@@ -8,14 +8,27 @@
 
 
 <!-- validation of all form data -->
+
 <script>
+
   $(document).ready(function() {
-    $.validator.addMethod('numericOnly', function (value) {
+
+    $.validator.addMethod("multipeFieldValidator", function(value) {  
+    if($("#image").val() && $("#video").val()) { 
+        
+      return false;
+    }
+    return true; 
+}, 'Either image or video is required');
+
+
+$.validator.addMethod('numericOnly', function (value) {
       return /^[0-9]+$/.test(value);
     }, 'Please enter only numeric values');
     $('#exerciseeditform').validate({  
 /// rules of error 
 rules: {
+
   "title": {
     required: true
   },
@@ -25,7 +38,25 @@ rules: {
   "duration": {
     numericOnly: true
   },
+   "image":      {required: 
+                    function() {
+                        //returns true if video is empty   
+                        return !$("#video").val();
+                    },
+                  multipeFieldValidator:true
+
+    },
+   "video":      {required: 
+                    function() {
+                        //returns true if video is empty   
+                        return !$("#image").val();
+                    },
+                    multipeFieldValidator:true
+    }
+  
+
 },
+
 ////for show error message
 messages: {
   "title":{
@@ -34,41 +65,65 @@ messages: {
   "description":{
     required: 'Please enter your description' 
   },
-  "duration": {
-    required: 'Please enter your duration time'
 
-  }, 
-}
-});
-///show uploading image and check validation of image
-$("#image").change(function(){ 
-/// check the extension of image
-var ext = $('#image').val().split('.').pop().toLowerCase();
-if($.inArray(ext, ['gif','png','jpg','jpeg']) == -1) {
-  alertify.alert('Only accept gif/png/jpg/jpeg extension formate of image');
-  $("#image").val('');
-  return false;
-}
-/// check the size of image
-var fileSize = (this.files[0].size / 1024); //size in KB
-if (fileSize > 100) /// not more than 30 kb
-{
-alertify.alert("Please Upload maximum 100KB file size of image");// if Maxsize from Model > real file size
-$("#image").val('');
-return false;
-}
-// show image after upload
-if (this.files && this.files[0]) {
-  var reader = new FileReader();
-  reader.onload = function (e) {
-    $('#profile_thumbnail').attr('src', e.target.result);
-  }
-  $("#profile_thumbnail").show();
-  reader.readAsDataURL(this.files[0]);
+ 
+  "duration": {
+    required: 'Please enter your duration'
+  },
+  "image": "Image is required if no video is given.",
+  "video": "Video is required if no image is given."
+  
 }
 });
 });
 </script>
+
+
+
+
+<script>
+  $(document).ready(function() {
+ $("#image").change(function(){ 
+
+    /// check the extension of image
+
+    var ext = $('#image').val().split('.').pop().toLowerCase();
+    if($.inArray(ext, ['gif','png','jpg','jpeg']) == -1) {
+    alertify.alert('Only accept gif/png/jpg/jpeg extension formate of image');
+    $("#image").val('');
+    return false;
+    }
+
+    /// check the size of image
+
+    var fileSize = (this.files[0].size / 1024); //size in KB
+    if (fileSize > 100) /// not more than 30 kb
+    {
+       alertify.alert("Please Upload maximum 100KB file size of image");// if Maxsize from Model > real file size
+        $("#image").val('');
+        return false;
+    }
+
+    // show image after upload
+    if (this.files && this.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        $('#profile_thumbnail').attr('src', e.target.result);
+        }
+        $("#profile_thumbnail").show();
+        reader.readAsDataURL(this.files[0]);
+      }
+});
+});
+</script>
+
+
+
+
+
+
+
+
 
 <div class="breadcrumbs">
   <div class="col-sm-4">
@@ -79,7 +134,7 @@ if (this.files && this.files[0]) {
     </div>
   </div>    
 </div>
-<div class="col-lg-6">
+<div class="col-lg-12">
   <div class="card">
     <div class="card-body card-block">
       <form action="{{route('updateexercise')}}" method="post" enctype="multipart/form-data" class="form-horizontal" id="exerciseeditform">
@@ -95,7 +150,7 @@ if (this.files && this.files[0]) {
           <div class="col col-md-3">
             <label for="text-input" class=" form-control-label">Description<span class="required_field_color">*</span></label></div>
             <div class="col-12 col-md-9">
-              <textarea id="description" name="description" placeholder="Description" class="form-control">{{$data->description}}</textarea>
+              <textarea id="description" name="description" placeholder="Description" class="form-control" style="height: 105px;resize: none;">{{$data->description}}</textarea>
             </div>
           </div>
           <div class="row form-group">
@@ -104,19 +159,35 @@ if (this.files && this.files[0]) {
             </div> 
           </div>
           <div class="row form-group">
-            <div class="col col-md-3"><label for="file-input" class=" form-control-label">Profile Image<span class="required_field_color">*</span></label></label></div>
-            <div class="col-12 col-md-9">                         
+              <div class="col col-md-3"><label for="text-input" class="form-control-label">Youtube Embeded Video Link<span class="required_field_color">*</span></label></div>
+              <div class="col-12 col-md-9"><input type="text" id="video" name="video" placeholder="Video Link" class="form-control" value="{{$data->video}}"></div>
+          </div>
+          <div class="row form-group">
+            <div class="col col-md-3">
+              <label for="file-input" class=" form-control-label">Image<span class="required_field_color">*</span>
+              </label>
+            </div>
+            <div class="col-12 col-md-4">                         
               <input type="file" id="image" name="image" class="form-control-file" >
               <input type="hidden" id="oldimage" name="oldimage" class="form-control-file" value="{{$data->image}}">
             </div>
-            <div class="pic-case-upload">
-              <img id="profile_thumbnail" src="{{asset('backend/images')}}/{{$data->image}}" alt="profile image" width="100"/>
+            <div class="col-12 col-md-5">
+              @if(isset($data->image) && !empty($data->image))                         
+                <img id="profile_thumbnail" src="{{asset('backend/images')}}/{{$data->image}}" alt="Excersise Image" width="100"/>
+              @else
+                <img id="profile_thumbnail" src="" alt="Excersise Image" width="100" style="display: none;"/>
+                @endif
             </div>
+            <!-- <div class="pic-case-upload">
+              <img id="profile_thumbnail" src="{{asset('backend/images')}}/{{$data->image}}" alt="profile image" width="100"/>
+            </div> -->
           </div>
-          <div>
-            <button type="submit" name="submit" class="btn btn-primary btn-sm">
-              <i class="fa fa-dot-circle-o"></i> Submit
-            </button>
+          <div class="row form-group">
+            <div class="col col-md-10">
+            </div>
+            <div class="col col-md-2">
+              <button type="submit" name="submit" class="btn btn-primary">Update</button>
+            </div>
           </div>
         </form>
       </div>

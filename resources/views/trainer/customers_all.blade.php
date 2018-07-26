@@ -36,19 +36,17 @@ $('#bootstrap-slot-data-table').DataTable({
     <div class="col-sm-4">
         <div class="page-header float-left">
             <div class="page-title">
-                <h1>All Customers List</h1>
+                <h1>All Registered Customers</h1>
             </div>
         </div>
     </div>
 </div>
-<div class="content mt-3">
+<div class="content mt-3" style="margin-top: 0px !important;">
     <div class="animated fadeIn">
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                   
-                        <div class="card-header">
-                        </div>
+                    <div class="card-header" style="padding-left: 0px;padding-right: 0px;padding-bottom: 0px;padding-top: 10px;"></div>
                     <div class="card-body">
                         <table id="bootstrap-slot-data-table" class="table table-striped table-bordered">
                             <thead>
@@ -61,20 +59,32 @@ $('#bootstrap-slot-data-table').DataTable({
                                     <th id="image">Image</th>
                                 </tr>
                             </thead>
-                        <tbody>  
-                         @if(count($data)>0)  
-                            @foreach($data as $key=>$mydata)
-                                <tr>
-                                   <td>{{++$key}}</td>
-                                    <td>{{$mydata->name}}</td>
-                                    <td>{{$mydata->email}}</td>
-                                    <td>{{$mydata->ph_no}}</td>
-                                    <td>{{$mydata->address}}</td>
-                                    <td><img src="{{asset('backend/images')}}/{{$mydata->image}}" height="50" width="50"></td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                          </table>
+                            <tbody>  
+                             @if(count($data)>0)  
+                                @foreach($data as $key=>$mydata)
+                                    <tr>
+                                       <td>{{++$key}}</td>
+                                        <td>{{$mydata->name}}</td>
+                                        <td>{{$mydata->email}}</td>
+                                        <td>{{$mydata->ph_no}}</td>
+                                        <td>
+                                            @if(isset($mydata->address) && !empty($mydata->address))
+                                                {{$mydata->address}}
+                                            @else
+                                                N/A
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if(isset($mydata->image) && !empty($mydata->image))
+                                            <img src="{{asset('backend/images')}}/{{$mydata->image}}" height="50" width="50">
+                                            @else
+                                            N/A
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                     @endif
                 </div>

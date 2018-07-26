@@ -271,7 +271,15 @@ Route::get('services','FrontSimpleController@services')->name('services');
 
 Route::get('testimonial','FrontSimpleController@testimonial')->name('testimonial');
 
-Route::get('contact','FrontSimpleController@contact')->name('contact');
+Route::get('gym_gallery','FrontSimpleController@gym_gallery');
+
+
+
+
+
+//insert function for contacts//
+Route::get('front_contact','FrontSimpleController@front_contact');
+Route::post('front_contact_insert','FrontSimpleController@front_contact_insert')->name('front_contact_insert');
 
 //
 

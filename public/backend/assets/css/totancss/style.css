@@ -126,7 +126,13 @@ All error msg
 
 
 
-
+#video-error {
+    color: #dc3545;
+    text-transform: uppercase;
+    font-weight: 700;
+    text-transform: none;
+    font-size: 13px;
+}
 
 
 

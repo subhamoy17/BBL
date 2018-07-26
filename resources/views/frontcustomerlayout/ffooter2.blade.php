@@ -1,6 +1,7 @@
 <!-- js -->
 	<script type="text/javascript" src="{{url('frontend/js/jquery-2.1.4.min.js')}}"></script>
 	<!-- //js -->
+<script src="{{asset('backend/assets/js/jquery.validate.min.js')}}"></script>
 
 	<!-- Slider script -->
 	<script src="{{url('frontend/js/responsiveslides.min.js')}}"></script>
@@ -173,6 +174,108 @@ $(document).ready(function() {
 		 });
 	</script>
 		<script src="{{url('frontend/js/accotab.js')}}"></script>
+
+
+
+
+
+
+<script>
+$(document).ready(function() {
+
+  $.validator.addMethod("alpha", function(value, element){
+    return this.optional(element) || value == value.match(/^[a-zA-Z, '']+$/);
+    }, "Alphabetic characters only please");
+
+  // mobile number can contant only numeric
+  $.validator.addMethod('numericOnly', function (value) {
+       return /^[0-9]+$/.test(value);
+    }, 'Please enter only numeric values');
+
+
+$('#contactusform').validate({  
+  /// rules of error 
+  rules: {
+    "form_name": {
+      alpha:true,
+      minlength:6,
+      required: true
+    },
+    "form_subject": {
+      required: true
+    },
+
+    "form_phone": {
+      required: true,
+      minlength: 10,
+      maxlength: 12,
+      numericOnly: true
+    },
+		"form_message": {
+      required: true
+    },
+
+
+    "form_email": {
+      required: true,
+      email: true
+     
+    }
+
+
+
+
+  },
+
+  messages: {
+    "form_name":{
+    required: 'Please enter your name',
+    minlength:'Minimum length 6 is required'
+  },
+  "form_subject":{
+    required: 'Please enter your subject' 
+  },
+  "form_phone": {
+      required: 'Please enter your mobile number',
+      minlength: 'Minimum 10 digits mobile number is required',
+      maxlength: 'Maximum 12 digits mobile number is required'
+  },
+  "form_email": {
+      required: 'Please enter your email',
+      email: "Email is invalid"
+  }
+  
+
+
+
+}
+  });
+ 
+
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	<!--Fontawesome script-->
 	<!--<script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js" integrity="sha384-3LK/3kTpDE/Pkp8gTNp2gR/2gOiwQ6QaO7Td0zV76UFJVhqLl4Vl3KL1We6q6wR9" crossorigin="anonymous"></script>-->
 </body>

@@ -36,47 +36,47 @@ table.dataTable thead>tr>th[id='action'].sorting_asc::after{display: none}
 </style>
 
 <div class="breadcrumbs">
-    <div class="col-sm-4">
+    <div class="col-sm-9">
         <div class="page-header float-left">
             <div class="page-title">
-                <h1>Exercise List</h1>
+                <h1>All Exercises</h1>
             </div>
         </div>
     </div>
+    <div class="col-sm-3">
+        <div class="page-header float-left" style="padding-top: 2%;padding-left: 17%;">
+            <a href="{{route('add_exercise_trainer')}}">
+                <button type="button" class="btn btn-success"><i class="fa fa-plus"></i>&nbsp;Add New Exercise</button>
+            </a>
+        </div>
+    </div>
 </div>
-<div class="content mt-3">
+<div class="content mt-3" style="margin-top: 0px !important;">
     <div class="animated fadeIn">
         <div class="row">
             <div class="col-md-12">
-                @if (session('delete'))
-                                    <div class="alert alert-danger">
-                                        {{ session('delete') }}
-                                    </div>
-                                @endif
                 <div class="card">
-                    <div class="card-header">
-                        <strong class="card-title">All Types of Exercise List &nbsp;&nbsp; 
-                            <a href="{{route('add_exercise_trainer')}}">
-                                <button><i class="fa fa-plus"></i> Add New Exercise Details</button>
-                            </a>
-                            <br>
-                            @if (session('success'))
-                            <div class="alert alert-success">
-                                {{ session('success') }}
+                    <div class="card-header" style="padding-left: 0px;padding-right: 0px;padding-bottom: 0px;padding-top: 10px;">
+                        @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                        @endif
+                        @if (session('delete'))
+                            <div class="alert alert-danger">
+                                {{ session('delete') }}
                             </div>
-                            @endif
-                        </strong>
+                        @endif
                     </div>
                     <div class="card-body">
                         <script type="text/javascript">
                             function delete_gym_type(id){ 
-                                alertify.confirm("Are you sure you want to delete this types of exercise?", function (e) {
+                                alertify.confirm("Are you sure you want to delete this exercise?", function (e) {
                                     if (e) {
-                                        alertify.success("You've clicked OK");
+                                        // alertify.success("You've clicked OK");
                                         window.location.href="{{url('trainer/gymdelete')}}/"+id;
-
                                     } else {
-                                        alertify.error("You've clicked Cancel");
+                                        // alertify.error("You've clicked Cancel");
                                     }                                       
                                 });
                             }
@@ -87,9 +87,11 @@ table.dataTable thead>tr>th[id='action'].sorting_asc::after{display: none}
                                     <th id="slno">Sl. No.</th>
                                     <th>Title</th>
                                     <th>Description</th>
-                                    <th>Duration</th>
-                                    <th id="image">Image</th>
-                                    <th id="action">Action</th>
+                                    <th style="width: 67px;">Duration<br>
+                                        <span style="font-weight: 400;">(in days)</span>
+                                    </th>
+                                    <th id="image" style="width: 220px;">Image</th>
+                                    <th id="action" style="width: 70px;">Action</th>
                                 </tr>
                             </thead>
                             <tbody> 
@@ -100,10 +102,18 @@ table.dataTable thead>tr>th[id='action'].sorting_asc::after{display: none}
                                     <td>{{$mydata->title}}</td>
                                     <td>{{$mydata->description}}</td>
                                     <td>{{$mydata->duration}}</td>
-                                    <td><img src="{{asset('backend/images')}}/{{$mydata->image}}" height="50" width="50"></td>
                                     <td>
-                                        <a href="{{url('trainer/editexercise')}}/{{$mydata->id}}" ><button class="button-primary">Edit</button></a>
-                                        <button class="button-primary" onclick="delete_gym_type({!!$mydata->id!!})">Delete</button>
+                                        @if(isset($mydata->video) && !empty($mydata->video))
+                                            <iframe src="{{$mydata->video}}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                                        @elseif(isset($mydata->image) && !empty($mydata->image))
+                                            <img src="{{asset('backend/images')}}/{{$mydata->image}}" style="width: 100%;">
+                                        @else
+                                            N/A
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <a href="{{url('trainer/editexercise')}}/{{$mydata->id}}" title="Edit Exercise"><button type="button" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button></a>
+                                        <button type="button" class="btn btn-danger btn-sm" onclick="delete_gym_type({!!$mydata->id!!})" style="width: 32px;" title="Delete Exercise"><i class="fa fa-trash-o"></i></button>
                                     </td>
                                 </tr>
                                 @endforeach

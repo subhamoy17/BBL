@@ -379,32 +379,31 @@ public function add_exercise_trainer()
 //gym insert function//
 public function exercise_user_insert(Request $request)
 {
-Log::debug(" data ".print_r($request->all(),true)); /// create log for showing error and print resul
-if($request->image!="")
-{
-    $request->validate
-    (
-        [ 'image'=>'image|mimes:jpeg,jpg,png,gif|max:2048']
-    );
-    $myimage=$request->image;
-    $folder="backend/images/"; 
-    $extension=$myimage->getClientOriginalExtension(); 
-    $image_name=time()."_adminimg.".$extension; 
-    $upload=$myimage->move($folder,$image_name); 
-    $data['image']=$image_name; 
-}
-else
-    { $data['image']=$request->oldimage;  }
-$data['title']=$request->title;
-$data['description']=$request->description;
-$data['duration']=$request->duration;
-$data['trainer_id']=$request->trainer_id;
-$data['created_at']=Carbon::now();
+    Log::debug(" data ".print_r($request->all(),true)); /// create log for showing error and print resul
+    if($request->image!=""){
+        $request->validate
+        (
+            [ 'image'=>'image|mimes:jpeg,jpg,png,gif|max:2048']
+        );
+        $myimage=$request->image;
+        $folder="backend/images/"; 
+        $extension=$myimage->getClientOriginalExtension(); 
+        $image_name=time()."_adminimg.".$extension; 
+        $upload=$myimage->move($folder,$image_name); 
+        $data['image'] = (isset($request->video) && !empty($request->video)) ? null : $image_name; 
+    }else{
+        $data['image'] = null;
+    }
+        $data['title']=$request->title;
+        $data['description']=$request->description;
+        $data['duration']=$request->duration;
+        $data['trainer_id']=$request->trainer_id;
+        $data['video']=(isset($request->video) && !empty($request->video)) ? $request->video : null;
+        $data['created_at']=Carbon::now();
 
-DB::table('exercise_details')->insert($data);
-return redirect('trainer/gymType')->with("success","Your new record of exercise details is insert successfully !");
+        DB::table('exercise_details')->insert($data);
+        return redirect('trainer/gymType')->with("success","You have successfully added one exercise.");
 }
-
 
 //gym view function//
 public function gym_showlist(Request $request)
@@ -429,7 +428,7 @@ public function gym_showlist(Request $request)
 public function gymdelete($id)
 {
     DB::table('exercise_details')->delete($id);
-    return redirect()->back()->with("delete","Your record of exercise list is deleted successfully !");;
+    return redirect()->back()->with("delete","You have successfully deleted one exercise.");;
 }
 //gym edit form//
 public function show_edit_exercise_form($id)
@@ -449,17 +448,18 @@ public function update_exercise(Request $request)
         $extension=$myimage->getClientOriginalExtension(); 
         $image_name=time()."_adminimg.".$extension; 
         $upload=$myimage->move($folder,$image_name); 
-        $data['image']=$image_name; 
+        $data['image'] = (isset($request->video) && !empty($request->video)) ? null : $image_name; 
+    }else{
+        $data['image'] = null;
     }
-    else {   $data['image']=$request->oldimage; }
+        $data['title']=$request->title;
+        $data['description']=$request->description;
+        $data['duration']=$request->duration;
+        $data['video']=(isset($request->video) && !empty($request->video)) ? $request->video : null;
+        $data['updated_at']=Carbon::now();
 
-    $data['title']=$request->title;
-    $data['description']=$request->description;
-    $data['duration']=$request->duration;
-    $data['updated_at']=Carbon::now();
-
-    DB::table('exercise_details')->where('id',$request->id)->update($data);
-    return redirect()->route("gymType")->with("success","The data of exercise details successfully updated!");
+        DB::table('exercise_details')->where('id',$request->id)->update($data);
+        return redirect()->route("gymType")->with("success","You have successfully updated one exercise.");
 }
 
 

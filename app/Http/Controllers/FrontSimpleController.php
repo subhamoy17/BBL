@@ -9,7 +9,9 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use App\Mail\Enquiry;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Mail;
+use Carbon\Carbon;
 
 class FrontSimpleController extends Controller
 {
@@ -89,7 +91,7 @@ return view('testimonial')->with(compact('data'));
 
 
 
- public function contact()
+ public function front_contact()
    {  
     return view('frontcontact');
    }
@@ -97,9 +99,31 @@ return view('testimonial')->with(compact('data'));
 
 
 
+ public function front_contact_insert(Request $request)
+   {  
+
+Log::debug(" data ".print_r($request->all(),true)); 
+$data['user_name']=$request->form_name;
+$data['user_email']=$request->form_email;
+$data['user_subject']=$request->form_subject;
+$data['user_phone']=$request->form_phone;
+$data['message']=$request->form_message;
+$data['created_at']=Carbon::now();
+DB::table('contact_us')->insert($data);
+return redirect('/')->with("success","Your Enquiry is insert successfully !");
+
+   }
 
 
 
+
+public function gym_gallery()
+   {  
+
+$data=DB::table('exercise_details')->where('deleted_at',null)->get();
+    
+    return view('frontgym')->with(compact('data'));
+   }
 
 
 

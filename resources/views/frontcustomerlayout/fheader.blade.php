@@ -28,6 +28,12 @@
     	</div>
     	<div id="myHeader" class="heder-bottom">
             
+
+             @if (session('success'))
+                                    <div class="alert alert-success">
+                                        {{ session('success') }}
+                                    </div>
+                                @endif
     		<div class="container">
     			<div class="row">
     				<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
@@ -53,10 +59,13 @@
 <li class="{{ Request::segment(1) === 'pricing' ? 'active' : null }}">
                         <a href="{{route('pricing')}}">Pricing</a>
                       </li>
-<li class="{{ Request::segment(1) === 'contact' ? 'active' : null }}">
-                        <a href="{{route('contact')}}">Contact Us</a>
+<li class="{{ Request::segment(1) === 'front_contact' ? 'active' : null }}">
+                        <a href="{{url('front_contact')}}">Contact Us</a>
                       </li>
                       
+           <li class="{{ Request::segment(1) === 'gym_gallery' ? 'active' : null }}">
+                        <a href="{{url('gym_gallery')}}">Exercise</a>
+                      </li>           
                     
 <li class="{{ Request::segment(1) === 'testimonial' ? 'active' : null }}">
                         <a href="{{route('testimonial')}}">Testimonial</a>

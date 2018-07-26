@@ -43,42 +43,50 @@
    					<div class="col-lg-7 col-md-7 col-sm-12 colxs-12">
    						<h4>Interested in discussing?</h4>
    						<div class="form-box">
+                 <form action="{{route('front_contact_insert')}}" method="post" enctype="multipart/form-data" class="form-horizontal" id="contactusform">
+
+                            <input type="hidden" name="_token" value="{{csrf_token()}}">
+
    							<div class="row">
    								<div class="col-md-6 col-sm-12 col-xs-12">
                   					<div class="form-group">
                   					  <label>Name <small>*</small></label>
-                  					  <input name="form_name" class="form-control" placeholder="Enter Name" required="" aria-required="true" type="text">
+                  					  <input name="form_name" class="form-control" placeholder="Enter Name" type="text">
                   					</div>
                 				</div>
+
                 				<div class="col-md-6 col-sm-12 col-xs-12">
                   					<div class="form-group">
                   					  <label>Email <small>*</small></label>
-                  					  <input name="form_email" class="form-control required email" placeholder="Enter Email" aria-required="true" type="email">
+                  					  <input name="form_email" class="form-control required email" placeholder="Enter Email" type="email">
                   					</div>
                 				</div>
+
+
                 				<div class="col-md-6 col-sm-12 col-xs-12">
                   					<div class="form-group">
                   					  <label>Subject <small>*</small></label>
-                  					  <input name="form_subject" class="form-control required" placeholder="Enter Subject" aria-required="true" type="text">
+                  					  <input name="form_subject" class="form-control required" placeholder="Enter Subject"  type="text">
                   					</div>
                 				</div>
                 				<div class="col-md-6 col-sm-12 col-xs-12">
                   					<div class="form-group">
-                  					  <label>Phone</label>
+                  					  <label>Phone<small>*</small></label>
                   					  <input name="form_phone" class="form-control" placeholder="Enter Phone" type="text">
                   					</div>
                 				</div>
                 				<div class="col-md-12 col-sm-12 col-xs-12">
                 				<div class="form-group">
                 					<label>Message</label>
-                					<textarea name="form_message" class="form-control required" rows="5" placeholder="Enter Message" aria-required="true">	</textarea>
+                					<textarea name="form_message" class="form-control required" rows="5" placeholder="Enter Message">	</textarea>
               					</div>
               					<div class="form-group">
-                					<input name="form_botcheck" class="form-control" value="" type="hidden">
-                					<button type="submit" class="btn btn-dark btn-theme-colored btn-flat" data-loading-text="Please wait...">Send your message</button>
+                					
+                					<button type="submit"  name="submit" class="btn btn-dark btn-theme-colored btn-flat" data-loading-text="Please wait...">Send your message</button>
               					</div>
 								</div>
    							</div>
+              </form>
    						</div>
    					</div>
    					<div class="col-lg-5 col-md-5 col-sm-12 colxs-12">

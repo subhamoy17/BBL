@@ -7,6 +7,16 @@
 <script>
 
   $(document).ready(function() {
+
+    $.validator.addMethod("multipeFieldValidator", function(value) {  
+    if($("#image").val() && $("#video").val()) { 
+        
+      return false;
+    }
+    return true; 
+}, 'Either image or video is required');
+
+
 $.validator.addMethod('numericOnly', function (value) {
       return /^[0-9]+$/.test(value);
     }, 'Please enter only numeric values');
@@ -22,7 +32,22 @@ rules: {
   },
   "duration": {
     numericOnly: true
-  }
+  },
+   "image":      {required: 
+                    function() {
+                        //returns true if video is empty   
+                        return !$("#video").val();
+                    },
+                  multipeFieldValidator:true
+
+    },
+   "video":      {required: 
+                    function() {
+                        //returns true if video is empty   
+                        return !$("#image").val();
+                    },
+                    multipeFieldValidator:true
+    }
   
 
 },
@@ -39,12 +64,17 @@ messages: {
  
   "duration": {
     required: 'Please enter your duration'
-  }
+  },
+  "image": "Image is required if no video is given.",
+  "video": "Video is required if no image is given."
   
 }
 });
 });
 </script>
+
+
+
 
 
 
@@ -123,7 +153,7 @@ messages: {
     </div>
   </div>    
 </div>
-<div class="col-lg-6">
+<div class="col-lg-12">
   <div class="card">
     <div class="card-body card-block">
       <form action="{{route('exercise_insert')}}" method="post" enctype="multipart/form-data" class="form-horizontal" id="traineraddform"  data-parsley-validate>
@@ -138,7 +168,7 @@ messages: {
           <div class="col col-md-3">
             <label for="text-input" class=" form-control-label">Description<span class="required_field_color">*</span></div>
               <div class="col-12 col-md-9">
-                <textarea id="description" name="description" placeholder="Description" class="form-control"></textarea>
+                <textarea id="description" name="description" placeholder="Description" class="form-control" style="height: 105px;resize: none;"></textarea>
               </div>
             </div>
             <div class="row form-group">
@@ -146,18 +176,25 @@ messages: {
               <div class="col-12 col-md-9"><input type="text" id="duration" name="duration" placeholder="Duration" class="form-control" value=""></div>
             </div>
             <div class="row form-group">
-              <div class="col col-md-3"><label for="file-input" class=" form-control-label">Profile Image<span class="required_field_color">*</span> </label></div>
-              <div class="col-12 col-md-9">
-                <input type="file" id="image" name="image" class="form-control" data-parsley-required data-parsley-required-message="Please upload an image" >
-
+              <div class="col col-md-3"><label for="text-input" class="form-control-label">Video Link<span class="required_field_color">*</span></label></div>
+              <div class="col-12 col-md-9"><input type="text" id="video" name="video" placeholder="Video Link" class="form-control" value=""></div>
+            </div>
+            <div class="row form-group">
+              <div class="col col-md-3"><label for="file-input" class="form-control-label">Image<span class="required_field_color">*</span> </label></div>
+              <div class="col-12 col-md-4">
+                <input type="file" id="image" name="image" class="form-control">
+              </div>
+              <div class="col-12 col-md-5">
                 <img id="profile_thumbnail" width="100"/>
               </div>
             </div>
-            <div>
-              <button type="submit"  name="submit" class="btn btn-primary btn-sm">
-                <i class="fa fa-dot-circle-o"></i> Submit
-              </button>
+            <div class="row form-group">
+            <div class="col col-md-10">
             </div>
+            <div class="col col-md-2">
+              <button type="submit"  name="submit" class="btn btn-primary" style="width: 65%;">Add</button>
+            </div>
+          </div>
           </form>
         </div>
       </div>
