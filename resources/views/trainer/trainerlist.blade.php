@@ -42,52 +42,48 @@ $('#bootstrap-slot-data-table').DataTable({
 
 
 <div class="breadcrumbs">
-    <div class="col-sm-4">
+    <div class="col-sm-9">
         <div class="page-header float-left">
             <div class="page-title">
-                <h1>Trainer List</h1>
+                <h1>All Trainers</h1>
             </div>
         </div>
     </div>
+    <div class="col-sm-3">
+        <div class="page-header float-left" style="padding-top: 2%;padding-left: 21%;">
+            <a href="{{route('addtrainer')}}">
+                <button type="button" class="btn btn-success"><i class="fa fa-plus"></i>&nbsp;Add New Trainer</button>
+            </a>
+        </div>
+    </div>
 </div>
-<div class="content mt-3">
+<div class="content mt-3" style="margin-top: 0px !important;">
     <div class="animated fadeIn">
         <div class="row">
             <div class="col-md-12">
-                                @if (session('delete'))
-                                    <div class="alert alert-danger">
-                                        {{ session('delete') }}
-                                    </div>
-                                @endif
                 <div class="card">
-                    
-                        <div class="card-header">
-                            <strong class="card-title">Trainer List is Here&nbsp;&nbsp; 
-                               <a href="{{route('addtrainer')}}">
-                                    <button><i class="fa fa-plus"></i> Add New Trainer</button>
-                                </a>
-                                <br>
-                                @if (session('success'))
-                                    <div class="alert alert-success">
-                                        {{ session('success') }}
-                                    </div>
-                                @endif
-                            </strong>
+                    <div class="card-header" style="padding-left: 0px;padding-right: 0px;padding-bottom: 0px;padding-top: 10px;">
+                        @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
                         </div>
-
+                        @endif
+                        @if (session('delete'))
+                            <div class="alert alert-danger">
+                                {{ session('delete') }}
+                            </div>
+                        @endif
+                    </div>
                     <div class="card-body">
                         <script type="text/javascript">
                            
                             function delete_trainer(id){ 
                             alertify.confirm("Are you sure you want to delete this trainer?", function (e) {
                                     if (e) {
-                                                alertify.success("You've clicked OK");
+                                                // alertify.success("You've clicked OK");
                                                 window.location.href="{{url('trainer/trainerdelete')}}/"+id;
                                                 
-                                            } else {
-                                                alertify.error("You've clicked Cancel");
-                                                
-                                            }                                       
+                                            }                                      
                                         });
                                     }
                             </script>

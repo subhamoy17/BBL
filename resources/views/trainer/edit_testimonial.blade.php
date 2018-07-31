@@ -22,40 +22,36 @@ $(document).ready(function() {
     }, 'Please enter only numeric values');
 
 
-$('#trainereditform').validate({  
-  /// rules of error 
-  rules: {
-    "name": {
-      alpha:true,
-      minlength:6,
-      required: true
+  $('#trainereditform').validate({  
+    /// rules of error 
+    rules: {
+      "name": {
+        alpha:true,
+        minlength:4,
+        required: true
+      },
+      "designation": {
+        required: true
+      },
+      "description": {
+        required: true
+      }
     },
-   "designation": {
-      required: true
-    },
+     ////for show error message
+    messages: {
+      "name":{
+        required: 'Please enter name',
+        minlength:'Minimum length 4 is required'
+      },
    
-   "description": {
-      required: true
+      "description":{
+        required: 'Please enter testimonial'
+      },
+    
+      "designation":{
+        required: 'Please enter designation' 
+      }
     }
-
-
-
-  },
-   ////for show error message
-  messages: {
-     "name":{
-    required: 'Please enter your name',
-    minlength:'Minimum length 6 is required'
-  },
- 
-  "description":{
-    required: 'Please enter your description' 
-  },
-  
-"designation":{
-    required: 'Please enter your designation' 
-  }
-  }
   });
   
   ///show uploading image and check validation of image
@@ -74,9 +70,9 @@ $('#trainereditform').validate({
     /// check the size of image
 
     var fileSize = (this.files[0].size / 1024); //size in KB
-    if (fileSize > 50) /// not more than 30 kb
+    if (fileSize > 200) /// not more than 30 kb
     {
-        alertify.alert("Please Upload maximum 50KB file size of image");// if Maxsize from Model > real file size
+        alertify.alert("Please Upload maximum 200KB file size of image");// if Maxsize from Model > real file size
         $("#image").val('');
         return false;
     }
@@ -108,7 +104,7 @@ $('#trainereditform').validate({
                 </div>
             </div>    
 </div>
-        <div class="col-lg-6">
+        <div class="col-lg-12">
         <div class="card">
                       <div class="card-body card-block">
                         <form action="{{route('testimonialupdate')}}" method="post" enctype="multipart/form-data" class="form-horizontal" id="trainereditform">
@@ -129,28 +125,30 @@ $('#trainereditform').validate({
                           </div>
                           <div class="row form-group">
                             <div class="col col-md-3">
-                              <label for="text-input" class=" form-control-label">Description<span class="required_field_color">*</span></div>
+                              <label for="text-input" class=" form-control-label">Testimonial<span class="required_field_color">*</span></div>
                             <div class="col-12 col-md-9">
-                              <textarea id="description" name="description" placeholder="description" class="form-control" >{{$data->description}}</textarea>
+                              <textarea id="description" name="description" placeholder="Testimonial" class="form-control" >{{$data->description}}</textarea>
                             </div>
                           </div>
                                
 
 
                             <div class="row form-group">
-                            <div class="col col-md-3"><label for="file-input" class=" form-control-label">Profile Image</label></div>
-                            <div class="col-12 col-md-9">                         
+                            <div class="col col-md-3"><label for="file-input" class=" form-control-label">Image</label></div>
+                            <div class="col-12 col-md-4">                         
                               <input type="file" id="image" name="image" class="form-control-file" >
                               <input type="hidden" id="oldimage" name="oldimage" class="form-control-file" value="{{$data->image}}">
                             </div>
-                            <div class="pic-case-upload">
-                                <img id="profile_thumbnail" src="{{asset('backend/images')}}/{{$data->image}}" alt="profile image" height="150"  width="200"/>
-                              </div>
+                            <div class="col-12 col-md-5">                         
+                              <img id="profile_thumbnail" src="{{asset('backend/images')}}/{{$data->image}}" alt="profile image" height="150"  width="200"/>
+                            </div>
                           </div>
-                            <div>
-                                <button type="submit" name="submit" class="btn btn-primary btn-sm">
-                                  <i class="fa fa-dot-circle-o"></i> Submit
-                                </button>
+                            <div class="row form-group">
+                              <div class="col col-md-10">
+                              </div>
+                              <div class="col col-md-2">
+                                <button type="submit"  name="submit" class="btn btn-primary" style="width: 65%;">Update</button>
+                              </div>
                             </div>
                         </form>
                       </div>

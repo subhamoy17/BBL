@@ -43,6 +43,81 @@
 </script>
 
 
+<script>
+$(document).ready(function() {
+
+  $.validator.addMethod("alpha", function(value, element){
+    return this.optional(element) || value == value.match(/^[a-zA-Z, '']+$/);
+    }, "Alphabetic characters only please");
+
+  // mobile number can contant only numeric
+  $.validator.addMethod('numericOnly', function (value) {
+       return /^[0-9]+$/.test(value);
+    }, 'Please enter only numeric values');
+
+
+$('#contactusform').validate({  
+  /// rules of error 
+  rules: {
+    "form_name": {
+      alpha:true,
+      minlength:6,
+      required: true
+    },
+    "form_subject": {
+      required: true
+    },
+
+    "form_phone": {
+      required: true,
+      minlength: 10,
+      maxlength: 12,
+      numericOnly: true
+    },
+    "form_message": {
+      required: true
+    },
+
+
+    "form_email": {
+      required: true,
+      email: true
+     
+    }
+
+
+
+
+  },
+
+  messages: {
+    "form_name":{
+    required: 'Please enter your name',
+    minlength:'Minimum length 6 is required'
+  },
+  "form_subject":{
+    required: 'Please enter your subject' 
+  },
+  "form_phone": {
+      required: 'Please enter your mobile number',
+      minlength: 'Minimum 10 digits mobile number is required',
+      maxlength: 'Maximum 12 digits mobile number is required'
+  },
+  "form_email": {
+      required: 'Please enter your email',
+      email: "Email is invalid"
+  }
+  
+
+
+
+}
+  });
+ 
+
+});
+</script>
+
 
 
 
@@ -187,6 +262,111 @@ $('#myeditform').validate({
 
     });  
   </script>
+
+
+  <script>
+    $(document).ready(function(){
+
+      $.validator.addMethod("alpha", function(value, element){
+    return this.optional(element) || value == value.match(/^[a-zA-Z, '']+$/);
+    }, "Alphabetic characters only please");
+
+  // mobile number can contant only numeric
+  $.validator.addMethod('numericOnly', function (value) {
+       return /^[0-9]+$/.test(value);
+    }, 'Please enter only numeric values');
+      
+$('#changepassword').validate({  
+  /// rules of error 
+  rules: {
+    
+    "new-password": {
+      required: true,
+      minlength: 6
+    },
+ "new-password_confirmation": {
+      required: true,
+       minlength: 6,
+      equalTo :"#new-password"
+
+     
+    }
+  },
+   ////for show error message
+  messages: {
+   
+  "new-password":{
+    minlength: 'Password must be at least 6 characters long',
+    required:'Please Enter your password' 
+  },
+"new-password_confirmation":{
+    minlength: 'Confirm Password must be at least 6 characters long',
+        required:'Please Enter Confirm password',
+        equalTo:"Please enter confirm password same as password"
+        
+  }
+  
+  
+  }
+  });
+  
+  ///show uploading image and check validation of image
+
+  $("#image").change(function(){ 
+
+    /// check the extension of image
+
+    var ext = $('#image').val().split('.').pop().toLowerCase();
+    if($.inArray(ext, ['gif','png','jpg','jpeg']) == -1) {
+    alertify.alert('Only accept gif/png/jpg/jpeg extension formate of image');
+    $("#image").val('');
+    return false;
+    }
+
+    /// check the size of image
+
+    var fileSize = (this.files[0].size / 1024); //size in KB
+    if (fileSize > 30) /// not more than 30 kb
+    {
+        alertify.alert("Please Upload maximum 30KB file size of image");// if Maxsize from Model > real file size
+        $("#image").val('');
+        return false;
+    }
+
+    // show image after upload
+    if (this.files && this.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        $('#profile_thumbnail').attr('src', e.target.result);
+        }
+        $("#profile_thumbnail").show();
+        reader.readAsDataURL(this.files[0]);
+      }
+});
+
+    });  
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

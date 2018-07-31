@@ -36,42 +36,49 @@ rules: {
     required: true
   },
   "duration": {
-    numericOnly: true
+    required: true
   },
-   "image":      {required: 
-                    function() {
-                        //returns true if video is empty   
-                        return !$("#video").val();
-                    },
-                  multipeFieldValidator:true
-
-    },
-   "video":      {required: 
-                    function() {
-                        //returns true if video is empty   
-                        return !$("#image").val();
-                    },
-                    multipeFieldValidator:true
-    }
-  
-
+  "image": {
+              required: 
+              function() {
+                  //returns true if video & previous image is empty   
+                  if(!$("#video").val() && !$("#oldimage").val() && !$("#image").val()){
+                    return true;
+                  }else{
+                    return false;
+                  }
+              },
+              multipeFieldValidator:true
+            },
+  "video": {
+              required: 
+              function() {
+                  //returns true if video is empty   
+                  if(!$("#video").val() && !$("#oldimage").val() && !$("#image").val()){
+                    return true;
+                  }else{
+                    return false;
+                  }
+              },
+              multipeFieldValidator:true
+            }
 },
 
 ////for show error message
 messages: {
   "title":{
-    required: 'Please enter your title'
+    required: 'Please enter title'
   },
   "description":{
-    required: 'Please enter your description' 
+    required: 'Please enter description' 
   },
 
  
   "duration": {
-    required: 'Please enter your duration'
+    required: 'Please enter duration'
   },
-  "image": "Image is required if no video is given.",
-  "video": "Video is required if no image is given."
+  "image": "Image is required if no video is given",
+  "video": "Video is required if no image is given"
   
 }
 });
@@ -82,39 +89,39 @@ messages: {
 
 
 <script>
-  $(document).ready(function() {
- $("#image").change(function(){ 
-
-    /// check the extension of image
-
-    var ext = $('#image').val().split('.').pop().toLowerCase();
-    if($.inArray(ext, ['gif','png','jpg','jpeg']) == -1) {
-    alertify.alert('Only accept gif/png/jpg/jpeg extension formate of image');
-    $("#image").val('');
-    return false;
-    }
-
-    /// check the size of image
-
-    var fileSize = (this.files[0].size / 1024); //size in KB
-    if (fileSize > 100) /// not more than 30 kb
-    {
-       alertify.alert("Please Upload maximum 100KB file size of image");// if Maxsize from Model > real file size
+  $(document).ready(function(){
+    $("#image").change(function(){ 
+      /// check the extension of image
+      var ext = $('#image').val().split('.').pop().toLowerCase();
+      if($.inArray(ext, ['gif','png','jpg','jpeg']) == -1) {
+        alertify.alert('Only accept gif/png/jpg/jpeg extension formats of image');
         $("#image").val('');
         return false;
-    }
-
-    // show image after upload
-    if (this.files && this.files[0]) {
-      var reader = new FileReader();
-      reader.onload = function (e) {
-        $('#profile_thumbnail').attr('src', e.target.result);
-        }
-        $("#profile_thumbnail").show();
-        reader.readAsDataURL(this.files[0]);
       }
-});
-});
+
+      /// check the size of image
+
+      var fileSize = (this.files[0].size / 1024); //size in KB
+      if (fileSize > 250) /// not more than 30 kb
+      {
+         alertify.alert("Please Upload maximum 250KB file size of image");// if Maxsize from Model > real file size
+          $("#image").val('');
+          return false;
+      }
+
+      // show image after upload
+      if (this.files && this.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          $('#profile_thumbnail').attr('src', e.target.result);
+          $('#recently_uploaded_image').val(true);
+          $('#video').val('');
+          }
+          $("#profile_thumbnail").show();
+          reader.readAsDataURL(this.files[0]);
+        }
+    });
+  });
 </script>
 
 
@@ -177,6 +184,7 @@ messages: {
               @else
                 <img id="profile_thumbnail" src="" alt="Excersise Image" width="100" style="display: none;"/>
                 @endif
+                <input type="hidden" id="recently_uploaded_image" name="recently_uploaded_image" value="false">
             </div>
             <!-- <div class="pic-case-upload">
               <img id="profile_thumbnail" src="{{asset('backend/images')}}/{{$data->image}}" alt="profile image" width="100"/>

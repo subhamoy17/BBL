@@ -43,8 +43,7 @@
    					<div class="col-lg-7 col-md-7 col-sm-12 colxs-12">
    						<h4>Interested in discussing?</h4>
    						<div class="form-box">
-                 <form action="{{route('front_contact_insert')}}" method="post" enctype="multipart/form-data" class="form-horizontal" id="contactusform">
-
+                 <form action="{{route('front_contact_insert')}}" method="post" enctype="multipart/form-data" class="" id="contactusform">
                             <input type="hidden" name="_token" value="{{csrf_token()}}">
 
    							<div class="row">
@@ -62,7 +61,7 @@
                   					</div>
                 				</div>
 
-
+                        <div class="clearfix"></div>
                 				<div class="col-md-6 col-sm-12 col-xs-12">
                   					<div class="form-group">
                   					  <label>Subject <small>*</small></label>
@@ -75,15 +74,25 @@
                   					  <input name="form_phone" class="form-control" placeholder="Enter Phone" type="text">
                   					</div>
                 				</div>
+                        <div class="clearfix"></div>
                 				<div class="col-md-12 col-sm-12 col-xs-12">
                 				<div class="form-group">
                 					<label>Message</label>
-                					<textarea name="form_message" class="form-control required" rows="5" placeholder="Enter Message">	</textarea>
+                					<textarea name="form_message" class="form-control" rows="5" placeholder="Enter Message">	</textarea>
               					</div>
               					<div class="form-group">
                 					
                 					<button type="submit"  name="submit" class="btn btn-dark btn-theme-colored btn-flat" data-loading-text="Please wait...">Send your message</button>
               					</div>
+                        <div class="form-group">
+                          @if (session('success'))
+                              <!-- <span style="color: white;">Test</span> -->
+                              <div class="alert alert-success">
+                                  {{ session('success') }}
+                              </div>
+                          @endif
+                          
+                        </div>
 								</div>
    							</div>
               </form>

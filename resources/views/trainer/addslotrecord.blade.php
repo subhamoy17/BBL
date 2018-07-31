@@ -23,7 +23,7 @@ $('#storeform').validate({
 
     "slots_number": {
       required: true,
-      digits: true,
+      numeric: true,
       min:1
     },
     "slots_price": {
@@ -33,7 +33,7 @@ $('#storeform').validate({
     },
     "slots_validity": {
       required: true,
-      digits: true,
+      numeric: true,
       min:1
     }
 
@@ -44,21 +44,21 @@ $('#storeform').validate({
   messages: {
 
  "slots_name":{
-   required: 'Please enter your name'
+   required: 'Please enter package name'
     },
     "slots_number":{
-    required:'Please Enter number of slots',
-    digits: 'Please enter only number of digits',
+    required:'Please Enter number of slots available for this package',
+    numeric: 'Please enter numeric value only',
     min: "Minimum value 1 is required"
     },
     "slots_price": {
-      required: 'Please enter the price of slots',
-      number: 'Please enter only point and number of digits',
+      required: 'Please enter the price of the package',
+      number: 'Please enter a valid price',
       range: "Please enter price betwwen 1 to 999999.99"
     },
     "slots_validity": {
-      required: 'Please enter the validity of slots',
-      digits: 'Please enter only number of digits',
+      required: 'Please enter the validity of the package',
+      numeric: 'Please enter numeric value only',
       min: "Minimum value 1 is required"
     }
 
@@ -71,20 +71,20 @@ $('#storeform').validate({
             <div class="col-sm-4">
                 <div class="page-header float-left">
                     <div class="page-title">
-                        <h1>Add New Slot's Record</h1>
+                        <h1>Add New Package</h1>
                     </div>
                 </div>
             </div>    
 </div>
-        <div class="col-lg-6">
+        <div class="col-lg-12">
         <div class="card">
                       <div class="card-body card-block">
                         <form action="{{route('storeslots')}}" method="post" enctype="multipart/form-data" class="form-horizontal" id="storeform">
                             {{ csrf_field() }}
                             
                           <div class="row form-group">
-                              <div class="col col-md-3"><label for="text-input" class="form-control-label"> Name of Slot<span class="required_field_color">*</span></label></div>
-                              <div class="col-12 col-md-9"><input type="text" id="slots_name" name="slots_name" placeholder="Name of Slot" class="form-control{{ $errors->has('slots_name') ? ' is-invalid' : '' }}" value="{{old('slots_name')}}">
+                              <div class="col col-md-3"><label for="text-input" class="form-control-label"> Package Name<span class="required_field_color">*</span></label></div>
+                              <div class="col-12 col-md-9"><input type="text" id="slots_name" name="slots_name" placeholder="Package Name" class="form-control{{ $errors->has('slots_name') ? ' is-invalid' : '' }}" value="{{old('slots_name')}}">
                               @if ($errors->has('slots_name'))
                                 <span class="invalid-feedback">
                                   <strong>{{ $errors->first('slots_name') }}</strong>
@@ -94,8 +94,8 @@ $('#storeform').validate({
                           </div>
 
                           <div class="row form-group">
-                              <div class="col col-md-3"><label for="text-input" class=" form-control-label">Number of Slot<span class="required_field_color">*</span></label></div>
-                              <div class="col-12 col-md-9"><input type="text" id="slots_number" name="slots_number" placeholder="Number of Slot" class="form-control{{ $errors->has('slots_number') ? ' is-invalid' : '' }}" value="{{old('slots_number')}}">
+                              <div class="col col-md-3"><label for="text-input" class=" form-control-label">No. of Slots<span class="required_field_color">*</span></label></div>
+                              <div class="col-12 col-md-9"><input type="text" id="slots_number" name="slots_number" placeholder="No. of Slots" class="form-control{{ $errors->has('slots_number') ? ' is-invalid' : '' }}" value="{{old('slots_number')}}">
                               @if ($errors->has('slots_number'))
                                 <span class="invalid-feedback">
                                   <strong>{{ $errors->first('slots_number') }}</strong>
@@ -105,8 +105,8 @@ $('#storeform').validate({
                           </div>
 
                           <div class="row form-group">
-                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Slot's Price (Rs.)<span class="required_field_color">*</span></label></div>
-                            <div class="col-12 col-md-9"><input type="text" id="slots_price" name="slots_price" placeholder="Slot's Price (Rs.)" class="form-control{{ $errors->has('slots_price') ? ' is-invalid' : '' }}"  value="{{old('slots_price')}}">
+                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Price<span class="required_field_color">*</span></label></div>
+                            <div class="col-12 col-md-9"><input type="text" id="slots_price" name="slots_price" placeholder="Price" class="form-control{{ $errors->has('slots_price') ? ' is-invalid' : '' }}"  value="{{old('slots_price')}}">
                              @if ($errors->has('slots_price'))
                                 <span class="invalid-feedback">
                                   <strong>{{ $errors->first('slots_price') }}</strong>
@@ -116,8 +116,8 @@ $('#storeform').validate({
                             
                           </div>
                           <div class="row form-group">
-                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Slot's Validity (In Days)<span class="required_field_color">*</span></label></div>
-                            <div class="col-12 col-md-9"><input type="text" id="slots_validity" name="slots_validity" placeholder="Slot's Validity (In Days)" class="form-control{{ $errors->has('slots_validity') ? ' is-invalid' : '' }}" value="{{old('slots_validity')}}">
+                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Validity (In Days)<span class="required_field_color">*</span></label></div>
+                            <div class="col-12 col-md-9"><input type="text" id="slots_validity" name="slots_validity" placeholder="Validity" class="form-control{{ $errors->has('slots_validity') ? ' is-invalid' : '' }}" value="{{old('slots_validity')}}">
                               @if ($errors->has('slots_validity'))
                                 <span class="invalid-feedback">
                                   <strong>{{ $errors->first('slots_validity') }}</strong>
@@ -126,11 +126,13 @@ $('#storeform').validate({
                             </div>
                             
                           </div>
-                          <div>
-                                <button type="submit" class="btn btn-primary btn-sm">
-                                  <i class="fa fa-dot-circle-o"></i> ADD
-                                </button>
-                           </div>
+                          <div class="row form-group">
+                            <div class="col col-md-10">
+                              </div>
+                              <div class="col col-md-2">
+                                <button type="submit"  name="submit" class="btn btn-primary" style="width: 65%;">Add</button>
+                              </div>
+                          </div>
                         </form>
                       </div>
                     </div>

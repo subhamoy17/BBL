@@ -43,52 +43,47 @@ $('#bootstrap-slot-data-table').DataTable({
 
 
 <div class="breadcrumbs">
-    <div class="col-sm-4">
+    <div class="col-sm-8">
         <div class="page-header float-left">
             <div class="page-title">
-                <h1>Customer MOT List</h1>
+                <h1>All Customer's MOT</h1>
             </div>
         </div>
     </div>
+    <div class="col-sm-4">
+        <div class="page-header float-left" style="padding-top: 2%;padding-left: 21%;">
+            <a href="{{route('motinsertshow_page')}}">
+                <button type="button" class="btn btn-success"><i class="fa fa-plus"></i>&nbsp;Add New Customer's MOT</button>
+            </a>
+        </div>
+    </div>
 </div>
-<div class="content mt-3">
+<div class="content mt-3" style="margin-top: 0px !important;">
     <div class="animated fadeIn">
         <div class="row">
             <div class="col-md-12">
-                                @if (session('delete'))
-                                    <div class="alert alert-danger">
-                                        {{ session('delete') }}
-                                    </div>
-                                @endif
                 <div class="card">
-                    
-                        <div class="card-header">
-                            <strong class="card-title">
-                               <a href="{{route('motinsertshow_page')}}">
-                                    <button><i class="fa fa-plus"></i> Add New Customer MOT</button>
-                                </a>
-                                <br>
-                                @if (session('success'))
-                                    <div class="alert alert-success">
-                                        {{ session('success') }}
-                                    </div>
-                                @endif
-                            </strong>
+                    <div class="card-header" style="padding-left: 0px;padding-right: 0px;padding-bottom: 0px;padding-top: 10px;">
+                        @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
                         </div>
-
+                        @endif
+                        @if (session('delete'))
+                            <div class="alert alert-danger">
+                                {{ session('delete') }}
+                            </div>
+                        @endif
+                    </div>
                     <div class="card-body">
                         <script type="text/javascript">
                            
                             function delete_mot(id){ 
-                            alertify.confirm("Are you sure you want to delete this MOT?", function (e) {
+                            alertify.confirm("Are you sure you want to delete this Customer's MOT?", function (e) {
                                     if (e) {
-                                                alertify.success("You've clicked OK");
                                                 window.location.href="{{url('trainer/motdelete')}}/"+id;
                                                 
-                                            } else {
-                                                alertify.error("You've clicked Cancel");
-                                                
-                                            }                                       
+                                            }                                      
                                         });
                                     }
                             </script>
@@ -97,18 +92,20 @@ $('#bootstrap-slot-data-table').DataTable({
                             <thead>
                                 <tr>
                                     <th id="slno">Sl. No.</th>
-                                        <th>Weight</th>
-                                    <th>Right arm</th>
-                                    <th>Left arm</th>
+                                    <th>Name</th>
+                                    <th>Weight</th>
+                                    <th>Height</th>
+                                    <!-- <th>Right arm</th>
+                                    <th>Left arm</th> -->
                                     <th>Chest</th>
                                     <th>Waist</th>
-                                     <th>Hips</th>
-                                     <th>Right_thigh</th>
+                                    <th>Hips</th>
+                                    <!-- <th>Right_thigh</th>
                                     <th>Left_thigh</th>
                                     <th>Right_calf</th>
-                                    <th>Left_calf</th>
+                                    <th>Left_calf</th> -->
                                     <th>Date</th>
-                                    <th>Action</th>
+                                    <th style="width: 70px;">Action</th>
                                                   
                                          
                                    </tr> 
@@ -118,22 +115,24 @@ $('#bootstrap-slot-data-table').DataTable({
                             @foreach($data as $key=>$mydata)
                                 <tr>
                                     <td>{{++$key}}</td>
+                                    <td>@if(!empty($mydata->name)) {{$mydata->name}} @else N/A @endif</td>
                                     <td>{{$mydata->weight}}</td>
-                                    <td>{{$mydata->right_arm}}</td>
-                                    <td>{{$mydata->left_arm}}</td>
+                                    <td>{{$mydata->height}}</td>
+                                    <!-- <td>{{$mydata->right_arm}}</td>
+                                    <td>{{$mydata->left_arm}}</td> -->
                                    <td>{{$mydata->chest}}</td>
                                     <td>{{$mydata->waist}}</td>
                                     <td>{{$mydata->hips}}</td>
-                                    <td>{{$mydata->right_thigh}}</td>
+                                    <!-- <td>{{$mydata->right_thigh}}</td>
                                     <td>{{$mydata->left_thigh}}</td>
                                     <td>{{$mydata->right_calf}}</td>
-                                   <td>{{$mydata->left_calf}}</td>
+                                   <td>{{$mydata->left_calf}}</td> -->
                                    <td>{{$mydata->date}}</td>
 
 
-                                   <td> <a href="{{url('trainer/moteditshow')}}/{{$mydata->id}}" ><button class="button-primary">Edit</button></a>
+                                   <td> <a href="{{url('trainer/moteditshow')}}/{{$mydata->id}}" title="Edit MOT"><button class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button></a>
 
-                                         <button class="button-primary" onclick="delete_mot({!!$mydata->id!!})">Delete</button>
+                                         <button class="btn btn-danger btn-sm" title="Delete MOT" onclick="delete_mot({!!$mydata->id!!})" style="width: 32px;"><i class="fa fa-trash-o"></i></button>
 
 
                                 </tr>

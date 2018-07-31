@@ -205,8 +205,9 @@
   <div class="container">
         <h3 class="gyl_header">Choose <span>Your Plan</span></h3>
           <div class="row">
-               @foreach($data as $mydata)
+              
                <div class="owl-carousel" id="price-slider">
+                 @foreach($data as $mydata)
             <div class="price-wrp">
               <div class="price-box">
                 <div class="p-box-head cmn-3">
@@ -214,7 +215,7 @@
                 <h1><i class="fa fa-gbp"></i> {{$mydata->slots_price}} <span></span></h1>
                   <span class="small-msg">No. of slots</span>
                   <span class="small-msg">{{$mydata->slots_number}}</span>
-                  <span class="small-msg">/ Validity 25 Days</span>
+                  <span class="small-msg">/ Validity {{$mydata->slots_validity}} Days</span>
                   <div class="btm-arow"><i class="fa fa-arrow-circle-down"></i></div>
                   <div class="plan-batch bch-3">Premium</div>
                 </div>
@@ -231,8 +232,9 @@
                 </div>
               </div>
             </div>
+     @endforeach
         </div>
-            @endforeach
+     
             </div>
         </div>
   </section>

@@ -1,16 +1,16 @@
-<!-- <div class="footer">
+<div class="footer">
 		<div class="f-bg-gyl">
 				<div class="col-md-3 gylayouts_footer_grid">
 					<h2>Subscribe <span>Newsletter</span></h2>
-					<p>By subscribing to our mailing list you will always get latest news from us.</p> -->
-				<!-- 	<form action="#" method="post">
+					<p>By subscribing to our mailing list you will always get latest news from us.</p>
+					<form action="#" method="post">
 						<input type="email" name="Email" placeholder="Enter your email..." required="">
 						<button class="btn1"><i class="fa fa-envelope" aria-hidden="true"></i></button>
 						<div class="clearfix"> </div>
-					</form> -->
+					</form>
 					
 				
-			<!-- 	</div>
+				</div>
 				<div class="col-md-4 gylayouts_footer_grid">
 					<h3>Recent <span>Works</span></h3>
 					 <ul class="con_inner_text midimg">
@@ -28,10 +28,10 @@
 				<div class="col-md-2 gylayouts_footer_grid">
 					<h3>Our <span>Links</span> </h3>
 					  <ul class="links">
-							<li><a href="{{route('bbl')}}">Home</a></li>
+							<li><a href="{{url('/')}}">Home</a></li>
 							<li><a href="{{route('about')}}">About</a></li>
 							<li><a href="#">Gallery</a></li>
-							<li><a href="{{route('frontlogin')}}">Mail Us</a></li>
+							<li><a href="#">Mail Us</a></li>
 						</ul>
 				</div>
 				<div class="col-md-3 gylayouts_footer_grid">
@@ -54,10 +54,9 @@
 				<div class="clearfix"> </div>
 					
 			</div>
-			<p class="copyright">© 2018 Body By Lekan. All Rights Reserved |Powered by <a href="http://softcliquesoftware.in/" target="_blank">Softclique Software Services LLP</a></p> -->
+			<p class="copyright">© 2018 Body By Lekan. All Rights Reserved |Powered by <a href="http://softcliquesoftware.in/" target="_blank">Softclique Software Services LLP</a></p>
 			<!--scroll to top button-->
-    		<!-- <a id="back2Top" title="Back to top" href="#"><i class="fa fa-hand-o-up"></i></a>
+    		<a id="back2Top" title="Back to top" href="#"><i class="fa fa-hand-o-up"></i></a>
 
-	</div> -->
+	</div>
 	<!-- //footer -->
-	

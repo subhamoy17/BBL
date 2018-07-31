@@ -39,7 +39,7 @@
                               <input type="hidden" name="id" id="id" value="{{$slot_id}}">
 
 
-                            <label>Specify your current employment status</label>
+                            <label>Payment Mode</label>
                               <ul>
                                 <li>
                                   <input type="radio" id="a-option" name="selector1" value="Paypal">

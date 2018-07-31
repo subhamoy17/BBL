@@ -41,7 +41,7 @@ th {
 <table style="width:100%">
   <tr>
     <th>Url:</th>
-    <th> <a href="{{URL::to('/bbl-admin-0518')}}">Click Here </a>to Login</th> 
+    <th> <a href="{{URL::to('/bbl-customer-0518')}}">Click Here </a>to Login</th> 
      </tr>
 
      <tr>

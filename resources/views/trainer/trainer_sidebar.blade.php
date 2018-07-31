@@ -61,7 +61,7 @@
                 @if(Request::segment(2) == "mot_show")
                        <ul class="nav navbar-nav">
                  <li class="active">
-                  <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('mot_show')}}" style="color: #fff !important;">Customer MOT</a></li>
+                  <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('mot_show')}}" style="color: #fff !important;">Customer's MOT</a></li>
                   @else
                   <ul class="nav navbar-nav">
                   <li class="active">
@@ -74,27 +74,35 @@
                   @if(Request::segment(2) == "contactlist")
                        <ul class="nav navbar-nav">
                  <li class="active">
-                  <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('contactlist')}}" style="color: #fff !important;">Contact's Enquiry</a></li>
+                  <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('contactlist')}}" style="color: #fff !important;">Customer's Enquiry</a></li>
                   @else
                   <ul class="nav navbar-nav">
                   <li class="active">
-                  <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('contactlist')}}">Contact's Enquiry</a></li>
+                  <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('contactlist')}}">Customer's Enquiry</a></li>
+                  @endif
+
+                  @if(Request::segment(2) == "our_client_show")
+                       <ul class="nav navbar-nav">
+                 <li class="active">
+                  <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('our_client_show')}}" style="color: #fff !important;">Our Client</a></li>
+                  @else
+                  <ul class="nav navbar-nav">
+                  <li class="active">
+                  <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('our_client_show')}}">Our Client</a></li>
                   @endif
 
 
 
 
 
-
-
                   @if(Request::segment(2) == "feedbacklist")
-                       <ul class="nav navbar-nav">
-                 <li class="active">
-                  <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('feedbacklist')}}" style="color: #fff !important;">Web User Feedback</a></li>
+                    <!-- <ul class="nav navbar-nav">
+                      <li class="active">
+                      <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('feedbacklist')}}" style="color: #fff !important;">Web User Feedback</a></li> -->
                   @else
-                  <ul class="nav navbar-nav">
-                  <li class="active">
-                  <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('feedbacklist')}}">Web User Feedback</a></li>
+                    <!-- <ul class="nav navbar-nav">
+                      <li class="active">
+                      <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('feedbacklist')}}">Web User Feedback</a></li> -->
                   @endif
 
 
@@ -108,9 +116,9 @@
                 <ul class="sub-menu children dropdown-menu">
                   @endif 
                   @if(Request::segment(2) == "add-slot" || Request::segment(2) == "add-slot-record" || Request::segment(2) == "editslots")
-                  <li><i class="fa fa-id-card-o"></i><a href="{{route('addslot')}}" style="color: #fff !important;">Pricing/ Slot</a></li>
+                  <li><i class="fa fa-id-card-o"></i><a href="{{route('addslot')}}" style="color: #fff !important;">Package Pricing</a></li>
                   @else
-                  <li><i class="fa fa-id-card-o"></i><a href="{{route('addslot')}}">Pricing/ Slot</a></li>
+                  <li><i class="fa fa-id-card-o"></i><a href="{{route('addslot')}}">Package Pricing</a></li>
                   @endif
 
                   @if(Request::segment(2) == "trainerlist" || Request::segment(2) == "addtrainer" || Request::segment(2) == "edittrainer")

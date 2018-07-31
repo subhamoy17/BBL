@@ -2468,13 +2468,15 @@ ul.tabs li {
 	position: relative;
 }
 ul.tabs li a{
-    padding: 10px 60.43px;
+    padding: 10px 44.4px;
     display: inline-block;
     text-align: center;
 }
+
+
 .error{
     margin-bottom: 0;
-    font-size: 12px;
+    font-size: 12px !important;;
     font-weight: 400;
 }
 ul.tabs li.bb{
@@ -5385,6 +5387,7 @@ a.sign-btn2 {
 	background: #3d3648;
     border: none;
 	resize: none;
+    color: #fff;
 }
 .form-box input:focus, .form-box textarea:focus, .form-box select:focus {
 	border: 1px solid #5e2bd2;

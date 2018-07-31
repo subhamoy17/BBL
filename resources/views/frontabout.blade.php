@@ -22,8 +22,8 @@
 		<h3 class="heading-agileinfo white-gyls">TrainHard is the right place to start new life as an athletic, strong and healthy person with a strong will.</h3>
 		<p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia .</p>
 			<div class="more-button">
-                {{ csrf_field() }}
-				<a href="{{route('customerpanel.frontlogin_registration')}}">Mail Us</a>
+           
+				<a href="">Mail Us</a>
 			</div>
 	</div>
 </div>
@@ -31,85 +31,35 @@
 <!-- Team -->
 <div class="team">
 		<div class="container">
+
 		<div class="wthree_head_section">
 				<h3 class="gyl_header">Our <span>Trainers</span></h3>
 			</div>
-		
+		 
 			<div class="owl-carousel" id="team-slider">
+				@foreach($data as $mydata)
 				<div class="agile_team_grid">
 					<div class="view view-sixth"> 
 
-						<img src="{{asset('frontend/images/t1.jpg')}}" alt=" " class="img-responsive">
+						<img src="{{asset('backend/images')}}/{{$mydata->image}}" alt=" " class="img-responsive">
 						<div class="mask">
-							<h5>Lorem Ipsum</h5>
-							<p>Quis autem vel eum iure reprehenderit qui in ea voluptate velit.</p>
+							<h5>{{$mydata->title}}</h5>
+							<p>{{$mydata->description}}</p>
 							<div class="agileits_social_icons">
 								<ul class="social_agileinfo">
-									<li><a href="#" class="gy_facebook"><i class="fa fa-facebook"></i></a></li>
-									<li><a href="#" class="gy_twitter"><i class="fa fa-twitter"></i></a></li>
-									<li><a href="#" class="gy_instagram"><i class="fa fa-instagram"></i></a></li>
+									<li><a href="{{$mydata->facebook}}" target="_blank" class="gy_facebook"><i class="fa fa-facebook"></i></a></li>
+									<li><a href="{{$mydata->twitter}}" target="_blank" class="gy_twitter"><i class="fa fa-twitter"></i></a></li>
+									<li><a href="{{$mydata->instagram}}" target="_blank" class="gy_instagram"><i class="fa fa-instagram"></i></a></li>
 								</ul>
 							</div>
 						</div>
 					</div>
-					<h4>Daniel</h4>
-					<p>Trainer</p>
+					<h4>{{$mydata->name}}</h4>
+					<p>{{$mydata->designation}}</p>
 				</div>
-				<div class="agile_team_grid">
-					<div class="view view-sixth">
-						<img src="{{asset('frontend/images/t2.jpg')}}" alt="" class="img-responsive">
-						<div class="mask">
-							<h5>Lorem Ipsum</h5>
-							<p>Quis autem vel eum iure reprehenderit qui in ea voluptate velit.</p>
-							<div class="agileits_social_icons">
-								<ul class="social_agileinfo">
-									<li><a href="#" class="gy_facebook"><i class="fa fa-facebook"></i></a></li>
-									<li><a href="#" class="gy_twitter"><i class="fa fa-twitter"></i></a></li>
-									<li><a href="#" class="gy_instagram"><i class="fa fa-instagram"></i></a></li>
-								</ul>
-							</div>
-						</div>
-					</div>
-					<h4>Mary Winkler</h4>
-					<p>Trainer</p>
-				</div>
-				<div class="agile_team_grid">
-					<div class="view view-sixth">
-						<img src="{{asset('frontend/images/t3.jpg')}}" alt=" " class="img-responsive">
-						<div class="mask">
-							<h5>Lorem Ipsum</h5>
-							<p>Quis autem vel eum iure reprehenderit qui in ea voluptate velit.</p>
-							<div class="agileits_social_icons">
-								<ul class="social_agileinfo">
-									<li><a href="#" class="gy_facebook"><i class="fa fa-facebook"></i></a></li>
-									<li><a href="#" class="gy_twitter"><i class="fa fa-twitter"></i></a></li>
-									<li><a href="#" class="gy_instagram"><i class="fa fa-instagram"></i></a></li>
-								</ul>
-							</div>
-						</div>
-					</div>
-					<h4>James Mac</h4>
-					<p>Trainer</p>
-				</div>
-				<div class="agile_team_grid">
-					<div class="view view-sixth">
-						<img src="{{asset('frontend/images/t4.jpg')}}" alt=" " class="img-responsive">
-						<div class="mask">
-							<h5>Lorem Ipsum</h5>
-							<p>Quis autem vel eum iure reprehenderit qui in ea voluptate velit.</p>
-							<div class="agileits_social_icons">
-								<ul class="social_agileinfo">
-									<li><a href="#" class="gy_facebook"><i class="fa fa-facebook"></i></a></li>
-									<li><a href="#" class="gy_twitter"><i class="fa fa-twitter"></i></a></li>
-									<li><a href="#" class="gy_instagram"><i class="fa fa-instagram"></i></a></li>
-								</ul>
-							</div>
-						</div>
-					</div>
-					<h4>Smith Carls</h4>
-					<p>Trainer</p>
-				</div>
+		 @endforeach
 			</div>
+	
 		</div>
 	</div>
 	<!-- //Team -->

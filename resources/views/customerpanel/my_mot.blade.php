@@ -1,4 +1,4 @@
-@extends('frontend.main') 
+@extends('frontend.submain') 
 @section('content')
 
 
@@ -64,12 +64,12 @@
                     <td>{{$mydata->date}}</td>
                      <td>
                          
-                    <a href="#" class="common" data-right_arm="{{$mydata->right_arm}}"  
-                      data-left_arm="{{$mydata->left_arm}}" data-chest="{{$mydata->chest}}"
+                    <a href="#" class="common btn btn-info btn-sm" data-right_arm="{{$mydata->right_arm}}"  data-left_arm="{{$mydata->left_arm}}" data-chest="{{$mydata->chest}}"
                       data-waist="{{$mydata->waist}}" data-hips="{{$mydata->hips}}"
                       data-right_thigh="{{$mydata->right_thigh}}" data-right_calf="{{$mydata->right_calf}}" 
                       data-left_calf="{{$mydata->left_calf}}" data-weight="{{$mydata->weight}}"
-                      data-left_thigh="{{$mydata->left_thigh}}">
+                      data-left_thigh="{{$mydata->left_thigh}}" class="btn btn-success">
+
                     Click Here</a>
                                         
 

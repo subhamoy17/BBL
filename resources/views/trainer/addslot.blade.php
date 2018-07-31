@@ -37,50 +37,48 @@ $('#bootstrap-slot-data-table').DataTable({
 </style>
 
 <div class="breadcrumbs">
-    <div class="col-sm-4">
+    <div class="col-sm-9">
         <div class="page-header float-left">
             <div class="page-title">
-                <h1>Add Slots</h1>
+                <h1>All Packages</h1>
             </div>
         </div>
     </div>
+    <div class="col-sm-3">
+        <div class="page-header float-left" style="padding-top: 2%;padding-left: 17%;">
+            <a href="{{route('addslotrecord')}}">
+                <button type="button" class="btn btn-success"><i class="fa fa-plus"></i>&nbsp;Add New Package</button>
+            </a>
+        </div>
+    </div>
 </div>
-<div class="content mt-3">
+<div class="content mt-3" style="margin-top: 0px !important;">
     <div class="animated fadeIn">
         <div class="row">
             <div class="col-md-12">
-                  @if (session('delete'))
-                                    <div class="alert alert-danger">
-                                        {{ session('delete') }}
-                                    </div>
-                                @endif
                 <div class="card">
                     @if(count($data)>0)
-                        <div class="card-header">
-                            <strong class="card-title">Total Data Are Here&nbsp;&nbsp; 
-                                <a href="{{route('addslotrecord')}}">
-                                    <button><i class="fa fa-plus"></i> Add New Record</button>
-                                </a>
-                                <br>
-                                @if (session('success'))
-                                    <div class="alert alert-success">
-                                        {{ session('success') }}
-                                    </div>
-                                @endif
-                            </strong>
+                        <div class="card-header" style="padding-left: 0px;padding-right: 0px;padding-bottom: 0px;padding-top: 10px;">
+                            @if (session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                            @endif
+                            @if (session('delete'))
+                                <div class="alert alert-danger">
+                                    {{ session('delete') }}
+                                </div>
+                            @endif
                         </div>
                     <div class="card-body">
                         <script type="text/javascript">
                             function delete_slots(id){ 
-                            alertify.confirm("Are you sure you want to delete this slot?", function (e) {
+                            alertify.confirm("Are you sure you want to delete this package?", function (e) {
                                     if (e) {
-                                                alertify.success("You've clicked OK");
+                                                // alertify.success("You've clicked OK");
                                                 window.location.href="{{url('trainer/deleteslots')}}/"+id;
                                                 
-                                            } else {
-                                                alertify.error("You've clicked Cancel");
-                                                
-                                            }                                       
+                                            }                                      
                                         });
                                     }
                         </script>
@@ -92,7 +90,7 @@ $('#bootstrap-slot-data-table').DataTable({
                                     <th>Number of Slot</th>
                                     <th>Slot's Price (Rs.)</th>
                                     <th>Slot's Validity (In Days)</th>
-                                    <th id="action">Action</th>
+                                    <th id="action" style="width: 70px;">Action</th>
                                 </tr>
                             </thead>
                         <tbody>
@@ -105,9 +103,8 @@ $('#bootstrap-slot-data-table').DataTable({
                                     <td>{{$mydata->slots_price}}</td>
                                     <td>{{$mydata->slots_validity}}</td>
                                     <td>
-                                        <a href="{{url('trainer/editslots')}}/{{$mydata->id}}" ><button class="button-primary">Edit</button></a>
-                    
-                                        <button class="button-primary" onclick="delete_slots({!!$mydata->id!!})">Delete</button>
+                                        <a href="{{url('trainer/editslots')}}/{{$mydata->id}}" title="Edit Package"><button type="button" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button></a>
+                                        <button type="button" class="btn btn-danger btn-sm" onclick="delete_slots({!!$mydata->id!!})" style="width: 32px;" title="Delete Package"><i class="fa fa-trash-o"></i></button>
                                         
                                     </td>
                                 </tr>

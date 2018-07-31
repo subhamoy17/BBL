@@ -68,7 +68,7 @@ $('#bootstrap-slot-data-table').DataTable({
     <div class="col-sm-4">
         <div class="page-header float-left">
             <div class="page-title">
-                <h1>Contact's Enquiry</h1>
+                <h1>All Customer's Enquiry</h1>
             </div>
         </div>
     </div>
@@ -115,10 +115,14 @@ $('#bootstrap-slot-data-table').DataTable({
                                     <td>{{$mydata->user_subject}}</td>
                                     <td>{{$mydata->user_phone}}</td>
                                     <td>
-                                        @if(strlen($mydata->message) > 50) 
-                                            {{substr($mydata->message,0,50)}}<a id="tar" href="#" class="common"  data-msg="{{$mydata->message}}">...</a>
+                                        @if(!empty($mydata->message))
+                                            @if(strlen($mydata->message) > 50) 
+                                                {{substr($mydata->message,0,50)}}<a id="tar" href="#" class="common"  data-msg="{{$mydata->message}}">...</a>
+                                            @else
+                                                {{$mydata->message}}
+                                            @endif
                                         @else
-                                            {{$mydata->message}}
+                                            N/A
                                         @endif
                                     </td>
                                     

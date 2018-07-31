@@ -1,4 +1,4 @@
-@extends('frontend.main') 
+@extends('frontend.submain') 
 @section('content')
 
 
@@ -14,13 +14,12 @@
               <table class="table">
                 <thead>
                   <tr>
-                    <th>Customer Name</th>
-                    <th>Slots Name</th>
-                    <th>Slots Price</th>
-                    <th>Slots validity</th>
-                    <th>Trainer Name</th>
-                     <th>Slots Starting Date</th>
-                     <th>Slots Ending Date</th>
+                   
+                    <th>Package Name</th>
+                    <th>Package Price</th>
+                    <th>Package validity</th>
+                     <th>Purchases Date</th>
+                     <th>Payment Mode</th>
                       <th>Remaining Time</th>
                       <th>Action</th>
                   </tr>
@@ -29,17 +28,18 @@
                    @if(count($data)>0)
                    @foreach($data as $key=>$mydata)
                   <tr>
-                    <td>{{$mydata->name}}</td>
+                    
                     <td>{{$mydata->slots_name}}</td>
                     <td>{{$mydata->slots_price}}</td>
                     <td>{{$mydata->slots_validity}}</td>
-                    <td>{{$mydata->users_name}}</td>
                     <td>{{$mydata->purchases_start_date}}</td>
-                    <td>{{$mydata->purchases_end_date}}</td>
+                      <td>{{$mydata->payment_options}}</td>
+                   
+                 
                   <td>{{$mydata->timeremaining}}</td>
                      <td>
                             @if($mydata->timeremaining < $mydata->slots_validity)
-                          <a href="{{url('customer/booking_slot')}}/{{$mydata->slot_purchases_id}}"class="btn btn-success">change</a>
+                          <a href="{{url('customer/booking_slot')}}/{{$mydata->id}}"class="btn btn-success">change</a>
                      @else
                         N/A
                         @endif

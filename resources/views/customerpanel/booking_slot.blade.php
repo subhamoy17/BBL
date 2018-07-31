@@ -78,6 +78,7 @@
                             <div class="form-group">
                               <label>Trainer Name<small>*</small></label>
                               <select class="form-control" name="id">
+                                <option value=""> Please select a name</option>
                                  @foreach($data as $mydata)
                                 <option value="{{$mydata->id}}"> {{$mydata->name}}</option>
                                 @endforeach
@@ -86,7 +87,7 @@
                         </div>
 
                           <div class="col-md-6 col-sm-12 col-xs-12">
-                          <label>Date:</label> <input type="text" id="datepicker" name="date" class="form-control">
+                          <label>Date:<small>*</small></label><input type="text" id="datepicker" name="date" class="form-control">
 
 
 
@@ -96,6 +97,7 @@
                             <div class="form-group" >
                               <label>Time <small>*</small></label>
                               <select class="form-control" name="time">
+                                <option value="">Time</option>
                                 <option value="13:00">1 p.m</option>
                                 <option value="14:00">2 p.m</option>
                                 <option value="15:00">3 p.m</option>
@@ -128,30 +130,6 @@
  
 
 
-<!-- 
-<script>
-    $(document).ready(function(){
-
-     
-      
-$('#slotform').validate({  
-  /// rules of error 
-  rules: {
-    "datepicker": {
-    required: true
-    }
-  },
-   ////for show error message
-  messages: {
-    "datepicker":{
-    required: 'Please enter date'
-  }
-  }
-  });
-
-    });  
-  </script> -->
-
 
 
 
@@ -177,7 +155,7 @@ $('#slotform').validate({
 <!-- js -->
   <script type="text/javascript" src="{{url('frontend/js/jquery-2.1.4.min.js')}}"></script>
   <!-- //js -->
-
+<script src="{{asset('backend/assets/js/jquery.validate.min.js')}}"></script>
   <!-- Slider script -->
   <script src="{{url('frontend/js/responsiveslides.min.js')}}"></script>
 
@@ -203,6 +181,22 @@ $('#slotform').validate({
   } );
 
   </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   <script type="text/javascript" src="{{url('frontend/js/bootstrap-3.1.1.min.js')}}"></script>
 
@@ -343,6 +337,53 @@ $(document).ready(function() {
      });
   </script>
     <script src="{{url('frontend/js/accotab.js')}}"></script>
+
+
+
+
+<script>
+    $(document).ready(function(){  
+$('#slotform').validate({  
+  /// rules of error 
+  rules: {
+    "date": {
+    required: true
+    },
+
+"id": {
+    required: true
+    },
+"time":
+    {
+    required: true
+    }
+
+  },
+
+  messages: {
+    "date":{
+    required: 'Please enter date'
+  },
+"id":{
+    required: 'Please select trainer name'
+  },
+"time":{
+    required: 'Please select time'
+  }
+
+
+
+  }
+  });
+
+    });  
+  </script>
+
+
+
+
+
+
   <!--Fontawesome script-->
   <!--<script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js" integrity="sha384-3LK/3kTpDE/Pkp8gTNp2gR/2gOiwQ6QaO7Td0zV76UFJVhqLl4Vl3KL1We6q6wR9" crossorigin="anonymous"></script>-->
 </body>

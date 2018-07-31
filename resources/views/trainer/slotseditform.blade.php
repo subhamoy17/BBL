@@ -53,7 +53,7 @@
             <div class="col-sm-4">
                 <div class="page-header float-left">
                     <div class="page-title">
-                        <h1>Edit Slot's Record</h1>
+                        <h1>Edit Package</h1>
                     </div>
                 </div>
             </div>    
@@ -64,7 +64,7 @@
                         </div>
                 @endif
 
-        <div class="col-lg-6">
+        <div class="col-lg-12">
         <div class="card">
                       <div class="card-body card-block">
                         <form action="{{route('editslots')}}" method="post" enctype="multipart/form-data" class="form-horizontal" id="editslotsform">
@@ -74,9 +74,9 @@
 
 
               <div class="row form-group">
-                            <div class="col col-md-3"><label for="text-input" class=" form-control-label"> Name of Slot<span class="required_field_color">*</span></label></div>
+                            <div class="col col-md-3"><label for="text-input" class=" form-control-label"> Package Name<span class="required_field_color">*</span></label></div>
                             <div class="col-12 col-md-9">
-                              <input type="text" id="slots_name" name="slots_name" placeholder="Name of Slot" class="form-control{{ $errors->has('slots_name') ? ' is-invalid' : '' }}" value="{{$data->slots_name}}">
+                              <input type="text" id="slots_name" name="slots_name" placeholder="Package Name" class="form-control{{ $errors->has('slots_name') ? ' is-invalid' : '' }}" value="{{$data->slots_name}}">
                               @if ($errors->has('slots_name'))
                                 <span class="invalid-feedback">
                                   <strong>{{ $errors->first('slots_name') }}</strong>
@@ -90,9 +90,9 @@
 
 
                           <div class="row form-group">
-                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Number of Slot<span class="required_field_color">*</span></label></div>
+                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">No. of Slots<span class="required_field_color">*</span></label></div>
                             <div class="col-12 col-md-9">
-                              <input type="text" id="slots_number" name="slots_number" placeholder="Number of Slot" class="form-control{{ $errors->has('slots_number') ? ' is-invalid' : '' }}" value="{{$data->slots_number}}">
+                              <input type="text" id="slots_number" name="slots_number" placeholder="No. of Slots" class="form-control{{ $errors->has('slots_number') ? ' is-invalid' : '' }}" value="{{$data->slots_number}}">
                               @if ($errors->has('slots_number'))
                                 <span class="invalid-feedback">
                                   <strong>{{ $errors->first('slots_number') }}</strong>
@@ -103,9 +103,9 @@
 
 
                           <div class="row form-group">
-                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Slot's Price (Rs.)<span class="required_field_color">*</span></label></div>
+                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Price<span class="required_field_color">*</span></label></div>
                             <div class="col-12 col-md-9">
-                              <input type="text" id="slots_price" name="slots_price" placeholder="Slot's Price (Rs.)" class="form-control{{ $errors->has('slots_price') ? ' is-invalid' : '' }}"  value="{{$data->slots_price}}">
+                              <input type="text" id="slots_price" name="slots_price" placeholder="Price" class="form-control{{ $errors->has('slots_price') ? ' is-invalid' : '' }}"  value="{{$data->slots_price}}">
                               @if ($errors->has('slots_price'))
                                 <span class="invalid-feedback">
                                   <strong>{{ $errors->first('slots_price') }}</strong>
@@ -115,9 +115,9 @@
                             
                           </div>
                           <div class="row form-group">
-                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Slot's Validity (In Days)<span class="required_field_color">*</span></label></div>
+                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Validity (In Days)<span class="required_field_color">*</span></label></div>
                             <div class="col-12 col-md-9">
-                              <input type="text" id="slots_validity" name="slots_validity" placeholder="Slot's Validity (In Days)" class="form-control{{ $errors->has('slots_validity') ? ' is-invalid' : '' }}"  value="{{$data->slots_validity}}">
+                              <input type="text" id="slots_validity" name="slots_validity" placeholder="Validity" class="form-control{{ $errors->has('slots_validity') ? ' is-invalid' : '' }}"  value="{{$data->slots_validity}}">
                               @if ($errors->has('slots_validity'))
                                 <span class="invalid-feedback">
                                   <strong>{{ $errors->first('slots_validity') }}</strong>
@@ -126,11 +126,13 @@
                             </div>
                             
                           </div>
-                          <div>
-                                <button type="submit" class="btn btn-primary btn-sm">
-                                  <i class="fa fa-dot-circle-o"></i> EDIT
-                                </button>
-                           </div>
+                          <div class="row form-group">
+                            <div class="col col-md-10">
+                              </div>
+                              <div class="col col-md-2">
+                                <button type="submit"  name="submit" class="btn btn-primary" style="width: 65%;">Update</button>
+                              </div>
+                          </div>
                         </form>
                       </div>
                     </div>

@@ -22,35 +22,42 @@ $('#traineraddform').validate({
   rules: {
     "name": {
       alpha:true,
-      minlength:6,
+      minlength:4,
       required: true
     },
    "designation": {
       required: true
     },
-   
    "description": {
       required: true
+    },
+    "image": {
+      required: true
     }
-
 
 
   },
 
   messages: {
-    "name":{
-    required: 'Please enter your name',
-    minlength:'Minimum length 6 is required'
+  "name":{
+    required: 'Please enter name',
+    minlength:'Minimum length 4 is required'
   },
- 
   "description":{
-    required: 'Please enter your description' 
+    required: 'Please enter testimonial' 
   },
-  
-"designation":{
-    required: 'Please enter your designation' 
-  }
+  "designation":{
+    required: 'Please enter designation' 
+  },
+  "image": {
+      required: function() {
+                        //returns true if video & previous image is empty   
 
+                        $("#profile_thumbnail").hide();
+                        return "Please upload an image";
+                        
+                    }
+  }
 
 }
   });
@@ -58,7 +65,6 @@ $('#traineraddform').validate({
   //show uploading image and check validation of image
 
   $("#image").change(function(){ 
-
     /// check the extension of image
 
     var ext = $('#image').val().split('.').pop().toLowerCase();
@@ -71,9 +77,9 @@ $('#traineraddform').validate({
     /// check the size of image
 
     var fileSize = (this.files[0].size / 1024); //size in KB
-    if (fileSize >50) /// not more than 30 kb
+    if (fileSize > 200) /// not more than 30 kb
     {
-        alertify.alert("Please Upload maximum 50KB file size of image");// if Maxsize from Model > real file size
+        alertify.alert("Please Upload maximum 200KB file size of image");// if Maxsize from Model > real file size
         $("#image").val('');
         return false;
     }
@@ -103,7 +109,7 @@ $('#traineraddform').validate({
                 </div>
             </div>    
 </div>
-        <div class="col-lg-6">
+        <div class="col-lg-12">
         <div class="card">
         	   @if (session('success'))
                                     <div class="alert alert-success">
@@ -131,25 +137,31 @@ $('#traineraddform').validate({
 
                           <div class="row form-group">
                             <div class="col col-md-3">
-                              <label for="text-input" class=" form-control-label">Description<span class="required_field_color">*</span></div>
+                              <label for="text-input" class=" form-control-label">Testimonial<span class="required_field_color">*</span></div>
                             <div class="col-12 col-md-9">
-                              <textarea id="description" name="description" placeholder=" Description" class="form-control"></textarea>
+                              <textarea id="description" name="description" placeholder=" Testimonial" class="form-control"></textarea>
                             </div>
                           </div>
                           
 
-                          <div class="row form-group">
-                            <div class="col col-md-3"><label for="file-input" class=" form-control-label">Profile Image</label></div>
-                            <div class="col-12 col-md-9">
-                              <input type="file" id="image" name="image" class="form-control" >
-                              <img id="profile_thumbnail" height="150"  width="200">
-                            </div>
-                          </div>
-                            <div>
-                                <button type="submit"  name="submit" class="btn btn-primary btn-sm">
-                                  <i class="fa fa-dot-circle-o"></i> Submit
-                                </button>
-                            </div>
+                           <div class="row form-group">
+                              <div class="col col-md-3">
+                                 <label for="file-input" class=" form-control-label">Image<span class="required_field_color">*</span></label>
+                              </div>
+                              <div class="col-3 col-md-4">
+                                 <input type="file" id="image" name="image" class="form-control" >
+                              </div>
+                              <div class="col-9 col-md-4">
+                                 <img id="profile_thumbnail" height="150"  width="200" style="display: none;">
+                              </div>
+                           </div>
+                           <div class="row form-group">
+                             <div class="col col-md-10">
+                             </div>
+                             <div class="col col-md-2">
+                               <button type="submit"  name="submit" class="btn btn-primary" style="width: 65%;">Add</button>
+                             </div>
+                           </div>
                         </form>
                       </div>
                     </div>

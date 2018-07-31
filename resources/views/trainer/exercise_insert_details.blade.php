@@ -17,60 +17,64 @@
 }, 'Either image or video is required');
 
 
-$.validator.addMethod('numericOnly', function (value) {
+    $.validator.addMethod('numericOnly', function (value) {
       return /^[0-9]+$/.test(value);
     }, 'Please enter only numeric values');
     $('#traineraddform').validate({  
-/// rules of error 
-rules: {
-
-  "title": {
-    required: true
-  },
-  "description": {
-    required: true
-  },
-  "duration": {
-    numericOnly: true
-  },
-   "image":      {required: 
+      /// rules of error 
+      rules: {
+        "title": {
+          required: true
+        },
+        "description": {
+          required: true
+        },
+        "duration": {
+          required: true
+        },
+        "image": {
+                    required: 
                     function() {
-                        //returns true if video is empty   
-                        return !$("#video").val();
-                    },
-                  multipeFieldValidator:true
+                        //returns true if video & previous image is empty   
 
-    },
-   "video":      {required: 
-                    function() {
-                        //returns true if video is empty   
-                        return !$("#image").val();
+                        if(!$("#video").val() && !$("#image").val()){
+                          return true;
+                        }else{
+                          return false;
+                        }
                     },
                     multipeFieldValidator:true
-    }
-  
-
-},
-
-////for show error message
-messages: {
-  "title":{
-    required: 'Please enter your title'
-  },
-  "description":{
-    required: 'Please enter your description' 
-  },
-
- 
-  "duration": {
-    required: 'Please enter your duration'
-  },
-  "image": "Image is required if no video is given.",
-  "video": "Video is required if no image is given."
-  
-}
-});
-});
+                  },
+         "video": {
+                    required: 
+                    function() {
+                        //returns true if video is empty   
+                        // alert(!$("#recently_uploaded_image").val());
+                        if(!$("#video").val() && $("#recently_uploaded_image").val() == "false"){
+                          return true;
+                        }else{
+                          return false;
+                        }
+                    },
+                    multipeFieldValidator:true
+                  }
+      },
+      ////for show error message
+      messages: {
+        "title":{
+          required: 'Please enter title'
+        },
+        "description":{
+          required: 'Please enter description' 
+        },
+        "duration":{
+          required: 'Please enter duration'
+        },
+        "image": "Image is required if no video is given",
+        "video": "Video is required if no image is given" 
+      }
+    });
+    });
 </script>
 
 
@@ -94,9 +98,9 @@ messages: {
     /// check the size of image
 
     var fileSize = (this.files[0].size / 1024); //size in KB
-    if (fileSize > 100) /// not more than 30 kb
+    if (fileSize > 250) /// not more than 30 kb
     {
-       alertify.alert("Please Upload maximum 100KB file size of image");// if Maxsize from Model > real file size
+       alertify.alert("Please Upload maximum 250KB file size of image");// if Maxsize from Model > real file size
         $("#image").val('');
         return false;
     }
@@ -106,6 +110,8 @@ messages: {
       var reader = new FileReader();
       reader.onload = function (e) {
         $('#profile_thumbnail').attr('src', e.target.result);
+        $('#recently_uploaded_image').val(true);
+        $('#video').val('');
         }
         $("#profile_thumbnail").show();
         reader.readAsDataURL(this.files[0]);
@@ -186,15 +192,16 @@ messages: {
               </div>
               <div class="col-12 col-md-5">
                 <img id="profile_thumbnail" width="100"/>
+                <input type="hidden" id="recently_uploaded_image" name="recently_uploaded_image" value="false">
               </div>
             </div>
             <div class="row form-group">
-            <div class="col col-md-10">
+              <div class="col col-md-10">
+              </div>
+              <div class="col col-md-2">
+                <button type="submit"  name="submit" class="btn btn-primary" style="width: 65%;">Add</button>
+              </div>
             </div>
-            <div class="col col-md-2">
-              <button type="submit"  name="submit" class="btn btn-primary" style="width: 65%;">Add</button>
-            </div>
-          </div>
           </form>
         </div>
       </div>

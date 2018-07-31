@@ -1,5 +1,5 @@
 @include('frontend.fhead')
-
-@yield('content2')
-
+@include('frontend.fheader')
+@include('frontend.myprofile_header')
+@yield('content')
 @include('frontend.ffooter2')
