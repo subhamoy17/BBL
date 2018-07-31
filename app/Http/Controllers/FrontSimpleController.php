@@ -39,7 +39,9 @@ public function index(Request $request)
 
   public function about()
     {	   	
-    return view('frontabout');
+      
+      $data=DB::table('our_client')->where('deleted_at',null)->get();
+    return view('frontabout')->with(compact('data'));
     }
 
 
@@ -93,6 +95,9 @@ return view('testimonial')->with(compact('data'));
 
  public function front_contact()
    {  
+
+
+
     return view('frontcontact');
    }
 
@@ -110,7 +115,9 @@ $data['user_phone']=$request->form_phone;
 $data['message']=$request->form_message;
 $data['created_at']=Carbon::now();
 DB::table('contact_us')->insert($data);
-return redirect('/')->with("success","Your Enquiry is insert successfully !");
+ return redirect()->back()->with("success","Your Enquiry is submitted successfully!");
+
+
 
    }
 

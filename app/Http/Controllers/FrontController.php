@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use App\Mail\Enquiry;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Controllers\DateTime;
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 use Auth;
@@ -24,10 +25,10 @@ class FrontController extends Controller
 
 
 public function bbl()
- 
-   	
+  	
  {
     
+
     $data=DB::table('slot_request')
     ->join('customers','customers.id','slot_request.customer_id')
     ->join('slot_approval','slot_approval.id','slot_request.approval_id')
@@ -35,7 +36,7 @@ public function bbl()
      ->join('purchases_history','purchases_history.id','slot_request.purchases_id')
     ->join('slots','slots.id','purchases_history.slot_id')
 
-    ->select('customers.name','slots.slots_name','slots.slots_price','slots.slots_validity','users.name as users_name','purchases_history.purchases_start_date','purchases_history.purchases_end_date','slot_request.purchases_id as slot_purchases_id','slot_approval.status')->where('slot_request.customer_id',Auth::user()->id)->get()->all();
+    ->select('customers.name','slots.slots_name','slots.slots_price','slots.slots_validity','users.name as users_name','purchases_history.purchases_start_date','purchases_history.purchases_end_date','slot_request.purchases_id as slot_purchases_id','slot_approval.status','slot_request.slot_date','slot_request.slot_time','slot_approval.status', 'slot_request.created_at')->where('slot_request.customer_id',Auth::user()->id)->get()->all();
 
         foreach($data as $dt)
 {
@@ -45,43 +46,21 @@ $totalDuration = $end->diffInDays($now);
 $dt->timeremaining=$totalDuration;
 }
 
-     return view('customerpanel.bbl')->with(compact('data'));
+return view('customerpanel.bbl')->with(compact('data','dt'));
 
   }
      
 
 
 
-// public function show_purchase_history()
-//   {
-    
-//     $dat=DB::table('slot_request')
-//     ->join('customers','customers.id','slot_request.customer_id')
-//     ->join('slot_approval','slot_approval.id','slot_request.approval_id')
-//      ->join('users','users.id','slot_request.trainer_id')
-//      ->join('purchases_history','purchases_history.id','slot_request.purchases_id')
-//     ->join('slots','slots.id','purchases_history.slot_id')
-
-//     ->select('customers.name','slots.slots_name','slots.slots_price','slots.slots_validity','users.name as users_name','purchases_history.purchases_start_date','purchases_history.purchases_end_date','slot_request.purchases_id as slot_purchases_id','slot_approval.status')->where('slot_request.customer_id',Auth::user()->id)->get()->all();
-
-//         foreach($dat as $dt)
-// {
-//           $start=Carbon::createFromFormat('Y-m-d', $dt->purchases_start_date);
-//           $end=Carbon::createFromFormat('Y-m-d', $dt->purchases_end_date);
-//         $totalDuration = $end->diffInDays($start);
-//         $dt->timeremaining=$totalDuration;
-// }
-
-//      return view('customerpanel.bbl')->with(compact('dat'));
-
-//   }
-
 
 
 
   public function about()
-    {	   	
-    return view('customerpanel/frontabout');
+    {	   
+    
+$data=DB::table('our_client')->where('deleted_at',null)->get();
+    return view('customerpanel/frontabout')->with(compact('data'));
     }
 
 
@@ -133,8 +112,6 @@ public function purchase_form($id)
 
 function purchaseinsert(Request $request)
 {
-
-
 
  $validator=Validator::make($request->all(), [
               
@@ -213,14 +190,10 @@ public function updateprofile(Request $request)
 
 public function purchases_history(Request $request)
 {
-    
-    $data=DB::table('slot_request')
-    ->join('customers','customers.id','slot_request.customer_id')
-    ->join('slot_approval','slot_approval.id','slot_request.approval_id')
-     ->join('users','users.id','slot_request.trainer_id')
-     ->join('purchases_history','purchases_history.id','slot_request.purchases_id')
+
+    $data=DB::table('purchases_history')
     ->join('slots','slots.id','purchases_history.slot_id')
-    ->select('customers.name','slots.slots_name','slots.slots_price','slots.slots_validity','users.name as users_name','purchases_history.purchases_start_date','purchases_history.purchases_end_date','slot_request.purchases_id as slot_purchases_id')->where('slot_request.customer_id',Auth::user()->id)->get()->all();
+    ->select('slots.slots_name','slots.slots_price','slots.slots_validity','purchases_history.purchases_start_date','purchases_history.payment_options','slots.slots_validity','purchases_history.purchases_end_date','purchases_history.id')->where('purchases_history.customer_id',Auth::user()->id)->get()->all();
 Log::debug(" Check id ".print_r($data,true));
 
 foreach($data as $dt)
@@ -285,17 +258,18 @@ $data=DB::table('slot_request')
      ->join('purchases_history','purchases_history.id','slot_request.purchases_id')
     ->join('slots','slots.id','purchases_history.slot_id')
 
-    ->select('customers.name','slots.slots_name','slots.slots_price','slots.slots_validity','users.name as users_name','purchases_history.purchases_start_date','purchases_history.purchases_end_date','slot_request.purchases_id as slot_purchases_id','slot_approval.status')->where('slot_request.customer_id',Auth::user()->id)->get()->all();
+    ->select('customers.name','slots.slots_name','slots.slots_price','slots.slots_validity','users.name as users_name','purchases_history.purchases_start_date','purchases_history.purchases_end_date','slot_request.purchases_id as slot_purchases_id','slot_approval.status','slot_request.slot_date','slot_request.slot_time','slot_approval.status', 'slot_request.created_at')->where('slot_request.customer_id',Auth::user()->id)->get()->all();
 
 foreach($data as $dt)
 {
-  $start=Carbon::createFromFormat('Y-m-d', $dt->purchases_start_date);
+           $now = Carbon::now();
   $end=Carbon::createFromFormat('Y-m-d', $dt->purchases_end_date);
-$totalDuration = $end->diffInDays($start);
+$totalDuration = $end->diffInDays($now);
 $dt->timeremaining=$totalDuration;
 }
 
-return view('customerpanel.booking_history')->with(compact('data'));
+
+return view('customerpanel.booking_history')->with(compact('data','dt'));
 
 }
 
@@ -333,17 +307,22 @@ return view('customerpanel.my_mot')->with(compact('data'));
    }
 
 
+ public function front_contact_insert(Request $request)
+   {  
 
-//  public function customer_contact()
-//    {  
+Log::debug(" data ".print_r($request->all(),true)); 
+$data['user_name']=$request->form_name;
+$data['user_email']=$request->form_email;
+$data['user_subject']=$request->form_subject;
+$data['user_phone']=$request->form_phone;
+$data['message']=$request->form_message;
+$data['created_at']=Carbon::now();
+DB::table('contact_us')->insert($data);
+ return redirect()->back()->with("success","Your Enquiry is submitted successfully!");
 
-// $data['user_name']=$request->name;
-// $data['user_email']=$request->email;
-// $data['user_subject']=$request->subject;
-// $data['user_phone']=$request->phone;
-// $data['message']=$request->message;
 
 
+   }
 
 
 // DB::table('contact_us')->insert($data);
@@ -357,6 +336,12 @@ return view('customerpanel.my_mot')->with(compact('data'));
 
 
     
+  // public function about()
+  //   {     
+      
+  //     $data=DB::table('our_client')->where('deleted_at',null)->get();
+  //   return view('frontabout')->with(compact('data'));
+  //   }
 
 
 
@@ -365,6 +350,15 @@ return view('customerpanel.my_mot')->with(compact('data'));
 
 
 
+
+
+public function gym_gallery()
+   {  
+
+$data=DB::table('exercise_details')->where('deleted_at',null)->get();
+    
+    return view('customerpanel.front_gym')->with(compact('data'));
+   }
 
 
 
