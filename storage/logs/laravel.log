@@ -1,0 +1,261 @@
+[2018-08-03 08:22:53] local.DEBUG: Customer Register Array
+(
+    [_token] => MRDBCZ3VAJdPpLm8zRk3DEL01LFPbLUfzbS7u49E
+    [provider_id] => 
+    [provider_name] => 
+    [name] => dfgdfgfd
+    [email] => totansau@gmail.com
+    [ph_no] => 1324567895
+    [password] => qwerty
+    [password_confirmation] => qwerty
+    [submit] => 
+)
+  
+[2018-08-03 08:22:54] local.DEBUG: Message-ID: <f0928b22fbd84708b6a804ce8b659dc8@127.0.0.1>
+Date: Fri, 03 Aug 2018 08:22:54 +0000
+From: Totan <totansau7@gmail.com>
+To: totansau@gmail.com
+MIME-Version: 1.0
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>BBL</title>
+  <!--Font awesome cdn-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="shortcut icon" href="http://localhost:8000/images/icon-fav.png" type="image/x-icon">
+</head>
+<body style="margin: 0; padding: 0;">
+  <table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="border: 1px solid #cccccc;">
+    <tr>
+      <td align="center" bgcolor="#5C342C" style="padding: 20px 0 20px 0;">
+        <h1>BBL</h1>
+      </td>
+    </tr>
+    <tr> 
+        <tr>
+            <td style="padding: 20px 0 30px 0; text-align: center;">
+    <p align="left"> </p>
+    <p align="left"> We have to add as a customer in our organisation.
+         Please see your details of login<br>
+          
+
+<style>
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 5px;
+}
+th {
+    text-align: left;
+}
+</style>
+<table style="width:100%">
+  <tr>
+    <th>Url:</th>
+    <th> <a href="http://localhost:8000/register/verify/6jIEiyZvVSBmW30mxBagmTmLFHjhmk">Click Here </a>to verify and login your account or to verify your account you can using social login by same email id </th> 
+     </tr>
+
+     <tr>
+    <th>User Id:</th>
+    <th>totansau@gmail.com</th>
+  </tr>
+
+    <tr>
+    <th>Password:</th>
+    <th>qwerty</th>
+  </tr>
+
+</table>
+<p align="left">Regards,</p>
+  <p align="left">Team BBL</p> 
+</td>
+  </tr>
+    <td bgcolor="#5C342C" style="padding: 7px 30px 7px 30px;">
+      <table border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+          <td width="50%" style="padding: 0 0 0 0;">
+          
+          </td>
+          <td align="right">
+            <table border="0" cellpadding="0" cellspacing="0">
+              <tr>
+                <td>
+                  <a href="http://www.youtube.com/" style="margin-left:10px;">
+                    <img src="http://i.imgur.com/bn30JGj.png" alt="Youtube" width="38" height="38" style="display: inline-black; margin-left:5px;" border="0" />
+                  </a>
+                </td>
+                <td>
+                  <a href="http://www.google.com/" style="margin-left:10px;">
+                    <img src="http://i.imgur.com/FtMuVSL.png" alt="Google+" width="38" height="38" style="display: inline-black; margin-left:5px;" border="0" />
+                  </a>
+                </td>
+                <td>
+                  <a href="http://www.twitter.com/" style="margin-left:10px;">
+                    <img src="http://i.imgur.com/Da2dbTK.png" alt="Twitter" width="38" height="38" style="display: inline-black; margin-left:5px;" border="0" />
+                  </a>
+                </td>
+                <td>
+                  <a href="http://www.facebook.com/" style="margin-left:10px;">
+                    <img src="http://i.imgur.com/t0a2zDt.png" alt="Facebook" width="38" height="38" style="display: inline-black; margin-left:5px;" border="0" />
+                  </a>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </table>
+</body>
+</html>
+  
+[2018-08-03 08:25:12] local.DEBUG: socialite callingfacebook  
+[2018-08-03 08:25:45] local.DEBUG: socialite sign inLaravel\Socialite\Two\User Object
+(
+    [token] => EAADom4eOPKcBAGylSm6mULkGcIBOklcKEMEeLKybNwUliL3OlaUiucFzlNY7IZBZANbrp8V5xFtwDD9cJ9YVhSkBlo0pOkH9ru12XOQ1BMnHa1Jx0qhrcVoZAIvswjw1CHhYBIQXNiGi3ZBaeAkS9eIsPemftZB4ZA0S5CDMqZAuAZDZD
+    [refreshToken] => 
+    [expiresIn] => 5177203
+    [id] => 1273545536114467
+    [nickname] => 
+    [name] => Totan Sau
+    [email] => 
+    [avatar] => https://graph.facebook.com/v3.0/1273545536114467/picture?type=normal
+    [user] => Array
+        (
+            [name] => Totan Sau
+            [id] => 1273545536114467
+        )
+
+    [avatar_original] => https://graph.facebook.com/v3.0/1273545536114467/picture?width=1920
+    [profileUrl] => 
+)
+  
+[2018-08-03 08:25:45] local.DEBUG: new_customer_dataArray
+(
+    [email] => 
+    [name] => Totan Sau
+    [provider_id] => 1273545536114467
+    [provider_name] => facebook
+)
+  
+[2018-08-03 08:25:51] local.DEBUG: anything wrong  
+[2018-08-03 08:26:43] local.DEBUG: socialite callingfacebook  
+[2018-08-03 08:26:58] local.DEBUG: socialite sign inLaravel\Socialite\Two\User Object
+(
+    [token] => EAADom4eOPKcBAJ1CsdopBzWe2StjKTGoa5BfDVxY741BkNOmXNswxJyO5bL4JtaCVumKWQPINYt0r6alKr3QsVs40hwaLbyfvSHoR3HZC7bbFHsorpC1gPd95QkAJuoX168mnvuhBKVvWET5PIyQwWlJlHWMa0dZAO0ezBojoYbG6I23ml
+    [refreshToken] => 
+    [expiresIn] => 5098040
+    [id] => 126166418310100
+    [nickname] => 
+    [name] => Harekrishna Mondal
+    [email] => bodybylaken@gmail.com
+    [avatar] => https://graph.facebook.com/v3.0/126166418310100/picture?type=normal
+    [user] => Array
+        (
+            [name] => Harekrishna Mondal
+            [email] => bodybylaken@gmail.com
+            [id] => 126166418310100
+        )
+
+    [avatar_original] => https://graph.facebook.com/v3.0/126166418310100/picture?width=1920
+    [profileUrl] => 
+)
+  
+[2018-08-03 08:27:02] local.DEBUG: :: Show Profile :: 28  
+[2018-08-03 08:27:02] local.DEBUG: :: customers data :: stdClass Object
+(
+    [id] => 28
+    [name] => dfgdfgfd
+    [ph_no] => 1324567895
+    [email] => bodybylaken@gmail.com
+    [password] => $2y$10$tzYYeWXtaEkPMMXjfR5KL.zlzBn5HnALCJszM0IYRQ0B2yeG84XYG
+    [image] => 
+    [dob] => 
+    [address] => 
+    [remember_token] => DFlrGXUGMEiWzrNZt91LUsZRRuB9r1toolOOHCQewhNuobXhMgJjbYyTwgH0
+    [confirmation_code] => 
+    [confirmed] => 1
+    [created_at] => 2018-08-03 08:22:53
+    [updated_at] => 2018-08-03 08:24:24
+    [deleted_at] => 
+)
+  
+[2018-08-03 08:27:03] local.DEBUG: customer logout  
+[2018-08-03 08:28:54] local.DEBUG: socialite callinggoogle  
+[2018-08-03 08:29:12] local.DEBUG: socialite sign inLaravel\Socialite\Two\User Object
+(
+    [token] => ya29.GlwMBoHlHQnmuYhoN9w6zfkSSbh2gB5DC9YIu6LOQeRqZXB47dvIcAAX083IongR2b5EryE6AGox_O9yalXUjc-Zjs-0eXi1S4Dyk7VHy9HSYyTcW4Y4zwC_gsqveQ
+    [refreshToken] => 
+    [expiresIn] => 3599
+    [id] => 109272205115145717324
+    [nickname] => 
+    [name] => James Bond
+    [email] => bodybylaken@gmail.com
+    [avatar] => https://lh6.googleusercontent.com/-Ec7SaG6Q5fE/AAAAAAAAAAI/AAAAAAAAAAA/AAnnY7qcGZejpzVNpzJ_zaZrDUDKDgt-aw/mo/photo.jpg?sz=50
+    [user] => Array
+        (
+            [kind] => plus#person
+            [etag] => "hCnRu-GwRzXLXPdAHHyDrK_S150/YrRYDwY01GsB1JuSXfUtW9dfkAU"
+            [emails] => Array
+                (
+                    [0] => Array
+                        (
+                            [value] => bodybylaken@gmail.com
+                            [type] => account
+                        )
+
+                )
+
+            [objectType] => person
+            [id] => 109272205115145717324
+            [displayName] => James Bond
+            [name] => Array
+                (
+                    [familyName] => Bond
+                    [givenName] => James
+                )
+
+            [image] => Array
+                (
+                    [url] => https://lh6.googleusercontent.com/-Ec7SaG6Q5fE/AAAAAAAAAAI/AAAAAAAAAAA/AAnnY7qcGZejpzVNpzJ_zaZrDUDKDgt-aw/mo/photo.jpg?sz=50
+                    [isDefault] => 1
+                )
+
+            [isPlusUser] => 
+            [language] => en
+            [verified] => 
+        )
+
+    [avatar_original] => https://lh6.googleusercontent.com/-Ec7SaG6Q5fE/AAAAAAAAAAI/AAAAAAAAAAA/AAnnY7qcGZejpzVNpzJ_zaZrDUDKDgt-aw/mo/photo.jpg
+)
+  
+[2018-08-03 08:29:48] local.DEBUG: :: Show Profile :: 28  
+[2018-08-03 08:29:48] local.DEBUG: :: customers data :: stdClass Object
+(
+    [id] => 28
+    [name] => dfgdfgfd
+    [ph_no] => 1324567895
+    [email] => bodybylaken@gmail.com
+    [password] => $2y$10$tzYYeWXtaEkPMMXjfR5KL.zlzBn5HnALCJszM0IYRQ0B2yeG84XYG
+    [image] => 
+    [dob] => 
+    [address] => 
+    [remember_token] => I7xwhxxsjZP9rL4EjlAo9Dj4VFlqX4dW5GBreiyw4QwdB0vLmXaRLYcQ06Xp
+    [confirmation_code] => 
+    [confirmed] => 1
+    [created_at] => 2018-08-03 08:22:53
+    [updated_at] => 2018-08-03 08:24:24
+    [deleted_at] => 
+)
+  
+[2018-08-03 08:29:51] local.DEBUG: customer logout  
