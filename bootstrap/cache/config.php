@@ -186,7 +186,7 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => 'D:\\xampp\\htdocs\\bbl\\storage\\framework/cache/data',
+        'path' => 'D:\\xampp\\htdocs\\BBL_SVN\\storage\\framework/cache/data',
       ),
       'memcached' => 
       array (
@@ -291,12 +291,12 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => 'D:\\xampp\\htdocs\\bbl\\storage\\app',
+        'root' => 'D:\\xampp\\htdocs\\BBL_SVN\\storage\\app',
       ),
       'public' => 
       array (
         'driver' => 'local',
-        'root' => 'D:\\xampp\\htdocs\\bbl\\storage\\app/public',
+        'root' => 'D:\\xampp\\htdocs\\BBL_SVN\\storage\\app/public',
         'url' => 'http://localhost/storage',
         'visibility' => 'public',
       ),
@@ -341,13 +341,13 @@
       'single' => 
       array (
         'driver' => 'single',
-        'path' => 'D:\\xampp\\htdocs\\bbl\\storage\\logs/laravel.log',
+        'path' => 'D:\\xampp\\htdocs\\BBL_SVN\\storage\\logs/laravel.log',
         'level' => 'debug',
       ),
       'daily' => 
       array (
         'driver' => 'daily',
-        'path' => 'D:\\xampp\\htdocs\\bbl\\storage\\logs/laravel.log',
+        'path' => 'D:\\xampp\\htdocs\\BBL_SVN\\storage\\logs/laravel.log',
         'level' => 'debug',
         'days' => 7,
       ),
@@ -399,7 +399,7 @@
       'theme' => 'default',
       'paths' => 
       array (
-        0 => 'D:\\xampp\\htdocs\\bbl\\resources\\views/vendor/mail',
+        0 => 'D:\\xampp\\htdocs\\BBL_SVN\\resources\\views/vendor/mail',
       ),
     ),
   ),
@@ -480,7 +480,7 @@
     'lifetime' => '120',
     'expire_on_close' => false,
     'encrypt' => false,
-    'files' => 'D:\\xampp\\htdocs\\bbl\\storage\\framework/sessions',
+    'files' => 'D:\\xampp\\htdocs\\BBL_SVN\\storage\\framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'store' => NULL,
@@ -500,9 +500,9 @@
   array (
     'paths' => 
     array (
-      0 => 'D:\\xampp\\htdocs\\bbl\\resources\\views',
+      0 => 'D:\\xampp\\htdocs\\BBL_SVN\\resources\\views',
     ),
-    'compiled' => 'D:\\xampp\\htdocs\\bbl\\storage\\framework\\views',
+    'compiled' => 'D:\\xampp\\htdocs\\BBL_SVN\\storage\\framework\\views',
   ),
   'trustedproxy' => 
   array (
