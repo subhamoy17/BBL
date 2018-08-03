@@ -1,6 +1,7 @@
 @extends('frontcustomerlayout.main') 
 @section('content')
 
+
 <div class="banner_top">
 		<div class="slider">
 			<div class="wrapper">
