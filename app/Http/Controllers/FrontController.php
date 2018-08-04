@@ -239,7 +239,7 @@ return redirect()->back()->with("success","Your booking form is update successfu
 
 public function booking_history()
 {
-
+ $now = Carbon::now();
 $data=DB::table('slot_request')
     ->join('customers','customers.id','slot_request.customer_id')
     ->join('slot_approval','slot_approval.id','slot_request.approval_id')
@@ -247,7 +247,7 @@ $data=DB::table('slot_request')
      ->join('purchases_history','purchases_history.id','slot_request.purchases_id')
     ->join('slots','slots.id','purchases_history.slot_id')
 
-    ->select('customers.name','slots.slots_name','slots.slots_price','slots.slots_validity','users.name as users_name','purchases_history.purchases_start_date','purchases_history.purchases_end_date','slot_request.purchases_id as slot_purchases_id','slot_approval.status','slot_request.slot_date','slot_request.slot_time','slot_approval.status', 'slot_request.created_at')->where('slot_request.customer_id',Auth::user()->id)->get()->all();
+    ->select('customers.name','slots.slots_name','slots.slots_number','slots.slots_price','slots.slots_validity','users.name as users_name','purchases_history.purchases_start_date','purchases_history.purchases_end_date','slot_request.purchases_id as slot_purchases_id','slot_approval.status','slot_request.slot_date','slot_request.slot_time','slot_approval.status', 'slot_request.created_at')->where('slot_request.slot_date','>=',$now )->where('slot_request.customer_id',Auth::user()->id)->get()->all();
 
 foreach($data as $dt)
 {
@@ -255,10 +255,28 @@ foreach($data as $dt)
   $end=Carbon::createFromFormat('Y-m-d', $dt->purchases_end_date);
 $totalDuration = $end->diffInDays($now);
 $dt->timeremaining=$totalDuration;
+
+ $sum_slots = DB::table('purchases_history')
+    ->join('slots','slots.id','purchases_history.slot_id')
+    ->join('slot_request','slot_request.purchases_id','purchases_history.id')->select('slot_request.purchases_id','slots.slots_number')->distinct('slot_request.purchases_id')->where('slot_request.customer_id',Auth::user()->id)
+     ->sum('slots.slots_number');
+     // foreach ($session_history as $key => $data_number) {
+
+      $count=DB::table('slot_request')->where('slot_request.slot_date','<=',$now )->count();
+      $future_pending_count=DB::table('purchases_history')
+    ->join('slots','slots.id','purchases_history.slot_id')
+    ->join('slot_request','slot_request.purchases_id','purchases_history.id')->select('slot_request.purchases_id','slots.slots_number','slots.slot_date')->where('slot_request.customer_id',Auth::user()->id)->where('slot_request.slot_date','>=',$now )->where('slot_request.approval_id',1 )->count();
+     // }
+
+      $accepted_count= DB::table('purchases_history')
+    ->join('slots','slots.id','purchases_history.slot_id')
+    ->join('slot_request','slot_request.purchases_id','purchases_history.id')->select('slot_request.purchases_id','slots.slots_number','slots.slot_date')->where('slot_request.customer_id',Auth::user()->id)->where('slot_request.slot_date','>=',$now )->where('slot_request.approval_id',3 )->count();
+       
 }
 
+Log::debug(" Check id ".print_r($sum_slots,true));
 
-return view('customerpanel.booking_history')->with(compact('data','dt'));
+return view('customerpanel.booking_history')->with(compact('data','dt','sum_slots','count','accepted_count','future_pending_count'));
 
 }
 
