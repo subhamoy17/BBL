@@ -66,6 +66,30 @@
   </script>
 
 
+<script>
+$(document).ready(function() {
+
+$('#frm1').validate({  
+  /// rules of error 
+  rules: {
+    "selector1": {
+      required: true
+    }
+
+  },
+
+  messages: {
+    "selector1":{
+    required: 'Please enter your payment mode'
+   
+  }
+
+}
+  });
+ 
+
+});
+</script>
 
 
 
