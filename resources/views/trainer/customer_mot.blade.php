@@ -93,7 +93,7 @@ $('#bootstrap-slot-data-table').DataTable({
                                 <tr>
                                     <th id="slno">Sl. No.</th>
                                     <th>Name</th>
-                                    <th>Weight</th>
+                              <!--       <th>Starting Weight</th> -->
                                     <th>Height</th>
                                     <!-- <th>Right arm</th>
                                     <th>Left arm</th> -->
@@ -104,7 +104,7 @@ $('#bootstrap-slot-data-table').DataTable({
                                     <th>Left_thigh</th>
                                     <th>Right_calf</th>
                                     <th>Left_calf</th> -->
-                                    <th>Date</th>
+                                    <th>Measured On</th>
                                     <th style="width: 70px;">Action</th>
                                                   
                                          
@@ -116,7 +116,7 @@ $('#bootstrap-slot-data-table').DataTable({
                                 <tr>
                                     <td>{{++$key}}</td>
                                     <td>@if(!empty($mydata->name)) {{$mydata->name}} @else N/A @endif</td>
-                                    <td>{{$mydata->weight}}</td>
+                                <!--     <td>{{$mydata->starting_weight}}</td> -->
                                     <td>{{$mydata->height}}</td>
                                     <!-- <td>{{$mydata->right_arm}}</td>
                                     <td>{{$mydata->left_arm}}</td> -->
