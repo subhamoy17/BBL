@@ -68,11 +68,7 @@
         </div>
       </div>
       <div id="myHeader" class="heder-bottom">
-              @if (session('success'))
-                                    <div class="alert alert-success">
-                                        {{ session('success') }}
-                                    </div>
-                                @endif
+            
         <div class="container">
           <div class="row">
             <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
@@ -126,8 +122,13 @@
 
 
 
-
+ @if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+  @endif
   <div class="inner-padding">
+
     <div class="container">
       <div class="hstry-box">
       <ul class="tabs">
@@ -136,11 +137,7 @@
       </ul>
       <div class="tab_container">
           <!-- #tab1 -->
-           @if (session('success'))
-                        <div class="alert alert-success">
-                            {{ session('success') }}
-                        </div>
-                    @endif
+          
           <h3 class="d_active tab_drawer_heading" rel="tab5">Tab 5</h3>
           <div id="tab5" class="tab_content">
             <div class="form-box">
@@ -157,7 +154,7 @@
 
                   <div class="col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group">
-                              <label>Trainer Name<small>*</small></label>
+                              <label>Trainer Name <small>*</small></label>
                               <select class="form-control" name="id">
                                 <option value=""> Please select a name</option>
                                  @foreach($data as $mydata)
@@ -168,7 +165,7 @@
                         </div>
 
                           <div class="col-md-6 col-sm-12 col-xs-12">
-                          <label>Date:<small>*</small></label><input type="text" id="datepicker" name="date" class="form-control">
+                          <label>Date <small>*</small></label><input type="text" id="datepicker" name="date" class="form-control">
 
 
 
@@ -201,30 +198,14 @@
                 </div>
               </div>
           </div>
-
-        
       </div>
       </div>
       <!-- .tab_container -->
     </div>
   </div>
- 
-
-
 <div class="footer">
     <div class="f-bg-gyl">
-        <div class="col-md-3 gylayouts_footer_grid">
-          <h2>Subscribe <span>Newsletter</span></h2>
-          <p>By subscribing to our mailing list you will always get latest news from us.</p>
-          <form action="#" method="post">
-            <input type="email" name="Email" placeholder="Enter your email..." required="">
-            <button class="btn1"><i class="fa fa-envelope" aria-hidden="true"></i></button>
-            <div class="clearfix"> </div>
-          </form>
-          
-        
-        </div>
-        <div class="col-md-4 gylayouts_footer_grid">
+        <div class="col-md-5 gylayouts_footer_grid">
           <h3>Recent <span>Works</span></h3>
            <ul class="con_inner_text midimg">
             <li><a href="#"><img src="{{asset('frontend/images/banner22.jpg')}}" alt="" class="img-responsive" /></a></li>
@@ -239,14 +220,23 @@
           
         </div>
         <div class="col-md-2 gylayouts_footer_grid">
-          <h3>Our <span>Links</span> </h3>
+          <h3>Popular <span>Links</span> </h3>
             <ul class="links">
-              <li><a href="{{url('/')}}">Home</a></li>
-              <li><a href="{{route('about')}}">About</a></li>
-              <li><a href="#">Gallery</a></li>
-              <li><a href="#">Mail Us</a></li>
+              <li><a href="{{url('customer/bbl')}}">Home</a></li>
+              <li><a href="{{url('customer/services')}}">Services</a></li>
+              <li><a href="{{url('customer/pricing')}}">Pricing</a></li>
             </ul>
         </div>
+
+<div class="col-md-2 gylayouts_footer_grid">
+          <h3>Our <span>Links</span> </h3>
+            <ul class="links">
+              <li><a href="{{url('customer/about-us')}}">About</a></li>
+              <li><a href="{{url('customer/contact-us')}}">Contact Us</a></li>
+              <li><a href="{{url('customer/testimonial')}}">Testimonial</a></li>
+            </ul>
+        </div>
+
         <div class="col-md-3 gylayouts_footer_grid">
           <h2>Contact <span>Us</span></h2>
               <ul class="con_inner_text">
@@ -262,16 +252,14 @@
             <li><a href="#" class="gy_google"><i class="fa fa-google-plus"></i></a></li>
           </ul>
         </div>
-
-
-        <div class="clearfix"> </div>
-          
+        <div class="clearfix"> </div> 
       </div>
       <p class="copyright">© 2018 Body By Lekan. All Rights Reserved |Powered by <a href="http://softcliquesoftware.in/" target="_blank">Softclique Software Services LLP</a></p>
       <!--scroll to top button-->
         <a id="back2Top" title="Back to top" href="#"><i class="fa fa-hand-o-up"></i></a>
 
   </div>
+  <!-- //footer -->
   <!-- //footer -->
 
 
