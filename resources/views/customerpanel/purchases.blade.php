@@ -54,11 +54,7 @@
                               </ul>
                               <label for="selector1" class="error" style="display:none;"></label>
                               <div class="clear"></div>
-                              @if($errors->has('selector1'))
-                    <span class="required_field_color">
-                      <strong>{{ $errors->first('selector1') }}</strong>
-                       </span>
-                        @endif
+                          
                 </div>
                 </div>
                 <div class="col-md-12 col-sm-12 col-xs-12">
