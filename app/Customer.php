@@ -22,10 +22,6 @@ class Customer extends Authenticatable
 
     }
 
-
-    
-
-
     /**
      * The attributes that are mass assignable.
      *

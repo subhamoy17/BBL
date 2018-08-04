@@ -63,7 +63,7 @@ Route::POST('inserttrainer','TrainerController@inserttrainer')->name('inserttrai
 Route::get('trainerdelete/{id}', 'TrainerController@trainerdelete');
 
 Route::get('edittrainer/{id}', 'TrainerController@showtrainerseditform');
- Route::POST('updatetrain', 'TrainerController@traineredit')->name('updatetrain');
+Route::POST('updatetrain', 'TrainerController@traineredit')->name('updatetrain');
 
 
 
@@ -156,7 +156,6 @@ Route::get('client_delete/{id}', 'TrainerController@client_delete');
 
 
 
-
 /*Route::get('add-slot', 'TrainerController@showslot')->name('addslot');
 Route::get('add-slot-record', 'TrainerController@addslot')->name('addslotrecord');
 Route::POST('store-slot-record', 'TrainerController@insertslot')->name('storeslots');*/
@@ -170,6 +169,7 @@ Route::get('auth/{provider}/callback', 'Customer\SocialLoginController@handlePro
 
 /// route for goto admin panel after login
 
+
 /// route for customer login                            
 Route::GET('customer-login','Customer\LoginController@showLoginForm')->name('customerpanel.frontlogin_registration');
 Route::POST('customer-login','Customer\LoginController@login');
@@ -178,11 +178,7 @@ Route::POST('customer-login','Customer\LoginController@login');
 Route::POST('customer/logout', 'Customer\LoginController@logout')->name('customerpanel.logout');
 
 
-
-
-
-
-/// route for admin reset password 
+/// route for customer reset password 
 Route::GET('customer-password/reset','Customer\ForgotPasswordController@showLinkRequestForm')->name('customerpanel.password.request');
 Route::POST('customer-password/email','Customer\ForgotPasswordController@sendResetLinkEmail')->name('customer.password.email');
 
