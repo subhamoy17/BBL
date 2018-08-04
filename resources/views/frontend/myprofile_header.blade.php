@@ -14,7 +14,7 @@
 
 
 
-    <li class="{{ Request::segment(2) === 'changepassword' ? 'active' : null }}" rel="tab4"><a href="{{ route('customer.changepassword') }}"><i class="fa fa-check"></i>Change Password</a></li>
+    <li class="{{ Request::segment(3) === 'customer-changepassword' ? 'active' : null }}" rel="tab4"><a href="{{ route('customer.changepassword') }}"><i class="fa fa-check"></i>Change Password</a></li>
 
 
 
