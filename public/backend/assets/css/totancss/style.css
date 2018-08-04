@@ -16,6 +16,75 @@ All error msg
 }
 
 
+#heart_beat-error {
+    color: #dc3545;
+    text-transform: uppercase;
+    font-weight: 700;
+    text-transform: none;
+    font-size: 13px;
+}
+
+
+#blood_pressure-error {
+    color: #dc3545;
+    text-transform: uppercase;
+    font-weight: 700;
+    text-transform: none;
+    font-size: 13px;
+}
+
+
+
+
+#ending_weight-error {
+    color: #dc3545;
+    text-transform: uppercase;
+    font-weight: 700;
+    text-transform: none;
+    font-size: 13px;
+}
+
+
+
+
+
+#starting_weight-error {
+    color: #dc3545;
+    text-transform: uppercase;
+    font-weight: 700;
+    text-transform: none;
+    font-size: 13px;
+}
+
+
+
+
+
+
+
+#height-error {
+    color: #dc3545;
+    text-transform: uppercase;
+    font-weight: 700;
+    text-transform: none;
+    font-size: 13px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #apply-error {
     color: #dc3545;
