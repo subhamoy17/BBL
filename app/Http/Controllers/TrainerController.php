@@ -692,12 +692,17 @@ public function motinsert(Request $request){
     $data['left_thigh']=(isset($request->left_thigh) && !empty($request->left_thigh)) ? $request->left_thigh : null;
     $data['right_calf']=(isset($request->right_calf) && !empty($request->right_calf)) ? $request->right_calf : null;
     $data['left_calf']=(isset($request->left_calf) && !empty($request->left_calf)) ? $request->left_calf : null;
-    $data['weight']=(isset($request->weight) && !empty($request->weight)) ? $request->weight : null;
+    $data['starting_weight']=(isset($request->starting_weight) && !empty($request->starting_weight)) ? $request->starting_weight : null;
+    $data['ending_weight']=(isset($request->ending_weight) && !empty($request->ending_weight)) ? $request->ending_weight : null;
+    $data['blood_pressure']=(isset($request->blood_pressure) && !empty($request->blood_pressure)) ? $request->blood_pressure : null;
+    $data['heart_beat']=(isset($request->heart_beat) && !empty($request->heart_beat)) ? $request->heart_beat : null;
     $data['height']=(isset($request->height) && !empty($request->height)) ? $request->height : null;
     $data['date']=(isset($request->date) && !empty($request->date)) ? $request->date : null;
     $data['trainer_id']=(isset($request->trainer_id) && !empty($request->trainer_id)) ? $request->trainer_id : null;
     $data['trainer_id']=(isset($request->trainer_id) && !empty($request->trainer_id)) ? $request->trainer_id : null;
     $data['customer_id']=(isset($request->apply) && !empty($request->apply)) ? $request->apply : null;
+
+
     // print_r($data);die();
     DB::table('customer_mot')->insert($data);
     Log::debug(" Check id ".print_r($data,true));
@@ -715,7 +720,7 @@ $data=DB::table('customer_mot')
     ->join('customers','customers.id','customer_mot.customer_id')
     ->join('users','users.id','customer_mot.trainer_id')
 
-    ->select('customer_mot.id as mot_id','customer_mot.height','customer_mot.customer_id as customer_id','customer_mot.trainer_id','customer_mot.right_arm','customer_mot.left_arm','customer_mot.chest','customer_mot.waist','customer_mot.hips','customer_mot.right_thigh','customer_mot.left_thigh','customer_mot.weight','customer_mot.date','customer_mot.right_calf','customer_mot.left_calf','customers.name as current_customer_name')->where('customer_mot.id',$id)->first();
+    ->select('customer_mot.id as mot_id','customer_mot.height','customer_mot.customer_id as customer_id','customer_mot.trainer_id','customer_mot.right_arm','customer_mot.left_arm','customer_mot.chest','customer_mot.waist','customer_mot.hips','customer_mot.right_thigh','customer_mot.left_thigh','customer_mot.starting_weight','customer_mot.date','customer_mot.right_calf','customer_mot.left_calf','customer_mot.heart_beat','customers.name as current_customer_name','customer_mot.blood_pressure','customer_mot.ending_weight')->where('customer_mot.id',$id)->first();
 
 return view('trainer.moteditshow')->with(compact('data'));
 
@@ -734,10 +739,12 @@ public function motedit(Request $request){
     $data['left_thigh']=(isset($request->left_thigh) && !empty($request->left_thigh)) ? $request->left_thigh : null;
     $data['right_calf']=(isset($request->right_calf) && !empty($request->right_calf)) ? $request->right_calf : null;
     $data['left_calf']=(isset($request->left_calf) && !empty($request->left_calf)) ? $request->left_calf : null;
-    $data['weight']=(isset($request->weight) && !empty($request->weight)) ? $request->weight : null;
+    $data['starting_weight']=(isset($request->starting_weight) && !empty($request->starting_weight)) ? $request->starting_weight : null;
+    $data['ending_weight']=(isset($request->ending_weight) && !empty($request->ending_weight)) ? $request->ending_weight : null;
+    $data['heart_beat']=(isset($request->heart_beat) && !empty($request->heart_beat)) ? $request->heart_beat : null;
+    $data['blood_pressure']=(isset($request->blood_pressure) && !empty($request->blood_pressure)) ? $request->blood_pressure : null;
     $data['height']=(isset($request->height) && !empty($request->height)) ? $request->height : null;
     $data['date']=(isset($request->date) && !empty($request->date)) ? $request->date : null;
-
     DB::table('customer_mot')->where('id',$request->id)->update($data);
     Log::debug(" Check id ".print_r($data,true));
    return redirect('trainer/mot_show')->with("success","You have successfully updated one customer's MOT.");
