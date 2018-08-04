@@ -13,7 +13,7 @@
                      <th>Status</th>
                      <th>Booked On</th>
                      <th>Slot date & time</th>
-                       <th>Status</th>
+                       <th>Remaining Days</th>
                   </tr>
                 </thead>
                 <tbody>
