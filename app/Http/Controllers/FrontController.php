@@ -113,17 +113,6 @@ public function purchase_form($id)
 function purchaseinsert(Request $request)
 {
 
- $validator=Validator::make($request->all(), [
-              
-              'selector1' => 'required|in:Paypal,Banking Transter',
-          ]);
-             
- if($validator->fails())
-          {
-            Log::debug(" Validator ".print_r($validator->errors(),true));
-            return redirect()->back()->withErrors($validator )
-                          ->withInput();
-          }
 
  $data['slot_id']=$request->id;
 $data['payment_options']=$request->selector1;
@@ -241,7 +230,7 @@ DB::table('slot_request')->insert($data);
 
 Log::debug(" Check id ".print_r($data,true));
 
-return redirect()->back()->with("success","Your profile is update successfully !");
+return redirect()->back()->with("success","Your booking form is update successfully !");
 
 }
 
@@ -320,28 +309,7 @@ $data['created_at']=Carbon::now();
 DB::table('contact_us')->insert($data);
  return redirect()->back()->with("success","Your Enquiry is submitted successfully!");
 
-
-
    }
-
-
-// DB::table('contact_us')->insert($data);
-
-// Log::debug(" Check id ".print_r($data,true));
-
-// return redirect('customerpanel/frontcontact')->with("success","Your new record of Trainer is insert successfully !");
-// }
-
-
-
-
-    
-  // public function about()
-  //   {     
-      
-  //     $data=DB::table('our_client')->where('deleted_at',null)->get();
-  //   return view('frontabout')->with(compact('data'));
-  //   }
 
 
 
