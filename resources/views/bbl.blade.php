@@ -199,13 +199,10 @@
 		</div>
 	</section>
 	
-
- <!--Pricing Section-->
-  <section class="pricing">
+<section class="pricing">
   <div class="container">
         <h3 class="gyl_header">Choose <span>Your Plan</span></h3>
           <div class="row">
-              
                <div class="owl-carousel" id="price-slider">
                  @foreach($data as $mydata)
             <div class="price-wrp">
@@ -238,9 +235,6 @@
             </div>
         </div>
   </section>
-
-
-
 
 
 @endsection
