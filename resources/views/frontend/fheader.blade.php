@@ -32,12 +32,7 @@
     			</div>
     		</div>
     	</div>
-    	<div id="myHeader" class="heder-bottom">
-                @if (session('success'))
-                    <div class="alert alert-success">
-                        {{ session('success') }}
-                    </div>
-                @endif
+    	
     		<div class="container">
     			<div class="row">
     				<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
