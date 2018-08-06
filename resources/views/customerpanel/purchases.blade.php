@@ -38,6 +38,7 @@
                                <input type="hidden" name="_token" value="{{csrf_token()}}">
                               <input type="hidden" name="id" id="id" value="{{$slot_id}}">
 
+  <!--  -->
 
                             <label>Payment Mode</label>
                               <ul>
