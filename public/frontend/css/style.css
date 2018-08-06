@@ -2602,6 +2602,7 @@ span.mul {
 .hstry-box{
     margin-top: 30px;
     margin-bottom: 30px;
+    position: relative;
 }
 .hstry-box .table{
     margin-bottom: 0;   
@@ -4620,6 +4621,7 @@ h3.heading-agileinfo.white-gyls {
     padding: 0 7px;
     position: relative;
 }
+
 .jn-us {
      background-image: linear-gradient(to right top, #127dee, #8b65da, #bf46b4, #d92383, #dd194e);
     padding: 7px 5px !important;
@@ -5664,6 +5666,16 @@ a.sign-btn2 {
     .test-text-box{
         position: relative;
     }
+
+    .pagination {
+    display: inline-block;
+    padding-left: 0;
+    margin: 20px 0;
+    border-radius: 4px;
+    position: absolute;
+    bottom: -70px;
+    right: 0;
+}
     .test-text-box:before{
         position: absolute;
         content: "";
