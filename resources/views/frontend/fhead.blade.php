@@ -26,6 +26,7 @@
 	<!-- //Testimonials-slider-css-files -->
 	<!--Main Menu-->
     <link href="{{url('frontend/css/stellarnav.min.css')}}" rel="stylesheet">
+    <link href="{{url('frontend/css/daterangepicker.css')}}" rel="stylesheet">
 
 	<link href="{{url('frontend/css/style.css')}}" rel="stylesheet" type="text/css" media="all" />
 	<link href="{{url('frontend/css/responsive.css')}}" rel="stylesheet" type="text/css" media="all" />
