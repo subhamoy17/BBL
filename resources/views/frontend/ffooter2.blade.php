@@ -5,6 +5,16 @@
 	<!-- Slider script -->
 	
 <script src="{{url('frontend/js/responsiveslides.min.js')}}"></script>
+<script src="{{asset('frontend/js/moment.min.js')}}"></script>
+ <script src="{{asset('frontend/js/daterangepicker.js')}}"></script>
+
+<script src="{{url('frontend/js/jquery.waypoints.min.js')}}"></script>
+
+
+  <script src="{{url('frontend/js/jquery.countup.js')}}"></script>
+  <script src="{{url('frontend/js/accotab.js')}}"></script>
+  <script src="{{url('frontend/js/stellarnav.min.js')}}"></script>
+
 	<script>
 		// You can also use "$(window).load(function() {"
 		$(function () {
@@ -199,16 +209,13 @@ $(document).ready(function() {
 	</script>
 <!-- for testimonials slider-js-script-->
 <!-- stats -->
-	<script src="{{url('frontend/js/jquery.waypoints.min.js')}}"></script>
-
-
-	<script src="{{url('frontend/js/jquery.countup.js')}}"></script>
+	
 
 	<script>
 		$('.counter').countUp();
 	</script>
 	<!-- //stats -->
-	<script src="{{url('frontend/js/stellarnav.min.js')}}"></script>
+	
 	
 
 	<script>
@@ -319,6 +326,76 @@ $('#myeditform').validate({
 
   <script>
     $(document).ready(function(){
+ $('#frm_search').on('submit', function(e) {
+
+  e.preventDefault();
+
+
+
+  alert( $('#frm_search').serialize() );
+
+  $.get('{{url('customer/booking_history?page=1')}}',$('#frm_search').serialize(), function(data){
+
+      console.log(data.data);
+
+                    $("#tbody_empty").empty();
+
+                    var obj = data.data;
+                    var table = "";
+                    console.log(obj.length);
+                    if(obj.length > 0){ 
+                    for(var i = 0; i < obj.length; i++){
+                    table += "<tr><td>"+obj[i]['users_name']+"</td><td>"+obj[i]['created_at']+"</td><td>"+obj[i]['slot_date']+' '+obj[i]['slot_time']+"</td><td>"+obj[i]['status']+"</td><td>"+'N/A'+"</td></tr>";
+                    }
+                    console.log(table);
+
+                    }
+                    else{
+                   
+                    
+                      // $('#approve_photo_plan_modal').modal('show');
+                    table = "<tr><td colspan='4' align='center'>No  data yet.</td></tr>";
+                    
+                    
+                    }
+                    $("#tbody_empty").html(table);
+      
+     
+    });
+});
+$('.page-link').on('click', function(e) {
+e.preventDefault();
+console.log($(this).attr('href'));
+ $.get($(this).attr('href'),$('#frm_search').serialize(), function(data){
+  console.log(data);
+
+   console.log(data.data);
+
+                    $("#tbody_empty").empty();
+
+                    var obj = data.data;
+                    var table = "";
+                    console.log(obj.length);
+                    if(obj.length > 0){ 
+                    for(var i = 0; i < obj.length; i++){
+                    table += "<tr><td>"+obj[i]['users_name']+"</td><td>"+obj[i]['created_at']+"</td><td>"+obj[i]['slot_date']+' '+obj[i]['slot_time']+"</td><td>"+obj[i]['status']+"</td><td>"+'N/A'+"</td></tr>";
+                    }
+                    console.log(table);
+
+                    }
+                    else{
+                   
+                    
+                      // $('#approve_photo_plan_modal').modal('show');
+                    table = "<tr><td colspan='4' align='center'>No  data yet.</td></tr>";
+                    
+                    
+                    }
+                    $("#tbody_empty").html(table);
+      
+  });
+
+});
 
       $.validator.addMethod("alpha", function(value, element){
     return this.optional(element) || value == value.match(/^[a-zA-Z, '']+$/);
@@ -402,6 +479,19 @@ $('#changepassword').validate({
 
 
 
+<script>
+$(function() {
+  $('input[name="daterange"]').daterangepicker({
+    // locale: { cancelLabel: 'Clear' } 
+    opens: 'left'
+  }, function(start, end, label) {
+
+    console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+
+  });
+  
+});
+</script>
 
 
 
@@ -426,8 +516,7 @@ $('#changepassword').validate({
 
 
 
-
-	<script>
+	<!-- <script>
 		window.onscroll = function() {myFunction()};
 		var header = document.getElementById("myHeader");
 		var sticky = header.offsetTop;
@@ -438,7 +527,7 @@ $('#changepassword').validate({
     			header.classList.remove("sticky");
   			}
 		}
-	</script>
+	</script> -->
 	
 	<script>
     	/*Scroll to top when arrow up clicked BEGIN*/
@@ -496,7 +585,7 @@ $(document).ready(function() {
     }); 
 		 });
 	</script>
-		<script src="{{url('frontend/js/accotab.js')}}"></script>
+		
 	<!--Fontawesome script-->
 	<!--<script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js" integrity="sha384-3LK/3kTpDE/Pkp8gTNp2gR/2gOiwQ6QaO7Td0zV76UFJVhqLl4Vl3KL1We6q6wR9" crossorigin="anonymous"></script>-->
 </body>
