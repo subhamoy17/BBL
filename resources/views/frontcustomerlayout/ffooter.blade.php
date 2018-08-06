@@ -29,7 +29,7 @@
 <div class="col-md-2 gylayouts_footer_grid">
 					<h3>Our <span>Links</span> </h3>
 					  <ul class="links">
-							<li><a href="{{route('about-us')}}">About</a></li>
+							<li><a href="{{route('about-us')}}">About Us</a></li>
 							<li><a href="{{route('contact-us')}}">Contact Us</a></li>
 							<li><a href="{{route('testimonial')}}">Testimonial</a></li>
 						</ul>
