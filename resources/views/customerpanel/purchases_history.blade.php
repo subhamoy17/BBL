@@ -19,29 +19,32 @@
                     <th>Package Price</th>
                     <th>Package validity</th>
                      <th>Purchases Date</th>
-                     <th>Payment Mode</th>
-                      <th>Remaining Time</th>
+                     <!-- <th>Payment Mode</th> -->
+                     <th>Total Slots </th>
+                      <th>Status</th>
                       <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                   @if(count($data)>0)
+                    @if(count($data)>0)
                    @foreach($data as $key=>$mydata)
                   <tr>
                     
                     <td>{{$mydata->slots_name}}</td>
                     <td>{{$mydata->slots_price}}</td>
                     <td>{{$mydata->slots_validity}}</td>
-                    <td>{{$mydata->purchases_start_date}}</td>
-                      <td>{{$mydata->payment_options}}</td>
-                   
-                 
-                  <td>{{$mydata->timeremaining}}</td>
+                    <td>{{$mydata->purchases_date}}</td>
+                     <td>{{$mydata->slots_number}}</td>
+                      <td>Status</td>
+                
                      <td>
-                            @if($mydata->timeremaining < $mydata->slots_validity)
-                          <a href="{{url('customer/booking_slot')}}/{{$mydata->id}}"class="btn btn-success">change</a>
+
+                  @if ((isset($mydata->slots_number) && !empty($mydata->slots_number)) &&($mydata->timeremaining < $mydata->slots_validity))
+
+                           
+                          <a href="{{url('customer/booking_slot')}}/{{$mydata->id}}"class="btn btn-success">Active</a>
                      @else
-                        N/A
+                       Inactive
                         @endif
 
                    </td>
@@ -52,6 +55,7 @@
                 </tbody>
               </table>
               @endif
+              {{$data->links()}}
             </div>
           </div>
           <!-- #tab2 -->
