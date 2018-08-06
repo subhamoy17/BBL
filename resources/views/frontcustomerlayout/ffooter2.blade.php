@@ -1,10 +1,12 @@
 <!-- js -->
-	<script type="text/javascript" src="{{url('frontend/js/jquery-2.1.4.min.js')}}"></script>
+	<script type="text/javascript" src="{{asset('frontend/js/jquery-2.1.4.min.js')}}"></script>
 	<!-- //js -->
 <script src="{{asset('backend/assets/js/jquery.validate.min.js')}}"></script>
 
 	<!-- Slider script -->
 	<script src="{{url('frontend/js/responsiveslides.min.js')}}"></script>
+  <script src="{{asset('frontend/js/daterangepicker.js')}}"></script>
+<script src="{{asset('frontend/js/moment.min.js')}}"></script>
 
 	<script>
 		// You can also use "$(window).load(function() {"
@@ -110,9 +112,10 @@ $(document).ready(function() {
 	<script>
 		$(document).ready(function(){
 			jQuery('#main-nav').stellarNav();
+      
 		});  
 	</script>
-	<script>
+	<!-- <script>
 		window.onscroll = function() {myFunction()};
 		var header = document.getElementById("myHeader");
 		var sticky = header.offsetTop;
@@ -123,7 +126,7 @@ $(document).ready(function() {
     			header.classList.remove("sticky");
   			}
 		}
-	</script>
+	</script> -->
 	
 	<script>
     	/*Scroll to top when arrow up clicked BEGIN*/
