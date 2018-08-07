@@ -5685,3 +5685,30 @@ a.sign-btn2 {
         height: 16px;
         width: 19px;
     }}
+
+
+
+     .pagination {
+    display: inline-block;
+    padding-left: 0;
+    margin: 20px 0;
+    border-radius: 4px;
+    position: absolute;
+    bottom: -70px;
+    right: 0;
+
+}
+
+
+
+
+     .table-bordered .pagination {
+    display: inline-block;
+    padding-left: 0;
+    margin: 20px 0;
+    border-radius: 4px;
+    position: absolute;
+    bottom: -224px;
+    right: 0;
+
+}
