@@ -31,7 +31,7 @@
               <div>Left thigh:</div><div class="left_thigh" ></div>
               <div>Right calf:</div><div class="right_calf" ></div>
               <div>Left calf:</div><div class="left_calf" ></div>
-              <div>Weight:</div><div class="weight" ></div>
+            
               
           </div>
 

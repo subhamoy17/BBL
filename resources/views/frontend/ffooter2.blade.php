@@ -5,8 +5,8 @@
 	<!-- Slider script -->
 	
 <script src="{{url('frontend/js/responsiveslides.min.js')}}"></script>
-<script src="{{asset('frontend/js/moment.min.js')}}"></script>
- <script src="{{asset('frontend/js/daterangepicker.js')}}"></script>
+<!-- <script src="{{asset('frontend/js/moment.min.js')}}"></script> -->
+ <!-- <script src="{{asset('frontend/js/daterangepicker.js')}}"></script> -->
 
 <script src="{{url('frontend/js/jquery.waypoints.min.js')}}"></script>
 
@@ -354,7 +354,7 @@ $('#myeditform').validate({
                    
                     
                       // $('#approve_photo_plan_modal').modal('show');
-                    table = "<tr><td colspan='4' align='center'>No  data yet.</td></tr>";
+                    table = "<tr><td colspan='5' align='center'>No  data yet.</td></tr>";
                     
                     
                     }
@@ -363,19 +363,19 @@ $('#myeditform').validate({
      
     });
 });
-$('.page-link').on('click', function(e) {
+$('#book_history .page-link').on('click', function(e) {
 e.preventDefault();
 console.log($(this).attr('href'));
  $.get($(this).attr('href'),$('#frm_search').serialize(), function(data){
-  console.log(data);
+  // console.log(data);
 
-   console.log(data.data);
+   // console.log(data.data);
 
                     $("#tbody_empty").empty();
 
                     var obj = data.data;
                     var table = "";
-                    console.log(obj.length);
+                    // console.log(obj.length);
                     if(obj.length > 0){ 
                     for(var i = 0; i < obj.length; i++){
                     table += "<tr><td>"+obj[i]['users_name']+"</td><td>"+obj[i]['created_at']+"</td><td>"+obj[i]['slot_date']+' '+obj[i]['slot_time']+"</td><td>"+obj[i]['status']+"</td><td>"+'N/A'+"</td></tr>";
@@ -397,7 +397,20 @@ console.log($(this).attr('href'));
 
 });
 
-      $.validator.addMethod("alpha", function(value, element){
+$('#purchase_link .page-link').on('click', function(e) {
+// e.preventDefault();
+url=$(this).attr('href')+'&'+$('#frm_purchase_search').serialize();
+window.location = url;
+});
+
+$('#frm_purchase_search').on('submit', function(e) {
+  e.preventDefault();
+  url="{{url('customer/purchase_history?page=1')}}"+'&'+$('#frm_purchase_search').serialize();
+window.location = url;
+});
+
+
+    $.validator.addMethod("alpha", function(value, element){
     return this.optional(element) || value == value.match(/^[a-zA-Z, '']+$/);
     }, "Alphabetic characters only please");
 
@@ -479,7 +492,7 @@ $('#changepassword').validate({
 
 
 
-<script>
+<!-- <script>
 $(function() {
   $('input[name="daterange"]').daterangepicker({
     // locale: { cancelLabel: 'Clear' } 
@@ -491,7 +504,7 @@ $(function() {
   });
   
 });
-</script>
+</script> -->
 
 
 

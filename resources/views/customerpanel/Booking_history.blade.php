@@ -83,7 +83,7 @@
               </table>
               @endif
            
-      {{$data->links()}}
+   <div id="book_history"> {{$data->links()}}</div>
       
 
 
