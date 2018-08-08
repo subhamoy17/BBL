@@ -25,7 +25,7 @@
 
                         <div class="col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group">
-                              <label>Name <small>*</small></label>
+                              <label>Full Name <small>*</small></label>
                               <input type="text" id="name" name="name" placeholder="Name" class="form-control" value="{{$data->name}}">
                             </div>
                         </div>
