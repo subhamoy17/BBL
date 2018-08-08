@@ -9,28 +9,28 @@
   <div class="modal-dialog">
     
     <div class="modal-content">
+		<div class="modal-header">
+			<h4 class="modal-title">Customers MOT</h4>
+		</div>
       <div class="modal-body" id="hall_details_edit">
         <div class="row clearfix">
           <div class="col-sm-12 col-xs-12">
-            <p class="pull-left">Customers MOT</p>
             <br class="clear" />
         </div>
-        <div class="col-xs-12 divi-line">
-        </div><br/>
-        <div class="col-sm-9 col-xs-12">
+        <div class="col-sm-12 col-xs-12">
             <input type="hidden" id="reason_id"></input>
             <input type="hidden" id="reason_action"></input>
             <div class="form-group">
 
-              <div>Right Arm:</div><div class="right_arm" ></div>
-              <div>Left Arm:</div><div class="left_arm" ></div>
-              <div>Chest:</div><div class="chest" ></div>
-              <div>Waist:</div><div class="waist" ></div>
-              <div>Hips:</div><div class="hips" ></div>
-              <div>Right thigh:</div><div class="right_thigh" ></div>
-              <div>Left thigh:</div><div class="left_thigh" ></div>
-              <div>Right calf:</div><div class="right_calf" ></div>
-              <div>Left calf:</div><div class="left_calf" ></div>
+              <div class="col-lg-4"><div class="rl">Right Arm / </div><div class="right_arm rv" ></div></div>
+             <div class="col-lg-4"> <div class="rl">Left Arm / </div><div class="left_arm rv" ></div></div>
+              <div class="col-lg-4"><div class="rl">Chest / </div><div class="chest rv" ></div></div><div class="clearfix"></div>
+              <div class="col-lg-4"><div class="rl">Waist / </div><div class="waist rv" ></div></div>
+              <div class="col-lg-4"><div class="rl">Hips / </div><div class="hips rv" ></div></div>
+              <div class="col-lg-4"><div class="rl">Right thigh / </div><div class="right_thigh rv" ></div></div><div class="clearfix"></div>
+              <div class="col-lg-4"><div class="rl">Left thigh / </div><div class="left_thigh rv" ></div></div>
+              <div class="col-lg-4"><div class="rl">Right calf / </div><div class="right_calf rv" ></div></div>
+              <div class="col-lg-4"><div class="rl">Left calf / </div><div class="left_calf rv" ></div></div>
             
               
           </div>

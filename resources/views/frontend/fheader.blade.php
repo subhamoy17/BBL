@@ -6,10 +6,7 @@
     				<div class="col-lg-12">
 
     					<div class="all-links">
-                              Welcom {{Auth::user()->name}}
                             <ul>
-                                 
-                                <ul>
                                  <li><a href="https://www.instagram.com" target="_blank"><i class="fa fa-instagram"></i></a></li>
                                  <li><a href="mailto:info@example.com"><i class="fa fa-envelope"></i></a></li>
                                 <li><a href="https://www.facebook.com" target="_blank"><i class="fa fa-facebook-f"></i></a></li>
@@ -17,8 +14,16 @@
                                 <!-- <li><a href="#"><i class="fa fa-google-plus"></i></a></li> -->
                                 <li><a href="https://www.youtube.com" target="_blank"><i class="fa fa-youtube"></i></a></li>
                             </ul>
-                            
-                          
+                            <div class="dropdown user-box">
+								<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Welcom {{Auth::user()->name}}
+								<span class="caret"></span></button>
+								<ul class="dropdown-menu">
+									<li><a href="#">My Dashboard</a></li>
+									<li><a href="#">My Profile</a></li>
+									<li><a href="#">Logout</a></li>
+								</ul>
+							</div>
+							<div class="clearfix"></div>
     						
     						<!-- <div class="reg-area">
     							<a class="srch-icon"> <i class="fa fa-search"></i><i class="fa fa-times"></i></a>
