@@ -326,91 +326,146 @@ $('#myeditform').validate({
 
   <script>
     $(document).ready(function(){
+     
  $('#frm_search').on('submit', function(e) {
 
   e.preventDefault();
 
+  url="{{url('customer/booking_history?page=1')}}"+'&'+$('#frm_search').serialize();
+
+// $(this).attr('href',url);
+window.location = url;
 
 
-  alert( $('#frm_search').serialize() );
 
-  $.get('{{url('customer/booking_history?page=1')}}',$('#frm_search').serialize(), function(data){
+  // alert( $('#frm_search').serialize() );
 
-      console.log(data.data);
+  // $.get('{{url('customer/booking_history?page=1')}}',$('#frm_search').serialize(), function(data){
 
-                    $("#tbody_empty").empty();
+  //     console.log(data.data);
 
-                    var obj = data.data;
-                    var table = "";
-                    console.log(obj.length);
-                    if(obj.length > 0){ 
-                    for(var i = 0; i < obj.length; i++){
-                    table += "<tr><td>"+obj[i]['users_name']+"</td><td>"+obj[i]['created_at']+"</td><td>"+obj[i]['slot_date']+' '+obj[i]['slot_time']+"</td><td>"+obj[i]['status']+"</td><td>"+'N/A'+"</td></tr>";
-                    }
-                    console.log(table);
+  //                   $("#tbody_empty").empty();
 
-                    }
-                    else{
+  //                   var obj = data.data;
+  //                   var table = "";
+  //                   console.log(obj.length);
+  //                   if(obj.length > 0){ 
+  //                   for(var i = 0; i < obj.length; i++){
+  //                   table += "<tr><td>"+obj[i]['users_name']+"</td><td>"+obj[i]['created_at']+"</td><td>"+obj[i]['slot_date']+' '+obj[i]['slot_time']+"</td><td>"+obj[i]['status']+"</td><td>"+'N/A'+"</td></tr>";
+  //                   }
+  //                   console.log(table);
+
+  //                   }
+  //                   else{
                    
                     
-                      // $('#approve_photo_plan_modal').modal('show');
-                    table = "<tr><td colspan='5' align='center'>No  data yet.</td></tr>";
+  //                     // $('#approve_photo_plan_modal').modal('show');
+  //                   table = "<tr><td colspan='5' align='center'>No  data yet.</td></tr>";
                     
                     
-                    }
-                    $("#tbody_empty").html(table);
+  //                   }
+  //                   $("#tbody_empty").html(table);
       
      
-    });
+  //   });
 });
 $('#book_history .page-link').on('click', function(e) {
 e.preventDefault();
-console.log($(this).attr('href'));
- $.get($(this).attr('href'),$('#frm_search').serialize(), function(data){
-  // console.log(data);
+console.log($(this).attr('href')+'&'+$('#frm_search').serialize());
+ url=$(this).attr('href')+'&'+$('#frm_search').serialize();
+// url="{{url('customer/booking_history?page=1')}}"+'&'+$('#frm_search').serialize();
+// $(this).attr('href',url);
+window.location = url;
+return true;
+ // $.get($(this).attr('href'),$('#frm_search').serialize(), function(data){
+ //  console.log(data);
 
-   // console.log(data.data);
+ //   console.log(data.data);
 
-                    $("#tbody_empty").empty();
+ //                    $("#tbody_empty").empty();
 
-                    var obj = data.data;
-                    var table = "";
-                    // console.log(obj.length);
-                    if(obj.length > 0){ 
-                    for(var i = 0; i < obj.length; i++){
-                    table += "<tr><td>"+obj[i]['users_name']+"</td><td>"+obj[i]['created_at']+"</td><td>"+obj[i]['slot_date']+' '+obj[i]['slot_time']+"</td><td>"+obj[i]['status']+"</td><td>"+'N/A'+"</td></tr>";
-                    }
-                    console.log(table);
+ //                    var obj = data.data;
+ //                    var table = "";
+ //                    console.log(obj.length);
+ //                    if(obj.length > 0){ 
+ //                    for(var i = 0; i < obj.length; i++){
+ //                    table += "<tr><td>"+obj[i]['users_name']+"</td><td>"+obj[i]['created_at']+"</td><td>"+obj[i]['slot_date']+' '+obj[i]['slot_time']+"</td><td>"+obj[i]['status']+"</td><td>"+'N/A'+"</td></tr>";
+ //                    }
+ //                    console.log(table);
 
-                    }
-                    else{
+ //                    }
+ //                    else{
                    
                     
-                      // $('#approve_photo_plan_modal').modal('show');
-                    table = "<tr><td colspan='4' align='center'>No  data yet.</td></tr>";
+ //                      // $('#approve_photo_plan_modal').modal('show');
+ //                    table = "<tr><td colspan='5' align='center'>No  data yet.</td></tr>";
                     
                     
-                    }
-                    $("#tbody_empty").html(table);
+ //                    }
+ //                    $("#tbody_empty").html(table);
       
-  });
+ //  });
 
 });
 
-$('#purchase_link .page-link').on('click', function(e) {
-// e.preventDefault();
-url=$(this).attr('href')+'&'+$('#frm_purchase_search').serialize();
-window.location = url;
-});
-
-$('#frm_purchase_search').on('submit', function(e) {
-  e.preventDefault();
-  url="{{url('customer/purchase_history?page=1')}}"+'&'+$('#frm_purchase_search').serialize();
-window.location = url;
-});
 
 
-    $.validator.addMethod("alpha", function(value, element){
+
+
+// $(window).on('hashchange', function() {
+//     if (window.location.hash) {
+//         var page = window.location.hash.replace('#', '');
+//         if (page == Number.NaN || page <= 0) {
+//             return false;
+//         }else{
+//             getData(page);
+//         }
+//     }
+// });
+
+
+// $(document).ready(function()
+// {
+//     $(document).on('click', '.pagination a',function(event)
+//     {
+//         $('li').removeClass('active');
+//         $(this).parent('li').addClass('active');
+//         event.preventDefault();
+
+
+//         var myurl = $(this).attr('href');
+//         var page=$(this).attr('href').split('page=')[1];
+
+
+//         getData(page);
+//     });
+// });
+
+
+// function getData(page){
+//         $.ajax(
+//         {
+//             url: '?page=' + page,
+//             type: "get",
+//             datatype: "html",
+//         })
+//         .done(function(data)
+//         {
+//             $("#tbodyempty").empty().html(data);
+//             location.hash = page;
+//         })
+//         .fail(function(jqXHR, ajaxOptions, thrownError)
+//         {
+//           // $("#tbody_empty").html(table);
+//               alert('No response from server');
+//         });
+// }
+
+
+
+
+
+      $.validator.addMethod("alpha", function(value, element){
     return this.optional(element) || value == value.match(/^[a-zA-Z, '']+$/);
     }, "Alphabetic characters only please");
 
@@ -495,8 +550,13 @@ $('#changepassword').validate({
 <!-- <script>
 $(function() {
   $('input[name="daterange"]').daterangepicker({
-    // locale: { cancelLabel: 'Clear' } 
+      "locale": {
+        "format": "YYYY-MM-DD",
+        // "separator": " - ",
+      },
     opens: 'left'
+    //   "startDate": "08/01/2018",
+    // "endDate": "08/07/2018"
   }, function(start, end, label) {
 
     console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
