@@ -11,25 +11,25 @@
                 <div class="row">
                   <div class="col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group">
-                              <label>Name <small>*</small></label>
+                              <label>Full Name</label>
                               <h6>{{$data->name}}</h6>
                             </div>
                         </div>
                         <div class="col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group">
-                              <label>Email <small>*</small></label>
+                              <label>Email </label>
                               <h6>{{$data->email}}</h6>
                             </div>
                         </div>
                         <div class="col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group">
-                              <label>Address <small>*</small></label>
+                              <label>Address </label>
                               <h6>{{$data->address}}</h6>
                             </div>
                         </div>
                         <div class="col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group">
-                              <label>Phone No. <small>*</small></label>
+                              <label>Phone No. </label>
                               <h6>{{$data->ph_no}}</h6>
                             </div>
                         </div>
@@ -37,7 +37,7 @@
                             <div class="form-group file-box">
                               <label>Image</label>
 
-                              <h6><img src="{{asset('backend/images')}}/{{Auth::user()->image}}" height="50" width="50"></h6>
+                              <h6><img src="{{asset('backend/images')}}/{{Auth::user()->image}}" height="50"></h6>
                             
                             </div>
                         </div>
