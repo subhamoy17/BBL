@@ -3,7 +3,7 @@
     <div class="container">
       <div class="hstry-box">
       <ul class="tabs">
-        <li class="{{ Request::segment(2) === 'booking_history' ? 'active' : null }}" rel="tab1"><a href="{{url('customer/booking_history')}}"><i class="fa fa-check"></i> Booking History</a></li>
+        <li class="{{ Request::segment(2) === 'booking_history' ? 'active' : null }}" rel="tab1"><a href="{{url('customer/booking_history')}}"><i class="fa fa-check"></i> My Booking</a></li>
 
           <li class="{{ Request::segment(2) === 'purchase_history' ? 'active' : null }}" rel="tab2"><a href="{{url('customer/purchase_history')}}"><i class="fa fa-check"></i> Purchases History</a></li>
 
