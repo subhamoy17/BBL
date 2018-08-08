@@ -36,19 +36,25 @@
           <div id="tab1" class="tab_content">
             <div class="table-responsive table-bordered"> -->
               
+
+
+
               <table class="table">
               <form id="frm_search" method="get">
-  <select align ="right" id="feature" name="option">
-  <option value="feature_confirm">Feature confirm</option>
-  <option value="feature_pending">Feature pending</option>
-  <option value="delete_request">Delete Request</option>
-  <option value="declined_request">Declined Request</option>
+  <select align ="right" id="feature" name="option" >
+  <option value="feature_confirm" <?php if($_GET['option'] == 'feature_confirm'){?> selected <?php } ?> >Future confirm</option>
+  <option value="feature_pending" <?php if($_GET['option'] == 'feature_pending'){?> selected <?php } ?> >Future pending</option>
+  <option value="delete_request" <?php if($_GET['option'] == 'delete_request'){?> selected <?php } ?> >Delete Request</option>
+  <option value="declined_request" <?php if($_GET['option'] == 'declined_request'){?> selected <?php } ?> >Declined Request</option>
   </select>
-  <input type="text" name="daterange" value="01/01/2018 - 01/15/2018"/>
+  <input type="text" name="start_date" value="<?php 
+  if(isset($_GET['start_date']) && !empty($_GET['start_date'])){ 
+    echo $_GET['start_date']; }?>"/>
+  <input type="text" name="end_date" value="<?php if(isset($_GET['end_date']) && !empty($_GET['end_date'])){ echo $_GET['end_date']; }?>"/>
   <button type="submit"   id="booking" class="btn btn-success" >Submit</button>
 </form>
                 <thead>
-                   <h3 align="left" id="booking_title">Feature confirm booking</h3>
+                   <h3 align="left" id="booking_title">Future confirm booking</h3>
                   <tr>
                     <th>Trainer Name</th>
                      
@@ -78,13 +84,18 @@
                   </tr>
                 @endforeach
                 @else
-                <p>No post available</p>
+                <tr><td colspan='5' align='center'>
+                No post available
+              </td>
+              </tr>
                 </tbody>
               </table>
               @endif
            
-   <div id="book_history"> {{$data->links()}}</div>
-      
+
+
+   <div id="book_history">{{$data->links()}}</div>
+      <!-- <div id="book_history">{!! $data->render() !!}</div> -->
 
 
 
