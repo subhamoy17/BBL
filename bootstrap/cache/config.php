@@ -405,6 +405,19 @@
       ),
     ),
   ),
+  'paypal' => 
+  array (
+    'client_id' => 'Ad_1HJW0N92YI3brRuEjiSNigAUwoIb71-gB4uoKA0JEijyT2DlAVFPI5TaiheH2Rxjd7KAqmL7XIXWw',
+    'secret' => 'EPzpjcIg4gRomZXcJ08I8mU9XHmP3YjGDMzKcIcUsfIW_vwHvomp3ItwpVZXnQ5o9KoRdIzv0HE6uXlc',
+    'settings' => 
+    array (
+      'paypal_mode' => 'sandbox',
+      'http.ConnectionTimeOut' => 30,
+      'log.LogEnabled' => true,
+      'log.FileName' => 'C:\\xampp\\htdocs\\bbl\\storage/logs/paypal.log',
+      'log.LogLevel' => 'ERROR',
+    ),
+  ),
   'queue' => 
   array (
     'default' => 'sync',

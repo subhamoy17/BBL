@@ -109,36 +109,39 @@ public function services()
 
 
 public function purchase_form($id)
-   { 
-
-
-     
-      $slot_id=$id;
+  { 
+    $slot_id=$id;
       
-      $data=DB::table('customers')->where('id',Auth::user()->id)->first();
-      Log::debug(":: purchase details :: ".print_r($data,true));
-
+    $data=DB::table('customers')->where('id',Auth::guard('customer')->user()->id)->first();
+    Log::debug(":: purchase details :: ".print_r($data,true));
     return view('customerpanel.purchases')->with(compact('data','slot_id','slots_name' ));
-   }
+  }
 
 
-function purchaseinsert(Request $request)
+function purchase_payment_mode(Request $request)
 {
+  $slot_details=DB::table('slots')->where('id',$request->id)->first();
 
+  $data["slots_name"]=$slot_details->slots_name;
+  $data["slots_number"]=$slot_details->slots_number;
+  $data["slots_price"]=$slot_details->slots_price;
+  $data["customer_id"]=Auth::guard('customer')->user()->id;
+  $data['slot_id']=$request->id;
+  $data['payment_options']=$request->selector1;
+  $data['purchases_date']=Carbon::now();
+  $data['package_validity_date']=Carbon::now()->addDay($slot_details->slots_validity);
 
+  if($request->selector1=='Paypal')
+  {
+    return view('customerpanel.paypal-payment')->with(compact('data'));
+  }
+// DB::table('purchases_history')->insert($data);
+// return redirect()->route("customer.pricing")->with("success","Your slot is subscribe successfully !");
+}
 
-$slot_details=DB::table('slots')->where('id',$request->id)->first();
-
-$data["slots_name"]=$slot_details->slots_name;
-$data["slots_number"]=$slot_details->slots_number;
-$data["slots_price"]=$slot_details->slots_price;
-$data["customer_id"]=Auth::user()->id;
- $data['slot_id']=$request->id;
-$data['payment_options']=$request->selector1;
-$data['purchases_date']=Carbon::now();
-$data['package_validity_date']=Carbon::now()->addDay($slot_details->slots_validity);
-DB::table('purchases_history')->insert($data);
-return redirect()->route("customer.pricing")->with("success","Your slot is subscribe successfully !");
+public function paypal_payment_success()
+{
+    return view('customerpanel.paypal-payment-success');
 }
 
 

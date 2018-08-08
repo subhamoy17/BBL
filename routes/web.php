@@ -11,10 +11,9 @@
 |
 */
 
+
+
 Route::get('/', 'FrontSimpleController@index')->name('bbldb');
-
-
-
 
 Route::get('/alertifydemo', function () {
     return view('alertifyjquery');
@@ -154,8 +153,6 @@ Route::get('client_delete/{id}', 'TrainerController@client_delete');
 
 
 
-
-
 /*Route::get('add-slot', 'TrainerController@showslot')->name('addslot');
 Route::get('add-slot-record', 'TrainerController@addslot')->name('addslotrecord');
 Route::POST('store-slot-record', 'TrainerController@insertslot')->name('storeslots');*/
@@ -221,6 +218,7 @@ Route::get('allCustomers', 'TrainerController@all_customers')->name('allCustomer
 
 
 
+
 //fronted work here//
 Route::prefix('customer')->group(function () {
 
@@ -243,7 +241,11 @@ Route::get('services','FrontController@services')->name('services');
 
 //slots payment//
 Route::get('purchase_form/{id}','FrontController@purchase_form')->name('purchase_form');
-Route::POST('purchaseinsert','FrontController@purchaseinsert')->name('customer.purchaseinsert');
+Route::POST('package_purchase','FrontController@purchase_payment_mode')->name('customer.package_purchase');
+Route::post('paypalpayment','PaypalPaymentController@payWithpaypal');
+Route::get('status','PaypalPaymentController@getPaymentStatus');
+Route::get('paypalpaymentsuccess','FrontController@paypal_payment_success');
+
 
 //customer profile//
 Route::get('profile/{id}','FrontController@customer_profile')->name('profile');

@@ -34,7 +34,7 @@
                                 </div>
               <div class="col-md-6 col-sm-12 col-xs-12">
                         <div class="inputs-w3ls">
-                            <form enctype="multipart/form-data" id="frm1" method="post" action="{{route('customer.purchaseinsert')}}">
+                            <form enctype="multipart/form-data" id="frm1" method="post" action="{{route('customer.package_purchase')}}">
                                <input type="hidden" name="_token" value="{{csrf_token()}}">
                               <input type="hidden" name="id" id="id" value="{{$slot_id}}">
 
