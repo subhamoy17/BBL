@@ -1,4 +1,4 @@
-@extends('frontend.submain') 
+@extends('frontend.dashboard_submain') 
 @section('content')
 
 <div class="tab_container">
