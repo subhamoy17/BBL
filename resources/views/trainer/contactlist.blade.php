@@ -94,7 +94,7 @@ $('#bootstrap-slot-data-table').DataTable({
                                     }
                             </script>
                         </script>
-                        <table id="bootstrap-slot-data-table" class="table table-striped table-bordered">
+                        <table id="bootstrap-slot-data-table" class="table table-striped table-bordered table-body">
                             <thead>
                                 <tr>
                                     <th id="slno">Sl. No.</th>
@@ -117,7 +117,7 @@ $('#bootstrap-slot-data-table').DataTable({
                                     <td>
                                         @if(!empty($mydata->message))
                                             @if(strlen($mydata->message) > 50) 
-                                                {{substr($mydata->message,0,50)}}<a id="tar" href="#" class="common"  data-msg="{{$mydata->message}}">...</a>
+                                                {{substr($mydata->message,0,50)}}<a href="#" class="commons"  data-msg="{{$mydata->message}}">...</a>
                                             @else
                                                 {{$mydata->message}}
                                             @endif
@@ -153,16 +153,13 @@ $('#bootstrap-slot-data-table').DataTable({
 
     <script type="text/javascript">
         $(document).ready(function() {
-
-        $(".common").click(function() {
-        var value = $(this).data("msg");
-      
-       $('div.total-msg').text(value);
-        
-        $('#reason_modal').modal('show');
+            $("#bootstrap-slot-data-table").on("click", ".commons", function(){
+                var value = $(this).data("msg");
+                $('div.total-msg').text(value);
+                $('#reason_modal').modal('show');
+            });
+            $('#bootstrap-data-table-export').DataTable();
         });
-          $('#bootstrap-data-table-export').DataTable();
-        } );
     </script>
 
     
