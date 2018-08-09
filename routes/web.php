@@ -265,8 +265,8 @@ Route::POST('slotinsert','FrontController@slotinsert')->name('customer.slotinser
 
 
 
-Route::get('booking_history','FrontController@booking_history')->name('booking_history');
-// Route::get('session_history','FrontController@session_history')->name('session_history');
+Route::get('mybooking','FrontController@booking_history')->name('booking_history');
+
 
 Route::get('show_purchase_history','FrontController@show_purchase_history')->name('show_purchase_history');
 

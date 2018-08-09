@@ -326,12 +326,46 @@ $('#myeditform').validate({
 
   <script>
     $(document).ready(function(){
+
+
+       $(".common").click(function() {
+            var right_arm = $(this).data("right_arm");
+            var left_arm = $(this).data("left_arm");
+            var chest = $(this).data("chest");
+            var waist = $(this).data("waist");
+            var hips = $(this).data("hips");
+            var right_thigh = $(this).data("right_thigh");
+            var left_thigh = $(this).data("left_thigh");
+            var right_calf = $(this).data("right_calf");
+            var left_calf = $(this).data("left_calf");
+            var weight = $(this).data("weight");
+            
+
+
+
+            $('div.right_arm').text(right_arm); $('div.left_arm').text(left_arm);
+           
+
+            $('div.chest').text(chest);
+            $('div.waist').text(waist);
+            $('div.hips').text(hips);
+            $('div.right_thigh').text(right_thigh);
+
+            $('div.left_thigh').text(left_thigh);
+            $('div.right_calf').text(right_calf);
+
+            $('div.left_calf').text(left_calf);
+            $('div.weight').text(weight);
+          
+            $('#reason_modal').modal('show');
+        });
+        
      
  $('#frm_search').on('submit', function(e) {
 
   e.preventDefault();
 
-  url="{{url('customer/booking_history?page=1')}}"+'&'+$('#frm_search').serialize();
+  url="{{url('customer/mybooking?page=1')}}"+'&'+$('#frm_search').serialize();
 
 // $(this).attr('href',url);
 window.location = url;
@@ -547,24 +581,6 @@ $('#changepassword').validate({
 
 
 
-<!-- <script>
-$(function() {
-  $('input[name="daterange"]').daterangepicker({
-      "locale": {
-        "format": "YYYY-MM-DD",
-        // "separator": " - ",
-      },
-    opens: 'left'
-    //   "startDate": "08/01/2018",
-    // "endDate": "08/07/2018"
-  }, function(start, end, label) {
-
-    console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-
-  });
-  
-});
-</script> -->
 
 
 
