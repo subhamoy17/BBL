@@ -1,17 +1,13 @@
-@extends('frontend.submain') 
+@extends('frontend.dashboard_submain') 
 @section('content')
-
-
-
-
 
 <div id="reason_modal" class="modal fade common" role="dialog" >
   <div class="modal-dialog">
     
     <div class="modal-content">
-		<div class="modal-header">
-			<h4 class="modal-title">Customers MOT</h4>
-		</div>
+    <div class="modal-header">
+      <h4 class="modal-title">Customers MOT</h4>
+    </div>
       <div class="modal-body" id="hall_details_edit">
         <div class="row clearfix">
           <div class="col-sm-12 col-xs-12">
@@ -93,8 +89,9 @@
       <!-- .tab_container -->
     </div>
   </div>
- 
 
+
+<!-- 
 <script src="{{asset('backend/assets/js/lib/data-table/datatables.min.js')}}"></script>
 <script src="{{asset('backend/assets/js/lib/data-table/dataTables.bootstrap.min.js')}}"></script>
 <script src="{{asset('backend/assets/js/lib/data-table/dataTables.buttons.min.js')}}"></script>
@@ -105,7 +102,7 @@
 <script src="{{asset('backend/assets/js/lib/data-table/buttons.html5.min.js')}}"></script>
 <script src="{{asset('backend/assets/js/lib/data-table/buttons.print.min.js')}}"></script>
 <script src="{{asset('backend/assets/js/lib/data-table/buttons.colVis.min.js')}}"></script>
-<script src="{{asset('backend/assets/js/lib/data-table/datatables-init.js')}}"></script>
+<script src="{{asset('backend/assets/js/lib/data-table/datatables-init.js')}}"></script> -->
 
 
 
