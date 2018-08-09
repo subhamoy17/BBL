@@ -5715,34 +5715,35 @@ a.sign-btn2 {
 
 
 
+
 /*80818*/
 .dropdown.user-box{
-	float: right;
+    float: right;
 }
 .dropdown.user-box ul.dropdown-menu {
     position: absolute;
-	right: 0px;
+    right: 0px;
     left: inherit;
-	background: #44555a;
-	padding: 0;
+    background: #44555a;
+    padding: 0;
 }
 .dropdown.user-box ul.dropdown-menu li{
-	display: block;
-	padding-right: 0;
-	padding: 5px 0;
+    display: block;
+    padding-right: 0;
+    padding: 5px 0;
 }
 .dropdown.user-box ul.dropdown-menu li a{
-	color:#fff !important;
-	font-size: 13px;
+    color:#fff !important;
+    font-size: 13px;
 }
 .dropdown.user-box ul.dropdown-menu li:hover a{
-	background: #3d4d52;
-	color: #ccc !important;
+    background: #3d4d52;
+    color: #ccc !important;
 }
 .dropdown.user-box button, .dropdown.user-box.open button {
     background-color: transparent;
     border: none;
-	padding: 0;
+    padding: 0;
 }
 #reason_modal h4.modal-title {
     font-size: 24px;
@@ -5752,13 +5753,13 @@ a.sign-btn2 {
     color: #3c4b54;
 }
 #reason_modal button.close{
-	font-size:30px;
+    font-size:30px;
 }
 .rl {
     font-size: 18px;
     font-weight: 600;
     /*color: #586279;*/
-	color: #ccc;
+    color: #ccc;
     display: inline-block;
     /*width: 120px;*/
     
