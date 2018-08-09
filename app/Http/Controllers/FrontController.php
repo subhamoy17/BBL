@@ -135,8 +135,7 @@ function purchase_payment_mode(Request $request)
   {
     return view('customerpanel.paypal-payment')->with(compact('data'));
   }
-// DB::table('purchases_history')->insert($data);
-// return redirect()->route("customer.pricing")->with("success","Your slot is subscribe successfully !");
+
 }
 
 public function paypal_payment_success()
@@ -341,7 +340,7 @@ if(isset($request->start_date) && isset($request->end_date) && !empty($request->
     $purchases_data=DB::table('purchases_history')
     ->join('slots','slots.id','purchases_history.slot_id')
     ->join('customers','customers.id','purchases_history.customer_id')
-    ->select('purchases_history.slots_name','purchases_history.slots_price','slots.slots_validity','purchases_history.slots_number','purchases_history.payment_options','purchases_history.package_validity_date','purchases_history.id','slots.slots_number','purchases_history.purchases_date')->where('purchases_history.purchases_date','>=',[$start_date])->where('purchases_history.package_validity_date','<=',[$end_date])->where('purchases_history.customer_id',Auth::user()->id)->paginate(3);
+    ->select('purchases_history.slots_name','purchases_history.slots_price','slots.slots_validity','purchases_history.slots_number','purchases_history.payment_options','purchases_history.package_validity_date','purchases_history.id','slots.slots_number','purchases_history.purchases_date','purchases_history.active_package','purchases_history.package_remaining')->where('purchases_history.purchases_date','>=',[$start_date])->where('purchases_history.package_validity_date','<=',[$end_date])->where('purchases_history.customer_id',Auth::guard('customer')->user()->id)->paginate(3);
 
 
     foreach($purchases_data as $searchdt)
@@ -361,7 +360,7 @@ else{
   $purchases_data=DB::table('purchases_history')
     ->join('slots','slots.id','purchases_history.slot_id')
     ->join('customers','customers.id','purchases_history.customer_id')
-    ->select('purchases_history.slots_name','purchases_history.slots_price','slots.slots_validity','purchases_history.slots_number','purchases_history.payment_options','purchases_history.package_validity_date','purchases_history.id','slots.slots_number','purchases_history.purchases_date')->where('purchases_history.customer_id',Auth::user()->id)->paginate(3);
+    ->select('purchases_history.slots_name','purchases_history.slots_price','slots.slots_validity','purchases_history.slots_number','purchases_history.payment_options','purchases_history.package_validity_date','purchases_history.id','slots.slots_number','purchases_history.purchases_date','purchases_history.active_package','purchases_history.package_remaining')->where('purchases_history.customer_id',Auth::guard('customer')->user()->id)->paginate(3);
 
 
 Log::debug(" Check id ".print_r($purchases_data,true));
@@ -371,8 +370,8 @@ foreach($purchases_data as $dt)
   
   $now = Carbon::now();
   $end=Carbon::createFromFormat('Y-m-d', $dt->package_validity_date);
-$totalDuration = $end->diffInDays($now);
-$dt->timeremaining=$totalDuration;
+  $totalDuration = $end->diffInDays($now);
+  $dt->timeremaining=$totalDuration;
 
 }
 Log::debug("all date ");

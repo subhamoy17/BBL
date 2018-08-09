@@ -173,7 +173,7 @@
                         <div class="clearfix"></div>
                         <div class="col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group" >
-                              <label>Time <small>*</small></label>
+                              <label>Start Time <small>*</small></label>
                               <select class="form-control" name="time">
                                 <option value="">Time</option>
                                 <option value="13:00">1 p.m</option>

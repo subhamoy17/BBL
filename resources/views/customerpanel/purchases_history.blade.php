@@ -1,12 +1,6 @@
 @extends('frontend.submain') 
 @section('content')
 
-
-
-
-
-
-
 <div class="tab_container">
   <h3 class="d_active tab_drawer_heading" rel="tab2">Tab 2</h3>
   <div id="tab2" class="tab_content">
@@ -26,12 +20,12 @@
             <th>Package Name</th>
             <th>Package Price</th>
             <th>Package validity</th>
-            <th>Purchases Date</th>
-            <th>Purchases End Date</th>
+            <th>Package Start Date</th>
+            <th>Package End Date</th>
             <!-- <th>Payment Mode</th> -->
             <th>Total Slots </th>
+            <th>Remaining Slot (S)</th>
             <th>Status</th>
-            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -45,14 +39,23 @@
             <td>{{$mydata->purchases_date}}</td>
             <td>{{$mydata->package_validity_date}}</td>
             <td>{{$mydata->slots_number}}</td>
-            <td>Status</td>
+            <td>{{$mydata->package_remaining}}</td>
             <td>
-              @if ((isset($mydata->slots_number) && !empty($mydata->slots_number)) &&($mydata->timeremaining < $mydata->slots_validity))
-              <a href="{{url('customer/booking_slot')}}/{{$mydata->id}}"class="btn btn-success">Active</a>
+              
+
+              @if ($mydata->active_package==1 && $mydata->package_remaining>0 && ($mydata->timeremaining <= $mydata->slots_validity))
+              Active
               @else
               Inactive
               @endif
             </td>
+            <!-- <td>
+              @if ($mydata->active_package==1 && $mydata->package_remaining>0 && ($mydata->timeremaining <= $mydata->slots_validity))
+              <a href="{{url('customer/booking_slot')}}/{{$mydata->id}}"class="btn btn-success">Send Slot Request</a>
+              @else
+              N/A
+              @endif
+            </td> -->
           </tr>
           @endforeach
           @else
