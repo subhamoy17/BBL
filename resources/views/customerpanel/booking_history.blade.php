@@ -1,4 +1,4 @@
-@extends('frontend.submain') 
+@extends('frontend.dashboard_submain') 
 @section('content')
 
       <div class="tab_container">
@@ -19,7 +19,7 @@
                    @if($data )
                  
                   <tr>
-                    <td>{{($sum_slots)-$count}}</td>
+                    <td>{{($sum_slots)}}</td>
                     <td>{{$future_pending_count}}</td>
                     <td>{{$accepted_count}}</td>
                       
@@ -39,8 +39,8 @@
 
 
 
-              <table class="table">
-              <form id="frm_search" method="get">
+  <table class="table">
+  <form id="frm_search" method="get">
 
   <select align ="right" id="feature" name="option" >
   <option value="future_confirm" {{Request::get('option')=='future_confirm' || Request::get('option')==''?'selected':''}} >Future confirm</option>
@@ -65,7 +65,7 @@
                       <h3 align="left" id="booking_title">Declined booking request</h3>
                        
                         @else
-                        <h3 align="left" id="booking_title">Future confirm booking</h3>
+                        <h3 align="left" id="booking_title">Future accepted booking</h3>
                          @endif
                   <tr>
                     <th>Trainer Name</th>
