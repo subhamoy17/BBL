@@ -14,13 +14,20 @@
                                 <!-- <li><a href="#"><i class="fa fa-google-plus"></i></a></li> -->
                                 <li><a href="https://www.youtube.com" target="_blank"><i class="fa fa-youtube"></i></a></li>
                             </ul>
+
+                            <span> {{Session::get('sum_slots')?Session::get('sum_slots'):0}}</span>
                             <div class="dropdown user-box">
 								<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Welcom {{Auth::user()->name}}
 								<span class="caret"></span></button>
 								<ul class="dropdown-menu">
-									<li><a href="#">My Dashboard</a></li>
-									<li><a href="#">My Profile</a></li>
-									<li><a href="#">Logout</a></li>
+									<li><a href="{{url('customer/mybooking')}}">My Dashboard</a></li>
+									<li><a href="{{url('customer/profile')}}/{{Auth::user()->id}}">My Profile</a></li>
+									<li><a href="{{ route('customerpanel.logout') }}" onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();">Logout</a></li>
+                                    <form id="logout-form" action="{{ route('customerpanel.logout') }}" method="POST" style="display: none;">
+                                        @csrf
+
+                                 </form>
 								</ul>
 							</div>
 							<div class="clearfix"></div>
@@ -79,6 +86,7 @@
                       <li class="{{ Request::segment(2) === 'profile' ? 'active' : null }}">
                         <a href="{{url('customer/profile')}}/{{Auth::user()->id}}">My Profile</a>
                       </li>
+
 
     						</ul>
 						</div>
