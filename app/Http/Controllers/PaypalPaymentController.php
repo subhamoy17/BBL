@@ -108,6 +108,10 @@ if (\Config::get('app.debug')) {
 \Session::put('failed_paypalpay', 'Connection timeout');
     $paypal_history_data['status']='Connection timeout';
     $paypal_history_data['payment_mode']='Paypal'; 
+
+    $purchases_history_data['active_package']=0;
+    $purchases_history_data['package_remaining']=0;
+
     $purchases_history=DB::table('purchases_history')->insert($purchases_history_data);
     $paypal_history_data['purchase_history_id']=DB::getPdo()->lastInsertId();
     $payment_history=DB::table('payment_history')->insert($paypal_history_data);
@@ -118,6 +122,10 @@ if (\Config::get('app.debug')) {
 \Session::put('failed_paypalpay', 'Some error occur, sorry for inconvenient');
     $paypal_history_data['status']='Inconvenient error';
     $paypal_history_data['payment_mode']='Paypal'; 
+
+    $purchases_history_data['active_package']=0;
+    $purchases_history_data['package_remaining']=0;
+
     $purchases_history=DB::table('purchases_history')->insert($purchases_history_data);
     $paypal_history_data['purchase_history_id']=DB::getPdo()->lastInsertId();
     $payment_history=DB::table('payment_history')->insert($paypal_history_data);
@@ -142,6 +150,10 @@ if (isset($redirect_url)) {
 \Session::put('failed_paypalpay', 'Unknown error occurred');
     $paypal_history_data['status']='Unknown error';
     $paypal_history_data['payment_mode']='Paypal'; 
+
+    $purchases_history_data['active_package']=0;
+    $purchases_history_data['package_remaining']=0;
+
     $purchases_history=DB::table('purchases_history')->insert($purchases_history_data);
     $paypal_history_data['purchase_history_id']=DB::getPdo()->lastInsertId();
     $payment_history=DB::table('payment_history')->insert($paypal_history_data);
@@ -180,6 +192,9 @@ public function getPaymentStatus()
 
     $paypal_history_data['status']='Cancelled';
     $paypal_history_data['payment_mode']='Paypal'; 
+
+    $purchases_history_data['active_package']=0;
+    $purchases_history_data['package_remaining']=0;
 
     $purchases_history=DB::table('purchases_history')->insert($purchases_history_data);
 
@@ -225,6 +240,9 @@ if ($result->getState() == 'approved') {
 
 	Log::debug(":: paypal return data :: ".print_r($paypal_history_data,true));
 
+    $purchases_history_data['active_package']=1;
+    $purchases_history_data['package_remaining']=$slots_number;
+
 
     $purchases_history=DB::table('purchases_history')->insert($purchases_history_data);
 
@@ -244,8 +262,41 @@ if ($result->getState() == 'approved') {
 
 
 \Session::put('success_paypalpay', 'Payment success');
+\Session::put('payment_id', $payment_id);
         return Redirect::to('customer/paypalpaymentsuccess');
 }
+
+    $amout=$result->getTransactions();
+    $transaction_details=$amout[0]->getAmount();
+
+    $paypal_history_data['payment_id']=$payment_id;
+    //$paypal_history_data['payer_id']=Input::get('PayerID');
+    $paypal_history_data['status']='Failed';
+    $paypal_history_data['amount']=$transaction_details->total;
+    $paypal_history_data['payment_mode']='Paypal';
+    $paypal_history_data['currency']=$transaction_details->currency;
+
+    Log::debug(":: paypal return data :: ".print_r($paypal_history_data,true));
+
+    $purchases_history_data['active_package']=0;
+    $purchases_history_data['package_remaining']=0;
+
+    $purchases_history=DB::table('purchases_history')->insert($purchases_history_data);
+
+    $paypal_history_data['purchase_history_id']=DB::getPdo()->lastInsertId();
+
+    $payment_history=DB::table('payment_history')->insert($paypal_history_data);
+
+    Log::debug(":: before session value :: ".print_r($package_amount,true));
+
+    Session::forget('package_amount');
+    Session::forget('slots_number');
+    Session::forget('package_id');
+    Session::forget('purchases_date');
+    Session::forget('package_validity_date');
+    Session::forget('customer_id');
+    Session::forget('package_amount');
+
 \Session::put('failed_paypalpay', 'Payment failed');
         return Redirect::to('customer/paypalpaymentsuccess');
 }
