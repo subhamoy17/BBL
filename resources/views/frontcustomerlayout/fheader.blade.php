@@ -67,6 +67,8 @@
 <li class="{{ Request::segment(1) === 'testimonial' ? 'active' : null }}">
                         <a href="{{route('testimonial')}}">Testimonial</a>
                       </li>
+
+                      
                      
     						</ul>
 						</div>
