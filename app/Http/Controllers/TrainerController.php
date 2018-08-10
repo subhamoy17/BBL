@@ -199,11 +199,139 @@ public function slotsdelete($id)
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 public function showlist()
 {
-    $data=DB::table('users')->where('master_trainer',2)->wherenull('deleted_at')->get();
+
+
+    $data=DB::table('users')
+    ->where('master_trainer',2)->wherenull('deleted_at')->get();
+
     return view('trainer.trainerlist')->with(compact('data'));
 }
+
+
+
+
+
+
+//trainer ajax function//
+public function trainer_active_deactive(Request $request)
+{
+    $data=$request->get('data');
+    $id=$data['id'];
+    $action=$data['action'];
+    Log::debug(" Check id ".print_r($id,true));
+    Log::debug(" Check action ".print_r($action,true));
+    if($action=="Active"){
+
+        DB::table('users')
+       ->where('id',$id)->update(['is_active'=>1 ]);
+        return response()->json(1);
+    }
+    elseif($action=="Deactive")
+    {
+        $remaining_session_request_now=Carbon::now()->toDateString();
+
+
+
+       DB::table('users')
+       ->where('id',$id)->update(['is_active'=>0 ]);
+
+
+       $total_decline=DB::table('slot_request')
+       ->where('trainer_id',$id)
+       ->where(function($q) {
+         $q->where('approval_id', 1)
+           ->orWhere('approval_id', 3);
+        })
+       ->where('slot_date','>=',$remaining_session_request_now)
+       ->get()->all();
+
+
+       Log::debug(" total_decline ".print_r($total_decline,true));
+
+       $customer_id=0; $session_remaining=0;
+       foreach($total_decline as $my_total)
+       {
+        
+            if($customer_id!=$my_total->customer_id){
+            $remaining_package=DB::table('purchases_history')
+            ->where('customer_id',$my_total->customer_id)
+            ->orderBy('package_validity_date','DESC')
+            ->first();
+
+            
+
+            $add_session_remaining=$remaining_package->package_remaining+1;
+
+            
+
+            $update_package_purchase=DB::table('purchases_history')
+            ->where('id',$remaining_package->id)
+            ->update(['package_remaining'=>$add_session_remaining]);
+
+            Log::debug(" package_validity_date ".print_r($update_package_purchase,true));
+        
+        }
+
+        $customer_id=$my_total->customer_id;
+        
+       }
+       
+
+       
+
+       $slot_rquest_update=DB::table('slot_request')
+       ->where('trainer_id',$id)
+       ->where(function($q) {
+         $q->where('approval_id', 1)
+           ->orWhere('approval_id', 3);
+        })
+       ->where('slot_date','>=',$remaining_session_request_now)
+       ->update(['approval_id'=>4]);
+
+
+
+
+        return response()->json(2);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -265,6 +393,7 @@ $data['master_trainer']=2;
 $password_code = str_random(6);
 $data['password']= bcrypt($password_code);
 $data['created_at']=Carbon::now();
+$data['is_active']=1;
 
 
 
@@ -308,6 +437,9 @@ public function traineredit(Request $request)
     DB::table('users')->where('id',$request->id)->update($data);
     return redirect('trainer/trainerlist')->with("success","You have successfully updated one trainer");
 }
+
+
+
 
 //past customer list//
 public function pastshowlist(Request $request)

@@ -155,6 +155,7 @@ Route::get('payment_history_backend_request', 'TrainerController@payment_history
 
 
 
+Route::get('trainer_active_deactive', 'TrainerController@trainer_active_deactive')->name('trainer_active_deactive');
 
 
 
@@ -225,6 +226,12 @@ Route::get('approvePendingRequest', 'TrainerController@approve_pending_request')
 Route::get('approveCustomer', 'TrainerController@approve_customer_request')->name('approveCustomer');
 // Route::get('approvePastCustomer', 'TrainerController@approve_past_customer_request')->name('approvePastCustomer');
 Route::get('allCustomers', 'TrainerController@all_customers')->name('allCustomers');
+
+
+
+
+
+
 
 
 

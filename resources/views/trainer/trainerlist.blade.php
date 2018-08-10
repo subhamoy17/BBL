@@ -29,17 +29,51 @@ $('#bootstrap-slot-data-table').DataTable({
      table.dataTable thead>tr>th[id='action'].sorting_asc::before{display: none}
      table.dataTable thead>tr>th[id='action'].sorting_asc::after{display: none}
 
-     /*for delete buton*/
-     .button-primary {
-    background: #d16879;
-    color: #FFF;
-    padding: 10px 20px;
-    font-weight: bold;
-    border:1px solid #FFC0CB;
+    .button-primary {
+  background: #d16879;
+  color: #FFF;
+  padding: 10px 20px;
+  font-weight: bold;
+  border:1px solid #FFC0CB; 
 }
+
+.div {
+    height:200px;
+    background-color:red;
+}
+#loading-img {
+  background: url(../backend/images/loader-gif-transparent-background-4.gif) center no-repeat / cover;
+    display: none;
+    height: 100px;
+    width: 100px;
+    position: absolute;
+    top: 33%;
+    left: 1%;
+    right: 1%;
+    margin: 0 auto;
+    z-index: 99999;
+}
+
+.group {
+    position: relative;
+    width: 100%;
+}
+.card-body{
+  
+}
+
 </style>
 
-
+<div id="success-msg" class="alert alert-success alert-dismissible" style="display: none;">
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+  <i class="icon fa fa-check"></i>Hi!
+ One request has been active successfully.
+</div>
+<div id="decline-msg" class="alert alert-warning alert-dismissible" style="display: none;">
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+  <i class="icon fa fa-info-circle"></i>Hi!
+ One request has been deactive successfully.
+</div>
 
 <div class="breadcrumbs">
     <div class="col-sm-9">
@@ -98,6 +132,7 @@ $('#bootstrap-slot-data-table').DataTable({
                                     <th>Addess</th>
                                     <th id="image">Image</th>
                                     <th id="action">Action</th>
+                                    <th>Avaliable </th>
                                 </tr>
                             </thead>
                         <tbody>
@@ -119,6 +154,19 @@ $('#bootstrap-slot-data-table').DataTable({
                                         <button class="button-primary" onclick="delete_trainer({!!$mydata->id!!})">Delete</button>
                                     </td>
                                     @endif
+                                       
+                                    <td>
+                                         @if($mydata->is_active == 1)
+                                    <button type="button" class="btn btn-danger status-all" id="{{$mydata->id}}">Deactive</button>
+                              
+                                    @else
+                           
+                                    <button type="button" class="btn btn-success status-all" id="{{$mydata->id}}">Active</button>
+                                    @endif
+                                    </td>
+
+
+
                                 </tr>
                             @endforeach
                         </tbody>
@@ -132,6 +180,173 @@ $('#bootstrap-slot-data-table').DataTable({
 </div>
     <!-- .content -->
   
+
+
+
+
+ 
+<script type="text/javascript">
+      $(document).ready(function(){
+        
+        $('.status-all').on('click',function(e) {
+          var action = $.trim($(this).text());
+          console.log(action);
+          var row = this.closest('tr');
+          console.log(row);
+      console.log(action);
+if (action == "Deactive"){
+  var Data =
+  {
+    'id': this.id,
+   
+    'action': action
+  }
+
+  alertify.confirm("Are you sure you want to deactive this trainer?", function (e) {
+     if (e) { 
+ 
+  
+
+  $.ajax({
+    url: "{{route('trainer_active_deactive')}}",
+
+    json_enc: Data,
+    type: "GET",
+    dataType: "json",
+    data:
+    {
+      'data': Data,
+    },
+    success: function (data)
+    {
+      if(data==1){
+        console.log("Approve response");
+      console.log(data);
+       $(".card-body").css("opacity", .2);
+    $("#loading-img").css({"display": "block"});
+
+      $('#success-msg').show();
+      setTimeout(function(){
+        $('#success-msg').hide();
+ location.reload();
+      }, 5000);
+      }
+      else
+      {
+        console.log("Deactive");
+      console.log(data);
+   $(".card-body").css("opacity", .2);
+    $("#loading-img").css({"display": "block"});
+      $('#decline-msg').show();
+      setTimeout(function(){
+        $('#decline-msg').hide();
+        location.reload();
+      }, 5000);
+
+
+      }
+      
+    }
+  });
+       }
+        else
+        {
+
+        }
+
+        });
+}
+else if (action == "Active"){
+  var Data =
+  {
+    'id': this.id,
+   
+    'action': action
+  }
+
+
+alertify.confirm("Are you sure you will be approve this trainer?", function (e) {
+ if (e) {
+   
+  $.ajax({
+    url: "{{route('trainer_active_deactive')}}",
+
+    json_enc: Data,
+    type: "GET",
+    dataType: "json",
+    data:
+    {
+      'data': Data,
+    },
+    success: function (data)
+    {
+      if(data==1){
+        console.log("Approve response");
+      console.log(data);
+      $(".card-body").css("opacity", .2);
+         $("#loading-img").css({"display": "block"});
+
+      $('#success-msg').show();
+      setTimeout(function(){
+        $('#success-msg').hide();
+ window.location.reload();
+      }, 5000);
+      }
+      else{
+        console.log("Decline decline");
+      console.log(data);
+   $(".card-body").css("opacity", .2);
+                  $("#loading-img").css({"display": "block"});
+      $('#decline-msg').show();
+      setTimeout(function(){
+        $('#decline-msg').hide();
+         window.location.reload();
+      }, 5000);
+
+
+      }
+      
+    }
+  });
+}
+  else 
+ 
+  {           
+
+
+   }   
+ });
+}
+});
+
+
+      });
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <script src="{{asset('backend/assets/js/lib/data-table/datatables.min.js')}}"></script>
     <script src="{{asset('backend/assets/js/lib/data-table/dataTables.bootstrap.min.js')}}"></script>
     <script src="{{asset('backend/assets/js/lib/data-table/dataTables.buttons.min.js')}}"></script>
