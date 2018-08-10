@@ -327,8 +327,10 @@ $('#myeditform').validate({
   <script>
     $(document).ready(function(){
 
-
-       $(".common").click(function() {
+var row;
+var row2;
+       $(".common_mot").click(function() {
+         row2 = $(this);
             var right_arm = $(this).data("right_arm");
             var left_arm = $(this).data("left_arm");
             var chest = $(this).data("chest");
@@ -338,6 +340,11 @@ $('#myeditform').validate({
             var left_thigh = $(this).data("left_thigh");
             var right_calf = $(this).data("right_calf");
             var left_calf = $(this).data("left_calf");
+            var starting_weight = $(this).data("starting_weight");
+            var ending_weight = $(this).data("ending_weight");
+            var heart_beat = $(this).data("heart_beat");
+            var blood_pressure = $(this).data("blood_pressure");
+            var height = $(this).data("height");
             var weight = $(this).data("weight");
             
 
@@ -355,6 +362,12 @@ $('#myeditform').validate({
             $('div.right_calf').text(right_calf);
 
             $('div.left_calf').text(left_calf);
+            $('div.left_calf').text(left_calf);
+            $('div.starting_weight').text(starting_weight);
+            $('div.ending_weight').text(ending_weight);
+            $('div.heart_beat').text(heart_beat);
+            $('div.blood_pressure').text(blood_pressure);
+            $('div.height').text(height);
             $('div.weight').text(weight);
           
             $('#reason_modal').modal('show');
@@ -370,38 +383,6 @@ $('#myeditform').validate({
 // $(this).attr('href',url);
 window.location = url;
 
-
-
-  // alert( $('#frm_search').serialize() );
-
-  // $.get('{{url('customer/booking_history?page=1')}}',$('#frm_search').serialize(), function(data){
-
-  //     console.log(data.data);
-
-  //                   $("#tbody_empty").empty();
-
-  //                   var obj = data.data;
-  //                   var table = "";
-  //                   console.log(obj.length);
-  //                   if(obj.length > 0){ 
-  //                   for(var i = 0; i < obj.length; i++){
-  //                   table += "<tr><td>"+obj[i]['users_name']+"</td><td>"+obj[i]['created_at']+"</td><td>"+obj[i]['slot_date']+' '+obj[i]['slot_time']+"</td><td>"+obj[i]['status']+"</td><td>"+'N/A'+"</td></tr>";
-  //                   }
-  //                   console.log(table);
-
-  //                   }
-  //                   else{
-                   
-                    
-  //                     // $('#approve_photo_plan_modal').modal('show');
-  //                   table = "<tr><td colspan='5' align='center'>No  data yet.</td></tr>";
-                    
-                    
-  //                   }
-  //                   $("#tbody_empty").html(table);
-      
-     
-  //   });
 });
 $('#book_history .page-link').on('click', function(e) {
 e.preventDefault();
@@ -411,93 +392,8 @@ console.log($(this).attr('href')+'&'+$('#frm_search').serialize());
 // $(this).attr('href',url);
 window.location = url;
 return true;
- // $.get($(this).attr('href'),$('#frm_search').serialize(), function(data){
- //  console.log(data);
-
- //   console.log(data.data);
-
- //                    $("#tbody_empty").empty();
-
- //                    var obj = data.data;
- //                    var table = "";
- //                    console.log(obj.length);
- //                    if(obj.length > 0){ 
- //                    for(var i = 0; i < obj.length; i++){
- //                    table += "<tr><td>"+obj[i]['users_name']+"</td><td>"+obj[i]['created_at']+"</td><td>"+obj[i]['slot_date']+' '+obj[i]['slot_time']+"</td><td>"+obj[i]['status']+"</td><td>"+'N/A'+"</td></tr>";
- //                    }
- //                    console.log(table);
-
- //                    }
- //                    else{
-                   
-                    
- //                      // $('#approve_photo_plan_modal').modal('show');
- //                    table = "<tr><td colspan='5' align='center'>No  data yet.</td></tr>";
-                    
-                    
- //                    }
- //                    $("#tbody_empty").html(table);
-      
- //  });
-
+ 
 });
-
-
-
-
-
-// $(window).on('hashchange', function() {
-//     if (window.location.hash) {
-//         var page = window.location.hash.replace('#', '');
-//         if (page == Number.NaN || page <= 0) {
-//             return false;
-//         }else{
-//             getData(page);
-//         }
-//     }
-// });
-
-
-// $(document).ready(function()
-// {
-//     $(document).on('click', '.pagination a',function(event)
-//     {
-//         $('li').removeClass('active');
-//         $(this).parent('li').addClass('active');
-//         event.preventDefault();
-
-
-//         var myurl = $(this).attr('href');
-//         var page=$(this).attr('href').split('page=')[1];
-
-
-//         getData(page);
-//     });
-// });
-
-
-// function getData(page){
-//         $.ajax(
-//         {
-//             url: '?page=' + page,
-//             type: "get",
-//             datatype: "html",
-//         })
-//         .done(function(data)
-//         {
-//             $("#tbodyempty").empty().html(data);
-//             location.hash = page;
-//         })
-//         .fail(function(jqXHR, ajaxOptions, thrownError)
-//         {
-//           // $("#tbody_empty").html(table);
-//               alert('No response from server');
-//         });
-// }
-
-
-
-
 
       $.validator.addMethod("alpha", function(value, element){
     return this.optional(element) || value == value.match(/^[a-zA-Z, '']+$/);
@@ -575,6 +471,178 @@ $('#changepassword').validate({
         reader.readAsDataURL(this.files[0]);
       }
 });
+
+ $(".convert").click(function() {
+             row = $(this);
+            // $('#this_row').val(row);
+            var right_arm = $(this).data("right_arm");
+            var left_arm = $(this).data("left_arm");
+            var chest = $(this).data("chest");
+            var waist = $(this).data("waist");
+            var hips = $(this).data("hips");
+            var right_thigh = $(this).data("right_thigh");
+            var left_thigh = $(this).data("left_thigh");
+            var right_calf = $(this).data("right_calf");
+            var left_calf = $(this).data("left_calf");
+            var starting_weight = $(this).data("starting_weight");
+            var ending_weight = $(this).data("ending_weight");
+            var heart_beat = $(this).data("heart_beat");
+            var blood_pressure = $(this).data("blood_pressure");
+            var height = $(this).data("height");
+            
+           
+
+            $('div.right_arm').text(right_arm); 
+            $('div.left_arm').text(left_arm);
+            $('div.chest').text(chest);
+            $('div.waist').text(waist);
+            $('div.hips').text(hips);
+            $('div.right_thigh').text(right_thigh);
+            $('div.left_thigh').text(left_thigh);
+            $('div.right_calf').text(right_calf);
+            $('div.left_calf').text(left_calf);
+            $('div.starting_weight').text(starting_weight);
+            $('div.ending_weight').text(ending_weight);
+            $('div.heart_beat').text(heart_beat);
+            $('div.blood_pressure').text(blood_pressure);
+            $('div.height').text(height);
+            
+          
+            $('#convert_modal').modal('show');
+        });
+
+
+
+     $('#convert_option').on('change', function()
+    {
+      // row=$('#this_row').val();
+      // alert('fdsdsf');
+    if($(this).val()=='metric')
+      { 
+           
+
+            var right_arm = row.data("right_arm");
+            var left_arm = row.data("left_arm");
+            var chest = row.data("chest");
+            var waist = row.data("waist");
+            var hips = row.data("hips");
+            var right_thigh = row.data("right_thigh");
+            var left_thigh = row.data("left_thigh");
+            var right_calf = row.data("right_calf");
+            var left_calf = row.data("left_calf");
+            var starting_weight = row.data("starting_weight");
+            var ending_weight = row.data("ending_weight");
+            var heart_beat = row.data("heart_beat");
+            var blood_pressure = row.data("blood_pressure");
+            var height = row.data("height");
+            
+            console.log('sas');
+    
+          }
+    else{
+      // var right_arm = $(this).data("right_arm")/0.393701;
+            var right_arm = (row.data("right_arm")*0.393701).toFixed(2);
+            var left_arm = (row.data("left_arm")*0.393701).toFixed(2);
+            var chest = (row.data("chest")*0.393701).toFixed(2);
+            var waist = (row.data("waist")*0.393701).toFixed(2);
+            var hips = (row.data("hips")*0.393701).toFixed(2);
+            var right_thigh = (row.data("right_thigh")*0.393701).toFixed(2);
+            var left_thigh = (row.data("left_thigh")*0.393701).toFixed(2);
+            var right_calf = (row.data("right_calf")*0.393701).toFixed(2);
+            var left_calf = (row.data("left_calf")*0.393701).toFixed(2);
+            var starting_weight = (row.data("starting_weight")*2.20462).toFixed(2);
+            var ending_weight = (row.data("ending_weight")*2.20462).toFixed(2);
+            var heart_beat = row.data("heart_beat");
+            var blood_pressure = row.data("blood_pressure");
+            var height = (row.data("height")*0.393701).toFixed(2);
+            
+      
+     
+
+    }
+    $('div.right_arm').text(right_arm); 
+            $('div.left_arm').text(left_arm);
+            $('div.chest').text(chest);
+            $('div.waist').text(waist);
+            $('div.hips').text(hips);
+            $('div.right_thigh').text(right_thigh);
+            $('div.left_thigh').text(left_thigh);
+            $('div.right_calf').text(right_calf);
+            $('div.left_calf').text(left_calf);
+            $('div.starting_weight').text(starting_weight);
+            $('div.ending_weight').text(ending_weight);
+            $('div.heart_beat').text(heart_beat);
+            $('div.blood_pressure').text(blood_pressure);
+            $('div.height').text(height);
+           
+   
+});
+
+ 
+  $('#mot_option').on('change', function()
+    {
+      // alert('fdsdsf');
+    if($(this).val()=='metric')
+      { 
+            
+
+            var right_arm = row2.data("right_arm");
+            var left_arm = row2.data("left_arm");
+            var chest = row2.data("chest");
+            var waist = row2.data("waist");
+            var hips = row2.data("hips");
+            var right_thigh = row2.data("right_thigh");
+            var left_thigh = row2.data("left_thigh");
+            var right_calf = row2.data("right_calf");
+            var left_calf = row2.data("left_calf");
+            var starting_weight = row2.data("starting_weight");
+            var ending_weight = row2.data("ending_weight");
+            var heart_beat = row2.data("heart_beat");
+            var blood_pressure = row2.data("blood_pressure");
+            var height = row2.data("height");
+            
+            
+          }
+    else{
+      
+      
+       var right_arm = (row2.data("right_arm")*0.393701).toFixed(2);
+            var left_arm = (row2.data("left_arm")*0.393701).toFixed(2);
+            var chest = (row2.data("chest")*0.393701).toFixed(2);
+            var waist = (row2.data("waist")*0.393701).toFixed(2);
+            var hips = (row2.data("hips")*0.393701).toFixed(2);
+            var right_thigh = (row2.data("right_thigh")*0.393701).toFixed(2);
+            var left_thigh = (row2.data("left_thigh")*0.393701).toFixed(2);
+            var right_calf = (row2.data("right_calf")*0.393701).toFixed(2);
+            var left_calf = (row2.data("left_calf")*0.393701).toFixed(2);
+            var starting_weight = (row2.data("starting_weight")*2.20462).toFixed(2);
+            var ending_weight = (row2.data("ending_weight")*2.20462).toFixed(2);
+            var heart_beat = row2.data("heart_beat");
+            var blood_pressure = row2.data("blood_pressure");
+            var height = (row2.data("height")*0.393701).toFixed(2);
+           
+     
+
+    }
+    $('div.right_arm').text(right_arm); 
+            $('div.left_arm').text(left_arm);
+            $('div.chest').text(chest);
+            $('div.waist').text(waist);
+            $('div.hips').text(hips);
+            $('div.right_thigh').text(right_thigh);
+            $('div.left_thigh').text(left_thigh);
+            $('div.right_calf').text(right_calf);
+            $('div.left_calf').text(left_calf);
+            $('div.starting_weight').text(starting_weight);
+            $('div.ending_weight').text(ending_weight);
+            $('div.heart_beat').text(heart_beat);
+            $('div.blood_pressure').text(blood_pressure);
+            $('div.height').text(height);
+            
+   
+});
+
+
 
     });  
   </script>
