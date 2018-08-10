@@ -25,7 +25,7 @@ class FrontController extends Controller
 
 
 public function bbl()
-  	
+    
  {
     
 
@@ -51,24 +51,24 @@ return view('customerpanel.bbl')->with(compact('data','dt'));
   }
      
   public function about()
-    {	   
+    {    
     
 $data=DB::table('our_client')->where('deleted_at',null)->get();
     return view('customerpanel/frontabout')->with(compact('data'));
     }
 
 public function details()
-   {	
+   {  
     return view('customerpanel/frontdetails');
    }
 
 public function history()
-   {	
+   {  
     return view('customerpanel/fronthistory');
    }
 
 public function frontlogin()
-   {	
+   {  
     return view('customerpanel/frontlogin_registration');
    }
 
@@ -81,7 +81,7 @@ public function frontprice(Request $request)
 
 
 public function services()
-   {	
+   {  
     return view('customerpanel/frontservices');
    }
 
@@ -256,13 +256,6 @@ $past_data->past_mot=DB::table('customer_mot')
      session(['sum_slots' => $sum_slots]);
      Log::debug(" session_value ".print_r(session('sum_slots'),true));
 
-
- // $sum_slots = DB::table('purchases_history')
- //    ->join('slots','slots.id','purchases_history.slot_id')
- //    ->join('slot_request','slot_request.purchases_id','purchases_history.id')->select('slot_request.purchases_id','slots.slots_number','purchases_history.active_package','purchases_history.package_remaining')->distinct('slot_request.purchases_id')->where('slot_request.customer_id',Auth::user()->id)->where('purchases_history.active_package',1 )
- //     ->sum('purchases_history.package_remaining');
-     // foreach ($session_history as $key => $data_number) {
-
       $count=DB::table('slot_request')->where('slot_request.slot_date','<=',$now )->count();
       $future_pending_count=DB::table('purchases_history')
     ->join('slots','slots.id','purchases_history.slot_id')
@@ -299,7 +292,7 @@ if(isset($request->start_date) && isset($request->end_date) && !empty($request->
     $purchases_data=DB::table('purchases_history')
     ->join('slots','slots.id','purchases_history.slot_id')
     ->join('customers','customers.id','purchases_history.customer_id')
-    ->select('purchases_history.slots_name','purchases_history.slots_price','slots.slots_validity','purchases_history.slots_number','purchases_history.payment_options','purchases_history.package_validity_date','purchases_history.id','slots.slots_number','purchases_history.purchases_date')->where('purchases_history.purchases_date','>=',[$start_date])->where('purchases_history.package_validity_date','<=',[$end_date])->where('purchases_history.customer_id',Auth::user()->id)->paginate(4);
+    ->select('purchases_history.slots_name','purchases_history.slots_price','slots.slots_validity','purchases_history.slots_number','purchases_history.payment_options','purchases_history.package_validity_date','purchases_history.id','slots.slots_number','purchases_history.purchases_date','purchases_history.active_package','purchases_history.package_remaining','customers.id as customer_id')->where('purchases_history.purchases_date','>=',[$start_date])->where('purchases_history.package_validity_date','<=',[$end_date])->where('purchases_history.customer_id',Auth::guard('customer')->user()->id)->paginate(3);
 
 
     foreach($purchases_data as $searchdt)
@@ -309,7 +302,6 @@ if(isset($request->start_date) && isset($request->end_date) && !empty($request->
   $end=Carbon::createFromFormat('Y-m-d', $searchdt->package_validity_date);
 $totalDuration = $end->diffInDays($now);
 $searchdt->timeremaining=$totalDuration;
-
 }
 Log::debug(" date ");
   }
@@ -319,7 +311,7 @@ else{
   $purchases_data=DB::table('purchases_history')
     ->join('slots','slots.id','purchases_history.slot_id')
     ->join('customers','customers.id','purchases_history.customer_id')
-    ->select('purchases_history.slots_name','purchases_history.slots_price','slots.slots_validity','purchases_history.slots_number','purchases_history.payment_options','purchases_history.package_validity_date','purchases_history.id','slots.slots_number','purchases_history.purchases_date')->where('purchases_history.customer_id',Auth::user()->id)->paginate(4);
+    ->select('purchases_history.slots_name','purchases_history.slots_price','slots.slots_validity','purchases_history.slots_number','purchases_history.payment_options','purchases_history.package_validity_date','purchases_history.id','slots.slots_number','purchases_history.purchases_date','purchases_history.active_package','purchases_history.package_remaining','customers.id as customer_id')->where('purchases_history.customer_id',Auth::guard('customer')->user()->id)->paginate(3);
 
 
 Log::debug(" Check id ".print_r($purchases_data,true));
@@ -331,15 +323,29 @@ foreach($purchases_data as $dt)
   $end=Carbon::createFromFormat('Y-m-d', $dt->package_validity_date);
   $totalDuration = $end->diffInDays($now);
   $dt->timeremaining=$totalDuration;
-
 }
 Log::debug("all date ");
 }
 
+  //$remaining_session_request_now=Carbon::now();
+
+  $remaining_session_request_now=Carbon::now()->toDateString();
+
+
+  $remaining_session_request=DB::table('purchases_history')
+    ->join('slots','slots.id','purchases_history.slot_id')
+    ->join('customers','customers.id','purchases_history.customer_id')
+    ->select('purchases_history.slots_name','purchases_history.slots_price','slots.slots_validity','purchases_history.slots_number','purchases_history.payment_options','purchases_history.package_validity_date','purchases_history.id','slots.slots_number','purchases_history.purchases_date','purchases_history.active_package','purchases_history.package_remaining')
+    ->where('purchases_history.customer_id',Auth::guard('customer')->user()->id)
+    ->where('purchases_history.active_package',1)
+    ->where('purchases_history.package_remaining','>',0)
+    ->where('purchases_history.package_validity_date','>=',$remaining_session_request_now)->count();
+
+Log::debug(" remaining_session_request ".print_r($remaining_session_request,true));
 
 Log::debug(" Check id ".print_r($purchases_data,true));
 
- return view('customerpanel.purchases_history')->with(compact('purchases_data'));
+ return view('customerpanel.purchases_history')->with(compact('purchases_data','remaining_session_request'));
 
    
 }
@@ -347,33 +353,118 @@ Log::debug(" Check id ".print_r($purchases_data,true));
 
 public function booking_slot($id)
 {
+$customer_id=$id;
 
-
-$purchases_id=$id;
-
- $data=DB::table('users')->get();
-return view('customerpanel.booking_slot')->with(compact('data','purchases_id'));
+if($customer_id!=0)
+{
+$data=DB::table('users')->get();
+return view('customerpanel.booking_slot')->with(compact('data','customer_id'));
+}
+else
+{
+  return view('customerpanel.booking_slot')->with(compact('customer_id'));
+}
 
 }
+
+
+public function booking_slot_times(Request $request)
+{
+
+  $trainer_id=$request->trainer_id;
+  $slot_date=$request->slot_date;
+
+  Log::debug(" trainer_id ".print_r($trainer_id,true));
+  Log::debug(" slot_date ".print_r($slot_date,true));
+
+$get_slot_times=DB::table('slot_request')
+  ->where('trainer_id',$trainer_id)
+  ->where('slot_date',$slot_date)
+  ->where(function($q) {
+         $q->where('approval_id', 1)
+           ->orWhere('approval_id', 3);
+     })
+  ->pluck('slot_time');
+
+  Log::debug(" get_slot_times ".print_r($get_slot_times,true));
+
+$final_slot_time=DB::table('slot_times')->whereNotIn('id',$get_slot_times)->get()->all();
+
+Log::debug(" final_slot_times ".print_r($final_slot_time,true));
+
+return json_encode($final_slot_time);
+}
+
 
 
 function slotinsert(Request $request)
 {
 
-Log::debug(" Check id ".print_r($request->all(),true));
+Log::debug(" Check session request data ".print_r($request->all(),true));
 
-$data['purchases_id']=$request->idd;
- 
-$data['trainer_id']=$request->id;
-$data['slot_time']=$request->time;
-$data['slot_date']=$request->date;
+$customer_id=$request->idd; //customer_id
+$trainer_id=$request->id;  //trainer_id
+$request_date=$request->date; // session request date
+$request_time=$request->time;  // session request time
 
-$data["customer_id"]=Auth::user()->id;
-DB::table('slot_request')->insert($data);
+$remaining_session_request_now=Carbon::now()->toDateString();
 
-Log::debug(" Check id ".print_r($data,true));
+$all_package=DB::table('purchases_history')
+->select('id','purchases_date','package_validity_date','package_remaining')
+->where('customer_id',$customer_id)
+->where('active_package',1)
+->where('package_remaining','>',0)
+->where('package_validity_date','>=',$remaining_session_request_now)
+->orderBy('package_validity_date', 'ASC')
+->first();
 
-return redirect()->back()->with("success","Your booking form is update successfully !");
+Log::debug(" all_package ".print_r($all_package,true));
+
+$oldest_package_id=$all_package->id;
+$oldest_package_validity_date=$all_package->package_validity_date;
+$package_remaining=$all_package->package_remaining;
+
+
+$slots_data['customer_id']=$customer_id;
+$slots_data['trainer_id']=$trainer_id;
+$slots_data['purchases_id']=$oldest_package_id;
+$slots_data['slot_date']=$request_date;
+$slots_data['slot_time']=$request_time;
+$slots_data['approval_id']=1;
+
+$insert_slot_session=DB::table('slot_request')->insert($slots_data);
+
+if($package_remaining>0){
+$new_remaining_package['package_remaining']=$package_remaining-1;
+$new_remaining_package['active_package']=1;
+}
+if($package_remaining==1)
+{
+$new_remaining_package['package_remaining']=$package_remaining-1;
+$new_remaining_package['active_package']=0;
+}
+
+
+$update_package_purchase=DB::table('purchases_history')
+->where('id',$oldest_package_id)
+->update($new_remaining_package);
+
+Log::debug(" all_package ".print_r($all_package,true));
+
+if($insert_slot_session && $update_package_purchase) {
+
+  $sum_slots = DB::table('purchases_history')->
+    select('purchases_history.active_package','purchases_history.package_remaining','purchases_history.customer_id')->where('purchases_history.customer_id',Auth::user()->id)
+    ->where('active_package',1)
+    ->where('package_remaining','>',0)
+    ->where('package_validity_date','>=',$remaining_session_request_now)
+    ->sum('purchases_history.package_remaining');
+     session(['sum_slots' => $sum_slots]);
+
+
+return redirect()->back()->with("success","Your Session booking request is sent successfully !");
+}
+
 
 }
 
