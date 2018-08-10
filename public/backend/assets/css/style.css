@@ -675,7 +675,10 @@ textarea.parsley-error {
 
 
 
-
+.modal-dialog.pay {
+    position: relative;
+    top: 200px;
+}
 
 
 

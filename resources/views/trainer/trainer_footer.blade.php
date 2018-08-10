@@ -8,7 +8,7 @@
     <script src="{{url('frontend/js/jquery-ui.js')}}"></script>
 
 
-
+ <script src="{{asset('backend/assets/js/jquery.search.min.js')}}"></script>
     <script src="{{asset('backend/assets/js/lib/chart-js/Chart.bundle.js')}}"></script>
     <script src="{{asset('backend/assets/js/dashboard.js')}}"></script>
     <script src="{{asset('backend/assets/js/widgets.js')}}"></script>
@@ -37,8 +37,11 @@
   });
 
 })( jQuery );
+
   
     </script>
+
+
 
     <script src="{{asset('backend/assets/js/totanjs/alertify.min.js')}}"></script>
     

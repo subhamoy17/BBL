@@ -2505,7 +2505,7 @@ ul.tabs li.active {
     float: left;
     width: 100%;
     background: #fff;
-    overflow: auto;
+   /* overflow: auto;*/
     margin-bottom: 30px;
 }
 
@@ -5711,7 +5711,6 @@ a.sign-btn2 {
     bottom: -224px;
     right: 0;
 
-}
 
 
 

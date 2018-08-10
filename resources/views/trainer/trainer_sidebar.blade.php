@@ -68,6 +68,16 @@
                   <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('mot_show')}}">Customer MOT</a></li>
                   @endif
 
+                  @if(Request::segment(2) == "payment_history_backend")
+                       <ul class="nav navbar-nav">
+                 <li class="active">
+                  <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('payment_history')}}" style="color: #fff !important;">Payment History</a></li>
+                  @else
+                  <ul class="nav navbar-nav">
+                  <li class="active">
+                  <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('payment_history')}}">Payment History</a></li>
+                  @endif
+
 
 
 
@@ -84,11 +94,11 @@
                   @if(Request::segment(2) == "our_client_show")
                        <ul class="nav navbar-nav">
                  <li class="active">
-                  <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('our_client_show')}}" style="color: #fff !important;">Our Client</a></li>
+                  <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('our_client_show')}}" style="color: #fff !important;">Our Trainer</a></li>
                   @else
                   <ul class="nav navbar-nav">
                   <li class="active">
-                  <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('our_client_show')}}">Our Client</a></li>
+                  <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('our_client_show')}}">Our Trainer</a></li>
                   @endif
 
 

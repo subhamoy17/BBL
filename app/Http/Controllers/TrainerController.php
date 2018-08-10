@@ -31,8 +31,8 @@ public function __construct()
 */
 public function index()
 
-  {
- $cur_date =TODAY();
+{
+    $cur_date =TODAY();
 
 $future_pending_request=DB::table('slot_request')->where('slot_request.trainer_id',Auth::user()->id)->where('slot_request.slot_date','>',$cur_date)->where('approval_id',1)->count();//number of future pending request 
 $future_approve_request=DB::table('slot_request')->where('slot_request.trainer_id',Auth::user()->id)->where('slot_request.approval_id','<>',1)->where('slot_request.slot_date','>',$cur_date)->count(); //number of future approve request 
@@ -41,7 +41,7 @@ $past_request=DB::table('slot_request')->where('slot_request.trainer_id',Auth::u
 
 $decline_request=DB::table('slot_request')->where('slot_request.trainer_id',Auth::user()->id)->where('approval_id',4)->count();//number of decline request
 
-    return view('trainer.home')->with(compact('future_pending_request','future_approve_request','past_request','decline_request'));
+return view('trainer.home')->with(compact('future_pending_request','future_approve_request','past_request','decline_request'));
 
 }
 
@@ -134,7 +134,7 @@ $request->validate
 [ 'slots_number'=>'required|integer|min:1', //accept only integer and must be minimum value of 1 is required
 'slots_price'=>'required|numeric|between:1,999999.99',//accept only integer and must be minimum value of 1 is required
 'slots_validity'=>'required|integer|min:1',
- // same as slots_number
+// same as slots_number
 
 'slots_name'=>'required|max:255|unique:slots'
 ]
@@ -191,7 +191,7 @@ public function slotsedit(Request $request)
 public function slotsdelete($id)
 {
     $slotsdata['deleted_at']=Carbon::now();
-    
+
     DB::table('slots')->where('id',$id)->update($slotsdata);
     return redirect('trainer/add-slot')->with("delete","You have successfully deleted one package");
 }
@@ -223,19 +223,19 @@ public function trainerdelete($id)
 
 public function inserttrainer(Request $request)
 {
-  
- $validator=Validator::make($request->all(), [
-              
-              'email' => 'sometimes|email|max:255|unique:users',
-          ]);
-             
- if($validator->fails())
-          {
-            Log::debug(" Validator ".print_r($validator->errors(),true));
-            return redirect()->back()->withErrors($validator )
-                          ->withInput();
-          }
- 
+
+    $validator=Validator::make($request->all(), [
+
+        'email' => 'sometimes|email|max:255|unique:users',
+    ]);
+
+    if($validator->fails())
+    {
+        Log::debug(" Validator ".print_r($validator->errors(),true));
+        return redirect()->back()->withErrors($validator )
+        ->withInput();
+    }
+
 
 Log::debug(" data ".print_r($request->all(),true)); /// create log for showing error and print resul
 if($request->image!="")
@@ -243,9 +243,9 @@ if($request->image!="")
     $request->validate
     (
         [ 'image'=>'image|mimes:jpeg,jpg,png,gif|max:2048',
-        
-        ]
-    );
+
+    ]
+);
     $myimage=$request->image;
     $folder="backend/images/"; 
     $extension=$myimage->getClientOriginalExtension(); 
@@ -365,7 +365,7 @@ public function approve_customer_request(Request $request)
 //future customer list//
 public function futureshowlist(Request $request)
 {
-    
+
     $id=$request->id;
     $cur_date =TODAY();
     $cur_time =date("H:i:s");
@@ -519,7 +519,7 @@ public function update_exercise(Request $request)
     $data['title']=$request->title;
     $data['description']=$request->description;
     $data['duration']=$request->duration;
-     $data['video']=(isset($request->video) && !empty($request->video)) ? $request->video : null;
+    $data['video']=(isset($request->video) && !empty($request->video)) ? $request->video : null;
     $data['updated_at']=Carbon::now();
 
     DB::table('exercise_details')->where('id',$request->id)->update($data);
@@ -549,7 +549,7 @@ public function contactlist(Request $request)
 public function testimonial_view()
 {
 
-      $data=DB::table('testimonial')->where('deleted_at',null)->get();
+    $data=DB::table('testimonial')->where('deleted_at',null)->get();
     return view('trainer.testimonial_view')->with(compact('data'));
 }
 
@@ -574,29 +574,29 @@ public function testimonialshow()
 
 public function testimonialinsert(Request $request)
 {
- 
- if($request->image!="")
-{
-    $request->validate
-    (
-        [ 'image'=>'image|mimes:jpeg,jpg,png,gif|max:2048']
-    );
-    $myimage=$request->image;
-    $folder="backend/images/"; 
-    $extension=$myimage->getClientOriginalExtension(); 
-    $image_name=time()."_adminimg.".$extension; 
-    $upload=$myimage->move($folder,$image_name); 
-    $data['image']=$image_name; 
-}
-else
-    { $data['image']=$request->oldimage;  }
 
-$data['name']=$request->name;
-$data['designation']=$request->designation;
-$data['description']=$request->description;
-DB::table('testimonial')->insert($data);
+    if($request->image!="")
+    {
+        $request->validate
+        (
+            [ 'image'=>'image|mimes:jpeg,jpg,png,gif|max:2048']
+        );
+        $myimage=$request->image;
+        $folder="backend/images/"; 
+        $extension=$myimage->getClientOriginalExtension(); 
+        $image_name=time()."_adminimg.".$extension; 
+        $upload=$myimage->move($folder,$image_name); 
+        $data['image']=$image_name; 
+    }
+    else
+        { $data['image']=$request->oldimage;  }
 
- return redirect('trainer/testimonial_view')->with("success","You have successfully added one testimonial.");
+    $data['name']=$request->name;
+    $data['designation']=$request->designation;
+    $data['description']=$request->description;
+    DB::table('testimonial')->insert($data);
+
+    return redirect('trainer/testimonial_view')->with("success","You have successfully added one testimonial.");
 
 }
 
@@ -614,12 +614,6 @@ public function testimonialedit($id)
     Log::debug(" data ".print_r($data,true));
     return view ("trainer.edit_testimonial")->with(compact('data'));
 }
-
-
-
-
-
-
 
 public function testimonialupdate(Request $request)
 { 
@@ -661,10 +655,10 @@ public function testimonialdelete($id)
 public function mot_show(Request $request)
 {
 
-$data=DB::table('customer_mot')
+    $data=DB::table('customer_mot')
     ->join('customers','customers.id','customer_mot.customer_id')
     ->select('customer_mot.*','customers.name')->where('customer_mot.deleted_at',null)->get();
-return view('trainer.customer_mot')->with(compact('data'));
+    return view('trainer.customer_mot')->with(compact('data'));
 
 }
 
@@ -674,8 +668,8 @@ public function motinsertshow()
 {
 
 
-$data=DB::table('customers')->get();
-return view('trainer.motinsertshow')->with(compact('data'));
+    $data=DB::table('customers')->get();
+    return view('trainer.motinsertshow')->with(compact('data'));
 
 }
 
@@ -683,30 +677,111 @@ return view('trainer.motinsertshow')->with(compact('data'));
 
 
 public function motinsert(Request $request){
-    $data['right_arm']=(isset($request->right_arm) && !empty($request->right_arm)) ? $request->right_arm : null;
-    $data['left_arm']=(isset($request->left_arm) && !empty($request->left_arm)) ? $request->left_arm : null;
-    $data['chest']=(isset($request->chest) && !empty($request->chest)) ? $request->chest : null;
-    $data['waist']=(isset($request->waist) && !empty($request->waist)) ? $request->waist : null;
-    $data['hips']=(isset($request->hips) && !empty($request->hips)) ? $request->hips : null;
-    $data['right_thigh']=(isset($request->right_thigh) && !empty($request->right_thigh)) ? $request->right_thigh : null;
-    $data['left_thigh']=(isset($request->left_thigh) && !empty($request->left_thigh)) ? $request->left_thigh : null;
-    $data['right_calf']=(isset($request->right_calf) && !empty($request->right_calf)) ? $request->right_calf : null;
-    $data['left_calf']=(isset($request->left_calf) && !empty($request->left_calf)) ? $request->left_calf : null;
-    $data['starting_weight']=(isset($request->starting_weight) && !empty($request->starting_weight)) ? $request->starting_weight : null;
-    $data['ending_weight']=(isset($request->ending_weight) && !empty($request->ending_weight)) ? $request->ending_weight : null;
-    $data['blood_pressure']=(isset($request->blood_pressure) && !empty($request->blood_pressure)) ? $request->blood_pressure : null;
-    $data['heart_beat']=(isset($request->heart_beat) && !empty($request->heart_beat)) ? $request->heart_beat : null;
-    $data['height']=(isset($request->height) && !empty($request->height)) ? $request->height : null;
+
+    if($request->right_arm_credential=="metric")
+    {
+        $right_arm =$request->right_arm;
+    }
+    else
+    {
+        $right_arm =($request->right_arm/0.39370 );
+    }
+    if($request->left_arm_credential=="metric")
+    {
+        $left_arm =$request->left_arm;
+    }
+    else
+    {
+        $left_arm =($request->left_arm/0.39370 );
+    }
+    if($request->chest_credential=="metric")
+    {
+        $chest =$request->chest;
+    }
+    else
+    {
+        $chest =($request->chest/0.39370 );
+    }
+    if($request->waist_credential=="metric")
+    {
+        $waist =$request->waist;
+    }
+    else
+    {
+        $waist =($request->waist/0.39370 );
+    }
+    if($request->hips_credential=="metric")
+    {
+        $hips =$request->hips;
+    }
+    else
+    {
+        $hips =($request->hips/0.39370 );
+    }
+    if($request->right_thigh_credential=="metric")
+    {
+        $right_thigh =$request->right_thigh;
+    }
+    else
+    {
+        $right_thigh =($request->right_thigh/0.39370 );
+    }
+    if($request->left_thigh_credential=="metric")
+    {
+        $left_thigh =$request->left_thigh;
+    }
+    else
+    {
+        $left_thigh =($request->left_thigh/0.39370 );
+    }
+    if($request->height_credential=="metric")
+    {
+        $height =$request->height;
+    }
+    else
+    {
+        $height =($request->height/0.39370 );
+    }
+    if($request->right_calf_credential=="metric")
+    {
+        $right_calf =$request->right_calf;
+    }
+    else
+    {
+        $right_calf =($request->right_calf/0.39370 );
+    }
+    $data['right_arm']=(isset($right_arm) && !empty($right_arm)) ? $right_arm : null;
+    $data['left_arm']=(isset($left_arm) && !empty($left_arm)) ? $left_arm : null;
+    $data['chest']=(isset($chest) && !empty($chest)) ? $chest : null;
+    $data['waist']=(isset($waist) && !empty($waist)) ? $waist : null;
+    $data['hips']=(isset($hips) && !empty($hips)) ? $hips : null;
+    $data['right_thigh']=(isset($right_thigh) && !empty($right_thigh)) ? $right_thigh : null;
+    $data['left_thigh']=(isset($left_thigh) && !empty($left_thigh)) ? $left_thigh : null;
+
+    $data['right_calf']=(isset($right_calf) && !empty($right_calf)) ? $right_calf : null;
+    $data['left_calf']=(isset($left_calf) && !empty($left_calf)) ? $left_calf : null;
+    $data['starting_weight']=(isset($starting_weight) && !empty($starting_weight)) ? $starting_weight : null;
+    $data['ending_weight']=(isset($ending_weight) && !empty($ending_weight)) ? $ending_weight : null;
+    $data['blood_pressure']=(isset($blood_pressure) && !empty($blood_pressure)) ? $blood_pressure : null;
+    $data['heart_beat']=(isset($heart_beat) && !empty($heart_beat)) ? $heart_beat : null;
+    $data['height']=(isset($height) && !empty($height)) ? $height : null;
+
     $data['date']=(isset($request->date) && !empty($request->date)) ? $request->date : null;
+
+    $data['description']=(isset($request->description) && !empty($request->description)) ? $request->description : null;
+
     $data['trainer_id']=(isset($request->trainer_id) && !empty($request->trainer_id)) ? $request->trainer_id : null;
     $data['trainer_id']=(isset($request->trainer_id) && !empty($request->trainer_id)) ? $request->trainer_id : null;
     $data['customer_id']=(isset($request->apply) && !empty($request->apply)) ? $request->apply : null;
 
-
-    // print_r($data);die();
+// print_r($data);die();
     DB::table('customer_mot')->insert($data);
     Log::debug(" Check id ".print_r($data,true));
     return redirect('trainer/mot_show')->with("success","You have successfully added one customer's MOT.");
+
+
+
+
 }
 
 
@@ -716,38 +791,116 @@ public function moteditshow($id)
 {
 
 
-$data=DB::table('customer_mot')
+    $data=DB::table('customer_mot')
     ->join('customers','customers.id','customer_mot.customer_id')
     ->join('users','users.id','customer_mot.trainer_id')
 
-    ->select('customer_mot.id as mot_id','customer_mot.height','customer_mot.customer_id as customer_id','customer_mot.trainer_id','customer_mot.right_arm','customer_mot.left_arm','customer_mot.chest','customer_mot.waist','customer_mot.hips','customer_mot.right_thigh','customer_mot.left_thigh','customer_mot.starting_weight','customer_mot.date','customer_mot.right_calf','customer_mot.left_calf','customer_mot.heart_beat','customers.name as current_customer_name','customer_mot.blood_pressure','customer_mot.ending_weight')->where('customer_mot.id',$id)->first();
+    ->select('customer_mot.id as mot_id','customer_mot.height','customer_mot.customer_id as customer_id','customer_mot.trainer_id','customer_mot.right_arm','customer_mot.left_arm','customer_mot.chest','customer_mot.waist','customer_mot.hips','customer_mot.right_thigh','customer_mot.left_thigh','customer_mot.starting_weight','customer_mot.date','customer_mot.right_calf','customer_mot.left_calf','customer_mot.heart_beat','customers.name as current_customer_name','customer_mot.blood_pressure','customer_mot.ending_weight','customer_mot.description')->where('customer_mot.id',$id)->first();
 
-return view('trainer.moteditshow')->with(compact('data'));
+    return view('trainer.moteditshow')->with(compact('data'));
 
 }
 
 
 
 public function motedit(Request $request){
-    
-    $data['right_arm']=(isset($request->right_arm) && !empty($request->right_arm)) ? $request->right_arm : null;
-    $data['left_arm']=(isset($request->left_arm) && !empty($request->left_arm)) ? $request->left_arm : null;
-    $data['chest']=(isset($request->chest) && !empty($request->chest)) ? $request->chest : null;
-    $data['waist']=(isset($request->waist) && !empty($request->waist)) ? $request->waist : null;
-    $data['hips']=(isset($request->hips) && !empty($request->hips)) ? $request->hips : null;
-    $data['right_thigh']=(isset($request->right_thigh) && !empty($request->right_thigh)) ? $request->right_thigh : null;
-    $data['left_thigh']=(isset($request->left_thigh) && !empty($request->left_thigh)) ? $request->left_thigh : null;
-    $data['right_calf']=(isset($request->right_calf) && !empty($request->right_calf)) ? $request->right_calf : null;
-    $data['left_calf']=(isset($request->left_calf) && !empty($request->left_calf)) ? $request->left_calf : null;
+
+
+    if($request->right_arm_credential=="metric")
+    {
+        $right_arm =$request->right_arm;
+    }
+    else
+    {
+        $right_arm =($request->right_arm/0.39370 );
+    }
+    if($request->left_arm_credential=="metric")
+    {
+        $left_arm =$request->left_arm;
+    }
+    else
+    {
+        $left_arm =($request->left_arm/0.39370 );
+    }
+    if($request->chest_credential=="metric")
+    {
+        $chest =$request->chest;
+    }
+    else
+    {
+        $chest =($request->chest/0.39370 );
+    }
+    if($request->waist_credential=="metric")
+    {
+        $waist =$request->waist;
+    }
+    else
+    {
+        $waist =($request->waist/0.39370 );
+    }
+    if($request->hips_credential=="metric")
+    {
+        $hips =$request->hips;
+    }
+    else
+    {
+        $hips =($request->hips/0.39370 );
+    }
+    if($request->right_thigh_credential=="metric")
+    {
+        $right_thigh =$request->right_thigh;
+    }
+    else
+    {
+        $right_thigh =($request->right_thigh/0.39370 );
+    }
+    if($request->left_thigh_credential=="metric")
+    {
+        $left_thigh =$request->left_thigh;
+    }
+    else
+    {
+        $left_thigh =($request->left_thigh/0.39370 );
+    }
+    if($request->height_credential=="metric")
+    {
+        $height =$request->height;
+    }
+    else
+    {
+        $height =($request->height/0.39370 );
+    }
+    if($request->right_calf_credential=="metric")
+    {
+        $right_calf =$request->right_calf;
+    }
+    else
+    {
+        $right_calf =($request->right_calf/0.39370 );
+    }
+
+    $data['right_arm']=(isset($right_arm) && !empty($right_arm)) ? $right_arm : null;
+
+    $data['left_arm']=(isset($left_arm) && !empty($left_arm)) ? $left_arm : null;
+    $data['chest']=(isset($chest) && !empty($chest)) ? $chest : null;
+    $data['waist']=(isset($waist) && !empty($waist)) ? $waist : null;
+    $data['hips']=(isset($hips) && !empty($hips)) ? $hips : null;
+    $data['right_thigh']=(isset($right_thigh) && !empty($right_thigh)) ? $right_thigh : null;
+    $data['left_thigh']=(isset($left_thigh) && !empty($left_thigh)) ? $left_thigh : null;
+
+    $data['right_calf']=(isset($right_calf) && !empty($right_calf)) ? $right_calf : null;
+    $data['left_calf']=(isset($left_calf) && !empty($left_calf)) ? $left_calf : null;
     $data['starting_weight']=(isset($request->starting_weight) && !empty($request->starting_weight)) ? $request->starting_weight : null;
     $data['ending_weight']=(isset($request->ending_weight) && !empty($request->ending_weight)) ? $request->ending_weight : null;
     $data['heart_beat']=(isset($request->heart_beat) && !empty($request->heart_beat)) ? $request->heart_beat : null;
     $data['blood_pressure']=(isset($request->blood_pressure) && !empty($request->blood_pressure)) ? $request->blood_pressure : null;
     $data['height']=(isset($request->height) && !empty($request->height)) ? $request->height : null;
+    $data['description']=(isset($request->description) && !empty($request->description)) ? $request->description : null;
+
     $data['date']=(isset($request->date) && !empty($request->date)) ? $request->date : null;
     DB::table('customer_mot')->where('id',$request->id)->update($data);
     Log::debug(" Check id ".print_r($data,true));
-   return redirect('trainer/mot_show')->with("success","You have successfully updated one customer's MOT.");
+    return redirect('trainer/mot_show')->with("success","You have successfully updated one customer's MOT.");
 
 }
 
@@ -758,15 +911,11 @@ public function motdelete($id){
     return redirect('trainer/mot_show')->with("delete","You have successfully deleted one customer's MOT.");
 }
 
-
-
 public function our_client_show(){
     $data=DB::table('our_client')->where('deleted_at',null)->get();
     return view('trainer.our_client_list')->with(compact('data'));
 
 }
-
-
 
 
 public function client_insert_view()
@@ -775,45 +924,42 @@ public function client_insert_view()
 }
 
 
-
-
-
 public function client_insert(Request $request)
 {
- if($request->image!="")
-{
-    $request->validate
-    (
-        [ 'image'=>'image|mimes:jpeg,jpg,png,gif|max:2048']
-    );
-    $myimage=$request->image;
-    $folder="backend/images/"; 
-    $extension=$myimage->getClientOriginalExtension(); 
-    $image_name=time()."_adminimg.".$extension; 
-    $upload=$myimage->move($folder,$image_name); 
-    $data['image']=$image_name; 
-}
-else
-    { $data['image']=$request->oldimage;  }
+    if($request->image!="")
+    {
+        $request->validate
+        (
+            [ 'image'=>'image|mimes:jpeg,jpg,png,gif|max:2048']
+        );
+        $myimage=$request->image;
+        $folder="backend/images/"; 
+        $extension=$myimage->getClientOriginalExtension(); 
+        $image_name=time()."_adminimg.".$extension; 
+        $upload=$myimage->move($folder,$image_name); 
+        $data['image']=$image_name; 
+    }
+    else
+        { $data['image']=$request->oldimage;  }
 
 
-$data['title']=$request->title;
-$data['name']=$request->name;
-$data['designation']=$request->designation;
-$data['description']=$request->description;
-$data['facebook']=$request->facebook;
-$data['twitter']=$request->twitter;
-$data['instagram']=$request->instagram;
+    $data['title']=$request->title;
+    $data['name']=$request->name;
+    $data['designation']=$request->designation;
+    $data['description']=$request->description;
+    $data['facebook']=$request->facebook;
+    $data['twitter']=$request->twitter;
+    $data['instagram']=$request->instagram;
 
-DB::table('our_client')->insert($data);
-Log::debug(" Check id ".print_r($data,true));
-return redirect('trainer/our_client_show')->with("success","One Client is insert successfully !");
+    DB::table('our_client')->insert($data);
+    Log::debug(" Check id ".print_r($data,true));
+    return redirect('trainer/our_client_show')->with("success","One Client is insert successfully !");
 }
 
 public function client_edit_view($id)
 {
 
- $data= DB::table('our_client')->where('id',$id)->first();
+    $data= DB::table('our_client')->where('id',$id)->first();
     Log::debug(" data ".print_r($data,true));
     return view ("trainer.client_edit_view")->with(compact('data'));
 
@@ -837,26 +983,18 @@ public function client_update(Request $request)
     }
     else {   $data['image']=$request->oldimage; }
 
-   $data['title']=$request->title;
-$data['name']=$request->name;
-$data['designation']=$request->designation;
-$data['description']=$request->description;
-$data['facebook']=$request->facebook;
-$data['twitter']=$request->twitter;
-$data['instagram']=$request->instagram;
-$data['updated_at']=Carbon::now();
+    $data['title']=$request->title;
+    $data['name']=$request->name;
+    $data['designation']=$request->designation;
+    $data['description']=$request->description;
+    $data['facebook']=$request->facebook;
+    $data['twitter']=$request->twitter;
+    $data['instagram']=$request->instagram;
+    $data['updated_at']=Carbon::now();
 
     DB::table('our_client')->where('id',$request->id)->update($data);
     return redirect('trainer/our_client_show')->with("success","One Client is updated successfully!");
 }
-
-
-
-
-
-
-
-
 
 public function client_delete($id)
 {
@@ -871,7 +1009,47 @@ public function client_delete($id)
 
 
 
+public function payment_history_backend()
+{
 
+
+    $data=DB::table('purchases_history')
+     ->join('customers','customers.id','purchases_history.customer_id')
+    ->join('payment_history','payment_history.purchase_history_id','purchases_history.id')
+
+ ->select('purchases_history.id','purchases_history.slots_name','purchases_history.slots_price','customers.name','customers.name','purchases_history.payment_options','purchases_history.active_package','purchases_history.payment_options','payment_history.status','purchases_history.purchases_date','payment_history.payment_id','payment_history.description','payment_history.image')->get();
+
+    return view('trainer.payment_history_backend')->with(compact('data'));
+
+}
+
+
+public function payment_history_backend_request(Request $request)
+{
+    $data=$request->get('data');
+    $id=$data['id'];
+    $action=$data['action'];
+    Log::debug(" Check id ".print_r($id,true));
+    Log::debug(" Check action ".print_r($action,true));
+    if($action=="Approve"){
+
+        DB::table('purchases_history')->join('customers','customers.id','purchases_history.customer_id')
+    ->join('payment_history','payment_history.purchase_history_id','purchases_history.id')
+
+ ->select('purchases_history.id','purchases_history.slots_name','purchases_history.slots_price','customers.name','customers.name','purchases_history.payment_options','purchases_history.active_package','purchases_history.payment_options','payment_history.status','purchases_history.purchases_date','payment_history.payment_id','payment_history.description','payment_history.image')
+        ->where('purchases_history.id',$id)->update(['purchases_history.active_package' =>1, 'payment_history.status'=> 'Success']);
+        return response()->json(1);
+    }
+    elseif($action=="Decline")
+    {
+        
+        DB::table('purchases_history')->join('customers','customers.id','purchases_history.customer_id')
+    ->join('payment_history','payment_history.purchase_history_id','purchases_history.id')
+
+ ->select('purchases_history.id','purchases_history.slots_name','purchases_history.slots_price','customers.name','customers.name','purchases_history.payment_options','purchases_history.active_package','purchases_history.payment_options','payment_history.status','purchases_history.purchases_date','payment_history.payment_id','payment_history.description','payment_history.image')->where('purchases_history.id',$id)->update(['purchases_history.active_package' => 0, 'payment_history.status'=> 'Decline']);
+        return response()->json(2);
+    }
+}
 
 
 

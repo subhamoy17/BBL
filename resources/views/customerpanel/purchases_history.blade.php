@@ -40,6 +40,7 @@
             <td>{{$mydata->package_validity_date}}</td>
             <td>{{$mydata->slots_number}}</td>
             <td>{{$mydata->package_remaining}}</td>
+             <td>{{$mydata->timeremaining}}</td>
             <td>
               
 

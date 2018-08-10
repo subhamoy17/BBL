@@ -1,102 +1,97 @@
-  <!-- for extends all i.e. header,footer,sidebar -->
+<!-- for extends all i.e. header,footer,sidebar -->
 
-  @extends('trainerlayouts.trainer_template')
+@extends('trainerlayouts.trainer_template')
 
-  @section('content')
+@section('content')
 
-  <script>
+<script>
 
-    $(document).ready(function() {
+  $(document).ready(function(){
 
-      $.validator.addMethod("alpha", function(value, element){
-        return this.optional(element) || value == value.match(/^[a-zA-Z, '']+$/);
-      }, "Alphabetic characters only please");
+    $.validator.addMethod("alpha", function(value, element){
+      return this.optional(element) || value == value.match(/^[a-zA-Z, '']+$/);
+    }, "Alphabetic characters only please");
 
-  // mobile number can contant only numeric
-  $.validator.addMethod('numericOnly', function (value) {
-    return /^[0-9]+$/.test(value);
-  }, 'Please enter only numeric values');
-
-
-  $.validator.addMethod("alphanumeric", function(value, element) {
-    return this.optional(element) || /^[\w.]+$/i.test(value);
-  }, "Letters, numbers, and underscores only please");
+// mobile number can contant only numeric
+$.validator.addMethod('numericOnly', function (value) {
+  return /^[0-9]+$/.test(value);
+}, 'Please enter only numeric values');
 
 
-  $.validator.addMethod("dollarsscents", function(value, element) {
-    return this.optional(element) || /^\d{0,4}(\.\d{0,1})?$/i.test(value);
-  }, "Please enter value betwwen 1 to 999.9");
+$.validator.addMethod("alphanumeric", function(value, element) {
+  return this.optional(element) || /^[\w.]+$/i.test(value);
+}, "Letters, numbers, and underscores only please");
 
 
-  $('#motaddform').validate({  
-  /// rules of error 
-  rules: {
+$.validator.addMethod("dollarsscents", function(value, element) {
+  return this.optional(element) || /^\d{0,4}(\.\d{0,1})?$/i.test(value);
+}, "Please enter value betwwen 1 to 999.9");
 
-    "apply":
-    {
-      required: true,
-    },
 
-    "date":
-    {
-      required: true,
-    }, 
+$('#motaddform').validate({  
+/// rules of error 
+rules: {
 
-    "right_arm": {
-  // required: true,
-  number: true,
-  range: [1, 999.9]
+  "apply":
+  {
+    required: true,
+  },
+
+  "date":
+  {
+    required: true,
+  }, 
+
+  "right_arm": {
+// required: true,
+number: true,
+range: [1, 999.9]
 },
 
 "left_arm": {
-  // required: true,
-  number: true,
-  range: [1, 999.9]
+// required: true,
+number: true,
+range: [1, 999.9]
 },
 "chest": {
-  // required: true,
-  number: true,
-  range: [1, 999.9]
+// required: true,
+number: true,
+range: [1, 999.9]
 },
 "waist": {
-  // required: true,
-  number: true,
-  range: [1, 999.9]
+// required: true,
+number: true,
+range: [1, 999.9]
 },
 "hips": {
-  // required: true,
-  number: true,
-  range: [1, 999.9]
+// required: true,
+number: true,
+range: [1, 999.9]
 },
 "right_thigh": {
-  // required: true,
-  number: true,
-  range: [1, 999.9]
+// required: true,
+number: true,
+range: [1, 999.9]
 },
 "left_thigh": {
-  // required: true,
-  number: true,
-  range: [1, 999.9]
+// required: true,
+number: true,
+range: [1, 999.9]
 },
 "right_calf": {
-  // required: true,
-  number: true,
-  range: [1, 999.9]
+// required: true,
+number: true,
+range: [1, 999.9]
 },
 "left_calf": {
-  // required: true,
-  number: true,
-  range: [1,999.9]
-},
-"weight": {
-  // required: true,
-  number: true,
-  range: [1, 999.9]
+// required: true,
+number: true,
+range: [1,999.9]
 },
 "height": {
-  // required: true,
-  number: true,
-  range: [1, 999.9]
+// required: true,
+number: true,
+range: [1, 999.9]
 },
 
 "starting_weight": {
@@ -142,15 +137,15 @@ messages: {
   },
 
   "right_arm":{
-  // required: 'Please enter the this value',
-  number: 'Please enter decimal only',
-  range: "Please enter value betwwen 1 to 999.9"
+// required: 'Please enter the this value',
+number: 'Please enter decimal only',
+range: "Please enter value betwwen 1 to 999.9"
 },
 
 "left_arm":{
-  // required: 'Please enter the this value',
-  number: 'Please enter decimal only',
-  range: "Please enter value betwwen 1 to 999.9"
+// required: 'Please enter the this value',
+number: 'Please enter decimal only',
+range: "Please enter value betwwen 1 to 999.9"
 },
 
 "chest":{
@@ -160,38 +155,38 @@ messages: {
 },
 
 "waist":{
-  // required: 'Please enter the this value',
-  number: 'Please enter decimal only',
-  range: "Please enter value betwwen 1 to 999.9"
+// required: 'Please enter the this value',
+number: 'Please enter decimal only',
+range: "Please enter value betwwen 1 to 999.9"
 },
 
 "hips":{
-  // required: 'Please enter the this value',
-  number: 'Please enter decimal only',
-  range: "Please enter value betwwen 1 to 999.9"
+// required: 'Please enter the this value',
+number: 'Please enter decimal only',
+range: "Please enter value betwwen 1 to 999.9"
 },
 
 "right_thigh":{
-  // required: 'Please enter the this value',
-  number: 'Please enter decimal only',
-  range: "Please enter value betwwen 1 to 999.9"
+// required: 'Please enter the this value',
+number: 'Please enter decimal only',
+range: "Please enter value betwwen 1 to 999.9"
 },
 
 "left_thigh":{
-  // required: 'Please enter the this value',
-  number: 'Please enter decimal only',
-  range: "Please enter value betwwen 1 to 999.9"
+// required: 'Please enter the this value',
+number: 'Please enter decimal only',
+range: "Please enter value betwwen 1 to 999.9"
 },
 
 "right_calf":{
-  // required: 'Please enter the this value',
-  number: 'Please enter decimal only',
-  range: "Please enter value betwwen 1 to 999.9"
+// required: 'Please enter the this value',
+number: 'Please enter decimal only',
+range: "Please enter value betwwen 1 to 999.9"
 },
 "left_calf":{
-  // required: 'Please enter the this value',
-  number: 'Please enter decimal only',
-  range: "Please enter value betwwen 1 to 999.9"
+// required: 'Please enter the this value',
+number: 'Please enter decimal only',
+range: "Please enter value betwwen 1 to 999.9"
 },
 
 "starting_weight":{
@@ -221,15 +216,29 @@ messages: {
 },
 
 "height":{
-  // required: 'Please enter the this value',
-  number: 'Please enter decimal only',
-  range: "Please enter value betwwen 1 to  999.9"
+// required: 'Please enter the this value',
+number: 'Please enter decimal only',
+range: "Please enter value betwwen 1 to  999.9"
 }
 
 }
 });
+
+$('.convert').on('change', function()
+{
+  if($(this).val()=='imperial')
+    converted_value=$(this).prev('input').val()*0.39370;
+  else
+    converted_value=$(this).prev('input').val()/0.39370;
+  $(this).prev('input').val(converted_value);
 });
+
+});
+
 </script>
+
+
+
 <div class="breadcrumbs">
   <div class="col-sm-4">
     <div class="page-header float-left">
@@ -259,97 +268,180 @@ messages: {
           </div>
         </div>
         <div class="row form-group">
-          <div class="col col-md-3"><label for="text-input" class=" form-control-label">Right Arm</label></div>
-          <div class="col-12 col-md-9"><input type="text" id="right_arm" name="right_arm" placeholder="Right Arm" class="form-control" value="">
-          </div>
-        </div>
-        <div class="row form-group">
-          <div class="col col-md-3"><label for="text-input" class="form-control-label">Left Arm</label></div>
-          <div class="col-12 col-md-9"><input type="text" id="left_arm" name="left_arm" placeholder="Left Arm" class="form-control" value="">
-          </div>
-        </div>
-        <div class="row form-group">
-          <div class="col col-md-3"><label for="text-input" class="form-control-label">Chest</label></div>
-          <div class="col-12 col-md-9"><input type="text" id="chest" name="chest" placeholder="Chest" class="form-control" value="">
-          </div>
-        </div>
-        <div class="row form-group">
-          <div class="col col-md-3"><label for="text-input" class="form-control-label">Waist</label></div>
-          <div class="col-12 col-md-9"><input type="text" id="waist" name="waist" placeholder="Waist" class="form-control" value="">
-          </div>
-        </div>
-        <div class="row form-group">
-          <div class="col col-md-3"><label for="text-input" class="form-control-label">Hips</label></div>
-          <div class="col-12 col-md-9"><input type="text" id="hips" name="hips" placeholder="Hips" class="form-control" value="">
-          </div>
-        </div>
-        <div class="row form-group">
-          <div class="col col-md-3"><label for="text-input" class="form-control-label">Right Thigh</label></div>
-          <div class="col-12 col-md-9"><input type="text" id="right_thigh" name="right_thigh" placeholder="Right Thigh" class="form-control" value="">
-          </div>
-        </div>
-        <div class="row form-group">
-          <div class="col col-md-3"><label for="text-input" class="form-control-label">Left Thigh</label></div>
-          <div class="col-12 col-md-9"><input type="text" id="left_thigh" name="left_thigh" placeholder="Left Thigh" class="form-control" value="">
-          </div>
-        </div>
-        <div class="row form-group">
-          <div class="col col-md-3"><label for="text-input" class="form-control-label">Right Calf</label></div>
-          <div class="col-12 col-md-9"><input type="text" id="right_calf" name="right_calf" placeholder="Right Calf" class="form-control" value="">
-          </div>
-        </div>
-        <div class="row form-group">
-          <div class="col col-md-3"><label for="text-input" class="form-control-label">Left Calf</label></div>
-          <div class="col-12 col-md-9"><input type="text" id="left_calf" name="left_calf" placeholder="Left Calf" class="form-control" value="">
-          </div>
-        </div>
-        <div class="row form-group">
-          <div class="col col-md-3"><label for="text-input" class="form-control-label">Height</label></div>
-          <div class="col-12 col-md-9"><input type="text" id="height" name="height" placeholder="Height" class="form-control" value="">
-          </div>
-        </div>
-        <div class="row form-group">
-          <div class="col col-md-3"><label for="text-input" class="form-control-label"> Starting Weight<span class="required_field_color">*</span></label></div>
-          <div class="col-12 col-md-9"><input type="text" id="starting_weight" name="starting_weight" placeholder="Starting Weight" class="form-control" value="">
-          </div>
-        </div>
-        <div class="row form-group">
-          <div class="col col-md-3"><label for="text-input" class="form-control-label"> Ending Weight<span class="required_field_color">*</span></label></div>
-          <div class="col-12 col-md-9"><input type="text" id="ending_weight" name="ending_weight" placeholder="Ending Weight" class="form-control" value="">
-          </div>
-        </div>
-        <div class="row form-group">
-          <div class="col col-md-3"><label for="text-input" class="form-control-label"> Blood Pressure<span class="required_field_color">*</span></label></div>
-          <div class="col-12 col-md-9"><input type="text" id="blood_pressure" name="blood_pressure" placeholder="Blood Pressure" class="form-control" value="">
-          </div>
-        </div>
-        <div class="row form-group">
-          <div class="col col-md-3"><label for="text-input" class="form-control-label">Heart Beat<span class="required_field_color">*</span></label></div>
-          <div class="col-12 col-md-9"><input type="text" id="heart_beat" name="heart_beat" placeholder="Heart Beat" class="form-control" value="">
-          </div>
-        </div>
-        <div class="row form-group">
-          <div class="col col-md-3"><label for="text-input" class="form-control-label">Measured On<span class="required_field_color">*</span></label></div>
-          <div class="col-12 col-md-9"><input type="text" id="mot_date" name="date" class="form-control" placeholder="Date">
-          </div>
-        </div>
-
-        <div class="row form-group">
-          <div class="col col-md-10">
-          </div>
-          <div class="col col-md-2">
-            <button type="submit"  name="submit" class="btn btn-primary" style="width: 65%;">Add</button>
-          </div>
-        </div>
-      </form>
+          <div class="col-lg-3"><label for="text-input" class=" form-control-label">Right Arm</label></div>
+          <div class="col-lg-9">
+            <div class="row">
+              <div class="col-lg-6">
+                <input type="text" id="right_arm" name="right_arm" placeholder="Right Arm" class="form-control" value="">
+           <!--  </div>
+            <div class="col-lg-6"> -->
+             <select class="form-control convert" name="right_arm_credential">
+              <option id="matric" value="matric">Matric (cm.)</option>
+              <option id="imperial" value="imperial">Imperial (inch.)</option>
+            </select>
+          </div>     
+        </div> 
+      </div>
     </div>
+    <div class="row form-group">
+      <div class="col-lg-3"><label for="text-input" class="form-control-label">Left Arm</label></div>
+      <div class="col-lg-9"><div class="row"><div class="col-lg-6"><input type="text" id="left_arm" name="left_arm" placeholder="Left Arm" class="form-control" value=""><!-- </div> -->
+      <!--  <div class="col-lg-6"> -->
+        <select class="form-control convert" name="left_arm_credential">
+          <option id="matric" value="matric">Matric (cm.)</option>
+          <option id="imperial" value="imperial">Imperial (inch.)</option>
+        </select>
+      </div>     
+    </div> 
+
   </div>
 </div>
 
+<div class="row form-group">
+  <div class="col-lg-3"><label for="text-input" class="form-control-label">Chest</label></div>
+  <div class="col-lg-9"><div class="row"><div class="col-lg-6"><input type="text" id="chest" name="chest" placeholder="Chest" class="form-control" value=""><!-- </div>
+  <div class="col-lg-6"> -->
+   <select class="form-control convert" name="chest_credential">
+    <option id="matric" value="matric">Matric (cm.)</option>
+    <option id="imperial" value="imperial">Imperial (inch.)</option>
+  </select>
+</div>     
+</div> 
 
 
+</div>
+</div>
+<div class="row form-group">
+  <div class="col-lg-3"><label for="text-input" class="form-control-label">Waist</label></div>
+  <div class="col-lg-9"><div class="row"><div class="col-lg-6"><input type="text" id="waist" name="waist" placeholder="Waist" class="form-control" value=""><!-- </div>
+  <div class="col-lg-6"> -->
+   <select class="form-control convert" name="waist_credential">
+    <option id="matric" value="matric">Matric (cm.)</option>
+    <option id="imperial" value="imperial">Imperial (inch.)</option>
+  </select>
+</div>     
+</div> 
 
+</div>
+</div>
+<div class="row form-group">
+  <div class="col-lg-3"><label for="text-input" class="form-control-label">Hips</label></div>
+  <div class="col-lg-9"><div class="row"><div class="col-lg-6"><input type="text" id="hips" name="hips" placeholder="Hips" class="form-control" value=""><!-- </div>
+  <div class="col-lg-6"> -->
+   <select class="form-control convert" name="hips_credential">
+    <option id="matric" value="matric">Matric (cm.)</option>
+    <option id="imperial" value="imperial">Imperial (inch.)</option>
+  </select>
+</div>     
+</div> 
 
+</div>
+</div>
+<div class="row form-group">
+  <div class="col-lg-3"><label for="text-input" class="form-control-label">Right Thigh</label></div>
+  <div class="col-lg-9"><div class="row"><div class="col-lg-6"><input type="text" id="right_thigh" name="right_thigh" placeholder="Right Thigh" class="form-control" value=""><!-- </div>
+  <div class="col-lg-6"> -->
+    <select class="form-control convert" name="right_thigh_credential">
+      <option id="matric" value="matric" >Matric (cm.)</option>
+      <option id="imperial" value="imperial">Imperial (inch.)</option>
+    </select>
+  </div>     
+</div> 
+
+</div>
+</div>
+<div class="row form-group">
+  <div class="col-lg-3"><label for="text-input" class="form-control-label">Left Thigh</label></div>
+  <div class="col-lg-9"><div class="row"><div class="col-lg-6"><input type="text" id="left_thigh" name="left_thigh" placeholder="Left Thigh" class="form-control" value=""><!-- </div>
+  <div class="col-lg-6"> -->
+   <select class="form-control convert" name="left_thigh_credential">
+    <option id="matric" value="matric">Matric (cm.)</option>
+    <option id="imperial" value="imperial">Imperial (inch.)</option>
+  </select>
+</div>     
+</div> 
+
+</div>
+</div>
+<div class="row form-group">
+  <div class="col-lg-3"><label for="text-input" class="form-control-label">Right Calf</label></div>
+  <div class="col-lg-9"><div class="row"><div class="col-lg-6"><input type="text" id="right_calf" name="right_calf" placeholder="Right Calf" class="form-control" value=""><!-- </div>
+  <div class="col-lg-6"> -->
+   <select class="form-control convert" name="right_calf_credential">
+    <option id="matric" value="matric">Matric (cm.)</option>
+    <option id="imperial" value="imperial">Imperial (inch.)</option>
+  </select>
+</div>     
+</div> 
+
+</div>
+</div>
+<div class="row form-group">
+  <div class="col-lg-3"><label for="text-input" class="form-control-label">Left Calf</label></div>
+  <div class="col-lg-9"><div class="row"><div class="col-lg-6"><input type="text" id="left_calf" name="left_calf" placeholder="Left Calf" class="form-control" value=""><!-- </div>
+  <div class="col-lg-6"> -->
+   <select class="form-control convert" name="left_calf_credential">
+    <option id="matric" value="matric">Matric (cm.)</option>
+    <option id="imperial" value="imperial">Imperial (inch.)</option>
+  </select>
+</div>     
+</div> 
+</div>
+</div>
+<div class="row form-group">
+  <div class="col-lg-3"><label for="text-input" class="form-control-label">Height</label></div>
+  <div class="col-lg-9"><div class="row"><div class="col-lg-6"><input type="text" id="height" name="height" placeholder="Height" class="form-control" value=""><!-- </div>
+  <div class="col-lg-6"> -->
+    <select class="form-control convert" name="height_credential">
+      <option id="matric" value="matric">Matric (cm.)</option>
+      <option id="imperial" value="imperial">Imperial (inch.)</option>
+    </select>
+  </div>     
+</div> 
+</div>
+</div>
+
+<div class="row form-group">
+  <div class="col-lg-3"><label for="text-input" class="form-control-label"> Starting Weight<span class="required_field_color">*</span></label></div>
+  <div class="col-lg-9"><input type="text" id="starting_weight" name="starting_weight" placeholder="Starting Weight" class="form-control" value="">
+  </div>
+</div>
+<div class="row form-group">
+  <div class="col-lg-3"><label for="text-input" class="form-control-label"> Ending Weight<span class="required_field_color">*</span></label></div>
+  <div class="col-lg-9"><input type="text" id="ending_weight" name="ending_weight" placeholder="Ending Weight" class="form-control" value="">
+  </div> 
+</div>
+<div class="row form-group">
+  <div class="col col-md-3"><label for="text-input" class="form-control-label"> Blood Pressure<span class="required_field_color">*</span></label></div>
+  <div class="col-12 col-md-9"><input type="text" id="blood_pressure" name="blood_pressure" placeholder="Blood Pressure" class="form-control" value="">
+  </div>
+</div>
+<div class="row form-group">
+  <div class="col col-md-3"><label for="text-input" class="form-control-label">Heart Beat<span class="required_field_color">*</span></label></div>
+  <div class="col-12 col-md-9"><input type="text" id="heart_beat" name="heart_beat" placeholder="Heart Beat" class="form-control" value="">
+  </div>
+</div>
+<div class="row form-group">
+  <div class="col-lg-3"><label for="text-input" class="form-control-label">Description</div>
+    <div class="col-lg-9"><textarea type="text" id="description" name="description" placeholder="Description" class="form-control" value=""></textarea>
+    </div>
+  </div>
+  <div class="row form-group">
+    <div class="col-lg-3"><label for="text-input" class="form-control-label">Measured On<span class="required_field_color">*</span></label></div>
+    <div class="col-lg-9"><input type="text" id="mot_date" name="date" class="form-control" placeholder="Date">
+    </div>
+  </div>
+  <div class="row form-group">
+    <div class="col col-md-10">
+    </div>
+    <div class="col col-md-2">
+      <button type="submit"  name="submit" class="btn btn-primary" style="width: 65%;">Add</button>
+    </div>
+  </div>
+</form>
+</div>
+</div>
+</div>
 
 
 

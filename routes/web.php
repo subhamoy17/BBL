@@ -146,6 +146,16 @@ Route::post('client_update','TrainerController@client_update')->name('client_upd
 //delete//
 Route::get('client_delete/{id}', 'TrainerController@client_delete');
 
+Route::get('payment_history_backend','TrainerController@payment_history_backend')->name('payment_history');
+
+
+Route::get('payment_history_backend_request', 'TrainerController@payment_history_backend_request')->name('payment_history_backend_request');
+
+
+
+
+
+
 
 
 });
