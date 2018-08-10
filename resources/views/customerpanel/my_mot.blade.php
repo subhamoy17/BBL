@@ -7,6 +7,10 @@
     <div class="modal-content">
     <div class="modal-header">
       <h4 class="modal-title">Customers MOT</h4>
+      <div> <select class="form-control mot_convert" id="mot_option">
+        <option  id="metric" value="metric">Metric (cm.)</option>
+        <option id="imperial" value="imperial">Imperial (inch.)</option>
+      </select></div>
     </div>
       <div class="modal-body" id="hall_details_edit">
         <div class="row clearfix">
@@ -27,6 +31,12 @@
               <div class="col-lg-4"><div class="rl">Left thigh / </div><div class="left_thigh rv" ></div></div>
               <div class="col-lg-4"><div class="rl">Right calf / </div><div class="right_calf rv" ></div></div>
               <div class="col-lg-4"><div class="rl">Left calf / </div><div class="left_calf rv" ></div></div>
+               <div class="col-lg-4"><div class="rl">Starting weight / </div><div class="starting_weight rv" ></div></div>
+              <div class="col-lg-4"><div class="rl">Ending weight / </div><div class="ending_weight rv" ></div></div>
+              <div class="col-lg-4"><div class="rl">Heart beat / </div><div class="heart_beat rv" ></div></div>
+               <div class="col-lg-4"><div class="rl">Blood pressure / </div><div class="blood_pressure rv" ></div></div>
+               
+                 <div class="col-lg-4"><div class="rl">Height / </div><div class="height rv" ></div></div>
             
               
           </div>
@@ -60,19 +70,19 @@
                     <td>{{$mydata->date}}</td>
                      <td>
                          
-                    <a href="#" class="common btn btn-info btn-sm" data-right_arm="{{$mydata->right_arm}}"  data-left_arm="{{$mydata->left_arm}}" data-chest="{{$mydata->chest}}"
+                    <a href="#" id="asd" class="common_mot btn btn-info btn-sm" data-right_arm="{{$mydata->right_arm}}"  data-left_arm="{{$mydata->left_arm}}" data-chest="{{$mydata->chest}}"
                       data-waist="{{$mydata->waist}}" data-hips="{{$mydata->hips}}"
                       data-right_thigh="{{$mydata->right_thigh}}" data-right_calf="{{$mydata->right_calf}}" 
                       data-left_calf="{{$mydata->left_calf}}" data-weight="{{$mydata->weight}}"
-                      data-left_thigh="{{$mydata->left_thigh}}" class="btn btn-success">
+                      data-left_thigh="{{$mydata->left_thigh}}" data-starting_weight="{{$mydata->starting_weight}}"  data-ending_weight="{{$mydata->ending_weight}}"  data-heart_beat="{{$mydata->heart_beat}}"  data-blood_pressure="{{$mydata->blood_pressure}}"
+                      data-height="{{$mydata->height}}"class="btn btn-success">
 
                     Click Here</a>
                                         
 
                    </td>
 
-
-                  </tr>
+                 </tr>
                 @endforeach
                 </tbody>
               </table>
@@ -107,51 +117,7 @@
 
 
 
-<script type="text/javascript">
-    $(document).ready(function() {
 
-        $(".common").click(function() {
-            var right_arm = $(this).data("right_arm");
-            var left_arm = $(this).data("left_arm");
-            var chest = $(this).data("chest");
-            var waist = $(this).data("waist");
-            var hips = $(this).data("hips");
-            var right_thigh = $(this).data("right_thigh");
-            var left_thigh = $(this).data("left_thigh");
-            var right_calf = $(this).data("right_calf");
-            var left_calf = $(this).data("left_calf");
-            var weight = $(this).data("weight");
-            
-
-
-
-            $('div.right_arm').text(right_arm); $('div.left_arm').text(left_arm);
-           
-
-            $('div.chest').text(chest);
-            $('div.waist').text(waist);
-            $('div.hips').text(hips);
-            $('div.right_thigh').text(right_thigh);
-
-            $('div.left_thigh').text(left_thigh);
-            $('div.right_calf').text(right_calf);
-
-            $('div.left_calf').text(left_calf);
-            $('div.weight').text(weight);
-            
-
-
-
-
-
-
-
-
-            $('#reason_modal').modal('show');
-        });
-        $('#bootstrap-data-table-export').DataTable();
-    } );
-</script>
 
 
 
