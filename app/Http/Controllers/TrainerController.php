@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
 use Carbon\Carbon;
 
+use Session;
+
 class TrainerController extends Controller
 {
 /**
@@ -311,40 +313,24 @@ public function traineredit(Request $request)
 public function pastshowlist(Request $request)
 {
     $id=$request->id;
-    $cur_date =TODAY();
+    $cur_date =Carbon::now()->toDateString();
     $cur_time =date("H:i:s");
     $data=DB::table('slot_request')
     ->join('customers','customers.id','slot_request.customer_id')
     ->join('slot_approval','slot_approval.id','slot_request.approval_id')
-    ->select( 'slot_request.id','customers.name','customers.ph_no','customers.image','slot_approval.status','slot_request.created_at','slot_request.approval_id','slot_request.slot_date','slot_request.slot_time')->where('slot_request.slot_date','<',$cur_date)->where('slot_request.trainer_id',$id)->get();
+    ->join('slot_times','slot_times.id','slot_request.slot_time')
+    ->select( 'slot_request.id','customers.name','customers.ph_no','customers.image','slot_approval.status','slot_request.created_at','slot_request.approval_id','slot_request.slot_date','slot_times.time as slot_time')
+    ->where('slot_request.slot_date','<',$cur_date)
+    ->where('slot_request.trainer_id',$id)->get();
     return view('trainer.past_request_customers')->with(compact('data'));
 }
 
-
-//past customer ajax function//
-public function approve_past_customer_request(Request $request)
-{
-    $data=$request->get('data');
-    $id=$data['id'];
-    $action=$data['action'];
-    Log::debug(" Check id ".print_r($id,true));
-    Log::debug(" Check action ".print_r($action,true));
-    if($action=="Approve"){
-        DB::table('slot_request')->where('id',$id)->update(['approval_id' =>3, 'decline_reason'=>null]);
-        return response()->json(1);
-    }
-    elseif($action=="Decline")
-    {
-        $reason=$data['comment'];
-        DB::table('slot_request')->where('id',$id)->update(['approval_id' => 4, 'decline_reason'=> $reason]);
-        return response()->json(2);
-    }
-}
 
 
 //future customer ajax function//
 public function approve_customer_request(Request $request)
 {
+
     $data=$request->get('data');
     $id=$data['id'];
     $action=$data['action'];
@@ -357,6 +343,26 @@ public function approve_customer_request(Request $request)
     elseif($action=="Decline")
     {
         $reason=$data['comment'];
+        $remaining_session_request_now=Carbon::now()->toDateString();
+
+        $customer_id=DB::table('slot_request')->where('id',$id)->first();
+
+        $package_history=DB::table('purchases_history')
+        ->where('customer_id',$customer_id->customer_id)
+        ->where('purchases_history.active_package',1)
+        ->where('purchases_history.package_remaining','>',0)
+        ->where('purchases_history.package_validity_date','>=',$remaining_session_request_now)
+        ->orderBy('package_validity_date','DESC')->first();
+
+        $package_history_update_data['package_remaining']=$package_history->package_remaining+1;
+
+        
+
+        $package_history_update=DB::table('purchases_history')->where('id',$package_history->id)->update($package_history_update_data);
+        
+        Log::debug(" package_history_update ".print_r($package_history_update,true));
+
+
         DB::table('slot_request')->where('id',$id)->update(['approval_id' => 4, 'decline_reason'=> $reason]);
         return response()->json(2);
     }
@@ -367,12 +373,17 @@ public function futureshowlist(Request $request)
 {
 
     $id=$request->id;
-    $cur_date =TODAY();
+    $cur_date =Carbon::now()->toDateString();
+
+
+    Log::debug("cur_date ".print_r($cur_date,true));
+
     $cur_time =date("H:i:s");
     $data=DB::table('slot_request')
     ->join('customers','customers.id','slot_request.customer_id')
     ->join('slot_approval','slot_approval.id','slot_request.approval_id')
-    ->select( 'slot_request.id','customers.name','customers.ph_no','customers.image','slot_approval.status','slot_request.created_at','slot_request.approval_id','slot_request.slot_date','slot_request.slot_time')->where('slot_request.slot_date','>',$cur_date)->where('slot_request.approval_id','<>',1)->where('slot_request.trainer_id',$id)->get();
+    ->join('slot_times','slot_times.id','slot_request.slot_time')
+    ->select( 'slot_request.id','customers.name','customers.ph_no','customers.image','slot_approval.status','slot_request.created_at','slot_request.approval_id','slot_request.slot_date','slot_times.time as slot_time')->where('slot_request.slot_date','>=',$cur_date)->where('slot_request.approval_id','<>',1)->where('slot_request.trainer_id',$id)->get();
     return view('trainer.future_request_customers')->with(compact('data'));
 }
 
@@ -384,12 +395,13 @@ public function futureshowlist(Request $request)
 public function future_pending_showlist(Request $request)
 {
     $id=$request->id;
-    $cur_date =TODAY();
+    $cur_date =Carbon::now()->toDateString();
     $cur_time =date("H:i:s");
     $data=DB::table('slot_request')
     ->join('customers','customers.id','slot_request.customer_id')
     ->join('slot_approval','slot_approval.id','slot_request.approval_id')
-    ->select( 'slot_request.id','customers.name','customers.ph_no','customers.image','slot_approval.status','slot_request.created_at','slot_request.approval_id','slot_request.slot_date','slot_request.slot_time')->where('slot_request.slot_date','>',$cur_date)->where('slot_request.approval_id',1)->where('slot_request.trainer_id',$id)->get();
+    ->join('slot_times','slot_times.id','slot_request.slot_time')
+    ->select( 'slot_request.id','customers.name','customers.ph_no','customers.image','slot_approval.status','slot_request.created_at','slot_request.approval_id','slot_request.slot_date','slot_times.time as slot_time')->where('slot_request.slot_date','>=',$cur_date)->where('slot_request.approval_id',1)->where('slot_request.trainer_id',$id)->get();
     return view('trainer.future_pending_request_customers')->with(compact('data'));
 
 }
@@ -402,25 +414,36 @@ public function approve_pending_request(Request $request)
     $action=$data['action'];
     Log::debug(" Check id ".print_r($id,true));
     Log::debug(" Check action ".print_r($action,true));
+
     if($action=="Approve"){
         DB::table('slot_request')->where('id',$id)->update(['approval_id' =>3,'decline_reason'=>null]);
         return response()->json(1);
     }
     elseif($action=="Decline")
     {
+
         $reason=$data['comment'];
+        $remaining_session_request_now=Carbon::now()->toDateString();
+
+        $customer_id=DB::table('slot_request')->where('id',$id)->first();
+
+        $package_history=DB::table('purchases_history')
+        ->where('customer_id',$customer_id->customer_id)
+        ->where('purchases_history.active_package',1)
+        ->where('purchases_history.package_remaining','>',0)
+        ->where('purchases_history.package_validity_date','>=',$remaining_session_request_now)
+        ->orderBy('package_validity_date','DESC')->first();
+        $package_history_update_data['package_remaining']=$package_history->package_remaining+1;
+
+
+        $package_history_update=DB::table('purchases_history')->where('id',$package_history->id)->update($package_history_update_data);
+
+        
+        Log::debug(" package_history_update ".print_r($package_history_update,true));
         DB::table('slot_request')->where('id',$id)->update(['approval_id' => 4, 'decline_reason'=> $reason]);
         return response()->json(2);
     }
 }
-
-
-
-
-
-
-
-
 
 
 

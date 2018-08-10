@@ -6,6 +6,8 @@
   <div id="tab2" class="tab_content">
     <div class="table-responsive table-bordered">
       <table class="table">
+        
+
         <form id="frm_purchase_search">
          <!--  <input type="text" name="daterange"  value="2018-08-06 - 2018-09-12"/> -->
 
@@ -15,6 +17,16 @@
   <input type="text" name="end_date" value="<?php if(isset($_GET['end_date']) && !empty($_GET['end_date'])){ echo $_GET['end_date']; }?>"/>
           <button type="submit" id="booking" class="btn btn-success" >Submit</button>
         </form>
+        @if(count($purchases_data)>0)
+          @foreach($purchases_data as $key=>$mydata1)
+          @endforeach
+        @endif
+        @if($remaining_session_request>0)
+        <a href="{{url('customer/booking_slot')}}/{{$mydata1->customer_id}}"class="btn btn-success">Send Slot Request</a>
+        @else
+        <a href="{{url('customer/booking_slot')}}/{{0}}"class="btn btn-success">Send Slot Request</a>
+        @endif
+        
         <thead>
           <tr>
             <th>Package Name</th>
@@ -31,6 +43,7 @@
         <tbody>
           @if(count($purchases_data)>0)
           @foreach($purchases_data as $key=>$mydata)
+
           <tr>
             <!--  -->
             <td>{{$mydata->slots_name}}</td>
@@ -40,9 +53,7 @@
             <td>{{$mydata->package_validity_date}}</td>
             <td>{{$mydata->slots_number}}</td>
             <td>{{$mydata->package_remaining}}</td>
-             <td>{{$mydata->timeremaining}}</td>
-            <td>
-              
+            <td> 
 
               @if ($mydata->active_package==1 && $mydata->package_remaining>0 && ($mydata->timeremaining <= $mydata->slots_validity))
               Active
@@ -50,18 +61,15 @@
               Inactive
               @endif
             </td>
-            <!-- <td>
-              @if ($mydata->active_package==1 && $mydata->package_remaining>0 && ($mydata->timeremaining <= $mydata->slots_validity))
-              <a href="{{url('customer/booking_slot')}}/{{$mydata->id}}"class="btn btn-success">Send Slot Request</a>
-              @else
-              N/A
-              @endif
-            </td> -->
           </tr>
           @endforeach
           @else
           <tr>No Data Found.</tr>
+
         @endif
+
+        
+
         </tbody> 
       </table>
     </div>

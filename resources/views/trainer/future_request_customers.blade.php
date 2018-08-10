@@ -221,7 +221,7 @@ table.dataTable thead>tr>th[id='action'].sorting_asc::after{display: none}
       }
     });
     $("#reason").on('click',function(e)
-    {
+    {   
       var id=$('#reason_id').val();
       var comment=$('#comment').val();
       var row=$('#'+id).closest('tr');
@@ -233,6 +233,7 @@ table.dataTable thead>tr>th[id='action'].sorting_asc::after{display: none}
       }
       else
       {
+        
         var action=$('#reason_action').val();
         var Data =
         {

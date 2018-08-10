@@ -223,7 +223,7 @@ Route::get('approvePendingRequest', 'TrainerController@approve_pending_request')
 
 
 Route::get('approveCustomer', 'TrainerController@approve_customer_request')->name('approveCustomer');
-Route::get('approvePastCustomer', 'TrainerController@approve_past_customer_request')->name('approvePastCustomer');
+// Route::get('approvePastCustomer', 'TrainerController@approve_past_customer_request')->name('approvePastCustomer');
 Route::get('allCustomers', 'TrainerController@all_customers')->name('allCustomers');
 
 
@@ -270,6 +270,11 @@ Route::get('purchase_history','FrontController@purchases_history')->name('custom
 
 
 Route::get('booking_slot/{id}','FrontController@booking_slot')->name('booking_slot');
+Route::get('booking_slot_time','FrontController@booking_slot_times')->name('get_slot_time');
+
+
+
+
 Route::POST('slotinsert','FrontController@slotinsert')->name('customer.slotinsert');
 
 

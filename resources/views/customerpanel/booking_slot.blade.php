@@ -36,6 +36,8 @@
   <link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800" rel="stylesheet">
   <link href="//fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,400,400i,500,500i,600,600i,700,700i,800" rel="stylesheet">
 
+  
+
 <body>
   <header>
       <div class="header-top">
@@ -126,13 +128,17 @@
     <div class="alert alert-success">
         {{ session('success') }}
     </div>
+
+    <?php $a=Session::forget('success'); ?>
+
+    {{ session('success') }}
   @endif
   <div class="inner-padding">
 
     <div class="container">
       <div class="hstry-box">
       <ul class="tabs">
-        <li class="active bb" rel="tab5"><i class="fa fa-check"></i> Booking Form</li>
+        <li class="active bb" rel="tab5">Session Booking</li>
         
       </ul>
       <div class="tab_container">
@@ -141,8 +147,8 @@
           <h3 class="d_active tab_drawer_heading" rel="tab5">Tab 5</h3>
           <div id="tab5" class="tab_content">
             <div class="form-box">
-                
-                <h4 class="ed-p">Booking Form</h4>
+                @if($customer_id!=0)
+                <h4 class="ed-p">Session Booking Form</h4>
                 <div class="row">
                   <div class="col-md-12 col-sm-12 col-xs-12">
 
@@ -150,12 +156,12 @@
 
 
                        <input type="hidden" name="_token" value="{{csrf_token()}}">
-                           <input type="hidden" name="idd" id="id" value="{{$purchases_id}}">
+                           <input type="hidden" name="idd" id="id" value="{{$customer_id}}">
 
                   <div class="col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group">
                               <label>Trainer Name <small>*</small></label>
-                              <select class="form-control" name="id">
+                              <select class="form-control" name="id" id='trainer_id' onchange="jsfunction()">
                                 <option value=""> Please select a name</option>
                                  @foreach($data as $mydata)
                                 <option value="{{$mydata->id}}"> {{$mydata->name}}</option>
@@ -165,7 +171,8 @@
                         </div>
 
                           <div class="col-md-6 col-sm-12 col-xs-12">
-                          <label>Date <small>*</small></label><input type="text" id="datepicker" name="date" class="form-control">
+                          <label>Date <small>*</small></label>
+                          <input type="text" id="datepicker" name="date" class="form-control" onchange="jsfunction()">
 
 
 
@@ -174,13 +181,8 @@
                         <div class="col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group" >
                               <label>Start Time <small>*</small></label>
-                              <select class="form-control" name="time">
-                                <option value="">Time</option>
-                                <option value="13:00">1 p.m</option>
-                                <option value="14:00">2 p.m</option>
-                                <option value="15:00">3 p.m</option>
-                                <option value="17:00">5 p.m</option>
-                                <option value="18:00">6 p.m</option>
+                              <select class="form-control" name="time" id="slot_time">
+                                
                               </select>
                             </div>
                         </div>
@@ -196,6 +198,16 @@
               </form>
             </div>
                 </div>
+
+                @else
+
+                <h4 class="ed-p">You have consumed all of your purchased session & to book a new session you have to purchase a new package, So do you want to purchase?</h4><br>
+
+                <a href="{{url('customer/pricing')}}"class="btn btn-dark btn-theme-colored btn-flat">Yes</a>
+                <a href="{{url('customer/purchase_history')}}"class="btn btn-dark btn-theme-colored btn-flat">No</a>
+
+                @endif
+
               </div>
           </div>
       </div>
@@ -261,23 +273,6 @@
   </div>
   <!-- //footer -->
   <!-- //footer -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -493,6 +488,64 @@ $('#slotform').validate({
   </script>
 
 
+  <script>
+   
+   function  jsfunction(){
+    // alert($('#trainer_id').val());
+    // alert($('#datepicker').val());
+
+
+    if($('#trainer_id').val()!='' && $('#datepicker').val()!='')
+    {
+      var slot_time = $('#slot_time');
+                    slot_time.prop("disabled",false);
+                    slot_time.empty();
+                    slot_time.append($('<option>').text("Please select time"));
+    $.ajax({
+                  type: "GET",
+                  url: "{{route('get_slot_time')}}",
+                  data: {'trainer_id': $('#trainer_id').val(),'slot_date': $('#datepicker').val()},
+                  success: function (data){
+                    console.log(data);
+
+                    var obj = $.parseJSON(data);
+                    var convert_time=0;
+                    var set_am=0;
+                    var set_pm=0;
+
+                    if(obj.length > 0){ 
+                    for(var i = 0; i < obj.length; i++){
+
+                      convert_time=obj[i]['time'].substring(0,obj[i]['time'].indexOf(':'));
+                      
+                      if(convert_time==12) { set_am_pm='12 PM';}
+                      else if(convert_time==13) { set_am_pm='1 PM';}
+                      else if(convert_time==14) { set_am_pm='2 PM';}
+                      else if(convert_time==15) { set_am_pm='3 PM';}
+                      else if(convert_time==16) { set_am_pm='4 PM';}
+                      else if(convert_time==17) { set_am_pm='5 PM';}
+                      else if(convert_time==18) { set_am_pm='6 PM';}
+                      else if(convert_time==19) { set_am_pm='7 PM';}
+                      else if(convert_time==20) { set_am_pm='8 PM';}
+                      else if(convert_time==21) { set_am_pm='9 PM';}
+                      else if(convert_time==22) { set_am_pm='10 PM';}
+                      else if(convert_time==23) { set_am_pm='11 PM';}
+                      else if(convert_time==24) { set_am_pm='12 AM';}
+                      else { set_am_pm=convert_time  + ' AM';}
+                      
+                    slot_time.append(
+                $('<option>', {value: obj[i]['id']}).text(set_am_pm));
+                  }
+                  }
+                    
+                  }
+      });
+  }
+    
+  }
+  
+
+  </script>
 
 
 
