@@ -1,6 +1,8 @@
 @extends('frontend.dashboard_submain') 
 @section('content')
 
+
+
       <div class="tab_container">
           <h3 class="d_active tab_drawer_heading" rel="tab1">Tab 1</h3>
           <div id="tab1" class="tab_content">
@@ -79,7 +81,7 @@
                 <tbody id="tbody_empty">
                    @if(count($data)>0)
                    @foreach($data as $key=>$mydata)
-                  <tr>
+                  <tr >
                     <td>{{$mydata->users_name}}</td>
                     <td>{{$mydata->created_at}}</td>
                      <td>
@@ -93,12 +95,14 @@
                     
                      @if(Request::get('option')=='past_request')
 @if(count($mydata->past_mot))
-<td> <a href="#" class="common btn btn-info btn-sm" data-right_arm="{{$mydata->past_mot->right_arm}}"  data-left_arm="{{$mydata->past_mot->left_arm}}" data-chest="{{$mydata->past_mot->chest}}"
+<td> <a href="#" class="convert btn btn-info btn-sm"
+  data-right_arm="{{$mydata->past_mot->right_arm}}"  data-left_arm="{{$mydata->past_mot->left_arm}}" data-chest="{{$mydata->past_mot->chest}}"
                       data-waist="{{$mydata->past_mot->waist}}" data-hips="{{$mydata->past_mot->hips}}"
                       data-right_thigh="{{$mydata->past_mot->right_thigh}}" data-right_calf="{{$mydata->past_mot->right_calf}}" 
                       data-left_calf="{{$mydata->past_mot->left_calf}}" data-weight="{{$mydata->past_mot->weight}}"
-                      data-left_thigh="{{$mydata->past_mot->left_thigh}}" class="btn btn-success">
-
+                      data-left_thigh="{{$mydata->past_mot->left_thigh}}" data-right_calf="{{$mydata->past_mot->right_calf}}"
+                      data-left_calf="{{$mydata->past_mot->left_calf}}" data-starting_weight="{{$mydata->past_mot->starting_weight}}"  data-ending_weight="{{$mydata->past_mot->ending_weight}}"  data-heart_beat="{{$mydata->past_mot->heart_beat}}"  data-blood_pressure="{{$mydata->past_mot->blood_pressure}}"
+                      data-height="{{$mydata->past_mot->height}}" class="btn btn-success">
                     View</a></td> 
                      @else
                      <td>N/A</td>
@@ -123,12 +127,16 @@
    <div id="book_history">{{$data->links()}}</div>
      
 
-<div id="reason_modal" class="modal fade common" role="dialog" >
+<div id="convert_modal" class="modal fade common" role="dialog" >
   <div class="modal-dialog">
-    
+    <input type="hidden" id="this_row">
     <div class="modal-content">
     <div class="modal-header">
       <h4 class="modal-title">Customers MOT</h4>
+     <div> <select class="form-control unit_convert" id="convert_option">
+        <option  id="metric" value="metric">Metric (cm.)</option>
+        <option id="imperial" value="imperial">Imperial (inch.)</option>
+      </select></div>
     </div>
       <div class="modal-body" id="hall_details_edit">
         <div class="row clearfix">
@@ -149,7 +157,13 @@
               <div class="col-lg-4"><div class="rl">Left thigh / </div><div class="left_thigh rv" ></div></div>
               <div class="col-lg-4"><div class="rl">Right calf / </div><div class="right_calf rv" ></div></div>
               <div class="col-lg-4"><div class="rl">Left calf / </div><div class="left_calf rv" ></div></div>
-            
+               <div class="col-lg-4"><div class="rl">Starting weight / </div><div class="starting_weight rv" ></div></div>
+              <div class="col-lg-4"><div class="rl">Ending weight / </div><div class="ending_weight rv" ></div></div>
+              <div class="col-lg-4"><div class="rl">Heart beat / </div><div class="heart_beat rv" ></div></div>
+               <div class="col-lg-4"><div class="rl">Blood pressure / </div><div class="blood_pressure rv" ></div></div>
+               
+                 <div class="col-lg-4"><div class="rl">Height / </div><div class="height rv" ></div></div>
+                 
               
           </div>
 
@@ -162,44 +176,13 @@
 </div>
 
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
     $(document).ready(function() {
 
-        $(".common").click(function() {
-
-            var right_arm = $(this).data("right_arm");
-            var left_arm = $(this).data("left_arm");
-            var chest = $(this).data("chest");
-            var waist = $(this).data("waist");
-            var hips = $(this).data("hips");
-            var right_thigh = $(this).data("right_thigh");
-            var left_thigh = $(this).data("left_thigh");
-            var right_calf = $(this).data("right_calf");
-            var left_calf = $(this).data("left_calf");
-            var weight = $(this).data("weight");
-            
-
-
-
-            $('div.right_arm').text(right_arm); $('div.left_arm').text(left_arm);
-           
-
-            $('div.chest').text(chest);
-            $('div.waist').text(waist);
-            $('div.hips').text(hips);
-            $('div.right_thigh').text(right_thigh);
-
-            $('div.left_thigh').text(left_thigh);
-            $('div.right_calf').text(right_calf);
-
-            $('div.left_calf').text(left_calf);
-            $('div.weight').text(weight);
-          
-            $('#reason_modal').modal('show');
-        });
+       
         
     } );
-</script>
+</script> -->
 
-  
+
 @endsection
