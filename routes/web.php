@@ -262,7 +262,7 @@ Route::POST('package_purchase','FrontController@purchase_payment_mode')->name('c
 Route::post('paypalpayment','PaypalPaymentController@payWithpaypal');
 Route::get('status','PaypalPaymentController@getPaymentStatus');
 Route::get('paypalpaymentsuccess','FrontController@paypal_payment_success');
-
+Route::post('bankpaymentsuccess','FrontController@bank_payment_success')->name('bankpaymentsuccess');
 
 //customer profile//
 Route::get('profile/{id}','FrontController@customer_profile')->name('profile');
