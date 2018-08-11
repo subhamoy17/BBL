@@ -219,6 +219,24 @@ $('.convert').on('change', function()
   $(this).prev('input').val(converted_value);
 });
 
+
+
+
+$('.weightconvert').on('change', function()
+{ 
+  if($(this).val()=='imperial')
+
+    converted_value=$(this).prev('input').val()* 2.2046;
+  else
+    converted_value=$(this).prev('input').val()/2.2046;
+  $(this).prev('input').val(converted_value);
+});
+
+
+
+
+
+
 });
 </script>
 
@@ -356,16 +374,46 @@ $('.convert').on('change', function()
 </div>
 </div>
 </div>
+
+
 <div class="row form-group">
-  <div class="col col-md-3"><label for="text-input" class="form-control-label">Starting Weight<span class="required_field_color">*</span></label></div>
-  <div class="col-12 col-md-9"><input type="text" id="starting_weight" name="starting_weight" placeholder="Starting Weight" class="form-control" value="{{$data->starting_weight}}">
-  </div>
+  <div class="col-lg-3"><label for="text-input" class="form-control-label">Starting Weight</label></div>
+  <div class="col-lg-9"><div class="row"><div class="col-lg-6"><input type="text" id="starting_weight" name="starting_weight" placeholder="Starting Weight" class="form-control" value="{{$data->starting_weight}}"><!-- </div>
+  <div class="col-lg-6"> -->
+    <select class="form-control weightconvert" name="starting_weight_credential">
+      <option id="matric" value="matric">Matric (kg.)</option>
+      <option id="imperial" value="imperial">Imperial (lbs.)</option>
+    </select>
+
+
+  </div>     
+</div> 
 </div>
+</div>
+
+
+
+
 <div class="row form-group">
-  <div class="col col-md-3"><label for="text-input" class="form-control-label">Ending Weight<span class="required_field_color">*</span></label></div>
-  <div class="col-12 col-md-9"><input type="text" id="ending_weight" name="ending_weight" placeholder="Ending Weight" class="form-control" value="{{$data->ending_weight}}">
-  </div>
+  <div class="col-lg-3"><label for="text-input" class="form-control-label">Ending Weight</label></div>
+  <div class="col-lg-9"><div class="row"><div class="col-lg-6"><input type="text" id="ending_weight" name="ending_weight" placeholder="Ending Weight" class="form-control" value="{{$data->ending_weight}}"><!-- </div>
+  <div class="col-lg-6"> -->
+    <select class="form-control weightconvert" name="ending_weight_credential">
+      <option id="matric" value="matric">Matric (cm.)</option>
+      <option id="imperial" value="imperial">Imperial (inch.)</option>
+    </select>
+
+
+  </div>     
+</div> 
 </div>
+</div>
+
+
+
+
+
+
 <div class="row form-group">
   <div class="col col-md-3"><label for="text-input" class="form-control-label">Heart Beat<span class="required_field_color">*</span></label></div>
   <div class="col-12 col-md-9"><input type="text" id="heart_beat" name="heart_beat" placeholder="Heart Beat" class="form-control" value="{{$data->heart_beat}}">
@@ -378,7 +426,7 @@ $('.convert').on('change', function()
 </div>
 <div class="row form-group">
   <div class="col col-md-3"><label for="text-input" class="form-control-label">Description</div>
-    <div class="col-12 col-md-9"><textarea type="text" id="description" name="description" placeholder="Description" class="form-control" value="{{$data->description}}"></textarea>
+    <div class="col-12 col-md-9"><textarea type="text" id="description" name="description" placeholder="Description" class="form-control" >{{$data->description}}</textarea>
     </div>
   </div>
 
