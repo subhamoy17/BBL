@@ -225,6 +225,41 @@ $(document).ready(function() {
 		});  
 	</script>
 
+  <script>
+    $(document).ready(function(){  
+$('#slotform').validate({  
+  /// rules of error 
+  rules: {
+    "date": {
+    required: true
+    },
+
+"id": {
+    required: true
+    },
+"time":
+    {
+    required: true
+    }
+
+  },
+
+  messages: {
+    "date":{
+    required: 'Please enter date'
+  },
+"id":{
+    required: 'Please select trainer name'
+  },
+"time":{
+    required: 'Please select time'
+  }
+  }
+  });
+
+    });  
+  </script>
+
 
 
   <script>
@@ -649,30 +684,6 @@ $('#changepassword').validate({
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	<!-- <script>
 		window.onscroll = function() {myFunction()};
 		var header = document.getElementById("myHeader");
@@ -776,6 +787,16 @@ $(document).ready(function() {
   		  });
   		} );
   	</script>	
+
+    <script>
+
+  $(function () {
+    $( "#datepicker_slot_request" ).datepicker({
+  dateFormat: "yy-mm-dd"
+});
+  } );
+
+  </script>
 	<!--Fontawesome script-->
 	<!--<script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js" integrity="sha384-3LK/3kTpDE/Pkp8gTNp2gR/2gOiwQ6QaO7Td0zV76UFJVhqLl4Vl3KL1We6q6wR9" crossorigin="anonymous"></script>-->
 </body>

@@ -200,8 +200,6 @@
                             </div>
                         </div>
 
-
-                       
                         <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="form-group">
                           <input name="form_botcheck" class="form-control" value="" type="hidden">
@@ -227,7 +225,8 @@
       </div>
       <!-- .tab_container -->
     </div>
-  </div>
+  </div> 
+
 <div class="footer">
     <div class="f-bg-gyl">
         <div class="col-md-5 gylayouts_footer_grid">
@@ -569,15 +568,6 @@ $('#slotform').validate({
 </body>
 
 </html>
-
-
-
-
-
-
-
-
-
 
 
 

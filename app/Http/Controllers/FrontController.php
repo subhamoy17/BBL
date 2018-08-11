@@ -249,12 +249,78 @@ $past_data->past_mot=DB::table('customer_mot')
   Log::debug(" Check id ".print_r($data,true));  
 
  $now = Carbon::now();
+
  
- $sum_slots = DB::table('purchases_history')->
-    select('purchases_history.active_package','purchases_history.package_remaining','purchases_history.customer_id')->where('purchases_history.customer_id',Auth::user()->id)->where('purchases_history.active_package',1 )
-     ->sum('purchases_history.package_remaining');
-     session(['sum_slots' => $sum_slots]);
+ 
+     //@totan
+
+    //when a customer's past request (s) are not approved/ declined then for that session 
+    // all sessions are added of latest-end package and into the slot_request table update 
+    // all past request approval_id=5 of that customer after login. 
+
+    $remaining_session_request_now=Carbon::now()->toDateString();
+
+     $all_package=DB::table('purchases_history')
+      ->select('id','purchases_date','package_validity_date','package_remaining','slots_number')
+      ->where('customer_id',Auth::guard('customer')->user()->id)
+      ->where('active_package',1)
+      ->where('package_validity_date','>=',$remaining_session_request_now)
+      ->orderBy('package_validity_date', 'DESC')
+      ->first();
+      if($all_package)
+      {
+        $count_past_slot_request=DB::table('slot_request')
+        ->where('customer_id',Auth::guard('customer')->user()->id)
+        ->where('slot_date','<',$remaining_session_request_now)
+        ->where('approval_id',1)
+        ->count();
+
+        $total_remaining_package=$all_package->package_remaining+$count_past_slot_request;
+
+        $package_update=DB::table('purchases_history')
+        ->where('id',$all_package->id)
+        ->update(['package_remaining'=>$total_remaining_package]);
+
+        $past_slot_request_update=DB::table('slot_request')
+        ->where('customer_id',Auth::guard('customer')->user()->id)
+        ->where('slot_date','<',$remaining_session_request_now)
+        ->where('approval_id',1)
+        ->update(['approval_id'=>5]);
+      }
+
+      ////@end totan
+
+      $sum_slots = DB::table('purchases_history')->
+    select('purchases_history.active_package','purchases_history.package_remaining','purchases_history.customer_id')->where('purchases_history.customer_id',Auth::user()->id)
+    ->where('purchases_history.active_package',1 )
+    ->where('package_validity_date','>=',$remaining_session_request_now)
+    ->sum('purchases_history.package_remaining');
+
+     //@totan
+     // if remaing remaing package is greater than slots_number
+
+     $sum_exact_slot= DB::table('purchases_history')
+     ->where('customer_id',Auth::guard('customer')->user()->id)
+    ->where('active_package',1 )
+    ->where('package_validity_date','>=',$remaining_session_request_now)
+    ->sum('slots_number');
+
+    if($sum_slots>$sum_exact_slot)
+    {
+      $extra_remaing_slots=$sum_slots-$sum_exact_slot;
+
+      session(['sum_slots' => $sum_slots]);
+    }
+    else
+    {
+      session(['sum_slots' => $sum_slots]);
+      $extra_remaing_slots=0;
+    }
+
+    ////@end totan
+
      Log::debug(" session_value ".print_r(session('sum_slots'),true));
+
 
       $count=DB::table('slot_request')->where('slot_request.slot_date','<=',$now )->count();
       $future_pending_count=DB::table('purchases_history')
@@ -272,7 +338,7 @@ $past_data->past_mot=DB::table('customer_mot')
 return response()->json($data);
 }
 
-return view('customerpanel.booking_history',['data' => $data])->with(compact('fea_pen_data','data','dt','sum_slots','count','accepted_count','future_pending_count'));
+return view('customerpanel.booking_history',['data' => $data])->with(compact('fea_pen_data','data','dt','sum_slots','count','accepted_count','future_pending_count','extra_remaing_slots','sum_exact_slot'));
 
 }
 
