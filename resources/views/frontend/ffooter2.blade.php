@@ -850,6 +850,18 @@ $(document).ready(function() {
   </script>
 	<!--Fontawesome script-->
 	<!--<script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js" integrity="sha384-3LK/3kTpDE/Pkp8gTNp2gR/2gOiwQ6QaO7Td0zV76UFJVhqLl4Vl3KL1We6q6wR9" crossorigin="anonymous"></script>-->
+
+  <script>
+$(document).ready(function(){
+$("#extra_session").mouseover(function(){
+        $('.extra_session_div').show();
+    });
+    $("#extra_session").mouseout(function(){
+        $('.extra_session_div').hide();
+    });
+
+});
+</script>
 </body>
 
 </html>

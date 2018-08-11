@@ -59,6 +59,10 @@
             <td>@if($mydata->package_remaining>$mydata->slots_number)
               <?php $others=$mydata->package_remaining-$mydata->slots_number;?>
               {{$mydata->slots_number}} + {{$others}}
+              <div id="extra_session">Sample</div>
+              <div class="modal-body extra_session_div" style="display: none;">
+                    <h5 class="profile_modal_body" id="exampleModalLabel">This is the sample of video link ---> https://www.youtube.com/embed/93nnzrYffVo or https://www.youtube.com/watch?v=93nnzrYffVo</h5>
+                </div>
               @else
               {{$mydata->slots_number}}
               @endif
@@ -93,5 +97,7 @@
 <!-- .tab_container -->
 </div>
 </div>
+
+
 
 @endsection
