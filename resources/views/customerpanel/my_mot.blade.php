@@ -7,10 +7,18 @@
     <div class="modal-content">
     <div class="modal-header">
       <h4 class="modal-title">My MOT</h4>
-      <div> <select class="form-control mot_convert" id="mot_option">
+      <!--<div> <select class="form-control mot_convert" id="mot_option">
         <option  id="metric" value="metric">Metric (cm.)</option>
         <option id="imperial" value="imperial">Imperial (inch.)</option>
-      </select></div>
+      </select></div>-->
+       <div class="dropdown mdl-optn">
+  			<button class="dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example
+  			<span class="caret"></span></button>
+  			<ul class="dropdown-menu">
+  			  <li><a href="#">Metric (cm.)</a></li>
+  			  <li><a href="#">(inch.)</a></li>
+  			</ul>
+		</div> 
     </div>
       <div class="modal-body" id="hall_details_edit">
         <div class="row clearfix">

@@ -2452,7 +2452,7 @@ ul.tabs {
     width: 100%;
 	position: relative;
 }
-.tabs::before {
+/*.tabs::before {
 	content: "";
 	position: absolute;
 	border: 1px solid #ccc;
@@ -2460,9 +2460,26 @@ ul.tabs {
 	width: 40%;
 	top: 23px;
 	left: 0;
-	/* z-index: -99; */
+	 z-index: -99; 
+}*/
+.tabs li a{
+	position: relative !important;
 }
-
+.tabs li a::before {
+	content: "";
+	position: absolute;
+	height: 2px;
+	width: 19px;
+	background: #ccc;
+	top: 20px;
+	right: -21px;
+}
+.tabs li:last-child a:before{
+	display: none;
+}
+.tabs li.tab_last a:before{
+	display: none;
+}
 ul.tabs li {
     float: left;
     margin: 0 15px 10px 0;
@@ -2471,7 +2488,7 @@ ul.tabs li {
     line-height: 24px;
     font-size: 13px;
     color: #ccc;
-    overflow: hidden;
+    /*overflow: hidden;*/
     position: relative;
 	border: 2px solid rgb(120, 134, 155);
 	background-color: #fff !important;
@@ -2495,7 +2512,7 @@ ul.tabs li a{
     font-weight: 400;
 }
 ul.tabs li.bb{
-    padding: 10px 60.43px;
+    /*padding: 10px 60.43px;*/
     display: inline-block;
     text-align: center;
 }
@@ -5398,6 +5415,7 @@ a.sign-btn2 {
     padding: 50px 60px 30px 60px;
     /*margin-bottom: 30px;
     margin-top: 30px;*/
+	/*margin-top: 15px;*/
 }
 .form-box label {
     color: #ccc;
@@ -5451,11 +5469,11 @@ a.sign-btn2 {
     width: 100%;
     margin-top: 85px;
 }
-.ed-p {
+/*.ed-p {
     color: #fb5b21;
     font-size: 24px;
     margin-bottom: 20px;
-}
+}*/
 .form-box h6{
     color: #fb5b21;
     font-size: 18px;
@@ -5769,7 +5787,8 @@ a.sign-btn2 {
     margin-top: 0;
     margin-bottom: 0;
     text-align: left;
-    color: #3c4b54;
+    color: #fff;
+	display: inline-block;
 }
 #reason_modal button.close{
     font-size:30px;
@@ -5822,11 +5841,6 @@ a.sign-btn2 {
 	text-transform: capitalize;
 	font-weight: 600;
 }
-.tbl-srch {
-	float: right;
-	margin-right: 15px;
-	margin-top: 5px;
-}
 .tbl-srch select, .tbl-srch input{
 	width: 200px;
 	padding: 7px 10px;
@@ -5847,8 +5861,10 @@ a.sign-btn2 {
 	float: right;
 	margin-right: 15px;
 	margin-top: 5px;
-	position: absolute;
 	right: 0;
+}
+.tbl-srch.tbl-srch2{
+	position: absolute;
 	top: 16px;
 }
 .sgn-in i {
@@ -5897,5 +5913,30 @@ a.sign-btn2 {
 	color: #fff;
 	font-weight: 600;
 	font-size: 13px;
+}
+.bk-slt-btn {
+	position: absolute;
+	top: -34px;
+	right: 0px;
+}
+.dropdown.mdl-optn {
+	position: absolute;
+	top: 1px;
+	right: 20px;
+}
+.dropdown.mdl-optn button {
+	background: none;
+	font-size: 13px;
+	font-weight: 600;
+	border: 1px solid #fcf7f7;
+	padding: 5px 10px;
+	border-radius: 3px;
+	color: #fff;
+}
+#reason_modal .modal-header {
+	background: #f16f14;
+}
+.ed-p {
+	margin-top: 15px;
 }
 /*81018*/

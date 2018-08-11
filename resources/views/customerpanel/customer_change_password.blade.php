@@ -11,9 +11,10 @@
                    @endif
           <h3 class="d_active tab_drawer_heading" rel="tab4">Tab 4</h3>
           <div id="tab4" class="tab_content">
+           <h3 class="ed-p">Change Password</h3>
             <div class="form-box">
 
-                <h4 class="ed-p">Change Password</h4>
+                
                 <div class="row">
                     <form class="sch" method="POST" action="{{ route('customer.changepassword.update') }}" id="changepassword">
                           @csrf

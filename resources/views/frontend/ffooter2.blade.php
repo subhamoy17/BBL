@@ -746,7 +746,7 @@ $(document).ready(function() {
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script>
   		$( function() {
-  		  $( "#datepicker" ).datepicker();
+  		  $( "#datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' });
   		  $( "#format" ).on( "change", function() {
   		    $( "#datepicker" ).datepicker( "option", "dateFormat", $( this ).val() );
   		  });
@@ -754,7 +754,7 @@ $(document).ready(function() {
   	</script>
   	<script>
   		$( function() {
-  		  $( "#datepicker2" ).datepicker();
+  		  $( "#datepicker2" ).datepicker({ dateFormat: 'yy-mm-dd' });
   		  $( "#format" ).on( "change", function() {
   		    $( "#datepicker2" ).datepicker( "option", "dateFormat", $( this ).val() );
   		  });
@@ -762,17 +762,17 @@ $(document).ready(function() {
   	</script>
   	<script>
   		$( function() {
-  		  $( "#datepicker3" ).datepicker();
+  		  $( "#datepicker3" ).datepicker({ dateFormat: 'yy-mm-dd' });
   		  $( "#format" ).on( "change", function() {
-  		    $( "#datepicker2" ).datepicker( "option", "dateFormat", $( this ).val() );
+  		    $( "#datepicker3" ).datepicker( "option", "dateFormat", $( this ).val() );
   		  });
   		} );
   	</script>
   	<script>
   		$( function() {
-  		  $( "#datepicker4" ).datepicker();
+  		  $( "#datepicker4" ).datepicker({ dateFormat: 'yy-mm-dd' });
   		  $( "#format" ).on( "change", function() {
-  		    $( "#datepicker2" ).datepicker( "option", "dateFormat", $( this ).val() );
+  		    $( "#datepicker4" ).datepicker( "option", "dateFormat", $( this ).val() );
   		  });
   		} );
   	</script>	

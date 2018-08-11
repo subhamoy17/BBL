@@ -7,19 +7,17 @@
   <div id="tab2" class="tab_content">
 
     <div class="table-responsive table-bordered">
-     <h3 align="center">All Purchase History 
-      @if(count($purchases_data)>0)
+    	 @if(count($purchases_data)>0)
           @foreach($purchases_data as $key=>$mydata1)
           @endforeach
         @endif
         @if($remaining_session_request>0)
-        <a href="{{url('customer/booking_slot')}}/{{$mydata1->customer_id}}" class="btn btn-success">Send Slot Request</a>
+        <a href="{{url('customer/booking_slot')}}/{{$mydata1->customer_id}}" class="btn btn-success bk-slt-btn">Send Slot Request</a>
         @else
-        <a href="{{url('customer/booking_slot')}}/{{0}}"class="btn btn-success">Send Slot Request</a>
+        <a href="{{url('customer/booking_slot')}}/{{0}}"class="btn btn-success bk-slt-btn">Send Slot Request</a>
         @endif
-
-     </h3>
-		<div class="tbl-srch">
+     <h3 align="center">All Purchase History</h3>
+		<div class="tbl-srch tbl-srch2">
 			 <form id="frm_purchase_search">
          <!--  <input type="text" name="daterange"  value="2018-08-06 - 2018-09-12"/> -->
 
