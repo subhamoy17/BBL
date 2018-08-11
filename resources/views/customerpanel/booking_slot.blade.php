@@ -500,7 +500,8 @@ $('#slotform').validate({
       var slot_time = $('#slot_time');
                     slot_time.prop("disabled",false);
                     slot_time.empty();
-                    slot_time.append($('<option>').text("Please select time"));
+                    slot_time.append(
+                $('<option>', {value: ''}).text('Please select time'));
     $.ajax({
                   type: "GET",
                   url: "{{route('get_slot_time')}}",
