@@ -897,6 +897,8 @@ public function motinsert(Request $request){
     {
         $height =($request->height/0.39370 );
     }
+
+
     if($request->right_calf_credential=="metric")
     {
         $right_calf =$request->right_calf;
@@ -905,6 +907,47 @@ public function motinsert(Request $request){
     {
         $right_calf =($request->right_calf/0.39370 );
     }
+
+
+
+    if($request->left_calf_credential=="metric")
+    {
+        $left_calf =$request->left_calf;
+    }
+    else
+    {
+        $left_calf =($request->left_calf/0.39370 );
+    }
+
+
+
+
+
+
+ if($request->starting_weight_credential=="metric")
+    {
+        $starting_weight =$request->starting_weight;
+    }
+    else
+    {
+        $starting_weight =($request->starting_weight/2.2046 );
+    }
+
+
+
+
+ if($request->ending_weight_credential=="metric")
+    {
+        $ending_weight =$request->ending_weight;
+    }
+    else
+    {
+        $ending_weight =($request->ending_weight/2.2046 );
+    }
+
+
+
+
     $data['right_arm']=(isset($right_arm) && !empty($right_arm)) ? $right_arm : null;
     $data['left_arm']=(isset($left_arm) && !empty($left_arm)) ? $left_arm : null;
     $data['chest']=(isset($chest) && !empty($chest)) ? $chest : null;
@@ -915,10 +958,17 @@ public function motinsert(Request $request){
 
     $data['right_calf']=(isset($right_calf) && !empty($right_calf)) ? $right_calf : null;
     $data['left_calf']=(isset($left_calf) && !empty($left_calf)) ? $left_calf : null;
-    $data['starting_weight']=(isset($starting_weight) && !empty($starting_weight)) ? $starting_weight : null;
+
+
+ $data['starting_weight']=(isset($starting_weight) && !empty($starting_weight)) ? $starting_weight : null;
+
+  
     $data['ending_weight']=(isset($ending_weight) && !empty($ending_weight)) ? $ending_weight : null;
-    $data['blood_pressure']=(isset($blood_pressure) && !empty($blood_pressure)) ? $blood_pressure : null;
-    $data['heart_beat']=(isset($heart_beat) && !empty($heart_beat)) ? $heart_beat : null;
+
+
+   
+    $data['heart_beat']=(isset($request->heart_beat) && !empty($request->heart_beat)) ? $request->heart_beat : null;
+    $data['blood_pressure']=(isset($request->blood_pressure) && !empty($request->blood_pressure)) ? $request->blood_pressure : null;
     $data['height']=(isset($height) && !empty($height)) ? $height : null;
 
     $data['date']=(isset($request->date) && !empty($request->date)) ? $request->date : null;
@@ -1025,6 +1075,8 @@ public function motedit(Request $request){
     {
         $height =($request->height/0.39370 );
     }
+
+
     if($request->right_calf_credential=="metric")
     {
         $right_calf =$request->right_calf;
@@ -1033,6 +1085,32 @@ public function motedit(Request $request){
     {
         $right_calf =($request->right_calf/0.39370 );
     }
+
+
+ 
+    if($request->starting_weight_credential=="metric")
+    {
+        $starting_weight=$request->starting_weight;
+    }
+    else
+    {
+        $starting_weight =($request->starting_weight/2.2046 );
+    }
+
+
+
+    if($request->ending_weight_credential=="metric")
+    {
+        $ending_weight=$request->ending_weight;
+    }
+    else
+    {
+        $ending_weight =($request->ending_weight/2.2046 );
+    }
+
+
+
+
 
     $data['right_arm']=(isset($right_arm) && !empty($right_arm)) ? $right_arm : null;
 
@@ -1045,8 +1123,13 @@ public function motedit(Request $request){
 
     $data['right_calf']=(isset($right_calf) && !empty($right_calf)) ? $right_calf : null;
     $data['left_calf']=(isset($left_calf) && !empty($left_calf)) ? $left_calf : null;
-    $data['starting_weight']=(isset($request->starting_weight) && !empty($request->starting_weight)) ? $request->starting_weight : null;
-    $data['ending_weight']=(isset($request->ending_weight) && !empty($request->ending_weight)) ? $request->ending_weight : null;
+ $data['starting_weight']=(isset($starting_weight) && !empty($starting_weight)) ? $starting_weight : null;
+
+$data['ending_weight']=(isset($ending_weight) && !empty($ending_weight)) ? $ending_weight : null;
+
+
+  
+    
     $data['heart_beat']=(isset($request->heart_beat) && !empty($request->heart_beat)) ? $request->heart_beat : null;
     $data['blood_pressure']=(isset($request->blood_pressure) && !empty($request->blood_pressure)) ? $request->blood_pressure : null;
     $data['height']=(isset($request->height) && !empty($request->height)) ? $request->height : null;
