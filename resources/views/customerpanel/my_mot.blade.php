@@ -7,18 +7,18 @@
     <div class="modal-content">
     <div class="modal-header">
       <h4 class="modal-title">My MOT</h4>
-      <!--<div> <select class="form-control mot_convert" id="mot_option">
+      <div class="mdl-optn"> <select class="form-control mot_convert" id="mot_option">
         <option  id="metric" value="metric">Metric (cm.)</option>
         <option id="imperial" value="imperial">Imperial (inch.)</option>
-      </select></div>-->
-       <div class="dropdown mdl-optn">
+      </select></div>
+       <!-- <div class="dropdown mdl-optn">
   			<button class="dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example
   			<span class="caret"></span></button>
   			<ul class="dropdown-menu">
   			  <li><a href="#">Metric (cm.)</a></li>
   			  <li><a href="#">(inch.)</a></li>
   			</ul>
-		</div> 
+		</div>  -->
     </div>
       <div class="modal-body" id="hall_details_edit">
         <div class="row clearfix">
@@ -30,21 +30,22 @@
             <input type="hidden" id="reason_action"></input>
             <div class="form-group">
 
-              <div class="col-lg-2"><div class="wrp2"><div class="rl">Right Arm / </div><small>Inch</small><div class="right_arm rv" ></div></div></div>
-             <div class="col-lg-2"> <div class="wrp2"><div class="rl">Left Arm / </div><small>Inch</small><div class="left_arm rv" ></div></div></div>
-              <div class="col-lg-2"><div class="wrp2"><div class="rl">Chest / </div><small>Inch</small><div class="chest rv" ></div></div></div>
-              <div class="col-lg-2"><div class="wrp2"><div class="rl">Waist / </div><small>Inch</small><div class="waist rv" ></div></div></div>
-              <div class="col-lg-2"><div class="wrp2"><div class="rl">Hips / </div><small>Inch</small><div class="hips rv" ></div></div></div>
-              <div class="col-lg-2"><div class="wrp2"><div class="rl">Right thigh / </div><small>Inch</small><div class="right_thigh rv" ></div></div></div><div class="clearfix"></div>
-              <div class="col-lg-2"><div class="wrp2"><div class="rl">Left thigh / </div><small>Inch</small><div class="left_thigh rv" ></div></div></div>
-              <div class="col-lg-2"><div class="wrp2"><div class="rl">Right calf / </div><small>Inch</small><div class="right_calf rv" ></div></div></div>
-              <div class="col-lg-2"><div class="wrp2"><div class="rl">Left calf / </div><small>Inch</small><div class="left_calf rv" ></div></div></div>
-            	<div class="col-lg-2"><div class="wrp2"><div class="rl">Starting weight / </div><small>Inch</small><div class="starting_weight rv" ></div></div></div>
-              <div class="col-lg-2"><div class="wrp2"><div class="rl">Ending weight / </div><small>Inch</small><div class="ending_weight rv" ></div></div></div>
-              <div class="col-lg-2"><div class="wrp2"><div class="rl">Heart beat / </div><small>Inch</small><div class="heart_beat rv" ></div></div></div>
-               <div class="col-lg-6"><div class="wrp"><div class="rl">Blood pressure / </div><small>Inch</small><div class="blood_pressure rv" ></div></div></div>
+              <div class="col-lg-2"><div class="wrp2"><div class="rl">Right Arm </div>&nbsp;<small class="inch" style="display: none;">(Inch)</small><small class="cm">(cm)</small><div class="right_arm rv" ></div></div></div>
+             <div class="col-lg-2"> <div class="wrp2"><div class="rl">Left Arm</div>&nbsp;<small class="inch" style="display: none;">(Inch)</small><small class="cm">(cm)</small><div class="left_arm rv" ></div></div></div>
+              <div class="col-lg-2"><div class="wrp2"><div class="rl">Chest</div>&nbsp;<small class="inch" style="display: none;">(Inch)</small><small class="cm">(cm)</small><div class="chest rv" ></div></div></div>
+              <div class="col-lg-2"><div class="wrp2"><div class="rl">Waist</div>&nbsp;<small class="inch" style="display: none;">(Inch)</small><small class="cm">(cm)</small><div class="waist rv" ></div></div></div>
+              <div class="col-lg-2"><div class="wrp2"><div class="rl">Hips</div>&nbsp;<small class="inch" style="display: none;">(Inch)</small><small class="cm">(cm)</small><div class="hips rv" ></div></div></div>
+              <div class="col-lg-2"><div class="wrp2"><div class="rl">Right thigh</div>&nbsp;<small class="inch" style="display: none;">(Inch)</small><small class="cm">(cm)</small><div class="right_thigh rv" ></div></div></div><div class="clearfix"></div>
+              <div class="col-lg-2"><div class="wrp2"><div class="rl">Left thigh</div>&nbsp;<small class="inch" style="display: none;">(Inch)</small><small class="cm">(cm)</small><div class="left_thigh rv" ></div></div></div>
+              <div class="col-lg-2"><div class="wrp2"><div class="rl">Right calf</div>&nbsp;<small class="inch" style="display: none;">(Inch)</small><small class="cm">(cm)</small><div class="right_calf rv" ></div></div></div>
+              <div class="col-lg-2"><div class="wrp2"><div class="rl">Left calf</div>&nbsp;<small class="inch" style="display: none;">(Inch)</small><small class="cm">(cm)</small><div class="left_calf rv" ></div></div></div>
+              <div class="col-lg-2"><div class="wrp2"><div class="rl">Blood pressure</div>&nbsp;<small>(mmHg)</small><div class="blood_pressure rv" ></div></div></div>
+            	
+              <div class="col-lg-2"><div class="wrp2"><div class="rl">Ending weight</div>&nbsp;<small class="inch" style="display: none;">(pound)</small><small class="cm">(kg)</small><div class="ending_weight rv" ></div></div></div>
+              <div class="col-lg-2"><div class="wrp2"><div class="rl">Heart beat</div>&nbsp;<small>(bpm)</small><div class="heart_beat rv" ></div></div></div>
                
-                 <div class="col-lg-6"><div class="wrp"><div class="rl">Height / </div><small>Inch</small><div class="height rv" ></div></div></div>
+               <div class="col-lg-6"><div class="wrp"><div class="rl">Starting weight</div>&nbsp;<small class="inch" style="display: none;">(pound)</small><small class="cm">(kg)</small><div class="starting_weight rv" ></div></div></div>
+                 <div class="col-lg-6"><div class="wrp"><div class="rl">Height</div>&nbsp;<small class="inch" style="display: none;">(Inch)</small><small class="cm">(cm)</small><div class="height rv" ></div></div></div>
 				<div class="col-lg-12">
 					<div id="mot_des" class="mot-text">
 						<h6>Description</h6>

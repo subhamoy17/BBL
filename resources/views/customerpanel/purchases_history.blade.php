@@ -36,12 +36,12 @@
             <th>Package Name</th>
             <th>Package Price</th>
             <th>Package validity</th>
-            <th>Package Start Date</th>
-            <th>Package End Date</th>
+            <th>Purchases Date</th>
+            <th>Purchases End Date</th>
             <!-- <th>Payment Mode</th> -->
             <th>Total Slots </th>
-            <th>Remaining Slot (S)</th>
             <th>Status</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -56,7 +56,7 @@
             <td>{{$mydata->purchases_date}}</td>
             <td>{{$mydata->package_validity_date}}</td>
             <td>{{$mydata->slots_number}}</td>
-            <td>{{$mydata->package_remaining}}</td>
+            <td>Status</td>
             <td> 
 
               @if ($mydata->active_package==1 && $mydata->package_remaining>0 && ($mydata->timeremaining <= $mydata->slots_validity))

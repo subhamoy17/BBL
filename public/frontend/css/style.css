@@ -5782,7 +5782,7 @@ a.sign-btn2 {
     border: none;
     padding: 0;
 }
-#reason_modal h4.modal-title {
+.common h4.modal-title {
     font-size: 24px;
     margin-top: 0;
     margin-bottom: 0;
@@ -5790,11 +5790,11 @@ a.sign-btn2 {
     color: #fff;
 	display: inline-block;
 }
-#reason_modal button.close{
+.common button.close{
     font-size:30px;
 }
 .rl {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
     /*color: #586279;*/
     color: #ccc;
@@ -5803,14 +5803,14 @@ a.sign-btn2 {
     
 }
 .rv {
-    font-size: 30px;
+    font-size: 24px;
     font-weight: 700;
     color: #f16f14;
     margin-bottom: 20px;
     font-family: 'Russo One', sans-serif;
     letter-spacing: 2px;
 }
-#reason_modal .modal-body {
+.common .modal-body {
     background: #252631;
 }
 /*80818*/
@@ -5871,7 +5871,7 @@ a.sign-btn2 {
 	margin-right: 5px;
 }
 .mot-mod .modal-dialog {
-	width: 870px;
+	width: 1115px;
 }
 .wrp {
 	margin: 0 auto;
@@ -5899,15 +5899,15 @@ a.sign-btn2 {
 	position: relative;
 }
 .wrp2 small{
-	position: absolute;
+	/*position: absolute;
 	bottom: 8px;
-	left: 55px;
+	left: 55px;*/
 	color: #fff;
 	font-weight: 600;
-	font-size: 13px;
+	font-size: 11px;
 }
  .wrp small{
-	position: absolute;
+	
 	bottom: 8px;
 	left: 58%;
 	color: #fff;
@@ -5919,21 +5919,26 @@ a.sign-btn2 {
 	top: -34px;
 	right: 0px;
 }
-.dropdown.mdl-optn {
+.mdl-optn {
 	position: absolute;
-	top: 1px;
+	top: 12px;
 	right: 20px;
 }
-.dropdown.mdl-optn button {
-	background: none;
-	font-size: 13px;
-	font-weight: 600;
-	border: 1px solid #fcf7f7;
-	padding: 5px 10px;
-	border-radius: 3px;
-	color: #fff;
+.mdl-optn select {
+    background: none;
+    font-size: 13px;
+    font-weight: 600;
+    border: 1px solid #fcf7f7;
+    padding: 0 10px;
+    width: 180px;
+    border-radius: 3px;
+    color: #fff;
+    height: 35px;
 }
-#reason_modal .modal-header {
+.mdl-optn select option{
+    color:#000;
+}
+.common .modal-header {
 	background: #f16f14;
 }
 .ed-p {

@@ -10,7 +10,7 @@
 	<!-- //custom-theme -->
 
 
-<link rel="stylesheet" href="{{ asset('frontend/css/daterangepicker.css') }}">
+
 
 	<link href="{{url('frontend/css/bootstrap.css')}}" rel="stylesheet" type="text/css" media="all" />
 			

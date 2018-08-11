@@ -96,15 +96,50 @@ $('#frm1').validate({
 
 }
   });
- 
+ $('#mot_option').on('change', function() {
+  if($('#mot_option').val()=='metric')
+  {
+   
+  $('.inch').hide();
+  
+   $('.cm').show();
+
+    }
+    else 
+  {
+    
+  $('.inch').show();
+  
+   $('.cm').hide();
+
+    }
+    
+
+});
+
+ $('#convert_option').on('change', function() {
+  if($('#convert_option').val()=='metric')
+  {
+    
+  $('.inch').hide();
+  
+   $('.cm').show();
+
+    }
+    else 
+  {
+    
+  $('.inch').show();
+  
+   $('.cm').hide();
+
+    }
+    
+
+});
 
 });
 </script>
-
-
-
-
-
 
 <script>
 $(document).ready(function() {
@@ -355,6 +390,8 @@ $('#myeditform').validate({
       }
 });
 
+
+
     });  
   </script>
 
@@ -380,12 +417,13 @@ var row2;
             var heart_beat = $(this).data("heart_beat");
             var blood_pressure = $(this).data("blood_pressure");
             var height = $(this).data("height");
-            var weight = $(this).data("weight");
             
+            var description = $(this).data("description");
 
 
 
-            $('div.right_arm').text(right_arm); $('div.left_arm').text(left_arm);
+            $('div.right_arm').text(right_arm); 
+            $('div.left_arm').text(left_arm);
            
 
             $('div.chest').text(chest);
@@ -397,13 +435,20 @@ var row2;
             $('div.right_calf').text(right_calf);
 
             $('div.left_calf').text(left_calf);
-            $('div.left_calf').text(left_calf);
+            
             $('div.starting_weight').text(starting_weight);
             $('div.ending_weight').text(ending_weight);
             $('div.heart_beat').text(heart_beat);
             $('div.blood_pressure').text(blood_pressure);
             $('div.height').text(height);
-            $('div.weight').text(weight);
+            if(description!=''){
+              $('#mot_des').show();
+            $('textarea.description').text(description);
+          }
+           else{
+              $('#mot_des').hide();
+            $('textarea.description').text('');
+          }
           
             $('#reason_modal').modal('show');
         });
@@ -524,7 +569,7 @@ $('#changepassword').validate({
             var heart_beat = $(this).data("heart_beat");
             var blood_pressure = $(this).data("blood_pressure");
             var height = $(this).data("height");
-            
+            var description = $(this).data("description");
            
 
             $('div.right_arm').text(right_arm); 
@@ -541,8 +586,14 @@ $('#changepassword').validate({
             $('div.heart_beat').text(heart_beat);
             $('div.blood_pressure').text(blood_pressure);
             $('div.height').text(height);
-            
-          
+            if(description!=''){
+              $('#des').show();
+            $('textarea.description').text(description);
+          }
+           else{
+              $('#des').hide();
+            $('textarea.description').text('');
+          }
             $('#convert_modal').modal('show');
         });
 
