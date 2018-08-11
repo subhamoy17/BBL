@@ -6,7 +6,7 @@
     
     <div class="modal-content">
     <div class="modal-header">
-      <h4 class="modal-title">Customers MOT</h4>
+      <h4 class="modal-title">My MOT</h4>
       <div> <select class="form-control mot_convert" id="mot_option">
         <option  id="metric" value="metric">Metric (cm.)</option>
         <option id="imperial" value="imperial">Imperial (inch.)</option>
@@ -31,15 +31,16 @@
               <div class="col-lg-2"><div class="wrp2"><div class="rl">Left thigh / </div><small>Inch</small><div class="left_thigh rv" ></div></div></div>
               <div class="col-lg-2"><div class="wrp2"><div class="rl">Right calf / </div><small>Inch</small><div class="right_calf rv" ></div></div></div>
               <div class="col-lg-2"><div class="wrp2"><div class="rl">Left calf / </div><small>Inch</small><div class="left_calf rv" ></div></div></div>
-            	<div class="col-lg-2"><div class="wrp2"><div class="rl">Right Arm / </div><small>Inch</small><div class="right_arm rv" ></div></div></div>
-             <div class="col-lg-2"><div class="wrp2"> <div class="rl">Left Arm / </div><small>Inch</small><div class="left_arm rv" ></div></div></div>
-              <div class="col-lg-2"><div class="wrp2"><div class="rl">Chest / </div><small>Inch</small><div class="chest rv" ></div></div></div><div class="clearfix"></div>
-				<div class="col-lg-6"><div class="wrp"><div class="rl">Waist / </div><small>Inch</small><div class="waist rv" ></div></div></div>
-              <div class="col-lg-6"><div class="wrp"><div class="rl">Hips / </div><small>Inch</small><div class="hips rv" ></div></div></div><div class="clearfix"></div>
+            	<div class="col-lg-2"><div class="wrp2"><div class="rl">Starting weight / </div><small>Inch</small><div class="starting_weight rv" ></div></div></div>
+              <div class="col-lg-2"><div class="wrp2"><div class="rl">Ending weight / </div><small>Inch</small><div class="ending_weight rv" ></div></div></div>
+              <div class="col-lg-2"><div class="wrp2"><div class="rl">Heart beat / </div><small>Inch</small><div class="heart_beat rv" ></div></div></div>
+               <div class="col-lg-6"><div class="wrp"><div class="rl">Blood pressure / </div><small>Inch</small><div class="blood_pressure rv" ></div></div></div>
+               
+                 <div class="col-lg-6"><div class="wrp"><div class="rl">Height / </div><small>Inch</small><div class="height rv" ></div></div></div>
 				<div class="col-lg-12">
-					<div class="mot-text">
+					<div id="mot_des" class="mot-text">
 						<h6>Description</h6>
-						<textarea></textarea>
+						<textarea class="description"></textarea>
 					</div>
          		</div>
           </div>
@@ -78,11 +79,8 @@
                       data-right_thigh="{{$mydata->right_thigh}}" data-right_calf="{{$mydata->right_calf}}" 
                       data-left_calf="{{$mydata->left_calf}}" data-weight="{{$mydata->weight}}"
                       data-left_thigh="{{$mydata->left_thigh}}" data-starting_weight="{{$mydata->starting_weight}}"  data-ending_weight="{{$mydata->ending_weight}}"  data-heart_beat="{{$mydata->heart_beat}}"  data-blood_pressure="{{$mydata->blood_pressure}}"
-                      data-height="{{$mydata->height}}"class="btn btn-success">
-
+                      data-height="{{$mydata->height}}" data-description="{{$mydata->description}}" class="btn btn-success">
                     Click Here</a>
-                                        
-
                    </td>
 
                  </tr>
