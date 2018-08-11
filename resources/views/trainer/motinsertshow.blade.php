@@ -8,6 +8,8 @@
 
   $(document).ready(function(){
 
+
+
     $.validator.addMethod("alpha", function(value, element){
       return this.optional(element) || value == value.match(/^[a-zA-Z, '']+$/);
     }, "Alphabetic characters only please");
@@ -24,8 +26,8 @@ $.validator.addMethod("alphanumeric", function(value, element) {
 
 
 $.validator.addMethod("dollarsscents", function(value, element) {
-  return this.optional(element) || /^\d{0,4}(\.\d{0,1})?$/i.test(value);
-}, "Please enter value betwwen 1 to 999.9");
+  return this.optional(element) || /^\d{0,5}(\.\d{0,3})?$/i.test(value);
+}, "Please enter value betwwen 1 to 999.99");
 
 
 $('#motaddform').validate({  
@@ -95,16 +97,16 @@ range: [1, 999.9]
 },
 
 "starting_weight": {
-  number: true,
+
   required: true,
-  dollarsscents: true,
+    number: true,
   range: [1, 999.9]
+  
 },
 
 "ending_weight": {
   number: true,
   required: true,
-  dollarsscents: true,
   range: [1, 999.9]
 
 },
@@ -191,7 +193,7 @@ range: "Please enter value betwwen 1 to 999.9"
 
 "starting_weight":{
   required: 'Please enter the this value',
-  number: 'Please enter decimal only',
+number: 'Please enter decimal only',
   range: "Please enter value betwwen 1 to 999.9"
 },
 
@@ -224,13 +226,33 @@ range: "Please enter value betwwen 1 to  999.9"
 }
 });
 
-$('.convert').on('change', function()
+
+    $('.convert').on('change', function()
 {
   if($(this).val()=='imperial')
     converted_value=$(this).prev('input').val()*0.39370;
   else
     converted_value=$(this).prev('input').val()/0.39370;
   $(this).prev('input').val(converted_value);
+});
+
+
+
+
+
+$('.weightconvert').on('change', function(){ 
+
+  if($(this).val()=='imperial')
+
+
+    converted_value=$(this).prev('input').val()* 2.2046;
+  
+  else
+  
+    converted_value=$(this).prev('input').val()/2.2046;
+
+  $(this).prev('input').val(converted_value);
+
 });
 
 });
@@ -273,8 +295,7 @@ $('.convert').on('change', function()
             <div class="row">
               <div class="col-lg-6">
                 <input type="text" id="right_arm" name="right_arm" placeholder="Right Arm" class="form-control" value="">
-           <!--  </div>
-            <div class="col-lg-6"> -->
+          
              <select class="form-control convert" name="right_arm_credential">
               <option id="matric" value="matric">Matric (cm.)</option>
               <option id="imperial" value="imperial">Imperial (inch.)</option>
@@ -283,6 +304,7 @@ $('.convert').on('change', function()
         </div> 
       </div>
     </div>
+
     <div class="row form-group">
       <div class="col-lg-3"><label for="text-input" class="form-control-label">Left Arm</label></div>
       <div class="col-lg-9"><div class="row"><div class="col-lg-6"><input type="text" id="left_arm" name="left_arm" placeholder="Left Arm" class="form-control" value=""><!-- </div> -->
@@ -296,6 +318,7 @@ $('.convert').on('change', function()
 
   </div>
 </div>
+
 
 <div class="row form-group">
   <div class="col-lg-3"><label for="text-input" class="form-control-label">Chest</label></div>
@@ -396,21 +419,87 @@ $('.convert').on('change', function()
       <option id="matric" value="matric">Matric (cm.)</option>
       <option id="imperial" value="imperial">Imperial (inch.)</option>
     </select>
+
+
   </div>     
 </div> 
 </div>
 </div>
 
-<div class="row form-group">
-  <div class="col-lg-3"><label for="text-input" class="form-control-label"> Starting Weight<span class="required_field_color">*</span></label></div>
-  <div class="col-lg-9"><input type="text" id="starting_weight" name="starting_weight" placeholder="Starting Weight" class="form-control" value="">
+<!-- <div class="row form-group">
+  <div class="col-lg-3"><label for="text-input" class="form-control-label"> Starting Weight</label></div>
+  <div class="col-lg-9"><div class="row"><div class="col-lg-6"><input type="text" id="starting_weight" name="starting_weight" placeholder="Starting Weight" class="form-control" value="">
+
+
+<select class="form-control convert" name="starting_weight_credential">
+
+      <option id="matric" value="matric">Matric (Kg.)</option>
+      <option id="imperial" value="imperial">Imperial (Lbs.)</option>
+    </select>
+     </div>     
+</div>
   </div>
 </div>
+ -->
+
+
 <div class="row form-group">
-  <div class="col-lg-3"><label for="text-input" class="form-control-label"> Ending Weight<span class="required_field_color">*</span></label></div>
-  <div class="col-lg-9"><input type="text" id="ending_weight" name="ending_weight" placeholder="Ending Weight" class="form-control" value="">
-  </div> 
+  <div class="col-lg-3"><label for="text-input" class="form-control-label">Starting Weight</label></div>
+  <div class="col-lg-9"><div class="row"><div class="col-lg-6"><input type="text" id="starting_weight" name="starting_weight" placeholder="Starting Weight" class="form-control" value=""><!-- </div>
+  <div class="col-lg-6"> -->
+    <select class="form-control weightconvert" name="starting_weight_credential">
+      <option id="matric" value="matric">Matric (kg.)</option>
+      <option id="imperial" value="imperial">Imperial (lbs.)</option>
+    </select>
+
+
+  </div>     
+</div> 
 </div>
+</div>
+
+
+<div class="row form-group">
+  <div class="col-lg-3"><label for="text-input" class="form-control-label">Ending Weight</label></div>
+  <div class="col-lg-9"><div class="row"><div class="col-lg-6"><input type="text" id="ending_weight" name="ending_weight" placeholder="Ending Weight" class="form-control" value=""><!-- </div>
+  <div class="col-lg-6"> -->
+    <select class="form-control weightconvert" name="ending_weight_credential">
+      <option id="matric" value="matric">Matric (cm.)</option>
+      <option id="imperial" value="imperial">Imperial (inch.)</option>
+    </select>
+
+
+  </div>     
+</div> 
+</div>
+</div>
+
+
+
+
+
+
+<!-- 
+
+<div class="row form-group" name="ending_weight_credential">
+
+  <div class="col-lg-3"><label for="text-input" class="form-control-label"> Ending Weight<span class="required_field_color">*</span></label></div>
+
+  <div class="col-lg-9"><div class="row"><div class="col-lg-6"><input type="text" id="ending_weight" name="ending_weight" placeholder="Ending Weight" class="form-control" value="">
+
+<select class="form-control weight_convert" name="ending_weight_credential">
+
+      <option id="matric" value="matric">Matric (Kg.)</option>
+      <option id="imperial" value="imperial">Imperial (Lbs.)</option>
+    </select>
+     </div>     
+</div>
+  </div>
+</div>
+ -->
+
+
+
 <div class="row form-group">
   <div class="col col-md-3"><label for="text-input" class="form-control-label"> Blood Pressure<span class="required_field_color">*</span></label></div>
   <div class="col-12 col-md-9"><input type="text" id="blood_pressure" name="blood_pressure" placeholder="Blood Pressure" class="form-control" value="">
