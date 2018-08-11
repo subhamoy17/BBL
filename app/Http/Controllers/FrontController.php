@@ -113,11 +113,51 @@ function purchase_payment_mode(Request $request)
   {
     return view('customerpanel.paypal-payment')->with(compact('data'));
   }
+  if($request->selector1=='Banking Transter')
+{
 
+    return view('customerpanel.bank-payment')->with(compact('data'));
+  }
 }
+
 
 public function paypal_payment_success()
 {
+    return view('customerpanel.paypal-payment-success');
+}
+
+public function bank_payment_success(Request $request)
+{
+$bank_data['customer_id']=$request->customer_id;
+$bank_data['slot_id']=$request->slot_id;
+$bank_data['purchases_date']=$request->purchases_date;
+$bank_data['package_validity_date']=$request->package_validity_date;
+$bank_data['payment_options']='Banking Transter';
+$bank_data['slots_name']=$request->slots_name;
+$bank_data['slots_number']=$request->slots_number;
+$bank_data['slots_price']=$request->slots_price;
+$bank_data['active_package']=0;
+$bank_data['package_remaining']=0;
+
+
+$insert_bank_data=DB::table('purchases_history')->insert($bank_data);
+
+ $purchase_history_id = DB::getPdo()->lastInsertId();
+           $data['purchase_history_id'] = $purchase_history_id;
+ $myimage=$request->image;
+        $folder="backend/images/"; 
+      $extension=$myimage->getClientOriginalExtension(); 
+        $image_name=time()."_trainerimg.".$extension; 
+        $upload=$myimage->move($folder,$image_name); 
+        $data['image']=$image_name; 
+
+$data['payment_id']='BANK'.time();
+$data['currency']=Null;
+$data['amount']=$request->slots_price;
+$data['payment_mode']='Banking Transter';
+$data['description']=$request->description;
+$data['status']='Inprogress';
+$bank_data=DB::table('payment_history')->insert($data);
     return view('customerpanel.paypal-payment-success');
 }
 
