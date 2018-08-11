@@ -11,7 +11,7 @@ $('#bootstrap-slot-data-table').DataTable({
         lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
         
         // disable shorting from slno,image and action columns
-        "columnDefs": [ { "orderable": false, "targets": [0,5,6] } ],
+        "columnDefs": [ { "orderable": false, "targets": [0,5,6,7] } ],
         
     });
  } );
@@ -26,8 +26,8 @@ $('#bootstrap-slot-data-table').DataTable({
       table.dataTable thead>tr>th[id='image'].sorting_asc::before{display: none}
      table.dataTable thead>tr>th[id='image'].sorting_asc::after{display: none}
 
-     table.dataTable thead>tr>th[id='action'].sorting_asc::before{display: none}
-     table.dataTable thead>tr>th[id='action'].sorting_asc::after{display: none}
+   
+     
 
     .button-primary {
   background: #d16879;
