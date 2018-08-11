@@ -185,7 +185,7 @@
 
                           <div class="col-md-6 col-sm-12 col-xs-12">
                           <label>Date <small>*</small></label>
-                          <input type="text" id="datepicker" name="date" class="form-control" onchange="jsfunction()">
+                          <input type="text" id="datepicker" name="date" class="form-control" onchange="jsfunction()" readonly="true">
 
 
 
@@ -212,8 +212,7 @@
 
                 @else
 
-                <h4 class="ed-p">You have consumed all of your purchased session & to book a new session you have to purchase a new package, So do you want to purchase?</h4><br>
-
+                <h3>You have consumed all of your purchased session & to book a new session you have to purchase a new package, So do you want to purchase?</h3><br>
                 <a href="{{url('customer/pricing')}}"class="btn btn-dark btn-theme-colored btn-flat">Yes</a>
                 <a href="{{url('customer/purchase_history')}}"class="btn btn-dark btn-theme-colored btn-flat">No</a>
 

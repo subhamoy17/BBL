@@ -200,23 +200,12 @@ public function slotsdelete($id)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 public function showlist()
 {
 
 
     $data=DB::table('users')
-    ->where('master_trainer',2)->wherenull('deleted_at')->get();
+    ->where('master_trainer',2)->whereNull('deleted_at')->get()->all();
 
     return view('trainer.trainerlist')->with(compact('data'));
 }
@@ -244,8 +233,6 @@ public function trainer_active_deactive(Request $request)
     {
         $remaining_session_request_now=Carbon::now()->toDateString();
 
-
-
        DB::table('users')
        ->where('id',$id)->update(['is_active'=>0 ]);
 
@@ -262,37 +249,24 @@ public function trainer_active_deactive(Request $request)
 
        Log::debug(" total_decline ".print_r($total_decline,true));
 
-       $customer_id=0; $session_remaining=0;
+       $customer_id=0; $slot_date='';
        foreach($total_decline as $my_total)
        {
-        
-            if($customer_id!=$my_total->customer_id){
             $remaining_package=DB::table('purchases_history')
             ->where('customer_id',$my_total->customer_id)
             ->orderBy('package_validity_date','DESC')
             ->first();
-
+        
             
-
             $add_session_remaining=$remaining_package->package_remaining+1;
-
             
 
             $update_package_purchase=DB::table('purchases_history')
             ->where('id',$remaining_package->id)
             ->update(['package_remaining'=>$add_session_remaining]);
-
-            Log::debug(" package_validity_date ".print_r($update_package_purchase,true));
-        
+           
         }
-
-        $customer_id=$my_total->customer_id;
-        
-       }
        
-
-       
-
        $slot_rquest_update=DB::table('slot_request')
        ->where('trainer_id',$id)
        ->where(function($q) {
