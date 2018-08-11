@@ -5939,4 +5939,10 @@ a.sign-btn2 {
 .ed-p {
 	margin-top: 15px;
 }
+
+.form-box .form-control[readonly]{
+    background: #3d3648;
+    border: none;
+    color: #ccc;
+}
 /*81018*/
