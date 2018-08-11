@@ -34,14 +34,16 @@ public function __construct()
 public function index()
 
 {
-    $cur_date =TODAY();
+    $cur_date =Carbon::now()->toDateString();
 
-$future_pending_request=DB::table('slot_request')->where('slot_request.trainer_id',Auth::user()->id)->where('slot_request.slot_date','>',$cur_date)->where('approval_id',1)->count();//number of future pending request 
-$future_approve_request=DB::table('slot_request')->where('slot_request.trainer_id',Auth::user()->id)->where('slot_request.approval_id','<>',1)->where('slot_request.slot_date','>',$cur_date)->count(); //number of future approve request 
+$future_pending_request=DB::table('slot_request')->where('trainer_id',Auth::user()->id)->where('slot_date','>=',$cur_date)->where('approval_id',1)->count();//number of future pending request 
 
-$past_request=DB::table('slot_request')->where('slot_request.trainer_id',Auth::user()->id)->where('slot_request.slot_date','<',$cur_date)->count();//number of past request
 
-$decline_request=DB::table('slot_request')->where('slot_request.trainer_id',Auth::user()->id)->where('approval_id',4)->count();//number of decline request
+$future_approve_request=DB::table('slot_request')->where('trainer_id',Auth::user()->id)->where('approval_id',3)->where('slot_date','>',$cur_date)->count(); //number of future approve request 
+
+$past_request=DB::table('slot_request')->where('trainer_id',Auth::user()->id)->where('slot_date','<',$cur_date)->count();//number of past request
+
+$decline_request=DB::table('slot_request')->where('trainer_id',Auth::user()->id)->where('approval_id',4)->count();//number of decline request
 
 return view('trainer.home')->with(compact('future_pending_request','future_approve_request','past_request','decline_request'));
 
@@ -168,17 +170,6 @@ public function showslotseditform($id)
 // update the slots
 public function slotsedit(Request $request)
 {
-// validation of data
-//     $request->validate
-//     (
-// [ 'slots_number'=>'required|integer|min:1', //accept only integer and must be minimum value of 1 is required
-// 'slots_price'=>'required|numeric|between:1,999999.99',//accept only integer and must be minimum value of 1 is required
-// 'slots_validity'=>'required|integer|min:1',
-//  // same as slots_number
-// 'slots_name'=>'required|max:255|unique:slots'
-// ]
-// );
-
     $slotsdata['slots_name']=$request->slots_name;
     $slotsdata['slots_number']=$request->slots_number;
     $slotsdata['slots_price']=$request->slots_price;
@@ -209,9 +200,6 @@ public function showlist()
 
     return view('trainer.trainerlist')->with(compact('data'));
 }
-
-
-
 
 
 
@@ -282,21 +270,6 @@ public function trainer_active_deactive(Request $request)
         return response()->json(2);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

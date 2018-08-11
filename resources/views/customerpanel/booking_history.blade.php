@@ -22,11 +22,9 @@
                  
                   <tr>
                     <td>
-                      @if($extra_remaing_slots>0)
-                      {{$sum_exact_slot}} + {{$extra_remaing_slots}}
-                      @else
+                      
                       {{($sum_slots)}}
-                      @endif
+                      
                     </td>
                     <td>{{$future_pending_count}}</td>
                     <td>{{$accepted_count}}</td>
