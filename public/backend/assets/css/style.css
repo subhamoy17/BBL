@@ -680,6 +680,14 @@ textarea.parsley-error {
     top: 200px;
 }
 
+.tbdy1 .btn-sm {
+ width: 48% !important;
+ padding: 5px 0;
+ float: left;
+}
+.tbdy1 a.btn-sm {
+ margin-right: 1px;
+}
 
 /*81118*/
 .card{

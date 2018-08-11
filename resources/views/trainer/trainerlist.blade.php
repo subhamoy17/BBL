@@ -141,7 +141,7 @@ $('#bootstrap-slot-data-table').DataTable({
                                     <th>Avaliable </th>
                                 </tr>
                             </thead>
-                        <tbody>
+                        <tbody class="tbdy1">
                                 @if(count($data)>0)
                             @foreach($data as $key=>$mydata)
                                 <tr>

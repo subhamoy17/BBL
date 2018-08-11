@@ -119,7 +119,7 @@ $('#clienteditform').validate({
                 </div>
             </div>    
 </div>
-        <div class="col-lg-6">
+        <div class="col-lg-12">
         <div class="card">
                       <div class="card-body card-block">
                         <form action="{{route('client_update')}}" method="post" enctype="multipart/form-data" class="form-horizontal" id="clienteditform">
@@ -189,7 +189,7 @@ $('#clienteditform').validate({
                               </div>
                           </div>
 
-                            <div>
+                             <div style="float: right">
                                 <button type="submit" name="submit" class="btn btn-primary btn-sm">
                                   <i class="fa fa-dot-circle-o"></i> Submit
                                 </button>

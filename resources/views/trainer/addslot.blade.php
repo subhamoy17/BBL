@@ -58,7 +58,7 @@ $('#bootstrap-slot-data-table').DataTable({
             <div class="col-md-12">
                 <div class="card">
                     @if(count($data)>0)
-                        <div class="card-header" style="padding-left: 0px;padding-right: 0px;padding-bottom: 0px;padding-top: 10px;">
+                        <div class="card-header" style="padding:0px;">
                             @if (session('success'))
                             <div class="alert alert-success">
                                 {{ session('success') }}

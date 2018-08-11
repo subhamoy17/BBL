@@ -12,7 +12,7 @@ $('#bootstrap-slot-data-table').DataTable({
         lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
         
         // disable shorting from slno,image and action columns
-        "columnDefs": [ { "orderable": false, "targets": [0,3] } ],
+        "columnDefs": [ { "orderable": false, "targets": [0,7] } ],
         
     });
  } );
@@ -63,7 +63,7 @@ $('#bootstrap-slot-data-table').DataTable({
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header" style="padding-left: 0px;padding-right: 0px;padding-bottom: 0px;padding-top: 10px;">
+                    <div class="card-header" style="padding:0">
                         @if (session('success'))
                         <div class="alert alert-success">
                             {{ session('success') }}

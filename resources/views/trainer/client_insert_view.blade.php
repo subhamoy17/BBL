@@ -112,7 +112,7 @@ $('#clientaddform').validate({
                 </div>
             </div>    
 </div>
-        <div class="col-lg-6">
+        <div class="col-lg-12">
         <div class="card">
                       <div class="card-body card-block">
                         <form action="{{route('client_insert')}}" method="post" enctype="multipart/form-data" class="form-horizontal" id="clientaddform" data-parsley-validate>
@@ -172,7 +172,7 @@ $('#clientaddform').validate({
             </div>
 
 
-                            <div>
+                            <div style="float: right">
                                 <button type="submit"  name="submit" class="btn btn-primary btn-sm">
                                   <i class="fa fa-dot-circle-o"></i> Submit
                                 </button>
@@ -182,36 +182,6 @@ $('#clientaddform').validate({
                     </div>
                     </div>
 
-<!-- 
-  <?php  ?>
-      @if(!empty($table_data))
-      <div class="card-body card-block">
-        <table>
-          <thead>
-            <tr>
-              <th><strong>Name</strong></th>
-              <th><strong>Contact No</strong></th>
-               <th><strong>Address</strong></th>
-              <th><strong>Email</strong></th>
-              <th><strong>Password</strong></th>
-              <th><strong>Image</strong></th>
-            </tr>
-          </thead>
-          <tbody>
-            @foreach($table_data as $key=>$single_data)
-            <tr>
-              <td>{{ $single_data->name }}</td>
-              <td>{{ $single_data->contact_no }}</td>
-              <td>{{ $single_data->address }}</td>
-              <td>{{ $single_data->email }}</td>
-              <td>{{ $single_data->password }}</td>
-               <td><img src="{{url($single_data->image)}}" width="100%" ></td>
-            </tr>
-            @endforeach 
-          </tbody>
-        </table>
-      </div>
-      @endif    -->
 
 
 
