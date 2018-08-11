@@ -94,8 +94,12 @@ $('#bootstrap-slot-data-table').DataTable({
 <div class="content mt-3" style="margin-top: 0px !important;">
     <div class="animated fadeIn">
         <div class="row">
+           
             <div class="col-md-12">
+                 
                 <div class="card">
+     <div class="group">
+         <div id="loading-img"></div>
                     <div class="card-header" style="padding-left: 0px;padding-right: 0px;padding-bottom: 0px;padding-top: 10px;">
                         @if (session('success'))
                         <div class="alert alert-success">
@@ -108,7 +112,9 @@ $('#bootstrap-slot-data-table').DataTable({
                             </div>
                         @endif
                     </div>
+                    
                     <div class="card-body">
+                    
                         <script type="text/javascript">
                            
                             function delete_trainer(id){ 
@@ -121,7 +127,7 @@ $('#bootstrap-slot-data-table').DataTable({
                                         });
                                     }
                             </script>
-                        </script>
+                      
                         <table id="bootstrap-slot-data-table" class="table table-striped table-bordered">
                             <thead>
                                 <tr>
@@ -145,27 +151,29 @@ $('#bootstrap-slot-data-table').DataTable({
                                     <td>{{$mydata->contact_no}}</td>
                                     <td>{{$mydata->address}}</td>
                                     <td><img src="{{asset('backend/images')}}/{{$mydata->image}}" height="50" width="50"></td>
+
+                                            <td>
                                     @if($mydata->master_trainer == 1)
-                                    <td>
-                                        <a href="{{url('trainer/edittrainer')}}/{{$mydata->id}}" ><button class="button-primary">Edit</button></a>
+                            
+                                    <a href="{{url('trainer/edittrainer')}}/{{$mydata->id}}" title="Edit"><button class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button></a>
+
+
                                     @else
-                                    <td>
-                                        <a href="{{url('trainer/edittrainer')}}/{{$mydata->id}}" ><button class="button-primary">Edit</button></a>
-                                        <button class="button-primary" onclick="delete_trainer({!!$mydata->id!!})">Delete</button>
-                                    </td>
+                                 
+                                        <a href="{{url('trainer/edittrainer')}}/{{$mydata->id}}" title="Edit Trainer"><button class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button></a>
+
+                                        <button class="btn btn-danger btn-sm" title="Delete Trainer" onclick="delete_trainer({!!$mydata->id!!})" style="width: 32px;"><i class="fa fa-trash-o"></i></button>
+
                                     @endif
-                                       
+                                      </td>
                                     <td>
                                          @if($mydata->is_active == 1)
-                                    <button type="button" class="btn btn-danger status-all" id="{{$mydata->id}}">Deactive</button>
-                              
+                                    <button type="button" title="Deactive Trainer"  class="btn btn-danger btn-sm status-all" id="{{$mydata->id}}" data-msg="Deactive"><i class="fa fa-times"></i></button>
                                     @else
-                           
-                                    <button type="button" class="btn btn-success status-all" id="{{$mydata->id}}">Active</button>
+                                    <button type="button"  title="Active Trainer" class="btn btn-success btn-sm status-all" id="{{$mydata->id}}" data-msg="Active"><i class="fa fa-check"></i></button>
                                     @endif
+
                                     </td>
-
-
 
                                 </tr>
                             @endforeach
@@ -175,21 +183,16 @@ $('#bootstrap-slot-data-table').DataTable({
                     @endif
                 </div>
             </div>
+            </div>
         </div>
     </div><!-- .animated -->
 </div>
     <!-- .content -->
-  
-
-
-
-
- 
-<script type="text/javascript">
+  <script type="text/javascript">
       $(document).ready(function(){
         
         $('.status-all').on('click',function(e) {
-          var action = $.trim($(this).text());
+          var action = $(this).data("msg");
           console.log(action);
           var row = this.closest('tr');
           console.log(row);
@@ -220,16 +223,18 @@ if (action == "Deactive"){
     success: function (data)
     {
       if(data==1){
+         
+
         console.log("Approve response");
       console.log(data);
+       
        $(".card-body").css("opacity", .2);
-    $("#loading-img").css({"display": "block"});
-
+   $("#loading-img").css({"display": "block"});
       $('#success-msg').show();
       setTimeout(function(){
         $('#success-msg').hide();
  location.reload();
-      }, 5000);
+      }, 4000);
       }
       else
       {
@@ -241,7 +246,7 @@ if (action == "Deactive"){
       setTimeout(function(){
         $('#decline-msg').hide();
         location.reload();
-      }, 5000);
+      }, 4000);
 
 
       }
@@ -255,7 +260,9 @@ if (action == "Deactive"){
         }
 
         });
+
 }
+
 else if (action == "Active"){
   var Data =
   {
@@ -325,28 +332,6 @@ alertify.confirm("Are you sure you will be approve this trainer?", function (e) 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     <script src="{{asset('backend/assets/js/lib/data-table/datatables.min.js')}}"></script>
     <script src="{{asset('backend/assets/js/lib/data-table/dataTables.bootstrap.min.js')}}"></script>
     <script src="{{asset('backend/assets/js/lib/data-table/dataTables.buttons.min.js')}}"></script>
@@ -358,8 +343,6 @@ alertify.confirm("Are you sure you will be approve this trainer?", function (e) 
     <script src="{{asset('backend/assets/js/lib/data-table/buttons.print.min.js')}}"></script>
     <script src="{{asset('backend/assets/js/lib/data-table/buttons.colVis.min.js')}}"></script>
     <script src="{{asset('backend/assets/js/lib/data-table/datatables-init.js')}}"></script>
-
-
     <script type="text/javascript">
         $(document).ready(function() {
           $('#bootstrap-data-table-export').DataTable();
