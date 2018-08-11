@@ -119,17 +119,6 @@
             </div>
           </div>
         </div>
-<!-- <div class="tab_container">
-          <h3 class="d_active tab_drawer_heading" rel="tab1">Tab 1</h3>
-          <div id="tab1" class="tab_content">
-            <div class="table-responsive table-bordered"> -->
-              
-
-
-
-  
-           
-
 
    <div id="book_history">{{$data->links()}}</div>
      
@@ -155,23 +144,6 @@
             <input type="hidden" id="reason_id"></input>
             <input type="hidden" id="reason_action"></input>
             <div class="form-group">
-
-              <!-- <div class="col-lg-2"><div class="wrp2"><div class="rl">Right Arm / </div><small>Inch</small><div class="right_arm rv" ></div></div></div>
-             <div class="col-lg-2"> <div class="wrp2"><div class="rl">Left Arm / </div><small>Inch</small><div class="left_arm rv" ></div></div></div>
-              <div class="col-lg-2"><div class="wrp2"><div class="rl">Chest / </div><small>Inch</small><div class="chest rv" ></div></div></div>
-              <div class="col-lg-2"><div class="wrp2"><div class="rl">Waist / </div><small>Inch</small><div class="waist rv" ></div></div></div>
-              <div class="col-lg-2"><div class="wrp2"><div class="rl">Hips / </div><small>Inch</small><div class="hips rv" ></div></div></div>
-              <div class="col-lg-2"><div class="wrp2"><div class="rl">Right thigh / </div><small>Inch</small><div class="right_thigh rv" ></div></div></div><div class="clearfix"></div>
-              <div class="col-lg-2"><div class="wrp2"><div class="rl">Left thigh / </div><small>Inch</small><div class="left_thigh rv" ></div></div></div>
-              <div class="col-lg-2"><div class="wrp2"><div class="rl">Right calf / </div><small>Inch</small><div class="right_calf rv" ></div></div></div>
-              <div class="col-lg-2"><div class="wrp2"><div class="rl">Left calf / </div><small>Inch</small><div class="left_calf rv" ></div></div></div>
-              <div class="col-lg-2"><div class="wrp2"><div class="rl">Starting weight / </div><small>Inch</small><div class="starting_weight rv" ></div></div></div>
-              <div class="col-lg-2"><div class="wrp2"><div class="rl">Ending weight / </div><small>Inch</small><div class="ending_weight rv" ></div></div></div>
-              <div class="col-lg-2"><div class="wrp2"><div class="rl">Heart beat / </div><small>Inch</small><div class="heart_beat rv" ></div></div></div>
-               <div class="col-lg-6"><div class="wrp"><div class="rl">Blood pressure / </div><small>Inch</small><div class="blood_pressure rv" ></div></div></div>
-               
-                 <div class="col-lg-6"><div class="wrp"><div class="rl">Height / </div><small>Inch</small><div class="height rv" ></div></div></div> -->
-
                  <div class="col-lg-2"><div class="wrp2"><div class="rl">Right Arm </div>&nbsp;<small class="inch" style="display: none;">(Inch)</small><small class="cm">(cm)</small><div class="right_arm rv" ></div></div></div>
              <div class="col-lg-2"> <div class="wrp2"><div class="rl">Left Arm</div>&nbsp;<small class="inch" style="display: none;">(Inch)</small><small class="cm">(cm)</small><div class="left_arm rv" ></div></div></div>
               <div class="col-lg-2"><div class="wrp2"><div class="rl">Chest</div>&nbsp;<small class="inch" style="display: none;">(Inch)</small><small class="cm">(cm)</small><div class="chest rv" ></div></div></div>
@@ -203,15 +175,5 @@
 </div>
 </div>
 </div>
-
-
-<!-- <script type="text/javascript">
-    $(document).ready(function() {
-
-       
-        
-    } );
-</script> -->
-
 
 @endsection
