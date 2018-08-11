@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
+use Illuminate\Support\Facades\DB;
+
 class LoginController extends Controller
 {
     /*
@@ -67,6 +69,7 @@ public function login(Request $request)
         }
 
         if($this->guard('customer')->attempt(
+
             $this->credentials($request), $request->has('remember')))
             {
               Log::debug ( " :: login before confirm :: " );
@@ -80,7 +83,9 @@ public function login(Request $request)
               }
              
               else {
+                 
                 return $this->sendLoginResponse($request);
+
               }
             }
 
