@@ -15,7 +15,7 @@
     }, "Alphabetic characters only please");
 
 // mobile number can contant only numeric
-$.validator.addMethod('numericOnly', function (value) {
+$.validator.addMethod('numericO	nly', function (value) {
   return /^[0-9]+$/.test(value);
 }, 'Please enter only numeric values');
 
@@ -293,7 +293,7 @@ $('.weightconvert').on('change', function(){
           <div class="col-lg-3"><label for="text-input" class=" form-control-label">Right Arm</label></div>
           <div class="col-lg-9">
             <div class="row">
-              <div class="col-lg-6">
+              <div class="col-lg-12">
                 <input type="text" id="right_arm" name="right_arm" placeholder="Right Arm" class="form-control" value="">
           
              <select class="form-control convert" name="right_arm_credential">
@@ -307,7 +307,7 @@ $('.weightconvert').on('change', function(){
 
     <div class="row form-group">
       <div class="col-lg-3"><label for="text-input" class="form-control-label">Left Arm</label></div>
-      <div class="col-lg-9"><div class="row"><div class="col-lg-6"><input type="text" id="left_arm" name="left_arm" placeholder="Left Arm" class="form-control" value=""><!-- </div> -->
+      <div class="col-lg-9"><div class="row"><div class="col-lg-12"><input type="text" id="left_arm" name="left_arm" placeholder="Left Arm" class="form-control" value=""><!-- </div> -->
       <!--  <div class="col-lg-6"> -->
         <select class="form-control convert" name="left_arm_credential">
           <option id="matric" value="matric">Matric (cm.)</option>
@@ -322,7 +322,7 @@ $('.weightconvert').on('change', function(){
 
 <div class="row form-group">
   <div class="col-lg-3"><label for="text-input" class="form-control-label">Chest</label></div>
-  <div class="col-lg-9"><div class="row"><div class="col-lg-6"><input type="text" id="chest" name="chest" placeholder="Chest" class="form-control" value=""><!-- </div>
+  <div class="col-lg-9"><div class="row"><div class="col-lg-12"><input type="text" id="chest" name="chest" placeholder="Chest" class="form-control" value=""><!-- </div>
   <div class="col-lg-6"> -->
    <select class="form-control convert" name="chest_credential">
     <option id="matric" value="matric">Matric (cm.)</option>
@@ -336,7 +336,7 @@ $('.weightconvert').on('change', function(){
 </div>
 <div class="row form-group">
   <div class="col-lg-3"><label for="text-input" class="form-control-label">Waist</label></div>
-  <div class="col-lg-9"><div class="row"><div class="col-lg-6"><input type="text" id="waist" name="waist" placeholder="Waist" class="form-control" value=""><!-- </div>
+  <div class="col-lg-9"><div class="row"><div class="col-lg-12"><input type="text" id="waist" name="waist" placeholder="Waist" class="form-control" value=""><!-- </div>
   <div class="col-lg-6"> -->
    <select class="form-control convert" name="waist_credential">
     <option id="matric" value="matric">Matric (cm.)</option>
@@ -349,7 +349,7 @@ $('.weightconvert').on('change', function(){
 </div>
 <div class="row form-group">
   <div class="col-lg-3"><label for="text-input" class="form-control-label">Hips</label></div>
-  <div class="col-lg-9"><div class="row"><div class="col-lg-6"><input type="text" id="hips" name="hips" placeholder="Hips" class="form-control" value=""><!-- </div>
+  <div class="col-lg-9"><div class="row"><div class="col-lg-12"><input type="text" id="hips" name="hips" placeholder="Hips" class="form-control" value=""><!-- </div>
   <div class="col-lg-6"> -->
    <select class="form-control convert" name="hips_credential">
     <option id="matric" value="matric">Matric (cm.)</option>
@@ -362,7 +362,7 @@ $('.weightconvert').on('change', function(){
 </div>
 <div class="row form-group">
   <div class="col-lg-3"><label for="text-input" class="form-control-label">Right Thigh</label></div>
-  <div class="col-lg-9"><div class="row"><div class="col-lg-6"><input type="text" id="right_thigh" name="right_thigh" placeholder="Right Thigh" class="form-control" value=""><!-- </div>
+  <div class="col-lg-9"><div class="row"><div class="col-lg-12"><input type="text" id="right_thigh" name="right_thigh" placeholder="Right Thigh" class="form-control" value=""><!-- </div>
   <div class="col-lg-6"> -->
     <select class="form-control convert" name="right_thigh_credential">
       <option id="matric" value="matric" >Matric (cm.)</option>
@@ -375,7 +375,7 @@ $('.weightconvert').on('change', function(){
 </div>
 <div class="row form-group">
   <div class="col-lg-3"><label for="text-input" class="form-control-label">Left Thigh</label></div>
-  <div class="col-lg-9"><div class="row"><div class="col-lg-6"><input type="text" id="left_thigh" name="left_thigh" placeholder="Left Thigh" class="form-control" value=""><!-- </div>
+  <div class="col-lg-9"><div class="row"><div class="col-lg-12"><input type="text" id="left_thigh" name="left_thigh" placeholder="Left Thigh" class="form-control" value=""><!-- </div>
   <div class="col-lg-6"> -->
    <select class="form-control convert" name="left_thigh_credential">
     <option id="matric" value="matric">Matric (cm.)</option>
@@ -388,7 +388,7 @@ $('.weightconvert').on('change', function(){
 </div>
 <div class="row form-group">
   <div class="col-lg-3"><label for="text-input" class="form-control-label">Right Calf</label></div>
-  <div class="col-lg-9"><div class="row"><div class="col-lg-6"><input type="text" id="right_calf" name="right_calf" placeholder="Right Calf" class="form-control" value=""><!-- </div>
+  <div class="col-lg-9"><div class="row"><div class="col-lg-12"><input type="text" id="right_calf" name="right_calf" placeholder="Right Calf" class="form-control" value=""><!-- </div>
   <div class="col-lg-6"> -->
    <select class="form-control convert" name="right_calf_credential">
     <option id="matric" value="matric">Matric (cm.)</option>
@@ -401,7 +401,7 @@ $('.weightconvert').on('change', function(){
 </div>
 <div class="row form-group">
   <div class="col-lg-3"><label for="text-input" class="form-control-label">Left Calf</label></div>
-  <div class="col-lg-9"><div class="row"><div class="col-lg-6"><input type="text" id="left_calf" name="left_calf" placeholder="Left Calf" class="form-control" value=""><!-- </div>
+  <div class="col-lg-9"><div class="row"><div class="col-lg-12"><input type="text" id="left_calf" name="left_calf" placeholder="Left Calf" class="form-control" value=""><!-- </div>
   <div class="col-lg-6"> -->
    <select class="form-control convert" name="left_calf_credential">
     <option id="matric" value="matric">Matric (cm.)</option>
@@ -413,7 +413,7 @@ $('.weightconvert').on('change', function(){
 </div>
 <div class="row form-group">
   <div class="col-lg-3"><label for="text-input" class="form-control-label">Height</label></div>
-  <div class="col-lg-9"><div class="row"><div class="col-lg-6"><input type="text" id="height" name="height" placeholder="Height" class="form-control" value=""><!-- </div>
+  <div class="col-lg-9"><div class="row"><div class="col-lg-12"><input type="text" id="height" name="height" placeholder="Height" class="form-control" value=""><!-- </div>
   <div class="col-lg-6"> -->
     <select class="form-control convert" name="height_credential">
       <option id="matric" value="matric">Matric (cm.)</option>

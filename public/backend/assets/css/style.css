@@ -681,7 +681,64 @@ textarea.parsley-error {
 }
 
 
-
+/*81118*/
+.card{
+	background: none;
+}
+/*.tbdy1 .btn-sm {
+	width: 30px;
+}*/
+#motaddform .col-lg-12 input {
+	width: 49%;
+	display: inline-block;
+	margin-right: 5px;
+}
+#motaddform .col-lg-12 select {
+	width: 49%;
+	display: inline-block;
+	margin-left: 5px;
+}
+.small-box-footer {
+	color: #fff;
+}
+.pull-left.customer-mot {
+	font-size: 24px;
+	font-weight: 600;
+	color: #655766;
+	margin-bottom: 10px;
+}
+.col-lg-8.modal_image {
+	width: 250px;
+	margin-top: 10px;
+}
+.cus {
+	margin-bottom: 10px;
+	display: inline-block;
+}
+.card-title.add-n-cl {
+	margin-top: 0px;
+	display: inline-block;
+	padding-top: 6px;
+	float: right;
+	padding-right: 15px;
+}
+.tbdy1 .btn-sm {
+	width: 48% !important;
+	padding: 5px 0;
+	float: left;
+}
+.tbdy1 a.btn-sm {
+	margin-right: 1px;
+}
+#bootstrap-slot-data-table .status-all {
+	float: left;
+	width: 65px;
+	margin: 2px;
+	padding: 0;
+	height: 32px;
+	font-size: 14px;
+}
+/*81118*/
 
 
 

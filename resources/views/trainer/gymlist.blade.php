@@ -94,7 +94,7 @@ table.dataTable thead>tr>th[id='action'].sorting_asc::after{display: none}
                                     <th id="action" style="width: 70px;">Action</th>
                                 </tr>
                             </thead>
-                            <tbody> 
+                            <tbody class="tbdy1"> 
                              @if(count($data)>0)
                                 @foreach($data as $key=>$mydata)
                                 <tr>
@@ -112,7 +112,7 @@ table.dataTable thead>tr>th[id='action'].sorting_asc::after{display: none}
                                         @endif
                                     </td>
                                     <td>
-                                        <a href="{{url('trainer/editexercise')}}/{{$mydata->id}}" title="Edit Exercise"><button type="button" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button></a>
+                                        <a href="{{url('trainer/editexercise')}}/{{$mydata->id}}" title="Edit Exercise" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></a>
                                         <button type="button" class="btn btn-danger btn-sm" onclick="delete_gym_type({!!$mydata->id!!})" style="width: 32px;" title="Delete Exercise"><i class="fa fa-trash-o"></i></button>
                                     </td>
                                 </tr>

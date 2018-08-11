@@ -14,7 +14,7 @@
 
         <div class="content mt-3">
            <div class="col-sm-6 col-lg-3">
-                <div class="card text-white bg-flat-color-1">
+                <div class="text-white bg-flat-color-1">
                     <div class="card-body pb-0">
                         <div class="dropdown float-right">
                             <button class="btn bg-transparent dropdown-toggle theme-toggle text-light" type="button" id="dropdownMenuButton" data-toggle="dropdown">
@@ -45,7 +45,7 @@
             <!--/.col-->
 
             <div class="col-sm-6 col-lg-3">
-                <div class="card text-white bg-flat-color-2">
+                <div class="text-white bg-flat-color-2">
                     <div class="card-body pb-0">
                         <div class="dropdown float-right">
                             <button class="btn bg-transparent dropdown-toggle theme-toggle text-light" type="button" id="dropdownMenuButton" data-toggle="dropdown">
@@ -74,7 +74,7 @@
             <!--/.col-->
 
             <div class="col-sm-6 col-lg-3">
-                <div class="card text-white bg-flat-color-3">
+                <div class="text-white bg-flat-color-3">
                     <div class="card-body pb-0">
                         <div class="dropdown float-right">
                             <button class="btn bg-transparent dropdown-toggle theme-toggle text-light" type="button" id="dropdownMenuButton" data-toggle="dropdown">
@@ -103,7 +103,7 @@
             <!--/.col-->
 
             <div class="col-sm-6 col-lg-3">
-                <div class="card text-white bg-flat-color-4">
+                <div class="text-white bg-flat-color-4">
                     <div class="card-body pb-0">
                         <div class="dropdown float-right">
                             <button class="btn bg-transparent dropdown-toggle theme-toggle text-light" type="button" id="dropdownMenuButton" data-toggle="dropdown">

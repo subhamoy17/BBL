@@ -42,14 +42,33 @@ $('#bootstrap-slot-data-table').DataTable({
 
 
 <div class="breadcrumbs">
-    <div class="col-sm-4">
+    <div class="col-sm-9">
         <div class="page-header float-left">
             <div class="page-title">
                 <h1>Our Client List</h1>
             </div>
         </div>
     </div>
+    <div class="col-sm-3">
+        <!--<div class="page-header float-left" style="padding-top: 2%;padding-left: 17%;">
+            <a href="{{route('add_exercise_trainer')}}">
+                <button type="button" class="btn btn-success"><i class="fa fa-plus"></i>&nbsp;Add New Exercise</button>
+            </a>
+        </div>-->
+         <strong class="card-title add-n-cl">
+                              <a href="{{route('client_insert_view')}}">
+                                    <button class="btn btn-success"><i class="fa fa-plus"></i> Add New Client</button>
+                                </a>
+                                <br>
+                                @if (session('success'))
+                                    <div class="alert alert-success">
+                                        {{ session('success') }}
+                                    </div>
+                                @endif
+                            </strong>
+    </div>
 </div>
+
 <div class="content mt-3">
     <div class="animated fadeIn">
         <div class="row">
@@ -62,17 +81,7 @@ $('#bootstrap-slot-data-table').DataTable({
                 <div class="card">
                     
                         <div class="card-header">
-                            <strong class="card-title">
-                              <a href="{{route('client_insert_view')}}">
-                                    <button><i class="fa fa-plus"></i> Add New Client</button>
-                                </a>
-                                <br>
-                                @if (session('success'))
-                                    <div class="alert alert-success">
-                                        {{ session('success') }}
-                                    </div>
-                                @endif
-                            </strong>
+                           
                         </div>
 
                     <div class="card-body">
@@ -104,7 +113,7 @@ $('#bootstrap-slot-data-table').DataTable({
                                     <th id="action">Action</th>
                                 </tr>
                             </thead>
-                        <tbody>
+                        <tbody class="tbdy1">
                                 @if(count($data)>0)
                             @foreach($data as $key=>$mydata)
                                 <tr>
@@ -140,8 +149,12 @@ $('#bootstrap-slot-data-table').DataTable({
 
 
                                    <td>
-                                        <a href="{{url('trainer/client_edit_view')}}/{{$mydata->id}}" ><button class="button-primary">Edit</button></a>
-                                        <button class="button-primary" onclick="delete_client({!!$mydata->id!!})">Delete</button>
+                                       <!-- <a href="{{url('trainer/client_edit_view')}}/{{$mydata->id}}" ><button class="button-primary">Edit</button></a>
+                                        <button class="button-primary" onclick="delete_client({!!$mydata->id!!})">Delete</button>-->
+                                        
+                                        
+                                        <a href="{{url('trainer/client_edit_view')}}/{{$mydata->id}}" title="Edit Exercise" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></a>
+                                        <button type="button" class="btn btn-danger btn-sm" onclick="delete_client({!!$mydata->id!!})" style="width: 32px;" title="Delete Exercise"><i class="fa fa-trash-o"></i></button>
                                     </td>
 
 
