@@ -15,7 +15,7 @@
     						</ul>
     						<div class="reg-area">
     							<p><a href="{{route('customer-register')}}" class="jn-us"><i class="fa fa-hand-o-right"></i> Join Us</a></p>
-                                <p><a href="{{url('customer-login')}}" class="jn-us"><i class="fa fa-user"></i>Sign In</a></p>
+                                <p><a href="{{url('customer-login')}}" class="sgn-in"><i class="fa fa-user"></i>Sign In</a></p>
     							<!-- <a class="srch-icon"><i class="fa fa-search"></i><i class="fa fa-times"></i></a> -->
     							<div class="srch-box">
     								<input type="text" placeholder="search">

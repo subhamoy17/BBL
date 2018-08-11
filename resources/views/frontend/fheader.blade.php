@@ -14,8 +14,6 @@
                                 <!-- <li><a href="#"><i class="fa fa-google-plus"></i></a></li> -->
                                 <li><a href="https://www.youtube.com" target="_blank"><i class="fa fa-youtube"></i></a></li>
                             </ul>
-
-                            <span> {{Session::get('sum_slots')?Session::get('sum_slots'):0}}</span>
                             <div class="dropdown user-box">
 								<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Welcom {{Auth::user()->name}}
 								<span class="caret"></span></button>
@@ -29,6 +27,7 @@
 
                                  </form>
 								</ul>
+								<span class="noification-d"><a href="#"><i class="fa fa-bell"></i><small>{{Session::get('sum_slots')?Session::get('sum_slots'):0}}</small></a></span>
 							</div>
 							<div class="clearfix"></div>
     						
@@ -44,7 +43,7 @@
     			</div>
     		</div>
     	</div>
-    	
+    	<div class="heder-bottom">
     		<div class="container">
     			<div class="row">
     				<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">

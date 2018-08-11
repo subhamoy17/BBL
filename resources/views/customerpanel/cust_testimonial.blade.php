@@ -3,6 +3,7 @@
 
 <!--Testimonial Section-->
     <section class="testimonial-section">
+     <h3 class="gyl_header">Testimonials</h3>
       <div class="container">
         <div class="owl-carousel" id="testi-slider">
             @foreach($data as $mydata)

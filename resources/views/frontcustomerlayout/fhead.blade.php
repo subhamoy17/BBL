@@ -29,6 +29,8 @@
 	<link href="{{url('frontend/css/responsive.css')}}" rel="stylesheet" type="text/css" media="all" />
 	<!-- font-awesome-icons -->
 	<link href=" {{url('frontend/css/font-awesome.css')}}" rel="stylesheet">
+	<!--DatePicker css-->
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<!-- //font-awesome-icons -->
 	<link href="//fonts.googleapis.com/css?family=Raleway:400,500,600,700,800" rel="stylesheet">
 	<link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800" rel="stylesheet">

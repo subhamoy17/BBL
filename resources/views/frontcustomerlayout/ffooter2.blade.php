@@ -89,7 +89,7 @@ $(document).ready(function() {
             items:1
         },
         1000:{
-            items:2
+            items:1
         }
     }
 });
@@ -265,29 +265,41 @@ $('#contactusform').validate({
 
 });
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	<!--Fontawesome script-->
+<!--DatePicker js-->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script>
+  		$( function() {
+  		  $( "#datepicker" ).datepicker();
+  		  $( "#format" ).on( "change", function() {
+  		    $( "#datepicker" ).datepicker( "option", "dateFormat", $( this ).val() );
+  		  });
+  		} );
+  	</script>
+  	<script>
+  		$( function() {
+  		  $( "#datepicker2" ).datepicker();
+  		  $( "#format" ).on( "change", function() {
+  		    $( "#datepicker2" ).datepicker( "option", "dateFormat", $( this ).val() );
+  		  });
+  		} );
+  	</script>
+  	<script>
+  		$( function() {
+  		  $( "#datepicker3" ).datepicker();
+  		  $( "#format" ).on( "change", function() {
+  		    $( "#datepicker2" ).datepicker( "option", "dateFormat", $( this ).val() );
+  		  });
+  		} );
+  	</script>
+  	<script>
+  		$( function() {
+  		  $( "#datepicker4" ).datepicker();
+  		  $( "#format" ).on( "change", function() {
+  		    $( "#datepicker2" ).datepicker( "option", "dateFormat", $( this ).val() );
+  		  });
+  		} );
+  	</script>
+<!--Fontawesome script-->
 	<!--<script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js" integrity="sha384-3LK/3kTpDE/Pkp8gTNp2gR/2gOiwQ6QaO7Td0zV76UFJVhqLl4Vl3KL1We6q6wR9" crossorigin="anonymous"></script>-->
 </body>
 

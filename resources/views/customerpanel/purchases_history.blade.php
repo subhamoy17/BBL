@@ -5,28 +5,19 @@
   <h3 class="d_active tab_drawer_heading" rel="tab2">Tab 2</h3>
   <div id="tab2" class="tab_content">
     <div class="table-responsive table-bordered">
-      <table class="table">
-        
-
-        <form id="frm_purchase_search">
+     <h3 align="center">All Purchase History</h3>
+		<div class="tbl-srch">
+			 <form id="frm_purchase_search">
          <!--  <input type="text" name="daterange"  value="2018-08-06 - 2018-09-12"/> -->
 
-          <input type="text" name="start_date" value="<?php 
+          <input id="datepicker3" type="text" name="start_date" value="<?php 
   if(isset($_GET['start_date']) && !empty($_GET['start_date'])){ 
     echo $_GET['start_date']; }?>"/>
-  <input type="text" name="end_date" value="<?php if(isset($_GET['end_date']) && !empty($_GET['end_date'])){ echo $_GET['end_date']; }?>"/>
+  <input id="datepicker4" type="text" name="end_date" value="<?php if(isset($_GET['end_date']) && !empty($_GET['end_date'])){ echo $_GET['end_date']; }?>"/>
           <button type="submit" id="booking" class="btn btn-success" >Submit</button>
         </form>
-        @if(count($purchases_data)>0)
-          @foreach($purchases_data as $key=>$mydata1)
-          @endforeach
-        @endif
-        @if($remaining_session_request>0)
-        <a href="{{url('customer/booking_slot')}}/{{$mydata1->customer_id}}"class="btn btn-success">Send Slot Request</a>
-        @else
-        <a href="{{url('customer/booking_slot')}}/{{0}}"class="btn btn-success">Send Slot Request</a>
-        @endif
-        
+		</div>
+      <table class="table">
         <thead>
           <tr>
             <th>Package Name</th>

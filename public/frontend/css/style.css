@@ -2450,30 +2450,45 @@ ul.tabs {
     height: 45px;
     /*border-bottom: 1px solid #333;*/
     width: 100%;
+	position: relative;
+}
+.tabs::before {
+	content: "";
+	position: absolute;
+	border: 1px solid #ccc;
+	height: 1px;
+	width: 40%;
+	top: 23px;
+	left: 0;
+	/* z-index: -99; */
 }
 
 ul.tabs li {
     float: left;
-    margin: 0;
+    margin: 0 15px 10px 0;
     cursor: pointer;
     height: 45px;
     line-height: 24px;
     font-size: 13px;
-    border-top: 1px solid #333;
-    border-left: 1px solid #333;
-    border-bottom: 1px solid #333;
-    background-color: #666;
     color: #ccc;
     overflow: hidden;
     position: relative;
+	border: 2px solid rgb(120, 134, 155);
+	background-color: #fff !important;
 }
 ul.tabs li a{
-    padding: 10px 44.4px;
+    padding: 10px 18px;
     display: inline-block;
     text-align: center;
+	letter-spacing: initial;
+	font-family: 'Montserrat', sans-serif;
+	color: #d28a1e;
+	font-size: 14px;
+	font-weight: 600;
 }
-
-
+.table-bordered {
+	margin-top: 15px;
+}
 .error{
     margin-bottom: 0;
     font-size: 12px !important;;
@@ -2492,10 +2507,12 @@ ul.tabs li:hover {
 }
 
 ul.tabs li.active {
-    background-color: #fff;
     color: #333;
-    border-bottom: 1px solid #fff;
     display: block;
+	border: 2px solid rgba(245,42,46,1.00);
+	background-color: rgba(245,42,46,1.00) !important;
+}ul.tabs li.active a{
+	color: #fff;
 }
 
 .tab_container {
@@ -2505,7 +2522,7 @@ ul.tabs li.active {
     float: left;
     width: 100%;
     background: #fff;
-   /* overflow: auto;*/
+	position: relative;
     margin-bottom: 30px;
 }
 
@@ -2545,13 +2562,13 @@ ul.tabs li.active {
     width: 100%;
 }
 .tabs li{
-    background: #fb5b21 !important;
+    background: none !important;
     color: #fff !important;
 }
 .tabs li.active{
-    background:#212629 !important;
+    /*background:#212629 !important;*/
     color: #fb5b21 !important;
-    border-bottom: none !important;
+    /*border-bottom: none !important;*/
 }
 thead tr{
     background: #214356 !important;
@@ -4623,13 +4640,26 @@ h3.heading-agileinfo.white-gyls {
 }
 
 .jn-us {
-     background-image: linear-gradient(to right top, #127dee, #8b65da, #bf46b4, #d92383, #dd194e);
+     /*background-image: linear-gradient(to right top, #127dee, #8b65da, #bf46b4, #d92383, #dd194e);*/
     padding: 7px 5px !important;
     border-radius: 3px;
-    margin-right: 15px;
+    margin-left:15px;
     font-weight: 700;
     text-transform: uppercase;
     font-size: 13px;
+	background: #44404d;
+}
+.sgn-in {
+     /*background-image: linear-gradient(to right top, #127dee, #8b65da, #bf46b4, #d92383, #dd194e);*/
+    padding: 6px 5px !important;
+    border-radius: 3px;
+    margin-left: 15px;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 13px;
+	color: #44404d;
+	background: none;
+	border: 1px solid #fff;
 }
 .reg-area p a:nth-child(3){
     padding-right: 0;
@@ -5448,15 +5478,16 @@ a.sign-btn2 {
     .testimonial-section{
       background: #fff;
         padding: 30px 0;
+		    margin-top: 30px;
 }
 .test-img {
-    width: 100px;
-    height: 100px;
+    width: 350px;
+    height: 350px;
     border-radius: 50%;
     margin: 0 auto;
 }
     .test-img img {
-    / width: 85%; /
+    /*/ width: 85%; /*/
     object-fit: cover;
     height: 100%;
     width: 100%;
@@ -5598,15 +5629,15 @@ a.sign-btn2 {
 
     .test-img{
         float: left;
-        width: 24%;
+        width: 35%;
     }
     .test-text-box {
         float: right;
-        width: 76%;
+        width: 65%;
     }
     .test-img-box {
-        width: 100px;
-        height: 100px;
+        width: 350px;
+        height: 350px;
         border-radius: 50%;
         position: relative;
         top: 5px;
@@ -5616,10 +5647,11 @@ a.sign-btn2 {
     .test-img-box img {
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        object-fit: contain;
         margin: 0 auto;
         border-radius: 50%;
          border: 1px solid rgba(0,0,0,0.2);
+		background: #252f38;
     }
     .test-text-box h4 {
         font-size: 16px;
@@ -5655,8 +5687,8 @@ a.sign-btn2 {
     .test-img-box::before {
         content: "";
         position: absolute;
-        height: 100px;
-        width: 100px;
+        height: 350px;
+        width: 350px;
         background: #eae3e3;
         z-index: -1;
         top: -1px;
@@ -5665,6 +5697,7 @@ a.sign-btn2 {
     }
     .test-text-box{
         position: relative;
+		top: 70px;
     }
 
     .pagination {
@@ -5684,33 +5717,20 @@ a.sign-btn2 {
         background: url('/images/i-comma-icon.png') no-repeat center center;
         height: 16px;
         width: 19px;
-    }}
+    }
 
 
 
      .pagination {
     display: inline-block;
     padding-left: 0;
-    margin: 20px 0;
+    margin: 0 0 !important;
     border-radius: 4px;
     position: absolute;
-    bottom: -70px;
+    bottom: -35px;
     right: 0;
 
 }
-
-
-
-
-     .table-bordered .pagination {
-    display: inline-block;
-    padding-left: 0;
-    margin: 20px 0;
-    border-radius: 4px;
-    position: absolute;
-    bottom: -224px;
-    right: 0;
-
 
 
 
@@ -5721,7 +5741,7 @@ a.sign-btn2 {
 }
 .dropdown.user-box ul.dropdown-menu {
     position: absolute;
-    right: 0px;
+    right: 30px;
     left: inherit;
     background: #44555a;
     padding: 0;
@@ -5775,3 +5795,107 @@ a.sign-btn2 {
     background: #252631;
 }
 /*80818*/
+
+
+/*81018*/
+.noification-d a{
+	line-height: 21px;
+	color: linear-gradient(to right top, #127dee, #8b65da, #bf46b4, #d92383, #dd194e);;
+	font-size: 16px;
+	margin-left: 5px;
+	position: relative;
+}
+.noification-d small {
+	font-size: 14px;
+	color: #fff;
+	position: absolute;
+	top: -5px;
+	right: -12px;
+	font-weight: 600;
+}
+.tab_container h3 {
+	background: #e9eff2;
+	text-align: left;
+	padding: 10px 15px;
+	color: #fb5b21;
+	border: 1px solid #ccc;
+	text-transform: capitalize;
+	font-weight: 600;
+}
+.tbl-srch {
+	float: right;
+	margin-right: 15px;
+	margin-top: 5px;
+}
+.tbl-srch select, .tbl-srch input{
+	width: 200px;
+	padding: 7px 10px;
+	border: 1px solid rgba(0,0,0,0.2);
+	border-radius: 3px;
+}
+.tbl-srch button {
+	background: #f52a2e;
+	color: #fff;
+	border: none;
+	vertical-align: initial;
+	padding: 8px 10px;
+}
+.tab_container .table {
+	margin-bottom: 15px;
+}
+.tbl-srch {
+	float: right;
+	margin-right: 15px;
+	margin-top: 5px;
+	position: absolute;
+	right: 0;
+	top: 16px;
+}
+.sgn-in i {
+	margin-right: 5px;
+}
+.mot-mod .modal-dialog {
+	width: 870px;
+}
+.wrp {
+	margin: 0 auto;
+	width: 100%;
+	text-align: center;
+}
+.mot-text textarea {
+	width: 100%;
+	background: #292835;
+	resize: none;
+	border: 1px solid #575454;
+	padding: 10px 15px;
+	color: #fff;
+	border-radius: 3px;
+}
+.mot-text h6{
+	color: #fff;
+	margin-bottom: 10px;
+	font-size: 16px;
+}
+.wrp2{
+	position: relative;
+}
+.wrp{
+	position: relative;
+}
+.wrp2 small{
+	position: absolute;
+	bottom: 8px;
+	left: 55px;
+	color: #fff;
+	font-weight: 600;
+	font-size: 13px;
+}
+ .wrp small{
+	position: absolute;
+	bottom: 8px;
+	left: 58%;
+	color: #fff;
+	font-weight: 600;
+	font-size: 13px;
+}
+/*81018*/

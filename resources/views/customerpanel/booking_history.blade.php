@@ -26,36 +26,27 @@
                     <td>{{$accepted_count}}</td>
                       
                   </tr>
-              
+              @endif
                 </tbody>
               </table>
-            @endif
-            </div>
-          </div>
-        </div>
-<!-- <div class="tab_container">
-          <h3 class="d_active tab_drawer_heading" rel="tab1">Tab 1</h3>
-          <div id="tab1" class="tab_content">
-            <div class="table-responsive table-bordered"> -->
+              <div class="tbl-srch">
+              	 <form id="frm_search" method="get">
+					<select align ="right" id="feature" name="option" >
+  					<option value="future_confirm" {{Request::get('option')=='future_confirm' || Request::get('option')==''?'selected':''}} >Future confirm</option>
+  					<option value="future_pending" {{Request::get('option')=='future_pending'?'selected':''}} >Future pending</option>
+  					<option value="delete_request" {{Request::get('option')=='delete_request'?'selected':''}} >Delete request</option>
+  					<option value="declined_request" {{Request::get('option')=='declined_request'?'selected':''}} >Declined request</option>
+  					<option value="past_request" {{Request::get('option')=='past_request'?'selected':''}} >Past request</option>
+ 					
+  					</select>
+  					<input id="datepicker" type="text" name="start_date" value="{{Request::get('start_date')? Request::get('start_date') : \Carbon\Carbon::now()->toDateString()}}"/>
+  					<input id="datepicker2" type="text" name="end_date" value="{{Request::get('end_date')? Request::get('end_date') : \Carbon\Carbon::now()->addDays(30)->toDateString()}}"/>
+  					<button type="submit"   id="booking" class="btn btn-success" >Search</button>
+				</form>
+              </div>
               
-
-
-
-  <table class="table">
-  <form id="frm_search" method="get">
-
-  <select align ="right" id="feature" name="option" >
-  <option value="future_confirm" {{Request::get('option')=='future_confirm' || Request::get('option')==''?'selected':''}} >Future confirm</option>
-  <option value="future_pending" {{Request::get('option')=='future_pending'?'selected':''}} >Future pending</option>
-  <option value="delete_request" {{Request::get('option')=='delete_request'?'selected':''}} >Delete request</option>
-  <option value="declined_request" {{Request::get('option')=='declined_request'?'selected':''}} >Declined request</option>
-  <option value="past_request" {{Request::get('option')=='past_request'?'selected':''}} >Past request</option>
+            	<table class="table">
  
-  </select>
-  <input type="text" name="start_date" value="{{Request::get('start_date')? Request::get('start_date') : \Carbon\Carbon::now()->toDateString()}}"/>
-  <input type="text" name="end_date" value="{{Request::get('end_date')? Request::get('end_date') : \Carbon\Carbon::now()->addDays(30)->toDateString()}}"/>
-  <button type="submit"   id="booking" class="btn btn-success" >Search</button>
-</form>
                 <thead>
                    @if(Request::get('option')=='past_request')
                    <h3 align="left" id="booking_title">Past booking request</h3>
@@ -121,6 +112,18 @@
                 </tbody>
               </table>
               @endif
+            </div>
+          </div>
+        </div>
+<!-- <div class="tab_container">
+          <h3 class="d_active tab_drawer_heading" rel="tab1">Tab 1</h3>
+          <div id="tab1" class="tab_content">
+            <div class="table-responsive table-bordered"> -->
+              
+
+
+
+  
            
 
 
