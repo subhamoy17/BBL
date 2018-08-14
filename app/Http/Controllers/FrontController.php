@@ -143,7 +143,7 @@ public function bank_payment_success(Request $request)
   if($request->package_image!='')
   {
     $myimage=$request->package_image;
-    $folder="backend/images/"; 
+    $folder="backend/bankpay_images/"; 
     $extension=$myimage->getClientOriginalExtension(); 
     $image_name=time()."_bankdocimg.".$extension; 
     $upload=$myimage->move($folder,$image_name); 

@@ -1174,10 +1174,9 @@ public function payment_history_backend()
 
 
     $data=DB::table('purchases_history')
-     ->join('customers','customers.id','purchases_history.customer_id')
+    ->join('customers','customers.id','purchases_history.customer_id')
     ->join('payment_history','payment_history.purchase_history_id','purchases_history.id')
-
- ->select('purchases_history.id','purchases_history.slots_name','purchases_history.slots_price','customers.name','customers.name','purchases_history.payment_options','purchases_history.active_package','purchases_history.payment_options','payment_history.status','purchases_history.purchases_date','payment_history.payment_id','payment_history.description','payment_history.image')->get();
+    ->select('purchases_history.id','purchases_history.slots_name','purchases_history.slots_price','customers.name','customers.name','purchases_history.payment_options','purchases_history.active_package','purchases_history.payment_options','payment_history.status','purchases_history.purchases_date','payment_history.payment_id','payment_history.description','payment_history.image')->get();
 
     return view('trainer.payment_history_backend')->with(compact('data'));
 
@@ -1187,26 +1186,29 @@ public function payment_history_backend()
 public function payment_history_backend_request(Request $request)
 {
     $data=$request->get('data');
-    $id=$data['id'];
+    $purchase_history_id=$data['id'];
     $action=$data['action'];
-    Log::debug(" Check id ".print_r($id,true));
-    Log::debug(" Check action ".print_r($action,true));
+    
     if($action=="Approve"){
 
-        DB::table('purchases_history')->join('customers','customers.id','purchases_history.customer_id')
-    ->join('payment_history','payment_history.purchase_history_id','purchases_history.id')
+    $slot_number=DB::table('purchases_history')->where('id',$purchase_history_id)->first();
 
- ->select('purchases_history.id','purchases_history.slots_name','purchases_history.slots_price','customers.name','customers.name','purchases_history.payment_options','purchases_history.active_package','purchases_history.payment_options','payment_history.status','purchases_history.purchases_date','payment_history.payment_id','payment_history.description','payment_history.image')
-        ->where('purchases_history.id',$id)->update(['purchases_history.active_package' =>1, 'payment_history.status'=> 'Success']);
+    $update_purchases_history=DB::table('purchases_history')
+    ->where('id',$purchase_history_id)->update(['active_package' =>1,'package_remaining'=>$slot_number->slots_number]);
+
+    $update_payment_history=DB::table('payment_history')
+    ->where('purchase_history_id',$purchase_history_id)->update(['status'=> 'Success']);
+
         return response()->json(1);
     }
     elseif($action=="Decline")
     {
-        
-        DB::table('purchases_history')->join('customers','customers.id','purchases_history.customer_id')
-    ->join('payment_history','payment_history.purchase_history_id','purchases_history.id')
+      $update_purchases_history=DB::table('purchases_history')
+    ->where('id',$purchase_history_id)->update(['active_package' =>0,'package_remaining'=>0]);
 
- ->select('purchases_history.id','purchases_history.slots_name','purchases_history.slots_price','customers.name','customers.name','purchases_history.payment_options','purchases_history.active_package','purchases_history.payment_options','payment_history.status','purchases_history.purchases_date','payment_history.payment_id','payment_history.description','payment_history.image')->where('purchases_history.id',$id)->update(['purchases_history.active_package' => 0, 'payment_history.status'=> 'Decline']);
+    $update_payment_history=DB::table('payment_history')
+    ->where('purchase_history_id',$purchase_history_id)->update(['status'=> 'Decline']);
+
         return response()->json(2);
     }
 }
