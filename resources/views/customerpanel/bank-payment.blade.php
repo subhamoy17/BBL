@@ -31,7 +31,7 @@
 <label>Description</label>
     <textarea  name="description" id="description"></textarea>
     <input type="file" name="image" id="image">
-  </p>      
+       
   <button class="btn btn-dark btn-theme-colored btn-flat">Pay with Bank</button></p>
 </form>
 </div>

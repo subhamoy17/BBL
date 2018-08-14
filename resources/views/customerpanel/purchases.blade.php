@@ -48,8 +48,8 @@
                                   <div class="check"></div>
                                 </li>
                                 <li>
-                                  <input type="radio" id="b-option" name="selector1" value="Banking Transter">
-                                  <label for="b-option" >Banking transter</label>
+                                  <input type="radio" id="b-option" name="selector1" value="Bank Transfer">
+                                  <label for="b-option" >Bank Transfer</label>
                                   <div class="check"></div>
                                 </li>
                               </ul>

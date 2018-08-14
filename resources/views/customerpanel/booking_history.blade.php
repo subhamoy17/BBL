@@ -11,7 +11,7 @@
               <table class="table">
                 <thead>
                   <tr>
-                    <th>Total number of session reaming</th>
+                    <th>Total number of session reamaining</th>
                      <th>Future pennding booking</th>
                      <th>Future accepted booking</th>
                      

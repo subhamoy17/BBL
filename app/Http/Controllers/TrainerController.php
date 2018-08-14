@@ -36,17 +36,23 @@ public function index()
 {
     $cur_date =Carbon::now()->toDateString();
 
-$future_pending_request=DB::table('slot_request')->where('trainer_id',Auth::user()->id)->where('slot_date','>=',$cur_date)->where('approval_id',1)->count();//number of future pending request 
+    //number of future pending request
+    $future_pending_request=DB::table('slot_request')->where('trainer_id',Auth::user()->id)->where('slot_date','>=',$cur_date)->where('approval_id',1)->count(); 
 
+    //number of future approve request 
+    $future_approve_request=DB::table('slot_request')->where('trainer_id',Auth::user()->id)
+    ->where(function($q) {
+         $q->where('approval_id', 1)
+           ->orWhere('approval_id', 3);
+     })->where('slot_date','>=',$cur_date)->count(); 
 
-$future_approve_request=DB::table('slot_request')->where('trainer_id',Auth::user()->id)->where('approval_id',3)->where('slot_date','>',$cur_date)->count(); //number of future approve request 
+    //number of past request
+    $past_request=DB::table('slot_request')->where('trainer_id',Auth::user()->id)->where('slot_date','<',$cur_date)->count();
 
-$past_request=DB::table('slot_request')->where('trainer_id',Auth::user()->id)->where('slot_date','<',$cur_date)->count();//number of past request
+    //number of decline request
+    $decline_request=DB::table('slot_request')->where('trainer_id',Auth::user()->id)->where('approval_id',4)->count();
 
-$decline_request=DB::table('slot_request')->where('trainer_id',Auth::user()->id)->where('approval_id',4)->count();//number of decline request
-
-return view('trainer.home')->with(compact('future_pending_request','future_approve_request','past_request','decline_request'));
-
+    return view('trainer.home')->with(compact('future_pending_request','future_approve_request','past_request','decline_request'));
 }
 
 
@@ -57,11 +63,10 @@ return view('trainer.home')->with(compact('future_pending_request','future_appro
 public function showprofile($id)
 {
     Log::debug(":: Show Profile :: ".print_r($id,true));
-// echo "asd";die();
+
     $data=DB::table('users')->where('Id',$id)->first();
     Log::debug(":: Trainer data :: ".print_r($data,true));
     return view('trainer.trainerprofile')->with(compact('data'));
-
 }
 
 // open the update form of trainer
@@ -71,8 +76,6 @@ public function showupdateform($id)
     Log::debug(" data ".print_r($data,true));
 
     return view ("trainer.editform")->with(compact('data'));
-
-
 }
 
 
@@ -86,7 +89,6 @@ public function updateprofile(Request $request)
         $myimage=$request->image;
         $folder="backend/images/"; 
 
-// Log::debug("::Inserted::".print_r($myimage,true));
         $extension=$myimage->getClientOriginalExtension(); 
         $image_name=time()."_trainerimg.".$extension; 
         $upload=$myimage->move($folder,$image_name); 
@@ -97,7 +99,6 @@ public function updateprofile(Request $request)
     $mydata['address']=$request->address;
     $mydata['contact_no']=$request->contact_no;
     $data['updated_at']=Carbon::now();
-
 
     $data=DB::table('users')->where('id',$request->id)->update($mydata);
     return redirect()->back()->with("success","Your profile has been updated successfully.");
@@ -110,9 +111,8 @@ public function updateprofile(Request $request)
 public function showslot()
 {
     $data=DB::table('slots')->where('deleted_at',null)->get();
-//Log::debug(":: Slots Data :: ".print_r($data,true));
+    //Log::debug(":: Slots Data :: ".print_r($data,true));
     return view('trainer.addslot')->with(compact('data'));
-
 }
 
 
@@ -131,31 +131,28 @@ public function addslot()
 */
 public function insertslot(Request $request)
 {
-Log::debug(" data ".print_r($request->all(),true)); /// create log for showing error and print result
-// validation of data
-$request->validate
-(
-[ 'slots_number'=>'required|integer|min:1', //accept only integer and must be minimum value of 1 is required
-'slots_price'=>'required|numeric|between:1,999999.99',//accept only integer and must be minimum value of 1 is required
-'slots_validity'=>'required|integer|min:1',
-// same as slots_number
+    // create log for showing error and print result
+    Log::debug(" data ".print_r($request->all(),true)); 
+    // validation of data
+    $request->validate
+    (
+    [ 'slots_number'=>'required|integer|min:1', //accept only integer and must be minimum value of 1 is required
+    'slots_price'=>'required|numeric|between:1,999999.99',//accept only integer and must be minimum value of 1 is required
+    'slots_validity'=>'required|integer|min:1',
+    // same as slots_number
 
-'slots_name'=>'required|max:255|unique:slots'
-]
-);
-$data['slots_name']=$request->slots_name;
-$data['slots_number']=$request->slots_number;
-$data['slots_price']=$request->slots_price;
-$data['slots_validity']=$request->slots_validity;
-$data['created_at']=Carbon::now();
+    'slots_name'=>'required|max:255|unique:slots'
+    ]
+    );
+    $data['slots_name']=$request->slots_name;
+    $data['slots_number']=$request->slots_number;
+    $data['slots_price']=$request->slots_price;
+    $data['slots_validity']=$request->slots_validity;
+    $data['created_at']=Carbon::now();
 
-
-DB::table('slots')->insert($data);
-return redirect('trainer/add-slot')->with("success","You have successfully addded one package");
+    DB::table('slots')->insert($data);
+    return redirect('trainer/add-slot')->with("success","You have successfully added one package");
 }
-
-
-
 
 
 // open the edit form of slots
@@ -193,11 +190,8 @@ public function slotsdelete($id)
 
 public function showlist()
 {
-
-
     $data=DB::table('users')
     ->where('master_trainer',2)->whereNull('deleted_at')->get()->all();
-
     return view('trainer.trainerlist')->with(compact('data'));
 }
 
@@ -251,8 +245,7 @@ public function trainer_active_deactive(Request $request)
 
             $update_package_purchase=DB::table('purchases_history')
             ->where('id',$remaining_package->id)
-            ->update(['package_remaining'=>$add_session_remaining]);
-           
+            ->update(['package_remaining'=>$add_session_remaining]);       
         }
        
        $slot_rquest_update=DB::table('slot_request')
@@ -264,22 +257,9 @@ public function trainer_active_deactive(Request $request)
        ->where('slot_date','>=',$remaining_session_request_now)
        ->update(['approval_id'=>4]);
 
-
-
-
         return response()->json(2);
     }
 }
-
-
-
-
-
-
-
-
-
-
 
 
 public function addtrainer()
@@ -313,43 +293,40 @@ public function inserttrainer(Request $request)
         ->withInput();
     }
 
+    Log::debug(" data ".print_r($request->all(),true)); 
+    if($request->image!="")
+    {
+        $request->validate
+        (
+            [ 'image'=>'image|mimes:jpeg,jpg,png,gif|max:2048',
 
-Log::debug(" data ".print_r($request->all(),true)); /// create log for showing error and print resul
-if($request->image!="")
-{
-    $request->validate
-    (
-        [ 'image'=>'image|mimes:jpeg,jpg,png,gif|max:2048',
-
-    ]
-);
-    $myimage=$request->image;
-    $folder="backend/images/"; 
-    $extension=$myimage->getClientOriginalExtension(); 
-    $image_name=time()."_adminimg.".$extension; 
-    $upload=$myimage->move($folder,$image_name); 
-    $data['image']=$image_name; 
-}
-else
+            ]
+        );
+        $myimage=$request->image;
+        $folder="backend/images/"; 
+        $extension=$myimage->getClientOriginalExtension(); 
+        $image_name=time()."_adminimg.".$extension; 
+        $upload=$myimage->move($folder,$image_name); 
+        $data['image']=$image_name; 
+    }
+    else
     { $data['image']=$request->oldimage;  }
-$data['name']=$request->name;
-$data['contact_no']=$request->contact_no;
-$data['address']=$request->address;
-$data['email']=$request->email;
-$data['master_trainer']=2;
-$password_code = str_random(6);
-$data['password']= bcrypt($password_code);
-$data['created_at']=Carbon::now();
-$data['is_active']=1;
+    $data['name']=$request->name;
+    $data['contact_no']=$request->contact_no;
+    $data['address']=$request->address;
+    $data['email']=$request->email;
+    $data['master_trainer']=2;
+    $password_code = str_random(6);
+    $data['password']= bcrypt($password_code);
+    $data['created_at']=Carbon::now();
+    $data['is_active']=1;
 
+    DB::table('users')->insert($data);
 
-
-DB::table('users')->insert($data);
-
-Mail::send('emails.enquirymail',['password' =>$password_code,'email' =>$data['email'],'name'=>$data['name']], function($message) {
+    Mail::send('emails.enquirymail',['password' =>$password_code,'email' =>$data['email'],'name'=>$data['name']], function($message) {
     $message->to(Input::get('email'));
-});
-return redirect('trainer/trainerlist')->with("success","You have successfully added one trainer");
+    });
+    return redirect('trainer/trainerlist')->with("success","You have successfully added one trainer");
 }
 
 
@@ -397,8 +374,8 @@ public function pastshowlist(Request $request)
     $data=DB::table('slot_request')
     ->join('customers','customers.id','slot_request.customer_id')
     ->join('slot_approval','slot_approval.id','slot_request.approval_id')
-    ->join('slot_times','slot_times.id','slot_request.slot_time')
-    ->select( 'slot_request.id','customers.name','customers.ph_no','customers.image','slot_approval.status','slot_request.created_at','slot_request.approval_id','slot_request.slot_date','slot_times.time as slot_time')
+    ->join('slot_times','slot_times.id','slot_request.slot_time_id')
+    ->select('slot_request.id','customers.name','customers.ph_no','customers.image','slot_approval.status','slot_request.created_at','slot_request.approval_id','slot_request.slot_date','slot_times.time as slot_time')
     ->where('slot_request.slot_date','<',$cur_date)
     ->where('slot_request.trainer_id',$id)->get();
     return view('trainer.past_request_customers')->with(compact('data'));
@@ -435,8 +412,6 @@ public function approve_customer_request(Request $request)
 
         $package_history_update_data['package_remaining']=$package_history->package_remaining+1;
 
-        
-
         $package_history_update=DB::table('purchases_history')->where('id',$package_history->id)->update($package_history_update_data);
         
         Log::debug(" package_history_update ".print_r($package_history_update,true));
@@ -461,7 +436,7 @@ public function futureshowlist(Request $request)
     $data=DB::table('slot_request')
     ->join('customers','customers.id','slot_request.customer_id')
     ->join('slot_approval','slot_approval.id','slot_request.approval_id')
-    ->join('slot_times','slot_times.id','slot_request.slot_time')
+    ->join('slot_times','slot_times.id','slot_request.slot_time_id')
     ->select( 'slot_request.id','customers.name','customers.ph_no','customers.image','slot_approval.status','slot_request.created_at','slot_request.approval_id','slot_request.slot_date','slot_times.time as slot_time')->where('slot_request.slot_date','>=',$cur_date)->where('slot_request.approval_id','<>',1)->where('slot_request.trainer_id',$id)->get();
     return view('trainer.future_request_customers')->with(compact('data'));
 }
@@ -479,7 +454,7 @@ public function future_pending_showlist(Request $request)
     $data=DB::table('slot_request')
     ->join('customers','customers.id','slot_request.customer_id')
     ->join('slot_approval','slot_approval.id','slot_request.approval_id')
-    ->join('slot_times','slot_times.id','slot_request.slot_time')
+    ->join('slot_times','slot_times.id','slot_request.slot_time_id')
     ->select( 'slot_request.id','customers.name','customers.ph_no','customers.image','slot_approval.status','slot_request.created_at','slot_request.approval_id','slot_request.slot_date','slot_times.time as slot_time')->where('slot_request.slot_date','>=',$cur_date)->where('slot_request.approval_id',1)->where('slot_request.trainer_id',$id)->get();
     return view('trainer.future_pending_request_customers')->with(compact('data'));
 
