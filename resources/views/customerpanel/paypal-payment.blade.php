@@ -1,6 +1,5 @@
 @extends('frontend.main') 
 @section('content')
-
 <div class="contact-box">
             <div class="container">
                 <div class="row">
@@ -9,15 +8,15 @@
                         
                         <div class="form-box">
                             <div class="row">
-	
-	<div align="center">
+  
+  <div align="center">
     
     @if($data)
     <div class="form-group">
 	<form class="w3-container w3-display-middle w3-card-4 " method="POST" id="payment-form"  action="{!! URL:: to('customer/paypalpayment')!!}">
   {{ csrf_field() }}
   <h6>Pay from here</h6>
-  <label>You can choose to pay by using payapl</label></br>
+  <label>You can choose to pay by using paypal</label></br>
   <label class="w3-text-blue"><b>Payable amount is </b>&nbsp;  <i class="fa fa-gbp"></i> {{$data['slots_price']}}</label>
   <input class="w3-input w3-border" name="amount" type="hidden" value="{{$data['slots_price']}}" readonly>
   <input class="w3-input w3-border" name="slots_name" type="hidden" value="{{$data['slots_name']}}">

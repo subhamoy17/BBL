@@ -862,6 +862,73 @@ $("#extra_session").mouseover(function(){
 
 });
 </script>
+
+
+<script>
+
+  $(document).ready(function() {
+
+    $.validator.addMethod("multipeFieldValidator", function(value) {  
+    if($("#package_image").val()=='' && $("#package_description").val()=='') {
+        
+      return false;
+    }
+    return true; 
+}, 'Either image or description is required');
+
+    $('#bank_payment-form').validate({  
+      /// rules of error 
+      rules: {
+        
+        "package_image": {
+                    multipeFieldValidator:true
+                  },
+         "package_description": {
+                    multipeFieldValidator:true
+                  }
+      },
+      ////for show error message
+      messages: {
+        
+        "package_image": "Image is required if no description is given",
+        "package_description": "Description is required if no image is given" 
+      }
+    });
+    });
+</script>
+
+
+
+
+
+
+<script>
+  $(document).ready(function() { 
+ $("#package_image").change(function(){ 
+    /// check the extension of image
+
+    var ext = $('#package_image').val().split('.').pop().toLowerCase();
+    if($.inArray(ext, ['gif','png','jpg','jpeg']) == -1) {
+    alert('Only accept gif/png/jpg/jpeg extension formate of image');
+    $("#package_image").val('');
+    return false;
+    }
+
+    /// check the size of image
+
+    var fileSize = (this.files[0].size / 1024); //size in KB
+    if (fileSize > 250) /// not more than 30 kb
+    {
+       alert("Please Upload maximum 250KB file size of image");// if Maxsize from Model > real file size
+        $("#package_image").val('');
+        return false;
+    }
+
+    
+});
+});
+</script>
+
 </body>
 
 </html>

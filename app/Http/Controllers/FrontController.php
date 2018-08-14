@@ -13,6 +13,7 @@ use App\Http\Controllers\DateTime;
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 use Auth;
+use Session;
 class FrontController extends Controller
 {
 
@@ -118,7 +119,7 @@ public function purchase_payment_mode(Request $request)
 
 public function paypal_payment_success()
 {
-  return view('customerpanel.paypal-payment-success');
+  return view('customerpanel.payment-success');
 }
 
 public function bank_payment_success(Request $request)
@@ -127,7 +128,7 @@ public function bank_payment_success(Request $request)
   $bank_data['slot_id']=$request->slot_id;
   $bank_data['purchases_date']=$request->purchases_date;
   $bank_data['package_validity_date']=$request->package_validity_date;
-  $bank_data['payment_options']='Banking Transter';
+  $bank_data['payment_options']='Bank Transfer';
   $bank_data['slots_name']=$request->slots_name;
   $bank_data['slots_number']=$request->slots_number;
   $bank_data['slots_price']=$request->slots_price;
@@ -139,21 +140,37 @@ public function bank_payment_success(Request $request)
 
   $purchase_history_id = DB::getPdo()->lastInsertId();
   $data['purchase_history_id'] = $purchase_history_id;
-  $myimage=$request->image;
-  $folder="backend/images/"; 
-  $extension=$myimage->getClientOriginalExtension(); 
-  $image_name=time()."_bankdocimg.".$extension; 
-  $upload=$myimage->move($folder,$image_name); 
-  $data['image']=$image_name; 
+  if($request->package_image!='')
+  {
+    $myimage=$request->package_image;
+    $folder="backend/images/"; 
+    $extension=$myimage->getClientOriginalExtension(); 
+    $image_name=time()."_bankdocimg.".$extension; 
+    $upload=$myimage->move($folder,$image_name); 
+    $data['image']=$image_name;
+  } 
 
   $data['payment_id']='BANK'.time();
   $data['currency']=Null;
   $data['amount']=$request->slots_price;
-  $data['payment_mode']='Banking Transter';
-  $data['description']=$request->description;
+  $data['payment_mode']='Bank Transfer';
+  $data['description']=$request->package_description;
   $data['status']='Inprogress';
   $bank_data=DB::table('payment_history')->insert($data);
-  return view('customerpanel.paypal-payment-success');
+
+  if ($insert_bank_data && $bank_data)
+  {
+    Session::put('success_bank_pay', 'Your payment is success using bank transfer');
+    Session::put('bank_payment_id',$data['payment_id']);
+    return view('customerpanel.payment-success'); 
+  }
+  else
+  {
+    Session::put('failed_bank_pay', 'Your bank transfer payment is failed');
+    return view('customerpanel.payment-success');
+  }
+
+  
 }
 
 public function customer_profile($id)

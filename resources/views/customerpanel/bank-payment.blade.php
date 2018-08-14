@@ -1,6 +1,7 @@
 @extends('frontend.main') 
 @section('content')
 
+
 <div class="contact-box">
             <div class="container">
                 <div class="row">
@@ -28,11 +29,10 @@
   <input class="w3-input w3-border" name="purchases_date" type="hidden" value="{{$data['purchases_date']}}" >
   <input class="w3-input w3-border" name="package_validity_date" type="hidden" value="{{$data['package_validity_date']}}" >
   <input class="w3-input w3-border" name="customer_id" type="hidden" value="{{$data['customer_id']}}" >
-<label>Description</label>
-    <textarea  name="description" id="description"></textarea>
-    <input type="file" name="image" id="image">
+    <label>Description</label><textarea  name="package_description" id="package_description"></textarea><br>
+    <label>Upload Payment Document</label><input type="file" name="package_image" id="package_image">
        
-  <button class="btn btn-dark btn-theme-colored btn-flat">Pay with Bank</button></p>
+  <button class="btn btn-dark btn-theme-colored btn-flat">Pay with Bank</button>
 </form>
 </div>
 </div>
@@ -47,4 +47,6 @@
 </div>
 </div>
 </div>
+
+
 @endsection
