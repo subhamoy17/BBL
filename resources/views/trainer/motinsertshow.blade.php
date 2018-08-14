@@ -243,14 +243,10 @@ range: "Please enter value betwwen 1 to  999.9"
 $('.weightconvert').on('change', function(){ 
 
   if($(this).val()=='imperial')
-
-
     converted_value=$(this).prev('input').val()* 2.2046;
   
   else
-  
     converted_value=$(this).prev('input').val()/2.2046;
-
   $(this).prev('input').val(converted_value);
 
 });
@@ -259,6 +255,55 @@ $('.weightconvert').on('change', function(){
 
 </script>
 
+
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.required').on('change',function(e) {
+      var customerID = $.trim($(this).val()); 
+      console.log(customerID);
+ if(customerID){
+  var Data =
+  {
+    'id': customerID
+ 
+  }
+ $.ajax({
+          url: "{{route('mot_customer_request')}}",
+          json_enc: Data,
+          type: "GET",
+          dataType: "json",
+          data:
+          {
+            'data': Data,
+          },
+          success: function (data)
+          {
+            
+           $('#right_arm').val(data.right_arm);
+             $('#left_arm').val(data.left_arm);
+              $('#chest').val(data.chest);
+ $('#waist').val(data.waist);
+  $('#hips').val(data.hips);
+   $('#right_thigh').val(data.right_thigh);
+    $('#left_thigh').val(data.left_thigh);
+     $('#right_calf').val(data.right_calf);
+      $('#left_calf').val(data.left_calf);
+       $('#height').val(data.height);
+       $('#starting_weight').val(data.starting_weight);
+       $('#ending_weight').val(data.ending_weight);
+       $('#heart_beat').val(data.heart_beat);
+        $('#blood_pressure').val(data.blood_pressure);
+       $('#description').val(data.description);
+       $('#mot_date').val(data.date);
+       
+          }
+        });
+    }
+     
+    });
+  });
+</script>
 
 
 <div class="breadcrumbs">
@@ -297,7 +342,7 @@ $('.weightconvert').on('change', function(){
                 <input type="text" id="right_arm" name="right_arm" placeholder="Right Arm" class="form-control" value="">
           
              <select class="form-control convert" name="right_arm_credential">
-              <option id="matric" value="matric">Matric (cm.)</option>
+              <option id="metric" value="metric">Metric (cm.)</option>
               <option id="imperial" value="imperial">Imperial (inch.)</option>
             </select>
           </div>     
@@ -310,7 +355,7 @@ $('.weightconvert').on('change', function(){
       <div class="col-lg-9"><div class="row"><div class="col-lg-12"><input type="text" id="left_arm" name="left_arm" placeholder="Left Arm" class="form-control" value=""><!-- </div> -->
       <!--  <div class="col-lg-6"> -->
         <select class="form-control convert" name="left_arm_credential">
-          <option id="matric" value="matric">Matric (cm.)</option>
+          <option id="metric" value="metric">Metric (cm.)</option>
           <option id="imperial" value="imperial">Imperial (inch.)</option>
         </select>
       </div>     
@@ -325,7 +370,7 @@ $('.weightconvert').on('change', function(){
   <div class="col-lg-9"><div class="row"><div class="col-lg-12"><input type="text" id="chest" name="chest" placeholder="Chest" class="form-control" value=""><!-- </div>
   <div class="col-lg-6"> -->
    <select class="form-control convert" name="chest_credential">
-    <option id="matric" value="matric">Matric (cm.)</option>
+    <option id="metric" value="metric">Metric (cm.)</option>
     <option id="imperial" value="imperial">Imperial (inch.)</option>
   </select>
 </div>     
@@ -339,7 +384,7 @@ $('.weightconvert').on('change', function(){
   <div class="col-lg-9"><div class="row"><div class="col-lg-12"><input type="text" id="waist" name="waist" placeholder="Waist" class="form-control" value=""><!-- </div>
   <div class="col-lg-6"> -->
    <select class="form-control convert" name="waist_credential">
-    <option id="matric" value="matric">Matric (cm.)</option>
+    <option id="metric" value="metric">Metric (cm.)</option>
     <option id="imperial" value="imperial">Imperial (inch.)</option>
   </select>
 </div>     
@@ -354,7 +399,7 @@ $('.weightconvert').on('change', function(){
   <div class="col-lg-9"><div class="row"><div class="col-lg-12"><input type="text" id="hips" name="hips" placeholder="Hips" class="form-control" value=""><!-- </div>
   <div class="col-lg-6"> -->
    <select class="form-control convert" name="hips_credential">
-    <option id="matric" value="matric">Matric (cm.)</option>
+    <option id="metric" value="metric">Metric (cm.)</option>
     <option id="imperial" value="imperial">Imperial (inch.)</option>
   </select>
 </div>     
@@ -367,7 +412,7 @@ $('.weightconvert').on('change', function(){
   <div class="col-lg-9"><div class="row"><div class="col-lg-12"><input type="text" id="right_thigh" name="right_thigh" placeholder="Right Thigh" class="form-control" value=""><!-- </div>
   <div class="col-lg-6"> -->
     <select class="form-control convert" name="right_thigh_credential">
-      <option id="matric" value="matric" >Matric (cm.)</option>
+      <option id="metric" value="metric" >Metric (cm.)</option>
       <option id="imperial" value="imperial">Imperial (inch.)</option>
     </select>
   </div>     
@@ -380,7 +425,7 @@ $('.weightconvert').on('change', function(){
   <div class="col-lg-9"><div class="row"><div class="col-lg-12"><input type="text" id="left_thigh" name="left_thigh" placeholder="Left Thigh" class="form-control" value=""><!-- </div>
   <div class="col-lg-6"> -->
    <select class="form-control convert" name="left_thigh_credential">
-    <option id="matric" value="matric">Matric (cm.)</option>
+    <option id="metric" value="metric">Metric (cm.)</option>
     <option id="imperial" value="imperial">Imperial (inch.)</option>
   </select>
 </div>     
@@ -393,7 +438,7 @@ $('.weightconvert').on('change', function(){
   <div class="col-lg-9"><div class="row"><div class="col-lg-12"><input type="text" id="right_calf" name="right_calf" placeholder="Right Calf" class="form-control" value=""><!-- </div>
   <div class="col-lg-6"> -->
    <select class="form-control convert" name="right_calf_credential">
-    <option id="matric" value="matric">Matric (cm.)</option>
+    <option id="metric" value="metric">Metric (cm.)</option>
     <option id="imperial" value="imperial">Imperial (inch.)</option>
   </select>
 </div>     
@@ -406,7 +451,7 @@ $('.weightconvert').on('change', function(){
   <div class="col-lg-9"><div class="row"><div class="col-lg-12"><input type="text" id="left_calf" name="left_calf" placeholder="Left Calf" class="form-control" value=""><!-- </div>
   <div class="col-lg-6"> -->
    <select class="form-control convert" name="left_calf_credential">
-    <option id="matric" value="matric">Matric (cm.)</option>
+    <option id="metric" value="metric">Metric (cm.)</option>
     <option id="imperial" value="imperial">Imperial (inch.)</option>
   </select>
 </div>     
@@ -418,91 +463,37 @@ $('.weightconvert').on('change', function(){
   <div class="col-lg-9"><div class="row"><div class="col-lg-12"><input type="text" id="height" name="height" placeholder="Height" class="form-control" value=""><!-- </div>
   <div class="col-lg-6"> -->
     <select class="form-control convert" name="height_credential">
-      <option id="matric" value="matric">Matric (cm.)</option>
+      <option id="metric" value="metric">Metric (cm.)</option>
       <option id="imperial" value="imperial">Imperial (inch.)</option>
     </select>
-
-
   </div>     
 </div> 
 </div>
 </div>
-
-<!-- <div class="row form-group">
-  <div class="col-lg-3"><label for="text-input" class="form-control-label"> Starting Weight</label></div>
-  <div class="col-lg-9"><div class="row"><div class="col-lg-6"><input type="text" id="starting_weight" name="starting_weight" placeholder="Starting Weight" class="form-control" value="">
-
-
-<select class="form-control convert" name="starting_weight_credential">
-
-      <option id="matric" value="matric">Matric (Kg.)</option>
-      <option id="imperial" value="imperial">Imperial (Lbs.)</option>
-    </select>
-     </div>     
-</div>
-  </div>
-</div>
- -->
-
-
-
-
 <div class="row form-group">
   <div class="col-lg-3"><label for="text-input" class="form-control-label">Starting Weight</label></div>
   <div class="col-lg-9"><div class="row"><div class="col-lg-12"><input type="text" id="starting_weight" name="starting_weight" placeholder="Starting Weight" class="form-control" value=""><!-- </div>
   <div class="col-lg-6"> -->
     <select class="form-control weightconvert" name="starting_weight_credential">
-      <option id="matric" value="matric">Matric (kg.)</option>
+      <option id="metric" value="metric">Metric (kg.)</option>
       <option id="imperial" value="imperial">Imperial (lbs.)</option>
     </select>
-
-
   </div>     
 </div> 
 </div>
 </div>
-
-
 <div class="row form-group">
   <div class="col-lg-3"><label for="text-input" class="form-control-label">Ending Weight</label></div>
   <div class="col-lg-9"><div class="row"><div class="col-lg-12"><input type="text" id="ending_weight" name="ending_weight" placeholder="Ending Weight" class="form-control" value=""><!-- </div>
   <div class="col-lg-6"> -->
     <select class="form-control weightconvert" name="ending_weight_credential">
-      <option id="matric" value="matric">Matric (cm.)</option>
-      <option id="imperial" value="imperial">Imperial (inch.)</option>
+      <option id="metric" value="metric">Metric (kg.)</option>
+      <option id="imperial" value="imperial">Imperial (lbs.)</option>
     </select>
-
-
   </div>     
 </div> 
 </div>
 </div>
-
-
-
-
-
-
-<!-- 
-
-<div class="row form-group" name="ending_weight_credential">
-
-  <div class="col-lg-3"><label for="text-input" class="form-control-label"> Ending Weight<span class="required_field_color">*</span></label></div>
-
-  <div class="col-lg-9"><div class="row"><div class="col-lg-6"><input type="text" id="ending_weight" name="ending_weight" placeholder="Ending Weight" class="form-control" value="">
-
-<select class="form-control weight_convert" name="ending_weight_credential">
-
-      <option id="matric" value="matric">Matric (Kg.)</option>
-      <option id="imperial" value="imperial">Imperial (Lbs.)</option>
-    </select>
-     </div>     
-</div>
-  </div>
-</div>
- -->
-
-
 
 <div class="row form-group">
   <div class="col col-md-3"><label for="text-input" class="form-control-label"> Blood Pressure<span class="required_field_color">*</span></label></div>

@@ -119,6 +119,18 @@ Route::get('mot_show','TrainerController@mot_show')->name('mot_show');
 Route::get('motinsertshow','TrainerController@motinsertshow')->name('motinsertshow_page');
 Route::post('motinsert','TrainerController@motinsert')->name('motinsert');
 
+
+
+Route::get('mot_customer_request', 'TrainerController@mot_customer_request')->name('mot_customer_request');
+
+
+
+
+
+
+
+
+
 //update mot//
 
 Route::get('moteditshow/{id}','TrainerController@moteditshow');

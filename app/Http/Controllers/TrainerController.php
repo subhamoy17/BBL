@@ -755,6 +755,8 @@ public function motinsertshow()
 
 public function motinsert(Request $request){
 
+    Log::debug(" metric ".print_r($request->right_arm_credential,true));
+
     if($request->right_arm_credential=="metric")
     {
         $right_arm =$request->right_arm;
@@ -903,10 +905,8 @@ public function motinsert(Request $request){
 
 // print_r($data);die();
     DB::table('customer_mot')->insert($data);
-    Log::debug(" Check id ".print_r($data,true));
+    Log::debug(" customer_mot ".print_r($data,true));
     return redirect('trainer/mot_show')->with("success","You have successfully added one customer's MOT.");
-
-
 
 
 }
@@ -914,10 +914,37 @@ public function motinsert(Request $request){
 
 
 
-public function moteditshow($id)
-{
+public function mot_customer_request(Request $request)
+
+    {
+            $data=$request->get('data');
+            $id=$data['id'];
+            $positions = DB::table('customer_mot')->where('customer_id',$id)->orderBy('date','DESC')->first();
+              Log::debug(" Check id ".print_r($positions,true));
+         return response()->json($positions);
+  
+    }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+public function moteditshow($id){
     $data=DB::table('customer_mot')
     ->join('customers','customers.id','customer_mot.customer_id')
     ->join('users','users.id','customer_mot.trainer_id')
@@ -1008,6 +1035,17 @@ public function motedit(Request $request){
         $right_calf =($request->right_calf/0.39370 );
     }
 
+if($request->left_calf_credential=="metric")
+    {
+        $left_calf =$request->left_calf;
+    }
+    else
+    {
+        $left_calf =($request->left_calf/0.39370 );
+    }
+
+
+
 
  
     if($request->starting_weight_credential=="metric")
@@ -1035,23 +1073,19 @@ public function motedit(Request $request){
 
 
     $data['right_arm']=(isset($right_arm) && !empty($right_arm)) ? $right_arm : null;
-
     $data['left_arm']=(isset($left_arm) && !empty($left_arm)) ? $left_arm : null;
     $data['chest']=(isset($chest) && !empty($chest)) ? $chest : null;
     $data['waist']=(isset($waist) && !empty($waist)) ? $waist : null;
     $data['hips']=(isset($hips) && !empty($hips)) ? $hips : null;
     $data['right_thigh']=(isset($right_thigh) && !empty($right_thigh)) ? $right_thigh : null;
     $data['left_thigh']=(isset($left_thigh) && !empty($left_thigh)) ? $left_thigh : null;
-
     $data['right_calf']=(isset($right_calf) && !empty($right_calf)) ? $right_calf : null;
+
     $data['left_calf']=(isset($left_calf) && !empty($left_calf)) ? $left_calf : null;
- $data['starting_weight']=(isset($starting_weight) && !empty($starting_weight)) ? $starting_weight : null;
-
-$data['ending_weight']=(isset($ending_weight) && !empty($ending_weight)) ? $ending_weight : null;
 
 
-  
-    
+    $data['starting_weight']=(isset($starting_weight) && !empty($starting_weight)) ? $starting_weight : null;
+    $data['ending_weight']=(isset($ending_weight) && !empty($ending_weight)) ? $ending_weight : null;
     $data['heart_beat']=(isset($request->heart_beat) && !empty($request->heart_beat)) ? $request->heart_beat : null;
     $data['blood_pressure']=(isset($request->blood_pressure) && !empty($request->blood_pressure)) ? $request->blood_pressure : null;
     $data['height']=(isset($request->height) && !empty($request->height)) ? $request->height : null;
@@ -1212,6 +1246,25 @@ public function payment_history_backend_request(Request $request)
         return response()->json(2);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
