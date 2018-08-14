@@ -45,7 +45,7 @@ $('#bootstrap-slot-data-table').DataTable({
     <div class="col-sm-9">
         <div class="page-header float-left">
             <div class="page-title">
-                <h1>Our Client List</h1>
+                <h1>Our Trainer List</h1>
             </div>
         </div>
     </div>
@@ -57,7 +57,7 @@ $('#bootstrap-slot-data-table').DataTable({
         </div>-->
          <strong class="card-title add-n-cl">
                               <a href="{{route('client_insert_view')}}">
-                                    <button class="btn btn-success"><i class="fa fa-plus"></i> Add New Client</button>
+                                    <button class="btn btn-success"><i class="fa fa-plus"></i> Add New Trainer</button>
                                 </a>
                                 <br>
                                 @if (session('success'))

@@ -117,7 +117,7 @@ $('#traineraddform').validate({
                 </div>
             </div>    
 </div>
-        <div class="col-lg-6">
+        <div class="col-lg-12">
         <div class="card">
                       <div class="card-body card-block">
                         <form action="{{route('inserttrainer')}}" method="post" enctype="multipart/form-data" class="form-horizontal" id="traineraddform">
@@ -129,6 +129,7 @@ $('#traineraddform').validate({
                             <div class="col-12 col-md-9"><input type="text" id="name" name="name" placeholder="Name" class="form-control" value="">
                             </div>
                           </div>
+
                            <div class="row form-group">
                             <div class="col col-md-3"><label for="text-input" class=" form-control-label">Contact No.<span class="required_field_color">*</span></label></div>
                             <div class="col-12 col-md-9"><input type="text" id="contact_no" name="contact_no" placeholder="Contact No" class="form-control" value="">
@@ -160,7 +161,7 @@ $('#traineraddform').validate({
                               <img id="profile_thumbnail" height="150"  width="200">
                             </div>
                           </div>
-                            <div>
+                            <div style="float: right">
                                 <button type="submit"  name="submit" class="btn btn-primary btn-sm">
                                   <i class="fa fa-dot-circle-o"></i> Submit
                                 </button>

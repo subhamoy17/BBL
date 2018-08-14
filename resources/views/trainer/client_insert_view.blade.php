@@ -107,7 +107,7 @@ $('#clientaddform').validate({
             <div class="col-sm-4">
                 <div class="page-header float-left">
                     <div class="page-title">
-                        <h1>Add New Client</h1>
+                        <h1>Add New Trainer</h1>
                     </div>
                 </div>
             </div>    
@@ -124,6 +124,7 @@ $('#clientaddform').validate({
                             <div class="col-12 col-md-9"><input type="text" id="title" name="title" placeholder="Title" class="form-control" value="">
                             </div>
                           </div>
+                          
                           <div class="row form-group">
                             <div class="col col-md-3"><label for="text-input" class=" form-control-label">Name<span class="required_field_color">*</span></label></div>
                             <div class="col-12 col-md-9"><input type="text" id="name" name="name" placeholder="Name" class="form-control" value="">

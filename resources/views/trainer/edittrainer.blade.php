@@ -117,7 +117,7 @@ $('#trainereditform').validate({
                 </div>
             </div>    
 </div>
-        <div class="col-lg-6">
+        <div class="col-lg-12">
         <div class="card">
                       <div class="card-body card-block">
                         <form action="{{route('updatetrain')}}" method="post" enctype="multipart/form-data" class="form-horizontal" id="trainereditform">
@@ -154,7 +154,7 @@ $('#trainereditform').validate({
                                 <img id="profile_thumbnail" src="{{asset('backend/images')}}/{{$data->image}}" alt="profile image" height="150"  width="200"/>
                               </div>
                           </div>
-                            <div>
+                            <div style="float: right">
                                 <button type="submit" name="submit" class="btn btn-primary btn-sm">
                                   <i class="fa fa-dot-circle-o"></i> Submit
                                 </button>

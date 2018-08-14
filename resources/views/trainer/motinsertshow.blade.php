@@ -330,10 +330,10 @@ $('.weightconvert').on('change', function(){
   </select>
 </div>     
 </div> 
-
-
 </div>
 </div>
+
+
 <div class="row form-group">
   <div class="col-lg-3"><label for="text-input" class="form-control-label">Waist</label></div>
   <div class="col-lg-9"><div class="row"><div class="col-lg-12"><input type="text" id="waist" name="waist" placeholder="Waist" class="form-control" value=""><!-- </div>
@@ -344,9 +344,11 @@ $('.weightconvert').on('change', function(){
   </select>
 </div>     
 </div> 
+</div>
+</div>
 
-</div>
-</div>
+
+
 <div class="row form-group">
   <div class="col-lg-3"><label for="text-input" class="form-control-label">Hips</label></div>
   <div class="col-lg-9"><div class="row"><div class="col-lg-12"><input type="text" id="hips" name="hips" placeholder="Hips" class="form-control" value=""><!-- </div>
@@ -443,9 +445,11 @@ $('.weightconvert').on('change', function(){
  -->
 
 
+
+
 <div class="row form-group">
   <div class="col-lg-3"><label for="text-input" class="form-control-label">Starting Weight</label></div>
-  <div class="col-lg-9"><div class="row"><div class="col-lg-6"><input type="text" id="starting_weight" name="starting_weight" placeholder="Starting Weight" class="form-control" value=""><!-- </div>
+  <div class="col-lg-9"><div class="row"><div class="col-lg-12"><input type="text" id="starting_weight" name="starting_weight" placeholder="Starting Weight" class="form-control" value=""><!-- </div>
   <div class="col-lg-6"> -->
     <select class="form-control weightconvert" name="starting_weight_credential">
       <option id="matric" value="matric">Matric (kg.)</option>
@@ -461,7 +465,7 @@ $('.weightconvert').on('change', function(){
 
 <div class="row form-group">
   <div class="col-lg-3"><label for="text-input" class="form-control-label">Ending Weight</label></div>
-  <div class="col-lg-9"><div class="row"><div class="col-lg-6"><input type="text" id="ending_weight" name="ending_weight" placeholder="Ending Weight" class="form-control" value=""><!-- </div>
+  <div class="col-lg-9"><div class="row"><div class="col-lg-12"><input type="text" id="ending_weight" name="ending_weight" placeholder="Ending Weight" class="form-control" value=""><!-- </div>
   <div class="col-lg-6"> -->
     <select class="form-control weightconvert" name="ending_weight_credential">
       <option id="matric" value="matric">Matric (cm.)</option>
