@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\mail;
+use Illuminate\Support\Facades\DB;
 
 
  
@@ -59,6 +60,19 @@ class TrainerChangePasswordController extends Controller
         $user->password = bcrypt($request->get('new-password'));
         $user->save();
         $email=$request->get('email');
+
+
+        $trainer_details=DB::table('users')->where('email',$email)->first();
+
+        Log::debug ( " :: trainer_details :: " . print_r ( $trainer_details, true ) );
+
+        if(($trainer_details->login_attempt==1 || $trainer_details->login_attempt==2)  && $trainer_details->master_trainer==2)
+        {
+            $trainer_details_update=DB::table('users')->where('email',$email)
+            ->update(['login_attempt' => 2]);   
+        }
+
+
         $name=$request->get('name');
         $new_password=$request->get('new-password');
         Log::debug(" email ".print_r($email,true));

@@ -23,7 +23,7 @@
             <td style="padding: 20px 0 30px 0; text-align: center;">
     <p align="left"> Hi, {{$name}} </p>
     <p align="left"> We have to add as a trainer excutive in our organisation.
-         Please see your details of login<br>
+         Please see your details of login. You are available to login only first time by the below credentials, after that you can changed your password otherwise you can't login.<br>
           
 
 <style>

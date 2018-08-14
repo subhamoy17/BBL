@@ -5,6 +5,8 @@ namespace Illuminate\Foundation\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 trait AuthenticatesUsers
 {
@@ -30,6 +32,8 @@ trait AuthenticatesUsers
      */
     public function login(Request $request)
     {
+
+
         $this->validateLogin($request);
 
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
@@ -41,7 +45,10 @@ trait AuthenticatesUsers
             return $this->sendLockoutResponse($request);
         }
 
+
+
         if ($this->attemptLogin($request)) {
+
             return $this->sendLoginResponse($request);
         }
 
@@ -50,7 +57,10 @@ trait AuthenticatesUsers
         // user surpasses their maximum number of attempts they will get locked out.
         $this->incrementLoginAttempts($request);
 
+
         return $this->sendFailedLoginResponse($request);
+
+
     }
 
     /**
@@ -61,6 +71,7 @@ trait AuthenticatesUsers
      */
     protected function validateLogin(Request $request)
     {
+       
         $this->validate($request, [
             $this->username() => 'required|string',
             'password' => 'required|string',
@@ -75,9 +86,40 @@ trait AuthenticatesUsers
      */
     protected function attemptLogin(Request $request)
     {
-        return $this->guard()->attempt(
+        $trainer_details=DB::table('users')->where('email',$request->email)->first();
+
+        if($trainer_details->login_attempt==0 && $trainer_details->master_trainer==2)
+        {
+            Log::debug ( " :: a :: " );
+            $trainer_details_update=DB::table('users')->where('email',$request->email)
+            ->update(['login_attempt' => 1]);
+
+            return $this->guard()->attempt(
             $this->credentials($request), $request->filled('remember')
         );
+             
+        }
+        else if($trainer_details->login_attempt==2 && $trainer_details->master_trainer==2)
+        {
+            Log::debug ( " :: b :: " );
+            return $this->guard()->attempt(
+            $this->credentials($request), $request->filled('remember')
+        );
+        }
+
+        else if($trainer_details->login_attempt==0 && $trainer_details->master_trainer==1)
+        {
+            Log::debug ( " :: c :: " );
+
+            return $this->guard()->attempt(
+            $this->credentials($request), $request->filled('remember')
+        );
+        }
+        else if($trainer_details->login_attempt==1 && $trainer_details->master_trainer==2)
+        {
+            Log::debug ( " :: sendLoginResponse fhdfhdhfdh :: " . print_r ( $request->all(), true ) );
+            return $this->sendFailedLoginResponse($request);   
+        }
     }
 
     /**
@@ -88,7 +130,10 @@ trait AuthenticatesUsers
      */
     protected function credentials(Request $request)
     {
+        
         return $request->only($this->username(), 'password');
+
+
     }
 
     /**
@@ -129,6 +174,7 @@ trait AuthenticatesUsers
      */
     protected function sendFailedLoginResponse(Request $request)
     {
+
         throw ValidationException::withMessages([
             $this->username() => [trans('auth.failed')],
         ]);
