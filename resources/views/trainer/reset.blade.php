@@ -42,6 +42,10 @@ $('#pwreset').validate({
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
+            <br>
+             <div class="whole-wrp"></div>
+    <div class="logo-m" align="center"><a href="{{route('bbldb')}}"><img src="{{asset('frontend/images/logo.png')}}"></a></div>
+    <br>
             <div class="card">
                 <div class="card-header">{{ __('Trainer Reset Password') }}</div>
 

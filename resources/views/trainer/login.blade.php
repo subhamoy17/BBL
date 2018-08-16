@@ -35,9 +35,14 @@ $('#myform').validate({
 
 
 <div class="sufee-login d-flex align-content-center flex-wrap">
+
+    <div class="whole-wrp"></div>
+    <div class="logo-m" align="center"><a href="{{route('bbldb')}}"><img src="{{asset('frontend/images/logo.png')}}"></a></div>
+
         <div class="container">
             <div class="login-content">
                 <div class="login-form">
+
                     @if (session('fisr_change_password_success'))
                         <div class="alert alert-success">
                             {{ session('fisr_change_password_success') }}
