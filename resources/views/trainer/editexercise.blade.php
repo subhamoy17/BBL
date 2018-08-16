@@ -36,7 +36,8 @@ rules: {
     required: true
   },
   "duration": {
-    required: true
+    required: true,
+    number: true
   },
   "image": {
               required: 
@@ -75,7 +76,8 @@ messages: {
 
  
   "duration": {
-    required: 'Please enter duration'
+    required: 'Please enter duration',
+    number: 'Invalid input, plesae enter a number'
   },
   "image": "Image is required if no video is given",
   "video": "Video is required if no image is given"
