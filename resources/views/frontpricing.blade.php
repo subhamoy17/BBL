@@ -13,7 +13,7 @@
                 <h1><i class="fa fa-gbp"></i> {{$mydata->slots_price}} <span></span></h1>
                  <span class="small-msg">No. of slots</span>
                   <span class="small-msg">{{$mydata->slots_number}}</span>
-                  <span class="small-msg">/ {{$mydata->slots_validity}}</span>
+                  <span class="small-msg">/ Validity {{$mydata->slots_validity}} Days</span>
                   <div class="btm-arow"><i class="fa fa-arrow-circle-down"></i></div>
                   <div class="plan-batch bch-3">Premium</div>
                 </div>
