@@ -86,7 +86,6 @@ rules: {
   "starting_weight": {
     number: true,
     required: true,
-    dollarsscents: true,
     range: [1, 999.9]
 
   },
@@ -94,7 +93,6 @@ rules: {
   "ending_weight": {
     number: true,
     required: true,
-    dollarsscents: true,
     range: [1, 999.9]
   },
 
