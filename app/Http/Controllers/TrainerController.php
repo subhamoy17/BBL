@@ -52,6 +52,8 @@ public function index()
     //number of decline request
     $decline_request=DB::table('slot_request')->where('trainer_id',Auth::user()->id)->where('approval_id',4)->count();
 
+    
+
     return view('trainer.home')->with(compact('future_pending_request','future_approve_request','past_request','decline_request'));
 }
 

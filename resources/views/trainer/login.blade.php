@@ -38,6 +38,12 @@ $('#myform').validate({
         <div class="container">
             <div class="login-content">
                 <div class="login-form">
+                    @if (session('fisr_change_password_success'))
+                        <div class="alert alert-success">
+                            {{ session('fisr_change_password_success') }}
+                        </div>
+                    @endif
+
                     <form method="POST" action="{{ route('login') }}" id="myform">
                         @csrf
                         <div class="form-group">
@@ -49,6 +55,8 @@ $('#myform').validate({
                                         <strong>{{ $errors->first('email') }}</strong>
                                     </span>
                                 @endif
+
+
                         </div>
                         <div class="form-group">
                             <label>{{ __('Password') }}</label>

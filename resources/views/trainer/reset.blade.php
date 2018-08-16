@@ -46,7 +46,7 @@ $('#pwreset').validate({
                 <div class="card-header">{{ __('Trainer Reset Password') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{url('trainer/password/reset')}}" id="pwreset">
+                    <form method="POST" action="{{route('trainer.password.reset')}}" id="pwreset">
                         @csrf
 
                         <input type="hidden" name="token" value="{{ $token }}">

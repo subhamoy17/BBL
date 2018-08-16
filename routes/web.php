@@ -19,6 +19,9 @@ Route::get('/alertifydemo', function () {
     return view('alertifyjquery');
 });
 
+
+Route::POST('update-trainer-first-changepassword','TrainerFirstChangePasswordController@updateTrainerPassword')->name('trainer.firstchangepassword.update');
+
 Auth::routes();
 
 ////the group function used to create all link as prefix is trainer
@@ -39,7 +42,6 @@ Route::POST('updateprofile','TrainerController@updateprofile')->name('trainer.pr
 
 Route::GET('changepassword','TrainerChangePasswordController@showChagePasswordForm')->name('trainer.changepassword');
 Route::POST('update-changepassword','TrainerChangePasswordController@updateTrainerPassword')->name('trainer.changepassword.update');
-
 
 
 // for add slot

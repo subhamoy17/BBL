@@ -32,9 +32,21 @@ trait AuthenticatesUsers
      */
     public function login(Request $request)
     {
+        $trainer_details=DB::table('users')->where('email',$request->email)->first();
 
-
+        if(($trainer_details->login_attempt==0 || $trainer_details->login_attempt==1) && $trainer_details->master_trainer==2)
+        {
+            Log::debug ( " :: a :: " );
+            $trainer_details_update=DB::table('users')->where('email',$request->email)
+            ->update(['login_attempt' => 1]);
+            
+            return view('trainer.first_changepassword')->with(compact('trainer_details'));             
+        }
+        else{
         $this->validateLogin($request);
+            }
+
+        
 
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
         // the login attempts for this application. We'll key this by the username and
@@ -86,40 +98,10 @@ trait AuthenticatesUsers
      */
     protected function attemptLogin(Request $request)
     {
-        $trainer_details=DB::table('users')->where('email',$request->email)->first();
 
-        if($trainer_details->login_attempt==0 && $trainer_details->master_trainer==2)
-        {
-            Log::debug ( " :: a :: " );
-            $trainer_details_update=DB::table('users')->where('email',$request->email)
-            ->update(['login_attempt' => 1]);
-
-            return $this->guard()->attempt(
+        return $this->guard()->attempt(
             $this->credentials($request), $request->filled('remember')
         );
-             
-        }
-        else if($trainer_details->login_attempt==2 && $trainer_details->master_trainer==2)
-        {
-            Log::debug ( " :: b :: " );
-            return $this->guard()->attempt(
-            $this->credentials($request), $request->filled('remember')
-        );
-        }
-
-        else if($trainer_details->login_attempt==0 && $trainer_details->master_trainer==1)
-        {
-            Log::debug ( " :: c :: " );
-
-            return $this->guard()->attempt(
-            $this->credentials($request), $request->filled('remember')
-        );
-        }
-        else if($trainer_details->login_attempt==1 && $trainer_details->master_trainer==2)
-        {
-            Log::debug ( " :: sendLoginResponse fhdfhdhfdh :: " . print_r ( $request->all(), true ) );
-            return $this->sendFailedLoginResponse($request);   
-        }
     }
 
     /**
@@ -144,12 +126,14 @@ trait AuthenticatesUsers
      */
     protected function sendLoginResponse(Request $request)
     {
+        
         $request->session()->regenerate();
 
         $this->clearLoginAttempts($request);
 
         return $this->authenticated($request, $this->guard()->user())
                 ?: redirect()->intended($this->redirectPath());
+           
     }
 
     /**
