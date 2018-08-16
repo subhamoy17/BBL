@@ -78,7 +78,10 @@
           </tr>
           @endforeach
           @else
-          <tr>No Data Found.</tr>
+           <tr><td colspan='8' align='center'>
+                No post available
+              </td>
+              </tr>
 
         @endif
 

@@ -183,7 +183,9 @@
             </div>
             <div class="row form-group">
               <div class="col col-md-3"><label for="text-input" class="form-control-label">Video Link<span class="required_field_color">*</span></label></div>
-              <div class="col-12 col-md-9"><input type="text" id="video" name="video" placeholder="Video Link" class="form-control" value=""></div>
+              <div class="col-12 col-md-9"><input type="text" id="video" name="video" placeholder="Video Link" class="form-control" value="">
+              <level>Video Link:-https://www.youtube.com/embed/P_SZpxUx3xw</level></div>
+
             </div>
             <div class="row form-group">
               <div class="col col-md-3"><label for="file-input" class="form-control-label">Image<span class="required_field_color">*</span> </label></div>

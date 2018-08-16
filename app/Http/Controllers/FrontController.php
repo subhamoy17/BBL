@@ -223,8 +223,8 @@ public function booking_history(Request $request)
       Log::debug(" Check id ".print_r($end_date,true)); 
     }
 
-    $now = Carbon::now();
-    $now_month = Carbon::now()->addDays(30);
+    $now = Carbon::now()->toDateString();
+    $now_month = Carbon::now()->toDateString(30);
   if($request->option=='future_pending')
   {
     $data=DB::table('slot_request')
