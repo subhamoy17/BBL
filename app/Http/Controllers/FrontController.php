@@ -354,16 +354,16 @@ public function booking_history(Request $request)
       session(['sum_slots' => $sum_slots]);
       Log::debug(" session_value ".print_r(session('sum_slots'),true));
 
-      $count=DB::table('slot_request')->where('slot_date','<=',$now )->count();
+      $count=DB::table('slot_request')->where('slot_date','<=',$remaining_session_request_now )->count();
 
       $future_pending_count=DB::table('purchases_history')
       ->join('slots','slots.id','purchases_history.slot_id')
-      ->join('slot_request','slot_request.purchases_id','purchases_history.id')->select('slot_request.purchases_id','slots.slots_number','slots.slot_date')->where('slot_request.customer_id',Auth::guard('customer')->user()->id)->where('slot_request.slot_date','>=',$now )->where('slot_request.approval_id',1 )->count();
+      ->join('slot_request','slot_request.purchases_id','purchases_history.id')->select('slot_request.purchases_id','slots.slots_number','slots.slot_date')->where('slot_request.customer_id',Auth::guard('customer')->user()->id)->where('slot_request.slot_date','>=',$remaining_session_request_now )->where('slot_request.approval_id',1 )->count();
     
 
       $accepted_count= DB::table('purchases_history')
     ->join('slots','slots.id','purchases_history.slot_id')
-    ->join('slot_request','slot_request.purchases_id','purchases_history.id')->select('slot_request.purchases_id','slots.slots_number','slots.slot_date')->where('slot_request.customer_id',Auth::guard('customer')->user()->id)->where('slot_request.slot_date','>=',$now )->where('slot_request.approval_id',3 )->count();
+    ->join('slot_request','slot_request.purchases_id','purchases_history.id')->select('slot_request.purchases_id','slots.slots_number','slots.slot_date')->where('slot_request.customer_id',Auth::guard('customer')->user()->id)->where('slot_request.slot_date','>=',$remaining_session_request_now )->where('slot_request.approval_id',3 )->count();
      Log::debug(" Check id ".print_r($sum_slots,true));  
 
  

@@ -64,7 +64,7 @@
                     <h5 class="profile_modal_body" id="exampleModalLabel">This is the sample of video link ---> https://www.youtube.com/embed/93nnzrYffVo or https://www.youtube.com/watch?v=93nnzrYffVo</h5>
                 </div>
               @else
-              {{$mydata->slots_number}}
+              {{$mydata->package_remaining}}
               @endif
             </td>
             <td> 
