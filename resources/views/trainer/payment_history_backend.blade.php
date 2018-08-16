@@ -51,7 +51,7 @@
       <div class="modal-body" id="hall_details_edit">
         <div class="row clearfix">
           <div class="col-sm-12 col-xs-12">
-            <h3 class="pull-left customer-mot">Customers MOT</h3>
+            <h3 class="pull-left customer-mot">Customers Details</h3>
             <br class="clear" />
         </div>
         <div class="col-xs-12 divi-line">
