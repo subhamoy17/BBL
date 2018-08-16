@@ -42,8 +42,8 @@ public function index()
     //number of future approve request 
     $future_approve_request=DB::table('slot_request')->where('trainer_id',Auth::user()->id)
     ->where(function($q) {
-         $q->where('approval_id', 1)
-           ->orWhere('approval_id', 3);
+         $q->where('approval_id', 3)
+           ->orWhere('approval_id', 4);
      })->where('slot_date','>=',$cur_date)->count(); 
 
     //number of past request
@@ -437,7 +437,10 @@ public function futureshowlist(Request $request)
     ->join('customers','customers.id','slot_request.customer_id')
     ->join('slot_approval','slot_approval.id','slot_request.approval_id')
     ->join('slot_times','slot_times.id','slot_request.slot_time_id')
-    ->select( 'slot_request.id','customers.name','customers.ph_no','customers.image','slot_approval.status','slot_request.created_at','slot_request.approval_id','slot_request.slot_date','slot_times.time as slot_time')->where('slot_request.slot_date','>=',$cur_date)->where('slot_request.approval_id','<>',1)->where('slot_request.trainer_id',$id)->get();
+    ->select( 'slot_request.id','customers.name','customers.ph_no','customers.image','slot_approval.status','slot_request.created_at','slot_request.approval_id','slot_request.slot_date','slot_times.time as slot_time')->where('slot_request.slot_date','>=',$cur_date)->where(function($q) {
+         $q->where('approval_id', 3)
+           ->orWhere('approval_id', 4);
+     })->where('slot_request.trainer_id',$id)->get();
     return view('trainer.future_request_customers')->with(compact('data'));
 }
 
