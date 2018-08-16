@@ -25,6 +25,30 @@ $.validator.addMethod("dollarsscents", function(value, element) {
   return this.optional(element) || /^\d{0,4}(\.\d{0,1})?$/i.test(value);
 }, "Please enter value betwwen 1 to 999.9");
 
+$('.convert').on('change', function()
+{
+  
+  if($(this).val()=='imperial')
+    converted_value=$(this).prev('input').val()*0.39370;
+  else
+    converted_value=$(this).prev('input').val()/0.39370;
+  $(this).prev('input').val(converted_value);
+});
+
+$('.weightconvert').on('change', function()
+{ 
+  
+  if($(this).val()=='imperial'){
+alert('ddddd');
+    converted_value=$(this).prev('input').val()* 2.2046;
+  }
+  else{
+    alert('ddd545d');
+    converted_value=$(this).prev('input').val()/2.2046;
+  }
+  $(this).prev('input').val(converted_value);
+});
+
 
 $('#motaddform').validate({  
 /// rules of error 
@@ -209,24 +233,7 @@ range: "Please enter value betwwen 1 to 9999.9"
 }
 });
 
-$('.convert').on('change', function()
-{
-  if($(this).val()=='imperial')
-    converted_value=$(this).prev('input').val()*0.39370;
-  else
-    converted_value=$(this).prev('input').val()/0.39370;
-  $(this).prev('input').val(converted_value);
-});
 
-$('.weightconvert').on('change', function()
-{ 
-  if($(this).val()=='imperial')
-
-    converted_value=$(this).prev('input').val()* 2.2046;
-  else
-    converted_value=$(this).prev('input').val()/2.2046;
-  $(this).prev('input').val(converted_value);
-});
 
 });
 </script>

@@ -150,7 +150,11 @@ $('#bootstrap-slot-data-table').DataTable({
                                     <td>{{$mydata->email}}</td>
                                     <td>{{$mydata->contact_no}}</td>
                                     <td>{{$mydata->address}}</td>
+                                    @if($mydata->image)
                                     <td><img src="{{asset('backend/images')}}/{{$mydata->image}}" height="50" width="50"></td>
+                                     @else
+                                  <td>N/A</td>
+                                  @endif
 
                                             <td>
                                     @if($mydata->master_trainer == 1)

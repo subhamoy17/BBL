@@ -114,7 +114,7 @@ $('#clienteditform').validate({
             <div class="col-sm-4">
                 <div class="page-header float-left">
                     <div class="page-title">
-                        <h1>Add New Trainer</h1>
+                        <h1>Edit Trainer</h1>
                     </div>
                 </div>
             </div>    
@@ -167,15 +167,11 @@ $('#clienteditform').validate({
                           </div>
 
 
-
-
-
                            <div class="row form-group">
                             <div class="col col-md-3"><label for="text-input" class=" form-control-label">Instagram</label></div>
                             <div class="col-12 col-md-9"><input type="text" id="instagram" name=instagram" placeholder="Instagram" class="form-control" value="{{$data->instagram}}">
                             </div>
                           </div>
-
 
 
                             <div class="row form-group">
@@ -184,9 +180,11 @@ $('#clienteditform').validate({
                               <input type="file" id="image" name="image" class="form-control-file" >
                               <input type="hidden" id="oldimage" name="oldimage" class="form-control-file" value="{{$data->image}}">
                             </div>
+                            @if($data->image)
                             <div class="pic-case-upload">
                                 <img id="profile_thumbnail" src="{{asset('backend/images')}}/{{$data->image}}" alt="profile image" height="150"  width="200"/>
                               </div>
+                               @endif
                           </div>
 
                              <div style="float: right">

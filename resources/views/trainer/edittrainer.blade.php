@@ -11,6 +11,14 @@
 <script>
 
 $(document).ready(function() {
+
+  if(profile_thumbnail!=''){
+              $('#p_img').show();
+            }
+            else{
+              $('#p_img').hide();
+            }
+
   // name can contant only alphabetic
   $.validator.addMethod("alpha", function(value, element){
     return this.optional(element) || value == value.match(/^[a-zA-Z, '']+$/);
@@ -112,7 +120,7 @@ $('#trainereditform').validate({
             <div class="col-sm-4">
                 <div class="page-header float-left">
                     <div class="page-title">
-                        <h1>Add New Trainer</h1>
+                        <h1>Edit Trainer</h1>
                     </div>
                 </div>
             </div>    
@@ -150,9 +158,12 @@ $('#trainereditform').validate({
                               <input type="file" id="image" name="image" class="form-control-file" >
                               <input type="hidden" id="oldimage" name="oldimage" class="form-control-file" value="{{$data->image}}">
                             </div>
+                            @if($data->image)
                             <div class="pic-case-upload">
-                                <img id="profile_thumbnail" src="{{asset('backend/images')}}/{{$data->image}}" alt="profile image" height="150"  width="200"/>
+                                <img id="profile_thumbnail" src="{{asset('backend/images')}}/{{$data->image}}"  height="150" />
                               </div>
+                              @endif
+
                           </div>
                             <div style="float: right">
                                 <button type="submit" name="submit" class="btn btn-primary btn-sm">

@@ -47,6 +47,13 @@ $('#bootstrap-slot-data-table').DataTable({
             <div class="page-title">
                 <h1>Our Trainer List</h1>
             </div>
+
+            @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+                            
         </div>
     </div>
     <div class="col-sm-3">
@@ -60,11 +67,7 @@ $('#bootstrap-slot-data-table').DataTable({
                                     <button class="btn btn-success"><i class="fa fa-plus"></i> Add New Trainer</button>
                                 </a>
                                 <br>
-                                @if (session('success'))
-                                    <div class="alert alert-success">
-                                        {{ session('success') }}
-                                    </div>
-                                @endif
+
                             </strong>
     </div>
 </div>
@@ -122,30 +125,11 @@ $('#bootstrap-slot-data-table').DataTable({
                                     <td>{{$mydata->name}}</td>
                                     <td>{{$mydata->designation}}</td>
                                     <td>{{$mydata->description}}</td>
-                                    <!-- <td>
-                                         @if($mydata->facebook !='') 
-                                           {{$mydata->facebook}}
-                                         @else  
-                                        N/A
-                                        @endif
-                                    </td>
-                                        <td>
-                                         @if($mydata->twitter !='') 
-                                           {{$mydata->twitter}}
-                                         @else  
-                                        N/A
-                                        @endif
-                                    </td>
-                                    
-                                        <td>
-                                         @if($mydata->instagram !='') 
-                                           {{$mydata->instagram}}
-                                         @else  
-                                        N/A
-                                        @endif
-                                    </td> -->
+                                   @if($mydata->image)
                                       <td><img src="{{asset('backend/images')}}/{{$mydata->image}}" height="50" width="50"></td>
-
+                                      @else
+                                    <td>N/A</td>
+                                 @endif
 
 
                                    <td>

@@ -123,7 +123,9 @@ table.dataTable thead>tr>th[id='action'].sorting_asc::after{display: none}
                   <th>Status</th>
                   <th>Request On</th>
                   <th id='image'>Image</th>
+                
                   <th id='action'>Action</th>
+                 
                 </tr>
               </thead>
               <tbody>
@@ -135,8 +137,12 @@ table.dataTable thead>tr>th[id='action'].sorting_asc::after{display: none}
                   <td>{{$mydata->ph_no}}</td>
                   <td>{{$mydata->status}}</td>
                   <td>{{$mydata->slot_date}} {{$mydata->slot_time}}</td> 
+                  @if($mydata->image)
                   <td><img src="{{asset('backend/images')}}/{{$mydata->image}}" height="50" width="50"></td>
                   <td>
+                     @else
+                     <td>N/A</td>
+                     @endif
                     @if($mydata->approval_id != 3 && $mydata->approval_id != 2)       
                     <button type="button" class="btn btn-success status-all" id="{{$mydata->id}}"> Approve</button>
                     @endif
