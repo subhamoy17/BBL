@@ -408,7 +408,6 @@ public function approve_customer_request(Request $request)
         $package_history=DB::table('purchases_history')
         ->where('customer_id',$customer_id->customer_id)
         ->where('purchases_history.active_package',1)
-        ->where('purchases_history.package_remaining','>',0)
         ->where('purchases_history.package_validity_date','>=',$remaining_session_request_now)
         ->orderBy('package_validity_date','DESC')->first();
 
@@ -489,7 +488,6 @@ public function approve_pending_request(Request $request)
         $package_history=DB::table('purchases_history')
         ->where('customer_id',$customer_id->customer_id)
         ->where('purchases_history.active_package',1)
-        ->where('purchases_history.package_remaining','>',0)
         ->where('purchases_history.package_validity_date','>=',$remaining_session_request_now)
         ->orderBy('package_validity_date','DESC')->first();
         $package_history_update_data['package_remaining']=$package_history->package_remaining+1;
