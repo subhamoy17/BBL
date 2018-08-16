@@ -39,7 +39,7 @@ th {
 <table style="width:100%">
   <tr>
     <th>Reset your Password</th>
-    <th> <a href="{{$url}}">Click Here </a>to Login</th> 
+    <th> <a href="{{$url}}">Click Here </a>to reset your password.</th> 
      </tr>
 
     
