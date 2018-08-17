@@ -62,15 +62,20 @@ public function bank_payment_success(Request $request)
   {
     Session::put('success_bank_pay', 'Your payment is success using bank transfer');
     Session::put('bank_payment_id',$data['payment_id']);
-    return view('customerpanel.payment-success'); 
+    return redirect()->route('bankpaymentcomplete'); 
   }
   else
   {
     Session::put('failed_bank_pay', 'Your bank transfer payment is failed');
-    return view('customerpanel.payment-success');
+    return redirect()->route('bankpaymentcomplete'); 
   }
 
   
+}
+
+public function bank_payment_complete()
+{
+  return view('customerpanel.payment-success');
 }
 
 }

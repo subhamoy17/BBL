@@ -277,6 +277,7 @@ Route::post('paypalpayment','PaypalPaymentController@payWithpaypal');
 Route::get('status','PaypalPaymentController@getPaymentStatus');
 Route::get('paypalpaymentsuccess','FrontController@paypal_payment_success');
 Route::post('bankpaymentsuccess','BankPaymentController@bank_payment_success');
+Route::get('bankpaymentcomplete','BankPaymentController@bank_payment_complete')->name('bankpaymentcomplete');
 
 //customer profile//
 Route::get('profile/{id}','FrontController@customer_profile')->name('profile');
