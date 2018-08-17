@@ -14,9 +14,9 @@
                                 <div class="col-md-4 col-sm-12 col-xs-12">
                                     <div class="form-group">
 										<h5>Customer Details</h5>
-                                      <label>Name <small>*</small> - <h6>{{$data->name}}</h6></label>
+                                      <label>Name - <h6>{{$data->name}}</h6></label>
                                       
-                                      <label>Email <small>*</small> - <h6>{{$data->email}}</h6></label>
+                                      <label>Email - <h6>{{$data->email}}</h6></label>
                                       
                                       <label>Phone - <h6>{{$data->ph_no}}</h6></label>
                                        
@@ -26,13 +26,13 @@
                    <div class="packg-dt">
                    		<h5>Package Details</h5>
                    		 <div class="form-group">
-                                      <label>Package Name - <h6>Silver Plus</h6></label>
+                                      <label>Package Name - <h6>{{$package_details->slots_name}}</h6></label>
                                       
-                                      <label>Cost - <h6><i class="fa fa-gbp"></i> 300</h6></label>
+                                      <label>Cost - <h6><i class="fa fa-gbp"></i> {{$package_details->slots_price}}</h6></label>
                                       
-                                      <label>No. Of Slots - <h6>7</h6></label>
+                                      <label>No. Of Slots - <h6>{{$package_details->slots_number}}</h6></label>
                                        
-                                       <label>Validity - <h6>25 Days</h6></label>
+                                       <label>Validity - <h6>{{$package_details->slots_validity}} Days</h6></label>
                                        
                                     </div>
                    </div>     
@@ -41,7 +41,7 @@
                <div class="inputs-w3ls">
                             <form enctype="multipart/form-data" id="frm1" method="post" action="{{route('customer.package_purchase')}}">
                                <input type="hidden" name="_token" value="{{csrf_token()}}">
-                              <input type="hidden" name="id" id="id" value="{{$slot_id}}">
+                              <input type="hidden" name="id" id="id" value="{{$package_details->id}}">
 
   <!--  -->
 

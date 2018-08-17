@@ -15,7 +15,7 @@
     
     @if($data)
     <div class="form-group">
-	<form class="w3-container w3-display-middle w3-card-4" enctype="multipart/form-data"method="POST" id="bank_payment-form"  action="bankpaymentsuccess">
+	<form class="w3-container w3-display-middle w3-card-4" enctype="multipart/form-data" method="POST" id="bank_payment-form"  action="{{url('customer/bankpaymentsuccess')}}">
   {{ csrf_field() }}
   <h6>Pay from here</h6>
   <label class="w3-text-blue"><b>Payable amount is </b>&nbsp;  <span class="pay-pal-price"><i class="fa fa-gbp"></i> {{$data['slots_price']}}</span></label>

@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\DB;
 class SocialLoginController extends Controller
 {
     //Where to redirect vendor after login.
-    protected $redirectTo = '/customer/bbl';
+    protected $redirectTo = '/customer/mybooking';
      /**
      * Redirect the user to the facebook authentication page.
      *
@@ -54,7 +54,7 @@ class SocialLoginController extends Controller
             
         Log::debug("old_customer_data" . print_r($old_customer_data,true));
         DB::commit();
-        return redirect('customer/bbl');    
+        return redirect('customer/mybooking');    
         }
         elseif($old_customer_data && $old_customer_data->confirmed==1)
         {
@@ -70,7 +70,7 @@ class SocialLoginController extends Controller
         {
         DB::commit();
         Auth::guard('customer')->login($old_customer_data,true);
-        return redirect('customer/bbl');
+        return redirect('customer/mybooking');
 
         }
 
@@ -90,7 +90,7 @@ class SocialLoginController extends Controller
 
             DB::commit();
             Auth::guard('customer')->login($old_customer_data,true);
-            return redirect('customer/bbl');
+            return redirect('customer/mybooking');
 
         }
         else
