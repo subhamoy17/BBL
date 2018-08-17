@@ -141,7 +141,7 @@ table.dataTable thead>tr>th[id='action'].sorting_asc::after{display: none}
                      @else
                      <td>N/A</td>
                      @endif
-                  <td>
+                  <td class="td-btn" style="position: relative;">
                     @if($mydata->approval_id != 3 && $mydata->approval_id != 2)       
                     <button type="button" class="btn btn-success status-all" id="{{$mydata->id}}"> Approve</button>
                     @endif

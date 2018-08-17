@@ -6046,4 +6046,9 @@ a.sign-btn2 {
 #tooltip_content strong{
 	display: block;
 }
+.invalid-feedback strong {
+	color: #ccc;
+	margin-top: 4px;
+	display: inline-block;
+}
 /*81718*/

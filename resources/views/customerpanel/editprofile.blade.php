@@ -70,7 +70,7 @@
 
                                 <input type="hidden" id="oldimage" name="oldimage" class="form-control-file" value="{{$data->image}}" height="50" width="50">
                               
-                                <img id="profile_thumbnail" src="{{asset('backend/images')}}/{{$data->image}}" alt="profile image"  height="50" width="50"/>
+                                <img id="profile_thumbnail" src="{{asset('backend/images')}}/{{$data->image}}" alt="profile image"  height="50" width="50" style="color: #ccc;"/>
                                      </div>
                               </div>
                               <div class="clearfix"></div>

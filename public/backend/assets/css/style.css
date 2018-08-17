@@ -700,11 +700,13 @@ textarea.parsley-error {
 	width: 49%;
 	display: inline-block;
 	margin-right: 5px;
+	margin-bottom: 5px;
 }
 #motaddform .col-lg-12 select {
 	width: 49%;
 	display: inline-block;
 	margin-left: 5px;
+	margin-bottom: 5px;
 }
 .small-box-footer {
 	color: #fff;
@@ -739,14 +741,49 @@ textarea.parsley-error {
 	margin-right: 1px;
 }
 #bootstrap-slot-data-table .status-all {
-	float: left;
-	width: 65px;
-	margin: 2px;
-	padding: 0;
-	height: 32px;
-	font-size: 14px;
+    float: left;
+    width: 57px;
+    margin: 2px;
+    padding: 0;
+    height: 35px;
+    font-size: 14px;
 }
 /*81118*/
+
+
+
+
+/*81718*/
+.content.mt-3 .text-white {
+	min-height: 177px;
+}
+#motaddform label.error {
+	position: absolute;
+	left: 15px;
+	top: 40px;
+	font-size: 12px;
+}
+#apply {
+	margin-bottom: 5px;
+}
+#motaddform input{
+	margin-bottom: 5px;
+}
+.btn-td a{
+	width: 20px !important;
+}
+.btn-td a button {
+	position: absolute;
+	top: 33%;
+	left: 1px;
+}
+.btn-td button{
+	position: absolute;
+	top: 33%;
+	right: 1px;
+}
+/*81718*/
+
 
 
 

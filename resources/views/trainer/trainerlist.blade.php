@@ -156,7 +156,7 @@ $('#bootstrap-slot-data-table').DataTable({
                                   <td>N/A</td>
                                   @endif
 
-                                            <td>
+                                            <td class="btn-td" style="position: relative;">
                                     @if($mydata->master_trainer == 1)
                             
                                     <a href="{{url('trainer/edittrainer')}}/{{$mydata->id}}" title="Edit"><button class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button></a>
