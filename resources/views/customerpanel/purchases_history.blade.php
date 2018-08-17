@@ -7,12 +7,8 @@
   <div id="tab2" class="tab_content">
 
     <div class="table-responsive table-bordered">
-    	 @if(count($purchases_data)>0)
-          @foreach($purchases_data as $key=>$mydata1)
-          @endforeach
-        @endif
         @if($remaining_session_request>0)
-        <a href="{{url('customer/booking_slot')}}/{{$mydata1->customer_id}}" class="btn btn-success bk-slt-btn">Send Slot Request</a>
+        <a href="{{url('customer/booking_slot')}}/{{Auth::guard('customer')->user()->id}}" class="btn btn-success bk-slt-btn">Send Slot Request</a>
         @else
         <a href="{{url('customer/booking_slot')}}/{{0}}"class="btn btn-success bk-slt-btn">Send Slot Request</a>
         @endif

@@ -441,7 +441,6 @@ else
   $remaining_session_request=DB::table('purchases_history')
     ->join('slots','slots.id','purchases_history.slot_id')
     ->join('customers','customers.id','purchases_history.customer_id')
-    ->select('purchases_history.slots_name','purchases_history.slots_price','slots.slots_validity','purchases_history.slots_number','purchases_history.payment_options','purchases_history.package_validity_date','purchases_history.id','slots.slots_number','purchases_history.purchases_date','purchases_history.active_package','purchases_history.package_remaining')
     ->where('purchases_history.customer_id',Auth::guard('customer')->user()->id)
     ->where('purchases_history.active_package',1)
     ->where('purchases_history.package_remaining','>',0)
