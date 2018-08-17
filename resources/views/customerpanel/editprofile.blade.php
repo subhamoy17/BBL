@@ -13,7 +13,7 @@
           
           <h3 class="d_active tab_drawer_heading" rel="tab3">Tab 3</h3>
           <div id="tab3" class="tab_content">
-            <div class="form-box">
+            <!-- <div class="form-box"> -->
 
                 <h3 class="ed-p">Edit Profile</h3>
                 <div class="form-box">
@@ -84,7 +84,7 @@
               </form>
                 </div>
               </div>
-              </div>
+              <!-- </div> -->
           </div>
       </div>
       </div>
