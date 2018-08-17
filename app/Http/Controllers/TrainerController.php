@@ -1198,7 +1198,7 @@ public function client_delete($id)
 
     DB::table('our_client')->where('id',$id)->update($updatedata);
 
-    return redirect('trainer/our_client_show')->with("delete","one trainer is deleted successfully !");
+    return redirect('trainer/our_client_show')->with("delete","One trainer is deleted successfully !");
 }
 
 

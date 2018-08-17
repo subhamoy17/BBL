@@ -37,9 +37,11 @@
                         <div class="col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group file-box">
                               <label>Image</label>
-
+                              @if(Auth::user()->image)
                               <h6><img src="{{asset('backend/images')}}/{{Auth::user()->image}}" height="50"></h6>
-                            
+                              @else
+                                    <h6>N/A</h6>
+                                 @endif
                             </div>
                         </div>
                         <div class="col-md-12 col-sm-12 col-xs-12">

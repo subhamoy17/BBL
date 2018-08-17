@@ -62,6 +62,8 @@ $('#clientaddform').validate({
   }
   
 }
+
+
   });
   
   //show uploading image and check validation of image

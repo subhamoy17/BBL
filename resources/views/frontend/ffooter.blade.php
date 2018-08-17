@@ -46,10 +46,10 @@
 						</ul>
 
 					<ul class="social_agileinfo">
-						<li><a href="#" class="gy_facebook"><i class="fa fa-facebook-f"></i></a></li>
-						<li><a href="#" class="gy_twitter"><i class="fa fa-twitter"></i></a></li>
-						<li><a href="#" class="gy_instagram"><i class="fa fa-instagram"></i></a></li>
-						<li><a href="#" class="gy_google"><i class="fa fa-google-plus"></i></a></li>
+						<li><a href="https://www.facebook.com" target="_blank" class="gy_facebook"><i class="fa fa-facebook-f"></i></a></li>
+						<li><a href="https://www.twitter.com" target="_blank" class="gy_twitter"><i class="fa fa-twitter"></i></a></li>
+						<li><a href="https://www.instagram.com" target="_blank" class="gy_instagram"><i class="fa fa-instagram"></i></a></li>
+						<li><a href="https://plus.google.com" target="_blank" class="gy_google"><i class="fa fa-google-plus"></i></a></li>
 					</ul>
 				</div>
 

@@ -47,12 +47,13 @@ $('#bootstrap-slot-data-table').DataTable({
             <div class="page-title">
                 <h1>Our Trainer List</h1>
             </div>
-
+        <div class="col-md-12">
             @if (session('success'))
                 <div class="alert alert-success">
                     {{ session('success') }}
                 </div>
             @endif
+        </div>
                             
         </div>
     </div>
@@ -64,7 +65,7 @@ $('#bootstrap-slot-data-table').DataTable({
         </div>-->
          <strong class="card-title add-n-cl">
                               <a href="{{route('client_insert_view')}}">
-                                    <button class="btn btn-success"><i class="fa fa-plus"></i> Add New Trainer</button>
+                                    <button class="btn btn-success"><i class="fa fa-plus"></i> Add New Our Trainer</button>
                                 </a>
                                 <br>
 

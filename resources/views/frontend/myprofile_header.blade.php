@@ -4,7 +4,7 @@
       <div class="hstry-box">
       <ul class="tabs">
       
-        <li class="{{ Request::segment(2) === 'profile' ? 'active' : null }}" rel="tab3"><a href="{{url('customer/profile')}}/{{Auth::user()->id}}"><i class="fa fa-check"></i>Profile</a></li>
+        <li class="{{ Request::segment(2) === 'profile' ? 'active' : null || Request::segment(2) === 'editprofile' ? 'active' : null}}" rel="tab3"><a href="{{url('customer/profile')}}/{{Auth::user()->id}}"><i class="fa fa-check"></i>Profile</a></li>
 
     <li class="{{ Request::segment(3) === 'customer-changepassword' ? 'active' : null }}" rel="tab4"><a href="{{ route('customer.changepassword') }}"><i class="fa fa-check"></i>Change Password</a></li>
 

@@ -1,21 +1,22 @@
-@extends('frontend.main') 
+@extends('frontend.submain') 
 @section('content')
 
 
-
-  
-      <div class="tab_container">
-          <!-- #tab1 -->
-           @if (session('success'))
+ @if (session('success'))
                         <div class="alert alert-success">
                             {{ session('success') }}
                         </div>
                     @endif
+  
+      <div class="tab_container">
+          <!-- #tab1 -->
+          
           <h3 class="d_active tab_drawer_heading" rel="tab3">Tab 3</h3>
           <div id="tab3" class="tab_content">
             <div class="form-box">
 
-                <h4 class="ed-p">Edit Profile</h4>
+                <h3 class="ed-p">Edit Profile</h3>
+                <div class="form-box">
                 <div class="row">
 
                   <form action="{{route('customer.profileupdate')}}" method="post" enctype="multipart/form-data" class="" id="myeditform">
@@ -82,6 +83,7 @@
                 <div class="clearfix"></div>
               </form>
                 </div>
+              </div>
               </div>
           </div>
       </div>

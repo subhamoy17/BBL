@@ -23,7 +23,7 @@
 		<p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia .</p>
 			<div class="more-button">
            
-				<a href="#">Mail Us</a>
+				<a href="mailto:info@example.com">Mail Us</a>
 			</div>
 	</div>
 </div>

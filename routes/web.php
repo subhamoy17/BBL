@@ -143,7 +143,7 @@ Route::get('motdelete/{id}', 'TrainerController@motdelete');
 
 
 //show our client//
-Route::get('our_client_show','TrainerController@our_client_show')->name('our_client_show');
+Route::get('our_trainer_list','TrainerController@our_client_show')->name('our_trainer_list');
 
 //insert our client//
 

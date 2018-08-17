@@ -39,14 +39,14 @@ $('.weightconvert').on('change', function()
 { 
   
   if($(this).val()=='imperial'){
-alert('ddddd');
-    converted_value=$(this).prev('input').val()* 2.2046;
+// alert('ddddd');
+    converted_value2=$(this).prev('input').val()* 2.2046;
   }
   else{
-    alert('ddd545d');
-    converted_value=$(this).prev('input').val()/2.2046;
+    // alert('ddd545d');
+    converted_value2=$(this).prev('input').val()/2.2046;
   }
-  $(this).prev('input').val(converted_value);
+  $(this).prev('input').val(converted_value2);
 });
 
 
@@ -374,7 +374,7 @@ range: "Please enter value betwwen 1 to 9999.9"
 
 
 <div class="row form-group">
-  <div class="col-lg-3"><label for="text-input" class="form-control-label">Starting Weight</label></div>
+  <div class="col-lg-3"><label for="text-input" class="form-control-label">Starting Weight<span class="required_field_color">*</span></label></div>
   <div class="col-lg-9"><div class="row"><div class="col-lg-12"><input type="text" id="starting_weight" name="starting_weight" placeholder="Starting Weight" class="form-control" value="{{$data->starting_weight}}"><!-- </div>
   <div class="col-lg-6"> -->
     <select class="form-control weightconvert" name="starting_weight_credential">
@@ -392,7 +392,7 @@ range: "Please enter value betwwen 1 to 9999.9"
 
 
 <div class="row form-group">
-  <div class="col-lg-3"><label for="text-input" class="form-control-label">Ending Weight</label></div>
+  <div class="col-lg-3"><label for="text-input" class="form-control-label">Ending Weight<span class="required_field_color">*</span></label></div>
   <div class="col-lg-9"><div class="row"><div class="col-lg-12"><input type="text" id="ending_weight" name="ending_weight" placeholder="Ending Weight" class="form-control" value="{{$data->ending_weight}}"><!-- </div>
   <div class="col-lg-6"> -->
     <select class="form-control weightconvert" name="ending_weight_credential">

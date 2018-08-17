@@ -152,7 +152,13 @@ All error msg
     font-size: 13px;
 }
 
-
+#left_thigh-error {
+    color: #dc3545;
+    text-transform: uppercase;
+    font-weight: 700;
+    text-transform: none;
+    font-size: 13px;
+}
 
 
 #right_calf-error {

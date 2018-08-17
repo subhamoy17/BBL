@@ -91,14 +91,14 @@
                   <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('contactlist')}}">Customer's Enquiry</a></li>
                   @endif
 
-                  @if(Request::segment(2) == "our_client_show")
+                  @if(Request::segment(2) == "our_trainer_list")
                        <ul class="nav navbar-nav">
                  <li class="active">
-                  <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('our_client_show')}}" style="color: #fff !important;">Our Trainer</a></li>
+                  <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('our_trainer_list')}}" style="color: #fff !important;">Our Trainer</a></li>
                   @else
                   <ul class="nav navbar-nav">
                   <li class="active">
-                  <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('our_client_show')}}">Our Trainer</a></li>
+                  <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('our_trainer_list')}}">Our Trainer</a></li>
                   @endif
 
 
