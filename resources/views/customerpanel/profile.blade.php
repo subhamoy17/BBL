@@ -47,7 +47,7 @@
                         <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="form-group">
                           <input name="form_botcheck" class="form-control" value="" type="hidden">
-                         <button type="submit"  class="btn btn-dark btn-theme-colored btn-flat" data-loading-text="Please wait..."> <a href="{{url('customer/editprofile')}}/{{Auth::user()->id}}">Edit</a></button>
+                         <a href="{{url('customer/editprofile')}}/{{Auth::user()->id}}"><button type="submit"  class="btn btn-dark btn-theme-colored btn-flat" data-loading-text="Please wait..."> Edit</button></a>
                         </div>
                 </div>
                 </div>
