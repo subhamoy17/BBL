@@ -8,19 +8,17 @@
          
                     <div class="col-lg-12 col-md-12 col-sm-12 colxs-12">
                         
-                        <div class="form-box">
+                        <div class="form-box form-box-pay2">
                             <div class="row">
 	
-	<div align="center">
+	<div class="paymnt-paypal paymnt-paypal2">
     
     @if($data)
     <div class="form-group">
 	<form class="w3-container w3-display-middle w3-card-4" enctype="multipart/form-data"method="POST" id="bank_payment-form"  action="bankpaymentsuccess">
   {{ csrf_field() }}
   <h6>Pay from here</h6>
- </br>
-  <label class="w3-text-blue"><b>Payable amount is </b>&nbsp;  <i class="fa fa-gbp"></i> {{$data['slots_price']}}</label>
-  <br>
+  <label class="w3-text-blue"><b>Payable amount is </b>&nbsp;  <span class="pay-pal-price"><i class="fa fa-gbp"></i> {{$data['slots_price']}}</span></label>
   <input class="w3-input w3-border" name="slots_price" type="hidden" value="{{$data['slots_price']}}" readonly >
   <input class="w3-input w3-border" name="slots_name" type="hidden" value="{{$data['slots_name']}}">
   <input class="w3-input w3-border" name="slots_number" type="hidden" value="{{$data['slots_number']}}">

@@ -9,38 +9,43 @@
          
                     <div class="col-lg-12 col-md-12 col-sm-12 colxs-12">
                         
-                        <div class="form-box">
+                        <div class="form-box form-pur">
                             <div class="row">
-                                <div class="col-md-6 col-sm-12 col-xs-12">
+                                <div class="col-md-4 col-sm-12 col-xs-12">
                                     <div class="form-group">
-
-                          
-                                      <label>Name <small>*</small></label>
-                                      <h6>{{$data->name}}</h6>
+										<h5>Customer Details</h5>
+                                      <label>Name <small>*</small> - <h6>{{$data->name}}</h6></label>
+                                      
+                                      <label>Email <small>*</small> - <h6>{{$data->email}}</h6></label>
+                                      
+                                      <label>Phone - <h6>{{$data->ph_no}}</h6></label>
+                                       
                                     </div>
                                 </div>
-                                <div class="col-md-6 col-sm-12 col-xs-12">
-                                    <div class="form-group">
-                                      <label>Email <small>*</small></label>
-                                     <h6>{{$data->email}}</h6>
+              <div class="col-md-4 col-sm-12 col-xs-12">
+                   <div class="packg-dt">
+                   		<h5>Package Details</h5>
+                   		 <div class="form-group">
+                                      <label>Package Name - <h6>Silver Plus</h6></label>
+                                      
+                                      <label>Cost - <h6><i class="fa fa-gbp"></i> 300</h6></label>
+                                      
+                                      <label>No. Of Slots - <h6>7</h6></label>
+                                       
+                                       <label>Validity - <h6>25 Days</h6></label>
+                                       
                                     </div>
-                                </div>
-                               
-                                <div class="col-md-6 col-sm-12 col-xs-12">
-                                    <div class="form-group">
-                                      <label>Phone</label>
-                                       <h6>{{$data->ph_no}}</h6>
-                                    </div>
-                                </div>
-              <div class="col-md-6 col-sm-12 col-xs-12">
-                        <div class="inputs-w3ls">
+                   </div>     
+                </div>
+                <div class="col-md-4 col-sm-12 col-xs-12">
+               <div class="inputs-w3ls">
                             <form enctype="multipart/form-data" id="frm1" method="post" action="{{route('customer.package_purchase')}}">
                                <input type="hidden" name="_token" value="{{csrf_token()}}">
                               <input type="hidden" name="id" id="id" value="{{$slot_id}}">
 
   <!--  -->
 
-                            <label>Payment Mode</label>
+                            <h5>Payment Option</h5>
                               <ul>
                                 <li>
                                   <input type="radio" id="a-option" name="selector1" value="Paypal">
@@ -55,16 +60,17 @@
                               </ul>
                               <label for="selector1" class="error" style="display:none;"></label>
                               <div class="clear"></div>
-                          
-                </div>
-                </div>
-                <div class="col-md-12 col-sm-12 col-xs-12">
-               <div class="form-group">
+                          <div class="form-group btn-wrp">
                     <input name="form_botcheck" class="form-control" value="" type="hidden">
                         <button type="submit" class="btn btn-dark btn-theme-colored btn-flat" data-loading-text="Please wait...">Submit</button>
-                        </div>  
+                        </div> 
+                		</div> 
+                        
                          </div>
-             
+             			<div class="clearfix"></div>
+                           <div class="col-lg-12 text-right">
+                           	
+                           </div>
                             </div>
                         </div>
                     </div>

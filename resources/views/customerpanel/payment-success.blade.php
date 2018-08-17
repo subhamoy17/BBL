@@ -5,6 +5,7 @@
         <?php $payment_id=Session::get('payment_id');?>
     <div class="w3-panel w3-green w3-display-container">        
         <div class="alert alert-success">
+                           
                             <p>{!! $message !!}</p>
                             <p>Your payment ID is {!! $payment_id !!}. Please not down that payment id for future reference.</p>
                         </div>
@@ -30,9 +31,15 @@
         <?php $payment_id=Session::get('bank_payment_id');?>
     <div class="w3-panel w3-green w3-display-container">        
         <div class="alert alert-success">
+                          	<div class="status-ico">
+                           		<img src="{{asset('frontend/images/tick-flat.png')}}">
+                           	</div>
                             <p>{!! $message !!}</p>
                             <p>Your payment ID is {!! $payment_id !!}. Please not down that payment id for future reference.</p>
+                            <a href="#" class="btbb">Back</a>
+                        <a href="#" class="btbb">Purchase Another Package</a>
                         </div>
+                        
     </div>
     <?php 
     Session::forget('success_bank_pay');
@@ -43,6 +50,9 @@
 @if ($message = Session::get('failed_bank_pay'))
     <div class="w3-panel w3-red w3-display-container">
                 <div class="alert alert-success">
+                           <div class="status-ico">
+                           		<img src="{{asset('frontend/images/cross-flat.png')}}">
+                           	</div>
                             <p>{!! $message !!}</p>
                         </div>
     </div>

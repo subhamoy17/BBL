@@ -14,7 +14,8 @@
   <script src="{{url('frontend/js/jquery.countup.js')}}"></script>
   <script src="{{url('frontend/js/accotab.js')}}"></script>
   <script src="{{url('frontend/js/stellarnav.min.js')}}"></script>
-
+	<!--tooltip js-->
+	<script src="{{url('frontend/js/tooltipster.bundle.min.js')}}"></script>
 	<script>
 		// You can also use "$(window).load(function() {"
 		$(function () {
@@ -928,6 +929,31 @@ $("#extra_session").mouseover(function(){
 });
 });
 </script>
+<script>
+        $(document).ready(function() {
+            $('.toolclip').tooltipster({
+				contentCloning: true,
+				contentAsHTML: true,
+				animation: 'grow',
+   				delay: 500,
+   				theme: 'tooltipster-punk',
+				functionInit: function(instance, helper){
+
+        var $origin = $(helper.origin),
+            dataOptions = $origin.attr('data-tooltipster');
+
+        if(dataOptions){
+			
+            dataOptions = JSON.parse(dataOptions);
+
+            $.each(dataOptions, function(name, option){
+                instance.option(name, option);
+            });
+        }
+    }
+			});
+        });
+    </script>
 
 </body>
 

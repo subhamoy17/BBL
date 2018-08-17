@@ -54,8 +54,16 @@
             <td>{{$mydata->slots_number}}</td>
             <td>@if($mydata->package_remaining>$mydata->slots_number)
               <?php $others=$mydata->package_remaining-$mydata->slots_number;?>
-              {{$mydata->slots_number}} + {{$others}}
-              <div id="extra_session">Sample</div>
+              {{$mydata->slots_number}} <font style="color: #ffa461;"> + {{$others}}</font>
+              <span id="gg" class="toolclip" data-tooltipster='{"side":"left","animation":"fade"}' data-tooltip-content="#tooltip_content"><i class="fa fa-info-circle" style="margin-left: 5px;font-size: 15px;"></i></span>
+              <div class="tooltip_templates">
+    			<span id="tooltip_content">
+    			    <strong>This is the content of my adc</strong>
+    			    <strong>This is the content of my adc</strong>
+    			    <strong>This is the content of my adc</strong>
+    			    <strong>This is the content of my adc</strong>
+    			</span>
+			</div>
               <div class="modal-body extra_session_div" style="display: none;">
                     <h5 class="profile_modal_body" id="exampleModalLabel">This is the sample of video link ---> https://www.youtube.com/embed/93nnzrYffVo or https://www.youtube.com/watch?v=93nnzrYffVo</h5>
                 </div>

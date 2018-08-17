@@ -51,7 +51,7 @@
       <div class="modal-body" id="hall_details_edit">
         <div class="row clearfix">
           <div class="col-sm-12 col-xs-12">
-            <h3 class="pull-left customer-mot">Customers Details</h3>
+            <h3 class="pull-left customer-mot">Customers MOT</h3>
             <br class="clear" />
         </div>
         <div class="col-xs-12 divi-line">
@@ -60,7 +60,7 @@
             <input type="hidden" id="reason_id"></input>
             <input type="hidden" id="reason_action"></input>
             <div class="form-group">
-        <div class="row">
+				<div class="row">
               <div class="col-lg-4"><strong class="cus">Customer Name:</strong></div><div class="col-lg-8 name"></div>
                <div class="col-lg-4"><strong class="cus">Purchases Date:</strong></div><div class="col-lg-8 purchases_date" ></div>
                 <div class="col-lg-4"><strong class="cus">Packege Name:</strong></div><div class="col-lg-8 slots_name" ></div>
@@ -68,7 +68,7 @@
             <div class="col-lg-4"><strong class="cus">Description:</strong></div><div class="col-lg-8 description" ></div>
              <div class="col-lg-4"><strong class="cus">Images:</strong></div><div><img class="col-lg-8 modal_image" width="100"> </div>
           </div>
-      </div>
+			</div>
       </div>
   </div>
 </div>
@@ -110,13 +110,13 @@
               <thead>
                 <tr>
                   <th id='slno'>Sl. No.</th>
-                  <th>Customers </th>
-                  <th>Package</th>
-                  <th>Price</th>
+                    <th>Customers </th>
+                  <th> Package</th>
+                  <th> Price</th>
                   <th>Payment Mode</th>
                   <th>Purchases Date</th>
                   <th>Status</th>
-                  <th>Action</th>
+                  <th>Action </th>
                 </tr>
               </thead>
               <tbody>
@@ -132,32 +132,33 @@
                   <td>{{$mydata->purchases_date}}</td>
                  <td> 
                   @if($mydata->payment_options == 'Paypal' && $mydata->active_package == 0) 
-                    Payment Not Success
-                  @endif
-                  @if($mydata->payment_options == 'Paypal' && $mydata->active_package == 1)
-                    Payment Success
-                  @endif
+                  Payment Not Success
+                       @endif
 
-                  @if($mydata->payment_options == 'Bank Transfer' && $mydata->status =='Inprogress' && $mydata->active_package == 0)
-                    Payment Inprogress
-                  @endif 
-                  @if($mydata->payment_options == 'Bank Transfer' && $mydata->status =='Decline' && $mydata->active_package == 0 ) 
-                              Payment declined by trainer
-                  @endif
-                  @if($mydata->payment_options == 'Bank Transfer' && $mydata->status =='Success' && $mydata->active_package == 1)
+
+                @if($mydata->payment_options == 'Paypal' && $mydata->active_package == 1)
                     Payment Success
-                  @endif 
+                          @endif
+                  @if($mydata->payment_options == 'Banking Transfer' && $mydata->status =='Inprogress' && $mydata->active_package == 0)
+                          Payment Inprogres
+                              @endif 
+                        @if($mydata->payment_options == 'Banking Transfer' && $mydata->status =='Decline' && $mydata->active_package == 0 ) 
+                              Payment Not Success
+                           @endif
+                  @if($mydata->payment_options == 'Banking Transfer' && $mydata->status =='Success' && $mydata->active_package == 1)
+                            Payment Success
+                              @endif 
 
                  </td>
               <td>
-                @if($mydata->payment_options== 'Bank Transfer' && $mydata->status =='Inprogress' && $mydata->active_package == 0)
+                @if($mydata->payment_options == 'Banking Transfer' && $mydata->status =='Inprogress' && $mydata->active_package == 0)
                <button type="button" class="btn btn-success status-all" id="{{$mydata->id}}"> Approve</button>
                  <button type="button" class="btn btn-danger status-all" id="{{$mydata->id}}"> Decline</button>
-                @endif
+                @else
          
-            <a href="#" class="payment btn btn-info btn-sm"  data-name="{{$mydata->name}}"   data-purchases_date="{{$mydata->purchases_date}}"  data-slots_name="{{$mydata->slots_name}}" data-payment_id="{{$mydata->payment_id}}" data-description="{{$mydata->description}}"   data-image="{{asset('backend/bankpay_images')}}/{{$mydata->image}}" >View Details</button>
+            <a href="#" class="payment btn btn-info btn-sm"  data-name="{{$mydata->name}}"   data-purchases_date="{{$mydata->purchases_date}}"  data-slots_name="{{$mydata->slots_name}}" data-payment_id="{{$mydata->payment_id}}" data-description="{{$mydata->description}}"   data-image="{{asset('backend/images')}}/{{$mydata->image}}" >View Details</button>
 
-                
+                @endif
 
               </td>
 

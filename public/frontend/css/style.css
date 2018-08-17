@@ -5255,7 +5255,7 @@ a.sign-btn2 {
     top: 160px;
 }
 .login-wrapper {
-    max-width: 400px;
+    max-width: 410px;
     height: auto;
     margin: 0 auto;
     z-index: 99;
@@ -5381,6 +5381,7 @@ a.sign-btn2 {
 }
 .nw-user a {
     color: #b9b3b3;
+	font-size: 15px;
 }
 .nw-user a:hover {
     text-decoration: none;
@@ -5476,12 +5477,21 @@ a.sign-btn2 {
 }*/
 .form-box h6{
     color: #fb5b21;
-    font-size: 18px;
+    font-size: 15px;
+}
+.form-pur label {
+	display: block;
 }
 .file-box input[type="file"]{
     background: none !important;
     color: #fff;
     margin-bottom: 5px;
+}
+.form-pur h6 {
+	display: inline-block;
+}
+.inputs-w3ls label {
+	display: inline-block;
 }
 /*Edit profile*/
 
@@ -5950,4 +5960,90 @@ a.sign-btn2 {
     border: none;
     color: #ccc;
 }
+.form-box h5 {
+	font-size: 20px;
+	color: #feeeee;
+	margin-bottom: 15px;
+}
 /*81018*/
+
+/*81718*/
+.btn-wrp button {
+	margin-top: 5px;
+}
+.form-box.form-box-pay {
+	background: #222f38;
+	padding: 50px 60px 30px 60px;
+	width: 400px;
+	margin: 0 auto;
+}
+.form-box.form-box-pay2{
+	background: #222f38;
+	padding: 50px 60px 30px 60px;
+	width: 500px;
+	margin: 0 auto;
+}
+.paymnt-paypal h6 {
+	font-size: 32px;
+	text-transform: uppercase;
+	font-weight: 300;
+}
+.paymnt-paypal2 label {
+	display: block;
+}
+.pay-pal-price {
+	font-weight: 700;
+	color: #fb5b21;
+	font-size: 18px;
+}
+#package_description {
+	width: 100%;
+	margin-bottom: 10px;
+	padding: 10px;
+}
+.form-box-pay2 input[type="file"] {
+	background: none;
+	margin-bottom: 10px;
+}
+.form-box-pay2 .error {
+	font-size: 13px !important;
+}
+.paymnt-paypal2 button {
+	margin-top: 10px;
+}
+.status-ico {
+	width: 110px;
+	height: 135px;
+}
+.status-ico img {
+	width: 100%;
+	height: auto;
+}
+.btbb {
+	padding: 10px 15px;
+	display: inline-block;
+	margin-top: 10px;
+	margin-right: 10px;
+}
+.btbb:nth-of-type(2n+1) {
+	background: #3e2b4a;
+	color: #fff;
+	font-size: 15px;
+}
+.btbb:nth-of-type(2n) {
+	background: rgba(50,51,58,1.00);
+	color: #fff;
+	font-size: 15px;
+}
+.alert-success {
+
+    color: #3c763d;
+    background-color: #f6f6f6;
+
+}
+/*tooltip*/
+.tooltip_templates { display: none; }
+#tooltip_content strong{
+	display: block;
+}
+/*81718*/

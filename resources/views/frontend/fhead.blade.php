@@ -27,7 +27,8 @@
 	<!--Main Menu-->
     <link href="{{url('frontend/css/stellarnav.min.css')}}" rel="stylesheet">
     <link href="{{url('frontend/css/daterangepicker.css')}}" rel="stylesheet">
-
+	<!--tootltip css-->
+	<link href="{{url('frontend/css/tooltipster.bundle.min.css')}}" rel="stylesheet">
 	<link href="{{url('frontend/css/style.css')}}" rel="stylesheet" type="text/css" media="all" />
 	<link href="{{url('frontend/css/responsive.css')}}" rel="stylesheet" type="text/css" media="all" />
 	<!-- font-awesome-icons -->

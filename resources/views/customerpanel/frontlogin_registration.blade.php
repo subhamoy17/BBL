@@ -82,8 +82,8 @@
                             </a></span>
 
                             <span class="nw-user"><a class="cm-cls">
-                                <a href="{{route('social-auth-login',['provider' => 'facebook'])}}" class="signup">Login With Facebook</a> |
-                                <a href="{{route('social-auth-login',['provider' => 'google'])}}" class="signup">Login With Google</a>
+                                <a href="{{route('social-auth-login',['provider' => 'facebook'])}}" class="signup"><i class="fa fa-facebook-square" style="color: #5277f8;margin-right: 5px;"></i> Login With Facebook</a> |
+                                <a href="{{route('social-auth-login',['provider' => 'google'])}}" class="signup"><i class="fa fa-google-plus" style="color: #cf1508;margin-right: 5px;"></i> Login With Google</a>
                             </a></span>
                         </div>
                     </form>
