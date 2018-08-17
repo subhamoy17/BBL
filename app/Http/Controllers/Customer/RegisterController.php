@@ -160,14 +160,14 @@ public function showForm(Request $request)
     {
         if(!$confirmation_code)
         {
-            throw new InvalidConfirmationCodeException;
+            return redirect('/customer-login');
         }
 
         $customers = Customer::whereConfirmationCode($confirmation_code)->first();
 
         if (!$customers)
         {
-            throw new InvalidConfirmationCodeException;
+            return redirect('/customer-login');
         }
 
         $customers->confirmed = 1;
