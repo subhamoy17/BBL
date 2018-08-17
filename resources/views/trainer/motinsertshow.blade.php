@@ -471,7 +471,7 @@ $('.weightconvert').on('change', function(){
 </div>
 </div>
 <div class="row form-group">
-  <div class="col-lg-3"><label for="text-input" class="form-control-label">Starting Weight</label></div>
+  <div class="col-lg-3"><label for="text-input" class="form-control-label">Starting Weight<span class="required_field_color">*</span></label></div>
   <div class="col-lg-9"><div class="row"><div class="col-lg-12"><input type="text" id="starting_weight" name="starting_weight" placeholder="Starting Weight" class="form-control" value=""><!-- </div>
   <div class="col-lg-6"> -->
     <select class="form-control weightconvert" name="starting_weight_credential">
@@ -483,7 +483,7 @@ $('.weightconvert').on('change', function(){
 </div>
 </div>
 <div class="row form-group">
-  <div class="col-lg-3"><label for="text-input" class="form-control-label">Ending Weight</label></div>
+  <div class="col-lg-3"><label for="text-input" class="form-control-label">Ending Weight<span class="required_field_color">*</span></label></div>
   <div class="col-lg-9"><div class="row"><div class="col-lg-12"><input type="text" id="ending_weight" name="ending_weight" placeholder="Ending Weight" class="form-control" value=""><!-- </div>
   <div class="col-lg-6"> -->
     <select class="form-control weightconvert" name="ending_weight_credential">
@@ -510,11 +510,13 @@ $('.weightconvert').on('change', function(){
     <div class="col-lg-9"><textarea type="text" id="description" name="description" placeholder="Description" class="form-control" value=""></textarea>
     </div>
   </div>
+
   <div class="row form-group">
     <div class="col-lg-3"><label for="text-input" class="form-control-label">Measured On<span class="required_field_color">*</span></label></div>
     <div class="col-lg-9"><input type="text" id="mot_date" name="date" class="form-control" placeholder="Date">
     </div>
   </div>
+  
   <div class="row form-group">
     <div class="col col-md-10">
     </div>
@@ -526,7 +528,10 @@ $('.weightconvert').on('change', function(){
 </div>
 </div>
 </div>
-
-
+<script src="{{asset('backend/assets/js/lib/chart-js/Chart.bundle.js')}}"></script>
+  <script src="{{asset('backend/assets/js/widgets.js')}}"></script>
+    <script src="{{asset('backend/assets/js/lib/vector-map/jquery.vmap.js')}}"></script>
+    <script src="{{asset('backend/assets/js/lib/vector-map/jquery.vmap.min.js')}}"></script>
+ <script src="{{asset('backend/assets/js/lib/vector-map/country/jquery.vmap.world.js')}}"></script>
 
 @endsection
