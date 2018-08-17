@@ -34,7 +34,7 @@ trait AuthenticatesUsers
     {
         $trainer_details=DB::table('users')->where('email',$request->email)->first();
 
-        if(($trainer_details->login_attempt==0 || $trainer_details->login_attempt==1) && $trainer_details->master_trainer==2)
+        if($trainer_details && ($trainer_details->login_attempt==0 || $trainer_details->login_attempt==1) && $trainer_details->master_trainer==2)
         {
             Log::debug ( " :: a :: " );
             $trainer_details_update=DB::table('users')->where('email',$request->email)

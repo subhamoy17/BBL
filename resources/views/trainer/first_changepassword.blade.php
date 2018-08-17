@@ -47,6 +47,11 @@ $('#changepassword').validate({
             </div>
 </div>
 
+<br>
+             <div class="whole-wrp"></div>
+    <div class="logo-m" align="center"><a href="{{route('bbldb')}}"><img src="{{asset('frontend/images/logo.png')}}"></a></div>
+    
+
 <div class="sufee-login d-flex align-content-center flex-wrap">
         <div class="container">
             <div class="login-content">
