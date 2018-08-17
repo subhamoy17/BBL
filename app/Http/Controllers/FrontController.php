@@ -320,12 +320,21 @@ public function booking_history(Request $request)
     ->join('slot_request','slot_request.purchases_id','purchases_history.id')->select('slot_request.purchases_id','slots.slots_number','slots.slot_date')->where('slot_request.customer_id',Auth::guard('customer')->user()->id)->where('slot_request.slot_date','>=',$remaining_session_request_now )->where('slot_request.approval_id',3 )->count();
      Log::debug(" Check id ".print_r($sum_slots,true));  
 
+     $remaining_session_request=DB::table('purchases_history')
+    ->join('slots','slots.id','purchases_history.slot_id')
+    ->join('customers','customers.id','purchases_history.customer_id')
+    ->where('purchases_history.customer_id',Auth::guard('customer')->user()->id)
+    ->where('purchases_history.active_package',1)
+    ->where('purchases_history.package_remaining','>',0)
+    ->where('purchases_history.package_validity_date','>=',$remaining_session_request_now)->count();
  
+
+
  if($request->ajax()){
 return response()->json($data);
 }
 
-return view('customerpanel.booking_history',['data' => $data])->with(compact('fea_pen_data','data','dt','sum_slots','count','accepted_count','future_pending_count'));
+return view('customerpanel.booking_history',['data' => $data])->with(compact('fea_pen_data','data','dt','sum_slots','count','accepted_count','future_pending_count','remaining_session_request'));
 
 }
 
