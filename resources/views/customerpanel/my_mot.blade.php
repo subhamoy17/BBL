@@ -94,6 +94,11 @@
 
                  </tr>
                 @endforeach
+                @else
+                <tr><td colspan='5' align='center'>
+                No post available
+              </td>
+              </tr>
                 </tbody>
               </table>
               @endif
