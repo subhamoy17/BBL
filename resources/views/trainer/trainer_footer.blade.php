@@ -8,14 +8,14 @@
     <script src="{{url('frontend/js/jquery-ui.js')}}"></script>
 
 
- <script src="{{asset('backend/assets/js/jquery.search.min.js')}}"></script>
-    <!-- <script src="{{asset('backend/assets/js/lib/chart-js/Chart.bundle.js')}}"></script> -->
+
+    <script src="{{asset('backend/assets/js/lib/chart-js/Chart.bundle.js')}}"></script>
     <script src="{{asset('backend/assets/js/dashboard.js')}}"></script>
-    <!-- <script src="{{asset('backend/assets/js/widgets.js')}}"></script> -->
-    <!-- <script src="{{asset('backend/assets/js/lib/vector-map/jquery.vmap.js')}}"></script> -->
-    <!-- <script src="{{asset('backend/assets/js/lib/vector-map/jquery.vmap.min.js')}}"></script> -->
+    <script src="{{asset('backend/assets/js/widgets.js')}}"></script>
+    <script src="{{asset('backend/assets/js/lib/vector-map/jquery.vmap.js')}}"></script>
+    <script src="{{asset('backend/assets/js/lib/vector-map/jquery.vmap.min.js')}}"></script>
     <script src="{{asset('backend/assets/js/lib/vector-map/jquery.vmap.sampledata.js')}}"></script>
-    <!-- <script src="{{asset('backend/assets/js/lib/vector-map/country/jquery.vmap.world.js')}}"></script> -->
+    <script src="{{asset('backend/assets/js/lib/vector-map/country/jquery.vmap.world.js')}}"></script>
     <script>
         ( function ( $ ) {
             "use strict";
@@ -37,11 +37,8 @@
   });
 
 })( jQuery );
-
   
     </script>
-
-
 
     <script src="{{asset('backend/assets/js/totanjs/alertify.min.js')}}"></script>
     
