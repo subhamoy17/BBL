@@ -84,6 +84,15 @@
                           
                           <button type="submit"  name="submit" class="btn btn-dark btn-theme-colored btn-flat" data-loading-text="Please wait...">Send your message</button>
                         </div>
+                         <div class="form-group">
+                          @if (session('success'))
+                              <!-- <span style="color: white;">Test</span> -->
+                              <div class="alert alert-success">
+                                  {{ session('success') }}
+                              </div>
+                          @endif
+                          
+                        </div>
                         
                 </div>
                 </div>
