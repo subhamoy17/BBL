@@ -381,15 +381,10 @@ range: "Please enter value betwwen 1 to 9999.9"
       <option id="metric" value="metric">Metric (kg.)</option>
       <option id="imperial" value="imperial">Imperial (lbs.)</option>
     </select>
-
-
   </div>     
 </div> 
 </div>
 </div>
-
-
-
 
 <div class="row form-group">
   <div class="col-lg-3"><label for="text-input" class="form-control-label">Ending Weight<span class="required_field_color">*</span></label></div>
@@ -399,16 +394,10 @@ range: "Please enter value betwwen 1 to 9999.9"
       <option id="metric" value="metric">Metric (kg.)</option>
       <option id="imperial" value="imperial">Imperial (lbs.)</option>
     </select>
-
-
   </div>     
 </div> 
 </div>
 </div>
-
-
-
-
 
 
 <div class="row form-group">
@@ -440,13 +429,11 @@ range: "Please enter value betwwen 1 to 9999.9"
     </div>
   </div>
 </form>
+
 </div>
 </div>
 </div>
 
-
-
-
-
+ 
 
 @endsection
