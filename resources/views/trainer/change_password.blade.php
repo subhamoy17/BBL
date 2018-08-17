@@ -72,7 +72,7 @@ $('#changepassword').validate({
                         <input id="name" type="hidden" class="form-control" name="name" value="{{Auth::user()->name}}">
 
                         <div class="form-group">
-                            <label for="new-password">New Password</label>
+                            <!-- <label for="new-password">New Password</label> -->
                             <input id="new-password" type="password" class="form-control{{ $errors->has('new-password') ? ' is-invalid' : '' }}" name="new-password" placeholder="New Password">
                             @if ($errors->has('new-password'))
                                     <span class="invalid-feedback">
@@ -82,7 +82,7 @@ $('#changepassword').validate({
 
                         </div>
                         <div class="form-group">
-                            <label for="new-password-confirm">Confirm New Password</label>
+                            <!-- <label for="new-password-confirm">Confirm New Password</label> -->
 
                             <input id="new-password-confirm" type="password" class="form-control" name="new-password_confirmation" placeholder="Confirm New Password">
 

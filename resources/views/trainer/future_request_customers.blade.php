@@ -114,7 +114,7 @@ table.dataTable thead>tr>th[id='action'].sorting_asc::after{display: none}
            <div class="group">
             <div id="loading-img"></div>
           <div class="card-body">
-            <table id="bootstrap-slot-data-table" class="table table-striped table-bordered">
+           <table id="bootstrap-slot-data-table" class="table table-striped table-bordered">
               <thead>
                 <tr>
                   <th id='slno'>Sl. No.</th>
@@ -139,10 +139,10 @@ table.dataTable thead>tr>th[id='action'].sorting_asc::after{display: none}
                   <td>{{$mydata->slot_date}} {{$mydata->slot_time}}</td> 
                   @if($mydata->image)
                   <td><img src="{{asset('backend/images')}}/{{$mydata->image}}" height="50" width="50"></td>
-                  <td>
                      @else
                      <td>N/A</td>
                      @endif
+                     <td>
                     @if($mydata->approval_id != 3 && $mydata->approval_id != 2)       
                     <button type="button" class="btn btn-success status-all" id="{{$mydata->id}}"> Approve</button>
                     @endif
@@ -168,10 +168,12 @@ table.dataTable thead>tr>th[id='action'].sorting_asc::after{display: none}
 <script type="text/javascript">
   $(document).ready(function(){
     $('.status-all').on('click',function(e) {
+
       var action = $.trim($(this).text());
       console.log(action);
       var row = this.closest('tr');
       if (action == "Decline"){
+        alert('dfghjkgk');
         $('#reason_id').val('');
         $('#reason_id').val(this.id);
         $('#reason_action').val(action);
@@ -186,6 +188,7 @@ table.dataTable thead>tr>th[id='action'].sorting_asc::after{display: none}
         });
       }
       else if (action == "Approve"){
+        alert('df');
         var Data =
         {
           'id': this.id,

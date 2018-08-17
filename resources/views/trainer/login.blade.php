@@ -52,7 +52,7 @@ $('#myform').validate({
                     <form method="POST" action="{{ route('login') }}" id="myform">
                         @csrf
                         <div class="form-group">
-                            <label>{{ __('E-Mail Address') }}</label>
+                            <!-- <label>{{ __('E-Mail Address') }}</label> -->
                             <input type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="Email" name="email" value="{{ old('email') }}" autofocus>
 
                                 @if ($errors->has('email'))
@@ -64,7 +64,7 @@ $('#myform').validate({
 
                         </div>
                         <div class="form-group">
-                            <label>{{ __('Password') }}</label>
+                            <!-- <label>{{ __('Password') }}</label> -->
                             <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="Password"  name="password">
                                 @if ($errors->has('password'))
                                     <span class="invalid-feedback">

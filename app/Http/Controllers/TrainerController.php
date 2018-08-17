@@ -1149,7 +1149,7 @@ public function client_insert(Request $request)
 
     DB::table('our_client')->insert($data);
     Log::debug(" Check id ".print_r($data,true));
-    return redirect('trainer/our_client_show')->with("success","One trainer is insert successfully !");
+    return redirect('trainer/our_trainer_list')->with("success","One trainer is insert successfully !");
 }
 
 public function client_edit_view($id)
@@ -1189,7 +1189,7 @@ public function client_update(Request $request)
     $data['updated_at']=Carbon::now();
 
     DB::table('our_client')->where('id',$request->id)->update($data);
-    return redirect('trainer/our_client_show')->with("success","One trainer is updated successfully!");
+    return redirect('trainer/our_trainer_list')->with("success","One trainer details updated successfully!");
 }
 
 public function client_delete($id)
@@ -1198,7 +1198,7 @@ public function client_delete($id)
 
     DB::table('our_client')->where('id',$id)->update($updatedata);
 
-    return redirect('trainer/our_client_show')->with("delete","One trainer is deleted successfully !");
+    return redirect('trainer/our_trainer_list')->with("delete","One trainer is deleted successfully !");
 }
 
 

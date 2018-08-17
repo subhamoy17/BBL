@@ -92,7 +92,7 @@ $('#bootstrap-slot-data-table').DataTable({
                         <script type="text/javascript">
                            
                             function delete_client(id){ 
-                            alertify.confirm("Are you sure you want to delete this client?", function (e) {
+                            alertify.confirm("Are you sure you want to delete this trainer?", function (e) {
                                     if (e) {
                                                 // alertify.success("You've clicked OK");
                                                 window.location.href="{{url('trainer/client_delete')}}/"+id;
