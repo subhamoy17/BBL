@@ -112,8 +112,8 @@ range: [1, 999.9]
 },
 
 "blood_pressure": {
-  number: true,
-  digits: true,
+ 
+  
   required: true
 },
 
@@ -205,8 +205,7 @@ number: 'Please enter decimal only',
 },
 
 "blood_pressure":{
-  number:'Please enter number only',
-  digits: 'Please enter only number of digits',
+ 
   required: 'Please enter the this value'
 
 },
