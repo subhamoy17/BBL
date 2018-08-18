@@ -733,7 +733,7 @@ textarea.parsley-error {
 	padding-right: 15px;
 }
 .tbdy1 .btn-sm {
-	width: 48% !important;
+	width: 25px !important;
 	padding: 5px 0;
 	float: left;
 }
@@ -775,12 +775,12 @@ textarea.parsley-error {
 .btn-td a button {
 	position: absolute;
 	top: 33%;
-	left: 1px;
+	left: 10px;
 }
 .btn-td button{
 	position: absolute;
 	top: 33%;
-	right: 1px;
+	right: 10px;
 }
 /*81718*/
 
