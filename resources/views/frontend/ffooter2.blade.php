@@ -885,14 +885,19 @@ $("#extra_session").mouseover(function(){
                     multipeFieldValidator:true
                   },
          "package_description": {
-                    multipeFieldValidator:true
+                    multipeFieldValidator:true,
+                    maxlength: 300,
                   }
       },
       ////for show error message
       messages: {
         
         "package_image": "Image is required if no description is given",
-        "package_description": "Description is required if no image is given" 
+        "package_description":
+        {
+          multipeFieldValidator:"Description is required if no image is given",
+          maxlength: "Maximum 300 characters are allow"
+        } 
       }
     });
     });
