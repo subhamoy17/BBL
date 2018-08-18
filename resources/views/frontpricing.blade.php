@@ -23,7 +23,7 @@
                    @if(Auth::guard('customer')->check())
                   <a href="{{url('customer/purchase_form')}}/{{$mydata->id}}" class="sign-btn2">Subscribe</a>
                    @else
-                <a href="{{url('bbl-customer-0518')}}" class="sign-btn2">sign-up</a>
+                <a href="{{url('customer-login')}}" class="sign-btn2">sign-up</a>
                 @endif
                 </div>
               </div>
