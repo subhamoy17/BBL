@@ -353,6 +353,7 @@ alertify.confirm("Are you sure you will be approve this payment?", function (e) 
           }
           else{
             $('#pay_img').hide();
+            $('img.modal_image').attr('src','');
           }
            
              
