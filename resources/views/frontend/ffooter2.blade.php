@@ -421,27 +421,34 @@ var row2;
             
             var description = $(this).data("description");
 
-
-
-            $('div.right_arm').text(right_arm); 
-            $('div.left_arm').text(left_arm);
-           
-
-            $('div.chest').text(chest);
-            $('div.waist').text(waist);
-            $('div.hips').text(hips);
-            $('div.right_thigh').text(right_thigh);
-
-            $('div.left_thigh').text(left_thigh);
-            $('div.right_calf').text(right_calf);
-
-            $('div.left_calf').text(left_calf);
-            
-            $('div.starting_weight').text(starting_weight);
-            $('div.ending_weight').text(ending_weight);
-            $('div.heart_beat').text(heart_beat);
-            $('div.blood_pressure').text(blood_pressure);
-            $('div.height').text(height);
+           if(right_arm!=''){ $('div.right_arm').text(right_arm);} 
+           else{  $('div.right_arm').text('-');} 
+           if(left_arm!=''){ $('div.left_arm').text(left_arm);}
+           else{  $('div.left_arm').text('-');}
+           if(chest!=''){ $('div.chest').text(chest);}
+           else{ $('div.chest').text('-');}
+           if(waist!=''){$('div.waist').text(waist);}
+           else{ $('div.waist').text('-');}
+           if(hips!=''){ $('div.hips').text(hips);}
+           else{ $('div.hips').text('-');}
+           if(right_thigh!=''){ $('div.right_thigh').text(right_thigh);}
+           else{ $('div.right_thigh').text('-');}
+           if(left_thigh!=''){$('div.left_thigh').text(left_thigh);}
+           else{ $('div.left_thigh').text('-');}
+           if(right_calf!=''){ $('div.right_calf').text(right_calf);}
+           else{ $('div.right_calf').text('-');}
+           if(left_calf!=''){ $('div.left_calf').text(left_calf);}
+           else{ $('div.left_calf').text('-');}
+           if(starting_weight!=''){ $('div.starting_weight').text(starting_weight);}
+           else{ $('div.starting_weight').text('-');}
+           if(ending_weight!=''){ $('div.ending_weight').text(ending_weight);}
+           else{ $('div.ending_weight').text('-');}
+           if(heart_beat!=''){ $('div.heart_beat').text(heart_beat);}
+           else{ $('div.heart_beat').text('-');}
+           if(blood_pressure!=''){ $('div.blood_pressure').text(blood_pressure); }
+           else{ $('div.blood_pressure').text('-'); }
+           if(height!=''){  $('div.height').text(height);}
+           else{ $('div.height').text('-');}
             if(description!=''){
               $('#mot_des').show();
             $('textarea.description').text(description);
@@ -573,20 +580,49 @@ $('#changepassword').validate({
             var description = $(this).data("description");
            
 
-            $('div.right_arm').text(right_arm); 
-            $('div.left_arm').text(left_arm);
-            $('div.chest').text(chest);
-            $('div.waist').text(waist);
-            $('div.hips').text(hips);
-            $('div.right_thigh').text(right_thigh);
-            $('div.left_thigh').text(left_thigh);
-            $('div.right_calf').text(right_calf);
-            $('div.left_calf').text(left_calf);
-            $('div.starting_weight').text(starting_weight);
-            $('div.ending_weight').text(ending_weight);
-            $('div.heart_beat').text(heart_beat);
-            $('div.blood_pressure').text(blood_pressure);
-            $('div.height').text(height);
+            // $('div.right_arm').text(right_arm); 
+            // $('div.left_arm').text(left_arm);
+            // $('div.chest').text(chest);
+            // $('div.waist').text(waist);
+            // $('div.hips').text(hips);
+            // $('div.right_thigh').text(right_thigh);
+            // $('div.left_thigh').text(left_thigh);
+            // $('div.right_calf').text(right_calf);
+            // $('div.left_calf').text(left_calf);
+            // $('div.starting_weight').text(starting_weight);
+            // $('div.ending_weight').text(ending_weight);
+            // $('div.heart_beat').text(heart_beat);
+            // $('div.blood_pressure').text(blood_pressure);
+            // $('div.height').text(height);
+
+             if(right_arm!=''){ $('div.right_arm').text(right_arm);} 
+           else{  $('div.right_arm').text('-');} 
+           if(left_arm!=''){ $('div.left_arm').text(left_arm);}
+           else{  $('div.left_arm').text('-');}
+           if(chest!=''){ $('div.chest').text(chest);}
+           else{ $('div.chest').text('-');}
+           if(waist!=''){$('div.waist').text(waist);}
+           else{ $('div.waist').text('-');}
+           if(hips!=''){ $('div.hips').text(hips);}
+           else{ $('div.hips').text('-');}
+           if(right_thigh!=''){ $('div.right_thigh').text(right_thigh);}
+           else{ $('div.right_thigh').text('-');}
+           if(left_thigh!=''){$('div.left_thigh').text(left_thigh);}
+           else{ $('div.left_thigh').text('-');}
+           if(right_calf!=''){ $('div.right_calf').text(right_calf);}
+           else{ $('div.right_calf').text('-');}
+           if(left_calf!=''){ $('div.left_calf').text(left_calf);}
+           else{ $('div.left_calf').text('-');}
+           if(starting_weight!=''){ $('div.starting_weight').text(starting_weight);}
+           else{ $('div.starting_weight').text('-');}
+           if(ending_weight!=''){ $('div.ending_weight').text(ending_weight);}
+           else{ $('div.ending_weight').text('-');}
+           if(heart_beat!=''){ $('div.heart_beat').text(heart_beat);}
+           else{ $('div.heart_beat').text('-');}
+           if(blood_pressure!=''){ $('div.blood_pressure').text(blood_pressure); }
+           else{ $('div.blood_pressure').text('-'); }
+           if(height!=''){  $('div.height').text(height);}
+           else{ $('div.height').text('-');}
             if(description!=''){
               $('#des').show();
             $('textarea.description').text(description);
@@ -607,7 +643,7 @@ $('#changepassword').validate({
     if($(this).val()=='metric')
       { 
            
-
+            
             var right_arm = row.data("right_arm");
             var left_arm = row.data("left_arm");
             var chest = row.data("chest");
@@ -622,6 +658,11 @@ $('#changepassword').validate({
             var heart_beat = row.data("heart_beat");
             var blood_pressure = row.data("blood_pressure");
             var height = row.data("height");
+
+
+
+            
+
             
             console.log('sas');
     
@@ -642,26 +683,60 @@ $('#changepassword').validate({
             var heart_beat = row.data("heart_beat");
             var blood_pressure = row.data("blood_pressure");
             var height = (row.data("height")*0.393701).toFixed(2);
+
+             
+
             
       
      
 
     }
-    $('div.right_arm').text(right_arm); 
-            $('div.left_arm').text(left_arm);
-            $('div.chest').text(chest);
-            $('div.waist').text(waist);
-            $('div.hips').text(hips);
-            $('div.right_thigh').text(right_thigh);
-            $('div.left_thigh').text(left_thigh);
-            $('div.right_calf').text(right_calf);
-            $('div.left_calf').text(left_calf);
-            $('div.starting_weight').text(starting_weight);
-            $('div.ending_weight').text(ending_weight);
-            $('div.heart_beat').text(heart_beat);
-            $('div.blood_pressure').text(blood_pressure);
-            $('div.height').text(height);
-           
+            // $('div.right_arm').text(right_arm); 
+            // $('div.left_arm').text(left_arm);
+            // $('div.chest').text(chest);
+            // $('div.waist').text(waist);
+            // $('div.hips').text(hips);
+            // $('div.right_thigh').text(right_thigh);
+            // $('div.left_thigh').text(left_thigh);
+            // $('div.right_calf').text(right_calf);
+            // $('div.left_calf').text(left_calf);
+            // $('div.starting_weight').text(starting_weight);
+            // $('div.ending_weight').text(ending_weight);
+            // $('div.heart_beat').text(heart_beat);
+            // $('div.blood_pressure').text(blood_pressure);
+            // $('div.height').text(height);
+
+          if(right_arm!=''){ $('div.right_arm').text(right_arm);} 
+           else{  $('div.right_arm').text('-');} 
+           if(left_arm!=''){ $('div.left_arm').text(left_arm);}
+           else{  $('div.left_arm').text('-');}
+           if(chest!=''){ $('div.chest').text(chest);}
+           else{ $('div.chest').text('-');}
+           if(waist!=''){$('div.waist').text(waist);}
+           else{ $('div.waist').text('-');}
+           if(hips!=''){ $('div.hips').text(hips);}
+           else{ $('div.hips').text('-');}
+           if(right_thigh!=''){ $('div.right_thigh').text(right_thigh);}
+           else{ $('div.right_thigh').text('-');}
+           if(left_thigh!=''){$('div.left_thigh').text(left_thigh);}
+           else{ $('div.left_thigh').text('-');}
+           if(right_calf!=''){ $('div.right_calf').text(right_calf);}
+           else{ $('div.right_calf').text('-');}
+           if(left_calf!=''){ $('div.left_calf').text(left_calf);}
+           else{ $('div.left_calf').text('-');}
+           if(starting_weight!=''){ $('div.starting_weight').text(starting_weight);}
+           else{ $('div.starting_weight').text('-');}
+           if(ending_weight!=''){ $('div.ending_weight').text(ending_weight);}
+           else{ $('div.ending_weight').text('-');}
+           if(heart_beat!=''){ $('div.heart_beat').text(heart_beat);}
+           else{ $('div.heart_beat').text('-');}
+           if(blood_pressure!=''){ $('div.blood_pressure').text(blood_pressure); }
+           else{ $('div.blood_pressure').text('-'); }
+           if(height!=''){  $('div.height').text(height);}
+           else{ $('div.height').text('-');}
+
+
+          
    
 });
 
@@ -688,6 +763,7 @@ $('#changepassword').validate({
             var blood_pressure = row2.data("blood_pressure");
             var height = row2.data("height");
             
+
             
           }
     else{
@@ -711,20 +787,36 @@ $('#changepassword').validate({
      
 
     }
-    $('div.right_arm').text(right_arm); 
-            $('div.left_arm').text(left_arm);
-            $('div.chest').text(chest);
-            $('div.waist').text(waist);
-            $('div.hips').text(hips);
-            $('div.right_thigh').text(right_thigh);
-            $('div.left_thigh').text(left_thigh);
-            $('div.right_calf').text(right_calf);
-            $('div.left_calf').text(left_calf);
-            $('div.starting_weight').text(starting_weight);
-            $('div.ending_weight').text(ending_weight);
-            $('div.heart_beat').text(heart_beat);
-            $('div.blood_pressure').text(blood_pressure);
-            $('div.height').text(height);
+   
+
+            if(right_arm!=''){ $('div.right_arm').text(right_arm);} 
+           else{  $('div.right_arm').text('-');} 
+           if(left_arm!=''){ $('div.left_arm').text(left_arm);}
+           else{  $('div.left_arm').text('-');}
+           if(chest!=''){ $('div.chest').text(chest);}
+           else{ $('div.chest').text('-');}
+           if(waist!=''){$('div.waist').text(waist);}
+           else{ $('div.waist').text('-');}
+           if(hips!=''){ $('div.hips').text(hips);}
+           else{ $('div.hips').text('-');}
+           if(right_thigh!=''){ $('div.right_thigh').text(right_thigh);}
+           else{ $('div.right_thigh').text('-');}
+           if(left_thigh!=''){$('div.left_thigh').text(left_thigh);}
+           else{ $('div.left_thigh').text('-');}
+           if(right_calf!=''){ $('div.right_calf').text(right_calf);}
+           else{ $('div.right_calf').text('-');}
+           if(left_calf!=''){ $('div.left_calf').text(left_calf);}
+           else{ $('div.left_calf').text('-');}
+           if(starting_weight!=''){ $('div.starting_weight').text(starting_weight);}
+           else{ $('div.starting_weight').text('-');}
+           if(ending_weight!=''){ $('div.ending_weight').text(ending_weight);}
+           else{ $('div.ending_weight').text('-');}
+           if(heart_beat!=''){ $('div.heart_beat').text(heart_beat);}
+           else{ $('div.heart_beat').text('-');}
+           if(blood_pressure!=''){ $('div.blood_pressure').text(blood_pressure); }
+           else{ $('div.blood_pressure').text('-'); }
+           if(height!=''){  $('div.height').text(height);}
+           else{ $('div.height').text('-');}
             
    
 });
