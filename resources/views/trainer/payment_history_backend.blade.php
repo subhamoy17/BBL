@@ -51,7 +51,7 @@
       <div class="modal-body" id="hall_details_edit">
         <div class="row clearfix">
           <div class="col-sm-12 col-xs-12">
-            <h3 class="pull-left customer-mot">Customers MOT</h3>
+            <h3 class="pull-left customer-mot">Customers Payment</h3>
             <br class="clear" />
         </div>
         <div class="col-xs-12 divi-line">
@@ -65,9 +65,9 @@
                <div class="col-lg-4"><strong class="cus">Purchases Date:</strong></div><div class="col-lg-8 purchases_date" ></div>
                 <div class="col-lg-4"><strong class="cus">Packege Name:</strong></div><div class="col-lg-8 slots_name" ></div>
               <div class="col-lg-4"><strong class="cus">Payment Id:</strong></div><div class="col-lg-8 payment_id" ></div>
-            <div class="col-lg-4"><strong class="cus">Description:</strong></div><div class="col-lg-8 description" ></div>
+            <div class="col-lg-4" id="pay_des"><strong class="cus">Description:</strong></div><div class="col-lg-8 description" ></div>
             
-             <div class="col-lg-4"><strong class="cus">Images:</strong></div><div><img class="col-lg-8 modal_image" width="100"> </div>
+             <div class="col-lg-4" id="pay_img"><strong class="cus">Images:</strong></div><div><img class="col-lg-8 modal_image" width="100"> </div>
             
           </div>
 			</div>
@@ -157,7 +157,7 @@
                  <button type="button" class="btn btn-danger status-all" id="{{$mydata->id}}"> Decline</button>
                 @endif
          
-            <a href="#" class="payment btn btn-info btn-sm"  data-name="{{$mydata->name}}"   data-purchases_date="{{$mydata->purchases_date}}"  data-slots_name="{{$mydata->slots_name}}" data-payment_id="{{$mydata->payment_id}}" data-description="{{$mydata->description}}"   data-image="{{asset('backend/images')}}/{{$mydata->image}}" >View Details</button>
+            <a href="#" class="payment btn btn-info btn-sm"  data-name="{{$mydata->name}}"   data-purchases_date="{{$mydata->purchases_date}}"  data-slots_name="{{$mydata->slots_name}}" data-payment_id="{{$mydata->payment_id}}" data-description="{{$mydata->description}}"   data-image="{{asset('backend/bankpay_images')}}/{{$mydata->image}}" data-noimage="{{$mydata->image}}">View Details</button>
 
                 
 
@@ -343,8 +343,27 @@ alertify.confirm("Are you sure you will be approve this payment?", function (e) 
             $('div.purchases_date').text(purchases_date); $('div.purchases_date').text(purchases_date);
            $('div.slots_name').text(slots_name); $('div.slots_name').text(slots_name);
         $('div.payment_id').text(payment_id); $('div.payment_id').text(payment_id);
-        $('div.description').text(description); $('div.description').text(description);
-        $('img.modal_image').attr('src',myimage); 
+        // $('div.description').text(description); $('div.description').text(description);
+        
+        // $('img.modal_image').attr('src',myimage); 
+    
+           if($(this).data('noimage')!=''){
+            $('#pay_img').show();
+            $('img.modal_image').attr('src',myimage); 
+          }
+          else{
+            $('#pay_img').hide();
+          }
+           
+             
+          if(description!=''){
+            $('#pay_des').show();
+            $('div.description').text(description); 
+          }
+          else{
+            $('#pay_des').hide();
+             $('div.description').text(''); 
+          }
 
             $('#reason_modal').modal('show');
         });
