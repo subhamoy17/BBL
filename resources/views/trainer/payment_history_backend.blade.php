@@ -128,7 +128,7 @@
                   <td>{{++$key}}</td>
                       <td>{{$mydata->name}}</td>
                   <td>{{$mydata->slots_name}}</td>
-                  <td><i class="fa fa-gbp"></i> {{$mydata->slots_price}}</td>
+                  <td><i class="fa fa-gbp"></i>{{$mydata->slots_price}}</td>
                   <td>{{$mydata->payment_options}}</td>
                   <td>{{$mydata->purchases_date}}</td>
                  <td> 
@@ -157,7 +157,7 @@
                  <button type="button" class="btn btn-danger status-all" id="{{$mydata->id}}">Decline</button>
                 @endif
          
-            <a href="#" class="payment btn btn-info btn-sm"  data-name="{{$mydata->name}}"   data-purchases_date="{{$mydata->purchases_date}}"  data-slots_name="{{$mydata->slots_name}}" data-payment_id="{{$mydata->payment_id}}" data-description="{{$mydata->description}}"   data-image="{{asset('backend/bankpay_images')}}/{{$mydata->image}}" data-noimage="{{$mydata->image}}"><i class="fa fa-eye"  aria-hidden="true"></i></button>
+            <a href="#" class="payment btn btn-info btn-sm"  data-name="{{$mydata->name}}"   data-purchases_date="{{$mydata->purchases_date}}"  data-slots_name="{{$mydata->slots_name}}" data-payment_id="{{$mydata->payment_id}}" data-description="{{$mydata->description}}"   data-image="{{asset('backend/bankpay_images')}}/{{$mydata->image}}" data-noimage="{{$mydata->image}}"><i class="fa fa-eye" title="view details"  aria-hidden="true"></i></button>
 
                 
 
