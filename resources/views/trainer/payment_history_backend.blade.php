@@ -65,9 +65,9 @@
                <div class="col-lg-4"><strong class="cus">Purchases Date:</strong></div><div class="col-lg-8 purchases_date" ></div>
                 <div class="col-lg-4"><strong class="cus">Packege Name:</strong></div><div class="col-lg-8 slots_name" ></div>
               <div class="col-lg-4"><strong class="cus">Payment Id:</strong></div><div class="col-lg-8 payment_id" ></div>
-            <div class="col-lg-4" id="pay_des"><strong class="cus">Description:</strong></div><div class="col-lg-8 description" ></div>
+            <div class="col-lg-4" id="pay_des"  style="display: none;"><strong class="cus">Description:</strong></div><div class="col-lg-8 description" ></div>
             
-             <div class="col-lg-4" id="pay_img"><strong class="cus">Images:</strong></div><div><img class="col-lg-8 modal_image" width="100"> </div>
+             <div class="col-lg-4" id="pay_img"  style="display: none;"><strong class="cus">Images:</strong></div><div><img class="col-lg-8 modal_image" width="100"> </div>
             
           </div>
 			</div>
@@ -151,13 +151,13 @@
                               @endif 
 
                  </td>
-              <td>
+              <td align="center">
                 @if($mydata->payment_options == 'Bank Transfer' && $mydata->status =='Inprogress' && $mydata->active_package == 0)
-               <button type="button" class="btn btn-success status-all" id="{{$mydata->id}}"> Approve</button>
-                 <button type="button" class="btn btn-danger status-all" id="{{$mydata->id}}"> Decline</button>
+               <button type="button" class="btn btn-success status-all" id="{{$mydata->id}}">Approve</button>
+                 <button type="button" class="btn btn-danger status-all" id="{{$mydata->id}}">Decline</button>
                 @endif
          
-            <a href="#" class="payment btn btn-info btn-sm"  data-name="{{$mydata->name}}"   data-purchases_date="{{$mydata->purchases_date}}"  data-slots_name="{{$mydata->slots_name}}" data-payment_id="{{$mydata->payment_id}}" data-description="{{$mydata->description}}"   data-image="{{asset('backend/bankpay_images')}}/{{$mydata->image}}" data-noimage="{{$mydata->image}}">View Details</button>
+            <a href="#" class="payment btn btn-info btn-sm"  data-name="{{$mydata->name}}"   data-purchases_date="{{$mydata->purchases_date}}"  data-slots_name="{{$mydata->slots_name}}" data-payment_id="{{$mydata->payment_id}}" data-description="{{$mydata->description}}"   data-image="{{asset('backend/bankpay_images')}}/{{$mydata->image}}" data-noimage="{{$mydata->image}}"><i class="fa fa-eye"  aria-hidden="true"></i></button>
 
                 
 
@@ -354,6 +354,7 @@ alertify.confirm("Are you sure you will be approve this payment?", function (e) 
             $('img.modal_image').attr('src',myimage); 
           }
           else{
+            $("#pay_img").css({"display": "block"});
             $('#pay_img').hide();
             $('img.modal_image').attr('src','');
           }
