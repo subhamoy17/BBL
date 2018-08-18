@@ -66,7 +66,9 @@
                 <div class="col-lg-4"><strong class="cus">Packege Name:</strong></div><div class="col-lg-8 slots_name" ></div>
               <div class="col-lg-4"><strong class="cus">Payment Id:</strong></div><div class="col-lg-8 payment_id" ></div>
             <div class="col-lg-4"><strong class="cus">Description:</strong></div><div class="col-lg-8 description" ></div>
+            
              <div class="col-lg-4"><strong class="cus">Images:</strong></div><div><img class="col-lg-8 modal_image" width="100"> </div>
+            
           </div>
 			</div>
       </div>
