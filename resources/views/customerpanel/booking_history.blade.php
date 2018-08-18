@@ -12,7 +12,7 @@
         @else
         <a href="{{url('customer/booking_slot')}}/{{0}}"class="btn btn-success bk-slt-btn">Send Slot Request</a>
         @endif
-              <h3 align="center">Over all booking history</h3>
+              <h3 align="center">Booking history</h3>
               <table class="table">
                 <thead>
                   <tr>
@@ -115,7 +115,7 @@
                 @endforeach
                 @else
                 <tr><td colspan='5' align='center'>
-                No post available
+                No record found
               </td>
               </tr>
                 </tbody>
