@@ -207,9 +207,9 @@
                               <li><i class="fa fa-id-card-o"></i><a href= "{{url('futureRequestlist')}}/{{Auth::user()->id}}">Future request</a></li>
                               @endif
                               @if(Request::segment(1) == "futurePendingRequestlist")
-                              <li><i class="fa fa-id-card-o"></i><a href= "{{url('futurePendingRequestlist')}}/{{Auth::user()->id}}"style="color: #fff !important;">Future request</a></li>
+                              <li><i class="fa fa-id-card-o"></i><a href= "{{url('futurePendingRequestlist')}}/{{Auth::user()->id}}"style="color: #fff !important;">Future Pending request</a></li>
                               @else
-                              <li><i class="fa fa-id-card-o"></i><a href= "{{url('futurePendingRequestlist')}}/{{Auth::user()->id}}">Future request</a></li>
+                              <li><i class="fa fa-id-card-o"></i><a href= "{{url('futurePendingRequestlist')}}/{{Auth::user()->id}}">Future Pending request</a></li>
                               @endif
                             </ul></li></ul></li>
                             @endif
