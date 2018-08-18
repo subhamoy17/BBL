@@ -47,13 +47,7 @@ $('#bootstrap-slot-data-table').DataTable({
             <div class="page-title">
                 <h1>Our Trainer List</h1>
             </div>
-        <!-- <div class="col-md-12">
-            @if (session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
-            @endif
-        </div> -->
+       
                             
         </div>
     </div>

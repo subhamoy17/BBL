@@ -185,7 +185,11 @@ $('#clienteditform').validate({
                                 <img id="profile_thumbnail" src="{{asset('backend/images')}}/{{$data->image}}" alt="profile image" height="150"  width="200"/>
                               </div>
                                @endif
+
                           </div>
+
+
+
 
                              <div style="float: right">
                                 <button type="submit" name="submit" class="btn btn-primary btn-sm">
