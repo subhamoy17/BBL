@@ -3,14 +3,14 @@
 				<div class="col-md-5 gylayouts_footer_grid">
 					<h3>Recent <span>Works</span></h3>
 					 <ul class="con_inner_text midimg">
-						<li><a href="#"><img src="{{asset('frontend/images/banner22.jpg')}}" alt="" class="img-responsive" /></a></li>
-					    <li><a href="#"><img src="{{asset('frontend/images/banner33.jpg')}}" alt="" class="img-responsive" /></a></li>
-						<li><a href="#"><img src="{{asset('frontend/images/banner44.jpg')}}" alt="" class="img-responsive" /></a></li>
-						<li><a href="#"><img src="{{asset('frontend/images/banner11.jpg')}}" alt="" class="img-responsive" /></a></li>
-						<li><a href="#"><img src="{{asset('frontend/images/banner22.jpg')}}" alt="" class="img-responsive" /></a></li>
-					    <li><a href="#"><img src="{{asset('frontend/images/banner33.jpg')}}" alt="" class="img-responsive" /></a></li>
-						 <li><a href="#"><img src="{{asset('frontend/images/banner11.jpg')}}" alt="" class="img-responsive" /></a></li>
-						<li><a href="#"><img src="{{asset('frontend/images/banner44.jpg')}}" alt="" class="img-responsive" /></a></li>
+						<li><a href="{{route('exercise')}}"><img src="{{asset('frontend/images/banner22.jpg')}}" alt="" class="img-responsive" /></a></li>
+					    <li><a href="{{route('exercise')}}"><img src="{{asset('frontend/images/banner33.jpg')}}" alt="" class="img-responsive" /></a></li>
+						<li><a href="{{route('exercise')}}"><img src="{{asset('frontend/images/banner44.jpg')}}" alt="" class="img-responsive" /></a></li>
+						<li><a href="{{route('exercise')}}"><img src="{{asset('frontend/images/banner11.jpg')}}" alt="" class="img-responsive" /></a></li>
+						<li><a href="{{route('exercise')}}"><img src="{{asset('frontend/images/banner22.jpg')}}" alt="" class="img-responsive" /></a></li>
+					    <li><a href="{{route('exercise')}}"><img src="{{asset('frontend/images/banner33.jpg')}}" alt="" class="img-responsive" /></a></li>
+						 <li><a href="{{route('exercise')}}"><img src="{{asset('frontend/images/banner11.jpg')}}" alt="" class="img-responsive" /></a></li>
+						<li><a href="{{route('exercise')}}"><img src="{{asset('frontend/images/banner44.jpg')}}" alt="" class="img-responsive" /></a></li>
 				     </ul>
 					
 				</div>
