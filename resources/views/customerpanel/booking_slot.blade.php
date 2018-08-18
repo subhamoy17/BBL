@@ -55,34 +55,30 @@
                                 <li><a href="https://www.youtube.com" target="_blank"><i class="fa fa-youtube"></i></a></li>
                             </ul>
                             <div class="dropdown user-box">
-                           @if(Auth::guard('customer')->check())
-                            <div class="dropdown user-box">
-                                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Welcom {{Auth::guard('customer')->user()->name}}
-                                <span class="caret"></span></button>
-                                <ul class="dropdown-menu">
-                                    <li><a href="{{url('customer/mybooking')}}">My Dashboard</a></li>
-                                    <li><a href="{{url('customer/profile')}}/{{Auth::guard('customer')->user()->id}}">My Profile</a></li>
-                                    <li><a href="{{ route('customerpanel.logout') }}" onclick="event.preventDefault();
+                           
+                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Welcom {{Auth::user()->name}}
+                <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                  <li><a href="{{url('customer/mybooking')}}">My Dashboard</a></li>
+                  <li><a href="{{url('customer/profile')}}/{{Auth::user()->id}}">My Profile</a></li>
+                  <li><a href="{{ route('customerpanel.logout') }}" onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();">Logout</a></li>
                                     <form id="logout-form" action="{{ route('customerpanel.logout') }}" method="POST" style="display: none;">
                                         @csrf
 
                                  </form>
-                                </ul>
-                                <span class="noification-d"><a href="{{url('customer/mybooking')}}"><i class="fa fa-bell"></i><small>{{Session::get('sum_slots')?Session::get('sum_slots'):0}}</small></a></span>
-                            </div>
-                            <div class="clearfix"></div>
-                            @else
-                <div class="reg-area">
-                  <p><a href="{{route('customer-register')}}" class="jn-us"><i class="fa fa-hand-o-right"></i> Join Us</a></p>
-                                <p><a href="{{url('customer-login')}}" class="sgn-in"><i class="fa fa-user"></i>Sign In</a></p>
-                  <!-- <a class="srch-icon"><i class="fa fa-search"></i><i class="fa fa-times"></i></a> -->
+                </ul>
+                <span class="noification-d"><a href="{{url('customer/mybooking')}}"><i class="fa fa-bell"></i><small>{{Session::get('sum_slots')?Session::get('sum_slots'):0}}</small></a></span>
+              </div>
+              <div class="clearfix"></div>
+                
+                <!-- <div class="reg-area">
+                  <a class="srch-icon"> <i class="fa fa-search"></i><i class="fa fa-times"></i></a>
                   <div class="srch-box">
                     <input type="text" placeholder="search">
                     <input type="button" value="Search">
                   </div>
-                </div>
-                            @endif
+                </div> -->
               </div>
             </div>
           </div>
