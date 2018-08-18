@@ -287,7 +287,7 @@ alertify.confirm("Are you sure you will be approve this payment?", function (e) 
         console.log("Decline decline");
       console.log(data);
    $(".card-body").css("opacity", .2);
-                  $("#loading-img").css({"display": "block"});
+      $("#loading-img").css({"display": "block"});
       $('#decline-msg').show();
       setTimeout(function(){
         $('#decline-msg').hide();
@@ -332,12 +332,14 @@ alertify.confirm("Are you sure you will be approve this payment?", function (e) 
 
         $(".payment").click(function() {
 
-            var name = $(this).data("name");
-            var purchases_date=$(this).data("purchases_date");
-           var slots_name=$(this).data("slots_name");
-        var payment_id=$(this).data("payment_id");
+          var name = $(this).data("name");
+          var purchases_date=$(this).data("purchases_date");
+          var slots_name=$(this).data("slots_name");
+          var payment_id=$(this).data("payment_id");
           var description=$(this).data("description");
           var myimage=$(this).data('image');
+
+         
 
             $('div.name').text(name); $('div.name').text(name);
             $('div.purchases_date').text(purchases_date); $('div.purchases_date').text(purchases_date);
