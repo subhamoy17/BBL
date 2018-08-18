@@ -6047,8 +6047,16 @@ a.sign-btn2 {
 	display: block;
 }
 .invalid-feedback strong {
-	color: #ccc;
-	margin-top: 4px;
-	display: inline-block;
+	float: left;
+    color: #ecb796;
+    position: relative;
+	font-size: 12px !important;
+    font-weight: 400;
 }
 /*81718*/
+
+/*81818*/
+.wthree-blog.padding-min {
+    padding-bottom: 0;
+}
+/*81818*/
