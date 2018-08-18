@@ -38,7 +38,8 @@ $('#bootstrap-slot-data-table').DataTable({
     border:1px solid #FFC0CB;
 }
 </style>
-<div id="reason_modal" class="modal fade common cntct-list" role="dialog" >
+@if(Auth::user()->master_trainer==1)
+<div id="reason_modal" class="modal fade common" role="dialog" >
   <div class="modal-dialog">
     
     <div class="modal-content">
@@ -138,6 +139,7 @@ $('#bootstrap-slot-data-table').DataTable({
     </div><!-- .animated -->
 </div><!-- .content -->
             
+            @endif
     <script src="{{asset('backend/assets/js/lib/data-table/datatables.min.js')}}"></script>
     <script src="{{asset('backend/assets/js/lib/data-table/dataTables.bootstrap.min.js')}}"></script>
     <script src="{{asset('backend/assets/js/lib/data-table/dataTables.buttons.min.js')}}"></script>

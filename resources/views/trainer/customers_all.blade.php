@@ -32,6 +32,8 @@ $('#bootstrap-slot-data-table').DataTable({
     border:1px solid #FFC0CB;
 }
 </style>
+
+@if(Auth::user()->master_trainer==1)
 <div class="breadcrumbs">
     <div class="col-sm-4">
         <div class="page-header float-left">
@@ -93,7 +95,7 @@ $('#bootstrap-slot-data-table').DataTable({
     </div><!-- .animated -->
 </div>
     <!-- .content -->
-  
+  @endif
 
 
     <script src="{{asset('backend/assets/js/lib/data-table/datatables.min.js')}}"></script>

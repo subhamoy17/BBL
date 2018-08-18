@@ -126,13 +126,7 @@ messages: {
   });
 </script>
 
-
-
-
-
-
-
-
+@if(Auth::user()->master_trainer==1)
 
 <div class="breadcrumbs">
   <div class="col-sm-4">
@@ -205,7 +199,7 @@ messages: {
     </div>
   </div>
 
-
+@endif
 
 
   @endsection

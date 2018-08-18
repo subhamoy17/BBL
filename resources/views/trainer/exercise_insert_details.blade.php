@@ -122,35 +122,7 @@
 });
 </script>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+@if(Auth::user()->master_trainer==1)
 
 <div class="breadcrumbs">
   <div class="col-sm-4">
@@ -238,7 +210,7 @@
     </div>
     @endif   
 
-
+@endif
 
 <script src="{{url('js/parsley.js')}}"></script>
 <script src="{{url('js/parsley.min.js')}}"></script>

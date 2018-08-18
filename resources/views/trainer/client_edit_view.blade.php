@@ -108,7 +108,7 @@ $('#clienteditform').validate({
 });
 </script>
 
-
+@if(Auth::user()->master_trainer==1)
 
 <div class="breadcrumbs">
             <div class="col-sm-4">
@@ -200,6 +200,6 @@ $('#clienteditform').validate({
                     </div>
                     </div>
 
-
+@endif
 
 @endsection

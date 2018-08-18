@@ -94,7 +94,7 @@ $(document).ready(function() {
 </script>
 
 
-
+@if(Auth::user()->master_trainer==1)
 <div class="breadcrumbs">
             <div class="col-sm-4">
                 <div class="page-header float-left">
@@ -155,6 +155,6 @@ $(document).ready(function() {
                     </div>
                     </div>
 
-
+@endif
 
 @endsection

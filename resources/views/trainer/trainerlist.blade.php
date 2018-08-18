@@ -63,7 +63,7 @@ $('#bootstrap-slot-data-table').DataTable({
 }
 
 </style>
-
+@if(Auth::user()->master_trainer==1)
 <div id="success-msg" class="alert alert-success alert-dismissible" style="display: none;">
   <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
   <i class="icon fa fa-check"></i>Hi!
@@ -192,6 +192,8 @@ $('#bootstrap-slot-data-table').DataTable({
     </div><!-- .animated -->
 </div>
     <!-- .content -->
+
+    @endif
   <script type="text/javascript">
       $(document).ready(function(){
         

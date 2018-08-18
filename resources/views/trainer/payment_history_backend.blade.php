@@ -40,7 +40,7 @@
 </style>
 
 
-
+@if(Auth::user()->master_trainer==1)
 
 
 
@@ -176,6 +176,8 @@
     </div>
   </div><!-- .animated -->
   
+
+  @endif
 <script type="text/javascript">
       $(document).ready(function(){
         

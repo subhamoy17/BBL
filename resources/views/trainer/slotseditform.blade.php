@@ -56,6 +56,8 @@ $('#editslotsform').validate({
 
 });
 </script>
+
+@if(Auth::user()->master_trainer==1)
 <div class="breadcrumbs">
             <div class="col-sm-4">
                 <div class="page-header float-left">
@@ -144,4 +146,6 @@ $('#editslotsform').validate({
                       </div>
                     </div>
                     </div>
+
+                    @endif
 @endsection

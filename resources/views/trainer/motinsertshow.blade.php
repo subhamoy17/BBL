@@ -304,6 +304,7 @@ $('.weightconvert').on('change', function(){
   });
 </script>
 
+@if(Auth::user()->master_trainer==1)
 
 <div class="breadcrumbs">
   <div class="col-sm-4">
@@ -528,5 +529,5 @@ $('.weightconvert').on('change', function(){
 </div>
 </div>
 
-
+@endif
 @endsection

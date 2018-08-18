@@ -237,7 +237,7 @@ range: "Please enter value betwwen 1 to 9999.9"
 
 });
 </script>
-
+@if(Auth::user()->master_trainer==1)
 <div class="breadcrumbs">
   <div class="col-sm-4">
     <div class="page-header float-left">
@@ -434,6 +434,6 @@ range: "Please enter value betwwen 1 to 9999.9"
 </div>
 </div>
 
- 
+ @endif
 
 @endsection

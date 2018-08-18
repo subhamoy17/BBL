@@ -34,7 +34,7 @@ table.dataTable thead>tr>th[id='action'].sorting_asc::after{display: none}
     border:1px solid #FFC0CB;
 }
 </style>
-
+@if(Auth::user()->master_trainer==1)
 <div class="breadcrumbs">
     <div class="col-sm-9">
         <div class="page-header float-left">
@@ -127,6 +127,8 @@ table.dataTable thead>tr>th[id='action'].sorting_asc::after{display: none}
     </div><!-- .animated -->
 </div>
 <!-- .content -->
+
+@endif
 
 <script src="{{asset('backend/assets/js/lib/data-table/datatables.min.js')}}"></script>
 <script src="{{asset('backend/assets/js/lib/data-table/dataTables.bootstrap.min.js')}}"></script>
