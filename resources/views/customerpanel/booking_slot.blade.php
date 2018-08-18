@@ -40,12 +40,12 @@
 
 <body>
   <header>
-    	<div class="header-top">
-    		<div class="container">
-    			<div class="row">
-    				<div class="col-lg-12">
+      <div class="header-top">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
 
-    					<div class="all-links">
+              <div class="all-links">
                             <ul>
                                  <li><a href="https://www.instagram.com" target="_blank"><i class="fa fa-instagram"></i></a></li>
                                  <li><a href="mailto:info@example.com"><i class="fa fa-envelope"></i></a></li>
@@ -83,25 +83,25 @@
                   </div>
                 </div>
                             @endif
-    					</div>
-    				</div>
-    			</div>
-    		</div>
-    	</div>
-    	<div class="heder-bottom">
-    		<div class="container">
-    			<div class="row">
-    				<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-    					<div class="logo text-left">
-    						<a href="{{url('/')}}"><img src="{{asset('frontend/images/logo.png')}}">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="heder-bottom">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+              <div class="logo text-left">
+                <a href="{{url('/')}}"><img src="{{asset('frontend/images/logo.png')}}">
                                 <ul> 
                             </a>
-    					</div>
-    				</div>
+              </div>
+            </div>
                   
-    				<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
-    					<div id="main-nav" class="stellarnav">
-    						<ul>
+            <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+              <div id="main-nav" class="stellarnav">
+                <ul>
 
                 <li class="{{ Request::segment(2) === 'bbl' ? 'active' : null }}">
                         <a href="{{url('customer/bbl')}}">Home</a>
@@ -132,12 +132,12 @@
                       </li>
 
 
-    						</ul>
-						</div>
-    				</div>
-    			</div>
-    		</div>
-    	</div>
+                </ul>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </header>
 
 

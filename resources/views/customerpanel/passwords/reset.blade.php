@@ -44,21 +44,21 @@
                             <h3>Login </h3>
                         </div>
                         <div class="input-box">
-                                     {{ __('E-Mail Address') }}
+                                     
                             <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"placeholder="Email" name="email" value="{{ $email ?? old('email') }}" autofocus>
                             @if ($errors->has('email'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('email') }}</strong>
                                     </span>
                                 @endif
-                                    {{ __('Password') }}
+                                    <br>
                              <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="Password"  name="password">
                               @if ($errors->has('password'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('password') }}</strong>
                                     </span>
                                 @endif
-                                {{ __('Confirm Password') }}
+                                <br>
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="Confirm Password">
                             <button class="lg-in" type="submit">{{ __('Reset Password') }}</button>
                         </div>
