@@ -401,12 +401,12 @@ range: "Please enter value betwwen 1 to 9999.9"
 
 
 <div class="row form-group">
-  <div class="col col-md-3"><label for="text-input" class="form-control-label">Heart Beat<span class="required_field_color">*</span></label></div>
+  <div class="col col-md-3"><label for="text-input" class="form-control-label">Heart Beat (bpm)<span class="required_field_color">*</span></label></div>
   <div class="col-12 col-md-9"><input type="text" id="heart_beat" name="heart_beat" placeholder="Heart Beat" class="form-control" value="{{$data->heart_beat}}">
   </div>
 </div>
 <div class="row form-group">
-  <div class="col col-md-3"><label for="text-input" class="form-control-label">Blood Pressure<span class="required_field_color">*</span></label></div>
+  <div class="col col-md-3"><label for="text-input" class="form-control-label">Blood Pressure (mmHg)<span class="required_field_color">*</span></label></div>
   <div class="col-12 col-md-9"><input type="text" id="blood_pressure" name="blood_pressure" placeholder="Blood Pressure" class="form-control" value="{{$data->blood_pressure}}">
   </div>
 </div>
