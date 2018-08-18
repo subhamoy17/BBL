@@ -5,7 +5,7 @@
 	<div class="main_section_agile inner">
 	</div>
 	<!-- //banner -->
-	<div class="wthree-blog">
+	<div class="wthree-blog padding-min">
 	<div class="container">
 		<div class="wthree_head_section">
 				<h3 class="gyl_header">We Provide <span>Services</span></h3>
@@ -30,8 +30,7 @@
 				<div class="blog-txt">
 					<h3><a href="#" data-toggle="modal" data-target="#myModal1">Lorem Ipsum </a></h3>
 					<h4>December 25,2017</h4>
-					<p>Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem ip sum has been the industry's standard text ever.
-						Lorem ipsum is simply dummy text.</p>
+					<p>Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem ip sum has been the industry's standard text ever. Lorem ipsum is simply dummy text.</p>
 					
 				</div>
 				<a href="#" data-toggle="modal" data-target="#myModal1"><img src="{{asset('frontend/images/7.jpg')}}" alt="blog image" class="img-responsive" /></a>
