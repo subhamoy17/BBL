@@ -29,7 +29,7 @@
 			autoPlay: true,
     		loop:true,
     		margin:30,
-    		nav:true,
+    		nav:false,
 			items: 3,
     		responsive:{
     		    0:{
