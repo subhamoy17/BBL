@@ -5,7 +5,7 @@
 	<div class="inner">
 	</div>
 	<!-- //banner -->
-	<div class="wthree-blog">
+	<div class="wthree-blog padding-min">
 	<div class="container">
 		<div class="wthree_head_section">
 				<h3 class="gyl_header">We Provide <span>Services</span></h3>
