@@ -179,13 +179,12 @@ $('#clienteditform').validate({
                             <div class="col-12 col-md-9">                         
                               <input type="file" id="image" name="image" class="form-control-file" >
                               <input type="hidden" id="oldimage" name="oldimage" class="form-control-file" value="{{$data->image}}">
-                            </div>
-                            @if($data->image)
+                              @if($data->image)
                             <div class="pic-case-upload">
-                                <img id="profile_thumbnail" src="{{asset('backend/images')}}/{{$data->image}}" alt="profile image" height="150"  width="200"/>
+                                <img id="profile_thumbnail" src="{{asset('backend/images')}}/{{$data->image}}" alt="profile image"  width="100"/>
                               </div>
                                @endif
-
+                            </div>
                           </div>
 
 

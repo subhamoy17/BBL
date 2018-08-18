@@ -782,13 +782,30 @@ textarea.parsley-error {
 	top: 33%;
 	right: 10px;
 }
+
+
+.btn-td2 button{
+  position: absolute;
+  top: 33%;
+  right:20px;
+}
+.btn-td2 a button{
+  position: absolute;
+  top: 33%;
+  left:20px;
+}
 /*81718*/
 
 
+.pic-case-upload {
+    margin-top: 15px;
+}
 
 
 
-
+.wrp-1 .card {
+    height: inherit;
+}
 
 
 

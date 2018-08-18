@@ -155,6 +155,7 @@ $('#traineraddform').validate({
                                  <img id="profile_thumbnail" height="150"  width="200" style="display: none;">
                               </div>
                            </div>
+                           
                            <div class="row form-group">
                              <div class="col col-md-10">
                              </div>

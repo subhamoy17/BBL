@@ -126,13 +126,6 @@ Route::post('motinsert','TrainerController@motinsert')->name('motinsert');
 Route::get('mot_customer_request', 'TrainerController@mot_customer_request')->name('mot_customer_request');
 
 
-
-
-
-
-
-
-
 //update mot//
 
 Route::get('moteditshow/{id}','TrainerController@moteditshow');
@@ -147,11 +140,11 @@ Route::get('our_trainer_list','TrainerController@our_client_show')->name('our_tr
 
 //insert our client//
 
-Route::get('client_insert_view','TrainerController@client_insert_view')->name('client_insert_view');
+Route::get('our_trainer_insert_view','TrainerController@client_insert_view')->name('client_insert_view');
 Route::post('client_insert','TrainerController@client_insert')->name('client_insert');
 
 //update our_client
-Route::get('client_edit_view/{id}','TrainerController@client_edit_view')->name('client_edit_view');
+Route::get('our_trainer_edit_view/{id}','TrainerController@client_edit_view')->name('client_edit_view');
 Route::post('client_update','TrainerController@client_update')->name('client_update');
 
 

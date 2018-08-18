@@ -99,17 +99,16 @@ $('#myeditform').validate({
             </div>    
 </div>
 
-        <div class="col-lg-6">
+        <div class="col-lg-12">
         <div class="card">
-                      <div class="card-header">
-                        <!-- <strong>Edit Profile</strong> -->
+                      
 
                         @if (session('success'))
                         <div class="alert alert-success">
                             {{ session('success') }}
                         </div>
                         @endif
-                      </div>
+                     
                       <div class="card-body card-block">
                         <form action="{{route('trainer.profileupdate')}}" method="post" enctype="multipart/form-data" class="form-horizontal" id="myeditform">
                             <input type="hidden" name="_token" value="{{csrf_token()}}">
@@ -120,7 +119,7 @@ $('#myeditform').validate({
                             </div>
                           </div>
                            <div class="row form-group">
-                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Contact NO<span class="required_field_color">*</span></label></div>
+                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Contact No.<span class="required_field_color">*</span></label></div>
                             <div class="col-12 col-md-9"><input type="text" id="contact_no" name="contact_no" placeholder="Contact No" class="form-control" value="{{$data->contact_no}}">
                             </div>
                           </div>
@@ -136,20 +135,25 @@ $('#myeditform').validate({
                             <div class="col col-md-3"><label for="text-input" class=" form-control-label">Email</label></div>
                             <div class="col-12 col-md-9"><input type="text" id="email" name="email" placeholder="Email" class="form-control" value="{{$data->email}}" readonly></div>
                           </div>
+
                           <div class="row form-group">
                             <div class="col col-md-3"><label for="file-input" class=" form-control-label">Profile Image</label></div>
                             
+                            
                             <div class="col-12 col-md-9">
-                              <input type="file" id="image" name="image" class="form-control">
+                              <input type="file" id="image" name="image" class="form-control-file">
 
                               <input type="hidden" id="oldimage" name="oldimage" class="form-control-file" value="{{$data->image}}">
                               
-                            </div>
+                            
                             <div class="pic-case-upload">
-                                <img id="profile_thumbnail" src="{{asset('backend/images')}}/{{$data->image}}" alt="profile image" />
+                                <img id="profile_thumbnail" src="{{asset('backend/images')}}/{{$data->image}}" alt="profile image"   width="150"/>
                               </div>
+                            
                           </div>
-                            <div>
+                          </div>
+
+                           <div style="float: right">
                                 <button type="submit" class="btn btn-primary btn-sm">
                                   <i class="fa fa-dot-circle-o"></i> Submit
                                 </button>

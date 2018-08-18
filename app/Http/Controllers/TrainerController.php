@@ -944,24 +944,6 @@ public function mot_customer_request(Request $request)
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 public function moteditshow($id){
     $data=DB::table('customer_mot')
     ->join('customers','customers.id','customer_mot.customer_id')

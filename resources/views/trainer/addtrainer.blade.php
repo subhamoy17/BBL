@@ -158,7 +158,7 @@ $('#traineraddform').validate({
                             <div class="col col-md-3"><label for="file-input" class=" form-control-label">Profile Image</label></div>
                             <div class="col-12 col-md-9">
                               <input type="file" id="image" name="image" class="form-control" >
-                              <img id="profile_thumbnail" height="150"  width="200">
+                              <img id="profile_thumbnail" width="100">
                             </div>
                           </div>
                             <div style="float: right">

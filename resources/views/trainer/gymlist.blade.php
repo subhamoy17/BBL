@@ -111,8 +111,8 @@ table.dataTable thead>tr>th[id='action'].sorting_asc::after{display: none}
                                             N/A
                                         @endif
                                     </td>
-                                    <td>
-                                        <a href="{{url('trainer/editexercise')}}/{{$mydata->id}}" title="Edit Exercise" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></a>
+                                    <td class="btn-td2" style="position: relative;">
+                                        <a href="{{url('trainer/editexercise')}}/{{$mydata->id}}" title="Edit Exercise"><button class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button></a>
                                         <button type="button" class="btn btn-danger btn-sm" onclick="delete_gym_type({!!$mydata->id!!})" style="width: 32px;" title="Delete Exercise"><i class="fa fa-trash-o"></i></button>
                                     </td>
                                 </tr>

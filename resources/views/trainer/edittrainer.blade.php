@@ -151,18 +151,20 @@ $('#trainereditform').validate({
                           <div class="row form-group">
                             <div class="col col-md-3"><label for="text-input" class=" form-control-label">Email<span class="required_field_color">*</span></label></div>
                             <div class="col-12 col-md-9"><input type="text" id="email" name="email" placeholder="Email" class="form-control" value="{{$data->email}}" readonly></div>
-                          </div>                  
+                          </div>    
+                                        
                             <div class="row form-group">
                             <div class="col col-md-3"><label for="file-input" class=" form-control-label">Profile Image</label></div>
                             <div class="col-12 col-md-9">                         
                               <input type="file" id="image" name="image" class="form-control-file" >
                               <input type="hidden" id="oldimage" name="oldimage" class="form-control-file" value="{{$data->image}}">
-                            </div>
-                            @if($data->image)
+                               @if($data->image)
                             <div class="pic-case-upload">
-                                <img id="profile_thumbnail" src="{{asset('backend/images')}}/{{$data->image}}"  height="150" />
+                                <img id="profile_thumbnail" src="{{asset('backend/images')}}/{{$data->image}}"  width="100" />
                               </div>
                               @endif
+                            </div>
+                           
 
                           </div>
                             <div style="float: right">
