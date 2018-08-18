@@ -40,7 +40,7 @@
    		<div class="contact-box">
    			<div class="container">
    				<div class="row">
-   					<div class="col-lg-7 col-md-7 col-sm-12 colxs-12">
+   					<div class="col-lg-7 col-md-7 col-sm-12 colxs-12"  id="contact_msg_success">
    						<h4>Interested in discussing?</h4>
    						<div class="form-box">
                  <form action="{{route('front_contact_insert')}}" method="post" enctype="multipart/form-data" class="" id="contactusform">
@@ -84,8 +84,11 @@
                 					
                 					<button type="submit"  name="submit" class="btn btn-dark btn-theme-colored btn-flat" data-loading-text="Please wait...">Send your message</button>
               					</div>
-                        <div class="form-group">
+                        <div class="form-group" >
                           @if (session('success'))
+                              <script type="text/javascript">
+                              window.location.hash = "contact_msg_success";
+                            </script>
                               <!-- <span style="color: white;">Test</span> -->
                               <div class="alert alert-success">
                                   {{ session('success') }}

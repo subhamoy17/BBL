@@ -557,7 +557,7 @@ public function front_contact_insert(Request $request)
   $data['message']=$request->form_message;
   $data['created_at']=Carbon::now();
   DB::table('contact_us')->insert($data);
-  return redirect()->back()->with("success","Your Enquiry is submitted successfully!");
+  return redirect()->back()->with("success","Your Enquiry is submitted successfully!");  
 }
 
 public function cust_testimonial(Request $request)
