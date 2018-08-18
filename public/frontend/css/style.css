@@ -5881,12 +5881,12 @@ a.sign-btn2 {
 	margin-right: 5px;
 }
 .mot-mod .modal-dialog {
-	width: 1115px;
+	width: 1158px;
 }
 .wrp {
 	margin: 0 auto;
 	width: 100%;
-	text-align: center;
+	text-align: left;
 }
 .mot-text textarea {
 	width: 100%;
@@ -5917,12 +5917,11 @@ a.sign-btn2 {
 	font-size: 11px;
 }
  .wrp small{
-	
 	bottom: 8px;
 	left: 58%;
 	color: #fff;
 	font-weight: 600;
-	font-size: 13px;
+	font-size: 11px;
 }
 .bk-slt-btn {
 	position: absolute;
@@ -6058,5 +6057,8 @@ a.sign-btn2 {
 /*81818*/
 .wthree-blog.padding-min {
     padding-bottom: 0;
+}
+.map {
+	margin-top: 70px;
 }
 /*81818*/

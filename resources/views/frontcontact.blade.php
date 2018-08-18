@@ -21,7 +21,7 @@
             </div>
             <div class="col-sm-12 col-md-4">
               <div class="contact-info text-center">
-                <i class="fa fa-map-marker-alt font-36 mb-10 text-theme-colored"></i>
+                <i class="fa fa-map-marker font-36 mb-10 text-theme-colored"></i>
                 <h4>Address</h4>
                 <h6 class="text-gray">121 King Street, Australia</h6>
               </div>
@@ -100,7 +100,7 @@
    					</div>
    					<div class="col-lg-5 col-md-5 col-sm-12 colxs-12">
    						<div class="map">
-   							<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14735.757260694843!2d88.4397378!3d22.5813729!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x639638c83b7f297a!2sSoftclique+Software+Services+LLP!5e0!3m2!1sen!2sin!4v1518768352355" width="100%" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+   							<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14735.757260694843!2d88.4397378!3d22.5813729!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x639638c83b7f297a!2sSoftclique+Software+Services+LLP!5e0!3m2!1sen!2sin!4v1518768352355" width="100%" height="467" frameborder="0" style="border:0" allowfullscreen></iframe>
    						</div>
    					</div>
    				</div>
