@@ -14,7 +14,7 @@
             </div>
           </div>
           <div class="test-text-box">
-            <h4>{{$mydata->name}}/ <span class="designation">{{$mydata->designation}}</span></h4>
+            <h4>{{$mydata->designation}} : {{$mydata->name}} <span class="designation"></span></h4>
             <p>{{$mydata->description}}</p>
           </div>
         </div>
