@@ -388,19 +388,35 @@ public function pastshowlist(Request $request)
 public function approve_customer_request(Request $request)
 {
 
+
+    $remaining_session_request_now=Carbon::now()->toDateString();
     $data=$request->get('data');
     $id=$data['id'];
     $action=$data['action'];
     Log::debug(" Check id ".print_r($id,true));
     Log::debug(" Check action ".print_r($action,true));
     if($action=="Approve"){
+
+        $customer_id=DB::table('slot_request')->where('id',$id)->first();
+
+        $package_history=DB::table('purchases_history')
+        ->where('customer_id',$customer_id->customer_id)
+        ->where('purchases_history.active_package',1)
+        ->where('purchases_history.package_validity_date','>=',$remaining_session_request_now)
+        ->orderBy('package_validity_date','ASC')->first();
+
+        $package_history_update_data['package_remaining']=$package_history->package_remaining-1;
+
+        $package_history_update=DB::table('purchases_history')->where('id',$package_history->id)->update($package_history_update_data);
+
+
         DB::table('slot_request')->where('id',$id)->update(['approval_id' =>3,'decline_reason'=>null]);
         return response()->json(1);
     }
     elseif($action=="Decline")
     {
         $reason=$data['comment'];
-        $remaining_session_request_now=Carbon::now()->toDateString();
+        
 
         $customer_id=DB::table('slot_request')->where('id',$id)->first();
 

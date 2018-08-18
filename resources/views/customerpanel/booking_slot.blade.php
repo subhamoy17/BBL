@@ -142,15 +142,7 @@
 
 
 
- @if (session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
-
-    <?php $a=Session::forget('success'); ?>
-
-    {{ session('success') }}
-  @endif
+ 
   <div class="inner-padding">
 
     <div class="container">
@@ -159,7 +151,15 @@
         <li class="active bb" rel="tab5"><a href="#">Session Booking</a></li>
         
       </ul>
+
       <div class="tab_container">
+        @if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+
+    <?php Session::forget('success'); ?>
+  @endif
           <!-- #tab1 -->
           <h3 class="ed-p">Session Booking Form</h3>
           <h3 class="d_active tab_drawer_heading" rel="tab5">Tab 5</h3>

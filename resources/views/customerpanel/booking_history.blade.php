@@ -17,7 +17,7 @@
                 <thead>
                   <tr>
                     <th>Total number of session reamaining</th>
-                     <th>Future pennding booking</th>
+                     <th>Future pending booking</th>
                      <th>Future accepted booking</th>
                      
                   </tr>
@@ -74,7 +74,7 @@
                      
                      <th>Booked On</th>
                      <th>Booking date & time</th>
-                       <th> Booking status</th>
+                       <th>Booking status</th>
                        <th>MOT</th>
                   </tr>
                 </thead>
