@@ -513,7 +513,7 @@ $('.weightconvert').on('change', function(){
 
   <div class="row form-group">
     <div class="col-lg-3"><label for="text-input" class="form-control-label">Measured On<span class="required_field_color">*</span></label></div>
-    <div class="col-lg-9"><input type="text" id="mot_date" name="date" class="form-control" placeholder="Date">
+    <div class="col-lg-9"><input type="text" id="mot_date" name="date" class="form-control" placeholder="Date" readonly>
     </div>
   </div>
   
@@ -528,10 +528,6 @@ $('.weightconvert').on('change', function(){
 </div>
 </div>
 </div>
-<script src="{{asset('backend/assets/js/lib/chart-js/Chart.bundle.js')}}"></script>
-  <script src="{{asset('backend/assets/js/widgets.js')}}"></script>
-    <script src="{{asset('backend/assets/js/lib/vector-map/jquery.vmap.js')}}"></script>
-    <script src="{{asset('backend/assets/js/lib/vector-map/jquery.vmap.min.js')}}"></script>
- <script src="{{asset('backend/assets/js/lib/vector-map/country/jquery.vmap.world.js')}}"></script>
+
 
 @endsection
