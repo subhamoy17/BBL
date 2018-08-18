@@ -15,7 +15,7 @@
   <table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="border: 1px solid #cccccc;">
     <tr>
       <td align="center" bgcolor="#5C342C" style="padding: 20px 0 20px 0;">
-        <h1>BBL</h1>
+       <h1><img src="{{asset('frontend/images/logo.png')}}"></h1>
       </td>
     </tr>
     <tr> 
