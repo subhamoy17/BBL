@@ -47,7 +47,7 @@
           <tr>
             <!--  -->
             <td>{{$mydata->slots_name}}</td>
-            <td>{{$mydata->slots_price}} <i class="fa fa-gbp"></i></td>
+            <td> <i class="fa fa-gbp"></i> {{$mydata->slots_price}}</td>
             <td>{{$mydata->slots_validity}} Days</td>
             <td>{{$mydata->purchases_date}}</td>
             <td>{{$mydata->package_validity_date}}</td>
