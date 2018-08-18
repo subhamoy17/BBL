@@ -33,7 +33,7 @@
             <th>Package Price</th>
             <th>Package validity</th>
             <th>Purchases Date</th>
-            <th>Purchases End Date</th>
+            <th>Purchases Validity</th>
             <!-- <th>Payment Mode</th> -->
             <th>Total Slots </th>
             <th>Remaining Slot(s)</th>
@@ -47,8 +47,8 @@
           <tr>
             <!--  -->
             <td>{{$mydata->slots_name}}</td>
-            <td>{{$mydata->slots_price}}</td>
-            <td>{{$mydata->slots_validity}}</td>
+            <td>{{$mydata->slots_price}} <i class="fa fa-gbp"></i></td>
+            <td>{{$mydata->slots_validity}} days</td>
             <td>{{$mydata->purchases_date}}</td>
             <td>{{$mydata->package_validity_date}}</td>
             <td>{{$mydata->slots_number}}</td>
