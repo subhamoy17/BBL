@@ -7,24 +7,17 @@
 <script type="text/javascript">
 $(document).ready(function() {  
 
-  $.validator.addMethod("alpha", function(value, element){
-    return this.optional(element) || value == value.match(/^[a-zA-Z, '']+$/);
-    }, "Alphabetic characters only please");
-
 $('#storeform').validate({ 
 /// rules of error 
-  rules: {
 
-"slots_name": {
-       alpha:true,
-      required: true
-    },
-
-
+rules: {
     "slots_number": {
       required: true,
-      numeric: true,
+      digits: true,
       min:1
+    },
+     "slots_name": {
+      required: true 
     },
     "slots_price": {
       required: true,
@@ -33,35 +26,33 @@ $('#storeform').validate({
     },
     "slots_validity": {
       required: true,
-      numeric: true,
+      digits: true,
       min:1
     }
-
 
   },
 
   ////for show error message
   messages: {
-
- "slots_name":{
-   required: 'Please enter package name'
-    },
     "slots_number":{
-    required:'Please Enter number of slots available for this package',
-    numeric: 'Please enter numeric value only',
+    required:'Please Enter number of slots',
+    digits: 'Please enter only number of digits',
     min: "Minimum value 1 is required"
     },
+    "slots_name":{
+    required:'Please Enter a package name'
+    
+    },
     "slots_price": {
-      required: 'Please enter the price of the package',
-      number: 'Please enter a valid price',
+      required: 'Please enter the price of slots',
+      number: 'Please enter only point and number of digits',
       range: "Please enter price betwwen 1 to 999999.99"
     },
     "slots_validity": {
-      required: 'Please enter the validity of the package',
-      numeric: 'Please enter numeric value only',
+      required: 'Please enter the validity of slots',
+      digits: 'Please enter only number of digits',
       min: "Minimum value 1 is required"
     }
-
   }
 });
 
