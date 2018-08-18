@@ -782,17 +782,8 @@ textarea.parsley-error {
 	top: 33%;
 	right: 10px;
 }
-
-
-.btn-td2 button{
-  position: absolute;
-  top: 33%;
-  right:20px;
-}
-.btn-td2 a button{
-  position: absolute;
-  top: 33%;
-  left:20px;
+.cntct-list .modal-dialog {
+    top: 150px;
 }
 /*81718*/
 

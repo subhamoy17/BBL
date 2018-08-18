@@ -38,7 +38,7 @@ $('#bootstrap-slot-data-table').DataTable({
     border:1px solid #FFC0CB;
 }
 </style>
-<div id="reason_modal" class="modal fade common" role="dialog" >
+<div id="reason_modal" class="modal fade common cntct-list" role="dialog" >
   <div class="modal-dialog">
     
     <div class="modal-content">
