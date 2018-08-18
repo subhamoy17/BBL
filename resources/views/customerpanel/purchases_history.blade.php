@@ -58,10 +58,10 @@
               <span id="gg" class="toolclip" data-tooltipster='{"side":"left","animation":"fade"}' data-tooltip-content="#tooltip_content"><i class="fa fa-info-circle" style="margin-left: 5px;font-size: 15px;"></i></span>
               <div class="tooltip_templates">
     			<span id="tooltip_content">
-    			    <strong>This is the content of my adc</strong>
-    			    <strong>This is the content of my adc</strong>
-    			    <strong>This is the content of my adc</strong>
-    			    <strong>This is the content of my adc</strong>
+    			    <strong>Remaining Slot is higher than Total Slot available. This is happen due to</strong>
+    			    <strong>a) If any slot was cancelled/declined from any previous active package.</strong>
+    			    <strong>b) If any slot request from any previous active package is not entertained by any trainer.</strong>
+    			    
     			</span>
 			</div>
               <div class="modal-body extra_session_div" style="display: none;">
