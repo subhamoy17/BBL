@@ -127,7 +127,6 @@
                       <td>{{$mydata->name}}</td>
                   <td>{{$mydata->slots_name}}</td>
                   <td><i class="fa fa-gbp"></i> {{$mydata->slots_price}}</td>
-
                   <td>{{$mydata->payment_options}}</td>
                   <td>{{$mydata->purchases_date}}</td>
                  <td> 
@@ -139,26 +138,26 @@
                 @if($mydata->payment_options == 'Paypal' && $mydata->active_package == 1)
                     Payment Success
                           @endif
-                  @if($mydata->payment_options == 'Banking Transfer' && $mydata->status =='Inprogress' && $mydata->active_package == 0)
-                          Payment Inprogres
+                  @if($mydata->payment_options == 'Bank Transfer' && $mydata->status =='Inprogress' && $mydata->active_package == 0)
+                          Payment Inprogress
                               @endif 
-                        @if($mydata->payment_options == 'Banking Transfer' && $mydata->status =='Decline' && $mydata->active_package == 0 ) 
+                        @if($mydata->payment_options == 'Bank Transfer' && $mydata->status =='Decline' && $mydata->active_package == 0 ) 
                               Payment Not Success
                            @endif
-                  @if($mydata->payment_options == 'Banking Transfer' && $mydata->status =='Success' && $mydata->active_package == 1)
+                  @if($mydata->payment_options == 'Bank Transfer' && $mydata->status =='Success' && $mydata->active_package == 1)
                             Payment Success
                               @endif 
 
                  </td>
               <td>
-                @if($mydata->payment_options == 'Banking Transfer' && $mydata->status =='Inprogress' && $mydata->active_package == 0)
+                @if($mydata->payment_options == 'Bank Transfer' && $mydata->status =='Inprogress' && $mydata->active_package == 0)
                <button type="button" class="btn btn-success status-all" id="{{$mydata->id}}"> Approve</button>
                  <button type="button" class="btn btn-danger status-all" id="{{$mydata->id}}"> Decline</button>
-                @else
+                @endif
          
             <a href="#" class="payment btn btn-info btn-sm"  data-name="{{$mydata->name}}"   data-purchases_date="{{$mydata->purchases_date}}"  data-slots_name="{{$mydata->slots_name}}" data-payment_id="{{$mydata->payment_id}}" data-description="{{$mydata->description}}"   data-image="{{asset('backend/images')}}/{{$mydata->image}}" >View Details</button>
 
-                @endif
+                
 
               </td>
 

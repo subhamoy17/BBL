@@ -1212,7 +1212,7 @@ public function payment_history_backend()
     $data=DB::table('purchases_history')
     ->join('customers','customers.id','purchases_history.customer_id')
     ->join('payment_history','payment_history.purchase_history_id','purchases_history.id')
-    ->select('purchases_history.id','purchases_history.slots_name','purchases_history.slots_price','customers.name','customers.name','purchases_history.payment_options','purchases_history.active_package','purchases_history.payment_options','payment_history.status','purchases_history.purchases_date','payment_history.payment_id','payment_history.description','payment_history.image')->get();
+    ->select('purchases_history.id','purchases_history.slots_name','purchases_history.slots_price','customers.name','customers.name','purchases_history.payment_options','purchases_history.active_package','payment_history.status','purchases_history.purchases_date','payment_history.payment_id','payment_history.description','payment_history.image','payment_history.payment_mode')->get()->all();
 
     return view('trainer.payment_history_backend')->with(compact('data'));
 

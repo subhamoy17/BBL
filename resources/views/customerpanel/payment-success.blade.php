@@ -63,7 +63,7 @@
     @endif
 
 
-    <a href="{{url('customer/mybooking')}}" class="btbb">Back</a>
+    <a href="{{url('customer/purchase_history')}}" class="btbb">Back</a>
     <a href="{{url('customer/pricing')}}" class="btbb">Purchase Another Package</a>
 
 	
