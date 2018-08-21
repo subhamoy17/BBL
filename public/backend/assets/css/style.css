@@ -742,7 +742,7 @@ textarea.parsley-error {
 }
 #bootstrap-slot-data-table .status-all {
     float: left;
-    width: 57px;
+    width: 30px;
     margin: 2px;
     padding: 0;
     height: 35px;
@@ -811,6 +811,13 @@ textarea.parsley-error {
 }
 /*81718*/
 
-
+/*82118*/
+.td-btn4 {
+	width: 70px;
+}
+.td-btn5{
+	width:130px;
+}
+/*82118*/
 
 
