@@ -167,7 +167,7 @@ table.dataTable thead>tr>th[id='action'].sorting_asc::after{display: none}
 
 <script type="text/javascript">
   $(document).ready(function(){
-    $('.status-all').on('click',function(e) {
+    $("#bootstrap-slot-data-table").on("click", ".status-all", function(e) {
       var action = $(this).data("msg");
       console.log(action);
       var row = this.closest('tr');
