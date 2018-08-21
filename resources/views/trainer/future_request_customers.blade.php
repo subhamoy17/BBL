@@ -142,14 +142,19 @@ table.dataTable thead>tr>th[id='action'].sorting_asc::after{display: none}
                      @else
                      <td>N/A</td>
                      @endif
-                     <td>
-                    @if($mydata->approval_id != 3 && $mydata->approval_id != 2)       
-                    <button type="button" class="btn btn-success status-all" id="{{$mydata->id}}"> Approve</button>
+                  
+                   <td class="td-btn4" style="position: relative;">
+                    @if($mydata->approval_id != 3 && $mydata->approval_id != 2) 
+
+                    <button type="button" title="Approve" class="btn btn-success status-all" id="{{$mydata->id}}" data-msg="Approve"><i class="fa fa-thumbs-up"></i></button>
                     @endif
                     @if($mydata->approval_id != 4 && $mydata->approval_id != 2)
-                    <button type="button" class="btn btn-danger status-all" id="{{$mydata->id}}"> Decline</button>
+                    <button type="button" title="Decline" class="btn btn-danger status-all" id="{{$mydata->id}}" data-msg="Decline"><i class="fa fa-thumbs-down"></i></button>
                     @endif
                   </td>
+
+
+
                 </tr>
                 @endforeach
                 </tbody>
@@ -169,7 +174,7 @@ table.dataTable thead>tr>th[id='action'].sorting_asc::after{display: none}
   $(document).ready(function(){
     $("#bootstrap-slot-data-table").on("click", ".status-all", function(e) {
 
-      var action = $.trim($(this).text());
+      var action =$(this).data("msg");
       console.log(action);
       var row = this.closest('tr');
       if (action == "Decline"){

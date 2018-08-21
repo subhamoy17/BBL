@@ -141,12 +141,13 @@ table.dataTable thead>tr>th[id='action'].sorting_asc::after{display: none}
                      @else
                      <td>N/A</td>
                      @endif
-                  <td class="td-btn4" style="position: relative;">
-                    @if($mydata->approval_id != 3 && $mydata->approval_id != 2)       
-                    <button type="button" class="btn btn-success status-all" id="{{$mydata->id}}"><i class="fa fa-check"></i></button>
+                    <td class="td-btn4" style="position: relative;">
+                    @if($mydata->approval_id != 3 && $mydata->approval_id != 2) 
+
+                    <button type="button" title="Approve" class="btn btn-success status-all" id="{{$mydata->id}}" data-msg="Approve"><i class="fa fa-thumbs-up"></i></button>
                     @endif
                     @if($mydata->approval_id != 4 && $mydata->approval_id != 2)
-                    <button type="button" class="btn btn-danger status-all" id="{{$mydata->id}}"><i class="fa fa-times"></i></button>
+                    <button type="button" title="Decline" class="btn btn-danger status-all" id="{{$mydata->id}}" data-msg="Decline"><i class="fa fa-thumbs-down"></i></button>
                     @endif
                   </td>
                 </tr>
@@ -167,7 +168,7 @@ table.dataTable thead>tr>th[id='action'].sorting_asc::after{display: none}
 <script type="text/javascript">
   $(document).ready(function(){
     $('.status-all').on('click',function(e) {
-      var action = $.trim($(this).text());
+      var action = $(this).data("msg");
       console.log(action);
       var row = this.closest('tr');
       if (action == "Decline"){

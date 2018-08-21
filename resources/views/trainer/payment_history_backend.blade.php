@@ -150,13 +150,22 @@
                             Payment Success
                               @endif 
 
+
                  </td>
+
+
               <td align="center" class="td-btn5">
+
+
                 @if($mydata->payment_options == 'Bank Transfer' && $mydata->status =='Inprogress' && $mydata->active_package == 0)
-               <button type="button" class="btn btn-success status-all" id="{{$mydata->id}}"><i class="fa fa-check"></i></button>
-                 <button type="button" class="btn btn-danger status-all" id="{{$mydata->id}}"><i class="fa fa-times"></i></button>
+
+               <button type="button" class="btn btn-success status-all" title="Approve" data-msg="Approve" id="{{$mydata->id}}"><i class="fa fa-thumbs-up"></i></button>
+
+                 <button type="button"  title="Decline" class="btn btn-danger status-all" data-msg="Decline" id="{{$mydata->id}}"><i class="fa fa-thumbs-down"></i></button>
+
                 @endif
          
+
             <a href="#" class="payment btn btn-info btn-sm"  data-name="{{$mydata->name}}"   data-purchases_date="{{$mydata->purchases_date}}"  data-slots_name="{{$mydata->slots_name}}" data-payment_id="{{$mydata->payment_id}}" data-description="{{$mydata->description}}"   data-image="{{asset('backend/bankpay_images')}}/{{$mydata->image}}" data-noimage="{{$mydata->image}}"><i class="fa fa-eye" title="view details"  aria-hidden="true"></i></button>
 
                 
@@ -182,7 +191,7 @@
       $(document).ready(function(){
         
         $('.status-all').on('click',function(e) {
-          var action = $.trim($(this).text());
+          var action = $(this).data("msg");
           console.log(action);
           var row = this.closest('tr');
           console.log(row);
