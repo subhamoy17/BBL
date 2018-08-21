@@ -87,7 +87,7 @@
                      <td>
                      <?php  $date=$mydata->slot_date;
                       $time =$mydata->slot_time;
-                      $merge =date('d F Y', strtotime($date)).' '.$time;
+                      $merge =date('d F Y', strtotime($date)).' '.date('h:i A', strtotime($time));
                        ?>
                       {{$merge}}
                       </td>
