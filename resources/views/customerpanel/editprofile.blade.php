@@ -43,7 +43,7 @@
                         <div class="col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group">
                               <label>Email <small>*</small></label>
-                              <input type="text" id="email" name="email" placeholder="Email" class="form-control" value="{{$data->email}}">
+                              <input type="text" id="email" name="email" placeholder="Email" class="form-control" readonly value="{{$data->email}}">
                             </div>
                         </div>
 

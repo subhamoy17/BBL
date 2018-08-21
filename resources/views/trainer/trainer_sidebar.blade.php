@@ -174,7 +174,7 @@
 
 
 
-                        @if(Request::segment(2) == "gymType")
+                        <!-- @if(Request::segment(2) == "gymType")
                        <ul class="nav navbar-nav">
                  <li class="active">
                   <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('gymType')}}" style="color: #fff !important;">Exercise List</a></li>
@@ -183,7 +183,7 @@
                   <li class="active">
                   <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('gymType')}}">Exercise List</a></li>
                   @endif
-
+ -->
 
 
                       @if(Request::segment(1) == "pastRequestlist" || Request::segment(1) == "futureRequestlist" || Request::segment(1) == "futurePendingRequestlist")                   

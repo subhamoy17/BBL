@@ -90,7 +90,7 @@
                    @foreach($data as $key=>$mydata)
                   <tr>
                     <td>{{$mydata->users_name}}</td>
-                    <td>{{$mydata->date}}</td>
+                    <td>{{date('d F Y', strtotime($mydata->date))}}</td>
                      <td>
                          
                     <a href="#" id="asd" class="common_mot btn btn-info btn-sm" data-right_arm="{{$mydata->right_arm}}"  data-left_arm="{{$mydata->left_arm}}" data-chest="{{$mydata->chest}}"
@@ -113,6 +113,7 @@
               </table>
               @endif
             </div>
+            <div id="purchase_link">{{$data->links()}}</div>
           </div>
           <!-- #tab2 -->
         

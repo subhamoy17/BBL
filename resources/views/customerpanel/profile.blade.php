@@ -25,7 +25,11 @@
                         <div class="col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group">
                               <label>Address </label>
+                              @if($data->address)
                               <h6>{{$data->address}}</h6>
+                               @else
+                                    <h6>N/A</h6>
+                                 @endif
                             </div>
                         </div>
                         <div class="col-md-6 col-sm-12 col-xs-12">

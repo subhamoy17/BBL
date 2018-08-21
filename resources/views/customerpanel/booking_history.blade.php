@@ -83,11 +83,11 @@
                    @foreach($data as $key=>$mydata)
                   <tr >
                     <td>{{$mydata->users_name}}</td>
-                    <td>{{$mydata->created_at}}</td>
+                    <td>{{date('d F Y', strtotime($mydata->created_at))}}</td>
                      <td>
                      <?php  $date=$mydata->slot_date;
                       $time =$mydata->slot_time;
-                      $merge =$date.' '.$time;
+                      $merge =date('d F Y', strtotime($date)).' '.$time;
                        ?>
                       {{$merge}}
                       </td>

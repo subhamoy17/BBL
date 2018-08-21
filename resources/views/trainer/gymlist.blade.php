@@ -106,7 +106,7 @@ table.dataTable thead>tr>th[id='action'].sorting_asc::after{display: none}
                                         @if(isset($mydata->video) && !empty($mydata->video))
                                             <iframe src="{{$mydata->video}}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                                         @elseif(isset($mydata->image) && !empty($mydata->image))
-                                            <img src="{{asset('backend/images')}}/{{$mydata->image}}" style="width: 90%;">
+                                            <img src="{{asset('backend/images')}}/{{$mydata->image}}" height="200px">
                                         @else
                                             N/A
                                         @endif

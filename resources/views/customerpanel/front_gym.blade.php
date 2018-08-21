@@ -14,7 +14,7 @@
             <div class="exr-emg">
               <h4><span>{{$mydata->title}}</span></h4>
               <p>{{$mydata->description}}</p>
-              <h5><span>Duration</span> {{$mydata->duration}} <span>Days</span></h5>
+              <h5><span>Duration:</span>{{$mydata->duration}}<span>Days</span></h5>
             </div>
           </div>
           <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -22,7 +22,7 @@
               @if(isset($mydata->video) && !empty($mydata->video))
                 <iframe src="{{$mydata->video}}" width="100%" height="315" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
               @elseif(isset($mydata->image) && !empty($mydata->image))
-                <img src="{{asset('backend/images')}}/{{$mydata->image}}">
+                <img src="{{asset('backend/images')}}/{{$mydata->image}}" height="315">
               @endif
             </div>
            

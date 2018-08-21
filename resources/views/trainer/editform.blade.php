@@ -125,7 +125,7 @@ $('#myeditform').validate({
                           </div>
                           <div class="row form-group">
                             <div class="col col-md-3">
-                              <label for="text-input" class=" form-control-label">Address</div>
+                              <label for="text-input" class=" form-control-label">Address<span class="required_field_color">*</span></div>
                             <div class="col-12 col-md-9">
                               <textarea id="address" name="address" placeholder="Enter Your Address" class="form-control"> {{ $data->address }}
                               </textarea>

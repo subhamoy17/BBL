@@ -21,7 +21,7 @@
               @if(isset($mydata->video) && !empty($mydata->video))
                 <iframe src="{{$mydata->video}}" width="100%" height="315" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
               @elseif(isset($mydata->image) && !empty($mydata->image))
-                <img src="{{asset('backend/images')}}/{{$mydata->image}}">
+                <img src="{{asset('backend/images')}}/{{$mydata->image}}" height="315">
               @endif
             </div>
           </div>
