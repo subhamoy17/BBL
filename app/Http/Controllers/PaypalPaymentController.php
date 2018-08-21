@@ -24,6 +24,7 @@ use Auth;
 
 use App\Customer;
 use App\Notifications\PackagePurchaseNotification;
+use Carbon\Carbon;
 
 
 
@@ -254,6 +255,17 @@ if ($result->getState() == 'approved') {
     $payment_history=DB::table('payment_history')->insert($paypal_history_data);
 
     Log::debug(":: before session value :: ".print_r($package_amount,true));
+
+    $remaining_session_request_now=Carbon::now()->toDateString();
+
+    $sum_slots = DB::table('purchases_history')
+      ->select('active_package','package_remaining','customer_id')
+      ->where('customer_id',$customer_id)
+      ->where('active_package',1 )
+      ->where('package_validity_date','>=',$remaining_session_request_now)
+      ->sum('package_remaining');
+
+      session(['sum_slots' => $sum_slots]);
 
 
     $customer_details=Customer::find($customer_id);

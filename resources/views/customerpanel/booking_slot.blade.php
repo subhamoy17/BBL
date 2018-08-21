@@ -183,15 +183,14 @@
                                 @endforeach
                               </select>
 
-                              <input type="hidden" id="trainer_id_old" class="form-control"  >
+                              <input type="hidden" id="old_trainer_id[]" >
+
                             </div>
                         </div>
 
                           <div class="col-md-6 col-sm-12 col-xs-12">
                           <label>Date <small>*</small></label>
                           <input type="text" id="slots_datepicker" name="date" class="form-control" onchange="jsfunction()" readonly="true">
-
-                           <input type="hidden" id="datepicker_old" class="form-control"  >
 
                         </div>
                         <div class="clearfix"></div>
@@ -201,8 +200,6 @@
                               <select class="form-control" name="time" id="slot_time">
                                 
                               </select>
-
-                              <input type="hidden" id="slot_time_id_old" class="form-control"  >
                             </div>
                         </div>
 
@@ -210,7 +207,7 @@
                         <div class="form-group">
                           <input name="form_botcheck" class="form-control" value="" type="hidden">
                           <input type="hidden" id="session_no" name="session_no" value="1">
-                          <button type="submit" name="submit" id="add_sess" class="btn btn-dark btn-theme-colored btn-flat" data-loading-text="Please wait...">Add Session</button>
+                          <button id="add_sess" class="btn btn-dark btn-theme-colored btn-flat">Add Session</button>
                         </div>
 
                 </div>
@@ -553,6 +550,9 @@ $('#slotform').validate({
     {
 
       
+      old_trainer_flg=0;
+      old_slots_date_flg=0;
+      old_slots_time_id_flg=0;
 
       i=$('#session_no').val();
 
@@ -562,16 +562,41 @@ $('#slotform').validate({
 
       trainer_id=$("#trainer_id").val();
 
-      console.log(trainer_name);
       slots_time_id=$("#slot_time").val();
 
-      if(i>$("#total_slots").val())
+      total_remaining_session=$("#total_slots").val();
+
+      $("input[name='trainer_id[]']").each(function() {
+      if($(this).val()==trainer_id)
+      {
+        old_trainer_flg=1;
+      }
+
+      });
+      $("input[name='slots_date[]']").each(function() {
+      if($(this).val()==slots_date)
+      {
+        old_slots_date_flg=1;
+      }
+
+      });
+
+      $("input[name='slots_time_id[]']").each(function() {
+      if($(this).val()==slots_time_id)
+      {
+        old_slots_time_id_flg=1;
+      }
+
+      });
+
+
+      if(parseInt(i)>parseInt(total_remaining_session))
       {
         alert ("You don't have any session"); 
         return false;
       }
 
-      else if(trainer_id==$("#trainer_id_old").val() && slots_date==$("#datepicker_old").val() && slots_time_id==$("#slot_time_id_old").val())
+      else if(old_trainer_flg==1 && old_slots_date_flg==1 && old_slots_time_id_flg==1)
       {
         alert ("You can't choose same time and date for a same trainer"); 
 
@@ -585,6 +610,8 @@ $('#slotform').validate({
       return false;
     }
     else{
+
+
    
 
     add_session_req.innerHTML = add_session_req.innerHTML +'<input type=text class="form-control"  readonly name="trainer_name[]"' + 'id="trainer_name[]"' + 'value="' + trainer_name + '"/>&nbsp;'
@@ -602,22 +629,24 @@ $('#slotform').validate({
     
     add_session_req.innerHTML = add_session_req.innerHTML +'<br>'
 
+    // var a=$('#trainer_name[]').val();
+    // alert(a);
+
     $('#save_btn').show();
     
 
     $("#trainer_id").val("");
     $("#slots_datepicker").val("");
     $("#slot_time").val("");
-
-    $("#trainer_id_old").val(trainer_id);
-    $("#datepicker_old").val(slots_date);
-    $("#slot_time_id_old").val(slots_time_id);
     
     i=1+parseInt(i);
     $("#session_no").val(i);
 
     
 }
+
+
+
     });
   
 </script>
