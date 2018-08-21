@@ -457,13 +457,11 @@ public function booking_slot_times(Request $request)
 
 public function slotinsert(Request $request)
 {
+  
 
-  Log::debug(" Check session request data ".print_r($request->all(),true));
+  $total_slots=$request->total_slots;
 
   $customer_id=$request->idd; //customer_id
-  $trainer_id=$request->id;  //trainer_id
-  $request_date=$request->date; // session request date
-  $request_time_id=$request->time;  // session request time id
 
   $remaining_session_request_now=Carbon::now()->toDateString();
 
@@ -475,56 +473,97 @@ public function slotinsert(Request $request)
   ->where('package_validity_date','>=',$remaining_session_request_now)
   ->orderBy('package_validity_date', 'ASC')
   ->first();
-
-  Log::debug(" all_package ".print_r($all_package,true));
-
+   
   $oldest_package_id=$all_package->id;
-  $oldest_package_validity_date=$all_package->package_validity_date;
-  $package_remaining=$all_package->package_remaining;
+
+  for($i=0;$i<$total_slots;$i++)
+  {
+
+    
+    $trainer_id=$request->trainer_id[$i];
+    $slots_date=$request->slots_date[$i];
+    $slots_time_id=$request->slots_time_id[$i];
 
 
   $slots_data['customer_id']=$customer_id;
   $slots_data['trainer_id']=$trainer_id;
   $slots_data['purchases_id']=$oldest_package_id;
-  $slots_data['slot_date']=$request_date;
-  $slots_data['slot_time_id']=$request_time_id;
+  $slots_data['slot_date']=$slots_date;
+  $slots_data['slot_time_id']=$slots_time_id;
   $slots_data['approval_id']=1;
 
+  Log::debug(" Check session request data1 ".print_r($slots_data,true));
+
   $insert_slot_session=DB::table('slot_request')->insert($slots_data);
-
-  if($package_remaining>0)
-  {
-    $new_remaining_package['package_remaining']=$package_remaining-1;
-    $new_remaining_package['active_package']=1;
-  }
-  if($package_remaining==1)
-  {
-    $new_remaining_package['package_remaining']=$package_remaining-1;
-    $new_remaining_package['active_package']=0;
   }
 
+  // // Log::debug(" Check session request data ".print_r($request->all(),true));
 
-  $update_package_purchase=DB::table('purchases_history')
-  ->where('id',$oldest_package_id)
-  ->update($new_remaining_package);
+  // // $customer_id=$request->idd; //customer_id
+  // // $trainer_id=$request->id;  //trainer_id
+  // // $request_date=$request->date; // session request date
+  // // $request_time_id=$request->time;  // session request time id
 
-  Log::debug(" all_package ".print_r($all_package,true));
+  // // $remaining_session_request_now=Carbon::now()->toDateString();
 
-  if($insert_slot_session && $update_package_purchase) 
-  {
+  // // $all_package=DB::table('purchases_history')
+  // // ->select('id','purchases_date','package_validity_date','package_remaining')
+  // // ->where('customer_id',$customer_id)
+  // // ->where('active_package',1)
+  // // ->where('package_remaining','>',0)
+  // // ->where('package_validity_date','>=',$remaining_session_request_now)
+  // // ->orderBy('package_validity_date', 'ASC')
+  // // ->first();
 
-    $sum_slots = DB::table('purchases_history')->
-    select('active_package','package_remaining','customer_id')
-    ->where('customer_id',Auth::guard('customer')->user()->id)
-    ->where('active_package',1)
-    ->where('package_remaining','>',0)
-    ->where('package_validity_date','>=',$remaining_session_request_now)
-    ->sum('package_remaining');
+  // // Log::debug(" all_package ".print_r($all_package,true));
 
-    session(['sum_slots' => $sum_slots]);
+  // // $oldest_package_id=$all_package->id;
+  // // $oldest_package_validity_date=$all_package->package_validity_date;
+  // // $package_remaining=$all_package->package_remaining;
+
+
+  // // $slots_data['customer_id']=$customer_id;
+  // // $slots_data['trainer_id']=$trainer_id;
+  // // $slots_data['purchases_id']=$oldest_package_id;
+  // // $slots_data['slot_date']=$request_date;
+  // // $slots_data['slot_time_id']=$request_time_id;
+  // // $slots_data['approval_id']=1;
+
+  // // $insert_slot_session=DB::table('slot_request')->insert($slots_data);
+
+  // // if($package_remaining>0)
+  // // {
+  // //   $new_remaining_package['package_remaining']=$package_remaining-1;
+  // //   $new_remaining_package['active_package']=1;
+  // // }
+  // // if($package_remaining==1)
+  // // {
+  // //   $new_remaining_package['package_remaining']=$package_remaining-1;
+  // //   $new_remaining_package['active_package']=0;
+  // // }
+
+
+  // // $update_package_purchase=DB::table('purchases_history')
+  // // ->where('id',$oldest_package_id)
+  // // ->update($new_remaining_package);
+
+  // // Log::debug(" all_package ".print_r($all_package,true));
+
+  // // if($insert_slot_session && $update_package_purchase) 
+  // // {
+
+  // //   $sum_slots = DB::table('purchases_history')->
+  // //   select('active_package','package_remaining','customer_id')
+  // //   ->where('customer_id',Auth::guard('customer')->user()->id)
+  // //   ->where('active_package',1)
+  // //   ->where('package_remaining','>',0)
+  // //   ->where('package_validity_date','>=',$remaining_session_request_now)
+  // //   ->sum('package_remaining');
+
+  // //   session(['sum_slots' => $sum_slots]);
 
     return redirect()->back()->with("success","Your session booking request is sent successfully !");
-  }
+  
 }
 
 public function my_mot()
