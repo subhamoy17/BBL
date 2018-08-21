@@ -90,7 +90,7 @@ $('#bootstrap-slot-data-table').DataTable({
                                     <th id="slno">Sl. No.</th>
                                     <th>Name of Slot</th>
                                     <th>Number of Slot</th>
-                                    <th>Slot's Price (Rs.)</th>
+                                    <th>Slot's Price </th>
                                     <th>Slot's Validity (In Days)</th>
                                     <th id="action" style="width: 70px;">Action</th>
                                 </tr>
@@ -102,7 +102,7 @@ $('#bootstrap-slot-data-table').DataTable({
                                     <td>{{$i++}}</td>
                                       <td>{{$mydata->slots_name}}</td>
                                     <td>{{$mydata->slots_number}}</td>
-                                    <td>{{$mydata->slots_price}}</td>
+                                    <td> <i class="fa fa-gbp"></i> {{$mydata->slots_price}}</td>
                                     <td>{{$mydata->slots_validity}}</td>
                                     <td>
                                         <a href="{{url('trainer/editslots')}}/{{$mydata->id}}" title="Edit Package"><button type="button" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button></a>
