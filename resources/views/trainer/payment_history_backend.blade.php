@@ -130,7 +130,7 @@
                   <td>{{$mydata->slots_name}}</td>
                   <td><i class="fa fa-gbp"></i>{{$mydata->slots_price}}</td>
                   <td>{{$mydata->payment_options}}</td>
-                  <td>{{$mydata->purchases_date}}</td>
+                  <td>{{date('d F Y', strtotime($mydata->purchases_date))}}</td>
                  <td> 
                   @if($mydata->payment_options == 'Paypal' && $mydata->active_package == 0) 
                   Payment Not Success
