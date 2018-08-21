@@ -45,7 +45,7 @@ $('#trainereditform').validate({
       required: true,
       numericOnly: true,
       minlength: 10,
-      maxlength: 10
+      maxlength: 12
       
     },
    "email": {
@@ -66,7 +66,7 @@ $('#trainereditform').validate({
   "contact_no": {
       required: 'Please enter your mobile number',
       minlength: 'Minimum 10 digits mobile number is required',
-      maxlength: 'Maximum 10 digits mobile number is required'
+      maxlength: 'Maximum 12 digits mobile number is required'
   },
  "email":{
     required: "Please enter an email",
