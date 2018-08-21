@@ -7,10 +7,14 @@
   <div id="tab2" class="tab_content">
 
     <div class="table-responsive table-bordered">
-        
+        @if($remaining_session_request>0)
+        <a href="{{url('customer/booking_slot')}}/{{Auth::guard('customer')->user()->id}}" class="btn btn-success bk-slt-btn">Send Slot Request</a>
+        @else
+        <a href="{{url('customer/booking_slot')}}/{{0}}"class="btn btn-success bk-slt-btn">Send Slot Request</a>
+        @endif
      <h3 align="center">All Purchase History</h3>
-		<div class="tbl-srch tbl-srch2">
-			 <form id="frm_purchase_search">
+    <div class="tbl-srch tbl-srch2">
+       <form id="frm_purchase_search">
          <!--  <input type="text" name="daterange"  value="2018-08-06 - 2018-09-12"/> -->
 
           <input id="datepicker3" type="text" name="start_date" value="<?php 
@@ -20,7 +24,7 @@
           <button type="submit" id="booking" class="btn btn-success" >Submit</button>
         </form>
         
-		</div>
+    </div>
 
       <table class="table">
         <thead>
@@ -53,13 +57,13 @@
               {{$mydata->slots_number}} <font style="color: #ffa461;"> + {{$others}}</font>
               <span id="gg" class="toolclip" data-tooltipster='{"side":"left","animation":"fade"}' data-tooltip-content="#tooltip_content"><i class="fa fa-info-circle" style="margin-left: 5px;font-size: 15px;"></i></span>
               <div class="tooltip_templates">
-    			<span id="tooltip_content">
-    			    <strong>Remaining Slot is higher than Total Slot available. This is happen due to</strong>
-    			    <strong>a) If any slot was cancelled/declined from any previous active package.</strong>
-    			    <strong>b) If any slot request from any previous active package is not entertained by any trainer.</strong>
-    			    
-    			</span>
-			</div>
+          <span id="tooltip_content">
+              <strong>Remaining Slot is higher than Total Slot available. This is happen due to</strong>
+              <strong>a) If any slot was cancelled/declined from any previous active package.</strong>
+              <strong>b) If any slot request from any previous active package is not entertained by any trainer.</strong>
+              
+          </span>
+      </div>
               <div class="modal-body extra_session_div" style="display: none;">
                     <h5 class="profile_modal_body" id="exampleModalLabel">This is the sample of video link ---> https://www.youtube.com/embed/93nnzrYffVo or https://www.youtube.com/watch?v=93nnzrYffVo</h5>
                 </div>
