@@ -33,16 +33,15 @@
                             <div class="clearfix"></div>
                             
               @else
-              <div class="reg-area">
+                <div class="reg-area">
                   <p><a href="{{route('customer-register')}}" class="jn-us"><i class="fa fa-hand-o-right"></i> Join Us</a></p>
-                                <p><a href="{{url('customer-login')}}" class="sgn-in"><i class="fa fa-user"></i>Sign In</a></p>
-                  <!-- <a class="srch-icon"><i class="fa fa-search"></i><i class="fa fa-times"></i></a> -->
+                  <p><a href="{{url('customer-login')}}" class="sgn-in"><i class="fa fa-user"></i>Sign In</a></p>
                   <div class="srch-box">
                     <input type="text" placeholder="search">
                     <input type="button" value="Search">
                   </div>
                 </div>
-                            @endif
+              @endif
     						
     						<!-- <div class="reg-area">
     							<a class="srch-icon"> <i class="fa fa-search"></i><i class="fa fa-times"></i></a>
