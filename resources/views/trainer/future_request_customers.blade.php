@@ -136,7 +136,7 @@ table.dataTable thead>tr>th[id='action'].sorting_asc::after{display: none}
                   <td>{{$mydata->name}}</td>
                   <td>{{$mydata->ph_no}}</td>
                   <td>{{$mydata->status}}</td>
-                  <td>{{date('d F Y', strtotime($mydata->slot_date))}} {{$mydata->slot_time}}</td> 
+                  <td>{{date('d F Y', strtotime($mydata->slot_date))}} {{date('h:i A', strtotime($mydata->slot_time))}}</td> 
                   @if($mydata->image)
                   <td><img src="{{asset('backend/images')}}/{{$mydata->image}}" height="50" width="50"></td>
                      @else

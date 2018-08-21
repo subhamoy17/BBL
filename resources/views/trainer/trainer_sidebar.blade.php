@@ -46,7 +46,7 @@
 
 
 
-                @if(Request::segment(2) == "testimonial_view")
+                @if(Request::segment(2) == "testimonial_view" || Request::segment(2) == "testimonialshow" || Request::segment(2) == "testimonialedit")
                        <ul class="nav navbar-nav">
                  <li class="active">
                   <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('testimonial_view')}}" style="color: #fff !important;">Testimonial</a></li>
@@ -58,7 +58,7 @@
 
 
 
-                @if(Request::segment(2) == "mot_show" || Request::segment(2) == "motinsertshow")
+                @if(Request::segment(2) == "mot_show" || Request::segment(2) == "motinsertshow" || Request::segment(2) == "moteditshow")
                        <ul class="nav navbar-nav">
                  <li class="active">
                   <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('mot_show')}}" style="color: #fff !important;">Customer's MOT</a></li>
@@ -91,7 +91,7 @@
                   <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('contactlist')}}">Customer's Enquiry</a></li>
                   @endif
 
-                  @if(Request::segment(2) == "our_trainer_list")
+                  @if(Request::segment(2) == "our_trainer_list" || Request::segment(2) == "our_trainer_insert_view" || Request::segment(2) == "our_trainer_edit_view")
                        <ul class="nav navbar-nav">
                  <li class="active">
                   <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('our_trainer_list')}}" style="color: #fff !important;">Our Trainer</a></li>
