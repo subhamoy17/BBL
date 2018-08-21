@@ -31,7 +31,7 @@ $('#traineraddform').validate({
     "contact_no": {
       required: true,
       minlength: 10,
-      maxlength: 10,
+      maxlength: 12,
       numericOnly: true
     },
     "email": {
