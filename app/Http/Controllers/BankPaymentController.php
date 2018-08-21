@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 use Auth;
 use Session;
+use App\Customer;
+use App\Notifications\PackagePurchaseNotification;
 
 class BankPaymentController extends Controller
 {
@@ -62,11 +64,53 @@ public function bank_payment_success(Request $request)
   {
     Session::put('success_bank_pay', 'Your payment is success using bank transfer');
     Session::put('bank_payment_id',$data['payment_id']);
+
+    $customer_details=Customer::find($request->customer_id);
+
+
+    $notifydata['package_name'] =$request->slots_name;
+    $notifydata['slots_number'] =$request->slots_number;
+    $notifydata['package_validity'] =$request->package_validity_date;
+    $notifydata['package_purchase_date'] =$request->purchases_date;
+    $notifydata['package_amount'] =$request->slots_price;
+    $notifydata['payment_id'] =$data['payment_id'];
+    $notifydata['payment_mode'] ='Bank Transfer';
+    $notifydata['url'] = '/customer/purchase_history';
+    $notifydata['customer_name']=$customer_details->name;
+    $notifydata['customer_email']=$customer_details->email;
+    $notifydata['customer_phone']=$customer_details->ph_no;
+    $notifydata['status']='Payment Success';
+
+    Log::debug(" paypal Inconvenient error notification ".print_r($notifydata,true));
+
+    $customer_details->notify(new PackagePurchaseNotification($notifydata));
     return redirect()->route('bankpaymentcomplete'); 
   }
   else
   {
     Session::put('failed_bank_pay', 'Your bank transfer payment is failed');
+
+    $customer_details=Customer::find($request->customer_id);
+
+
+    $notifydata['package_name'] =$request->slots_name;
+    $notifydata['slots_number'] =$request->slots_number;
+    $notifydata['package_validity'] =$request->package_validity_date;
+    $notifydata['package_purchase_date'] =$request->purchases_date;
+    $notifydata['package_amount'] =$request->slots_price;
+    $notifydata['payment_id'] =$data['payment_id'];
+    $notifydata['payment_mode'] ='Bank Transfer';
+    $notifydata['url'] = '/customer/purchase_history';
+    $notifydata['customer_name']=$customer_details->name;
+    $notifydata['customer_email']=$customer_details->email;
+    $notifydata['customer_phone']=$customer_details->ph_no;
+    $notifydata['status']='Payment Failed';
+
+    Log::debug(" paypal Inconvenient error notification ".print_r($notifydata,true));
+
+    $customer_details->notify(new PackagePurchaseNotification($notifydata));
+
+
     return redirect()->route('bankpaymentcomplete'); 
   }
 

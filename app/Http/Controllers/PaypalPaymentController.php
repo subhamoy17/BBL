@@ -134,6 +134,27 @@ if (\Config::get('app.debug')) {
     $paypal_history_data['purchase_history_id']=DB::getPdo()->lastInsertId();
     $payment_history=DB::table('payment_history')->insert($paypal_history_data);
 
+
+    $customer_details=Customer::find($customer_id);
+
+
+    $notifydata['package_name'] =$package_name;
+    $notifydata['slots_number'] =$slots_number;
+    $notifydata['package_validity'] =$package_validity_date;
+    $notifydata['package_purchase_date'] =$purchases_date;
+    $notifydata['package_amount'] =$package_amount;
+    $notifydata['payment_id'] =' ';
+    $notifydata['payment_mode'] ='Paypal';
+    $notifydata['url'] = '/customer/purchase_history';
+    $notifydata['customer_name']=$customer_details->name;
+    $notifydata['customer_email']=$customer_details->email;
+    $notifydata['customer_phone']=$customer_details->ph_no;
+    $notifydata['status']='Payment Failed';
+
+    Log::debug(" paypal Inconvenient error notification ".print_r($notifydata,true));
+
+    $customer_details->notify(new PackagePurchaseNotification($notifydata));
+
     return Redirect::to('customer/paypalpaymentsuccess');
 }
 }
@@ -161,6 +182,26 @@ if (isset($redirect_url)) {
     $purchases_history=DB::table('purchases_history')->insert($purchases_history_data);
     $paypal_history_data['purchase_history_id']=DB::getPdo()->lastInsertId();
     $payment_history=DB::table('payment_history')->insert($paypal_history_data);
+
+    $customer_details=Customer::find($customer_id);
+
+
+    $notifydata['package_name'] =$package_name;
+    $notifydata['slots_number'] =$slots_number;
+    $notifydata['package_validity'] =$package_validity_date;
+    $notifydata['package_purchase_date'] =$purchases_date;
+    $notifydata['package_amount'] =$package_amount;
+    $notifydata['payment_id'] =' ';
+    $notifydata['payment_mode'] ='Paypal';
+    $notifydata['url'] = '/customer/purchase_history';
+    $notifydata['customer_name']=$customer_details->name;
+    $notifydata['customer_email']=$customer_details->email;
+    $notifydata['customer_phone']=$customer_details->ph_no;
+    $notifydata['status']='Payment Failed';
+
+    Log::debug(" paypal payment Failed For Unknown Error notification ".print_r($notifydata,true));
+
+    $customer_details->notify(new PackagePurchaseNotification($notifydata));
 
     return Redirect::to('customer/paypalpaymentsuccess');       
 }
@@ -207,6 +248,26 @@ public function getPaymentStatus()
     $payment_history=DB::table('payment_history')->insert($paypal_history_data);
 
     Log::debug(":: before session value :: ".print_r($package_amount,true));
+
+    $customer_details=Customer::find($customer_id);
+
+
+    $notifydata['package_name'] =$package_name;
+    $notifydata['slots_number'] =$slots_number;
+    $notifydata['package_validity'] =$package_validity_date;
+    $notifydata['package_purchase_date'] =$purchases_date;
+    $notifydata['package_amount'] =$package_amount;
+    $notifydata['payment_id'] =' ';
+    $notifydata['payment_mode'] ='Paypal';
+    $notifydata['url'] = '/customer/purchase_history';
+    $notifydata['customer_name']=$customer_details->name;
+    $notifydata['customer_email']=$customer_details->email;
+    $notifydata['customer_phone']=$customer_details->ph_no;
+    $notifydata['status']='Payment Cancelled';
+
+    Log::debug(" paypal payment Cancelled notification ".print_r($notifydata,true));
+
+    $customer_details->notify(new PackagePurchaseNotification($notifydata));
 
     Session::forget('package_amount');
     Session::forget('slots_number');
@@ -341,7 +402,7 @@ if ($result->getState() == 'approved') {
     $notifydata['customer_phone']=$customer_details->ph_no;
     $notifydata['status']='Payment Failed';
 
-    Log::debug(" paypal payment success notification ".print_r($notifydata,true));
+    Log::debug(" paypal payment failed notification ".print_r($notifydata,true));
 
     $customer_details->notify(new PackagePurchaseNotification($notifydata));
 

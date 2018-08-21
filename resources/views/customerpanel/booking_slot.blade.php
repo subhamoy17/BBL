@@ -218,7 +218,7 @@
 
     <input type="hidden" name="_token" value="{{csrf_token()}}">
     <input type="hidden" name="idd" id="id" value="{{$customer_id}}">
-    <div id="add_session_req">
+    <div id="add_session_req" >
 
     </div>
             
@@ -614,7 +614,7 @@ $('#slotform').validate({
 
    
 
-    add_session_req.innerHTML = add_session_req.innerHTML +'<input type=text class="form-control"  readonly name="trainer_name[]"' + 'id="trainer_name[]"' + 'value="' + trainer_name + '"/>&nbsp;'
+    add_session_req.innerHTML = add_session_req.innerHTML +'<input type=text class="form-control col-md-4"  readonly name="trainer_name[]"' + 'id="trainer_name[]"' + 'value="' + trainer_name + '"/>&nbsp;'
 
     add_session_req.innerHTML = add_session_req.innerHTML +'<input type=hidden  readonly name="trainer_id[]"' + 'id="trainer_id[]"' + 'value="' + trainer_id + '" />&nbsp;'
 
