@@ -90,7 +90,7 @@ table.dataTable thead>tr>th[id='action'].sorting_asc::after{display: none}
                                     <th style="width: 67px;">Duration<br>
                                         <span style="font-weight: 400;">(in days)</span>
                                     </th>
-                                    <th id="image" style="width: 220px;">Image</th>
+                                    <th id="image" style="width: 200px;">Image</th>
                                     <th id="action" style="width: 70px;">Action</th>
                                 </tr>
                             </thead>
@@ -106,7 +106,7 @@ table.dataTable thead>tr>th[id='action'].sorting_asc::after{display: none}
                                         @if(isset($mydata->video) && !empty($mydata->video))
                                             <iframe src="{{$mydata->video}}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                                         @elseif(isset($mydata->image) && !empty($mydata->image))
-                                            <img src="{{asset('backend/images')}}/{{$mydata->image}}" style="width: 100%;">
+                                            <img src="{{asset('backend/images')}}/{{$mydata->image}}" style="width: 90%;">
                                         @else
                                             N/A
                                         @endif

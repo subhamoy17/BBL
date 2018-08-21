@@ -19,6 +19,9 @@ $.validator.addMethod('numericO	nly', function (value) {
   return /^[0-9]+$/.test(value);
 }, 'Please enter only numeric values');
 
+$.validator.addMethod('blood', function (value) {
+  return /^[0-9]*[/]?[0-9]*$/.test(value);
+}, 'Please enter only numeric values');
 
 $.validator.addMethod("alphanumeric", function(value, element) {
   return this.optional(element) || /^[\w.]+$/i.test(value);
@@ -113,7 +116,7 @@ range: [1, 999.9]
 
 "blood_pressure": {
  
-  
+  blood: true,
   required: true
 },
 
@@ -206,7 +209,8 @@ number: 'Please enter decimal only',
 
 "blood_pressure":{
  
-  required: 'Please enter the this value'
+  required: 'Please enter the this value',
+  blood: 'Please enter approppriate value'
 
 },
 

@@ -211,6 +211,13 @@ $('#contactusform').validate({
 
 
 }
+
+
+
+
+
+
+        
   });
  
 
@@ -578,22 +585,6 @@ $('#changepassword').validate({
             var blood_pressure = $(this).data("blood_pressure");
             var height = $(this).data("height");
             var description = $(this).data("description");
-           
-
-            // $('div.right_arm').text(right_arm); 
-            // $('div.left_arm').text(left_arm);
-            // $('div.chest').text(chest);
-            // $('div.waist').text(waist);
-            // $('div.hips').text(hips);
-            // $('div.right_thigh').text(right_thigh);
-            // $('div.left_thigh').text(left_thigh);
-            // $('div.right_calf').text(right_calf);
-            // $('div.left_calf').text(left_calf);
-            // $('div.starting_weight').text(starting_weight);
-            // $('div.ending_weight').text(ending_weight);
-            // $('div.heart_beat').text(heart_beat);
-            // $('div.blood_pressure').text(blood_pressure);
-            // $('div.height').text(height);
 
              if(right_arm!=''){ $('div.right_arm').text(right_arm);} 
            else{  $('div.right_arm').text('-');} 
@@ -684,27 +675,8 @@ $('#changepassword').validate({
             var blood_pressure = row.data("blood_pressure");
             var height = (row.data("height")*0.393701).toFixed(2);
 
-             
-
-            
-      
-     
-
     }
-            // $('div.right_arm').text(right_arm); 
-            // $('div.left_arm').text(left_arm);
-            // $('div.chest').text(chest);
-            // $('div.waist').text(waist);
-            // $('div.hips').text(hips);
-            // $('div.right_thigh').text(right_thigh);
-            // $('div.left_thigh').text(left_thigh);
-            // $('div.right_calf').text(right_calf);
-            // $('div.left_calf').text(left_calf);
-            // $('div.starting_weight').text(starting_weight);
-            // $('div.ending_weight').text(ending_weight);
-            // $('div.heart_beat').text(heart_beat);
-            // $('div.blood_pressure').text(blood_pressure);
-            // $('div.height').text(height);
+           
 
           if(right_arm!=''){ $('div.right_arm').text(right_arm);} 
            else{  $('div.right_arm').text('-');} 

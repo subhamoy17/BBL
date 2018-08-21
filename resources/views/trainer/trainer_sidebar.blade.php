@@ -33,7 +33,7 @@
                   <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('allCustomers')}}">All Customers</a></li>
                   @endif
 
-                @if(Request::segment(2) == "gymType")
+                @if(Request::segment(2) == "gymType" || Request::segment(2) == "add_exercise_trainer" || Request::segment(2) == "editexercise")
                        <ul class="nav navbar-nav">
                  <li class="active">
                   <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('gymType')}}" style="color: #fff !important;">Exercise List</a></li>
@@ -58,7 +58,7 @@
 
 
 
-                @if(Request::segment(2) == "mot_show")
+                @if(Request::segment(2) == "mot_show" || Request::segment(2) == "motinsertshow")
                        <ul class="nav navbar-nav">
                  <li class="active">
                   <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('mot_show')}}" style="color: #fff !important;">Customer's MOT</a></li>

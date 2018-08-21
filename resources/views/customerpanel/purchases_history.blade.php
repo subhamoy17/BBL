@@ -45,8 +45,8 @@
             <td>{{$mydata->slots_name}}</td>
             <td> <i class="fa fa-gbp"></i> {{$mydata->slots_price}}</td>
             <td>{{$mydata->slots_validity}} Days</td>
-            <td>{{$mydata->purchases_date}}</td>
-            <td>{{$mydata->package_validity_date}}</td>
+            <td>{{date('d F Y', strtotime($mydata->purchases_date))}}</td>
+            <td>{{date('d F Y', strtotime($mydata->package_validity_date))}}</td>
             <td>{{$mydata->slots_number}}</td>
             <td>@if($mydata->package_remaining>$mydata->slots_number)
               <?php $others=$mydata->package_remaining-$mydata->slots_number;?>

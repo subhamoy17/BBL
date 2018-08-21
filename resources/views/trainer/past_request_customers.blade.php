@@ -122,7 +122,7 @@ table.dataTable thead>tr>th[id='image'].sorting_asc::after{display: none}
                   <td>{{$mydata->slot_date}} {{$mydata->slot_time}}</td>
                   @if($mydata->image) 
                   <td><img src="{{asset('backend/images')}}/{{$mydata->image}}" height="50" width="50"></td>
-                  <td>
+                 
                      @else
                      <td>N/A</td>
                      @endif

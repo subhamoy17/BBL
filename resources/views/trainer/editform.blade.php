@@ -25,7 +25,7 @@ $('#myeditform').validate({
     "address": {
       required: true
     },
-    "phone": {
+    "contact_no": {
       required: true,
       minlength: 10,
       maxlength: 10,
@@ -41,7 +41,7 @@ $('#myeditform').validate({
   "address":{
     required: 'Please enter your address' 
   },
-  "phone": {
+  "contact_no": {
       required: 'Please enter your mobile number',
       minlength: 'Minimum 10 digits mobile number is required',
       maxlength: 'Maximum 10 digits mobile number is required'
