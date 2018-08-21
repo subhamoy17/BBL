@@ -22,6 +22,9 @@ use Illuminate\Support\Facades\DB;
 
 use Auth;
 
+use App\Customer;
+use App\Notifications\PackagePurchaseNotification;
+
 
 
 class PaypalPaymentController extends Controller
@@ -252,6 +255,27 @@ if ($result->getState() == 'approved') {
 
     Log::debug(":: before session value :: ".print_r($package_amount,true));
 
+
+    $customer_details=Customer::find($customer_id);
+
+
+    $notifydata['package_name'] =$package_name;
+    $notifydata['slots_number'] =$slots_number;
+    $notifydata['package_validity'] =$package_validity_date;
+    $notifydata['package_purchase_date'] =$purchases_date;
+    $notifydata['package_amount'] =$package_amount;
+    $notifydata['payment_id'] =$payment_id;
+    $notifydata['payment_mode'] ='Paypal';
+    $notifydata['url'] = '/customer/purchase_history';
+    $notifydata['customer_name']=$customer_details->name;
+    $notifydata['customer_email']=$customer_details->email;
+    $notifydata['customer_phone']=$customer_details->ph_no;
+    $notifydata['status']='Payment Success';
+
+    Log::debug(" paypal payment success notification ".print_r($notifydata,true));
+
+    $customer_details->notify(new PackagePurchaseNotification($notifydata));
+
     Session::forget('package_amount');
     Session::forget('slots_number');
     Session::forget('package_id');
@@ -288,6 +312,26 @@ if ($result->getState() == 'approved') {
     $payment_history=DB::table('payment_history')->insert($paypal_history_data);
 
     Log::debug(":: before session value :: ".print_r($package_amount,true));
+
+    $customer_details=Customer::find($customer_id);
+
+
+    $notifydata['package_name'] =$package_name;
+    $notifydata['slots_number'] =$slots_number;
+    $notifydata['package_validity'] =$package_validity_date;
+    $notifydata['package_purchase_date'] =$purchases_date;
+    $notifydata['package_amount'] =$package_amount;
+    $notifydata['payment_id'] =$payment_id;
+    $notifydata['payment_mode'] ='Paypal';
+    $notifydata['url'] = '/customer/purchase_history';
+    $notifydata['customer_name']=$customer_details->name;
+    $notifydata['customer_email']=$customer_details->email;
+    $notifydata['customer_phone']=$customer_details->ph_no;
+    $notifydata['status']='Payment Failed';
+
+    Log::debug(" paypal payment success notification ".print_r($notifydata,true));
+
+    $customer_details->notify(new PackagePurchaseNotification($notifydata));
 
     Session::forget('package_amount');
     Session::forget('slots_number');

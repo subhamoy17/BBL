@@ -173,6 +173,8 @@
 
                   <div class="col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group">
+                              
+                              <input type="hidden" id="total_slots" class="form-control" value="{{Session::get('sum_slots')}}"  >
                               <label>Trainer Name <small>*</small></label>
                               <select class="form-control" name="id" id='trainer_id' onchange="jsfunction()">
                                 <option value=""> Please select a name</option>
@@ -180,14 +182,16 @@
                                 <option value="{{$mydata->id}}"> {{$mydata->name}}</option>
                                 @endforeach
                               </select>
+
+                              <input type="hidden" id="trainer_id_old" class="form-control"  >
                             </div>
                         </div>
 
                           <div class="col-md-6 col-sm-12 col-xs-12">
                           <label>Date <small>*</small></label>
-                          <input type="text" id="datepicker" name="date" class="form-control" onchange="jsfunction()" readonly="true">
+                          <input type="text" id="slots_datepicker" name="date" class="form-control" onchange="jsfunction()" readonly="true">
 
-
+                           <input type="hidden" id="datepicker_old" class="form-control"  >
 
                         </div>
                         <div class="clearfix"></div>
@@ -197,6 +201,8 @@
                               <select class="form-control" name="time" id="slot_time">
                                 
                               </select>
+
+                              <input type="hidden" id="slot_time_id_old" class="form-control"  >
                             </div>
                         </div>
 
@@ -219,7 +225,7 @@
 
     </div>
             
-      <button type="submit" name="submit" class="btn btn-dark btn-theme-colored btn-flat" data-loading-text="Please wait...">Save</button>
+      <button type="submit" name="submit" class="btn btn-dark btn-theme-colored btn-flat" data-loading-text="Please wait..." style="display:none;" id="save_btn">Save</button>
        </form>
     </div>
 
@@ -269,10 +275,24 @@
   <script>
 
   $(function () {
-    $( "#datepicker" ).datepicker({
-  dateFormat: "yy-mm-dd"
+    $( "#slots_datepicker" ).datepicker({
+  dateFormat: "yy-mm-dd",
+  beforeShowDay: NotBeforeToday
 });
   } );
+
+  function NotBeforeToday(date)
+{
+    var now = new Date();//this gets the current date and time
+    if (date.getFullYear() == now.getFullYear() && date.getMonth() == now.getMonth() && date.getDate() > now.getDate())
+        return [true];
+    if (date.getFullYear() >= now.getFullYear() && date.getMonth() > now.getMonth())
+       return [true];
+     if (date.getFullYear() > now.getFullYear())
+       return [true];
+    return [false];
+}
+
 
   </script>
   <script type="text/javascript" src="{{url('frontend/js/bootstrap-3.1.1.min.js')}}"></script>
@@ -472,11 +492,10 @@ $('#slotform').validate({
   <script>
    
    function  jsfunction(){
-    // alert($('#trainer_id').val());
-    // alert($('#datepicker').val());
+    
 
 
-    if($('#trainer_id').val()!='' && $('#datepicker').val()!='')
+    if($('#trainer_id').val()!='' && $('#slots_datepicker').val()!='')
     {
       var slot_time = $('#slot_time');
                     slot_time.prop("disabled",false);
@@ -486,7 +505,7 @@ $('#slotform').validate({
     $.ajax({
                   type: "GET",
                   url: "{{route('get_slot_time')}}",
-                  data: {'trainer_id': $('#trainer_id').val(),'slot_date': $('#datepicker').val()},
+                  data: {'trainer_id': $('#trainer_id').val(),'slot_date': $('#slots_datepicker').val()},
                   success: function (data){
                     console.log(data);
 
@@ -537,10 +556,8 @@ $('#slotform').validate({
 
       i=$('#session_no').val();
 
-      
-
       trainer_name=$("#trainer_id option:selected").text();
-      slots_date=$("#datepicker").val();
+      slots_date=$("#slots_datepicker").val();
       slots_time=$("#slot_time option:selected").text();
 
       trainer_id=$("#trainer_id").val();
@@ -548,32 +565,53 @@ $('#slotform').validate({
       console.log(trainer_name);
       slots_time_id=$("#slot_time").val();
 
-      if ($( "#trainer_id" ).val().length==0 || $("#datepicker").val().length==0 || $("#slot_time").val().length==0 )
+      if(i>$("#total_slots").val())
+      {
+        alert ("You don't have any session"); 
+        return false;
+      }
+
+      else if(trainer_id==$("#trainer_id_old").val() && slots_date==$("#datepicker_old").val() && slots_time_id==$("#slot_time_id_old").val())
+      {
+        alert ("You can't choose same time and date for a same trainer"); 
+
+        return false;
+      }
+
+    else if ($( "#trainer_id" ).val().length==0 || $("#slots_datepicker").val().length==0 || $("#slot_time").val().length==0 )
     {
-    alert ("Pls choose trainer name and date and time"); 
+    alert ("Please choose trainer name, date and time"); 
+      
+      return false;
     }
     else{
    
 
-    add_session_req.innerHTML = add_session_req.innerHTML +'<input type=text  readonly name="trainer_name[]"' + 'id="trainer_name[]"' + 'value="' + trainer_name + '" />&nbsp;'
+    add_session_req.innerHTML = add_session_req.innerHTML +'<input type=text class="form-control"  readonly name="trainer_name[]"' + 'id="trainer_name[]"' + 'value="' + trainer_name + '"/>&nbsp;'
 
     add_session_req.innerHTML = add_session_req.innerHTML +'<input type=hidden  readonly name="trainer_id[]"' + 'id="trainer_id[]"' + 'value="' + trainer_id + '" />&nbsp;'
 
 
-    add_session_req.innerHTML = add_session_req.innerHTML +'<input type=text  readonly name="slots_date[]"' + 'id="slots_date[]"' + 'value="' + slots_date + '" />&nbsp;'
+    add_session_req.innerHTML = add_session_req.innerHTML +'<input type=text class="form-control" readonly name="slots_date[]"' + 'id="slots_date[]"' + 'value="' + slots_date + '" />&nbsp;'
 
-    add_session_req.innerHTML = add_session_req.innerHTML +'<input type=text  readonly name="slots_time[]"' +'id="slots_time[]"' +'value="' + slots_time + '" />&nbsp;'
+    add_session_req.innerHTML = add_session_req.innerHTML +'<input type=text class="form-control" readonly name="slots_time[]"' +'id="slots_time[]"' +'value="' + slots_time + '" />&nbsp;'
 
     add_session_req.innerHTML = add_session_req.innerHTML +'<input type=hidden  readonly name="slots_time_id[]"' +'id="slots_time_id[]"' +'value="' + slots_time_id + '" />&nbsp;'
 
     add_session_req.innerHTML = add_session_req.innerHTML +'<input type=hidden  readonly name=total_slots '+ 'id=total_slots ' + 'value="' + i + '" />&nbsp;'
     
     add_session_req.innerHTML = add_session_req.innerHTML +'<br>'
+
+    $('#save_btn').show();
     
 
     $("#trainer_id").val("");
-    $("#datepicker").val("");
+    $("#slots_datepicker").val("");
     $("#slot_time").val("");
+
+    $("#trainer_id_old").val(trainer_id);
+    $("#datepicker_old").val(slots_date);
+    $("#slot_time_id_old").val(slots_time_id);
     
     i=1+parseInt(i);
     $("#session_no").val(i);
