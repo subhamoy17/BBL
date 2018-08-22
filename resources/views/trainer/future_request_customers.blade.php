@@ -41,7 +41,7 @@ table.dataTable thead>tr>th[id='action'].sorting_asc::after{display: none}
     height: 100px;
     width: 100px;
     position: absolute;
-    top: 33%;
+    top: 50%;
     left: 1%;
     right: 1%;
     margin: 0 auto;

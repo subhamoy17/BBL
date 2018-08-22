@@ -32,7 +32,7 @@ $(document).ready(function() {
     height: 100px;
     width: 100px;
     position: absolute;
-    top: 33%;
+    top: 50%;
     left: 1%;
     right: 1%;
     margin: 0 auto;
