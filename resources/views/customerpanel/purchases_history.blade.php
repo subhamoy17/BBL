@@ -17,10 +17,10 @@
        <form id="frm_purchase_search">
          <!--  <input type="text" name="daterange"  value="2018-08-06 - 2018-09-12"/> -->
 
-          <input id="datepicker3" type="text" name="start_date" value="<?php 
+          <input id="datepicker3" type="text" placeholder="Please select a date" name="start_date" value="<?php 
   if(isset($_GET['start_date']) && !empty($_GET['start_date'])){ 
     echo $_GET['start_date']; }?>"/>
-  <input id="datepicker4" type="text" name="end_date" value="<?php if(isset($_GET['end_date']) && !empty($_GET['end_date'])){ echo $_GET['end_date']; }?>" />
+  <input id="datepicker4" type="text" name="end_date" placeholder="Please select a date" value="<?php if(isset($_GET['end_date']) && !empty($_GET['end_date'])){ echo $_GET['end_date']; }?>" />
           <button type="submit" id="booking" class="btn btn-success" >Submit</button>
         </form>
         
