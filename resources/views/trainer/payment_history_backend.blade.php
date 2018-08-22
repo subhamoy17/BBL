@@ -176,7 +176,7 @@ $(document).ready(function() {
                 @endif
          
 
-            <a href="#" class="payment btn btn-info btn-sm"  data-name="{{$mydata->name}}"   data-purchases_date="{{$mydata->purchases_date}}"  data-slots_name="{{$mydata->slots_name}}" data-payment_id="{{$mydata->payment_id}}" data-description="{{$mydata->description}}"   data-image="{{asset('backend/bankpay_images')}}/{{$mydata->image}}" data-noimage="{{$mydata->image}}"><i class="fa fa-eye" title="view details"  aria-hidden="true"></i></button>
+            <a href="#" class="payment btn btn-info btn-sm"  data-name="{{$mydata->name}}"   data-purchases_date="{{date('d F Y', strtotime($mydata->purchases_date))}}"  data-slots_name="{{$mydata->slots_name}}" data-payment_id="{{$mydata->payment_id}}" data-description="{{$mydata->description}}"   data-image="{{asset('backend/bankpay_images')}}/{{$mydata->image}}" data-noimage="{{$mydata->image}}"><i class="fa fa-eye" title="view details"  aria-hidden="true"></i></button>
 
                 
 
