@@ -77,7 +77,7 @@ $('#myform').validate({
                                 <input type="checkbox"  {{ old('remember') ? 'checked' : '' }}  name="remember">{{ __('Remember Me') }}
                             </label> -->
                             <label class="pull-right">
-                                <a href="{{ route('password.request.trainer') }}">Forgotten Password?</a>
+                                <a href="{{ route('password.request.trainer') }}">Forgot Password?</a>
                             </label>
 
                         </div>
