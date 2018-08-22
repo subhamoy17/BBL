@@ -93,21 +93,12 @@ $('#bootstrap-slot-data-table').DataTable({
                                 <tr>
                                     <th id="slno">Sl. No.</th>
                                     <th>Name</th>
-                              <!--       <th>Starting Weight</th> -->
                                     <th>Height</th>
-                                    <!-- <th>Right arm</th>
-                                    <th>Left arm</th> -->
                                     <th>Chest</th>
                                     <th>Waist</th>
                                     <th>Hips</th>
-                                    <!-- <th>Right_thigh</th>
-                                    <th>Left_thigh</th>
-                                    <th>Right_calf</th>
-                                    <th>Left_calf</th> -->
                                     <th>Measured On</th>
-                                    <th style="width: 70px;">Action</th>
-                                                  
-                                         
+                                    <th style="width: 70px;">Action</th>    
                                    </tr> 
                             </thead>
                         <tbody>
@@ -116,18 +107,11 @@ $('#bootstrap-slot-data-table').DataTable({
                                 <tr>
                                     <td>{{++$key}}</td>
                                     <td>@if(!empty($mydata->name)) {{$mydata->name}} @else N/A @endif</td>
-                                <!--     <td>{{$mydata->starting_weight}}</td> -->
                                     <td>{{$mydata->height}}</td>
-                                    <!-- <td>{{$mydata->right_arm}}</td>
-                                    <td>{{$mydata->left_arm}}</td> -->
                                    <td>{{$mydata->chest}}</td>
                                     <td>{{$mydata->waist}}</td>
                                     <td>{{$mydata->hips}}</td>
-                                    <!-- <td>{{$mydata->right_thigh}}</td>
-                                    <td>{{$mydata->left_thigh}}</td>
-                                    <td>{{$mydata->right_calf}}</td>
-                                   <td>{{$mydata->left_calf}}</td> -->
-                                   <td>{{$mydata->date}}</td>
+                                   <td>{{date('d F Y', strtotime($mydata->date))}}</td>
 
 
                                    <td> <a href="{{url('trainer/moteditshow')}}/{{$mydata->id}}" title="Edit MOT"><button class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button></a>

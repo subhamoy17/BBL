@@ -61,7 +61,7 @@ $('#trainereditform').validate({
     minlength:'Minimum length 6 is required'
   },
   "address":{
-    required: 'Please enter your address' 
+    required: 'Please enter your address'
   },
   "contact_no": {
       required: 'Please enter your mobile number',

@@ -16,6 +16,10 @@
 $.validator.addMethod('numericOnly', function (value) {
   return /^[0-9]+$/.test(value);
 }, 'Please enter only numeric values');
+$.validator.addMethod('blood', function (value) {
+  return /^[0-9]*[/]?[0-9]*$/.test(value);
+}, 'Please enter only numeric values');
+
 
 $.validator.addMethod("alphanumeric", function(value, element) {
   return this.optional(element) || /^[\w.]+$/i.test(value);
@@ -121,8 +125,8 @@ rules: {
   },
 
   "blood_pressure": {
-    number: true,
-    digits: true,
+    blood: true,
+   
     required: true
   },
   "heart_beat": {
@@ -220,8 +224,8 @@ range: "Please enter value betwwen 1 to 9999.9"
 },
 
 "blood_pressure":{
-  number:'Please enter number only',
-  digits: 'Please enter only number of digits',
+  blood:'Please enter approppriate value',
+ 
   required: 'Please enter the this value'
 
 },
