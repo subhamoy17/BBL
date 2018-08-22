@@ -9,13 +9,13 @@
 
                 <div class="col-sm-7">
                     <a id="menuToggle" class="menutoggle pull-left"><i class="fa fa fa-tasks"></i></a>
-                   Welcom {{Auth::user()->name}}
+                   
                 </div>
 
                 <div class="col-sm-5">
                     <div class="user-area dropdown float-right">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                           
+                           Welcom {{Auth::user()->name}} &nbsp;
                             <img class="user-avatar rounded-circle" src="{{asset('backend/images')}}/{{Auth::user()->image}}" alt="Trainer">
                         </a>
 
