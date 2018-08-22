@@ -6062,3 +6062,17 @@ a.sign-btn2 {
 	margin-top: 70px;
 }
 /*81818*/
+/*82218*/
+#add_session_req input{
+    width: 32.1%;
+    display: inline-block;
+    margin: 7.5px 0;
+}
+div#add_session_req {
+    padding-left: 30px;
+}
+.btn-drk2{
+    margin-top: 15px;
+    margin-left: 30px;
+}
+/*82218*/

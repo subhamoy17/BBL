@@ -222,7 +222,7 @@
 
     </div>
             
-      <button type="submit" name="submit" class="btn btn-dark btn-theme-colored btn-flat" data-loading-text="Please wait..." style="display:none;" id="save_btn">Save</button>
+      <button type="submit" name="submit" class="btn btn-dark btn-theme-colored btn-flat btn-drk2" data-loading-text="Please wait..." style="display:none;" id="save_btn">Save</button>
        </form>
     </div>
 
@@ -317,16 +317,6 @@
         }
     })
 
-    // if(slot_time!=''){
-    //   alert('aaa');
-    //           $('#sesssion_table').show();
-            
-    //       }
-    //        else{
-    //         alert('bb');
-    //           $('#sesssion_table').hide();
-           
-    //       }
     }); 
 </script>
 
@@ -616,12 +606,12 @@ $('#slotform').validate({
 
     add_session_req.innerHTML = add_session_req.innerHTML +'<input type=text class="form-control col-md-4"  readonly name="trainer_name[]"' + 'id="trainer_name[]"' + 'value="' + trainer_name + '"/>&nbsp;'
 
-    add_session_req.innerHTML = add_session_req.innerHTML +'<input type=hidden  readonly name="trainer_id[]"' + 'id="trainer_id[]"' + 'value="' + trainer_id + '" />&nbsp;'
-
 
     add_session_req.innerHTML = add_session_req.innerHTML +'<input type=text class="form-control" readonly name="slots_date[]"' + 'id="slots_date[]"' + 'value="' + slots_date + '" />&nbsp;'
 
     add_session_req.innerHTML = add_session_req.innerHTML +'<input type=text class="form-control" readonly name="slots_time[]"' +'id="slots_time[]"' +'value="' + slots_time + '" />&nbsp;'
+
+    add_session_req.innerHTML = add_session_req.innerHTML +'<input type=hidden  readonly name="trainer_id[]"' + 'id="trainer_id[]"' + 'value="' + trainer_id + '" />&nbsp;'
 
     add_session_req.innerHTML = add_session_req.innerHTML +'<input type=hidden  readonly name="slots_time_id[]"' +'id="slots_time_id[]"' +'value="' + slots_time_id + '" />&nbsp;'
 
