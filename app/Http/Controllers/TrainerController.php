@@ -215,6 +215,8 @@ public function trainer_active_deactive(Request $request)
         DB::table('users')
        ->where('id',$id)->update(['is_active'=>1 ]);
         return response()->json(1);
+
+
     }
     elseif($action=="Deactive")
     {
@@ -250,7 +252,26 @@ public function trainer_active_deactive(Request $request)
 
             $update_package_purchase=DB::table('purchases_history')
             ->where('id',$remaining_package->id)
-            ->update(['package_remaining'=>$add_session_remaining]);       
+            ->update(['package_remaining'=>$add_session_remaining]);
+
+
+            $customer_details=Customer::find($my_total->customer_id);
+            $trainer_details=User::find($id);
+
+            $notifydata['url'] = '/customer/mybooking';
+            $notifydata['customer_name']=$customer_details->name;
+            $notifydata['customer_email']=$customer_details->email;
+            $notifydata['customer_phone']=$customer_details->ph_no;
+            $notifydata['status']='Cancelled Session Request';
+            $notifydata['session_booked_on']=$my_total->created_at;
+            $notifydata['session_booking_date']=$my_total->slot_date;
+            $notifydata['trainer_name']=$trainer_details->name;
+
+            Log::debug("Declined Session Request notification ".print_r($notifydata,true));
+
+            $customer_details->notify(new SessionRequestNotification($notifydata));
+
+
         }
        
        $slot_rquest_update=DB::table('slot_request')
@@ -278,6 +299,68 @@ public function trainerdelete($id)
     $updatedata['deleted_at']=Carbon::now();
 
     DB::table('users')->where('id',$id)->update($updatedata);
+
+    //dsfgsdghsdighids
+
+    $remaining_session_request_now=Carbon::now()->toDateString();
+
+       $total_decline=DB::table('slot_request')
+       ->where('trainer_id',$id)
+       ->where(function($q) {
+         $q->where('approval_id', 1)
+           ->orWhere('approval_id', 3);
+        })
+       ->where('slot_date','>=',$remaining_session_request_now)
+       ->get()->all();
+
+
+       Log::debug(" total_decline ".print_r($total_decline,true));
+
+       $customer_id=0; $slot_date='';
+       foreach($total_decline as $my_total)
+       {
+            $remaining_package=DB::table('purchases_history')
+            ->where('customer_id',$my_total->customer_id)
+            ->orderBy('package_validity_date','DESC')
+            ->first();
+        
+            
+            $add_session_remaining=$remaining_package->package_remaining+1;
+            
+
+            $update_package_purchase=DB::table('purchases_history')
+            ->where('id',$remaining_package->id)
+            ->update(['package_remaining'=>$add_session_remaining]);
+
+
+            $customer_details=Customer::find($my_total->customer_id);
+            $trainer_details=User::find($id);
+
+            $notifydata['url'] = '/customer/mybooking';
+            $notifydata['customer_name']=$customer_details->name;
+            $notifydata['customer_email']=$customer_details->email;
+            $notifydata['customer_phone']=$customer_details->ph_no;
+            $notifydata['status']='Cancelled Session Request';
+            $notifydata['session_booked_on']=$my_total->created_at;
+            $notifydata['session_booking_date']=$my_total->slot_date;
+            $notifydata['trainer_name']=$trainer_details->name;
+
+            Log::debug("Declined Session Request notification ".print_r($notifydata,true));
+
+            $customer_details->notify(new SessionRequestNotification($notifydata));
+
+
+        }
+       
+       $slot_rquest_update=DB::table('slot_request')
+       ->where('trainer_id',$id)
+       ->where(function($q) {
+         $q->where('approval_id', 1)
+           ->orWhere('approval_id', 3);
+        })
+       ->where('slot_date','>=',$remaining_session_request_now)
+       ->update(['approval_id'=>4]);
+
     return redirect('trainer/trainerlist')->with("delete","You have successfully deleted one trainer");
 }
 
@@ -415,6 +498,23 @@ public function approve_customer_request(Request $request)
 
 
         DB::table('slot_request')->where('id',$id)->update(['approval_id' =>3,'decline_reason'=>null]);
+
+
+        $customer_details=Customer::find($customer_id->customer_id);
+        $trainer_details=User::find($customer_id->trainer_id);
+
+        $notifydata['url'] = '/customer/mybooking';
+        $notifydata['customer_name']=$customer_details->name;
+        $notifydata['customer_email']=$customer_details->email;
+        $notifydata['customer_phone']=$customer_details->ph_no;
+        $notifydata['status']='Approved Session Request';
+        $notifydata['session_booked_on']=$customer_id->created_at;
+        $notifydata['session_booking_date']=$customer_id->slot_date;
+        $notifydata['trainer_name']=$trainer_details->name;
+
+        Log::debug("Approved Session Request notification ".print_r($notifydata,true));
+
+        $customer_details->notify(new SessionRequestNotification($notifydata));
         return response()->json(1);
     }
     elseif($action=="Decline")
@@ -438,6 +538,22 @@ public function approve_customer_request(Request $request)
 
 
         DB::table('slot_request')->where('id',$id)->update(['approval_id' => 4, 'decline_reason'=> $reason]);
+
+        $customer_details=Customer::find($customer_id->customer_id);
+        $trainer_details=User::find($customer_id->trainer_id);
+
+        $notifydata['url'] = '/customer/mybooking';
+        $notifydata['customer_name']=$customer_details->name;
+        $notifydata['customer_email']=$customer_details->email;
+        $notifydata['customer_phone']=$customer_details->ph_no;
+        $notifydata['status']='Declined Session Request';
+        $notifydata['session_booked_on']=$customer_id->created_at;
+        $notifydata['session_booking_date']=$customer_id->slot_date;
+        $notifydata['trainer_name']=$trainer_details->name;
+
+        Log::debug("Declined Session Request notification ".print_r($notifydata,true));
+
+        $customer_details->notify(new SessionRequestNotification($notifydata));
         return response()->json(2);
     }
 }
