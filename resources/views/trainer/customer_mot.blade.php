@@ -107,10 +107,10 @@ $('#bootstrap-slot-data-table').DataTable({
                                 <tr>
                                     <td>{{++$key}}</td>
                                     <td>@if(!empty($mydata->name)) {{$mydata->name}} @else N/A @endif</td>
-                                    <td>{{$mydata->height}}</td>
-                                   <td>{{$mydata->chest}}</td>
-                                    <td>{{$mydata->waist}}</td>
-                                    <td>{{$mydata->hips}}</td>
+                                    <td>@if(!empty($mydata->height)){{$mydata->height}} @else N/A @endif</td>
+                                   <td>@if(!empty($mydata->chest)){{$mydata->chest}} @else N/A @endif</td>
+                                    <td>@if(!empty($mydata->waist)) {{$mydata->waist}} @else N/A @endif</td>
+                                    <td>@if(!empty($mydata->hips)) {{$mydata->hips}} @else N/A @endif</td>
                                    <td>{{date('d F Y', strtotime($mydata->date))}}</td>
 
 
