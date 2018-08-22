@@ -183,7 +183,7 @@
                                 @endforeach
                               </select>
 
-                              <input type="hidden" id="old_trainer_id[]" >
+                              
 
                             </div>
                         </div>
@@ -191,6 +191,8 @@
                           <div class="col-md-6 col-sm-12 col-xs-12">
                           <label>Date <small>*</small></label>
                           <input type="text" id="slots_datepicker" name="date" class="form-control" onchange="jsfunction()" readonly="true">
+
+                        
 
                         </div>
                         <div class="clearfix"></div>
@@ -200,11 +202,17 @@
                               <select class="form-control" name="time" id="slot_time">
                                 
                               </select>
+
+                              
+
                               <div id='loadingimg' style='display:none'>
                               <img src="{{asset('backend/images/loader-gif-time.gif')}}" width="60px" />
                             </div>
                             </div>
                             
+                        </div>
+
+                        <div id="old_session_data">
                         </div>
 
                         <div class="col-md-12 col-sm-12 col-xs-12">
@@ -546,9 +554,8 @@ $('#slotform').validate({
     {
 
       
-      old_trainer_flg=0;
-      old_slots_date_flg=0;
-      old_slots_time_id_flg=0;
+      duplicate_flag=0;
+    
 
       i=$('#session_no').val();
 
@@ -562,28 +569,18 @@ $('#slotform').validate({
 
       total_remaining_session=$("#total_slots").val();
 
-      $("input[name='trainer_id[]']").each(function() {
-      if($(this).val()==trainer_id)
+      var all_data=trainer_id + '#' + slots_date + '#' + slots_time_id;
+
+      var inputs = $(".duplicate");
+
+    for(var k = 0; k < inputs.length; k++)
+    {
+      if($(inputs[k]).val()==all_data)
       {
-        old_trainer_flg=1;
+        duplicate_flag=1;
       }
+    }
 
-      });
-      $("input[name='slots_date[]']").each(function() {
-      if($(this).val()==slots_date)
-      {
-        old_slots_date_flg=1;
-      }
-
-      });
-
-      $("input[name='slots_time_id[]']").each(function() {
-      if($(this).val()==slots_time_id)
-      {
-        old_slots_time_id_flg=1;
-      }
-
-      });
 
 
       if(parseInt(i)>parseInt(total_remaining_session))
@@ -592,7 +589,7 @@ $('#slotform').validate({
         return false;
       }
 
-      else if(old_trainer_flg==1 && old_slots_date_flg==1 && old_slots_time_id_flg==1)
+      else if(duplicate_flag==1)
       {
         alert ("You can't choose same time and date for a same trainer"); 
 
@@ -608,29 +605,30 @@ $('#slotform').validate({
     else{
 
 
-   
-
-    add_session_req.innerHTML = add_session_req.innerHTML +'<input type=text class="form-control col-md-4"  readonly name="trainer_name[]"' + 'id="trainer_name[]"' + 'value="' + trainer_name + '"/>&nbsp;'
+      add_session_req.innerHTML = add_session_req.innerHTML +'<input type=text class="form-control"  readonly name="trainer_name[]"' + 'id="trainer_name[]"' + 'value="' + trainer_name + '"/>&nbsp;'
 
 
     add_session_req.innerHTML = add_session_req.innerHTML +'<input type=text class="form-control" readonly name="slots_date[]"' + 'id="slots_date[]"' + 'value="' + slots_date + '" />&nbsp;'
 
     add_session_req.innerHTML = add_session_req.innerHTML +'<input type=text class="form-control" readonly name="slots_time[]"' +'id="slots_time[]"' +'value="' + slots_time + '" />&nbsp;'
 
-    add_session_req.innerHTML = add_session_req.innerHTML +'<input type=hidden  readonly name="trainer_id[]"' + 'id="trainer_id[]"' + 'value="' + trainer_id + '" />&nbsp;'
+    add_session_req.innerHTML = add_session_req.innerHTML +'<input type=hidden class="form-control"  readonly name="trainer_id[]"' + 'id="trainer_id[]"' + 'value="' + trainer_id + '" />&nbsp;'
 
-    add_session_req.innerHTML = add_session_req.innerHTML +'<input type=hidden  readonly name="slots_time_id[]"' +'id="slots_time_id[]"' +'value="' + slots_time_id + '" />&nbsp;'
+    add_session_req.innerHTML = add_session_req.innerHTML +'<input type=hidden class="form-control" readonly name="slots_time_id[]"' +'id="slots_time_id[]"' +'value="' + slots_time_id + '" />&nbsp;'
 
     add_session_req.innerHTML = add_session_req.innerHTML +'<input type=hidden  readonly name=total_slots '+ 'id=total_slots ' + 'value="' + i + '" />&nbsp;'
     
     add_session_req.innerHTML = add_session_req.innerHTML +'<br>'
 
-    // var a=$('#trainer_name[]').val();
-    // alert(a);
+
+    var duplicatvalue=trainer_id + '#' + slots_date + '#' + slots_time_id;
+
+
+    old_session_data.innerHTML = old_session_data.innerHTML +'<input type=hidden class="duplicate"  readonly name="all_previous_data[]"' + 'id="all_previous_data[]"' + 'value="' + duplicatvalue + '" />&nbsp;'
+        
 
     $('#save_btn').show();
     
-
     $("#trainer_id").val("");
     $("#slots_datepicker").val("");
     $("#slot_time").val("");
