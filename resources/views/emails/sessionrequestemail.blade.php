@@ -44,36 +44,17 @@ th {
   </tr>
   <tr>
     <th> 
-    @if($status=='Payment Success' && $payment_mode=='Paypal')
-    You have successfully paid <i class="fa fa-gbp"> </i>{{$package_amount}} through PayPal and your Transaction ID is {{$payment_id}}. <a href="{{URL::to($url)}}">Click Here </a> to see your purchased package details.
+    @if($status=='Sent Session Request')
+    Thank you for your request, Please wait for trainer to approve your booking and once the trainer will aprrove your booking request we will let your know. <a href="{{URL::to($url)}}">Click Here </a> to see your session booking details.
     @endif
 
-    @if($status=='Payment Cancelled' && $payment_mode=='Paypal')
-    The payment has not been completed due to cancelled transaction by you and if the amount is already debited from your account then it will autometically credited in your account within 7 working days.
+    @if($status=='Approved Session Request')
+    Your booking on {{date('d F Y', strtotime($session_booked_on))}} with trainer {{$trainer_name}} has been approved. <a href="{{URL::to($url)}}">Click Here </a> to see your session booking details.
     @endif
 
-    @if($status=='Payment Failed' && $payment_mode=='Paypal')
-    The payment has not been completed due some technical issue and if the amount is already debited from your account then it will autometically credited in your account within 7 working days.
+    @if($status=='Declined Session Request')
+    Your booking on {{date('d F Y', strtotime($session_booked_on))}} with trainer {{$trainer_name}} has been declined due to some other reason. <a href="{{URL::to($url)}}">Click Here </a> to see your session booking details.
     @endif
-
-    @if($status=='Payment Success' && $payment_mode=='Bank Transfer')
-    You have successfully paid <i class="fa fa-gbp"> </i>{{$package_amount}} through Bank Transfer and your Transaction ID is {{$payment_id}} and once the System Admin will approves your payment you can access the below mentioned package. <a href="{{URL::to($url)}}">Click Here </a> to see your purchased package details.
-    @endif
-
-
-    @if($status=='Payment Failed' && $payment_mode=='Bank Transfer')
-     The payment has not been completed due some technical issue using your bank transfer payment.
-    @endif
-
-    @if($status=='Bank Payment Approved' && $payment_mode=='Bank Transfer')
-    Your payment of <i class="fa fa-gbp"> </i>{{$package_amount}} through bank transfer has been approved by the System Admin. Now you can avail your purchased package. <a href="{{URL::to($url)}}">Click Here </a> to see your purchased package details.
-    @endif
-
-
-    @if($status=='Bank Payment Declined' && $payment_mode=='Bank Transfer')
-    Your payment of <i class="fa fa-gbp"> </i>{{$package_amount}} through bank transfer has been declined by the System Admin due some reason. Please wait for some time & our team will get back to your soon.
-    @endif
-
 
     </th> 
      </tr>

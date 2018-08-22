@@ -9,8 +9,9 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 
+ // implements ShouldQueue
 
-class PackagePurchaseNotification extends Notification implements ShouldQueue
+class SessionRequestNotification extends Notification
 {
     use Queueable;
 
@@ -49,21 +50,17 @@ class PackagePurchaseNotification extends Notification implements ShouldQueue
 
 
             return (new MailMessage)->view(
-              'emails.packagepurchaseemail',
+              'emails.sessionrequestemail',
               [
             'enquiredTime' => Carbon::now(),
-            'package_name'=>$this->notifydata['package_name'],
-            'slots_number'=>$this->notifydata['slots_number'],
-            'package_validity'=>$this->notifydata['package_validity'],
-            'package_purchase_date'=>$this->notifydata['package_purchase_date'],
-            'package_amount'=>$this->notifydata['package_amount'],
-            'payment_id'=>$this->notifydata['payment_id'],
-            'payment_mode'=>$this->notifydata['payment_mode'],
             'customer_name'=>$this->notifydata['customer_name'],
             'customer_email'=>$this->notifydata['customer_email'],
             'customer_phone'=>$this->notifydata['customer_phone'],
             'status'=>$this->notifydata['status'],
             'url'=>$this->notifydata['url'],
+            'session_booked_on'=>$this->notifydata['session_booked_on'],
+            'session_booking_date'=>$this->notifydata['session_booking_date'],
+            'trainer_name'=>$this->notifydata['trainer_name'],
 
 
             

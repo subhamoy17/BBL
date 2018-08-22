@@ -14,6 +14,11 @@ use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 use Auth;
 use Session;
+
+use App\Customer;
+use App\Notifications\SessionRequestNotification;
+
+
 class FrontController extends Controller
 {
 
@@ -411,7 +416,7 @@ public function booking_slot($id)
 
   if($customer_id!=0)
   {
-    $data=DB::table('users')->get();
+    $data=DB::table('users')->whereNull('deleted_at')->where('is_active',1)->get();
     return view('customerpanel.booking_slot')->with(compact('data','customer_id'));
   }
   else
@@ -479,6 +484,7 @@ public function slotinsert(Request $request)
     $slots_data['slot_date']=$slots_date;
     $slots_data['slot_time_id']=$slots_time_id;
     $slots_data['approval_id']=1;
+    $slots_data['created_at']=Carbon::now();
 
     Log::debug(" Check session request data1 ".print_r($slots_data,true));
 
@@ -515,12 +521,24 @@ public function slotinsert(Request $request)
 
     session(['sum_slots' => $sum_slots]);
 
+    $customer_details=Customer::find($customer_id);
+
+    $notifydata['url'] = '/customer/mybooking';
+    $notifydata['customer_name']=$customer_details->name;
+    $notifydata['customer_email']=$customer_details->email;
+    $notifydata['customer_phone']=$customer_details->ph_no;
+    $notifydata['status']='Sent Session Request';
+    $notifydata['session_booked_on']=' ';
+    $notifydata['session_booking_date']=' ';
+    $notifydata['trainer_name']=' ';
+
+    Log::debug("Sent Session Request notification ".print_r($notifydata,true));
+
+    $customer_details->notify(new SessionRequestNotification($notifydata));
 
   }
 
- 
-
-    return redirect()->back()->with("success","Your session booking request is sent successfully !");
+  return redirect()->back()->with("success","Your session booking request is sent successfully !");
   
 }
 

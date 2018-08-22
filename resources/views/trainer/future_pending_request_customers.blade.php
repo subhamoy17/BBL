@@ -121,7 +121,7 @@ table.dataTable thead>tr>th[id='action'].sorting_asc::after{display: none}
                   <th> Customer Name</th>
                   <th>Customer Phone</th>
                   <th>Status</th>
-                  <th>Request On</th>
+                  <th>Booking Date & Time</th>
                   <th id='image'>Image</th>
                   <th id='action'>Action</th>
                 </tr>

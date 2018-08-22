@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Input;
 use Carbon\Carbon;
 
 use Session;
+use App\Customer;
+use App\User;
+use App\Notifications\PackagePurchaseNotification;
+use App\Notifications\SessionRequestNotification;
 
 class TrainerController extends Controller
 {
@@ -488,8 +492,29 @@ public function approve_pending_request(Request $request)
     Log::debug(" Check id ".print_r($id,true));
     Log::debug(" Check action ".print_r($action,true));
 
-    if($action=="Approve"){
+    if($action=="Approve")
+    {
+        
         DB::table('slot_request')->where('id',$id)->update(['approval_id' =>3,'decline_reason'=>null]);
+
+        $get_customer_id=DB::table('slot_request')->where('id',$id)->first();
+
+        $customer_details=Customer::find($get_customer_id->customer_id);
+        $trainer_details=User::find($get_customer_id->trainer_id);
+
+        $notifydata['url'] = '/customer/mybooking';
+        $notifydata['customer_name']=$customer_details->name;
+        $notifydata['customer_email']=$customer_details->email;
+        $notifydata['customer_phone']=$customer_details->ph_no;
+        $notifydata['status']='Approved Session Request';
+        $notifydata['session_booked_on']=$get_customer_id->created_at;
+        $notifydata['session_booking_date']=$get_customer_id->slot_date;
+        $notifydata['trainer_name']=$trainer_details->name;
+
+        Log::debug("Approved Session Request notification ".print_r($notifydata,true));
+
+        $customer_details->notify(new SessionRequestNotification($notifydata));
+
         return response()->json(1);
     }
     elseif($action=="Decline")
@@ -513,6 +538,23 @@ public function approve_pending_request(Request $request)
         
         Log::debug(" package_history_update ".print_r($package_history_update,true));
         DB::table('slot_request')->where('id',$id)->update(['approval_id' => 4, 'decline_reason'=> $reason]);
+
+        $customer_details=Customer::find($customer_id->customer_id);
+        $trainer_details=User::find($customer_id->trainer_id);
+
+        $notifydata['url'] = '/customer/mybooking';
+        $notifydata['customer_name']=$customer_details->name;
+        $notifydata['customer_email']=$customer_details->email;
+        $notifydata['customer_phone']=$customer_details->ph_no;
+        $notifydata['status']='Declined Session Request';
+        $notifydata['session_booked_on']=$customer_id->created_at;
+        $notifydata['session_booking_date']=$customer_id->slot_date;
+        $notifydata['trainer_name']=$trainer_details->name;
+
+        Log::debug("Declined Session Request notification ".print_r($notifydata,true));
+
+        $customer_details->notify(new SessionRequestNotification($notifydata));
+
         return response()->json(2);
     }
 }
@@ -1222,10 +1264,10 @@ public function payment_history_backend_request(Request $request)
     $data=$request->get('data');
     $purchase_history_id=$data['id'];
     $action=$data['action'];
-    
-    if($action=="Approve"){
 
     $slot_number=DB::table('purchases_history')->where('id',$purchase_history_id)->first();
+    
+    if($action=="Approve"){
 
     $update_purchases_history=DB::table('purchases_history')
     ->where('id',$purchase_history_id)->update(['active_package' =>1,'package_remaining'=>$slot_number->slots_number]);
@@ -1233,17 +1275,68 @@ public function payment_history_backend_request(Request $request)
     $update_payment_history=DB::table('payment_history')
     ->where('purchase_history_id',$purchase_history_id)->update(['status'=> 'Success']);
 
-        return response()->json(1);
+    // send notification mail
+
+    $customer_details=Customer::find($slot_number->customer_id);
+
+    $payment_history_details=DB::table('payment_history')
+    ->where('purchase_history_id',$purchase_history_id)->first();
+
+
+    $notifydata['package_name'] =$slot_number->slots_name;
+    $notifydata['slots_number'] =$slot_number->slots_number;
+    $notifydata['package_validity'] =$slot_number->package_validity_date;
+    $notifydata['package_purchase_date'] =$slot_number->purchases_date;
+    $notifydata['package_amount'] =$slot_number->slots_price;
+    $notifydata['payment_id'] =$payment_history_details->payment_id;
+    $notifydata['payment_mode'] ='Bank Transfer';
+    $notifydata['url'] = '/customer/purchase_history';
+    $notifydata['customer_name']=$customer_details->name;
+    $notifydata['customer_email']=$customer_details->email;
+    $notifydata['customer_phone']=$customer_details->ph_no;
+    $notifydata['status']='Bank Payment Approved';
+
+    Log::debug(" bank transfer approve notification ".print_r($notifydata,true));
+
+    $customer_details->notify(new PackagePurchaseNotification($notifydata));
+
+    return response()->json(1);
     }
     elseif($action=="Decline")
     {
-      $update_purchases_history=DB::table('purchases_history')
+
+    $update_purchases_history=DB::table('purchases_history')
     ->where('id',$purchase_history_id)->update(['active_package' =>0,'package_remaining'=>0]);
 
     $update_payment_history=DB::table('payment_history')
     ->where('purchase_history_id',$purchase_history_id)->update(['status'=> 'Decline']);
 
-        return response()->json(2);
+    // send notification mail
+
+    $customer_details=Customer::find($slot_number->customer_id);
+
+    $payment_history_details=DB::table('payment_history')
+    ->where('purchase_history_id',$purchase_history_id)->first();
+
+
+    $notifydata['package_name'] =$slot_number->slots_name;
+    $notifydata['slots_number'] =$slot_number->slots_number;
+    $notifydata['package_validity'] =$slot_number->package_validity_date;
+    $notifydata['package_purchase_date'] =$slot_number->purchases_date;
+    $notifydata['package_amount'] =$slot_number->slots_price;
+    $notifydata['payment_id'] =$payment_history_details->payment_id;
+    $notifydata['payment_mode'] ='Bank Transfer';
+    $notifydata['url'] = '/customer/purchase_history';
+    $notifydata['customer_name']=$customer_details->name;
+    $notifydata['customer_email']=$customer_details->email;
+    $notifydata['customer_phone']=$customer_details->ph_no;
+    $notifydata['status']='Bank Payment Declined';
+
+    Log::debug(" bank transfer decline notification ".print_r($notifydata,true));
+
+    $customer_details->notify(new PackagePurchaseNotification($notifydata));
+
+    return response()->json(2);
     }
 }
 
