@@ -200,7 +200,11 @@
                               <select class="form-control" name="time" id="slot_time">
                                 
                               </select>
+                              <div id='loadingimg' style='display:none'>
+                              <img src="{{asset('backend/images/loader-gif-time.gif')}}" width="60px" />
                             </div>
+                            </div>
+                            
                         </div>
 
                         <div class="col-md-12 col-sm-12 col-xs-12">
@@ -484,6 +488,7 @@ $('#slotform').validate({
 
     if($('#trainer_id').val()!='' && $('#slots_datepicker').val()!='')
     {
+      $('#loadingimg').show();
       var slot_time = $('#slot_time');
                     slot_time.prop("disabled",false);
                     slot_time.empty();
@@ -494,6 +499,7 @@ $('#slotform').validate({
                   url: "{{route('get_slot_time')}}",
                   data: {'trainer_id': $('#trainer_id').val(),'slot_date': $('#slots_datepicker').val()},
                   success: function (data){
+                    $('#loadingimg').hide();
                     console.log(data);
 
                     var obj = $.parseJSON(data);
