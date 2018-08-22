@@ -348,6 +348,7 @@ $remaining_session_request_now=Carbon::now()->toDateString();
   
 if(isset($request->start_date) && isset($request->end_date) && !empty($request->start_date) && !empty($request->end_date))
 {
+  $now = Carbon::now()->toDateString();
         $start_date=$request->start_date;
         $end_date=$request->end_date;
       // echo $start_date."-".$end_date;die();
@@ -359,24 +360,19 @@ if(isset($request->start_date) && isset($request->end_date) && !empty($request->
     ->join('slots','slots.id','purchases_history.slot_id')
     ->join('customers','customers.id','purchases_history.customer_id')
     ->select('purchases_history.slots_name','purchases_history.slots_price','slots.slots_validity','purchases_history.slots_number','purchases_history.payment_options','purchases_history.package_validity_date','purchases_history.id','slots.slots_number','purchases_history.purchases_date','purchases_history.active_package','purchases_history.package_remaining','customers.id as customer_id')
-    ->where('purchases_history.purchases_date','>=',[$start_date])
-    ->where('purchases_history.package_validity_date','<=',[$end_date])
+    
+    ->whereBetween('purchases_history.purchases_date', [$start_date, $end_date])
     ->where('purchases_history.customer_id',Auth::guard('customer')->user()->id)
     ->orderBy('purchases_history.active_package','DESC')
     ->paginate(10);
 
 
-    foreach($purchases_data as $searchdt)
-  {
-    $now = Carbon::now();
-    $end=Carbon::createFromFormat('Y-m-d', $searchdt->package_validity_date);
-    $totalDuration = $end->diffInDays($now);
-    $searchdt->timeremaining=$totalDuration;
-  }
-  Log::debug(" date ");
 }
 else
 {
+  $now = Carbon::now()->toDateString();
+   $start_date=$request->start_date;
+        $end_date=$request->end_date;
   $purchases_data=DB::table('purchases_history')
     ->join('slots','slots.id','purchases_history.slot_id')
     ->join('customers','customers.id','purchases_history.customer_id')
@@ -388,15 +384,6 @@ else
 
     Log::debug(" Check id ".print_r($purchases_data,true));
 
-  foreach($purchases_data as $dt)
-  {
-  
-    $now = Carbon::now();
-    $end=Carbon::createFromFormat('Y-m-d', $dt->package_validity_date);
-    $totalDuration = $end->diffInDays($now);
-    $dt->timeremaining=$totalDuration; 
-  }
-    Log::debug("all date ");
 }
 
 
