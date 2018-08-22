@@ -158,7 +158,7 @@ $('#clientaddform').validate({
                           </div>
                            <div class="row form-group">
                             <div class="col col-md-3"><label for="text-input" class=" form-control-label">Instagram</label></div>
-                            <div class="col-12 col-md-9"><input type="text" id="instagram" name=instagram" placeholder="Instagram" class="form-control" value="">
+                            <div class="col-12 col-md-9"><input type="text" id="instagram" name="instagram" placeholder="Instagram" class="form-control" value="">
                             </div>
                           </div>
 
