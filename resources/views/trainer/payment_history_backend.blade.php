@@ -2,6 +2,16 @@
 @extends('trainerlayouts.trainer_template')
 @section('content')
 
+<script>
+// for shortin ,pagination,searching data using datatable concept
+$(document).ready(function() { 
+  $('#bootstrap-slot-data-table').DataTable({
+    lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
+// disable shorting from slno,image and action columns
+"columnDefs": [ { "orderable": false, "targets": [0,7] } ],
+});
+} );
+</script>
 <style>
 
 .button-primary {
@@ -190,7 +200,7 @@
 <script type="text/javascript">
       $(document).ready(function(){
         
-        $('.status-all').on('click',function(e) {
+       $("#bootstrap-slot-data-table").on("click", ".status-all", function(e) {
           var action = $(this).data("msg");
           console.log(action);
           var row = this.closest('tr');
@@ -341,8 +351,8 @@ alertify.confirm("Are you sure you will be approve this payment?", function (e) 
 <script type="text/javascript">
     $(document).ready(function() {
 
-        $(".payment").click(function() {
-
+        // $(".payment").click(function() {
+$("#bootstrap-slot-data-table").on("click", ".payment", function(e){
           var name = $(this).data("name");
           var purchases_date=$(this).data("purchases_date");
           var slots_name=$(this).data("slots_name");
