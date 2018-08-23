@@ -484,7 +484,7 @@ public function slotinsert(Request $request)
     $slots_data['slot_date']=$slots_date;
     $slots_data['slot_time_id']=$slots_time_id;
     $slots_data['approval_id']=1;
-    $slots_data['created_at']=Carbon::now();
+    //$slots_data['created_at']=Carbon::now();
 
     Log::debug(" Check session request data1 ".print_r($slots_data,true));
 
