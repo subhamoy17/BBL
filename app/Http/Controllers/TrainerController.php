@@ -17,6 +17,9 @@ use App\Customer;
 use App\User;
 use App\Notifications\PackagePurchaseNotification;
 use App\Notifications\SessionRequestNotification;
+use App\Notifications\TrainerActiveDeactiveNotification;
+
+
 
 class TrainerController extends Controller
 {
@@ -208,13 +211,27 @@ public function trainer_active_deactive(Request $request)
     $data=$request->get('data');
     $id=$data['id'];
     $action=$data['action'];
-    Log::debug(" Check id ".print_r($id,true));
-    Log::debug(" Check action ".print_r($action,true));
+    
     if($action=="Active"){
 
-        DB::table('users')
+        $a=DB::table('users')
        ->where('id',$id)->update(['is_active'=>1 ]);
-        return response()->json(1);
+        
+
+        $trainer_details=User::find($id);
+
+        $notifydata['status']='Trainer Active';
+        $notifydata['trainer_name']=$trainer_details->name;
+
+        Log::debug("Trainer Active notification ".print_r($notifydata,true));
+
+        $trainer_details->notify(new TrainerActiveDeactiveNotification($notifydata));
+
+        Log::debug(" Check id ".print_r($id,true));
+        Log::debug(" Check action ".print_r($action,true));
+
+    return response()->json(1);
+
     }
     elseif($action=="Deactive")
     {
@@ -241,10 +258,12 @@ public function trainer_active_deactive(Request $request)
        {
             $remaining_package=DB::table('purchases_history')
             ->where('customer_id',$my_total->customer_id)
+            ->where('active_package',1)
             ->orderBy('package_validity_date','DESC')
             ->first();
         
-            
+            if($remaining_package) 
+            {
             $add_session_remaining=$remaining_package->package_remaining+1;
             
 
@@ -268,6 +287,7 @@ public function trainer_active_deactive(Request $request)
             Log::debug("Declined Session Request notification ".print_r($notifydata,true));
 
             $customer_details->notify(new SessionRequestNotification($notifydata));
+            }
 
 
         }
@@ -280,6 +300,16 @@ public function trainer_active_deactive(Request $request)
         })
        ->where('slot_date','>=',$remaining_session_request_now)
        ->update(['approval_id'=>4]);
+
+
+       $trainer_details=User::find($id);
+
+        $notifydata['status']='Trainer Deactive';
+        $notifydata['trainer_name']=$trainer_details->name;
+
+        Log::debug("Trainer Deactive notification ".print_r($notifydata,true));
+
+        $trainer_details->notify(new TrainerActiveDeactiveNotification($notifydata));
 
         return response()->json(2);
     }
@@ -349,6 +379,17 @@ public function trainerdelete($id)
 
 
         }
+
+        $trainer_details=User::find($id);
+
+        $notifydata['status']='Trainer Delete';
+        $notifydata['trainer_name']=$trainer_details->name;
+
+        Log::debug("Trainer Delete notification ".print_r($notifydata,true));
+
+        $trainer_details->notify(new TrainerActiveDeactiveNotification($notifydata));
+
+
        
        $slot_rquest_update=DB::table('slot_request')
        ->where('trainer_id',$id)

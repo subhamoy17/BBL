@@ -50,7 +50,7 @@ th {
   <tr>
     <th> 
     @if($status=='Payment Success' && $payment_mode=='Paypal')
-    You have successfully paid <i class="fa fa-gbp"> </i>{{$package_amount}} through PayPal and your Transaction ID is {{$payment_id}}. <a href="{{URL::to($url)}}">Click Here </a> to see your purchased package details.
+    You have successfully paid <i class="fa fa-gbp"> </i>{{$package_amount}} through PayPal and your Transaction ID is {{$payment_id}}. Please see the below purchased package. <a href="{{URL::to($url)}}">Click Here </a> to see your purchased package details.
 
     </br></br>
     <table style="width:100%" class="table-bordered">
@@ -62,7 +62,7 @@ th {
   </tr>
   <tr>
     <th class="table-bordered">{{$package_name}}</th>
-    <th class="table-bordered">{{$package_validity}}</th>
+    <th class="table-bordered">{{date('d F Y', strtotime($package_validity))}}</th>
     <th class="table-bordered">{{$slots_number}}</th>
     <th class="table-bordered">{{$package_amount}}</th>
   </tr>
@@ -79,7 +79,7 @@ th {
 
     @if($status=='Payment Success' && $payment_mode=='Bank Transfer')
     You have successfully paid <i class="fa fa-gbp"> </i>{{$package_amount}} through Bank Transfer and your Transaction ID is {{$payment_id}} and once the System Admin will approves your payment you can access the below mentioned package. <a href="{{URL::to($url)}}">Click Here </a> to see your purchased package details.
-    @endif
+
 
     </br></br>
     <table style="width:100%" class="table-bordered">
@@ -91,12 +91,12 @@ th {
   </tr>
   <tr>
     <th class="table-bordered">{{$package_name}}</th>
-    <th class="table-bordered">{{$package_validity}}</th>
+    <th class="table-bordered">{{date('d F Y', strtotime($package_validity))}}</th>
     <th class="table-bordered">{{$slots_number}}</th>
     <th class="table-bordered">{{$package_amount}}</th>
   </tr>
 </table>
-
+    @endif
     @if($status=='Payment Failed' && $payment_mode=='Bank Transfer')
      The payment has not been completed due some technical issue using your bank transfer payment.
     @endif

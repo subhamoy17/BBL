@@ -16,7 +16,10 @@ use Auth;
 use Session;
 
 use App\Customer;
+use App\User;
 use App\Notifications\SessionRequestNotification;
+use App\Notifications\SessionRequestNotificationToTrainer;
+
 
 
 class FrontController extends Controller
@@ -506,6 +509,25 @@ public function slotinsert(Request $request)
   ->update($new_remaining_package);
 
   Log::debug(" all_package ".print_r($all_package,true));
+
+
+  
+  $customer_details=Customer::find($customer_id);
+  $trainer_details=User::find($trainer_id);
+
+  $notifydata['url'] = '/trainer-login';
+  $notifydata['customer_name']=$customer_details->name;
+  $notifydata['customer_email']=$customer_details->email;
+  $notifydata['customer_phone']=$customer_details->ph_no;
+  $notifydata['status']='Sent Session Request To Trainer';
+  $notifydata['session_booking_date']=$slots_date;
+  $notifydata['trainer_name']=$trainer_details->name;
+
+  Log::debug("Sent Session Request notification to trainer ".print_r($notifydata,true));
+
+  $customer_details->notify(new SessionRequestNotificationToTrainer($notifydata));
+
+
 }
 
   if($insert_slot_session && $update_package_purchase) 

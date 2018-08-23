@@ -15,20 +15,21 @@
   <table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="border: 1px solid #cccccc;">
     <tr>
       <td align="center" bgcolor="#5C342C" style="padding: 20px 0 20px 0;">
-       <h1><img src="{{asset('frontend/images/logo.png')}}"></h1>
+        <h1><img src="{{asset('frontend/images/logo.png')}}"></h1>
       </td>
     </tr>
     <tr> 
         <tr>
             <td style="padding: 20px 0 30px 0; text-align: center;">
-    <p align="left"> Dear {{$name}}, </p>
-    <p align="left"> Your profile in Body By Lekan has been successfully created as a Trainer. Please use the below credential to Login to your account.<br>
+    <p align="left"> </p>
+    
           
 
 <style>
 table, th, td {
-    border: 1px solid black;
+    border: 0px solid black;
     border-collapse: collapse;
+    font-weight: 400;
 }
 th, td {
     padding: 5px;
@@ -39,23 +40,44 @@ th {
 </style>
 <table style="width:100%">
   <tr>
-    <th>Url:</th>
-    <th> <a href="{{URL::to('/trainer-login')}}">Click Here </a>to Login</th> 
+    <th>
+        Dear {{$trainer_name}},
+    </th>
+  </tr>
+  <tr>
+    <th> 
+    @if($status=='Trainer Deactive')
+    Your trainer account in Body By Lekan has been Deactivated by the Master Trainer due to some reason. Please contact with the Master Trainer if required.
+    @endif
+
+    @if($status=='Trainer Active')
+    Your trainer account in Body By Lekan has been Activated by the Master Trainer.
+    @endif
+
+    @if($status=='Trainer Delete')
+    Your trainer account in Body By Lekan has been Deleted by the Master Trainer due to some reason. Please contact with the Master Trainer if required.
+    @endif
+
+
+    
+
+
+    </th> 
      </tr>
 
      <tr>
-    <th>User Id:</th>
-    <th>{{$email}}</th>
-  </tr>
-
-    <tr>
-    <th>Password:</th>
-    <th>{{$password}}</th>
-  </tr>
+    <th> 
+        Regards,
+        </th> 
+     </tr>
+<tr>
+    <th> 
+        Team BBL
+        </th> 
+     </tr>
 
 </table>
-<p align="left">Regards,</p>
-  <p align="left">Team BBL</p> 
+
 </td>
   </tr>
     <td bgcolor="#5C342C" style="padding: 7px 30px 7px 30px;">

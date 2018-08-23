@@ -40,7 +40,15 @@ th {
 </style>
 <table style="width:100%">
   <tr>
-    <th>Dear {{$customer_name}},</th>
+    <th>
+      @if($status=='Sent Session Request To Trainer')
+        Dear {{$trainer_name}},
+
+      @else
+        Dear {{$customer_name}},
+      @endif
+
+      </th>
   </tr>
   <tr>
     <th> 
@@ -58,6 +66,11 @@ th {
 
     @if($status=='Cancelled Session Request')
     Your booking on {{date('d F Y', strtotime($session_booked_on))}} with trainer {{$trainer_name}} has been cancelled due to some other reason. Our team will get back to you soon for the same. <a href="{{URL::to($url)}}">Click Here </a> to see your session booking details.
+    @endif
+
+
+    @if($status=='Sent Session Request To Trainer')
+    You have new session request on {{date('d F Y', strtotime($session_booking_date))}} with a client named {{$customer_name}}. Please login your account in BBL Trainer portal to approve the same. <a href="{{URL::to($url)}}">Click Here </a> to see your session request details.
     @endif
 
 
