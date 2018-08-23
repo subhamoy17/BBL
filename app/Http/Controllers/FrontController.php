@@ -605,7 +605,7 @@ else
   }
   else
   {
-    return redirect()->back()->with("success","You don't have any avilable session!");
+    return redirect()->back()->with("success","You don't have any available session!");
   }
 
   
