@@ -349,9 +349,12 @@ public function trainerdelete($id)
        {
             $remaining_package=DB::table('purchases_history')
             ->where('customer_id',$my_total->customer_id)
+            ->where('active_package',1)
             ->orderBy('package_validity_date','DESC')
             ->first();
         
+            if($remaining_package) 
+            {
             
             $add_session_remaining=$remaining_package->package_remaining+1;
             
@@ -376,8 +379,7 @@ public function trainerdelete($id)
             Log::debug("Declined Session Request notification ".print_r($notifydata,true));
 
             $customer_details->notify(new SessionRequestNotification($notifydata));
-
-
+            }
         }
 
         $trainer_details=User::find($id);
@@ -531,6 +533,9 @@ public function approve_customer_request(Request $request)
         ->where('purchases_history.package_validity_date','>=',$remaining_session_request_now)
         ->orderBy('package_validity_date','ASC')->first();
 
+        if($package_history)
+        {
+
         $package_history_update_data['package_remaining']=$package_history->package_remaining-1;
 
         $package_history_update=DB::table('purchases_history')->where('id',$package_history->id)->update($package_history_update_data);
@@ -554,7 +559,9 @@ public function approve_customer_request(Request $request)
         Log::debug("Approved Session Request notification ".print_r($notifydata,true));
 
         $customer_details->notify(new SessionRequestNotification($notifydata));
+
         return response()->json(1);
+    }
     }
     elseif($action=="Decline")
     {
@@ -568,6 +575,9 @@ public function approve_customer_request(Request $request)
         ->where('purchases_history.active_package',1)
         ->where('purchases_history.package_validity_date','>=',$remaining_session_request_now)
         ->orderBy('package_validity_date','DESC')->first();
+
+        if($package_history)
+        {
 
         $package_history_update_data['package_remaining']=$package_history->package_remaining+1;
 
@@ -594,6 +604,8 @@ public function approve_customer_request(Request $request)
 
         $customer_details->notify(new SessionRequestNotification($notifydata));
         return response()->json(2);
+
+    }
     }
 }
 
@@ -685,6 +697,10 @@ public function approve_pending_request(Request $request)
         ->where('purchases_history.active_package',1)
         ->where('purchases_history.package_validity_date','>=',$remaining_session_request_now)
         ->orderBy('package_validity_date','DESC')->first();
+
+
+        if($package_history)
+        {
         $package_history_update_data['package_remaining']=$package_history->package_remaining+1;
 
 
@@ -711,6 +727,7 @@ public function approve_pending_request(Request $request)
         $customer_details->notify(new SessionRequestNotification($notifydata));
 
         return response()->json(2);
+        }
     }
 }
 

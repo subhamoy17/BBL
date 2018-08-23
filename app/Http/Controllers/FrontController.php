@@ -472,6 +472,9 @@ public function slotinsert(Request $request)
     ->where('package_validity_date','>=',$remaining_session_request_now)
     ->orderBy('package_validity_date', 'ASC')
     ->first();
+
+    if($all_package)
+    {
    
     $oldest_package_id=$all_package->id;
     $package_remaining=$all_package->package_remaining;
@@ -527,7 +530,12 @@ public function slotinsert(Request $request)
 
   $customer_details->notify(new SessionRequestNotificationToTrainer($notifydata));
 
+}
+else
+{
 
+  $insert_slot_session=0;
+}
 }
 
   if($insert_slot_session && $update_package_purchase) 
@@ -558,9 +566,15 @@ public function slotinsert(Request $request)
 
     $customer_details->notify(new SessionRequestNotification($notifydata));
 
+    return redirect()->back()->with("success","Your session booking request is sent successfully !");
+
+  }
+  else
+  {
+    return redirect()->back()->with("success","You don't have any avilable session!");
   }
 
-  return redirect()->back()->with("success","Your session booking request is sent successfully !");
+  
   
 }
 
