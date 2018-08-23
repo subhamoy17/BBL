@@ -156,7 +156,7 @@ $('#bootstrap-slot-data-table').DataTable({
                                   <td>N/A</td>
                                   @endif
 
-                                            <td class="btn-td" style="position: relative;">
+                                            <td style="width: 70px">
                                     @if($mydata->master_trainer == 1)
                             
                                     <a href="{{url('trainer/edittrainer')}}/{{$mydata->id}}" title="Edit"><button class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button></a>
@@ -170,7 +170,7 @@ $('#bootstrap-slot-data-table').DataTable({
 
                                     @endif
                                       </td>
-                                    <td class="btn-td" style="position: relative;">
+                                    <td>
                                          @if($mydata->is_active == 1)
                                     <button type="button" title="Deactive Trainer"  class="btn btn-danger btn-sm status-all" id="{{$mydata->id}}" data-msg="Deactive"><i class="fa fa-times"></i></button>
                                     @else

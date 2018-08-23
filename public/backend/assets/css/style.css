@@ -680,11 +680,15 @@ textarea.parsley-error {
     top: 200px;
 }
 
+/*
 .tbdy1 .btn-sm {
  width: 48% !important;
  padding: 5px 0;
  float: left;
 }
+*/
+
+
 .tbdy1 a.btn-sm {
  margin-right: 1px;
 }
@@ -732,11 +736,11 @@ textarea.parsley-error {
 	float: right;
 	padding-right: 15px;
 }
-.tbdy1 .btn-sm {
+/*.tbdy1 .btn-sm {
 	width: 25px !important;
 	padding: 5px 0;
 	float: left;
-}
+}*/
 .tbdy1 a.btn-sm {
 	margin-right: 1px;
 }

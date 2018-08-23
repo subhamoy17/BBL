@@ -134,7 +134,7 @@ $('#bootstrap-slot-data-table').DataTable({
 
                                    
                                         
-                                        <td class="btn-td" style="position: relative;">
+                                        <td style="width: 70px"">
                                         <a href="{{url('trainer/our_trainer_edit_view')}}/{{$mydata->id}}" title="Edit Exercise"><button class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button></a>
                                         <button type="button" class="btn btn-danger btn-sm" onclick="delete_client({!!$mydata->id!!})" style="width: 32px;" title="Delete Exercise"><i class="fa fa-trash-o"></i></button>
                                     </td>
