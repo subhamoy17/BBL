@@ -50,8 +50,8 @@ public function payWithpaypal(Request $request)
     	$package_name=$request->slots_name;
     	$slots_number=$request->slots_number;
     	$package_id=$request->slot_id;
-    	$purchases_date=$request->purchases_date;
-    	$package_validity_date=$request->package_validity_date;
+    	$purchases_date=substr($request->purchases_date,0,10);
+    	$package_validity_date=substr($request->package_validity_date,0,10);
     	$customer_id=$request->customer_id;
     	$package_amount=$request->amount;
         

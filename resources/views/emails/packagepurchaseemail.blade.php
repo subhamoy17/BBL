@@ -37,6 +37,11 @@ th, td {
 th {
     text-align: left;
 }
+
+.table-bordered
+{
+  border: 2px solid black;
+}
 </style>
 <table style="width:100%">
   <tr>
@@ -46,6 +51,22 @@ th {
     <th> 
     @if($status=='Payment Success' && $payment_mode=='Paypal')
     You have successfully paid <i class="fa fa-gbp"> </i>{{$package_amount}} through PayPal and your Transaction ID is {{$payment_id}}. <a href="{{URL::to($url)}}">Click Here </a> to see your purchased package details.
+
+    </br></br>
+    <table style="width:100%" class="table-bordered">
+  <tr>
+    <th class="table-bordered">Package Name</th>
+    <th class="table-bordered">Package Validity Upto</th>
+    <th class="table-bordered">Available Session</th>
+    <th class="table-bordered">Price</th>
+  </tr>
+  <tr>
+    <th class="table-bordered">{{$package_name}}</th>
+    <th class="table-bordered">{{$package_validity}}</th>
+    <th class="table-bordered">{{$slots_number}}</th>
+    <th class="table-bordered">{{$package_amount}}</th>
+  </tr>
+</table>
     @endif
 
     @if($status=='Payment Cancelled' && $payment_mode=='Paypal')
@@ -60,6 +81,21 @@ th {
     You have successfully paid <i class="fa fa-gbp"> </i>{{$package_amount}} through Bank Transfer and your Transaction ID is {{$payment_id}} and once the System Admin will approves your payment you can access the below mentioned package. <a href="{{URL::to($url)}}">Click Here </a> to see your purchased package details.
     @endif
 
+    </br></br>
+    <table style="width:100%" class="table-bordered">
+  <tr>
+    <th class="table-bordered">Package Name</th>
+    <th class="table-bordered">Package Validity Upto</th>
+    <th class="table-bordered">Available Session</th>
+    <th class="table-bordered">Price</th>
+  </tr>
+  <tr>
+    <th class="table-bordered">{{$package_name}}</th>
+    <th class="table-bordered">{{$package_validity}}</th>
+    <th class="table-bordered">{{$slots_number}}</th>
+    <th class="table-bordered">{{$package_amount}}</th>
+  </tr>
+</table>
 
     @if($status=='Payment Failed' && $payment_mode=='Bank Transfer')
      The payment has not been completed due some technical issue using your bank transfer payment.

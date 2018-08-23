@@ -70,8 +70,8 @@ public function bank_payment_success(Request $request)
 
     $notifydata['package_name'] =$request->slots_name;
     $notifydata['slots_number'] =$request->slots_number;
-    $notifydata['package_validity'] =$request->package_validity_date;
-    $notifydata['package_purchase_date'] =$request->purchases_date;
+    $notifydata['package_validity'] =substr($request->package_validity_date,0,10);
+    $notifydata['package_purchase_date'] =substr($request->purchases_date,0,10);
     $notifydata['package_amount'] =$request->slots_price;
     $notifydata['payment_id'] =$data['payment_id'];
     $notifydata['payment_mode'] ='Bank Transfer';
@@ -95,8 +95,8 @@ public function bank_payment_success(Request $request)
 
     $notifydata['package_name'] =$request->slots_name;
     $notifydata['slots_number'] =$request->slots_number;
-    $notifydata['package_validity'] =$request->package_validity_date;
-    $notifydata['package_purchase_date'] =$request->purchases_date;
+    $notifydata['package_validity'] =substr($request->package_validity_date,0,10);
+    $notifydata['package_purchase_date'] =substr($request->purchases_date,0,10);
     $notifydata['package_amount'] =$request->slots_price;
     $notifydata['payment_id'] =$data['payment_id'];
     $notifydata['payment_mode'] ='Bank Transfer';

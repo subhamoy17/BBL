@@ -215,8 +215,6 @@ public function trainer_active_deactive(Request $request)
         DB::table('users')
        ->where('id',$id)->update(['is_active'=>1 ]);
         return response()->json(1);
-
-
     }
     elseif($action=="Deactive")
     {
