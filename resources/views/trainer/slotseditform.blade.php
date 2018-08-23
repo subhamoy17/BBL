@@ -33,12 +33,12 @@ $('#editslotsform').validate({
   ////for show error message
   messages: {
     "slots_number":{
-    required:'Please Enter number of slots',
+    required:'Please enter number of slots',
     digits: 'Please enter only number of digits',
     min: "Minimum value 1 is required"
     },
     "slots_name":{
-    required:'Please Enter a package name'
+    required:'Please enter a package name'
     
     },
     "slots_price": {

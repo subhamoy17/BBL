@@ -291,7 +291,7 @@ Route::get('booking_slot_time','FrontController@booking_slot_times')->name('get_
 
 
 Route::POST('slotinsert','FrontController@slotinsert')->name('customer.slotinsert');
-
+Route::get('customer_session_delete/{id}', 'FrontController@session_delete')->name('customer_session_delete');
 
 
 
