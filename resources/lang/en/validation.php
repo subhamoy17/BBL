@@ -141,6 +141,8 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'ph_no' => 'phone no'
+    ],
 
 ];
