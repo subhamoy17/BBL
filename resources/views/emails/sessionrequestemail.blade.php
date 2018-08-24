@@ -73,6 +73,10 @@ th {
     You have new session request on {{date('d F Y', strtotime($session_booking_date))}} with a client named {{$customer_name}}. Please login your account in BBL Trainer portal to approve the same. <a href="{{URL::to($url)}}">Click Here </a> to see your session request details.
     @endif
 
+    @if($status=='Delete Session Request')
+    You have successfully cancelled your session request scheduled on {{date('d F Y', strtotime($session_booking_date))}} with {{$trainer_name}}. <a href="{{URL::to($url)}}">Click Here </a> to see your session request details.
+    @endif
+
 
     </th> 
      </tr>

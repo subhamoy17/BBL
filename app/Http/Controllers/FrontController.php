@@ -41,9 +41,9 @@ public function session_delete($id)
 
      date_default_timezone_set('Asia/Kolkata');
                  
-    $customer_details=DB::table('slot_request')->where('id',$id)->first();
+      $slot_request_details=DB::table('slot_request')->where('id',$id)->first();
 
-        $slot_request_time=$customer_details->created_at;
+        $slot_request_time=$slot_request_details->created_at;
         $current_time = date("Y-m-d H:i:s");
         $slot_cancel_time = date("Y-m-d H:i:s", strtotime('+24 hours', strtotime($slot_request_time)));
 
@@ -52,21 +52,44 @@ public function session_delete($id)
         if($current_time<$slot_cancel_time){
 
         $package_history=DB::table('purchases_history')
-        ->where('customer_id',$customer_details->customer_id)
+        ->where('customer_id',$slot_request_details->customer_id)
         ->where('purchases_history.active_package',1)
         ->where('purchases_history.package_validity_date','>=',$remaining_session_request_now)
         ->orderBy('package_validity_date','DESC')->first();
 
+        if($package_history)
+        {
         $package_history_update_data['package_remaining']=$package_history->package_remaining+1;
 
         $package_history_update=DB::table('purchases_history')->where('id',$package_history->id)->update($package_history_update_data);
+      }
 
         DB::table('slot_request')->where('id',$id)->update($deleted_data);
+
+        $customer_details=Customer::find($slot_request_details->customer_id);
+        $trainer_details=User::find($slot_request_details->trainer_id);
+
+        $notifydata['url'] = '/customer/mybooking';
+        $notifydata['customer_name']=$customer_details->name;
+        $notifydata['customer_email']=$customer_details->email;
+        $notifydata['customer_phone']=$customer_details->ph_no;
+        $notifydata['status']='Delete Session Request';
+        $notifydata['session_booked_on']=$slot_request_details->created_at;
+        $notifydata['session_booking_date']=$slot_request_details->slot_date;
+        $notifydata['trainer_name']=$trainer_details->name;
+        $notifydata['decline_reason']=' ';
+
+  Log::debug("Delete Session Request notification by customer ".print_r($notifydata,true));
+
+  $customer_details->notify(new SessionRequestNotification($notifydata));
+
+
 
      return redirect()->back()->with("session_delete","You have successfully deleted one session");
    }
    else
    {
+     
       return redirect()->back()->with("session_delete","You don't have permission for delete session");
    }
 }
