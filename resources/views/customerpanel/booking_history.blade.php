@@ -120,13 +120,13 @@
                      @else
                   <td>N/A</td>
                   @endif
-
+ @if(Request::get('option')=='future_pending' || Request::get('option')=='future_confirm' || Request::get('option')=='')
                   
                   <td><a href="{{route('customer_session_delete',['id'=>$mydata->slot_id])}}"  
                  class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this session?');">
                     Delete</a></td>
                    
-                    
+                    @endif
                      
                   </tr>
                 @endforeach
