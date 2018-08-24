@@ -123,7 +123,7 @@
 
                   
                   <td><a href="{{route('customer_session_delete',['id'=>$mydata->slot_id])}}"  
-                 class="btn btn-success">
+                 class="btn btn-success" onclick="return confirm('Are you sure you want to delete this session?');">
                     Delete</a></td>
                    
                     
