@@ -33,13 +33,23 @@ public function __construct()
 
 public function session_delete($id)
 {
+
+
     $remaining_session_request_now=Carbon::now()->toDateString();
      $deleted_data['deleted_at']=Carbon::now();
      $deleted_data['approval_id']=2;
-    
-    
 
+     date_default_timezone_set('Asia/Kolkata');
+                 
     $customer_details=DB::table('slot_request')->where('id',$id)->first();
+
+        $slot_request_time=$customer_details->created_at;
+        $current_time = date("Y-m-d H:i:s");
+        $slot_cancel_time = date("Y-m-d H:i:s", strtotime('+24 hours', strtotime($slot_request_time)));
+
+
+
+        if($current_time<$slot_cancel_time){
 
         $package_history=DB::table('purchases_history')
         ->where('customer_id',$customer_details->customer_id)
@@ -54,6 +64,11 @@ public function session_delete($id)
         DB::table('slot_request')->where('id',$id)->update($deleted_data);
 
      return redirect()->back()->with("session_delete","You have successfully deleted one session");
+   }
+   else
+   {
+      return redirect()->back()->with("session_delete","You don't have permission for delete session");
+   }
 }
 
 
@@ -595,6 +610,8 @@ else
     $notifydata['session_booked_on']=' ';
     $notifydata['session_booking_date']=' ';
     $notifydata['trainer_name']=' ';
+    $notifydata['decline_reason']=' ';
+
 
     Log::debug("Sent Session Request notification ".print_r($notifydata,true));
 

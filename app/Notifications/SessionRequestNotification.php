@@ -61,6 +61,7 @@ class SessionRequestNotification extends Notification
             'session_booked_on'=>$this->notifydata['session_booked_on'],
             'session_booking_date'=>$this->notifydata['session_booking_date'],
             'trainer_name'=>$this->notifydata['trainer_name'],
+            'decline_reason'=>$this->notifydata['decline_reason'],
 
 
             

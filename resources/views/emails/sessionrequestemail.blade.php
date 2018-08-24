@@ -61,11 +61,11 @@ th {
     @endif
 
     @if($status=='Declined Session Request')
-    Your booking on {{date('d F Y', strtotime($session_booked_on))}} with trainer {{$trainer_name}} has been declined due to some other reason. <a href="{{URL::to($url)}}">Click Here </a> to see your session booking details.
+    Your booking on {{date('d F Y', strtotime($session_booked_on))}} with trainer {{$trainer_name}} has been declined due to {{$decline_reason}}. <a href="{{URL::to($url)}}">Click Here </a> to see your session booking details.
     @endif
 
     @if($status=='Cancelled Session Request')
-    Your booking on {{date('d F Y', strtotime($session_booked_on))}} with trainer {{$trainer_name}} has been cancelled due to some other reason. Our team will get back to you soon for the same. <a href="{{URL::to($url)}}">Click Here </a> to see your session booking details.
+    Your booking on {{date('d F Y', strtotime($session_booked_on))}} with trainer {{$trainer_name}} has been cancelled due to {{$decline_reason}}. Our team will get back to you soon for the same. <a href="{{URL::to($url)}}">Click Here </a> to see your session booking details.
     @endif
 
 

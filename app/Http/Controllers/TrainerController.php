@@ -283,6 +283,7 @@ public function trainer_active_deactive(Request $request)
             $notifydata['session_booked_on']=$my_total->created_at;
             $notifydata['session_booking_date']=$my_total->slot_date;
             $notifydata['trainer_name']=$trainer_details->name;
+            $notifydata['decline_reason']='Deactivate Trainer';
 
             Log::debug("Declined Session Request notification ".print_r($notifydata,true));
 
@@ -375,6 +376,7 @@ public function trainerdelete($id)
             $notifydata['session_booked_on']=$my_total->created_at;
             $notifydata['session_booking_date']=$my_total->slot_date;
             $notifydata['trainer_name']=$trainer_details->name;
+            $notifydata['decline_reason']='Deleted Trainer';
 
             Log::debug("Declined Session Request notification ".print_r($notifydata,true));
 
@@ -555,13 +557,15 @@ public function approve_customer_request(Request $request)
         $notifydata['session_booked_on']=$customer_id->created_at;
         $notifydata['session_booking_date']=$customer_id->slot_date;
         $notifydata['trainer_name']=$trainer_details->name;
+        $notifydata['decline_reason']=' ';
 
         Log::debug("Approved Session Request notification ".print_r($notifydata,true));
 
         $customer_details->notify(new SessionRequestNotification($notifydata));
 
-        return response()->json(1);
+       
     }
+     return response()->json(1);
     }
     elseif($action=="Decline")
     {
@@ -599,13 +603,16 @@ public function approve_customer_request(Request $request)
         $notifydata['session_booked_on']=$customer_id->created_at;
         $notifydata['session_booking_date']=$customer_id->slot_date;
         $notifydata['trainer_name']=$trainer_details->name;
+        $notifydata['decline_reason']=$reason;
 
         Log::debug("Declined Session Request notification ".print_r($notifydata,true));
 
         $customer_details->notify(new SessionRequestNotification($notifydata));
-        return response()->json(2);
+        
 
     }
+
+    return response()->json(2);
     }
 }
 
@@ -677,6 +684,7 @@ public function approve_pending_request(Request $request)
         $notifydata['session_booked_on']=$get_customer_id->created_at;
         $notifydata['session_booking_date']=$get_customer_id->slot_date;
         $notifydata['trainer_name']=$trainer_details->name;
+        $notifydata['decline_reason']=' ';
 
         Log::debug("Approved Session Request notification ".print_r($notifydata,true));
 
@@ -721,13 +729,15 @@ public function approve_pending_request(Request $request)
         $notifydata['session_booked_on']=$customer_id->created_at;
         $notifydata['session_booking_date']=$customer_id->slot_date;
         $notifydata['trainer_name']=$trainer_details->name;
+        $notifydata['decline_reason']=$reason;
 
         Log::debug("Declined Session Request notification ".print_r($notifydata,true));
 
         $customer_details->notify(new SessionRequestNotification($notifydata));
 
-        return response()->json(2);
+        
         }
+        return response()->json(2);
     }
 }
 

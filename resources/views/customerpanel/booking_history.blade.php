@@ -123,24 +123,11 @@
                   <td>N/A</td>
                   @endif
 
-                  @php 
-                  date_default_timezone_set('Asia/Kolkata');
-                  $slot_request_time=$mydata->created_at;
-
-                  $current_time = date("Y-m-d H:i:s");
-                  $slot_cancel_time = date("Y-m-d H:i:s", strtotime('+24 hours', strtotime($slot_request_time)));
                   
-
-                  @endphp
-               
-                  
-                  @if($current_time<$slot_cancel_time)
                   <td><a href="{{route('customer_session_delete',['id'=>$mydata->slot_id])}}"  
                  class="btn btn-success">
                     Delete</a></td>
-                   @else  
-                     <td>N/A</td>
-                     @endif
+                   
                     
                      
                   </tr>
