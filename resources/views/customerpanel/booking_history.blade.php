@@ -1,14 +1,10 @@
 @extends('frontend.dashboard_submain') 
 @section('content')
 
-<div class="card-header" style="padding:0px;">
+
                            
-                            @if (session('session_delete'))
-                                <div class="alert alert-danger">
-                                    {{ session('session_delete') }}
-                                </div>
-                            @endif
-                        </div>
+                           
+                        
 
       <div class="tab_container">
           <h3 class="d_active tab_drawer_heading" rel="tab1">Tab 1</h3>
@@ -19,6 +15,11 @@
         @else
         <a href="{{url('customer/booking_slot')}}/{{0}}"class="btn btn-success bk-slt-btn">Send Slot Request</a>
         @endif
+         @if (session('session_delete'))
+                                <div class="alert alert-danger">
+                                    {{ session('session_delete') }}
+                                </div>
+                            @endif
               <h3 align="center">Booking history</h3>
               <table class="table">
                 <thead>
@@ -125,12 +126,15 @@
                   @php 
                   date_default_timezone_set('Asia/Kolkata');
                   $slot_request_time=$mydata->created_at;
+
                   $current_time = date("Y-m-d H:i:s");
-                  $slot_cancel_time = date("Y-m-d H:i:s", strtotime('+2 hours', strtotime($slot_request_time)));
+                  $slot_cancel_time = date("Y-m-d H:i:s", strtotime('+24 hours', strtotime($slot_request_time)));
                   
 
                   @endphp
-                  @if($slot_request_time>=$current_time && $current_time<$slot_cancel_time)
+               
+                  
+                  @if($current_time<$slot_cancel_time)
                   <td><a href="{{route('customer_session_delete',['id'=>$mydata->slot_id])}}"  
                  class="btn btn-success">
                     Delete</a></td>
