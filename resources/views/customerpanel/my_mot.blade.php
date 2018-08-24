@@ -48,16 +48,11 @@
                <div class="col-lg-2"></div> 
               
                <div class="col-lg-4"><div class="wrp"><div class="rl">Starting weight</div>&nbsp;<small class="inch" style="display: none;">(pound)</small><small class="cm">(kg)</small><div class="starting_weight rv" ></div></div></div>
- <div class="col-lg-2"></div> 
+              <div class="col-lg-2"></div> 
                 <div class="col-lg-4"><div class="wrp"><div class="rl">Ending weight</div>&nbsp;<small class="inch" style="display: none;">(pound)</small><small class="cm">(kg)</small><div class="ending_weight rv" ></div></div></div>
-            
-
-               
-
-
               
 				<div class="col-lg-12">
-					<div id="mot_des" class="mot-text">
+					<div id="mot_des" class="mot-text" style="display: none;">
 						<h6>Description</h6>
 						<textarea class="description"></textarea>
 					</div>
