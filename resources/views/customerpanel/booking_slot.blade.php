@@ -293,7 +293,7 @@
   function NotBeforeToday(date)
 {
     var now = new Date();//this gets the current date and time
-    if (date.getFullYear() == now.getFullYear() && date.getMonth() == now.getMonth() && date.getDate() >= now.getDate())
+    if (date.getFullYear() == now.getFullYear() && date.getMonth() == now.getMonth() && date.getDate() > now.getDate())
         return [true];
     if (date.getFullYear() >= now.getFullYear() && date.getMonth() > now.getMonth())
        return [true];
