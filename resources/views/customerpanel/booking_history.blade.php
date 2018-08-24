@@ -123,7 +123,7 @@
  @if(Request::get('option')=='future_pending' || Request::get('option')=='future_confirm' || Request::get('option')=='')
                   
                   <td><a href="{{route('customer_session_delete',['id'=>$mydata->slot_id])}}"  
-                 class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this session?');">
+                 class="btn btn-danger asd"  onclick="return confirm('Are you sure you want to delete this session?');">
                     Delete</a></td>
                    
                     @endif
@@ -178,9 +178,10 @@
               <div class="col-lg-2"><div class="wrp2"><div class="rl">Starting weight</div>&nbsp;<small class="inch" style="display: none;">(pound)</small><small class="cm">(kg)</small><div class="starting_weight rv" ></div></div></div>
               <div class="col-lg-2"><div class="wrp2"><div class="rl">Ending weight</div>&nbsp;<small class="inch" style="display: none;">(pound)</small><small class="cm">(kg)</small><div class="ending_weight rv" ></div></div></div>
               <div class="col-lg-2"><div class="wrp2"><div class="rl">Heart beat</div>&nbsp;<small>(bpm)</small><div class="heart_beat rv" ></div></div></div>
-               <div class="col-lg-6"><div class="wrp"><div class="rl">Blood pressure</div>&nbsp;<small>(mmHg)</small><div class="blood_pressure rv" ></div></div></div>
-               
-                 <div class="col-lg-6"><div class="wrp"><div class="rl">Height</div>&nbsp;<small class="inch" style="display: none;">(Inch)</small><small class="cm">(cm)</small><div class="height rv" ></div></div></div>
+               <div class="col-lg-2"></div> 
+               <div class="col-lg-4"><div class="wrp"><div class="rl">Blood pressure</div>&nbsp;<small>(mmHg)</small><div class="blood_pressure rv" ></div></div></div>
+                <div class="col-lg-2"></div> 
+                 <div class="col-lg-4"><div class="wrp"><div class="rl">Height</div>&nbsp;<small class="inch" style="display: none;">(Inch)</small><small class="cm">(cm)</small><div class="height rv" ></div></div></div>
                  <div class="col-lg-12">
           <div id="des" class="mot-text" style="display: none;">
             <h6>Description</h6>
