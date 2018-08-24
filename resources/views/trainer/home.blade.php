@@ -31,7 +31,7 @@
                         <h4 class="mb-0">
                             <span class="count">{{$future_pending_request}}</span>
                         </h4>
-                     <p class="text-light"><a href="{{url('futurePendingRequestlist')}}/{{Auth::user()->id}}" class="small-box-footer">Future Pending Request <i class="fa fa-arrow-circle-right"></i></a></p>
+                     <p class="text-light"><a href="{{url('futurePendingRequestlist')}}/{{Auth::user()->id}}" class="small-box-footer">Pending Request <i class="fa fa-arrow-circle-right"></i></a></p>
 
 
                         <div class="chart-wrapper px-0" style="height:70px;" height="70"/>
@@ -62,7 +62,7 @@
                         <h4 class="mb-0">
                             <span class="count">{{$future_approve_request}}</span>
                         </h4>
-                        <p class="text-light"><a href="{{url('futureRequestlist')}}/{{Auth::user()->id}}" class="small-box-footer">Future Approve/Declined Request <i class="fa fa-arrow-circle-right"></i></a></p>
+                        <p class="text-light"><a href="{{url('futureRequestlist')}}/{{Auth::user()->id}}" class="small-box-footer">Future Slot Booking Request <i class="fa fa-arrow-circle-right"></i></a></p>
 
                         <div class="chart-wrapper px-0" style="height:70px;" height="70"/>
                           <!--   <canvas id="widgetChart2"></canvas> -->
@@ -91,7 +91,7 @@
                         <h4 class="mb-0">
                             <span class="count">{{$past_request}}</span>
                         </h4>
-                        <p class="text-light"><a href="{{url('pastRequestlist')}}/{{Auth::user()->id}}" class="small-box-footer">Past Request <i class="fa fa-arrow-circle-right"></i></a></p>
+                        <p class="text-light"><a href="{{url('pastRequestlist')}}/{{Auth::user()->id}}" class="small-box-footer">Past Slot Booking Request <i class="fa fa-arrow-circle-right"></i></a></p>
 
                     </div>
 

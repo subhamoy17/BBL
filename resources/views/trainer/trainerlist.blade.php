@@ -42,6 +42,7 @@ $('#bootstrap-slot-data-table').DataTable({
     background-color:red;
 }
 #loading-img {
+   
   background: url(../backend/images/loader-gif-transparent-background-4.gif) center no-repeat / cover;
     display: none;
     height: 100px;
@@ -94,12 +95,10 @@ $('#bootstrap-slot-data-table').DataTable({
 <div class="content mt-3" style="margin-top: 0px !important;">
     <div class="animated fadeIn">
         <div class="row">
-           
             <div class="col-md-12">
-                 
                 <div class="card">
-     <div class="group">
-         <div id="loading-img"></div>
+              <div class="group">
+         
                     <div class="card-header" style="padding-left: 0px;padding-right: 0px;padding-bottom: 0px;padding-top: 10px;">
                         @if (session('success'))
                         <div class="alert alert-success">
@@ -112,8 +111,8 @@ $('#bootstrap-slot-data-table').DataTable({
                             </div>
                         @endif
                     </div>
+                    <div id="loading-img"></div>
                     
-                    <div class="card-body">
                     
                         <script type="text/javascript">
                            
@@ -127,7 +126,7 @@ $('#bootstrap-slot-data-table').DataTable({
                                         });
                                     }
                             </script>
-                      
+                      <div class="card-body">
                         <table id="bootstrap-slot-data-table" class="table table-striped table-bordered">
                             <thead>
                                 <tr>
@@ -183,8 +182,9 @@ $('#bootstrap-slot-data-table').DataTable({
                             @endforeach
                         </tbody>
                         </table>
-                    </div>
+                    
                     @endif
+                    </div>
                 </div>
             </div>
             </div>

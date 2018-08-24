@@ -152,9 +152,6 @@ table.dataTable thead>tr>th[id='action'].sorting_asc::after{display: none}
                     <button type="button" title="Decline" class="btn btn-danger status-all" id="{{$mydata->id}}" data-msg="Decline"><i class="fa fa-thumbs-down"></i></button>
                     @endif
                   </td>
-
-
-
                 </tr>
                 @endforeach
                 </tbody>
@@ -178,7 +175,7 @@ table.dataTable thead>tr>th[id='action'].sorting_asc::after{display: none}
       console.log(action);
       var row = this.closest('tr');
       if (action == "Decline"){
-        // alert('dfghjkgk');
+       
         $('#reason_id').val('');
         $('#reason_id').val(this.id);
         $('#reason_action').val(action);
@@ -193,7 +190,7 @@ table.dataTable thead>tr>th[id='action'].sorting_asc::after{display: none}
         });
       }
       else if (action == "Approve"){
-        // alert('df');
+        
         var Data =
         {
           'id': this.id,

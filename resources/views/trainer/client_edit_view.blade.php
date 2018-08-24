@@ -32,7 +32,7 @@ $('#clienteditform').validate({
 
     "name": {
       alpha:true,
-      minlength:6,
+      minlength:3,
       required: true
     },
     "designation": {
@@ -55,7 +55,7 @@ $('#clienteditform').validate({
 
     "name":{
     required: 'Please enter your name',
-    minlength:'Minimum length 6 is required'
+    minlength:'Minimum length 3 is required'
   },
   "designation":{
     required: 'Please enter your designation' 

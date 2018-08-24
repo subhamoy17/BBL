@@ -147,20 +147,20 @@
                       <ul class="sub-menu children dropdown-menu"> 
                         @endif
                         @if(Request::segment(1) == "pastRequestlist")
-                        <li><i class="fa fa-id-card-o" ></i><a href="{{url('pastRequestlist')}}/{{Auth::user()->id}}" style="color: #fff !important;">Past Request</a></li>
+                        <li><i class="fa fa-id-card-o" ></i><a href="{{url('pastRequestlist')}}/{{Auth::user()->id}}" style="color: #fff !important;">Past Slot Booking Request</a></li>
                         @else
-                        <li><i class="fa fa-id-card-o"></i><a href="{{url('pastRequestlist')}}/{{Auth::user()->id}}">Past Request</a></li>
+                        <li><i class="fa fa-id-card-o"></i><a href="{{url('pastRequestlist')}}/{{Auth::user()->id}}">Past Slot Booking Request</a></li>
                         @endif
                         @if(Request::segment(1) == "futureRequestlist")
-                        <li><i class="fa fa-id-card-o"></i><a href="{{url('futureRequestlist')}}/{{Auth::user()->id}}" style="color: #fff !important;">Future request</a></li>
+                        <li><i class="fa fa-id-card-o"></i><a href="{{url('futureRequestlist')}}/{{Auth::user()->id}}" style="color: #fff !important;">Future Slot Booking Request</a></li>
                         @else
-                        <li><i class="fa fa-id-card-o"></i><a href="{{url('futureRequestlist')}}/{{Auth::user()->id}}">Future request</a></li>
+                        <li><i class="fa fa-id-card-o"></i><a href="{{url('futureRequestlist')}}/{{Auth::user()->id}}">Future Slot Booking Request</a></li>
                         @endif
 
                       @if(Request::segment(1) == "futurePendingRequestlist")
-                        <li><i class="fa fa-id-card-o"></i><a href="{{url('futurePendingRequestlist')}}/{{Auth::user()->id}}" style="color: #fff !important;">Future Pending request</a></li>
+                        <li><i class="fa fa-id-card-o"></i><a href="{{url('futurePendingRequestlist')}}/{{Auth::user()->id}}" style="color: #fff !important;">Pending Request</a></li>
                         @else
-                        <li><i class="fa fa-id-card-o"></i><a href="{{url('futurePendingRequestlist')}}/{{Auth::user()->id}}">Future Pending request</a></li>
+                        <li><i class="fa fa-id-card-o"></i><a href="{{url('futurePendingRequestlist')}}/{{Auth::user()->id}}">Pending Request</a></li>
                         @endif
 
 
@@ -197,19 +197,19 @@
                               @endif
                               @if(Request::segment(1) == "pastRequestlist")
                               
-                              <li><i class="fa fa-id-card-o"></i><a href="{{url('pastRequestlist')}}/{{Auth::user()->id}}" style="color: #fff !important;">Past Request</a></li>
+                              <li><i class="fa fa-id-card-o"></i><a href="{{url('pastRequestlist')}}/{{Auth::user()->id}}" style="color: #fff !important;">Past Slot Booking Request</a></li>
                               @else
-                              <li><i class="fa fa-id-card-o"></i><a href="{{url('pastRequestlist')}}/{{Auth::user()->id}}">Past Request</a></li>
+                              <li><i class="fa fa-id-card-o"></i><a href="{{url('pastRequestlist')}}/{{Auth::user()->id}}">Past Slot Booking Request</a></li>
                               @endif
                               @if(Request::segment(1) == "futureRequestlist")
-                              <li><i class="fa fa-id-card-o"></i><a href= "{{url('futureRequestlist')}}/{{Auth::user()->id}}"style="color: #fff !important;">Future request</a></li>
+                              <li><i class="fa fa-id-card-o"></i><a href= "{{url('futureRequestlist')}}/{{Auth::user()->id}}"style="color: #fff !important;">Future Slot Booking Request</a></li>
                               @else
-                              <li><i class="fa fa-id-card-o"></i><a href= "{{url('futureRequestlist')}}/{{Auth::user()->id}}">Future request</a></li>
+                              <li><i class="fa fa-id-card-o"></i><a href= "{{url('futureRequestlist')}}/{{Auth::user()->id}}">Future Slot Booking Request</a></li>
                               @endif
                               @if(Request::segment(1) == "futurePendingRequestlist")
-                              <li><i class="fa fa-id-card-o"></i><a href= "{{url('futurePendingRequestlist')}}/{{Auth::user()->id}}"style="color: #fff !important;">Future Pending request</a></li>
+                              <li><i class="fa fa-id-card-o"></i><a href= "{{url('futurePendingRequestlist')}}/{{Auth::user()->id}}"style="color: #fff !important;">Pending Request</a></li>
                               @else
-                              <li><i class="fa fa-id-card-o"></i><a href= "{{url('futurePendingRequestlist')}}/{{Auth::user()->id}}">Future Pending request</a></li>
+                              <li><i class="fa fa-id-card-o"></i><a href= "{{url('futurePendingRequestlist')}}/{{Auth::user()->id}}">Pending Request</a></li>
                               @endif
                             </ul></li></ul></li>
                             @endif
