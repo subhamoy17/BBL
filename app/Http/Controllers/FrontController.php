@@ -410,13 +410,22 @@ public function booking_history(Request $request)
 
     $future_pending_count=DB::table('purchases_history')
     ->join('slots','slots.id','purchases_history.slot_id')
-    ->join('slot_request','slot_request.purchases_id','purchases_history.id')->select('slot_request.purchases_id','slots.slots_number','slots.slot_date')->where('slot_request.customer_id',Auth::guard('customer')->user()->id)->where('slot_request.slot_date','>=',$remaining_session_request_now )->where('slot_request.approval_id',1 )->count();
+    ->join('slot_request','slot_request.purchases_id','purchases_history.id')
+    ->select('slot_request.purchases_id','slots.slots_number','slots.slot_date')
+    ->where('slot_request.customer_id',Auth::guard('customer')->user()->id)
+    ->where('slot_request.slot_date','>=',$remaining_session_request_now )
+    ->where('slot_request.approval_id',1 )->count();
     
 
     $accepted_count= DB::table('purchases_history')
     ->join('slots','slots.id','purchases_history.slot_id')
-    ->join('slot_request','slot_request.purchases_id','purchases_history.id')->select('slot_request.purchases_id','slots.slots_number','slots.slot_date')->where('slot_request.customer_id',Auth::guard('customer')->user()->id)->where('slot_request.slot_date','>=',$remaining_session_request_now )->where('slot_request.approval_id',3 )->count();
-      Log::debug(" Check id ".print_r($sum_slots,true));  
+    ->join('slot_request','slot_request.purchases_id','purchases_history.id')
+    ->select('slot_request.purchases_id','slots.slots_number','slots.slot_date')
+    ->where('slot_request.customer_id',Auth::guard('customer')->user()->id)
+    ->where('slot_request.slot_date','>=',$remaining_session_request_now )
+    ->where('slot_request.approval_id',3 )->count();
+
+    Log::debug(" Check id ".print_r($sum_slots,true));  
 
     if($request->ajax())
     {
@@ -526,10 +535,8 @@ public function slotinsert(Request $request)
   
 
   $total_slots=$request->total_slots;
-
   $customer_id=$request->idd; //customer_id
-
-  $remaining_session_request_now=Carbon::now()->toDateString();
+  $remaining_session_request_now=Carbon::now()->toDateString(); // current date
 
   for($i=0;$i<$total_slots;$i++)
   {
