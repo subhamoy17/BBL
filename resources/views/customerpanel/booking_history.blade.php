@@ -8,11 +8,9 @@
           <h3 class="d_active tab_drawer_heading" rel="tab1">Tab 1</h3>
           <div id="tab1" class="tab_content">
             <div class="table-responsive table-bordered">
-              @if($remaining_session_request>0)
-        <a href="{{url('customer/booking_slot')}}/{{Auth::guard('customer')->user()->id}}" class="btn btn-success bk-slt-btn">Send Slot Request</a>
-        @else
-        <a href="{{url('customer/booking_slot')}}/{{0}}"class="btn btn-success bk-slt-btn">Send Slot Request</a>
-        @endif
+              
+        <a href="{{url('customer/booking_slot')}}" class="btn btn-success bk-slt-btn">Send Slot Request</a>
+        
          @if (session('session_delete'))
                                 <div class="alert alert-danger">
                                     {{ session('session_delete') }}
@@ -32,11 +30,7 @@
                    @if($data )
                  
                   <tr>
-                    <td>
-                      
-                      {{($sum_slots)}}
-                      
-                    </td>
+                    <td>{{($total_remaining_session)}}</td>
                     <td>{{$future_pending_count}}</td>
                     <td>{{$accepted_count}}</td>
                       

@@ -161,7 +161,8 @@
           <h3 class="d_active tab_drawer_heading" rel="tab5">Tab 5</h3>
           <div id="tab5" class="tab_content">
             <div class="form-box">
-                @if($customer_id!=0)
+                
+                @if($total_remaining_session>0)
                 
                 <div class="row">
                   <div class="col-md-12 col-sm-12 col-xs-12">
@@ -169,8 +170,7 @@
                  
 
 
-                       
-
+              
                   <div class="col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group">
                               
@@ -229,7 +229,7 @@
   <form action="{{route('customer.slotinsert')}}" method="post" enctype="multipart/form-data" class="form-horizontal" id="">
 
     <input type="hidden" name="_token" value="{{csrf_token()}}">
-    <input type="hidden" name="idd" id="id" value="{{$customer_id}}">
+    <input type="hidden" name="idd" id="id" value="{{Auth::guard('customer')->user()->id}}">
     <div id="add_session_req" >
 
     </div>

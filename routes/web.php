@@ -284,7 +284,7 @@ Route::get('purchase_history','FrontController@purchases_history')->name('custom
 
 
 
-Route::get('booking_slot/{id}','FrontController@booking_slot')->name('booking_slot');
+Route::get('booking_slot','FrontController@booking_slot')->name('booking_slot');
 Route::get('booking_slot_time','FrontController@booking_slot_times')->name('get_slot_time');
 
 
