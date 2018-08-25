@@ -373,7 +373,7 @@ public function booking_history(Request $request)
       ->where('approval_id',1)
       ->update(['approval_id'=>5]);
     }
-    else
+    else if($extra_package)
     {
       $total_remaining_package=$extra_package->extra_package_remaining+$count_past_slot_request;
 
