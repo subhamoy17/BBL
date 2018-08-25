@@ -59,7 +59,7 @@ class TrainerFirstChangePasswordController extends Controller
 
 
     
-       return redirect()->route('login')->with("fisr_change_password_success","Password changed successfully ! now you can logged in using your new password");
+       return redirect()->route('login')->with("fisr_change_password_success","Password changed successfully! Now you can log in using your new password");
  
  
     }

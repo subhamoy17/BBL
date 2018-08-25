@@ -68,7 +68,7 @@ class TrainerChangePasswordController extends Controller
         Mail::send('trainer.change_password_message',['new_password' =>$new_password,'email' => $email,'name'=>$name], function($message) {
            $message->to(Auth::user()->email);          
             });
-       return redirect()->back()->with("success","Password changed successfully !");
+       return redirect()->back()->with("success","Password changed successfully!");
  
  
     }

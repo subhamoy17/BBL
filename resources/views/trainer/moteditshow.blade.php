@@ -211,13 +211,13 @@ range: "Please enter value betwwen 1 to 9999.9"
 
 
 "starting_weight":{
-  required: 'Please enter the this value',
+  required: 'Please enter the value',
   number: 'Please enter decimal only',
   range: "Please enter value betwwen 1 to 999.9"
 },
 
 "ending_weight":{
-  required: 'Please enter the this value',
+  required: 'Please enter the value',
   number: 'Please enter decimal only',
   range: "Please enter value betwwen 1 to 999.9"
 
@@ -226,11 +226,11 @@ range: "Please enter value betwwen 1 to 9999.9"
 "blood_pressure":{
   blood:'Please enter approppriate value',
  
-  required: 'Please enter the this value'
+  required: 'Please enter the value'
 
 },
 "heart_beat":{
-  required: 'Please enter the this value',
+  required: 'Please enter the value',
   digits: 'Please enter only number of digits',
   number: 'Please enter number only'
 }

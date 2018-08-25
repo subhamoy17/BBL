@@ -154,7 +154,7 @@ range: "Please enter value betwwen 1 to 999.9"
 },
 
 "chest":{
-  required: 'Please enter the this value',
+  required: 'Please enter the value',
   number: 'Please enter decimal only',
   range: "Please enter value betwwen 1 to 999.9"
 },
@@ -195,13 +195,13 @@ range: "Please enter value betwwen 1 to 999.9"
 },
 
 "starting_weight":{
-  required: 'Please enter the this value',
+  required: 'Please enter the value',
 number: 'Please enter decimal only',
   range: "Please enter value betwwen 1 to 999.9"
 },
 
 "ending_weight":{
-  required: 'Please enter the this value',
+  required: 'Please enter the value',
   number: 'Please enter decimal only',
   range: "Please enter value betwwen 1 to 999.9"
 
@@ -209,13 +209,13 @@ number: 'Please enter decimal only',
 
 "blood_pressure":{
  
-  required: 'Please enter the this value',
+  required: 'Please enter the value',
   blood: 'Please enter approppriate value'
 
 },
 
 "heart_beat":{
-  required: 'Please enter the this value',
+  required: 'Please enter the value',
   digits: 'Please enter only number of digits',
   number: 'Please enter number only'
 },
