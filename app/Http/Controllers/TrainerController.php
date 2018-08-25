@@ -250,6 +250,7 @@ public function trainer_active_deactive(Request $request)
       $extra_package=DB::table('purchases_history')
       ->select('id','package_validity_date','package_remaining','extra_package_remaining')
       ->where('customer_id',$customer_id)
+      ->where('active_package',1)
       ->orderBy('package_validity_date', 'DESC')
       ->first();
         
@@ -369,6 +370,7 @@ public function trainerdelete($id)
     $extra_package=DB::table('purchases_history')
     ->select('id','purchases_date','package_validity_date','package_remaining','extra_package_remaining')
     ->where('customer_id',$my_total->customer_id)
+    ->where('active_package',1)
     ->orderBy('package_validity_date', 'DESC')
     ->first();
         
@@ -568,6 +570,7 @@ public function approve_customer_request(Request $request)
     $extra_package=DB::table('purchases_history')
     ->select('id','purchases_date','package_validity_date','package_remaining','extra_package_remaining')
     ->where('customer_id',$customer_id->customer_id)
+    ->where('active_package',1)
     ->where('extra_package_remaining','>',0)
     ->orderBy('package_validity_date', 'DESC')
     ->first();
@@ -642,6 +645,7 @@ public function approve_customer_request(Request $request)
     $extra_package=DB::table('purchases_history')
     ->select('id','purchases_date','package_validity_date','package_remaining','extra_package_remaining')
     ->where('customer_id',$customer_id->customer_id)
+    ->where('active_package',1)
     ->orderBy('package_validity_date', 'DESC')
     ->first();
 
@@ -794,6 +798,7 @@ public function approve_pending_request(Request $request)
     $extra_package=DB::table('purchases_history')
     ->select('id','purchases_date','package_validity_date','package_remaining','extra_package_remaining')
     ->where('customer_id',$customer_id->customer_id)
+    ->where('active_package',1)
     ->orderBy('package_validity_date', 'DESC')
     ->first();
 

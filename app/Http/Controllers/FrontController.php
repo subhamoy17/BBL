@@ -349,6 +349,7 @@ public function booking_history(Request $request)
     $extra_package=DB::table('purchases_history')
     ->select('id','purchases_date','package_validity_date','package_remaining','extra_package_remaining','slots_number')
     ->where('customer_id',Auth::guard('customer')->user()->id)
+    ->where('active_package',1)
     ->orderBy('package_validity_date', 'DESC')
     ->first();
 
@@ -400,6 +401,7 @@ public function booking_history(Request $request)
     $sum_extra_slots = DB::table('purchases_history')
     ->select('active_package','package_remaining','extra_package_remaining','customer_id')
     ->where('customer_id',Auth::guard('customer')->user()->id)
+    ->where('active_package',1)
     ->sum('extra_package_remaining');
 
     $total_remaining_session=$sum_slots+$sum_extra_slots;
@@ -498,6 +500,7 @@ public function booking_slot()
   $sum_extra_slots = DB::table('purchases_history')
   ->select('active_package','package_remaining','extra_package_remaining','customer_id')
   ->where('customer_id',Auth::guard('customer')->user()->id)
+  ->where('active_package',1)
   ->sum('extra_package_remaining');
 
   $total_remaining_session=$sum_slots+$sum_extra_slots;
@@ -553,6 +556,7 @@ public function slotinsert(Request $request)
     ->select('id','purchases_date','package_validity_date','package_remaining','extra_package_remaining')
     ->where('customer_id',$customer_id)
     ->where('extra_package_remaining','>',0)
+    ->where('active_package',1)
     ->orderBy('package_validity_date', 'DESC')
     ->first();
 
@@ -674,6 +678,7 @@ public function slotinsert(Request $request)
     $sum_extra_slots = DB::table('purchases_history')
     ->select('active_package','package_remaining','extra_package_remaining','customer_id')
     ->where('customer_id',Auth::guard('customer')->user()->id)
+    ->where('active_package',1)
     ->sum('extra_package_remaining');
 
     $total_remaining_session=$sum_slots+$sum_extra_slots;
