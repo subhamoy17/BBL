@@ -169,13 +169,15 @@
               <div class="col-lg-2"><div class="wrp2"><div class="rl">Left thigh</div>&nbsp;<small class="inch" style="display: none;">(Inch)</small><small class="cm">(cm)</small><div class="left_thigh rv" ></div></div></div>
               <div class="col-lg-2"><div class="wrp2"><div class="rl">Right calf</div>&nbsp;<small class="inch" style="display: none;">(Inch)</small><small class="cm">(cm)</small><div class="right_calf rv" ></div></div></div>
               <div class="col-lg-2"><div class="wrp2"><div class="rl">Left calf</div>&nbsp;<small class="inch" style="display: none;">(Inch)</small><small class="cm">(cm)</small><div class="left_calf rv" ></div></div></div>
-              <div class="col-lg-2"><div class="wrp2"><div class="rl">Starting weight</div>&nbsp;<small class="inch" style="display: none;">(pound)</small><small class="cm">(kg)</small><div class="starting_weight rv" ></div></div></div>
-              <div class="col-lg-2"><div class="wrp2"><div class="rl">Ending weight</div>&nbsp;<small class="inch" style="display: none;">(pound)</small><small class="cm">(kg)</small><div class="ending_weight rv" ></div></div></div>
+              <div class="col-lg-2"><div class="wrp2"><div class="rl">Blood pressure</div>&nbsp;<small class="inch" style="display: none;">(pound)</small><small class="cm">(kg)</small><div class="blood_pressure rv" ></div></div></div>
+              <div class="col-lg-2"><div class="wrp2"><div class="rl">Height</div>&nbsp;<small class="inch" style="display: none;">(pound)</small><small class="cm">(kg)</small><div class="height rv" ></div></div></div>
               <div class="col-lg-2"><div class="wrp2"><div class="rl">Heart beat</div>&nbsp;<small>(bpm)</small><div class="heart_beat rv" ></div></div></div>
                <div class="col-lg-2"></div> 
-               <div class="col-lg-4"><div class="wrp"><div class="rl">Blood pressure</div>&nbsp;<small>(mmHg)</small><div class="blood_pressure rv" ></div></div></div>
+
+               <div class="col-lg-4"><div class="wrp"><div class="rl">Starting weight</div>&nbsp;<small>(mmHg)</small><div class="starting_weight rv" ></div></div></div>
                 <div class="col-lg-2"></div> 
-                 <div class="col-lg-4"><div class="wrp"><div class="rl">Height</div>&nbsp;<small class="inch" style="display: none;">(Inch)</small><small class="cm">(cm)</small><div class="height rv" ></div></div></div>
+                 <div class="col-lg-4"><div class="wrp"><div class="rl">Ending weight</div>&nbsp;<small class="inch" style="display: none;">(Inch)</small><small class="cm">(cm)</small><div class="ending_weight rv" ></div></div></div>
+
                  <div class="col-lg-12">
           <div id="des" class="mot-text" style="display: none;">
             <h6>Description</h6>
