@@ -619,16 +619,19 @@ public function slotinsert(Request $request)
 
       $insert_slot_session=DB::table('slot_request')->insert($slots_data);
 
-      if($package_remaining>0)
-      {
-        $new_remaining_package['package_remaining']=$package_remaining-1;
-        $new_remaining_package['active_package']=1;
-      }
-      if($package_remaining==1)
-      {
-        $new_remaining_package['package_remaining']=$package_remaining-1;
-        $new_remaining_package['active_package']=0;
-      }
+      // if($package_remaining>0)
+      // {
+      //   $new_remaining_package['package_remaining']=$package_remaining-1;
+      //   $new_remaining_package['active_package']=1;
+      // }
+      // if($package_remaining==1)
+      // {
+      //   $new_remaining_package['package_remaining']=$package_remaining-1;
+      //   $new_remaining_package['active_package']=0;
+      // }
+
+      $new_remaining_package['package_remaining']=$package_remaining-1;
+
 
       $update_package_purchase=DB::table('purchases_history')
       ->where('id',$oldest_package_id)
@@ -675,7 +678,7 @@ public function slotinsert(Request $request)
 
     $total_remaining_session=$sum_slots+$sum_extra_slots;
 
-    session(['sum_slots' => $sum_slots]);
+    session(['sum_slots' => $total_remaining_session]);
 
     $customer_details=Customer::find($customer_id);
 

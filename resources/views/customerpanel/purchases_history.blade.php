@@ -50,9 +50,17 @@
             <td>{{$mydata->slots_number}}</td>
             <td>
 
-              <?php $total_package_remaining=$mydata->package_remaining+$mydata->extra_package_remaining;
+              @if ($mydata->active_package==1 && $mydata->package_remaining>0 && $mydata->package_validity_date >= $remaining_session_request_now )
+              
+              <?php 
+              $total_package_remaining=$mydata->package_remaining+$mydata->extra_package_remaining;
               ?>
+              @else
 
+              <?php
+              $total_package_remaining=$mydata->extra_package_remaining;
+              ?>
+                            @endif
 
               @if($total_package_remaining>$mydata->slots_number)
               <?php $others=$total_package_remaining-$mydata->slots_number;?>
