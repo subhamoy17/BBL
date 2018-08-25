@@ -69,7 +69,7 @@
                   <tr>
                     <th>Trainer Name</th>
                     <th>Date</th>
-                    <th>view More</th>
+                    <th>View More</th>
                     
                   </tr>
                 </thead>
