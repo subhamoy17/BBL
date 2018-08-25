@@ -53,6 +53,7 @@
               <?php $total_package_remaining=$mydata->package_remaining+$mydata->extra_package_remaining;
               ?>
 
+
               @if($total_package_remaining>$mydata->slots_number)
               <?php $others=$total_package_remaining-$mydata->slots_number;?>
               {{$mydata->slots_number}} <font style="color: #ffa461;"> + {{$others}}</font>
@@ -67,6 +68,10 @@
       </div>
               @else
               {{$total_package_remaining}}
+              @if (($mydata->active_package==0 || $mydata->package_validity_date < $remaining_session_request_now) && $mydata->extra_package_remaining>0)
+
+              
+              @endif
               @endif
             </td>
             <td> 
@@ -102,6 +107,7 @@
 <!-- .tab_container -->
 </div>
 </div>
+
 
 
 
