@@ -57,6 +57,7 @@ $('#clienteditform').validate({
     required: 'Please enter your name',
     minlength:'Minimum length 3 is required'
   },
+
   "designation":{
     required: 'Please enter your designation' 
   },
@@ -67,6 +68,7 @@ $('#clienteditform').validate({
   }
   
 }
+
   });
   
   ///show uploading image and check validation of image
