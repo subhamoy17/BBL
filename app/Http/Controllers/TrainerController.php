@@ -253,6 +253,9 @@ public function trainer_active_deactive(Request $request)
       ->where('active_package',1)
       ->orderBy('package_validity_date', 'DESC')
       ->first();
+
+
+      $slot_time=DB::table('slot_times')->where('id',$my_total->slot_time_id)->first();
         
       if($remaining_package) 
       {
@@ -266,6 +269,8 @@ public function trainer_active_deactive(Request $request)
         $customer_details=Customer::find($my_total->customer_id);
         $trainer_details=User::find($id);
 
+
+
         $notifydata['url'] = '/customer/mybooking';
         $notifydata['customer_name']=$customer_details->name;
         $notifydata['customer_email']=$customer_details->email;
@@ -273,6 +278,7 @@ public function trainer_active_deactive(Request $request)
         $notifydata['status']='Cancelled Session Request';
         $notifydata['session_booked_on']=$my_total->created_at;
         $notifydata['session_booking_date']=$my_total->slot_date;
+        $notifydata['session_booking_time']=$slot_time->time;
         $notifydata['trainer_name']=$trainer_details->name;
         $notifydata['decline_reason']='Deactivate Trainer';
 
@@ -299,6 +305,7 @@ public function trainer_active_deactive(Request $request)
         $notifydata['status']='Cancelled Session Request';
         $notifydata['session_booked_on']=$my_total->created_at;
         $notifydata['session_booking_date']=$my_total->slot_date;
+        $notifydata['session_booking_time']=$slot_time->time;
         $notifydata['trainer_name']=$trainer_details->name;
         $notifydata['decline_reason']='Deactivate Trainer';
 
@@ -373,6 +380,8 @@ public function trainerdelete($id)
     ->where('active_package',1)
     ->orderBy('package_validity_date', 'DESC')
     ->first();
+
+    $slot_time=DB::table('slot_times')->where('id',$my_total->slot_time_id)->first();
         
     if($remaining_package) 
     {
@@ -394,6 +403,7 @@ public function trainerdelete($id)
       $notifydata['status']='Cancelled Session Request';
       $notifydata['session_booked_on']=$my_total->created_at;
       $notifydata['session_booking_date']=$my_total->slot_date;
+      $notifydata['session_booking_time']=$slot_time->time;
       $notifydata['trainer_name']=$trainer_details->name;
       $notifydata['decline_reason']='Deleted Trainer';
 
@@ -420,6 +430,7 @@ public function trainerdelete($id)
       $notifydata['status']='Cancelled Session Request';
       $notifydata['session_booked_on']=$my_total->created_at;
       $notifydata['session_booking_date']=$my_total->slot_date;
+      $notifydata['session_booking_time']=$slot_time->time;
       $notifydata['trainer_name']=$trainer_details->name;
       $notifydata['decline_reason']='Deleted Trainer';
 
@@ -570,12 +581,17 @@ public function approve_customer_request(Request $request)
   $data=$request->get('data');
   $id=$data['id'];
   $action=$data['action'];
+
+  $customer_id=DB::table('slot_request')->where('id',$id)->first();
+
+  
+
+  $slot_time=DB::table('slot_times')->where('id',$customer_id->slot_time_id)->first();
+
+
     
   if($action=="Approve")
   {
-
-    $customer_id=DB::table('slot_request')->where('id',$id)->first();
-
     $package_history=DB::table('purchases_history')
     ->where('customer_id',$customer_id->customer_id)
     ->where('purchases_history.active_package',1)
@@ -589,6 +605,7 @@ public function approve_customer_request(Request $request)
     ->where('extra_package_remaining','>',0)
     ->orderBy('package_validity_date', 'DESC')
     ->first();
+
 
     if($package_history)
     {
@@ -610,6 +627,7 @@ public function approve_customer_request(Request $request)
       $notifydata['status']='Approved Session Request';
       $notifydata['session_booked_on']=$customer_id->created_at;
       $notifydata['session_booking_date']=$customer_id->slot_date;
+      $notifydata['session_booking_time']=$slot_time->time;
       $notifydata['trainer_name']=$trainer_details->name;
       $notifydata['decline_reason']=' ';
 
@@ -636,21 +654,21 @@ public function approve_customer_request(Request $request)
       $notifydata['status']='Approved Session Request';
       $notifydata['session_booked_on']=$customer_id->created_at;
       $notifydata['session_booking_date']=$customer_id->slot_date;
+      $notifydata['session_booking_time']=$slot_time->time;
       $notifydata['trainer_name']=$trainer_details->name;
       $notifydata['decline_reason']=' ';
 
       Log::debug("Approved Session Request notification ".print_r($notifydata,true));
 
       $customer_details->notify(new SessionRequestNotification($notifydata));
-     return response()->json(1);
+     
     }
+    return response()->json(1);
   }
   elseif($action=="Decline")
   {
     $reason=$data['comment'];
         
-    $customer_id=DB::table('slot_request')->where('id',$id)->first();
-
     $package_history=DB::table('purchases_history')
     ->where('customer_id',$customer_id->customer_id)
     ->where('purchases_history.active_package',1)
@@ -686,6 +704,7 @@ public function approve_customer_request(Request $request)
       $notifydata['status']='Declined Session Request';
       $notifydata['session_booked_on']=$customer_id->created_at;
       $notifydata['session_booking_date']=$customer_id->slot_date;
+      $notifydata['session_booking_time']=$slot_time->time;
       $notifydata['trainer_name']=$trainer_details->name;
       $notifydata['decline_reason']=$reason;
 
@@ -713,6 +732,7 @@ public function approve_customer_request(Request $request)
       $notifydata['status']='Declined Session Request';
       $notifydata['session_booked_on']=$customer_id->created_at;
       $notifydata['session_booking_date']=$customer_id->slot_date;
+      $notifydata['session_booking_time']=$slot_time->time;
       $notifydata['trainer_name']=$trainer_details->name;
       $notifydata['decline_reason']=$reason;
 
@@ -777,6 +797,8 @@ public function approve_pending_request(Request $request)
 
     $get_customer_id=DB::table('slot_request')->where('id',$id)->first();
 
+    $slot_time=DB::table('slot_times')->where('id',$get_customer_id->slot_time_id)->first();
+
     $customer_details=Customer::find($get_customer_id->customer_id);
     $trainer_details=User::find($get_customer_id->trainer_id);
 
@@ -787,6 +809,7 @@ public function approve_pending_request(Request $request)
     $notifydata['status']='Approved Session Request';
     $notifydata['session_booked_on']=$get_customer_id->created_at;
     $notifydata['session_booking_date']=$get_customer_id->slot_date;
+    $notifydata['session_booking_time']=$slot_time->time;
     $notifydata['trainer_name']=$trainer_details->name;
     $notifydata['decline_reason']=' ';
 
@@ -803,6 +826,7 @@ public function approve_pending_request(Request $request)
     $remaining_session_request_now=Carbon::now()->toDateString();
 
     $customer_id=DB::table('slot_request')->where('id',$id)->first();
+    $slot_time=DB::table('slot_times')->where('id',$customer_id->slot_time_id)->first();
 
     $package_history=DB::table('purchases_history')
     ->where('customer_id',$customer_id->customer_id)
@@ -836,6 +860,7 @@ public function approve_pending_request(Request $request)
       $notifydata['status']='Declined Session Request';
       $notifydata['session_booked_on']=$customer_id->created_at;
       $notifydata['session_booking_date']=$customer_id->slot_date;
+      $notifydata['session_booking_time']=$slot_time->time;
       $notifydata['trainer_name']=$trainer_details->name;
       $notifydata['decline_reason']=$reason;
 
@@ -862,6 +887,7 @@ public function approve_pending_request(Request $request)
       $notifydata['status']='Declined Session Request';
       $notifydata['session_booked_on']=$customer_id->created_at;
       $notifydata['session_booking_date']=$customer_id->slot_date;
+      $notifydata['session_booking_time']=$slot_time->time;
       $notifydata['trainer_name']=$trainer_details->name;
       $notifydata['decline_reason']=$reason;
 

@@ -11,7 +11,7 @@ use Carbon\Carbon;
 
  // implements ShouldQueue
 
-class TrainerActiveDeactiveNotification extends Notification
+class TrainerActiveDeactiveNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 

@@ -64,19 +64,47 @@ public function session_delete($id)
     $customer_details=Customer::find($slot_request_details->customer_id);
     $trainer_details=User::find($slot_request_details->trainer_id);
 
+    $session_time=DB::table('slot_times')->where('id',$slot_request_details->slot_time_id)->first();
+
+
+    Log::debug("Delete Session Request notification to customer ".print_r($session_time,true));
+
     $notifydata['url'] = '/customer/mybooking';
-    $notifydata['customer_name']=$customer_details->name;
-    $notifydata['customer_email']=$customer_details->email;
-    $notifydata['customer_phone']=$customer_details->ph_no;
-    $notifydata['status']='Delete Session Request';
-    $notifydata['session_booked_on']=$slot_request_details->created_at;
-    $notifydata['session_booking_date']=$slot_request_details->slot_date;
-    $notifydata['trainer_name']=$trainer_details->name;
-    $notifydata['decline_reason']=' ';
+    $notifydata['url1'] = '/trainer-login';
 
-    Log::debug("Delete Session Request notification by customer ".print_r($notifydata,true));
+    if($notifydata['url'] == '/customer/mybooking')
+    {
+      $notifydata['url'] = '/customer/mybooking';
+      $notifydata['customer_name']=$customer_details->name;
+      $notifydata['customer_email']=$customer_details->email;
+      $notifydata['customer_phone']=$customer_details->ph_no;
+      $notifydata['status']='Delete Session Request To Customer';
+      $notifydata['session_booked_on']=$slot_request_details->created_at;
+      $notifydata['session_booking_date']=$slot_request_details->slot_date;
+      $notifydata['session_booking_time']=$session_time->time;
+      $notifydata['trainer_name']=$trainer_details->name;
+      $notifydata['decline_reason']=' ';
 
-    $customer_details->notify(new SessionRequestNotification($notifydata));
+      Log::debug("Delete Session Request notification to customer ".print_r($notifydata,true));
+      $customer_details->notify(new SessionRequestNotification($notifydata));
+    }
+    if($notifydata['url1'] == '/trainer-login')
+    {
+      $notifydata['url'] = '/trainer-login';
+      $notifydata['customer_name']=$customer_details->name;
+      $notifydata['customer_email']=$customer_details->email;
+      $notifydata['customer_phone']=$customer_details->ph_no;
+      $notifydata['status']='Delete Session Request To Trainer';
+      $notifydata['session_booked_on']=$slot_request_details->created_at;
+      $notifydata['session_booking_date']=$slot_request_details->slot_date;
+      $notifydata['session_booking_time']=$session_time->time;
+      $notifydata['trainer_name']=$trainer_details->name;
+      $notifydata['decline_reason']=' ';
+
+      Log::debug("Delete Session Request notification to trainer ".print_r($notifydata,true));
+      $customer_details->notify(new SessionRequestNotification($notifydata));
+    }
+
     return redirect()->back()->with("session_delete","You have successfully deleted one session");
    }
    else
@@ -564,6 +592,8 @@ public function slotinsert(Request $request)
     $slots_date=$request->slots_date[$i];
     $slots_time_id=$request->slots_time_id[$i];
 
+    $slot_time=DB::table('slot_times')->where('id',$slots_time_id)->first();
+
     if($extra_package)
     {
 
@@ -599,11 +629,12 @@ public function slotinsert(Request $request)
       $notifydata['customer_phone']=$customer_details->ph_no;
       $notifydata['status']='Sent Session Request To Trainer';
       $notifydata['session_booking_date']=$slots_date;
+      $notifydata['session_booking_time']=$slot_time->time;
       $notifydata['trainer_name']=$trainer_details->name;
 
       Log::debug("Sent Session Request notification to trainer ".print_r($notifydata,true));
 
-      $customer_details->notify(new SessionRequestNotificationToTrainer($notifydata));
+      $trainer_details->notify(new SessionRequestNotificationToTrainer($notifydata));
     }
     elseif($all_package)
     {
@@ -652,11 +683,12 @@ public function slotinsert(Request $request)
       $notifydata['customer_phone']=$customer_details->ph_no;
       $notifydata['status']='Sent Session Request To Trainer';
       $notifydata['session_booking_date']=$slots_date;
+      $notifydata['session_booking_time']=$slot_time->time;
       $notifydata['trainer_name']=$trainer_details->name;
 
       Log::debug("Sent Session Request notification to trainer ".print_r($notifydata,true));
 
-      $customer_details->notify(new SessionRequestNotificationToTrainer($notifydata));
+      $trainer_details->notify(new SessionRequestNotificationToTrainer($notifydata));
     }
     else
     {
@@ -694,6 +726,7 @@ public function slotinsert(Request $request)
     $notifydata['status']='Sent Session Request';
     $notifydata['session_booked_on']=' ';
     $notifydata['session_booking_date']=' ';
+    $notifydata['session_booking_time']=' ';
     $notifydata['trainer_name']=' ';
     $notifydata['decline_reason']=' ';
 

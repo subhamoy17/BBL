@@ -11,7 +11,7 @@ use Carbon\Carbon;
 
  // implements ShouldQueue
 
-class SessionRequestNotification extends Notification
+class SessionRequestNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -60,6 +60,7 @@ class SessionRequestNotification extends Notification
             'url'=>$this->notifydata['url'],
             'session_booked_on'=>$this->notifydata['session_booked_on'],
             'session_booking_date'=>$this->notifydata['session_booking_date'],
+            'session_booking_time'=>$this->notifydata['session_booking_time'],
             'trainer_name'=>$this->notifydata['trainer_name'],
             'decline_reason'=>$this->notifydata['decline_reason'],
 
