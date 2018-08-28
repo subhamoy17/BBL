@@ -121,7 +121,7 @@ public function showForm(Request $request)
             Log::debug("Request_allllllll ".print_r($request->all(),true));
 
             Auth::guard('customer')->login($customers,true);
-            return redirect('customer/bbl'); 
+            return redirect('customer/mybooking'); 
         }
 
 

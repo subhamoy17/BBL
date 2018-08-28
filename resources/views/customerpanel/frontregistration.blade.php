@@ -52,10 +52,6 @@
             <?php $social_email=''?>
             @endif
 
-             @if($errors->has('email') || $errors->has('ph_no'))
-            <?php $social_email=old('email');  $social_name=old('name'); ?>
-            @endif
-
             @if($customer_social_data1['provider_id'] && $customer_social_data1['provider_name'])
 
             <?php 
@@ -68,6 +64,16 @@
             $social_provider_name='';
             ?>
             @endif
+
+             @if($errors->has('email') || $errors->has('ph_no'))
+            <?php $social_email=old('email');  $social_name=old('name'); 
+
+            $social_provider_id=old('provider_id');
+            $social_provider_name=old('provider_name');
+            ?>
+            @endif
+
+            
           <!--social login block end-->
          
             <div class="container-fluid">
