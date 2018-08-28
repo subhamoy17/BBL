@@ -224,6 +224,8 @@ Route::GET('adminpanel/home/{id}','Admin\ProfileUpdateController@showprofile');
 Route::get('pastRequestlist/{id}','TrainerController@pastshowlist');
 Route::get('futureRequestlist/{id}','TrainerController@futureshowlist');
 
+Route::get('canelledlist','TrainerController@cancelledshowlist');
+
 Route::get('futurePendingRequestlist/{id}','TrainerController@future_pending_showlist');
 
 

@@ -54,7 +54,7 @@ public function index()
   })->where('slot_date','>=',$cur_date)->count(); 
 
   //number of past request
-  $past_request=DB::table('slot_request')->where('trainer_id',Auth::user()->id)->where('slot_date','<',$cur_date)->count();
+  $past_request=DB::table('slot_request')->where('trainer_id',Auth::user()->id)->where('approval_id','<>',2)->where('slot_date','<',$cur_date)->count();
 
   //number of decline request
   $decline_request=DB::table('slot_request')->where('trainer_id',Auth::user()->id)->where('approval_id',4)->count();
@@ -543,8 +543,23 @@ public function pastshowlist(Request $request)
   ->join('slot_times','slot_times.id','slot_request.slot_time_id')
   ->select('slot_request.id','customers.name','customers.ph_no','customers.image','slot_approval.status','slot_request.created_at','slot_request.approval_id','slot_request.slot_date','slot_times.time as slot_time')
   ->where('slot_request.slot_date','<',$cur_date)
+  ->where('approval_id','<>',2)
   ->where('slot_request.trainer_id',$id)->get();
   return view('trainer.past_request_customers')->with(compact('data'));
+}
+
+
+//past customer list//
+public function cancelledshowlist()
+{
+  $data=DB::table('slot_request')
+  ->join('customers','customers.id','slot_request.customer_id')
+  ->join('slot_approval','slot_approval.id','slot_request.approval_id')
+  ->join('slot_times','slot_times.id','slot_request.slot_time_id')
+  ->select('slot_request.id','customers.name','customers.ph_no','customers.image','slot_approval.status','slot_request.created_at','slot_request.approval_id','slot_request.slot_date','slot_times.time as slot_time')
+  ->where('approval_id',2)
+  ->where('slot_request.trainer_id',Auth::user()->id)->get();
+  return view('trainer.cancelled_request_customers')->with(compact('data'));
 }
 
 //future customer ajax function//

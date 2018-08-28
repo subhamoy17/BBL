@@ -137,7 +137,7 @@
                   <li><i class="fa fa-id-card-o"></i><a href="{{route('trainerlist')}}">Trainer List</a></li>
                   @endif
                 </ul></li>
-                  @if(Request::segment(1) == "pastRequestlist" || Request::segment(1) == "futureRequestlist"||Request::segment(1) == "futurePendingRequestlist")         
+                  @if(Request::segment(1) == "pastRequestlist" || Request::segment(1) == "futureRequestlist" || Request::segment(1) == "futurePendingRequestlist" || Request::segment(1) == "canelledlist")         
                 <li class="menu-item-has-children dropdown show">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i> Slot Request</a>
                   <ul class="sub-menu children dropdown-menu show"> 
@@ -163,7 +163,11 @@
                         <li><i class="fa fa-id-card-o"></i><a href="{{url('futurePendingRequestlist')}}/{{Auth::user()->id}}">Pending Request</a></li>
                         @endif
 
-
+                        @if(Request::segment(1) == "canelledlist")
+                        <li><i class="fa fa-id-card-o"></i><a href="{{url('canelledlist')}}" style="color: #fff !important;">Cancelled Request</a></li>
+                        @else
+                        <li><i class="fa fa-id-card-o"></i><a href="{{url('canelledlist')}}">Cancelled Request</a></li>
+                        @endif
 
 
 
@@ -186,7 +190,7 @@
  -->
 
 
-                      @if(Request::segment(1) == "pastRequestlist" || Request::segment(1) == "futureRequestlist" || Request::segment(1) == "futurePendingRequestlist")                   
+                      @if(Request::segment(1) == "pastRequestlist" || Request::segment(1) == "futureRequestlist" || Request::segment(1) == "futurePendingRequestlist" || Request::segment(1) == "canelledlist")                   
                       <li class="menu-item-has-children dropdown show">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i> Slot Request</a>
                         <ul class="sub-menu children dropdown-menu show"> 
@@ -211,6 +215,12 @@
                               @else
                               <li><i class="fa fa-id-card-o"></i><a href= "{{url('futurePendingRequestlist')}}/{{Auth::user()->id}}">Pending Request</a></li>
                               @endif
+
+                               @if(Request::segment(1) == "canelledlist")
+                        <li><i class="fa fa-id-card-o"></i><a href="{{url('canelledlist')}}" style="color: #fff !important;">Cancelled Request</a></li>
+                        @else
+                        <li><i class="fa fa-id-card-o"></i><a href="{{url('canelledlist')}}">Cancelled Request</a></li>
+                        @endif
                             </ul></li></ul></li>
                             @endif
                           </div><!-- /.navbar-collapse -->
