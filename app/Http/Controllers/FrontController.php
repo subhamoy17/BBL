@@ -109,7 +109,7 @@ public function session_delete($id)
    }
    else
    {  
-      return redirect()->back()->with("session_delete","You don't have permission for delete session");
+      return redirect()->back()->with("session_delete","Your session delete remaning time(24 hour's) is expired");
    }
 }
 
