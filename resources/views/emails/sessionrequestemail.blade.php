@@ -101,7 +101,7 @@ th {
 
       <!-- after sent session request by client to trainer -->
     @if($status=='Sent Session Request To Trainer')
-    You have new session request on {{date('d F Y', strtotime($session_booking_date))}} at {{$session_booking_time}} with a client named {{$customer_name}}. Please login your account in BBL Trainer portal to approve the same. <a href="{{URL::to($url)}}">Click Here </a> to see your session request details.
+    You have new session request on {{date('d F Y', strtotime($session_booking_date))}} at {{$session_booking_time}} with a client named {{$customer_name}}. Please login your account in BBL Trainer portal to approve the same. <a href="{{URL::to($url)}}">Click Here </a> to see the list of session request.
     @endif
 
       <!-- after delete session request by client -->
