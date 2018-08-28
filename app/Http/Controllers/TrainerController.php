@@ -208,7 +208,7 @@ public function trainer_active_deactive(Request $request)
     
   if($action=="Active")
   {
-    $a=DB::table('users')->where('id',$id)->update(['is_active'=>1 ]);
+    $a=DB::table('users')->where('id',$id)->update(['is_active'=>1]);
         
     $trainer_details=User::find($id);
 
