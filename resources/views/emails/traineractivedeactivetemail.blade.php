@@ -41,7 +41,7 @@ th {
 <table style="width:100%">
   <tr>
     <th>
-        Dear {{$trainer_name}},
+        Hi {{$trainer_name}},
     </th>
   </tr>
   <tr>

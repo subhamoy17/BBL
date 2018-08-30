@@ -45,7 +45,7 @@ th {
 </style>
 <table style="width:100%">
   <tr>
-    <th>Dear {{$customer_name}},</th>
+    <th>Hi {{$customer_name}},</th>
   </tr>
   <tr>
     <th> 

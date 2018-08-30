@@ -67,10 +67,10 @@ th {
 
 
       @if($status=='Sent Session Request To Trainer' || $status=='Delete Session Request To Trainer')
-        Dear {{$trainer_name}},
+        Hi {{$trainer_name}},
 
       @else
-        Dear {{$customer_name}},
+        Hi {{$customer_name}},
       @endif
 
       </th>
