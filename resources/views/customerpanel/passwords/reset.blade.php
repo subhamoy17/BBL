@@ -41,7 +41,7 @@
                         @csrf
                          <input type="hidden" name="token" value="{{ $token }}">
                         <div class="log-box-header">
-                            <h3>Login </h3>
+                            <h3>Reset Password</h3>
                         </div>
                         <div class="input-box">
                                      

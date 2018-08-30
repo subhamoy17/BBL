@@ -36,22 +36,24 @@
 <body class="lg-body">
     <div class="whole-wrp"></div>
     <div class="logo-m"><a href="{{route('bbldb')}}"><img src="{{asset('frontend/images/logo.png')}}"></a></div>
+
 <section class="login-section">
             <div class="container-fluid">
                 <div class="login-wrapper" style="display: block;">
+                     @if (session('status'))
+                        <div class="alert alert-success">
+                            {{ session('status') }}
+                        </div>
+                    @endif
                        <div class="login-form">
                    
                    <form method="POST" action="{{ route('customer.password.email') }}" id="passwordresetform">
                         @csrf
                         <div class="log-box-header">
 
-                            <h3>Login</h3>
+                            <h3>Forgot Password</h3>
                         </div>
-                         @if (session('status'))
-                        <div class="alert alert-success">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+                        
                         <div class="input-box">
                                      <!-- {{ __('E-Mail Address') }} -->
                             <input type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="Email" name="email" value="{{ old('email') }}" autofocus>

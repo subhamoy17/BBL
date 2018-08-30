@@ -200,7 +200,7 @@ Route::POST('customer-password/email','Customer\ForgotPasswordController@sendRes
 Route::POST('customer-password/reset','Customer\ResetPasswordController@reset');
 Route::GET('customer-password/reset/{token}','Customer\ResetPasswordController@showResetForm')->name('customerpanel.password.reset');
 
-    Route::get('cutomer-registration', 'Customer\RegisterController@showRegistrationForm')->name('customer-register');
+    Route::get('customer-registration', 'Customer\RegisterController@showRegistrationForm')->name('customer-register');
 
     Route::post('register', 'Customer\RegisterController@showForm')->name('customer-register-success');
     Route::get('register/verify/{confirmationCode}','Customer\RegisterController@confirm')->name('verify-user');

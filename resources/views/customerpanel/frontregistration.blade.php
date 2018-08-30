@@ -38,7 +38,7 @@
 
     <div class="logo-m"><a href="{{route('bbldb')}}"><img src="{{asset('frontend/images/logo.png')}}"></a></div>
      <section class="login-section">
-
+      <div class="container-fluid">
           <!--social login block -->
           @if($customer_social_data1['name'])
                 <?php $social_name=$customer_social_data1['name']?>
@@ -120,14 +120,18 @@
 
                             <input class="cnfm-pswrd" placeholder="Confirm Password" type="password"  id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
 
-
-
                             <button class="lg-in" type="submit" name="submit" id="submit">Register</button>
+                            
 
+                            <span class="nw-user"><a class="cm-cls">
+                                <a href="{{route('social-auth-login',['provider' => 'facebook'])}}" class="signup"><i class="fa fa-facebook-square" style="color: #5277f8;margin-right: 4px;"></i> Login With Facebook</a> |
+                                <a href="{{route('social-auth-login',['provider' => 'google'])}}" class="signup"><i class="fa fa-google-plus" style="color: #cf1508;margin-right: 4px;"></i> Login With Google</a>
+                            </a></span>
                         </div>
                     </form>
                 </div>
             </div>
+          </div>
 </section>
 
 

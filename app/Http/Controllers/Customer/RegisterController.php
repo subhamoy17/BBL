@@ -131,7 +131,7 @@ public function showForm(Request $request)
             $message->to(Input::get('email'));
             });  
 
-            return redirect('cutomer-registration')->with('confirm_message', 'A verification code has been sent to your email. Please confirm to complete the registration process!');
+            return redirect('customer-registration')->with('confirm_message', 'A verification code has been sent to your email. Please confirm to complete the registration process!');
         }
 }
 
