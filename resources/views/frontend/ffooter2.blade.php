@@ -16,6 +16,12 @@
   <script src="{{url('frontend/js/stellarnav.min.js')}}"></script>
 	<!--tooltip js-->
 	<script src="{{url('frontend/js/tooltipster.bundle.min.js')}}"></script>
+  <!-- @if(Request::segment(2) == 'mybooking')
+
+  <link rel="stylesheet" href="{{ asset('backend/assets/css/totancss/style.css') }}">
+
+    <script src="{{ asset('backend/assets/js/totanjs/alertify.min.js') }}"></script>
+ @endif -->
 	<script>
 		// You can also use "$(window).load(function() {"
 		$(function () {
@@ -50,6 +56,10 @@
     		    }
     		}
 		})
+
+//     $(".asd").on( 'click', function () { 
+//   alertify.alert('Alert Message!', function(){ alertify.success('Ok'); });
+// });
 		}); 
 </script>
 

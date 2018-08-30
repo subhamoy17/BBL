@@ -94,9 +94,6 @@
                         <a href="{{url('customer/testimonial')}}">Testimonial</a>
                       </li>
 
-                      <!-- <li class="{{ Request::segment(2) === 'profile' ? 'active' : null }}">
-                        <a href="{{url('customer/profile')}}/{{Auth::user()->id}}">My Profile</a>
-                      </li> -->
 
 
     						</ul>
