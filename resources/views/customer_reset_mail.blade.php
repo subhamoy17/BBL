@@ -10,6 +10,18 @@
   <!--Font awesome cdn-->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="shortcut icon" href="{{url('/images/icon-fav.png')}}" type="image/x-icon">
+  <style>
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 5px;
+}
+th {
+    text-align: left;
+}
+</style>
 </head>
 <body style="margin: 0; padding: 0;">
   <table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="border: 1px solid #cccccc;">
@@ -24,19 +36,8 @@
     
           
 
-<style>
-table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
-}
-th, td {
-    padding: 5px;
-}
-th {
-    text-align: left;
-}
-</style>
-<table style="width:100%">
+
+<table style="width:100%" border="1">
   <tr>
     <th>Reset your Password</th>
     <th> <a href="{{$url}}">Click Here </a>to reset your password.</th> 
