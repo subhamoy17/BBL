@@ -89,6 +89,8 @@
     <!-- for testimonials slider-js-file-->
             <script src="{{url('frontend/js/owl.carousel.js')}}"></script>
 
+            <script src="{{asset('backend/assets/js/jquery.validate.min.js')}}"></script>
+
     <script>
         $(document).ready(function() { 
         $('#price-slider').owlCarousel({

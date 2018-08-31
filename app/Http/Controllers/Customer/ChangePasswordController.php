@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\mail;
+use Illuminate\Support\Facades\Mail;
 
 
  
@@ -77,7 +77,7 @@ class ChangePasswordController extends Controller
         //echo "your change password message is sent";
 
  Mail::send('customerpanel.customer_change_password_message',['new_password' =>$new_password,'email' => $email,'name'=>$name], function($message) {
-           $message->to(Auth::user()->email);          
+           $message->to(Auth::user()->email)->subject('Change Password');          
             });
      return redirect()->back()->with("success","Password changed successfully!");
  
