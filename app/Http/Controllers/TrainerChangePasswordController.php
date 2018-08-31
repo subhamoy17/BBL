@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\mail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
 
 
@@ -66,7 +66,7 @@ class TrainerChangePasswordController extends Controller
         $new_password=$request->get('new-password');
         Log::debug(" email ".print_r($email,true));
         Mail::send('trainer.change_password_message',['new_password' =>$new_password,'email' => $email,'name'=>$name], function($message) {
-           $message->to(Auth::user()->email);          
+           $message->to(Auth::user()->email)->subject('Change Password');          
             });
        return redirect()->back()->with("success","Password changed successfully!");
  
