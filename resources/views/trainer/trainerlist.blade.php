@@ -76,6 +76,21 @@ $('#bootstrap-slot-data-table').DataTable({
  One request has been deactive successfully.
 </div>
 
+
+<div class="card-header" style="padding-left: 0px;padding-right: 0px;padding-bottom: 0px;padding-top: 10px;">
+                        @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                        @endif
+                        @if (session('delete'))
+                            <div class="alert alert-danger">
+                                {{ session('delete') }}
+                            </div>
+                        @endif
+                    </div>
+                    <div id="loading-img"></div>
+
 <div class="breadcrumbs">
     <div class="col-sm-9">
         <div class="page-header float-left">
@@ -99,19 +114,7 @@ $('#bootstrap-slot-data-table').DataTable({
                 <div class="card">
               <div class="group">
          
-                    <div class="card-header" style="padding-left: 0px;padding-right: 0px;padding-bottom: 0px;padding-top: 10px;">
-                        @if (session('success'))
-                        <div class="alert alert-success">
-                            {{ session('success') }}
-                        </div>
-                        @endif
-                        @if (session('delete'))
-                            <div class="alert alert-danger">
-                                {{ session('delete') }}
-                            </div>
-                        @endif
-                    </div>
-                    <div id="loading-img"></div>
+                    
                     
                     
                         <script type="text/javascript">
@@ -119,6 +122,8 @@ $('#bootstrap-slot-data-table').DataTable({
                             function delete_trainer(id){ 
                             alertify.confirm("Are you sure you want to delete this trainer?", function (e) {
                                     if (e) {
+                                                $(".card-body").css("opacity", .2);
+                                                $("#loading-img").css({"display": "block"});
                                                 // alertify.success("You've clicked OK");
                                                 window.location.href="{{url('trainer/trainerdelete')}}/"+id;
                                                 
@@ -213,7 +218,8 @@ if (action == "Deactive"){
 
   alertify.confirm("Are you sure you want to deactive this trainer?", function (e) {
      if (e) { 
- 
+ $(".card-body").css("opacity", .2);
+    $("#loading-img").css({"display": "block"});
   
 
   $.ajax({
@@ -281,6 +287,8 @@ else if (action == "Active"){
 alertify.confirm("Are you sure you will be approve this trainer?", function (e) {
  if (e) {
    
+   $(".card-body").css("opacity", .2);
+    $("#loading-img").css({"display": "block"});
   $.ajax({
     url: "{{route('trainer_active_deactive')}}",
 
