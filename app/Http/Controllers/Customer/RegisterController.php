@@ -116,7 +116,7 @@ public function showForm(Request $request)
         if($customers && $request->provider_id && $request->provider_name)
         {
             Mail::send('emails.socialenquirycustomermail',['email' =>$request->email,'name' =>$request->name],function($message) {
-            $message->to(Input::get('email'));   
+            $message->to(Input::get('email'))->subject('Successfully Register');   
             });
             Log::debug("Request_allllllll ".print_r($request->all(),true));
 
@@ -128,7 +128,7 @@ public function showForm(Request $request)
         if($customers && !$request->provider_id && !$request->provider_name)
         {
             Mail::send('emails.enquirycustomermail',['email' =>$request->email,'password' =>$request->password,'confirmation_code' => $confirmation_code],function($message) {
-            $message->to(Input::get('email'));
+            $message->to(Input::get('email'))->subject('Successfully Register');
             });  
 
             return redirect('customer-registration')->with('confirm_message', 'A verification code has been sent to your email. Please confirm to complete the registration process!');
