@@ -37,8 +37,6 @@ th {
             <td style="padding: 20px 0 30px 0; text-align: center;">
     <p align="left"> </p>
     
-          
-
 
 <table style="width:100%">
   <tr>
