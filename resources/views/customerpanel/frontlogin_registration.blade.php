@@ -33,6 +33,8 @@
     <link href="//fonts.googleapis.com/css?family=Raleway:400,500,600,700,800" rel="stylesheet">
     <link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800" rel="stylesheet">
     <link href="//fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,400,400i,500,500i,600,600i,700,700i,800" rel="stylesheet">
+
+   
 </head>
 
 
@@ -45,7 +47,7 @@
 <section class="login-section">
             <div class="container-fluid">
                 <div class="login-wrapper" style="display: block;">
-                   <form method="POST" action="{{ route('customerpanel.frontlogin_registration') }}" id="myform">
+                   <form method="POST" action="{{ route('customerpanel.frontlogin_registration') }}" id="myform" name="myform">
                         @csrf
                         <div class="log-box-header">
 
@@ -116,6 +118,8 @@
 
     <script>
         $(document).ready(function() { 
+
+
         $('#price-slider').owlCarousel({
             loop:true,
             margin:30,
@@ -464,6 +468,10 @@ $(document).ready(function() {
          });
     </script>
         <script src="{{url('frontend/js/accotab.js')}}"></script>
+
+
+
+        
     <!--Fontawesome script-->
     <!--<script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js" integrity="sha384-3LK/3kTpDE/Pkp8gTNp2gR/2gOiwQ6QaO7Td0zV76UFJVhqLl4Vl3KL1We6q6wR9" crossorigin="anonymous"></script>-->
 </body>

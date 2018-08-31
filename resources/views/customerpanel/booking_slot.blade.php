@@ -234,7 +234,7 @@
 
     </div>
             
-      <button type="submit" name="submit" class="btn btn-dark btn-theme-colored btn-flat btn-drk2" data-loading-text="Please wait..." style="display:none;" id="save_btn">Save</button>
+      <button type="submit" name="submit" class="btn btn-dark btn-theme-colored btn-flat btn-drk2 save_button"  style="display:none;" id="save_btn" onclick="button_name_change()">Save</button>
        </form>
     </div>
 
@@ -643,6 +643,14 @@ $('#slotform').validate({
 
     });
   
+</script>
+
+<script type="text/javascript">
+  
+  function button_name_change() // no ';' here
+{
+    $('.save_button').text('Please wait...');
+}
 </script>
 
 
