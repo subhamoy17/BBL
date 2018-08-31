@@ -8,7 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
 
-class AdminResetPasswordNotification extends Notification
+class ResetPasswordNotification extends Notification
 {
     use Queueable;
 
