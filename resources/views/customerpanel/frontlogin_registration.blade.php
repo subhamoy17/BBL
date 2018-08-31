@@ -78,7 +78,7 @@
                                 <label class="checkbox"></label>
                             </span>
                             <a href="{{ route('customerpanel.password.request') }}" class="forgot-p">Forgot Password</a>
-                            <button class="lg-in" type="submit">Login</button>
+                            <button class="lg-in login_button" type="submit" onclick="change_login_name()">Login</button>
                             <span class="nw-user">New User ? <a class="cm-cls">
                                 <a href="{{ route('customer-register') }}" class="signup">Create Account</a>
                             </a></span>
@@ -469,7 +469,13 @@ $(document).ready(function() {
     </script>
         <script src="{{url('frontend/js/accotab.js')}}"></script>
 
+      <script>
 
+        // function change_login_name()
+        // {
+        //   $('.login_button').text('Please wait...');
+        // }
+      </script>
 
         
     <!--Fontawesome script-->
