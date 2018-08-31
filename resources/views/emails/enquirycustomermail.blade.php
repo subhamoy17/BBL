@@ -40,7 +40,7 @@ th {
           
 
 
-<table style="width:100%">
+<table style="width:100%" border="1">
   <tr>
     <th>Url:</th>
     <th> <a href="{{URL::to('register/verify/'.$confirmation_code)}}">Click Here </a>to verify and login your account or to verify your account you can using social login by same email id. </th> 

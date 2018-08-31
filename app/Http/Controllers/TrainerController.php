@@ -503,7 +503,7 @@ public function inserttrainer(Request $request)
   DB::table('users')->insert($data);
 
   Mail::send('emails.enquirymail',['password' =>$password_code,'email' =>$data['email'],'name'=>$data['name']], function($message) {
-    $message->to(Input::get('email'));
+    $message->to(Input::get('email'))->subject('Successfully add as a trainer');
     });
   return redirect('trainer/trainerlist')->with("success","You have successfully added one trainer");
 }
