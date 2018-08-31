@@ -193,6 +193,8 @@ table.dataTable thead>tr>th[id='action'].sorting_asc::after{display: none}
         }
         alertify.confirm("Are you sure you will be avaliable on this slot?", function (e) {
           if (e) {
+            $(".card-body").css("opacity", .2);
+                  $("#loading-img").css({"display": "block"});
             $.ajax({
               url: "{{route('approvePendingRequest')}}",
               json_enc: Data,
@@ -247,6 +249,9 @@ table.dataTable thead>tr>th[id='action'].sorting_asc::after{display: none}
           'comment':comment
         }
         console.log(Data);
+
+        $(".card-body").css("opacity", .2);
+            $("#loading-img").css({"display": "block"});
         $.ajax({
           url: "{{route('approvePendingRequest')}}",
           json_enc: Data,
