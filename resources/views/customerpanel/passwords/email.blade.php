@@ -78,30 +78,9 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     <script type="text/javascript" src="{{url('frontend/js/jquery-2.1.4.min.js')}}"></script>
+
+    <script src="{{asset('backend/assets/js/jquery.validate.min.js')}}"></script>
     <!-- //js -->
 
     <!-- Slider script -->
