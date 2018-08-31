@@ -191,7 +191,7 @@ messages: {
             <div class="col col-md-10">
             </div>
             <div class="col col-md-2">
-              <button type="submit" name="submit" class="btn btn-primary">Update</button>
+              <button type="submit" name="submit" class="btn btn-primary" data-loading-text="Please wait...">Update</button>
             </div>
           </div>
         </form>

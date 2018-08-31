@@ -216,8 +216,8 @@ if (action == "Decline"){
 
   alertify.confirm("Are you sure you want to decline this payment?", function (e) {
      if (e) { 
- 
-  
+ $(".card-body").css("opacity", .2);
+  $("#loading-img").css({"display": "block"});
 
   $.ajax({
     url: "{{route('payment_history_backend_request')}}",
@@ -279,6 +279,8 @@ else if (action == "Approve"){
 
 alertify.confirm("Are you sure you will be approve this payment?", function (e) {
  if (e) {
+  $(".card-body").css("opacity", .2);
+  $("#loading-img").css({"display": "block"});
    
   $.ajax({
     url: "{{route('payment_history_backend_request')}}",
