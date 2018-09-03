@@ -10,22 +10,8 @@
   <!--Font awesome cdn-->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="shortcut icon" href="{{url('/images/icon-fav.png')}}" type="image/x-icon">
-</head>
-<body style="margin: 0; padding: 0;">
-  <table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="border: 1px solid #cccccc;">
-    <tr>
-      <td align="center" bgcolor="#5C342C" style="padding: 20px 0 20px 0;">
-        <h1><img src="{{asset('frontend/images/logo.png')}}"></h1>
-      </td>
-    </tr>
-    <tr> 
-        <tr>
-            <td style="padding: 20px 0 30px 0; text-align: center;">
-    <p align="left"> Hi, {{$name}} </p>
-    <p align="left">your password has been changed.<br>
-          
 
-<style>
+  <style>
 table, th, td {
     border: 1px solid black;
     border-collapse: collapse;
@@ -37,7 +23,23 @@ th {
     text-align: left;
 }
 </style>
-<table style="width:100%">
+</head>
+<body style="margin: 0; padding: 0;">
+  <table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="border: 1px solid #cccccc;">
+    <tr>
+      <td align="center" bgcolor="#5C342C" style="padding: 20px 0 20px 0;">
+        <h1><img src="https://www.bodybylekan.com/frontend/images/logo.png"></h1>
+      </td>
+    </tr>
+    <tr> 
+        <tr>
+            <td style="padding: 20px 0 30px 0; text-align: center;">
+    <p align="left"> Hi, {{$name}} </p>
+    <p align="left">your password has been changed.<br>
+          
+
+
+<table style="width:100%" border="1">
      <tr>
     <th>User Id:</th>
     <th>{{$email}}</th>
