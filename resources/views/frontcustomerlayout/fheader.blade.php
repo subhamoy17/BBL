@@ -16,7 +16,7 @@
 
                             @if(Auth::guard('customer')->check())
                             <div class="dropdown user-box">
-                                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Welcom {{Auth::guard('customer')->user()->name}}
+                                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Welcome {{Auth::guard('customer')->user()->name}}
                                 <span class="caret"></span></button>
                                 <ul class="dropdown-menu">
                                     <li><a href="{{url('customer/mybooking')}}">My Dashboard</a></li>

@@ -9,7 +9,7 @@
 
                 <div class="col-sm-7">
                     <a id="menuToggle" class="menutoggle pull-left"><i class="fa fa fa-tasks"></i></a>
-                   Welcom {{Auth::user()->name}}
+                   Welcome {{Auth::user()->name}}
                 </div>
 
                 <div class="col-sm-5">
