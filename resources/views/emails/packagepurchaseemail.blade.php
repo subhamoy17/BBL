@@ -25,13 +25,18 @@ th {
     text-align: left;
 }
 
+.table-bordered
+{
+  border: 2px solid black;
+}
+
 </style>
 </head>
 <body style="margin: 0; padding: 0;">
   <table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="border: 1px solid #cccccc;">
     <tr>
       <td align="center" bgcolor="#5C342C" style="padding: 20px 0 20px 0;">
-        <h1><img src="https://www.bodybylekan.com/frontend/images/logo.png"></h1>
+        <h1><img src="www.bodybylekan.com/frontend/images/logo.png"></h1>
       </td>
     </tr>
     
@@ -50,18 +55,18 @@ th {
     You have successfully paid <i class="fa fa-gbp"> </i>{{$package_amount}} through PayPal and your Transaction ID is {{$payment_id}}. Please see the below purchased package. <a href="{{URL::to($url)}}">Click Here </a> to see your purchased package details.
 
     <br><br>
-    <table style="width:100%" border="1">
+    <table style="width:100%" class="table-bordered">
   <tr>
-    <th>Package Name</th>
-    <th>Package Validity Upto</th>
-    <th">Available Session</th>
-    <th>Price</th>
+    <th class="table-bordered">Package Name</th>
+    <th class="table-bordered">Package Validity Upto</th>
+    <th class="table-bordered">Available Session</th>
+    <th class="table-bordered">Price</th>
   </tr>
   <tr>
-    <th>{{$package_name}}</th>
-    <th>{{date('d F Y', strtotime($package_validity))}}</th>
-    <th>{{$slots_number}}</th>
-    <th>{{$package_amount}}</th>
+    <th class="table-bordered">{{$package_name}}</th>
+    <th class="table-bordered">{{date('d F Y', strtotime($package_validity))}}</th>
+    <th class="table-bordered">{{$slots_number}}</th>
+    <th class="table-bordered">{{$package_amount}}</th>
   </tr>
 </table>
     @endif
@@ -79,18 +84,18 @@ th {
 
 
     <br><br>
-    <table style="width:100%" border="1">
+    <table style="width:100%" class="table-bordered">
   <tr>
-    <th>Package Name</th>
-    <th>Package Validity Upto</th>
-    <th>Available Session</th>
-    <th>Price</th>
+    <th class="table-bordered">Package Name</th>
+    <th class="table-bordered">Package Validity Upto</th>
+    <th class="table-bordered">Available Session</th>
+    <th class="table-bordered">Price</th>
   </tr>
   <tr>
-    <th>{{$package_name}}</th>
-    <th>{{date('d F Y', strtotime($package_validity))}}</th>
-    <th>{{$slots_number}}</th>
-    <th>{{$package_amount}}</th>
+    <th class="table-bordered">{{$package_name}}</th>
+    <th class="table-bordered">{{date('d F Y', strtotime($package_validity))}}</th>
+    <th class="table-bordered">{{$slots_number}}</th>
+    <th class="table-bordered">{{$package_amount}}</th>
   </tr>
 </table>
     @endif
