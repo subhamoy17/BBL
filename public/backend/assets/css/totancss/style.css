@@ -621,3 +621,7 @@ All error msg
         background: #5CB811;
         background: rgba(92,184,17,.9);
     }
+    
+.logo-m a img {
+    height: 70px;
+}

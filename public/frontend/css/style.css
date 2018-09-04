@@ -6081,3 +6081,7 @@ div#add_session_req {
     pointer-events: none;
     cursor: no-drop;
 }
+
+.logo a img {
+    height: 53px;
+}
