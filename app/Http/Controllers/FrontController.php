@@ -654,17 +654,6 @@ public function slotinsert(Request $request)
 
       $insert_slot_session=DB::table('slot_request')->insert($slots_data);
 
-      // if($package_remaining>0)
-      // {
-      //   $new_remaining_package['package_remaining']=$package_remaining-1;
-      //   $new_remaining_package['active_package']=1;
-      // }
-      // if($package_remaining==1)
-      // {
-      //   $new_remaining_package['package_remaining']=$package_remaining-1;
-      //   $new_remaining_package['active_package']=0;
-      // }
-
       $new_remaining_package['package_remaining']=$package_remaining-1;
 
 
