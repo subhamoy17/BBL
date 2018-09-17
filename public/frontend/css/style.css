@@ -6085,3 +6085,17 @@ div#add_session_req {
 .logo a img {
     height: 53px;
 }
+
+.acnt-det h5 {
+    display: inline-block;
+    font-size: 16px;
+    color: #e9ac08;
+}
+.acnt-det span {
+    color: #fff;
+    display: inline-block;
+}
+.hldr-name {
+    font-weight: 600;
+    margin-top: 10px;
+}
