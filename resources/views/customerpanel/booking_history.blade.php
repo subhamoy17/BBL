@@ -117,8 +117,8 @@
  @if(Request::get('option')=='future_pending' || Request::get('option')=='future_confirm' || Request::get('option')=='')
                   
                   <td><a href="{{route('customer_session_delete',['id'=>$mydata->slot_id])}}"  
-                 class="btn btn-danger asd"  onclick="return confirm('Are you sure you want to delete this session?');">
-                    Delete</a></td>
+                 class="btn btn-danger asd"  onclick="return confirm('Are you sure you want to cancel this session?');">
+                    Cancel</a></td>
                    
                     @endif
                      

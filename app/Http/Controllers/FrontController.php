@@ -105,11 +105,11 @@ public function session_delete($id)
       $customer_details->notify(new SessionRequestNotification($notifydata));
     }
 
-    return redirect()->back()->with("session_delete","You have successfully deleted one session");
+    return redirect()->back()->with("session_delete","You have successfully cancelled one session");
    }
    else
    {  
-      return redirect()->back()->with("session_delete","Your session delete remaning time(24 hour's) is expired");
+      return redirect()->back()->with("session_delete","Your session cancelled remaning time(24 hour's) is expired");
    }
 }
 
