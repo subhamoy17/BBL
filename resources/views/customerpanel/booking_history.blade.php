@@ -42,7 +42,7 @@
               	 <form id="frm_search" method="get">
 					<select align ="right" id="feature" name="option" >
             <option value="future_booking" {{Request::get('option')=='future_booking' || Request::get('option')==''?'selected':''}} >Future booking</option>
-  					<option value="future_confirm" {{Request::get('option')=='future_confirm' || Request::get('option')==''?'selected':''}} >Future accepted</option>
+  					<option value="future_confirm" {{Request::get('option')=='future_confirm'?'selected':''}} >Future accepted</option>
   					<option value="future_pending" {{Request::get('option')=='future_pending'?'selected':''}} >Future pending</option>
   					<option value="delete_request" {{Request::get('option')=='delete_request'?'selected':''}} >Delete request</option>
   					<option value="declined_request" {{Request::get('option')=='declined_request'?'selected':''}} >Declined request</option>

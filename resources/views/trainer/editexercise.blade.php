@@ -92,7 +92,7 @@ rules: {
 ////for show error message
 messages: {
   "title":{
-    required: 'Please enter title'
+    required: 'Please enter category'
   },
   "description":{
     required: 'Please enter description' 
