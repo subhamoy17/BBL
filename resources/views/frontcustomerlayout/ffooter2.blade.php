@@ -75,12 +75,13 @@ $(document).ready(function() {
 
   <script>
     $('#testi-slider').owlCarousel({
-  autoplay: false,
+  autoplay: true,
     loop:true,
     margin:30,
     nav:false,
   dots: true,
-  smartSpeed: 1500,   
+  smartSpeed: 1500,
+  autoplayHoverPause:true,   
   responsive:{
         0:{
             items:1

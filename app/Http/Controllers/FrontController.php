@@ -36,17 +36,9 @@ public function session_delete($id)
   $remaining_session_request_now=Carbon::now()->toDateString();
   $deleted_data['deleted_at']=Carbon::now();
   $deleted_data['approval_id']=2;
-
-  date_default_timezone_set('Asia/Kolkata');
                  
   $slot_request_details=DB::table('slot_request')->where('id',$id)->first();
 
-  $slot_request_time=$slot_request_details->created_at;
-  $current_time = date("Y-m-d H:i:s");
-  $slot_cancel_time = date("Y-m-d H:i:s", strtotime('+24 hours', strtotime($slot_request_time)));
-
-  if($current_time<$slot_cancel_time)
-  {
     $package_history=DB::table('purchases_history')
     ->where('customer_id',$slot_request_details->customer_id)
     ->where('purchases_history.active_package',1)
@@ -65,9 +57,6 @@ public function session_delete($id)
     $trainer_details=User::find($slot_request_details->trainer_id);
 
     $session_time=DB::table('slot_times')->where('id',$slot_request_details->slot_time_id)->first();
-
-
-    Log::debug("Delete Session Request notification to customer ".print_r($session_time,true));
 
     $notifydata['url'] = '/customer/mybooking';
     $notifydata['url1'] = '/trainer-login';
@@ -106,11 +95,7 @@ public function session_delete($id)
     }
 
     return redirect()->back()->with("session_delete","You have successfully cancelled one session");
-   }
-   else
-   {  
-      return redirect()->back()->with("session_delete","Your session cancelled remaning time(24 hour's) is expired");
-   }
+   
 }
 
 

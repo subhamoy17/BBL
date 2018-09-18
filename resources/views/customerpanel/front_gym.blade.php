@@ -14,7 +14,7 @@
             <div class="exr-emg">
               <h4><span>{{$mydata->title}}</span></h4>
               <p>{{$mydata->description}}</p>
-              <h5><span>Duration:</span>{{$mydata->duration}} &nbsp;<span>Days</span></h5>
+              
             </div>
           </div>
           <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">

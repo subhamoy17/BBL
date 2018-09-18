@@ -625,3 +625,22 @@ All error msg
 .logo-m a img {
     height: 70px;
 }
+
+#duplicate_category {
+    color: #dc3545;
+    font-weight: 700;
+    text-transform: none;
+    font-size: 13px;
+}
+#video_add_error {
+    color: #dc3545;
+    font-weight: 700;
+    text-transform: none;
+    font-size: 13px;
+}
+#duplicate_name {
+    color: #dc3545;
+    font-weight: 700;
+    text-transform: none;
+    font-size: 13px;
+}

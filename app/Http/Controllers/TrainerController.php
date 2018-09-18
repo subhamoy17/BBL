@@ -595,6 +595,7 @@ public function approve_customer_request(Request $request)
     $package_history=DB::table('purchases_history')
     ->where('customer_id',$customer_id->customer_id)
     ->where('purchases_history.active_package',1)
+    ->where('purchases_history.package_remaining','>=',0)
     ->where('purchases_history.package_validity_date','>=',$remaining_session_request_now)
     ->orderBy('package_validity_date','ASC')->first();
 
@@ -968,13 +969,39 @@ public function gymdelete($id)
 public function show_edit_exercise_form($id)
 {
   $data= DB::table('exercise_details')->where('id',$id)->first();
-  Log::debug(" data ".print_r($data,true));
+  //Log::debug(" data ".print_r($data,true));
   return view ("trainer.editexercise")->with(compact('data'));
 }
 
 //gym edit function//
 public function update_exercise(Request $request)
 { 
+
+
+    $category=$request->title;
+    $category=preg_replace('/\s+/', ' ', $category);
+    
+    $edit_category=DB::table('exercise_details')->where('id',$request->id)->pluck('title');
+    $all_category=DB::table('exercise_details')->where('id','!=',$request->id)->get()->all();
+
+    $duplicate_cat=0;
+    foreach($all_category as $each_category)
+    {
+      if($each_category->title==$category)
+      {
+        $duplicate_cat=1;
+      }
+    }
+
+  
+    if($duplicate_cat==1)
+    {
+      return redirect()->back()->withInput()->with("duplicate_category","Duplicate category name is not allow.");
+    }
+    else
+    {
+
+      
   if($request->image!="")
   {
     $myimage=$request->image;
@@ -997,6 +1024,7 @@ public function update_exercise(Request $request)
 
   DB::table('exercise_details')->where('id',$request->id)->update($data);
   return redirect()->route("gymType")->with("success","You have successfully updated one exercise.");
+}
 }
 
 
@@ -1063,6 +1091,30 @@ public function testimonialedit($id)
 
 public function testimonialupdate(Request $request)
 { 
+
+    $name=$request->name;
+    $name=preg_replace('/\s+/', ' ', $name);
+    
+    $edit_name=DB::table('testimonial')->where('id',$request->id)->pluck('name');
+    $all_name=DB::table('testimonial')->where('id','!=',$request->id)->get()->all();
+
+    $duplicate_name=0;
+    foreach($all_name as $each_name)
+    {
+      if($each_name->name==$name)
+      {
+        $duplicate_name=1;
+      }
+    }
+
+  
+    if($duplicate_name==1)
+    {
+      return redirect()->back()->withInput()->with("duplicate_name","Duplicate testimonial name is not allow.");
+    }
+    else
+    {
+
   if($request->image!="")
   {
     $myimage=$request->image;
@@ -1081,6 +1133,7 @@ public function testimonialupdate(Request $request)
 
   DB::table('testimonial')->where('id',$request->id)->update($data);
   return redirect('trainer/testimonial_view')->with("success","You have successfully updated one testimonial.");
+}
 }
 
 
@@ -1627,13 +1680,49 @@ public function payment_history_backend_request(Request $request)
     $notifydata['customer_phone']=$customer_details->ph_no;
     $notifydata['status']='Bank Payment Declined';
 
-    Log::debug(" bank transfer decline notification ".print_r($notifydata,true));
+    //Log::debug(" bank transfer decline notification ".print_r($notifydata,true));
 
     $customer_details->notify(new PackagePurchaseNotification($notifydata));
 
     return response()->json(2);
     }
 }
+
+
+  function cheeck_exercise_category(Request $request)
+  {
+    $category=$request->title;
+    $category=preg_replace('/\s+/', ' ', $category);
+    
+    $exercise_details=DB::table('exercise_details')->where('title',$category)->count();
+
+    if($exercise_details>0)
+    {
+      return 1;
+    }
+    else
+    {
+      return 0;
+    }
+  }
+
+  function cheecktestimonialname(Request $request)
+  {
+    $name=$request->name;
+    $name=preg_replace('/\s+/', ' ', $name);
+    
+    $testimonial_details=DB::table('testimonial')->where('name',$name)->count();
+
+    if($testimonial_details>0)
+    {
+      return 1;
+    }
+    else
+    {
+      return 0;
+    }
+  }
+  
 
 
 }

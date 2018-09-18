@@ -2,6 +2,20 @@
 
 @extends('trainerlayouts.trainer_template')
 @section('content')
+
+<script type="text/javascript">
+  $(document).ready(function()
+  { 
+  setTimeout(function(){ 
+                          $('.alert-success').hide();
+                      }, 5000);
+
+  setTimeout(function(){ 
+                          $('.alert-danger').hide();
+                      }, 5000);
+});
+</script>
+
 <script>
 // for shortin ,pagination,searching data using datatable concept
 $(document).ready(function() { 
@@ -9,7 +23,7 @@ $(document).ready(function() {
         lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
 
 // disable shorting from slno,image and action columns
-"columnDefs": [ { "orderable": false, "targets": [0,5] } ],
+"columnDefs": [ { "orderable": false, "targets": [0,3,4] } ],
 
 });
 } );
@@ -85,11 +99,8 @@ table.dataTable thead>tr>th[id='action'].sorting_asc::after{display: none}
                             <thead>
                                 <tr>
                                     <th id="slno">Sl. No.</th>
-                                    <th>Title</th>
+                                    <th>Category</th>
                                     <th>Description</th>
-                                    <th style="width: 67px;">Duration<br>
-                                        <span style="font-weight: 400;">(in days)</span>
-                                    </th>
                                     <th id="image" style="width: 200px;">Image</th>
                                     <th id="action" style="width: 70px;">Action</th>
                                 </tr>
@@ -101,7 +112,6 @@ table.dataTable thead>tr>th[id='action'].sorting_asc::after{display: none}
                                     <td>{{++$key}}</td>
                                     <td>{{$mydata->title}}</td>
                                     <td>{{$mydata->description}}</td>
-                                    <td>{{$mydata->duration}}</td>
                                     <td>
                                         @if(isset($mydata->video) && !empty($mydata->video))
                                             <iframe src="{{$mydata->video}}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>

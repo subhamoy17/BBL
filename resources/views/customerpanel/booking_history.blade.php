@@ -12,7 +12,7 @@
         <a href="{{url('customer/booking_slot')}}" class="btn btn-success bk-slt-btn">Send Slot Request</a>
         
          @if (session('session_delete'))
-                                <div class="alert alert-danger">
+                                <div class="alert alert-danger session-delete">
                                     {{ session('session_delete') }}
                                 </div>
                             @endif
@@ -84,6 +84,7 @@
                 <tbody id="tbody_empty">
                    @if(count($data)>0)
                    @foreach($data as $key=>$mydata)
+
                   <tr >
                     <td>{{$mydata->users_name}}</td>
                     <td>{{date('d F Y', strtotime($mydata->created_at))}}</td>
@@ -115,10 +116,26 @@
                   <td>N/A</td>
                   @endif
  @if(Request::get('option')=='future_pending' || Request::get('option')=='future_confirm' || Request::get('option')=='')
+
+                  <?php
+                  date_default_timezone_set('Asia/Kolkata');
+                  $slot_request_time=$mydata->created_at;
+                  $current_time = date("Y-m-d H:i:s");
+                  $slot_cancel_time = date("Y-m-d H:i:s", strtotime('+24 hours', strtotime($slot_request_time)));
+                  ?>
                   
-                  <td><a href="{{route('customer_session_delete',['id'=>$mydata->slot_id])}}"  
+                  <td>
+                    @if($current_time<$slot_cancel_time)
+                      <a href="{{route('customer_session_delete',['id'=>$mydata->slot_id])}}"  
                  class="btn btn-danger asd"  onclick="return confirm('Are you sure you want to cancel this session?');">
-                    Cancel</a></td>
+                    Cancel</a>
+                    @else
+                    <a href="#"  
+                 class="btn btn-danger asd"  onclick="return confirm('Automatic cancelation is not allowed any more, please contact trainer');">
+                    Cancel</a>
+
+                    @endif
+                  </td>
                    
                     @endif
                      
@@ -194,5 +211,7 @@
 </div>
 </div>
 </div>
+
+
 
 @endsection

@@ -148,8 +148,6 @@ Route::get('our_trainer_edit_view/{id}','TrainerController@client_edit_view')->n
 Route::post('client_update','TrainerController@client_update')->name('client_update');
 
 
-
-
 //delete//
 Route::get('client_delete/{id}', 'TrainerController@client_delete');
 
@@ -158,12 +156,11 @@ Route::get('payment_history_backend','TrainerController@payment_history_backend'
 
 Route::get('payment_history_backend_request', 'TrainerController@payment_history_backend_request')->name('payment_history_backend_request');
 
-
-
-
-
 Route::get('trainer_active_deactive', 'TrainerController@trainer_active_deactive')->name('trainer_active_deactive');
 
+
+Route::post('cheeckexercisecategory', 'TrainerController@cheeck_exercise_category');
+Route::post('cheecktestimonialname', 'TrainerController@cheecktestimonialname');
 
 
 });

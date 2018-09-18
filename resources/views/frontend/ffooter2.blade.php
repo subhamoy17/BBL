@@ -66,12 +66,13 @@
 
 <script>
     $('#testi-slider').owlCarousel({
-  autoplay: false,
+  autoplay: true,
     loop:true,
     margin:30,
     nav:false,
   dots: true,
-  smartSpeed: 1500,   
+  smartSpeed: 1500, 
+  autoplayHoverPause:true, 
   responsive:{
         0:{
             items:1
@@ -1033,6 +1034,15 @@ $("#extra_session").mouseover(function(){
 			});
         });
     </script>
+
+    <script type="text/javascript">
+  $(document).ready(function()
+  { 
+  setTimeout(function(){ 
+                          $('.session-delete').hide();
+                      }, 5000);
+});
+</script>
 
 </body>
 

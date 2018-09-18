@@ -95,6 +95,30 @@ $('#traineraddform').validate({
       }
 });
 
+$('#name').keyup(function(){ 
+
+      $.post("{{url('trainer/cheecktestimonialname')}}",$('#traineraddform').serialize(), function(data){
+            if(data==1)
+            { 
+              $("#duplicate_name").show();
+              $("#duplicate_name").html("Duplicate testimonial name is not allow");
+              $('.btn-primary').attr('disabled','disabled');
+              return false;
+            }
+            else
+            { 
+              $("#duplicate_name").hide();
+              $('.btn-primary').removeAttr('disabled');
+              return true;
+            }
+        
+        });
+   
+  });
+
+    setTimeout(function(){ 
+                          $('.alert-success').hide();
+                      }, 5000);
 
 
 });
@@ -125,6 +149,7 @@ $('#traineraddform').validate({
                           <div class="row form-group">
                             <div class="col col-md-3"><label for="text-input" class=" form-control-label"> Name<span class="required_field_color">*</span></label></div>
                             <div class="col-12 col-md-9"><input type="text" id="name" name="name" placeholder="Name" class="form-control" value="">
+                              <div id="duplicate_name"></div>
                             </div>
                           </div>
                           

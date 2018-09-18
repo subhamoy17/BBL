@@ -14,6 +14,10 @@ $('#bootstrap-slot-data-table').DataTable({
         "columnDefs": [ { "orderable": false, "targets": [0,4,5] } ],
         
     });
+
+    setTimeout(function(){ 
+                          $('.alert-success').hide();
+                      }, 5000);
  } );
 
 </script>

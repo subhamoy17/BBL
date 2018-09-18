@@ -5,8 +5,38 @@
 @section('content')
 
 <script>
-
   $(document).ready(function() {
+
+    // $("#video_error").hide();
+    // $("#duplicate_category").hide();
+
+  $('#video').keyup(function(){ 
+    
+   var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\?v=)([^#\&\?]*).*/;
+            var match = $("#video").val().match(regExp);
+            if (match && match[2].length == 11) { 
+                 $('#video').val('https://www.youtube.com/embed/' + match[2] + '?autoplay=0');
+                 $("#video_add_error").hide();
+                 $('.btn-primary').removeAttr('disabled');
+                
+                return true;
+              }
+              else if($('#video').val()=='')
+              {
+                $("#video_add_error").hide();
+                $('.btn-primary').removeAttr('disabled');
+              }
+            else
+            {
+              $('.btn-primary').attr('disabled','disabled');
+              $("#video_add_error").show();
+              $("#video_add_error").html("Please follow video link sample and enter specific video link");
+              return false;
+            }
+          
+  });
+
+  
 
     $.validator.addMethod("multipeFieldValidator", function(value) {  
     if($("#image").val() && $("#video").val()) { 
@@ -15,6 +45,7 @@
     }
     return true; 
 }, 'Either image or video is required');
+
 
 
     $.validator.addMethod('numericOnly', function (value) {
@@ -28,10 +59,6 @@
         },
         "description": {
           required: true
-        },
-        "duration": {
-          required: true,
-          number: true
         },
         "image": {
                     required: 
@@ -48,16 +75,18 @@
                   },
          "video": {
                     required: 
-                    function() {
-                        //returns true if video is empty   
-                        // alert(!$("#recently_uploaded_image").val());
+                    function() { 
                         if(!$("#video").val() && $("#recently_uploaded_image").val() == "false"){
-                          return true;
+
+                          return true; 
                         }else{
                           return false;
                         }
                     },
+
                     multipeFieldValidator:true
+                    
+                    
                   }
       },
       ////for show error message
@@ -68,14 +97,35 @@
         "description":{
           required: 'Please enter description' 
         },
-        "duration":{
-          required: 'Please enter duration',
-          number: 'Invalid input, plesae enter a number'
-        },
         "image": "Image is required if no video is given",
         "video": "Video is required if no image is given" 
       }
     });
+
+
+
+    $('#title').keyup(function(){ 
+
+      $.post("{{url('trainer/cheeckexercisecategory')}}",$('#traineraddform').serialize(), function(data){
+            if(data==1)
+            { 
+              $("#duplicate_category").show();
+              $("#duplicate_category").html("Duplicate category name is not allow");
+              $('.btn-primary').attr('disabled','disabled');
+              return false;
+            }
+            else
+            { 
+              $("#duplicate_category").hide();
+              $('.btn-primary').removeAttr('disabled');
+              return true;
+            }
+        
+        });
+   
+  });
+
+
     });
 </script>
 
@@ -140,8 +190,11 @@
         <input type="hidden" name="_token" value="{{csrf_token()}}">
         <input type="hidden" name="trainer_id" value="{{Auth::user()->id}}">
         <div class="row form-group">
-          <div class="col col-md-3"><label for="text-input" class=" form-control-label">Title<span class="required_field_color">*</span></label></div>
-          <div class="col-12 col-md-9"><input type="text" id="title" name="title" placeholder="Title" class="form-control" value="">
+          <div class="col col-md-3"><label for="text-input" class=" form-control-label">Category<span class="required_field_color">*</span></label>
+          </div>
+          <div class="col-12 col-md-9"><input type="text" id="title" name="title" placeholder="Category" class="form-control" value="">
+            <div id="duplicate_category"></div>
+            <level>Note: Personal Trainer ,Boot camp trainer, Yoga, Gymnastic, Cycling, Boxing etc.</level>
           </div>
         </div>
         <div class="row form-group">
@@ -152,13 +205,10 @@
               </div>
             </div>
             <div class="row form-group">
-              <div class="col col-md-3"><label for="text-input" class=" form-control-label">Duration (in Day)<span class="required_field_color">*</span></label></div>
-              <div class="col-12 col-md-9"><input type="text" id="duration" name="duration" placeholder="Duration" class="form-control" value=""></div>
-            </div>
-            <div class="row form-group">
               <div class="col col-md-3"><label for="text-input" class="form-control-label">Video Link<span class="required_field_color">*</span></label></div>
               <div class="col-12 col-md-9"><input type="text" id="video" name="video" placeholder="Video Link" class="form-control" value="">
-              <level>Video Link:-https://www.youtube.com/embed/P_SZpxUx3xw</level></div>
+                <div id="video_add_error"></div>
+              <level>Video Link Sample:-https://www.youtube.com/embed/P_SZpxUx3xw or https://youtube.com/watch?v=WOsXayVmnoc</level></div>
 
             </div>
             <div class="row form-group">
@@ -190,9 +240,8 @@
       <table>
         <thead>
           <tr>
-            <th><strong>Title</strong></th>
+            <th><strong>Category</strong></th>
             <th><strong>Description</strong></th>
-            <th><strong>Duration</strong></th>
             <th><strong>Profile Image</strong></th>
           </tr>
         </thead>
@@ -201,7 +250,6 @@
           <tr>
             <td>{{ $single_data->title}}</td>
             <td>{{ $single_data->description }}</td>
-            <td>{{ $single_data->duration }}</td>
             <td>{{ $single_data->image}}</td>
           </tr>
           @endforeach 
