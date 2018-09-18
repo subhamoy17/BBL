@@ -9,7 +9,7 @@
           <div id="tab1" class="tab_content">
             <div class="table-responsive table-bordered">
               
-        <a href="{{url('customer/booking_slot')}}" class="btn btn-success bk-slt-btn">Send Slot Request</a>
+        <a href="{{url('customer/booking_slot')}}" class="btn btn-success bk-slt-btn">Book Gym Session</a>
         
          @if (session('session_delete'))
                                 <div class="alert alert-danger session-delete">
@@ -41,6 +41,7 @@
               <div class="tbl-srch">
               	 <form id="frm_search" method="get">
 					<select align ="right" id="feature" name="option" >
+            <option value="future_booking" {{Request::get('option')=='future_booking' || Request::get('option')==''?'selected':''}} >Future booking</option>
   					<option value="future_confirm" {{Request::get('option')=='future_confirm' || Request::get('option')==''?'selected':''}} >Future accepted</option>
   					<option value="future_pending" {{Request::get('option')=='future_pending'?'selected':''}} >Future pending</option>
   					<option value="delete_request" {{Request::get('option')=='delete_request'?'selected':''}} >Delete request</option>

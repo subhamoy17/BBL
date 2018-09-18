@@ -7,7 +7,7 @@
   <div id="tab2" class="tab_content">
 
     <div class="table-responsive table-bordered">
-        <a href="{{url('customer/booking_slot')}}" class="btn btn-success bk-slt-btn">Send Slot Request</a>
+        <a href="{{url('customer/booking_slot')}}" class="btn btn-success bk-slt-btn">Book Gym Session</a>
      <h3 align="center">All Purchase History</h3>
     <div class="tbl-srch tbl-srch2">
        <form id="frm_purchase_search">

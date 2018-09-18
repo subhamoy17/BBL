@@ -247,8 +247,8 @@ public function booking_history(Request $request)
     {
       $start_date=$request->start_date;
       $end_date=$request->end_date;
-      Log::debug(" Check ".print_r($start_date,true)); 
-      Log::debug(" Check id ".print_r($end_date,true)); 
+      //Log::debug(" Check ".print_r($start_date,true)); 
+      //Log::debug(" Check id ".print_r($end_date,true)); 
     }
 
     $now = Carbon::now()->toDateString();
@@ -316,7 +316,7 @@ public function booking_history(Request $request)
       ->select('customer_mot.id as mot_id','customer_mot.customer_id as customer_id','customer_mot.trainer_id','customer_mot.date','customer_mot.left_arm','users.name as users_name','customer_mot.right_arm','customer_mot.chest','customer_mot.waist','customer_mot.hips','customer_mot.right_thigh','customer_mot.left_thigh','customer_mot.weight','customer_mot.right_calf','customer_mot.left_calf','customer_mot.starting_weight','customer_mot.ending_weight','customer_mot.heart_beat','customer_mot.blood_pressure','customer_mot.height','customer_mot.description')->where('customer_mot.date',$past_data->slot_date)->first();
     }
   }
-  else
+  elseif($request->option=='future_confirm')
   {
     // $time_now = $slot_request->slot_time->addHour(24);
     $data=DB::table('slot_request')
@@ -339,8 +339,36 @@ public function booking_history(Request $request)
     }
     $data=$data->paginate(10);
   }
+  else
+  {
+    // $time_now = $slot_request->slot_time->addHour(24);
+    $data=DB::table('slot_request')
+    ->join('customers','customers.id','slot_request.customer_id')
+    ->join('slot_approval','slot_approval.id','slot_request.approval_id')
+    ->join('users','users.id','slot_request.trainer_id')
+    ->join('purchases_history','purchases_history.id','slot_request.purchases_id')
+    ->join('slots','slots.id','purchases_history.slot_id')
+    ->join('slot_times','slot_times.id','slot_request.slot_time_id')
+    ->select('customers.name','slots.slots_name','slots.slots_number','slots.slots_price','slots.slots_validity','users.name as users_name','purchases_history.purchases_date','purchases_history.package_validity_date','slot_request.purchases_id as slot_purchases_id','slot_approval.status','slot_request.slot_date','slot_times.time as slot_time','slot_approval.status', 'slot_request.created_at as created_at','slot_request.id as slot_id')->where('slot_request.slot_date','>=',$now)
+    ->where(function($q) {
+         $q->where('slot_request.approval_id',1 )
+           ->orWhere('slot_request.approval_id', 3);
+     })
+    ->where('slot_request.customer_id',Auth::guard('customer')->user()->id);
 
-    Log::debug(" Check id ".print_r($data,true));  
+
+    if($request->start_date && $request->end_date)
+    {
+      $data->whereBetween('slot_request.slot_date', [$start_date, $end_date]);
+    }
+    else
+    {
+      $data->whereBetween('slot_request.slot_date', [$now, $now_month]);
+    }
+    $data=$data->paginate(10);
+  }
+
+    //Log::debug(" Check id ".print_r($data,true));  
     
  
      //@totan

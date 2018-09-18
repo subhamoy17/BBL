@@ -22,6 +22,14 @@
 
     <script src="{{ asset('backend/assets/js/totanjs/alertify.min.js') }}"></script>
  @endif -->
+ <script type="text/javascript">
+  $(document).ready(function()
+  { 
+  setTimeout(function(){ 
+                          $('.session-delete').hide();
+                      }, 5000);
+});
+</script>
 	<script>
 		// You can also use "$(window).load(function() {"
 		$(function () {
@@ -1035,14 +1043,7 @@ $("#extra_session").mouseover(function(){
         });
     </script>
 
-    <script type="text/javascript">
-  $(document).ready(function()
-  { 
-  setTimeout(function(){ 
-                          $('.session-delete').hide();
-                      }, 5000);
-});
-</script>
+    
 
 </body>
 
