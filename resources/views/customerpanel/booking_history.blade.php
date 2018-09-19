@@ -44,7 +44,7 @@
             <option value="future_booking" {{Request::get('option')=='future_booking' || Request::get('option')==''?'selected':''}} >Future booking</option>
   					<option value="future_confirm" {{Request::get('option')=='future_confirm'?'selected':''}} >Future accepted</option>
   					<option value="future_pending" {{Request::get('option')=='future_pending'?'selected':''}} >Future pending</option>
-  					<option value="delete_request" {{Request::get('option')=='delete_request'?'selected':''}} >Delete request</option>
+  					<option value="delete_request" {{Request::get('option')=='delete_request'?'selected':''}} >Cancel request</option>
   					<option value="declined_request" {{Request::get('option')=='declined_request'?'selected':''}} >Declined request</option>
   					<option value="past_request" {{Request::get('option')=='past_request'?'selected':''}} >Past request</option>
  					
@@ -77,7 +77,7 @@
                      <th>Booking date & time</th>
                        <th>Booking status</th>
                        <th>MOT</th>
-                       @if(Request::get('option')=='future_pending' || Request::get('option')=='future_confirm' || Request::get('option')=='')
+                       @if(Request::get('option')=='future_booking' || Request::get('option')=='future_pending' || Request::get('option')=='future_confirm' || Request::get('option')=='')
                        <th>Action</th>
                        @endif
                   </tr>
@@ -116,13 +116,13 @@
                      @else
                   <td>N/A</td>
                   @endif
- @if(Request::get('option')=='future_pending' || Request::get('option')=='future_confirm' || Request::get('option')=='')
+ @if(Request::get('option')=='future_booking' || Request::get('option')=='future_pending' || Request::get('option')=='future_confirm' || Request::get('option')=='')
 
                   <?php
                   date_default_timezone_set('Asia/Kolkata');
-                  $slot_request_time=$mydata->created_at;
+                  $slot_request_date_time=$mydata->slot_date.' '.$mydata->slot_time;
                   $current_time = date("Y-m-d H:i:s");
-                  $slot_cancel_time = date("Y-m-d H:i:s", strtotime('+24 hours', strtotime($slot_request_time)));
+                  $slot_cancel_time = date("Y-m-d H:i:s", strtotime('-48 hours', strtotime($slot_request_date_time)));
                   ?>
                   
                   <td>

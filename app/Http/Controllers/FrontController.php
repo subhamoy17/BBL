@@ -368,6 +368,7 @@ public function booking_history(Request $request)
     $data=$data->paginate(10);
   }
 
+
     //Log::debug(" Check id ".print_r($data,true));  
     
  
