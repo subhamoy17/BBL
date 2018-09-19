@@ -977,31 +977,7 @@ public function show_edit_exercise_form($id)
 public function update_exercise(Request $request)
 { 
 
-
-    $category=$request->title;
-    $category=preg_replace('/\s+/', ' ', $category);
-    
-    $edit_category=DB::table('exercise_details')->where('id',$request->id)->pluck('title');
-    $all_category=DB::table('exercise_details')->where('id','!=',$request->id)->get()->all();
-
-    $duplicate_cat=0;
-    foreach($all_category as $each_category)
-    {
-      if($each_category->title==$category)
-      {
-        $duplicate_cat=1;
-      }
-    }
-
   
-    if($duplicate_cat==1)
-    {
-      return redirect()->back()->withInput()->with("duplicate_category","Duplicate category name is not allow.");
-    }
-    else
-    {
-
-      
   if($request->image!="")
   {
     $myimage=$request->image;
@@ -1024,8 +1000,9 @@ public function update_exercise(Request $request)
 
   DB::table('exercise_details')->where('id',$request->id)->update($data);
   return redirect()->route("gymType")->with("success","You have successfully updated one exercise.");
+
 }
-}
+
 
 
 //feedback function//
@@ -1714,6 +1691,34 @@ public function payment_history_backend_request(Request $request)
     $testimonial_details=DB::table('testimonial')->where('name',$name)->count();
 
     if($testimonial_details>0)
+    {
+      return 1;
+    }
+    else
+    {
+      return 0;
+    }
+  }
+
+function cheeckexercisecategory_edit(Request $request)
+  {
+    $category=$request->title;
+    $category=preg_replace('/\s+/', ' ', $category);
+    
+    $edit_category=DB::table('exercise_details')->where('id',$request->id)->pluck('title');
+    $all_category=DB::table('exercise_details')->where('id','!=',$request->id)->get()->all();
+
+    $duplicate_cat=0;
+    foreach($all_category as $each_category)
+    {
+      if($each_category->title==$category)
+      {
+        $duplicate_cat=1;
+      }
+    }
+
+  
+    if($duplicate_cat==1)
     {
       return 1;
     }

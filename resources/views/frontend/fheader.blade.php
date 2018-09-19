@@ -94,6 +94,11 @@
                         <a href="{{url('customer/testimonial')}}">Testimonial</a>
                       </li>
 
+                      @if(Auth::guard('customer')->check())
+                      <li class="{{ Request::segment(2) === 'mybooking' || Request::segment(2) === 'purchase_history' || Request::segment(2) === 'my_mot' ? 'active' : null }}">
+                        <a href="{{url('customer/mybooking')}}">My Dashboard</a>
+                      </li>
+                      @endif
 
 
     						</ul>

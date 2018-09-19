@@ -5,6 +5,7 @@
 @section('content')
 
 <script>
+  // validation for valid video link upload and duplicate category namechecking
   function  add_exercise_fun(){ 
     if($('#video').val()!='')
     {
