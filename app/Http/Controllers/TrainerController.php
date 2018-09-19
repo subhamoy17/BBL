@@ -1069,29 +1069,7 @@ public function testimonialedit($id)
 public function testimonialupdate(Request $request)
 { 
 
-    $name=$request->name;
-    $name=preg_replace('/\s+/', ' ', $name);
     
-    $edit_name=DB::table('testimonial')->where('id',$request->id)->pluck('name');
-    $all_name=DB::table('testimonial')->where('id','!=',$request->id)->get()->all();
-
-    $duplicate_name=0;
-    foreach($all_name as $each_name)
-    {
-      if($each_name->name==$name)
-      {
-        $duplicate_name=1;
-      }
-    }
-
-  
-    if($duplicate_name==1)
-    {
-      return redirect()->back()->withInput()->with("duplicate_name","Duplicate testimonial name is not allow.");
-    }
-    else
-    {
-
   if($request->image!="")
   {
     $myimage=$request->image;
@@ -1110,7 +1088,7 @@ public function testimonialupdate(Request $request)
 
   DB::table('testimonial')->where('id',$request->id)->update($data);
   return redirect('trainer/testimonial_view')->with("success","You have successfully updated one testimonial.");
-}
+
 }
 
 
@@ -1683,22 +1661,6 @@ public function payment_history_backend_request(Request $request)
     }
   }
 
-  function cheecktestimonialname(Request $request)
-  {
-    $name=$request->name;
-    $name=preg_replace('/\s+/', ' ', $name);
-    
-    $testimonial_details=DB::table('testimonial')->where('name',$name)->count();
-
-    if($testimonial_details>0)
-    {
-      return 1;
-    }
-    else
-    {
-      return 0;
-    }
-  }
 
 function cheeckexercisecategory_edit(Request $request)
   {
@@ -1727,6 +1689,52 @@ function cheeckexercisecategory_edit(Request $request)
       return 0;
     }
   }
+function cheecktestimonialname(Request $request)
+  {
+    $name=$request->name;
+    $name=preg_replace('/\s+/', ' ', $name);
+    
+    $testimonial_details=DB::table('testimonial')->where('name',$name)->count();
+
+    if($testimonial_details>0)
+    {
+      return 1;
+    }
+    else
+    {
+      return 0;
+    }
+  }
+
+  function cheecktestimonialname_edit(Request $request)
+  {
+    $name=$request->name;
+    $name=preg_replace('/\s+/', ' ', $name);
+    
+    $edit_name=DB::table('testimonial')->where('id',$request->id)->pluck('name');
+    $all_name=DB::table('testimonial')->where('id','!=',$request->id)->get()->all();
+
+    $duplicate_name=0;
+    foreach($all_name as $each_name)
+    {
+      if($each_name->name==$name)
+      {
+        $duplicate_name=1;
+      }
+    }
+
+  
+    if($duplicate_name==1)
+    {
+      return 1;
+    }
+    else
+    {
+      return 0;
+    }
+
+  }
+
   
 
 

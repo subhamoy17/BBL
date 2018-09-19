@@ -95,6 +95,7 @@ $('#traineraddform').validate({
       }
 });
 
+//validation for duplicate name
 $('#name').keyup(function(){ 
 
       $.post("{{url('trainer/cheecktestimonialname')}}",$('#traineraddform').serialize(), function(data){

@@ -162,6 +162,7 @@ Route::get('trainer_active_deactive', 'TrainerController@trainer_active_deactive
 Route::post('cheeckexercisecategory', 'TrainerController@cheeck_exercise_category');
 Route::post('cheeckexercisecategory_edit', 'TrainerController@cheeckexercisecategory_edit');
 Route::post('cheecktestimonialname', 'TrainerController@cheecktestimonialname');
+Route::post('cheecktestimonialname_edit', 'TrainerController@cheecktestimonialname_edit');
 
 
 });

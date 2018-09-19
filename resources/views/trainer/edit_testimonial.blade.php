@@ -88,7 +88,28 @@ $(document).ready(function() {
       }
 });
 
+  //validation for duplicate name
 
+  $('#name').keyup(function(){ 
+
+      $.post("{{url('trainer/cheecktestimonialname_edit')}}",$('#trainereditform').serialize(), function(data){
+            if(data==1)
+            { 
+              $("#duplicate_name").show();
+              $("#duplicate_name").html("Duplicate testimonial name is not allow");
+              $('.btn-primary').attr('disabled','disabled');
+              return false;
+            }
+            else
+            { 
+              $("#duplicate_name").hide();
+              $('.btn-primary').removeAttr('disabled');
+              return true;
+            }
+        
+        });
+   
+  });
 
 });
 </script>
@@ -104,11 +125,7 @@ $(document).ready(function() {
                 </div>
             </div>    
 </div>
-         @if (session('duplicate_name'))
-            <?php $name=old('name'); ?>
-          @else
-            <?php $name=$data->name; ?>
-          @endif
+    
         <div class="col-lg-12">
         <div class="card">
                       <div class="card-body card-block">
@@ -118,12 +135,11 @@ $(document).ready(function() {
                           <div class="row form-group">
                             <div class="col col-md-3"><label for="text-input" class=" form-control-label">Name<span class="required_field_color">*</span></label></div>
 
-                            <div class="col-12 col-md-9"><input type="text" id="name" name="name" placeholder="Name" class="form-control" value="{{$name}}">
-                              @if (session('duplicate_name'))
-                              <div id="duplicate_name">
-                                {{ session('duplicate_name') }}
+                            <div class="col-12 col-md-9"><input type="text" id="name" name="name" placeholder="Name" class="form-control" value="{{$data->name}}">
+                              
+                              <div id="duplicate_name">                             
                               </div>
-                              @endif
+                              
                             </div>
                           </div>
 
