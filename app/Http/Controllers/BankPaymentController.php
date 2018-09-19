@@ -52,7 +52,7 @@ public function bank_payment_success(Request $request)
     $data['image']=$image_name;
   } 
 
-  $data['payment_id']='BANK'.time();
+  $data['payment_id']='BBL'.time();
   $data['currency']=Null;
   $data['amount']=$request->slots_price;
   $data['payment_mode']='Bank Transfer';

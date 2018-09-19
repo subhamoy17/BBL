@@ -9,7 +9,7 @@
                                 <img src="{{asset('frontend/images/tick-flat.png')}}">
                             </div>
                             <p>{!! $message !!}</p>
-                            <p>Your payment ID is {!! $payment_id !!}. Please note down that payment id for future reference.</p>
+                            <p>Your Order Ref ID is {!! $payment_id !!}. Please note down that payment id for future reference.</p>
                         </div>
     </div>
     <?php 
@@ -40,7 +40,7 @@
                            		<img src="{{asset('frontend/images/tick-flat.png')}}">
                            	</div>
                             <p>{!! $message !!}</p>
-                            <p>Your payment ID is {!! $payment_id !!}. Please note down that payment id for future reference.</p>
+                            <p>Your Order Ref ID is {!! $payment_id !!}. Please note down that payment id for future reference.</p>
                             
                         </div>
                         

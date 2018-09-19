@@ -71,11 +71,11 @@
                   @if(Request::segment(2) == "payment_history_backend")
                        <ul class="nav navbar-nav">
                  <li class="active">
-                  <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('payment_history')}}" style="color: #fff !important;">Payment History</a></li>
+                  <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('payment_history')}}" style="color: #fff !important;">Package Purchased History</a></li>
                   @else
                   <ul class="nav navbar-nav">
                   <li class="active">
-                  <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('payment_history')}}">Payment History</a></li>
+                  <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('payment_history')}}">Package Purchased History</a></li>
                   @endif
 
 
