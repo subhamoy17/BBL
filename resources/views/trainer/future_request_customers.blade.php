@@ -2,7 +2,7 @@
 @extends('trainerlayouts.trainer_template')
 @section('content')
 <script>
-// for shortin ,pagination,searching data using datatable concept
+// for shorting ,pagination,searching data using datatable concept
 $(document).ready(function() { 
   $('#bootstrap-slot-data-table').DataTable({
     lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
@@ -136,13 +136,14 @@ table.dataTable thead>tr>th[id='action'].sorting_asc::after{display: none}
                   <td>{{$mydata->name}}</td>
                   <td>{{$mydata->ph_no}}</td>
                   <td>{{$mydata->status}}</td>
-                  <td>{{date('d F Y', strtotime($mydata->slot_date))}} {{date('h:i A', strtotime($mydata->slot_time))}}</td> 
+                  <td>{{date('d F Y', strtotime($mydata->slot_date))}} {{date('h:i A', strtotime($mydata->slot_time))}}</td>
+                  <td> 
                   @if($mydata->image)
-                  <td><img src="{{asset('backend/images')}}/{{$mydata->image}}" height="50" width="50"></td>
+                  <img src="{{asset('backend/images')}}/{{$mydata->image}}" height="50" width="50">
                      @else
-                     <td>N/A</td>
+                     N/A
                      @endif
-                  
+                  </td>
                    <td class="td-btn4" style="position: relative;">
                     @if($mydata->approval_id != 3 && $mydata->approval_id != 2) 
 
