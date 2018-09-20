@@ -12,15 +12,15 @@
 			</div>
 				<div class="about-bott-right">
 					 <h5>Who We Are</h5>
-					 <p>Masagni dolores eoquie int Basmodi temporant, ut laboreas dolore magnam aliquam kuytase uaeraquis autem vel eum iure reprehend.Unicmquam eius, Basmodi temurer sehsMunim.Masagni dolores eoquie int Basmodi temporant, ut laboreas dolore magnam aliquam kuytase uaeraquis autem vel eum iure reprehend.</p>
+					 <p>We are your complete fitness solution. From regular weight checkups to periodic heart rate monitoring, checking of blood pressure and body fat ratio measure, to suggesting the right diet according to your body, we have it all. Every package we offer is designed under the supervision of body building experts to give you the best.</p>
 				</div>
 				<div class="clearfix"> </div>
 			</div>
 </div>
 <div class="about-agile inner-padding">
 	<div class="container">
-		<h3 class="heading-agileinfo white-gyls">TrainHard is the right place to start new life as an athletic, strong and healthy person with a strong will.</h3>
-		<p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia .</p>
+		<h3 class="heading-agileinfo white-gyls">Body by Lekan is the right place to begin a healthy life with a strong will that will keep you fit for days to come.</h3>
+		<p>To know more about the services we offer.</p>
 			<div class="more-button">
            
 				<a href="mailto:info@example.com">Mail Us</a>
