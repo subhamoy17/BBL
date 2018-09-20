@@ -99,8 +99,9 @@
                       {{$merge}}
                       </td>
                     <td>{{$mydata->status}}</td>
-                    <td>
+                    
                      @if(Request::get('option')=='past_request')
+                     <td>
               @if($mydata->past_mot)
                <a href="#" class="convert btn btn-info btn-sm"
                 data-right_arm="{{$mydata->past_mot->right_arm}}"  data-left_arm="{{$mydata->past_mot->left_arm}}" data-chest="{{$mydata->past_mot->chest}}"
@@ -114,8 +115,9 @@
                      @else
                      N/A
                     @endif
+                    </td>
                   @endif
-                  </td>
+                  
  @if(Request::get('option')=='future_booking' || Request::get('option')=='future_pending' || Request::get('option')=='future_confirm' || Request::get('option')=='')
 
                   <?php
