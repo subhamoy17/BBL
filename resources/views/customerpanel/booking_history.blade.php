@@ -76,7 +76,9 @@
                      <th>Booked On</th>
                      <th>Booking date & time</th>
                        <th>Booking status</th>
+                       @if(Request::get('option')=='past_request')
                        <th>MOT</th>
+                       @endif
                        @if(Request::get('option')=='future_booking' || Request::get('option')=='future_pending' || Request::get('option')=='future_confirm' || Request::get('option')=='')
                        <th>Action</th>
                        @endif
@@ -97,10 +99,10 @@
                       {{$merge}}
                       </td>
                     <td>{{$mydata->status}}</td>
-                    
+                    <td>
                      @if(Request::get('option')=='past_request')
               @if($mydata->past_mot)
-              <td> <a href="#" class="convert btn btn-info btn-sm"
+               <a href="#" class="convert btn btn-info btn-sm"
                 data-right_arm="{{$mydata->past_mot->right_arm}}"  data-left_arm="{{$mydata->past_mot->left_arm}}" data-chest="{{$mydata->past_mot->chest}}"
                       data-waist="{{$mydata->past_mot->waist}}" data-hips="{{$mydata->past_mot->hips}}"
                       data-right_thigh="{{$mydata->past_mot->right_thigh}}" data-right_calf="{{$mydata->past_mot->right_calf}}" 
@@ -108,14 +110,12 @@
                       data-left_thigh="{{$mydata->past_mot->left_thigh}}" data-right_calf="{{$mydata->past_mot->right_calf}}"
                       data-left_calf="{{$mydata->past_mot->left_calf}}" data-starting_weight="{{$mydata->past_mot->starting_weight}}"  data-ending_weight="{{$mydata->past_mot->ending_weight}}"  data-heart_beat="{{$mydata->past_mot->heart_beat}}"  data-blood_pressure="{{$mydata->past_mot->blood_pressure}}"
                       data-height="{{$mydata->past_mot->height}}" data-description="{{$mydata->past_mot->description}}" class="btn btn-success">
-                    View</a></td> 
+                    View</a>
                      @else
-                     <td>N/A</td>
-                     @endif
-                
-                     @else
-                  <td>N/A</td>
+                     N/A
+                    @endif
                   @endif
+                  </td>
  @if(Request::get('option')=='future_booking' || Request::get('option')=='future_pending' || Request::get('option')=='future_confirm' || Request::get('option')=='')
 
                   <?php
