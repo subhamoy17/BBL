@@ -208,15 +208,15 @@
                               <select class="form-control" name="time" id="slot_time">
                                 
                               </select>
-
-                              
-
-                              <div id='loadingimg' style='display:none'>
-                              <img src="{{asset('backend/images/loader-gif-time.gif')}}" width="60px" />
-                            </div>
                             </div>
                             
                         </div>
+                         
+                              <div  class="col-md-6 col-sm-12 col-xs-12" id='loadingimg' style='display:none'  >
+                                <div class="form-group" >
+                              <img src="{{asset('backend/images/loader_session_time.gif')}}" style="width: 98px;margin-top: -2px;margin-left: -28px;"/>
+                            </div>
+                            </div>
 
                         <div id="old_session_data">
                         </div>
@@ -240,7 +240,7 @@
 
     </div>
             
-      <button type="submit" name="submit" class="btn btn-dark btn-theme-colored btn-flat btn-drk2 save_button"  style="display:none;" id="save_btn" onclick="button_name_change()">Save</button>
+      <button type="submit" name="submit" class="btn btn-dark btn-theme-colored btn-flat btn-drk2 save_button"  style="display:none;" id="save_btn" onclick="button_name_change()">Book Session (S)</button>
        </form>
     </div>
 
@@ -498,8 +498,6 @@ $('#slotform').validate({
    
    function  jsfunction(){
     
-
-
     if($('#trainer_id').val()!='' && $('#slots_datepicker').val()!='')
     {
       $('#loadingimg').show();
@@ -548,6 +546,12 @@ $('#slotform').validate({
                     
                   }
       });
+  }
+
+  else
+  {
+    $('#slot_time').attr('disabled','disabled');
+    $("#slot_time").css("background","#3d3648");
   }
     
   }
@@ -646,7 +650,7 @@ $('#slotform').validate({
 }
 
 
-
+  
     });
   
 </script>
@@ -659,6 +663,19 @@ $('#slotform').validate({
 }
 </script>
 
+<script>
+  $(document).ready(function(){
+  $('#slot_time').mouseover(function() {
+    if($('#trainer_id').val()=='' || $('#slots_datepicker').val()=='')
+    {
+      return jsfunction();
+    } 
+   
+  });
+
+  });
+
+</script>>
 
 
   <!--Fontawesome script-->
