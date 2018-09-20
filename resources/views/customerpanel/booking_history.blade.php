@@ -99,7 +99,7 @@
                     <td>{{$mydata->status}}</td>
                     
                      @if(Request::get('option')=='past_request')
-              @if(count($mydata->past_mot))
+              @if($mydata->past_mot)
               <td> <a href="#" class="convert btn btn-info btn-sm"
                 data-right_arm="{{$mydata->past_mot->right_arm}}"  data-left_arm="{{$mydata->past_mot->left_arm}}" data-chest="{{$mydata->past_mot->chest}}"
                       data-waist="{{$mydata->past_mot->waist}}" data-hips="{{$mydata->past_mot->hips}}"
