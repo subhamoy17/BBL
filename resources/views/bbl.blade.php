@@ -50,6 +50,7 @@
 	<div class="about-3">
 		<div class="wthree_head_section">
 				<h3 class="gyl_header">What We <span>Do?</span></h3>
+                <p align="center">We believe physical fitness is must for a healthy life. So, we design your workout and daily regime to take your fitness level high.</p>
 			</div>
 		<div class="container">
 			<div class="d-flex">
@@ -63,8 +64,8 @@
 								<img src="{{asset('frontend/images/1.jpg')}}" alt="" class="img-responsive" />
 							</div>
 							<div class="col-md-8 in-block">
-								<h5>ELEMENTS</h5>
-								<p>Suspendisse maximus leo vel facilisis porta. Aliquam posuere mollis auctor. Nunc eget massa eleifend, finibus.</p>
+								<h5>GYM TRAINING </h5>
+								<p>Train your body at our state of art gym under the guidance of experienced instructors.</p>
 							</div>
 							<div class="clearfix"> </div>
 						</li>
@@ -73,8 +74,8 @@
 								<img src="{{asset('frontend/images/2.jpg')}}" alt="" class="img-responsive" />
 							</div>
 							<div class="col-md-8 in-block">
-								<h5>BOOT CAMP</h5>
-								<p>Suspendisse maximus leo vel facilisis porta. Aliquam posuere mollis auctor. Nunc eget massa eleifend, finibus.</p>
+								<h5>DIET PLANS</h5>
+								<p>Let our dieticians plan the perfect diet chart for you according to your body weight, structure and health conditions.</p>
 							</div>
 							<div class="clearfix"> </div>
 						</li>
@@ -83,8 +84,8 @@
 								<img src="{{asset('frontend/images/3.jpg')}}" alt="" class="img-responsive" />
 							</div>
 							<div class="col-md-8 in-block">
-								<h5>CROSSFIT</h5>
-								<p>Suspendisse maximus leo vel facilisis porta. Aliquam posuere mollis auctor. Nunc eget massa eleifend, finibus.</p>
+								<h5>HEALTH PACKAGES</h5>
+								<p>We offer customized health packages to help keep your body fit within your budget.</p>
 							</div>
 							<div class="clearfix"> </div>
 						</li>
@@ -103,7 +104,7 @@
     <section class="service-section">
     	<div class="container">
     		<h3 class="gyl_header">Featured <span>Services</span></h3>
-    		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.Acque quidem eaque, amet doloribus, error inventore, quisquam totam magni cumque.</p>
+    		<p>Our features services are designed to give you the dream body you always wanted.</p>
     		<div class="row">
     			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
     				<div class="box-hover-effect thumb-cross-effect forservice">
@@ -112,8 +113,8 @@
     						<a class="hover-link">View more</a>
     					</div>
     					<div class="sr-text">
-    						<h4>Lorem Ipsum</h4>
-    						<p>dolor sit amet</p>
+    						<h4>GYM TRAINING</h4>
+    						<p>Fitness training in a state of art modern gym</p>
     						<a href="#" class="rd-btn2">read more <i class="fa fa-long-arrow-right"></i></a>
     					</div>
     				</div>
@@ -125,8 +126,8 @@
     						<a class="hover-link">View more</a>
     					</div>
     					<div class="sr-text">
-    						<h4>Lorem Ipsum</h4>
-    						<p>dolor sit amet</p>
+    						<h4>DIET PLANS</h4>
+    						<p>Customized diet plans to fit all body types</p>
     						<a href="#" class="rd-btn2">read more <i class="fa fa-long-arrow-right"></i></a>
     					</div>
     				</div>
@@ -138,8 +139,8 @@
     						<a class="hover-link">View more</a>
     					</div>
     					<div class="sr-text">
-    						<h4>Lorem Ipsum</h4>
-    						<p>dolor sit amet</p>
+    						<h4>HEALTH PACKAGES</h4>
+    						<p>Multiple health packages to suit all</p>
     						<a href="#" class="rd-btn2">read more <i class="fa fa-long-arrow-right"></i></a>
     					</div>
     				</div>
@@ -151,8 +152,8 @@
     						<a class="hover-link">View more</a>
     					</div>
     					<div class="sr-text">
-    						<h4>Lorem Ipsum</h4>
-    						<p>dolor sit amet</p>
+    						<h4>INSTRUCTIONAL VIDEOS</h4>
+    						<p>Access to online gym videos for constant guidance</p>
     						<a href="#" class="rd-btn2">read more <i class="fa fa-long-arrow-right"></i></a>
     					</div>
     				</div>
@@ -164,8 +165,8 @@
     						<a class="hover-link">View more</a>
     					</div>
     					<div class="sr-text">
-    						<h4>Lorem Ipsum</h4>
-    						<p>dolor sit amet</p>
+    						<h4>PERSONAL INSTRUCTORS</h4>
+    						<p>Personal fitness trainers, available at your convenience</p>
     						<a href="#" class="rd-btn2">read more <i class="fa fa-long-arrow-right"></i></a>
     					</div>
     				</div>
@@ -177,8 +178,8 @@
     						<a class="hover-link">View more</a>
     					</div>
     					<div class="sr-text">
-    						<h4>Lorem Ipsum</h4>
-    						<p>dolor sit amet</p>
+    						<h4>ONLINE BOOKING</h4>
+    						<p>Easy online booking of packages and tracking your health plan</p>
     						<a href="#" class="rd-btn2">read more <i class="fa fa-long-arrow-right"></i></a>
     					</div>
     				</div>
@@ -193,7 +194,7 @@
 		<div class="container">
 			<div class="gt-strt-text">
 				<h1>HAVE EXTRA WEIGHT?<span>Get special nutrition program</span></h1>
-				<p>Phasellus elementum commodo aliquet. Sed vitae sem in arcu auctor pharetra vel ut erat. Praesent mattis nisi laoreet ex tempus auctor. Nullam vitae arcu euismod, placerat mi id, ornare lorem. Morbi vulputate dui purus, ut sodales dolor hendrerit. Curabitur et purus at urna tristique pharetra.</p>
+				<p>Our special nutrition program helps you with a balanced diet that is required to keep your body fighting fit every day. Our experienced and trained nutritionists will consult with you personally to help you with the best balanced diet chart as per your body weight, medical conditions and structure.</p>
 				<a href="#" class="gt-btn">Get Started</a>
 			</div>
 		</div>
