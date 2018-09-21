@@ -35,7 +35,8 @@ $(document).ready(function() {
       },
       "description": {
         required: true
-      }
+      },
+      
     },
      ////for show error message
     messages: {
@@ -50,7 +51,8 @@ $(document).ready(function() {
     
       "designation":{
         required: 'Please enter designation' 
-      }
+      },
+
     }
   });
   
@@ -160,9 +162,9 @@ $(document).ready(function() {
 
 
                             <div class="row form-group">
-                            <div class="col col-md-3"><label for="file-input" class=" form-control-label">Image</label></div>
+                            <div class="col col-md-3"><label for="file-input" class=" form-control-label">Image<span class="required_field_color">*</span></label></div>
                             <div class="col-12 col-md-4">                         
-                              <input type="file" id="image" name="image" class="form-control-file" >
+                              <input type="file" id="image" name="image" class="form-control-file">
                               <input type="hidden" id="oldimage" name="oldimage" class="form-control-file" value="{{$data->image}}">
                             </div>
                             <div class="col-12 col-md-5">                         
