@@ -1116,27 +1116,10 @@ public function motinsertshow()
   return view('trainer.motinsertshow')->with(compact('data'));
 }
 
-public function auto()
-{
-  return view('autcomplete');
-}
 
 public function motinsertshowauto(Request $request)
 {
-  // Log::debug ( " :: motinsertshowauto :: ".print_r ($request->data,true));
-
-    //$all_customers=DB::table('customers')->where('name', 'like', '%' . $request->data . '%')->get()->all();
-
-    // $all_customers=DB::table('customers')->where('name', 'like', '%' . $request->data . '%')->get();
-    //  Log::debug ( " :: motinsertshowauto :: ".print_r ($all_customers,true));
-
-    
-
-    // foreach($all_customers as $each_customers)
-    // {
-    //   Log::debug ( " :: motinsertshowauto :: ".print_r ($each_customers->name,true));
-    //   return json_encode($each_customers->name);
-    // }
+  
 
   $query = $request->get('term','');
         
