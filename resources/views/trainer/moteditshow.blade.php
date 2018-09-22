@@ -125,14 +125,14 @@ rules: {
   },
 
   "blood_pressure": {
-    blood: true,
+    blood: true
    
-    required: true
+  
   },
   "heart_beat": {
     number: true,
-    digits: true,
-    required: true
+    digits: true
+    
   }
 
 
@@ -224,13 +224,13 @@ range: "Please enter value betwwen 1 to 9999.9"
 },
 
 "blood_pressure":{
-  blood:'Please enter approppriate value',
+  blood:'Please enter approppriate value'
  
-  required: 'Please enter the value'
+  
 
 },
 "heart_beat":{
-  required: 'Please enter the value',
+  
   digits: 'Please enter only number of digits',
   number: 'Please enter number only'
 }

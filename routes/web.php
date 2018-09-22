@@ -119,6 +119,14 @@ Route::get('mot_show','TrainerController@mot_show')->name('mot_show');
 
 //insert mot//
 Route::get('motinsertshow','TrainerController@motinsertshow')->name('motinsertshow_page');
+
+Route::get('auto','TrainerController@auto');
+
+Route::get('motinsertshowauto','TrainerController@motinsertshowauto')->name('searchajax');
+
+//Route::get('auto',array('as'=>'autocomplete','uses'=>'TrainerController@auto'));
+//Route::get('searchajax',array('as'=>'searchajax','uses'=>'AutoCompleteController@autoComplete'));
+
 Route::post('motinsert','TrainerController@motinsert')->name('motinsert');
 
 

@@ -37,7 +37,7 @@ $('#motaddform').validate({
 /// rules of error 
 rules: {
 
-  "apply":
+  "apply1":
   {
     required: true,
   },
@@ -116,14 +116,14 @@ range: [1, 999.9]
 
 "blood_pressure": {
  
-  blood: true,
-  required: true
+  blood: true
+ 
 },
 
 "heart_beat": {
   number: true,
-  digits: true,
-  required: true
+  digits: true
+ 
 }
 
 
@@ -131,7 +131,7 @@ range: [1, 999.9]
 
 messages: {
 
-  "apply":
+  "apply1":
   {
     required: "Please select a customer name"
   },
@@ -209,13 +209,13 @@ number: 'Please enter decimal only',
 
 "blood_pressure":{
  
-  required: 'Please enter the value',
+  
   blood: 'Please enter approppriate value'
 
 },
 
 "heart_beat":{
-  required: 'Please enter the value',
+  
   digits: 'Please enter only number of digits',
   number: 'Please enter number only'
 },
@@ -259,52 +259,84 @@ $('.weightconvert').on('change', function(){
 </script>
 
 
+<!-- <script>
+
+  $(function () {
+    $( "#mot_date" ).datepicker({
+  dateFormat: "yy-mm-dd",
+  beforeShowDay: NotBeforeToday
+});
+  } );
+
+  function NotBeforeToday(date)
+{
+    var now = new Date();//this gets the current date and time
+    if (date.getFullYear() == now.getFullYear() && date.getMonth() == now.getMonth() && date.getDate() > now.getDate())
+        return [true];
+    if (date.getFullYear() <= now.getFullYear() && date.getMonth() > now.getMonth())
+       return [true];
+     if (date.getFullYear() < now.getFullYear())
+       return [true];
+    return [false];
+}
+
+
+  </script> -->
+
+
 
 <script type="text/javascript">
-  $(document).ready(function(){
-    $('.required').on('change',function(e) {
-      var customerID = $.trim($(this).val()); 
-      console.log(customerID);
- if(customerID){
-  var Data =
-  {
-    'id': customerID
+
  
-  }
- $.ajax({
-          url: "{{route('mot_customer_request')}}",
-          json_enc: Data,
-          type: "GET",
-          dataType: "json",
-          data:
-          {
-            'data': Data,
-          },
-          success: function (data)
-          {
+
+
+  $(document).ready(function(){
+
+
+
+ //    $('#apply').keypress(function(e) {
+ //      var customerID = $.trim($(this).val()); 
+ //      console.log(customerID);
+ // if(customerID){
+ //  var Data =
+ //  {
+ //    'id': customerID
+ 
+ //  }
+ // $.ajax({
+ //          url: "{{route('mot_customer_request')}}",
+ //          json_enc: Data,
+ //          type: "GET",
+ //          dataType: "json",
+ //          data:
+ //          {
+ //            'data': Data,
+ //          },
+ //          success: function (data)
+ //          {
             
-           $('#right_arm').val(data.right_arm);
-             $('#left_arm').val(data.left_arm);
-              $('#chest').val(data.chest);
- $('#waist').val(data.waist);
-  $('#hips').val(data.hips);
-   $('#right_thigh').val(data.right_thigh);
-    $('#left_thigh').val(data.left_thigh);
-     $('#right_calf').val(data.right_calf);
-      $('#left_calf').val(data.left_calf);
-       $('#height').val(data.height);
-       $('#starting_weight').val(data.starting_weight);
-       $('#ending_weight').val(data.ending_weight);
-       $('#heart_beat').val(data.heart_beat);
-        $('#blood_pressure').val(data.blood_pressure);
-       $('#description').val(data.description);
-       $('#mot_date').val(data.date);
+ //           $('#right_arm').val(data.right_arm);
+ //             $('#left_arm').val(data.left_arm);
+ //              $('#chest').val(data.chest);
+ // $('#waist').val(data.waist);
+ //  $('#hips').val(data.hips);
+ //   $('#right_thigh').val(data.right_thigh);
+ //    $('#left_thigh').val(data.left_thigh);
+ //     $('#right_calf').val(data.right_calf);
+ //      $('#left_calf').val(data.left_calf);
+ //       $('#height').val(data.height);
+ //       $('#starting_weight').val(data.starting_weight);
+ //       $('#ending_weight').val(data.ending_weight);
+ //       $('#heart_beat').val(data.heart_beat);
+ //        $('#blood_pressure').val(data.blood_pressure);
+ //       $('#description').val(data.description);
+ //       $('#mot_date').val(data.date);
        
-          }
-        });
-    }
+ //          }
+ //        });
+ //    }
      
-    });
+ //    });
   });
 </script>
 
@@ -330,12 +362,15 @@ $('.weightconvert').on('change', function(){
             <label>Customer Name<span class="required_field_color">*</span></label>
           </div>
           <div class=" col-md-9">
-            <select class="form-control required" name="apply" id="apply">
-              <option value=""> Please select a name</option>
+            <!-- <select class="form-control required" name="apply" id="apply">
+              <option id="search_term" value=""> Please select a name</option>
               @foreach($data as $mydata)
-              <option value="{{$mydata->id}}"> {{$mydata->name}}</option>
+              <option  id="search_term" value="{{$mydata->id}}"> {{$mydata->name}}</option>
               @endforeach
-            </select>
+            </select> -->
+            <input type="text" id="apply1" name="apply1" placeholder="Please select a name" class="form-control apply required" >
+
+            <input type="hidden" id="apply" name="apply" >
           </div>
         </div>
         <div class="row form-group">
@@ -500,7 +535,7 @@ $('.weightconvert').on('change', function(){
 </div>
 
 <div class="row form-group">
-  <div class="col col-md-3"><label for="text-input" class="form-control-label"> Blood Pressure (mmHg)<span class="required_field_color">*</span></label></div>
+  <div class="col col-md-3"><label for="text-input" class="form-control-label"> Blood Pressure (mmHg)</label></div>
   <div class="col-12 col-md-9"><input type="text" id="blood_pressure" name="blood_pressure" placeholder="Blood Pressure" class="form-control" value="">
   </div>
 </div>
@@ -508,7 +543,7 @@ $('.weightconvert').on('change', function(){
 
 
 <div class="row form-group">
-  <div class="col col-md-3"><label for="text-input" class="form-control-label">Heart Beat (bpm)<span class="required_field_color">*</span></label></div>
+  <div class="col col-md-3"><label for="text-input" class="form-control-label">Heart Beat (bpm)</label></div>
   <div class="col-12 col-md-9"><input type="text" id="heart_beat" name="heart_beat" placeholder="Heart Beat" class="form-control" value="">
   </div>
 </div>
@@ -520,7 +555,7 @@ $('.weightconvert').on('change', function(){
 
   <div class="row form-group">
     <div class="col-lg-3"><label for="text-input" class="form-control-label">Measured On<span class="required_field_color">*</span></label></div>
-    <div class="col-lg-9"><input type="text" id="mot_date" name="date" class="form-control" placeholder="Date" readonly>
+    <div class="col-lg-9"><input type="text" id="mot_date" name="date" class="form-control" placeholder="Date" onchange="jsfunction()" readonly="true">
     </div>
   </div>
   

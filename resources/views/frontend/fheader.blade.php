@@ -71,7 +71,7 @@
     						<ul>
 
                 <li class="{{ Request::segment(2) === 'bbl' ? 'active' : null }}">
-                        <a href="{{url('customer/bbl')}}">Home</a>
+                        <a href="{{url('/')}}">Home</a>
                       </li>
                        <li class="{{ Request::segment(2) === 'about-us' ? 'active' : null }}">
                         <a href="{{url('customer/about-us')}}">About Us</a>

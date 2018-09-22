@@ -18,6 +18,9 @@
     <link rel="apple-touch-icon" href="{{ asset('backend/apple-icon.png')}}">
     <link rel="shortcut icon" href="{{ asset('backend/favicon.ico')}}">
      <script src="{{asset('backend/assets/js/jquery.min.js')}}"></script>
+
+     <script src="{{asset('backend/assets/js/jquery.js')}}"></script>
+<script src="{{asset('backend/assets/js/jquery-ui.min.js')}}"></script>
      <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
     <script src="{{asset('backend/assets/js/jquery.validate.min.js')}}"></script>
     <script src="{{asset('backend/assets/js/additional-methods.js')}}"></script>

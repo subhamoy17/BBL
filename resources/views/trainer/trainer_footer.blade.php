@@ -40,7 +40,98 @@
   
     </script>
 
+    
+
+
+  
+
+
+
     <script src="{{asset('backend/assets/js/totanjs/alertify.min.js')}}"></script>
+
+<!-- <script src="{{asset('backend/assets/js/jquery.js')}}"></script>
+<script src="{{asset('backend/assets/js/jquery-ui.min.js')}}"></script> -->
+    <script>
+   $(document).ready(function() {
+    src = "{{ route('searchajax') }}";
+     $("#apply1").autocomplete({
+        source: function(request, response) {
+            $.ajax({
+                url: src,
+                dataType: "json",
+                data: {
+                    term : request.term
+                },
+                success: function(data) {
+                    //response(data.value + '_' + data.id);
+                    // console.log(data);
+                    // response(data);
+//                     data.forEach(function(element) {
+//                         response(data);
+//                          $("#apply1").val(element.id);
+//   console.log(element);
+// });
+                response( $.map( data, function( item ) {
+                    
+                    return {
+                        value: item.value,
+                        id:item.id
+
+                    }
+                }));
+
+
+                    
+                   
+                }
+
+
+            });
+        },
+        minLength: 3,
+        select: function(event, ui) {
+        $("#apply").val(ui.item.id);  // ui.item.value contains the id of the selected label
+
+         var Data = 
+  {
+    'id': ui.item.id
+ 
+  }
+ $.ajax({
+          url: "{{route('mot_customer_request')}}",
+          json_enc: Data,
+          type: "GET",
+          dataType: "json",
+          data:
+          {
+            'data': Data,
+          },
+          success: function (data)
+          {
+            
+           $('#right_arm').val(data.right_arm);
+             $('#left_arm').val(data.left_arm);
+              $('#chest').val(data.chest);
+ $('#waist').val(data.waist);
+  $('#hips').val(data.hips);
+   $('#right_thigh').val(data.right_thigh);
+    $('#left_thigh').val(data.left_thigh);
+     $('#right_calf').val(data.right_calf);
+      $('#left_calf').val(data.left_calf);
+       $('#height').val(data.height);
+       $('#starting_weight').val(data.starting_weight);
+       $('#ending_weight').val(data.ending_weight);
+       $('#heart_beat').val(data.heart_beat);
+        $('#blood_pressure').val(data.blood_pressure);
+       $('#description').val(data.description);
+       $('#mot_date').val(data.date);
+       
+          }
+        });
+    }
+    });
+});
+</script>
     
 
 </body>
