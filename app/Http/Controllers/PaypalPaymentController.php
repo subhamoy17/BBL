@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use PayPal\Api\PaymentExecution;
 use PayPal\Api\Amount;
@@ -25,6 +26,8 @@ use Auth;
 use App\Customer;
 use App\Notifications\PackagePurchaseNotification;
 use Carbon\Carbon;
+
+use PayPal\Exception\PayPalConnectionException;
 
 
 
@@ -103,11 +106,22 @@ $payment = new Payment();
             
         // dd($payment->create($this->_api_context));exit; 
         try {
+ Log::debug(":: try :: ".print_r($payment,true));
 $payment->create($this->_api_context);
+
+ // Log::debug(":: _api_context :: ".print_r($this->_api_context,true));
+ //echo $this->_api_context;
 
 //Log::debug(":: before paypal return data :: ".print_r($payment,true));
 
-} catch (\PayPal\Exception\PPConnectionException $ex) {
+} 
+catch (PayPalConnectionException $ex) {
+
+        //Log::debug(":: 1st catche :: ".print_r($ex->getData(),true));
+
+    //var_dump(json_decode($ex->getData()));
+        //exit(1);
+    
 if (\Config::get('app.debug')) {
 \Session::put('failed_paypalpay', 'Connection timeout');
     $paypal_history_data['status']='Connection timeout';
@@ -137,7 +151,6 @@ if (\Config::get('app.debug')) {
 
     $customer_details=Customer::find($customer_id);
 
-
     $notifydata['package_name'] =$package_name;
     $notifydata['slots_number'] =$slots_number;
     $notifydata['package_validity'] =$package_validity_date;
@@ -151,7 +164,7 @@ if (\Config::get('app.debug')) {
     $notifydata['customer_phone']=$customer_details->ph_no;
     $notifydata['status']='Payment Failed';
 
-    Log::debug(" paypal Inconvenient error notification ".print_r($notifydata,true));
+    //Log::debug(" paypal Inconvenient error notification ".print_r($notifydata,true));
 
     $customer_details->notify(new PackagePurchaseNotification($notifydata));
 
@@ -165,7 +178,7 @@ $redirect_url = $link->getHref();
 }
 }
 /** add payment ID to session **/
-        Session::put('paypal_payment_id', $payment->getId());
+Session::put('paypal_payment_id', $payment->getId());
         
 
 if (isset($redirect_url)) {
@@ -199,7 +212,7 @@ if (isset($redirect_url)) {
     $notifydata['customer_phone']=$customer_details->ph_no;
     $notifydata['status']='Payment Failed';
 
-    Log::debug(" paypal payment Failed For Unknown Error notification ".print_r($notifydata,true));
+    //Log::debug(" paypal payment Failed For Unknown Error notification ".print_r($notifydata,true));
 
     $customer_details->notify(new PackagePurchaseNotification($notifydata));
 
@@ -208,6 +221,7 @@ if (isset($redirect_url)) {
 
 public function getPaymentStatus()
     {
+
 
         $package_name=Session('package_name');
         $slots_number=Session('slots_number');
@@ -247,7 +261,7 @@ public function getPaymentStatus()
 
     $payment_history=DB::table('payment_history')->insert($paypal_history_data);
 
-    Log::debug(":: before session value :: ".print_r($package_amount,true));
+    //Log::debug(":: before session value :: ".print_r($package_amount,true));
 
     $customer_details=Customer::find($customer_id);
 
@@ -265,7 +279,7 @@ public function getPaymentStatus()
     $notifydata['customer_phone']=$customer_details->ph_no;
     $notifydata['status']='Payment Cancelled';
 
-    Log::debug(" paypal payment Cancelled notification ".print_r($notifydata,true));
+    //Log::debug(" paypal payment Cancelled notification ".print_r($notifydata,true));
 
     $customer_details->notify(new PackagePurchaseNotification($notifydata));
 
@@ -287,8 +301,18 @@ public function getPaymentStatus()
         $execution = new PaymentExecution();
         $execution->setPayerId(Input::get('PayerID'));
 /**Execute the payment **/
-        $result = $payment->execute($execution, $this->_api_context);
+        
+//try{
+$result = $payment->execute($execution, $this->_api_context);
 
+//echo "write".$result;
+//}
+//catch (\Exception $e)
+//{
+    //echo "wrong".$e->getData();
+//}
+
+//Log::debug(" paypal payment Failed For Unknown Error notification ".print_r($result->getUrl(),true));
 
 if ($result->getState() == 'approved') {
 
@@ -303,7 +327,7 @@ if ($result->getState() == 'approved') {
 	$paypal_history_data['payment_mode']='Paypal';
 	$paypal_history_data['currency']=$transaction_details->currency;
 
-	Log::debug(":: paypal return data :: ".print_r($paypal_history_data,true));
+	//Log::debug(":: paypal return data :: ".print_r($paypal_history_data,true));
 
     $purchases_history_data['active_package']=1;
     $purchases_history_data['package_remaining']=$slots_number;
@@ -315,7 +339,7 @@ if ($result->getState() == 'approved') {
 
     $payment_history=DB::table('payment_history')->insert($paypal_history_data);
 
-    Log::debug(":: before session value :: ".print_r($package_amount,true));
+    //Log::debug(":: before session value :: ".print_r($package_amount,true));
 
     $remaining_session_request_now=Carbon::now()->toDateString();
 
@@ -345,7 +369,7 @@ if ($result->getState() == 'approved') {
     $notifydata['customer_phone']=$customer_details->ph_no;
     $notifydata['status']='Payment Success';
 
-    Log::debug(" paypal payment success notification ".print_r($notifydata,true));
+    //Log::debug(" paypal payment success notification ".print_r($notifydata,true));
 
     $customer_details->notify(new PackagePurchaseNotification($notifydata));
 
@@ -360,8 +384,9 @@ if ($result->getState() == 'approved') {
 
 \Session::put('success_paypalpay', 'Payment success');
 \Session::put('payment_id', $payment_id);
-        return Redirect::to('customer/paypalpaymentsuccess');
+    return Redirect::to('customer/paypalpaymentsuccess');
 }
+
 
     $amout=$result->getTransactions();
     $transaction_details=$amout[0]->getAmount();
@@ -373,7 +398,7 @@ if ($result->getState() == 'approved') {
     $paypal_history_data['payment_mode']='Paypal';
     $paypal_history_data['currency']=$transaction_details->currency;
 
-    Log::debug(":: paypal return data :: ".print_r($paypal_history_data,true));
+    //Log::debug(":: paypal return data :: ".print_r($paypal_history_data,true));
 
     $purchases_history_data['active_package']=0;
     $purchases_history_data['package_remaining']=0;
@@ -384,7 +409,7 @@ if ($result->getState() == 'approved') {
 
     $payment_history=DB::table('payment_history')->insert($paypal_history_data);
 
-    Log::debug(":: before session value :: ".print_r($package_amount,true));
+    //Log::debug(":: before session value :: ".print_r($package_amount,true));
 
     $customer_details=Customer::find($customer_id);
 
@@ -402,7 +427,7 @@ if ($result->getState() == 'approved') {
     $notifydata['customer_phone']=$customer_details->ph_no;
     $notifydata['status']='Payment Failed';
 
-    Log::debug(" paypal payment failed notification ".print_r($notifydata,true));
+    //Log::debug(" paypal payment failed notification ".print_r($notifydata,true));
 
     $customer_details->notify(new PackagePurchaseNotification($notifydata));
 
