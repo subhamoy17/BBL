@@ -46,6 +46,5 @@
     <script src="{{ asset('backend/assets/js/main.js')}}"></script>
 
 
-
 </body>
 </html>

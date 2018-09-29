@@ -41,7 +41,7 @@
 					<h2>Contact <span>Us</span></h2>
 					    <ul class="con_inner_text">
 							<li><span class="fa fa-map-marker" aria-hidden="true"></span>6 Brighton Hill RG22 4EH,<label>Basingstoke</label></li>
-							<li><span class="fa fa-envelope-o" aria-hidden="true"></span> <a href="mailto:info@example.com">info@example.com</a></li>
+							<li><span class="fa fa-envelope-o" aria-hidden="true"></span> <a href="mailto:info@example.com">info@bodybylekan.com</a></li>
 							<li><span class="fa fa-phone" aria-hidden="true"></span>+44 7706 975795</li>
 						</ul>
 
@@ -57,7 +57,7 @@
 				<div class="clearfix"> </div>
 					
 			</div>
-			<p class="copyright">© 2018 Body By Lekan. All Rights Reserved |Powered by <a href="http://softcliquesoftware.in/" target="_blank">Softclique Software Services LLP</a></p>
+			<p class="copyright">© 2018 Body By Lekan. All Rights Reserved |Powered by <a href="https://www.softcliquesoftware.in/" target="_blank">Softclique Software Services LLP</a></p>
 			<!--scroll to top button-->
     		<a id="back2Top" title="Back to top" href="#"><i class="fa fa-hand-o-up"></i></a>
 

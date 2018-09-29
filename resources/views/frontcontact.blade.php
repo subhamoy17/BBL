@@ -16,21 +16,21 @@
               <div class="contact-info text-center">
                 <i class="fa fa-phone font-36 mb-10 text-theme-colored"></i>
                 <h4>Call Us</h4>
-                <h6 class="text-gray">Phone: +262 695 2601</h6>
+                <h6 class="text-gray">Phone: +44-7706975795</h6>
               </div>
             </div>
             <div class="col-sm-12 col-md-4">
               <div class="contact-info text-center">
                 <i class="fa fa-map-marker font-36 mb-10 text-theme-colored"></i>
                 <h4>Address</h4>
-                <h6 class="text-gray">121 King Street, Australia</h6>
+                <h6 class="text-gray">6 Brighton Hill RG22 4EH, Basingstoke</h6>
               </div>
             </div>
             <div class="col-sm-12 col-md-4">
               <div class="contact-info text-center">
                 <i class="fa fa-envelope font-36 mb-10 text-theme-colored"></i>
                 <h4>Email</h4>
-                <h6 class="text-gray">you@yourdomain.com</h6>
+                <h6 class="text-gray">info@bodybylekan.com</h6>
               </div>
             </div>
           </div>
