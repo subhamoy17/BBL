@@ -174,13 +174,26 @@
                   <div class="col-md-12 col-sm-12 col-xs-12">
 
                  
+                    <div class="col-md-6 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                              
+                              <input type="hidden" id="total_slots" class="form-control" value="{{Session::get('sum_slots')}}"  >
+                              <label>Location<small>*</small></label>
+                              <select class="form-control" >
+                                <option value="Basingstoke">Basingstoke</option>
+                                
+                              </select>
 
+                              
+
+                            </div>
+                        </div>
 
               
                   <div class="col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group">
                               
-                              <input type="hidden" id="total_slots" class="form-control" value="{{Session::get('sum_slots')}}"  >
+                            
                               <label>Trainer Name <small>*</small></label>
                               <select class="form-control" name="id" id='trainer_id' onchange="jsfunction()">
                                 <option value=""> Please select a name</option>
@@ -201,7 +214,7 @@
                         
 
                         </div>
-                        <div class="clearfix"></div>
+                        <!-- <div class="clearfix"></div> -->
                         <div class="col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group" >
                               <label>Available Time <small>*</small></label>

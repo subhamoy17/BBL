@@ -106,6 +106,9 @@ table.dataTable thead>tr>th[id='image'].sorting_asc::after{display: none}
                   <th id='slno'>Sl. No.</th>
                   <th> Customer Name</th>
                   <th>Customer Phone</th>
+                   @if(Auth::user()->master_trainer==1)
+                  <th>Trainer Name</th>
+                  @endif
                   <th>Status</th>
                   <th>Booking Date & Time</th>
                   <th id='image'>Image</th>
@@ -117,7 +120,10 @@ table.dataTable thead>tr>th[id='image'].sorting_asc::after{display: none}
                 <tr>
                   <td>{{++$key}}</td>
                   <td>{{$mydata->name}}</td>
-                  <td>{{$mydata->ph_no}}</td>
+                  <td>{{$mydata->ph_no}}</td>               
+                    @if(Auth::user()->master_trainer==1)
+                   <td>{{$mydata->trainer_name}}</td>
+                   @endif           
                   <td>{{$mydata->status}}</td>
                   <td>{{date('d F Y', strtotime($mydata->slot_date))}} {{date('h:i A', strtotime($mydata->slot_time))}}</td>
                   @if($mydata->image) 

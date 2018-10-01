@@ -204,6 +204,128 @@
 
 
         </div> <!-- .content -->
+
+        <div class="content mt-3">
+           <div class="col-sm-6 col-lg-3">
+                <div class="text-white bg-flat-color-1">
+                    <div class="card-body pb-0">
+                        <div class="dropdown float-right">
+                            <button class="btn bg-transparent dropdown-toggle theme-toggle text-light" type="button" id="dropdownMenuButton" data-toggle="dropdown">
+                                <i class=""></i>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <div class="dropdown-menu-content">
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Another action</a>
+                                    <a class="dropdown-item" href="#">Something else here</a>
+                                </div>
+                            </div>
+                        </div>
+                        <h4 class="mb-0">
+                            <span class="count">{{$total_number_of_customer}}</span>
+                        </h4>
+                     <p class="text-light"><a href="{{url('allCustomers')}}" class="small-box-footer">Total Number of Customer<i class="fa fa-arrow-circle-right"></i></a></p>
+
+
+                        <div class="chart-wrapper px-0" style="height:70px;" height="70"/>
+                      <!--  -->
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <!--/.col-->
+
+            <div class="col-sm-6 col-lg-3">
+                <div class="text-white bg-flat-color-2">
+                    <div class="card-body pb-0">
+                        <div class="dropdown float-right">
+                            <button class="btn bg-transparent dropdown-toggle theme-toggle text-light" type="button" id="dropdownMenuButton" data-toggle="dropdown">
+                                <i class=""></i>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <div class="dropdown-menu-content">
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Another action</a>
+                                    <a class="dropdown-item" href="#">Something else here</a>
+                                </div>
+                            </div>
+                        </div>
+                        <h4 class="mb-0">
+                            <span class="count">{{$total_number_of_trainer}}</span>
+                        </h4>
+                        <p class="text-light"><a href="{{url('trainer/our_trainer_list')}}" class="small-box-footer">Total Number of Trainer <i class="fa fa-arrow-circle-right"></i></a></p>
+
+                        <div class="chart-wrapper px-0" style="height:70px;" height="70"/>
+                          <!--   <canvas id="widgetChart2"></canvas> -->
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--/.col-->
+
+            <div class="col-sm-6 col-lg-3">
+                <div class="text-white bg-flat-color-3">
+                    <div class="card-body pb-0">
+                        <div class="dropdown float-right">
+                            <button class="btn bg-transparent dropdown-toggle theme-toggle text-light" type="button" id="dropdownMenuButton" data-toggle="dropdown">
+                                <i class=""></i>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <div class="dropdown-menu-content">
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Another action</a>
+                                    <a class="dropdown-item" href="#">Something else here</a>
+                                </div>
+                            </div>
+                        </div>
+                        <h4 class="mb-0">
+                            <span class="count">{{$total_booking_count_month}}</span>
+                        </h4>
+                        <p class="text-light"><a href="#" class="small-box-footer">Total Booking in Current Months <i class="fa fa-arrow-circle-right"></i></a></p>
+
+                    </div>
+
+                        <div class="chart-wrapper px-0" style="height:70px;" height="70"/>
+                     <!--  <a href="{{url('pastRequestlist')}}/{{Auth::user()->id}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a> -->
+                        </div>
+                </div>
+            </div>
+            <!--/.col-->
+
+            <div class="col-sm-6 col-lg-3">
+                <div class="text-white bg-flat-color-4">
+                    <div class="card-body pb-0">
+                        <div class="dropdown float-right">
+                            <button class="btn bg-transparent dropdown-toggle theme-toggle text-light" type="button" id="dropdownMenuButton" data-toggle="dropdown">
+                                <i class=""></i>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <div class="dropdown-menu-content">
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Another action</a>
+                                    <a class="dropdown-item" href="#">Something else here</a>
+                                </div>
+                            </div>
+                        </div>
+                        <h4 class="mb-0">
+                            <span class="count">{{$total_booking_qtr}}</span>
+                        </h4>
+                        <p class="text-light"> Total Booking in last 3 Months</p>
+
+                        <div class="chart-wrapper px-3" style="height:70px;" height="70"/>
+                            <!-- <canvas id="widgetChart4"></canvas> -->
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+         
+
+
+        </div> <!-- .content -->
     </div><!-- /#right-panel -->
 
     <!-- Right Panel -->

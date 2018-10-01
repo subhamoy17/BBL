@@ -132,7 +132,53 @@
     });
 });
 </script>
-    
+
+   @if(Request::segment(1) == 'trainer' && Request::segment(2) == 'add_session') 
+<script>
+   $(document).ready(function() {
+    src = "{{ route('customersearch') }}";
+     $("#apply2").autocomplete({
+        source: function(request, response) {
+            $.ajax({
+                url: src,
+                dataType: "json",
+                data: {
+                    term : request.term
+                },
+                success: function(data) {
+                  
+                response( $.map( data, function( item ) {
+                    
+                    return {
+                        value: item.value,
+                        id:item.id
+
+                    }
+                }));
+
+
+                    
+                   
+                }
+
+
+            });
+        },
+        minLength: 3,
+        select: function(event, ui) {
+        $("#apply3").val(ui.item.id);  // ui.item.value contains the id of the selected label
+
+         var Data = 
+  {
+    'id': ui.item.id
+ 
+  }
+
+    }
+    });
+});
+</script>
+@endif
 
 </body>
 </html>

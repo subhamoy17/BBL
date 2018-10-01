@@ -368,7 +368,7 @@ $('.weightconvert').on('change', function(){
               <option  id="search_term" value="{{$mydata->id}}"> {{$mydata->name}}</option>
               @endforeach
             </select> -->
-            <input type="text" id="apply1" name="apply1" placeholder="Please select a name" class="form-control apply required" >
+            <input type="text" id="apply1" name="apply1" placeholder="Please select a name" class="form-control apply1 required" >
 
             <input type="hidden" id="apply" name="apply" >
           </div>

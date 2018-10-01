@@ -124,6 +124,7 @@ Route::get('motinsertshow','TrainerController@motinsertshow')->name('motinsertsh
 
 Route::get('motinsertshowauto','TrainerController@motinsertshowauto')->name('searchajax');
 
+Route::get('customersearch','TrainerController@customersearch')->name('customersearch');
 
 Route::post('motinsert','TrainerController@motinsert')->name('motinsert');
 
@@ -140,6 +141,13 @@ Route::post('motedit','TrainerController@motedit')->name('motedit');
 //delete//
 Route::get('motdelete/{id}', 'TrainerController@motdelete');
 
+//Add session//
+Route::get('add_session','TrainerController@add_session')->name('add_session');
+
+Route::get('slot_time','TrainerController@slot_times')->name('slot_time');
+
+Route::POST('trainer_slotinsert','TrainerController@trainer_slotinsert')->name('trainer_slotinsert');
+Route::get('add_customer','TrainerController@add_customer_session')->name('add_customer');
 
 //show our client//
 Route::get('our_trainer_list','TrainerController@our_client_show')->name('our_trainer_list');
