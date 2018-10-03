@@ -920,25 +920,16 @@ h3.agile_tittle span {
     opacity: 1;
 }
 .blog-txt {
-    -webkit-flex: 1;
-    -ms-flex: 1;
-    flex:1;
-    -webkit-flex-basis: 50%;
-    flex-basis: 50%;
     padding: 80px;
-    background-color: #fb5b21;
-        max-width: 50%;
-    transition: .5s all ease-in;
+    background-color: #282F36;
+        max-width: 100%;
+		height: 100%;
 }
-.blog-txt:hover{
-    transition: .5s all ease-in;
-    background:#282F36;
-}
-.blog-txt:hover h3 a{
+.blog-txt h3 a{
     color: #fb5b21;
     transition: .5s all ease-in;
 }
-.blog-txt:hover h4{
+.blog-txt h4{
     color: #fff;
     transition: .5s all ease-in;
 }
@@ -970,6 +961,14 @@ h3.agile_tittle span {
 }
 .blog-txt a {
     color: #fff;
+}
+.blog-txt h3 a{
+    color: #fb5b21;
+    transition: .5s all ease-in;
+}
+.blog-txt h4{
+    color: #fff;
+    transition: .5s all ease-in;
 }
 .blog-box img.img-responsive {
     /* flex-basis: 25%; 
@@ -4766,10 +4765,10 @@ h3.heading-agileinfo.white-gyls {
 }
 .stellarnav ul{
     text-align: right;
-    margin-top: 11px;
+    margin-top: 16px;
 }
 .heder-bottom {
-    padding: 10px 0;
+    padding: 5px 0;
 }
 .stellarnav ul > li > a{
     position: relative;
@@ -6134,4 +6133,16 @@ div#add_session_req {
 .hldr-name {
     font-weight: 600;
     margin-top: 10px;
+}
+.wthree-blog.padding-min .col-lg-6.col-sm-6.col-xs-12 {
+	padding: 0;
+}
+.wthree-blog.padding-min img {
+	width: 100%;
+}
+.wthree-blog .col-lg-6.col-sm-6.col-xs-12:nth-of-type(2n+1) {
+	float: right;
+}
+.wthree-blog .clearfix {
+	background: #282F36;
 }

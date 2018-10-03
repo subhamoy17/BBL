@@ -74,7 +74,7 @@
 
 <script>
     $('#testi-slider').owlCarousel({
-  autoplay: true,
+  autoplay: false,
     loop:true,
     margin:30,
     nav:false,

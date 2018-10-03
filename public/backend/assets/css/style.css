@@ -824,4 +824,27 @@ textarea.parsley-error {
 }
 /*82118*/
 
-
+@media only screen and (max-width: 767px) {
+	aside.left-panel {
+	display: block !important;
+	height: auto !important;
+	min-height: inherit !important;
+	padding: 0 15px !important;
+	width: 74vh !important;
+}
+.right-panel {
+	display: block !important;
+}
+.navbar-brand {
+	margin-top: 0 !important;
+}
+.navbar-brand img {
+	width: 100px;
+	position: relative;
+	top: 7px;
+}
+#main-menu ul li i {
+	width: 7%;
+	color: white;
+}
+}
