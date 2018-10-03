@@ -2,7 +2,7 @@
 @section('content')
 
 	<!-- banner -->
-	<div class="inner">
+	<div class="main_section_agile about inner">
 	</div>
 	<!-- //banner -->
 	<!-- about inner -->

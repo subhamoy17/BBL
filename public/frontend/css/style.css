@@ -401,6 +401,27 @@ a.navbar-brand {
     -ms-background-size: cover;
     min-height: 550px;
 }
+
+
+.main_section_agile.inner.about  {
+    background: url(../images/about_1.jpg)no-repeat 0px 0px !important;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    -ms-background-size: cover;
+    min-height: 550px;
+}
+
+.main_section_agile.inner.service  {
+    background: url(../images/service_1.jpg)no-repeat 0px 0px !important;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    -ms-background-size: cover;
+    min-height: 550px;
+}
 /*--- slider-css --*/
 
 .agile_banner_text_info h3 {
@@ -5239,6 +5260,21 @@ a.sign-btn2 {
 .whole-wrp {
     /*background-image: linear-gradient(to left top, #953107, #7e3b00, #683f00, #544000, #423f05);*/
     background-image: url(../images/banner1.jpg);
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    min-height: 100vh;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.whole-wrp .about{
+    /*background-image: linear-gradient(to left top, #953107, #7e3b00, #683f00, #544000, #423f05);*/
+    background-image: url(../images/about_1.jpg);
     width: 100%;
     background-repeat: no-repeat;
     background-position: center center;

@@ -161,7 +161,7 @@
     			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
     				<div class="box-hover-effect thumb-cross-effect forservice">
     					<div class="effect-wrapper">
-    						<div class="thumb"><img src="{{asset('frontend/images/sr2.jpg')}}"></div>
+    						<div class="thumb"><img src="{{asset('frontend/images/gym instruction.jpg')}}"></div>
     						<a class="hover-link">View more</a>
     					</div>
     					<div class="sr-text">

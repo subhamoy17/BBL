@@ -1,7 +1,7 @@
 @extends('frontcustomerlayout.main') 
 @section('content')
 	<!-- banner -->
-	<div class="main_section_agile inner">
+	<div class="main_section_agile about inner">
 	</div>
 	<!-- //banner -->
 	<!-- about inner -->
