@@ -255,12 +255,13 @@ $(document).ready(function() {
     		margin:30,
     		nav:true,
 			items: 4,
+      margin: 30,
     		responsive:{
     		    0:{
     		        items:1
     		    },
     		    600:{
-    		        items:3
+    		        items:1
     		    },
     		    1000:{
     		        items:4
