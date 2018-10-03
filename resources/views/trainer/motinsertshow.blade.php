@@ -287,12 +287,14 @@ $('.weightconvert').on('change', function(){
 
 <script type="text/javascript">
 
- 
 
 
   $(document).ready(function(){
 
-
+  
+// $(function() {
+//   $( "#mot_date" ).datepicker({  maxDate: new Date() });
+//  });
 
  //    $('#apply').keypress(function(e) {
  //      var customerID = $.trim($(this).val()); 
@@ -370,7 +372,25 @@ $('.weightconvert').on('change', function(){
             </select> -->
             <input type="text" id="apply1" name="apply1" placeholder="Please select a name" class="form-control apply1 required" >
 
+            <!-- <input type="text" id="cus_e" name="cus_e" > -->
+            
             <input type="hidden" id="apply" name="apply" >
+          </div>
+        </div>
+
+         <div class="row form-group">
+          <div class="col col-md-3">
+            <label>Customer Email<span class="required_field_color">*</span></label>
+          </div>
+          <div class=" col-lg-9">
+           <div class="row">
+              <div  id="cus_e" name="cus_e" class="col-lg-12">
+           
+            
+            <!-- <input type="text" id="cus_e" name="cus_e" > -->
+             <!-- <div id="cus_e" name="cus_e"></div> -->
+           </div>
+         </div>
           </div>
         </div>
         <div class="row form-group">

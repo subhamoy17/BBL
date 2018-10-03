@@ -1208,9 +1208,10 @@ public function motinsertshowauto(Request $request)
         $products=DB::table('customers')->where('name','LIKE','%'.$query.'%')->get();
         
         $data=array();
+        $data1=array();
         foreach ($products as $product) {
                
-          $data[]=array('value'=>$product->name,'id'=>$product->id);
+          $data[]=array('value'=>$product->name,'id'=>$product->id, 'email'=>$product->email );
 
                
         }
@@ -1219,16 +1220,14 @@ public function motinsertshowauto(Request $request)
 
         if(count($data))
         {
-          //foreach ($data as $key => $mydata) {
-            //Log::debug ( " :: motinsertshowauto :: ".print_r ($mydata,true));
-
-            return $data;
-          //}
-              
-            }
-        else{
-            return ['value'=>'No Result Found','id'=>''];
-          }
+          return $data;
+        }
+        else
+        {
+          
+          $data1[]=array('value'=>'No Result Found');
+          return $data1;
+        }
     
     
 }
@@ -1911,6 +1910,7 @@ public function customersearch(Request $request)
         $products=DB::table('customers')->where('email','LIKE','%'.$query.'%')->get();
         
         $data=array();
+         $data1=array();
         foreach ($products as $product) {
                
           $data[]=array('value'=>$product->email,'id'=>$product->id);
@@ -1923,13 +1923,14 @@ public function customersearch(Request $request)
         if(count($data))
         {
           
-
             return $data;
-         
-              
+                     
             }
         else{
-            return ['value'=>'No Result Found','id'=>''];
+
+           $data1[]=array('value'=>'No Result Found');
+          return $data1;
+            // return ['value'=>'No Result Found','id'=>''];
           }
     
     

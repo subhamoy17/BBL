@@ -52,6 +52,8 @@
 <!-- <script src="{{asset('backend/assets/js/jquery.js')}}"></script>
 <script src="{{asset('backend/assets/js/jquery-ui.min.js')}}"></script> -->
     <script>
+
+ 
    $(document).ready(function() {
     src = "{{ route('searchajax') }}";
      $("#apply1").autocomplete({
@@ -62,41 +64,43 @@
                 data: {
                     term : request.term
                 },
-                success: function(data) {
-                    //response(data.value + '_' + data.id);
-                    // console.log(data);
-                    // response(data);
-//                     data.forEach(function(element) {
-//                         response(data);
-//                          $("#apply1").val(element.id);
-//   console.log(element);
-// });
+                success: function(data) { //alert(data);
                 response( $.map( data, function( item ) {
+                  
                     
                     return {
-                        value: item.value,
-                        id:item.id
 
+                        //if(item.value!='No Result Found')
+                        //{
+                        value: item.value,
+                        id:item.id,
+                        email: item.email
+                        //}
+                        //else
+                        //{
+
+                        //}
                     }
                 }));
 
-
-                    
-                   
                 }
-
 
             });
         },
         minLength: 3,
         select: function(event, ui) {
-        $("#apply").val(ui.item.id);  // ui.item.value contains the id of the selected label
+        $("#apply").val(ui.item.id); 
+         $("#cus_e").text(ui.item.email);
+         // ui.item.value contains the id of the selected label
 
          var Data = 
   {
     'id': ui.item.id
  
   }
+  if($("#apply").val())
+  {
+
  $.ajax({
           url: "{{route('mot_customer_request')}}",
           json_enc: Data,
@@ -109,9 +113,9 @@
           success: function (data)
           {
             
-           $('#right_arm').val(data.right_arm);
-             $('#left_arm').val(data.left_arm);
-              $('#chest').val(data.chest);
+$('#right_arm').val(data.right_arm);
+ $('#left_arm').val(data.left_arm);
+  $('#chest').val(data.chest);
  $('#waist').val(data.waist);
   $('#hips').val(data.hips);
    $('#right_thigh').val(data.right_thigh);
@@ -128,6 +132,27 @@
        
           }
         });
+}
+
+else{
+      $('#right_arm').val('');
+ $('#left_arm').val('');
+  $('#chest').val('');
+ $('#waist').val('');
+  $('#hips').val('');
+   $('#right_thigh').val('');
+    $('#left_thigh').val('');
+     $('#right_calf').val('');
+      $('#left_calf').val('');
+       $('#height').val('');
+       $('#starting_weight').val('');
+       $('#ending_weight').val('');
+       $('#heart_beat').val('');
+        $('#blood_pressure').val('');
+       $('#description').val('');
+       $('#mot_date').val('');
+    }
+
     }
     });
 });
