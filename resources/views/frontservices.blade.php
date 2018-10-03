@@ -38,7 +38,7 @@
 		</div>
 		<div class="blog1">
 			<div class="blog-box">
-				<a href="#" data-toggle="modal" data-target="#myModal1"><img src="{{asset('frontend/images/4_4.jpg')}}" alt="blog image" class="img-responsive" /></a>
+				<a href="#" data-toggle="modal" data-target="#myModal1"><img src="{{asset('frontend/images/3_3.jpg')}}" alt="blog image" class="img-responsive" /></a>
 				<div class="blog-txt">
 					<h3><a href="#" data-toggle="modal" data-target="#myModal1">Diet Plans</a></h3>
 					<h4>December 15,2017</h4>
@@ -58,7 +58,7 @@
 					<p>We provide a multitude of health packages to suit your need and budget. Customized health packages are also provided in consultation with our training experts to give your body the best. We accept bulk booking for institutions and corporates at discounted rates. Our registered customers will also enjoy the benefit of tracking their personal training calendar and diet charts online.</p>
 					
 				</div>
-				<a href="#" data-toggle="modal" data-target="#myModal1"><img src="{{asset('frontend/images/3_3.jpg')}}" alt="blog image" class="img-responsive" /></a>
+				<a href="#" data-toggle="modal" data-target="#myModal1"><img src="{{asset('frontend/images/4_4.jpg')}}" alt="blog image" class="img-responsive" /></a>
 				
 			</div>
 		</div>
