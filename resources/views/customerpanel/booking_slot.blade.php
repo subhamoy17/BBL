@@ -688,7 +688,7 @@ $('#slotform').validate({
 
   });
 
-</script>>
+</script>
 
 
   <!--Fontawesome script-->
