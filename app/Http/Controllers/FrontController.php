@@ -599,7 +599,7 @@ public function slotinsert(Request $request)
     ->where('customer_id',$customer_id)
     ->where('extra_package_remaining','>',0)
     ->where('active_package',1)
-    ->orderBy('package_validity_date', 'DESC')
+    // ->orderBy('package_validity_date', 'DESC')
     ->first();
 
     $trainer_id=$request->trainer_id[$i];

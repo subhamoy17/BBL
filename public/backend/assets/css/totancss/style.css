@@ -675,3 +675,9 @@ All error msg
     text-transform: none;
     font-size: 13px;
 }
+
+
+.datepicker_trainer .slots_date_trainer
+{
+    background-color: white;
+}

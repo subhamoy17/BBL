@@ -224,7 +224,7 @@
                         <h4 class="mb-0">
                             <span class="count">{{$total_number_of_customer}}</span>
                         </h4>
-                     <p class="text-light"><a href="{{url('allCustomers')}}" class="small-box-footer">Total Number of Customer<i class="fa fa-arrow-circle-right"></i></a></p>
+                     <p class="text-light"><a href="{{route('allCustomers')}}" class="small-box-footer">Total Number of Customer<i class="fa fa-arrow-circle-right"></i></a></p>
 
 
                         <div class="chart-wrapper px-0" style="height:70px;" height="70"/>
@@ -255,7 +255,7 @@
                         <h4 class="mb-0">
                             <span class="count">{{$total_number_of_trainer}}</span>
                         </h4>
-                        <p class="text-light"><a href="{{url('trainer/our_trainer_list')}}" class="small-box-footer">Total Number of Trainer <i class="fa fa-arrow-circle-right"></i></a></p>
+                        <p class="text-light"><a href="{{url('trainer/trainerlist')}}" class="small-box-footer">Total Number of Trainer <i class="fa fa-arrow-circle-right"></i></a></p>
 
                         <div class="chart-wrapper px-0" style="height:70px;" height="70"/>
                           <!--   <canvas id="widgetChart2"></canvas> -->
@@ -284,7 +284,7 @@
                         <h4 class="mb-0">
                             <span class="count">{{$total_booking_count_month}}</span>
                         </h4>
-                        <p class="text-light"><a href="#" class="small-box-footer">Total Booking in Current Months <i class="fa fa-arrow-circle-right"></i></a></p>
+                        <p class="text-light">Total Booking in Current Months </p>
 
                     </div>
 

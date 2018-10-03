@@ -241,6 +241,31 @@ range: "Please enter value betwwen 1 to 9999.9"
 
 });
 </script>
+
+<script>
+
+  $(function () {
+    $( "#mot_date" ).datepicker({
+  dateFormat: "yy-mm-dd",
+  beforeShowDay: NotAfterToday
+});
+  } );
+
+  function NotAfterToday(date)
+{
+    var now = new Date();//this gets the current date and time
+    if (date.getFullYear() == now.getFullYear() && date.getMonth() == now.getMonth() && date.getDate() <= now.getDate())
+        return [true];
+    if (date.getFullYear() <= now.getFullYear() && date.getMonth() < now.getMonth())
+       return [true];
+     if (date.getFullYear() < now.getFullYear())
+       return [true];
+    return [false];
+}
+
+
+  </script>
+
 @if(Auth::user()->master_trainer==1)
 <div class="breadcrumbs">
   <div class="col-sm-4">
@@ -423,7 +448,7 @@ range: "Please enter value betwwen 1 to 9999.9"
 
   <div class="row form-group">
     <div class="col col-md-3"><label for="text-input" class="form-control-label">Measured On<span class="required_field_color">*</span></label></div>
-    <div class="col-12 col-md-9"><input type="text" id="mot_date" name="date" class="form-control" placeholder="Date" value="{{$data->date}}">
+    <div class="col-12 col-md-9"><input type="text" id="mot_date" name="date" class="form-control" placeholder="Date" value="{{$data->date}}" readonly="true">
     </div>
   </div>
   <div class="row form-group">

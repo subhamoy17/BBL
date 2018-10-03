@@ -259,21 +259,21 @@ $('.weightconvert').on('change', function(){
 </script>
 
 
-<!-- <script>
+<script>
 
   $(function () {
     $( "#mot_date" ).datepicker({
   dateFormat: "yy-mm-dd",
-  beforeShowDay: NotBeforeToday
+  beforeShowDay: NotAfterToday
 });
   } );
 
-  function NotBeforeToday(date)
+  function NotAfterToday(date)
 {
     var now = new Date();//this gets the current date and time
-    if (date.getFullYear() == now.getFullYear() && date.getMonth() == now.getMonth() && date.getDate() > now.getDate())
+    if (date.getFullYear() == now.getFullYear() && date.getMonth() == now.getMonth() && date.getDate() <= now.getDate())
         return [true];
-    if (date.getFullYear() <= now.getFullYear() && date.getMonth() > now.getMonth())
+    if (date.getFullYear() <= now.getFullYear() && date.getMonth() < now.getMonth())
        return [true];
      if (date.getFullYear() < now.getFullYear())
        return [true];
@@ -281,7 +281,7 @@ $('.weightconvert').on('change', function(){
 }
 
 
-  </script> -->
+  </script>
 
 
 

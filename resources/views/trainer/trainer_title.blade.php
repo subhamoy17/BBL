@@ -76,7 +76,7 @@
    
    function  jsfunction(){
     
-    if($('#trainer_id').val()!='' && $('#slots_datepicker').val()!='')
+    if($('#trainer_id').val()!='' && $('#slots_datepicker').val()!='' && $('#apply2').val()!='')
     {
       $('#loadingimg').show();
       var slot_time = $('#slot_time');
@@ -129,7 +129,6 @@
   else
   {
     $('#slot_time').attr('disabled','disabled');
-    $("#slot_time").css("background","#3d3648");
   }
     
   }

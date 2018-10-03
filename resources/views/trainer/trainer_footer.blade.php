@@ -32,10 +32,7 @@
                 scaleColors: [ '#1de9b6', '#03a9f5' ],
                 normalizeFunction: 'polynomial'
             } );
-            $( "#mot_date" ).datepicker({
-    dateFormat: "yy-mm-dd"
-  });
-
+            
 })( jQuery );
   
     </script>

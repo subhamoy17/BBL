@@ -178,7 +178,7 @@ Route::post('cheeckexercisecategory_edit', 'TrainerController@cheeckexercisecate
 Route::post('cheecktestimonialname', 'TrainerController@cheecktestimonialname');
 Route::post('cheecktestimonialname_edit', 'TrainerController@cheecktestimonialname_edit');
 
-
+Route::get('allCustomers', 'TrainerController@all_customers')->name('allCustomers');
 });
 
 
@@ -247,7 +247,7 @@ Route::get('approvePendingRequest', 'TrainerController@approve_pending_request')
 
 Route::get('approveCustomer', 'TrainerController@approve_customer_request')->name('approveCustomer');
 // Route::get('approvePastCustomer', 'TrainerController@approve_past_customer_request')->name('approvePastCustomer');
-Route::get('allCustomers', 'TrainerController@all_customers')->name('allCustomers');
+
 
 
 

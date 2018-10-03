@@ -60,8 +60,8 @@ public function index()
   //number of decline request
   $decline_request=DB::table('slot_request')->where('trainer_id',Auth::user()->id)->where('approval_id',4)->count();
 
-  $total_number_of_trainer=DB::table('users')->count();
-  $total_number_of_customer=DB::table('customers')->count();
+  $total_number_of_trainer=DB::table('users')->where('master_trainer',2)->whereNull('deleted_at')->count();
+  $total_number_of_customer=DB::table('customers')->where('confirmed',1)->whereNull('deleted_at')->count();
 
   $currentMonth = date('m');
   $total_booking_count_month = DB::table("slot_request")
@@ -986,7 +986,7 @@ public function approve_pending_request(Request $request)
 //all customers table//
 public function all_customers()
 {
-  $data=DB::table('customers')->get();
+  $data=DB::table('customers')->whereNull('deleted_at')->where('confirmed',1)->get();
   return view('trainer.customers_all')->with(compact('data'));
 }
 //gym insert form//
@@ -1858,21 +1858,19 @@ function cheecktestimonialname(Request $request)
   function add_session(Request $request)
   {
 
-     $remaining_session_request_now=Carbon::now()->toDateString();
+  $remaining_session_request_now=Carbon::now()->toDateString();
   
   $customers=DB::table('customers')->whereNull('deleted_at')->where('confirmed',1)->get();
-   $data=DB::table('users')->whereNull('deleted_at')->where('is_active',1)->get();
+  $data=DB::table('users')->whereNull('deleted_at')->where('is_active',1)->get();
 
   $sum_slots = DB::table('purchases_history')
-  ->select('active_package','package_remaining','customer_id')
-  
+  ->select('active_package','package_remaining','customer_id')  
   ->where('active_package',1 )
   ->where('package_validity_date','>=',$remaining_session_request_now)
   ->sum('package_remaining');
 
   $sum_extra_slots = DB::table('purchases_history')
   ->select('active_package','package_remaining','extra_package_remaining','customer_id')
-  
   ->where('active_package',1)
   ->sum('extra_package_remaining');
 
@@ -1939,8 +1937,9 @@ public function customersearch(Request $request)
 
 public function trainer_slotinsert(Request $request)
 {
+
+
   $trainer_id=$request->trainer_id;
-  $total_slots=$request->total_slots;
   $slots_date=$request->slots_datepicker;
   $slots_time_id=$request->slot_time;
   $customer_id=$request->apply3; //customer_id
@@ -1960,7 +1959,7 @@ Log::debug(" Check customer_id  ".print_r($customer_id,true));
     ->where('customer_id',$customer_id)
     ->where('extra_package_remaining','>',0)
     ->where('active_package',1)
-    ->orderBy('package_validity_date', 'DESC')
+    // ->orderBy('package_validity_date', 'DESC')
     ->first();
 
     // $trainer_id=$request->trainer_id;
@@ -2055,7 +2054,7 @@ Log::debug(" Check customer_id  ".print_r($customer_id,true));
 
       Log::debug("Sent Session Request notification to trainer ".print_r($notifydata,true));
 
-   return redirect()->route('add_session')->with("success","Your session booking request is sent successfully !");
+   return redirect()->route('add_session')->with("success","Your session booking request is sent successfully!");
 
       $trainer_details->notify(new SessionRequestNotificationToTrainer($notifydata));
     }
@@ -2082,9 +2081,10 @@ Log::debug(" Check all_package  ".print_r($customer_email,true));
     ->select('purchases_history.id','purchases_history.purchases_date','purchases_history.package_validity_date','purchases_history.package_remaining','customers.id as customer_id','customers.name as customer_name','customers.email as customer_email')
     ->where(function ($query) {
     $query->where('package_remaining', '>', 0)
-            ->where('active_package',1)
+          ->where('active_package',1)
+          ->where('package_validity_date','>=',$remaining_session_request_now)
           ->orWhere('extra_package_remaining', '>', 0);
-})->where('customers.email','=', $customer_email)->where('package_validity_date','>=',$remaining_session_request_now)->get()->all();
+})->where('customers.email','=', $customer_email)->get()->all();
    
    Log::debug(" Check all_package  ".print_r($all_package,true));
    if($all_package)

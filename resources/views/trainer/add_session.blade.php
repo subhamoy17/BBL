@@ -93,7 +93,6 @@ messages: {
 
   <div class="form-box">
 
-    <div class="row">
 <!--  <form  method="get" enctype="multipart/form-data" class="form-horizontal" id="cus_search">
 <div class="col-md-6 col-sm-12 col-xs-12">
 <input type="hidden" name="_token" value="{{csrf_token()}}">
@@ -105,7 +104,7 @@ messages: {
 </div>
 </form> -->
 
-<div id="add_ses" >
+
 
   <form action="{{route('trainer_slotinsert')}}" method="post" enctype="multipart/form-data" class="form-horizontal" id="add_slot">
     <div class="col-md-12 col-sm-12 col-xs-12" style="width:100%" >
@@ -113,8 +112,6 @@ messages: {
 
       <div class="col-md-6 col-sm-12 col-xs-12" >
         <div class="form-group">
-
-          <input type="hidden" id="total_slots" class="form-control" value="{{Session::get('sum_slots')}}"  >
           <label>Location<small class="required_field_color">*</small></label>
           <select class="form-control" >
             <option value="Basingstoke">Basingstoke</option>
@@ -173,12 +170,9 @@ messages: {
   </div>
 </div>
 
-<div class="col-md-6 col-sm-12 col-xs-12">
+<div class="col-md-6 col-sm-12 col-xs-12 datepicker_trainer">
   <label>Date <small class="required_field_color">*</small></label>
-  <input type="text" id="slots_datepicker" name="slots_datepicker" class="form-control" onchange="jsfunction()" readonly="true">
-
-
-
+  <input type="text" id="slots_datepicker" name="slots_datepicker" class="form-control slots_date_trainer" onchange="jsfunction()" readonly="true">
 </div>
 <div class="clearfix"></div>
 <div class="col-md-6 col-sm-12 col-xs-12">
@@ -190,12 +184,13 @@ messages: {
   </div>
 
 </div>
-<div class="clearfix"></div>
-<div  class="col-md-6 col-sm-12 col-xs-12" id='loadingimg' style='display:none'  >
+
+<div  class="col-md-6 col-sm-12 col-xs-12" id='loadingimg' style='display:none'>
   <div class="form-group" >
-    <img src="{{asset('backend/images/loader-gif-time.gif')}}" style="width: 88px;margin-top: -2px;margin-left: -08px;"/>
+    <img src="{{asset('backend/images/loader_session_time.gif')}}" style="width: 80px;margin-top: 10px;margin-left: -28px;"/>
   </div>
 </div>
+
 
 <div id="old_session_data">
 </div>
@@ -211,28 +206,11 @@ messages: {
 
 </div>
 </form>
-
-<div id="no_session" style="display: none;">
-  <div class="col-md-6 col-sm-12 col-xs-12">
-    <div class="form-group" >
-      <label>Available Time <small>*</small></label>
-
-    </div>
-
-  </div>
-</div>
-</div>
-</div>
-
-
-
-
-
+ 
 </div>
 
 </div>
 @endif
-
 
 @endsection
 

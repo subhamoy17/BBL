@@ -55,14 +55,16 @@
               <?php 
               $total_package_remaining=$mydata->package_remaining+$mydata->extra_package_remaining;
               ?>
-              @else
 
+              @else
               <?php
               $total_package_remaining=$mydata->extra_package_remaining;
               ?>
-                            @endif
+
+              @endif
 
               @if($total_package_remaining>$mydata->slots_number)
+              
               <?php $others=$total_package_remaining-$mydata->slots_number;?>
               {{$mydata->slots_number}} <font style="color: #ffa461;"> + {{$others}}</font>
               <span id="gg" class="toolclip" data-tooltipster='{"side":"left","animation":"fade"}' data-tooltip-content="#tooltip_content"><i class="fa fa-info-circle" style="margin-left: 5px;font-size: 15px;"></i></span>
