@@ -193,7 +193,7 @@ messages: {
 <div class="clearfix"></div>
 <div  class="col-md-6 col-sm-12 col-xs-12" id='loadingimg' style='display:none'  >
   <div class="form-group" >
-    <img src="{{asset('backend/images/loader_session_time.gif')}}" style="width: 98px;margin-top: -2px;margin-left: -28px;"/>
+    <img src="{{asset('backend/images/loader-gif-time.gif')}}" style="width: 88px;margin-top: -2px;margin-left: -08px;"/>
   </div>
 </div>
 
