@@ -90,6 +90,7 @@
         minLength: 3,
         select: function(event, ui) {
         $("#apply").val(ui.item.id); 
+        $("#mail").show();
          $("#cus_e").text(ui.item.email);
          // ui.item.value contains the id of the selected label
 

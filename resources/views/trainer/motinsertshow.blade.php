@@ -378,9 +378,9 @@ $('.weightconvert').on('change', function(){
           </div>
         </div>
 
-         <div class="row form-group">
+         <div class="row form-group"  id="mail" style="display: none;">
           <div class="col col-md-3">
-            <label>Customer Email<span class="required_field_color">*</span></label>
+            <label>Customer Email</label>
           </div>
           <div class=" col-lg-9">
            <div class="row">
