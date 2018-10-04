@@ -14,7 +14,7 @@ rules: {
   "apply2":
   {
     required: true,
-     email:true
+     // email:true
   },
 
   "trainer_id":
@@ -37,8 +37,8 @@ messages: {
 
   "apply2":
   {
-    required: "Please select a customer email",
-     email: "Please enter valid email id"
+    required: "Please select a customer name",
+     // email: "Please enter valid email id"
   },
 
   "trainer_id":
@@ -124,30 +124,12 @@ messages: {
       </div>
 
 
-
-<!--  <div class="col-md-6 col-sm-12 col-xs-12">
-<div class="form-group">
-
-
-<label>Customer Name <small>*</small></label>
-<select class="form-control" name="idd" id="idd">
-<option value=""> Please select a name</option>
-@foreach($customers as $mycustomers)
-<option value="{{$mycustomers->id}}"> {{$mycustomers->name}}</option>
-@endforeach
-</select>
-
-
-
-</div>
-</div> -->
-
 <div class="col-md-6 col-sm-12 col-xs-12">
   <div class="form-group">
-    <label>Customer Email<small class="required_field_color">*</small></label>
+    <label>Customer Name<small class="required_field_color">*</small></label>
 
 
-    <input type="text" id="apply2" name="apply2" placeholder="Please select an email" class="form-control apply2 required" >
+    <input type="text" id="apply2" name="apply2" placeholder="Please select customer name" class="form-control apply2 required" >
 
     <input type="hidden" id="apply3" name="apply3" >
 
@@ -169,6 +151,16 @@ messages: {
 
   </div>
 </div>
+<div class="col-md-6 col-sm-12 col-xs-12">
+<div class="row"  id="mail" style="display: none;">
+        
+          <div class=" col-lg-12">
+              <div  id="cus_e" name="cus_e" class="col-lg-12 asd">
+           
+           </div>
+          </div>
+        </div>
+      </div>
 
 <div class="col-md-6 col-sm-12 col-xs-12 datepicker_trainer">
   <label>Date <small class="required_field_color">*</small></label>

@@ -141,19 +141,17 @@
         </div>
       </div>
     </header>
-
-
-
  
   <div class="inner-padding">
 
     <div class="container">
       <div class="hstry-box">
+        <!-- @if($total_remaining_session>0) -->
       <ul class="tabs">
-        <li class="active bb" rel="tab5"><a href="#">Session Booking</a></li>
-        
+        <li class="active bb" rel="tab5"><a href="#">Book By Trainer</a></li>
+        <li class="bb" rel="tab6"><a href="#">Book By Time</a></li>
       </ul>
-
+      <!-- @endif -->
       <div class="tab_container">
         @if (session('success'))
     <div class="alert alert-success">
@@ -209,7 +207,7 @@
 
                           <div class="col-md-6 col-sm-12 col-xs-12">
                           <label>Date <small>*</small></label>
-                          <input type="text" id="slots_datepicker" name="date" class="form-control" onchange="jsfunction()" readonly="true">
+                          <input type="text" id="slots_datepicker" name="date" class="form-control date-control" onchange="jsfunction()" readonly="true">
 
                         
 
@@ -259,7 +257,9 @@
 
                 </div>
 
-                @else
+                @endif
+
+                @if($total_remaining_session<=0)
 
                 <h3>You don't have any purchased session & to book a new session you have to purchase a new package, So do you want to purchase?</h3><br>
                 <a href="{{url('customer/pricing')}}"class="btn btn-dark btn-theme-colored btn-flat">Yes</a>
@@ -269,12 +269,131 @@
 
               </div>
           </div>
+
+
+
+          <div id="tab6" class="tab_content">
+            <div class="form-box">
+
+
+                
+                @if($total_remaining_session>0)
+                
+                <div class="row">
+                  <div class="col-md-12 col-sm-12 col-xs-12">
+
+                 
+                    <div class="col-md-6 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                              
+                              <input type="hidden" id="total_slots2" class="form-control" value="{{Session::get('sum_slots')}}"  >
+                              <label>Location<small>*</small></label>
+                              <select class="form-control" >
+                                <option value="Basingstoke">Basingstoke</option>
+                                
+                              </select>
+
+                              
+
+                            </div>
+                        </div>              
+
+                         <div class="col-md-6 col-sm-12 col-xs-12">
+                            <div class="form-group" >
+
+
+                              <label>Booking Time <small>*</small></label>
+                              <select class="form-control" name="slot_time2" id="slot_time2" onchange="jsfunction2()">
+                                
+                                <option value=""> Please select time</option>
+                                 @foreach($data2 as $mydata)
+                                <option value="{{$mydata->id}}"> 
+                                  {{date('h A', strtotime($mydata->time))}}
+                                </option>
+                                @endforeach
+                              </select>
+                            </div>
+                            
+                        </div>
+
+                          <div class="col-md-6 col-sm-12 col-xs-12">
+                          <label>Date <small>*</small></label>
+                          <input type="text" id="slots_datepicker2" name="date" class="form-control date-control" onchange="jsfunction2()" readonly="true">
+
+                        
+
+                        </div>
+
+                        <div class="col-md-6 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                              
+                            
+                              <label>Available Trainer<small>*</small></label>
+                              <select class="form-control" name="trainer_id2" id='trainer_id2'>
+                               
+                              </select>
+
+                              
+
+                            </div>
+                        </div>
+                        <!-- <div class="clearfix"></div> -->
+                       
+                         
+                              <div  class="col-md-6 col-sm-12 col-xs-12" id='loadingimg2' style='display:none'  >
+                                <div class="form-group" >
+                              <img src="{{asset('backend/images/loader_session_time.gif')}}" style="width: 98px;margin-top: -2px;margin-left: -28px;"/>
+                            </div>
+                            </div>
+
+                        <div id="old_session_data2">
+                        </div>
+
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                          <input name="form_botcheck" class="form-control" value="" type="hidden">
+                          <input type="hidden" id="session_no2" name="session_no2" value="1">
+                          <button id="add_sess2" class="btn btn-dark btn-theme-colored btn-flat">Add Session</button>
+                        </div>
+
+                        </div>
+              </div>
+            
+<div id="sesssion_table">
+  <form action="{{route('customer.slotinsert')}}" method="post" enctype="multipart/form-data" class="form-horizontal" id="">
+
+    <input type="hidden" name="_token" value="{{csrf_token()}}">
+    <input type="hidden" name="idd" id="id" value="{{Auth::guard('customer')->user()->id}}">
+    <div id="add_session_req2" >
+
+    </div>
+            
+      <button type="submit" name="submit" class="btn btn-dark btn-theme-colored btn-flat btn-drk2 save_button"  style="display:none;" id="save_btn2" onclick="button_name_change()">Book Session (S)</button>
+       </form>
+    </div>
+
+                </div>
+
+                @endif
+
+
+
+                
+
+              </div>
+          </div>
+
+
+
+              
+
+                
+
       </div>
       </div>
       <!-- .tab_container -->
     </div>
   </div> 
-
 
 
 
@@ -288,93 +407,14 @@
   <script src="{{url('frontend/js/responsiveslides.min.js')}}"></script>
 
  <script src="{{url('frontend/js/jquery-ui.js')}}"></script>
- 
-  <script>
-    // You can also use "$(window).load(function() {"
-    $(function () {
-      $("#slider").responsiveSlides({
-        auto: true,
-        nav: true,
-        manualControls: '#slider3-pager',
-      });
-    });
-  </script>
-
-  <script>
-
-  $(function () {
-    $( "#slots_datepicker" ).datepicker({
-  dateFormat: "yy-mm-dd",
-  beforeShowDay: NotBeforeToday
-});
-  } );
-
-  function NotBeforeToday(date)
-{
-    var now = new Date();//this gets the current date and time
-    if (date.getFullYear() == now.getFullYear() && date.getMonth() == now.getMonth() && date.getDate() > now.getDate())
-        return [true];
-    if (date.getFullYear() >= now.getFullYear() && date.getMonth() > now.getMonth())
-       return [true];
-     if (date.getFullYear() > now.getFullYear())
-       return [true];
-    return [false];
-}
 
 
-  </script>
+
+  
   <script type="text/javascript" src="{{url('frontend/js/bootstrap-3.1.1.min.js')}}"></script>
 
   <!-- for testimonials slider-js-file-->
       <script src="{{url('frontend/js/owl.carousel.js')}}"></script>
-
-  <script>
-    $(document).ready(function() { 
-    $('#price-slider').owlCarousel({
-        loop:true,
-        margin:30,
-        nav:true,
-      items: 3,
-        responsive:{
-            0:{
-                items:1
-            },
-            600:{
-                items:3
-            },
-            1000:{
-                items:3
-            }
-        }
-    })
-
-    }); 
-</script>
-
-
-<script>
-$(document).ready(function() { 
-    $('#team-slider').owlCarousel({
-        loop:true,
-      autoplay: true,
-        margin:30,
-        nav:true,
-      items: 4,
-        responsive:{
-            0:{
-                items:1
-            },
-            600:{
-                items:3
-            },
-            1000:{
-                items:4
-            }
-        }
-    })
-
-});
-  </script>
 <!-- for testimonials slider-js-script-->
 <!-- stats -->
   <script src="{{url('frontend/js/jquery.waypoints.min.js')}}"></script>
@@ -387,127 +427,12 @@ $(document).ready(function() {
   </script>
   <!-- //stats -->
   <script src="{{url('frontend/js/stellarnav.min.js')}}"></script>
-  
-
-  <script>
-    $(document).ready(function(){
-      jQuery('#main-nav').stellarNav();
-    });  
-  </script>
-  <script>
-    window.onscroll = function() {myFunction()};
-    var header = document.getElementById("myHeader");
-    var sticky = header.offsetTop;
-    function myFunction() {
-        if (window.pageYOffset >= sticky) {
-          header.classList.add("sticky");
-        } else {
-          header.classList.remove("sticky");
-        }
-    }
-  </script>
-  
-  <script>
-      /*Scroll to top when arrow up clicked BEGIN*/
-$(window).scroll(function() {
-    var height = $(window).scrollTop();
-    if (height > 100) {
-        $('#back2Top').fadeIn();
-    } else {
-        $('#back2Top').fadeOut();
-    }
-});
-$(document).ready(function() {
-    $("#back2Top").click(function(event) {
-        event.preventDefault();
-        $("html, body").animate({ scrollTop: 0 }, "slow");
-        return false;
-    });
-
-});
- /*Scroll to top when arrow up clicked END*/
-    </script>
-<script>
-    $(document).ready(function(){
-      $(".fa-search").click(function(){
-            $(".fa-search").hide();
-            $(".fa-times").show();
-            $(".srch-box").show();
-        });
-
-        $(".fa-times").click(function(){
-          $(".fa-times").hide();
-          $(".fa-search").show();
-          $(".srch-box").hide();
-        });
-    });  
-  </script>
 
 
   <script src="{{url('frontend/js/accotab.js')}}"></script>
-    <script>
-     $(document).ready(function(){
-    $(".cm-cls").click(function(){
-    $(".login-wrapper").fadeToggle("slow", "linear");
-        $(".login-wrapper").hide("slow", "linear");
-    $(".reg-wrapper").fadeToggle("slow", "linear");
-     $(".reg-wrapper").show("slow", "linear");
-    
-    });
-    $(".cmr-cls").click(function(){
-    $(".reg-wrapper").fadeToggle("slow", "linear");
-        $(".reg-wrapper").hide("slow", "linear");
-    $(".login-wrapper").fadeToggle("slow", "linear");
-     $(".login-wrapper").show("slow", "linear");
-    
-    }); 
-     });
-  </script>
     <script src="{{url('frontend/js/accotab.js')}}"></script>
 
-
-
-
 <script>
-    $(document).ready(function(){  
-$('#slotform').validate({  
-  /// rules of error 
-  rules: {
-    "date": {
-    required: true
-    },
-
-"id": {
-    required: true
-    },
-"time":
-    {
-    required: true
-    }
-
-  },
-
-  messages: {
-    "date":{
-    required: 'Please enter date'
-  },
-"id":{
-    required: 'Please select trainer name'
-  },
-"time":{
-    required: 'Please select time'
-  }
-
-
-
-  }
-  });
-
-    });  
-  </script>
-
-
-  <script>
    
    function  jsfunction(){
     
@@ -565,6 +490,52 @@ $('#slotform').validate({
   {
     $('#slot_time').attr('disabled','disabled');
     $("#slot_time").css("background","#3d3648");
+  }
+    
+  }
+  
+  </script>
+<script>
+   
+   function  jsfunction2(){
+    
+    if($('#slot_time2').val()!='' && $('#slots_datepicker2').val()!='')
+    {
+
+
+      // alert('gg');
+      $('#loadingimg2').show();
+      var slot_trainer = $('#trainer_id2');
+                    slot_trainer.prop("disabled",false);
+                    slot_trainer.empty();
+                    slot_trainer.append(
+                $('<option>', {value: ''}).text('Please select trainer'));
+    $.ajax({
+                  type: "GET",
+                  url: "{{route('get_slot_trainer')}}",
+                  data: {'slot_time': $('#slot_time2').val(),'slot_date': $('#slots_datepicker2').val()},
+                  success: function (data){
+                    $('#loadingimg2').hide();
+                    //console.log(data);
+
+                    var obj = $.parseJSON(data);
+                    
+
+                    if(obj.length > 0){ 
+                    for(var i = 0; i < obj.length; i++){
+
+                     slot_trainer.append(
+                 $('<option>', {value: obj[i]['id']}).text(obj[i]['name']));
+                   }
+                 }
+                  }
+      });
+  }
+
+  else
+  {
+    $('#trainer_id2').attr('disabled','disabled');
+    $("#trainer_id2").css("background","#3d3648");
   }
     
   }
@@ -662,11 +633,109 @@ $('#slotform').validate({
     
 }
 
+    });
+  
+</script>
+
+
+  
+
+<script>
+   $('#add_sess2').click(function()
+    {
+// alert('dfd');
+      
+      duplicate_flag=0;
+    
+
+      i=$('#session_no2').val();
+
+      trainer_name=$("#trainer_id2 option:selected").text();
+      slots_date=$("#slots_datepicker2").val();
+      slots_time=$("#slot_time2 option:selected").text();
+
+      trainer_id=$("#trainer_id2").val();
+
+      slots_time_id=$("#slot_time2").val();
+
+      total_remaining_session=$("#total_slots2").val();
+
+      var all_data=trainer_id + '#' + slots_date + '#' + slots_time_id;
+
+      var inputs = $(".duplicate");
+
+    for(var k = 0; k < inputs.length; k++)
+    {
+      if($(inputs[k]).val()==all_data)
+      {
+        duplicate_flag=1;
+      }
+    }
+
+
+
+      if(parseInt(i)>parseInt(total_remaining_session))
+      {
+        alert ("You don't have any session"); 
+        return false;
+      }
+
+      else if(duplicate_flag==1)
+      {
+        alert ("You can't choose same time and date for a same trainer"); 
+
+        return false;
+      }
+
+    else if ($( "#trainer_id2" ).val().length==0 || $("#slots_datepicker2").val().length==0 || $("#slot_time2").val().length==0 )
+    {
+    alert ("Please choose trainer name, date and time"); 
+      
+      return false;
+    }
+    else{
+
+
+      add_session_req2.innerHTML = add_session_req2.innerHTML +'<input type=text class="form-control"  readonly name="trainer_name[]"' + 'id="trainer_name[]"' + 'value="' + trainer_name + '"/>&nbsp;'
+
+
+    add_session_req2.innerHTML = add_session_req2.innerHTML +'<input type=text class="form-control" readonly name="slots_date[]"' + 'id="slots_date[]"' + 'value="' + slots_date + '" />&nbsp;'
+
+    add_session_req2.innerHTML = add_session_req2.innerHTML +'<input type=text class="form-control" readonly name="slots_time[]"' +'id="slots_time[]"' +'value="' + slots_time + '" />&nbsp;'
+
+    add_session_req2.innerHTML = add_session_req2.innerHTML +'<input type=hidden class="form-control"  readonly name="trainer_id[]"' + 'id="trainer_id[]"' + 'value="' + trainer_id + '" />&nbsp;'
+
+    add_session_req2.innerHTML = add_session_req2.innerHTML +'<input type=hidden class="form-control" readonly name="slots_time_id[]"' +'id="slots_time_id[]"' +'value="' + slots_time_id + '" />&nbsp;'
+
+    add_session_req2.innerHTML = add_session_req2.innerHTML +'<input type=hidden  readonly name=total_slots '+ 'id=total_slots ' + 'value="' + i + '" />&nbsp;'
+    
+    add_session_req2.innerHTML = add_session_req2.innerHTML +'<br>'
+
+
+    var duplicatvalue=trainer_id + '#' + slots_date + '#' + slots_time_id;
+
+
+    old_session_data2.innerHTML = old_session_data2.innerHTML +'<input type=hidden class="duplicate"  readonly name="all_previous_data[]"' + 'id="all_previous_data[]"' + 'value="' + duplicatvalue + '" />&nbsp;'
+        
+
+    $('#save_btn2').show();
+    
+    $("#trainer_id2").val("");
+    $("#slots_datepicker2").val("");
+    $("#slot_time2").val("");
+    
+    i=1+parseInt(i);
+    $("#session_no2").val(i);
+
+    
+}
+
 
   
     });
   
 </script>
+
 
 <script type="text/javascript">
   
@@ -689,6 +758,223 @@ $('#slotform').validate({
   });
 
 </script>
+
+<script>
+  $(document).ready(function(){
+  $('#trainer_id2').mouseover(function() {
+    if($('#slot_time2').val()=='' || $('#slots_datepicker2').val()=='')
+    {
+      return jsfunction2();
+    } 
+   
+  });
+
+  });
+
+</script>
+
+  <script>
+    // You can also use "$(window).load(function() {"
+    $(function () {
+      $("#slider").responsiveSlides({
+        auto: true,
+        nav: true,
+        manualControls: '#slider3-pager',
+      });
+    });
+  </script>
+
+  <script>
+
+  $(function () {
+    $( ".date-control").datepicker({
+  dateFormat: "yy-mm-dd",
+  beforeShowDay: NotBeforeToday
+});
+  } );
+
+  function NotBeforeToday(date)
+{
+    var now = new Date();//this gets the current date and time
+    if (date.getFullYear() == now.getFullYear() && date.getMonth() == now.getMonth() && date.getDate() > now.getDate())
+        return [true];
+    if (date.getFullYear() >= now.getFullYear() && date.getMonth() > now.getMonth())
+       return [true];
+     if (date.getFullYear() > now.getFullYear())
+       return [true];
+    return [false];
+}
+
+
+  </script>
+
+
+  <script>
+    $(document).ready(function() { 
+    $('#price-slider').owlCarousel({
+        loop:true,
+        margin:30,
+        nav:true,
+      items: 3,
+        responsive:{
+            0:{
+                items:1
+            },
+            600:{
+                items:3
+            },
+            1000:{
+                items:3
+            }
+        }
+    })
+
+    }); 
+</script>
+
+
+<script>
+$(document).ready(function() { 
+    $('#team-slider').owlCarousel({
+        loop:true,
+      autoplay: true,
+        margin:30,
+        nav:true,
+      items: 4,
+        responsive:{
+            0:{
+                items:1
+            },
+            600:{
+                items:3
+            },
+            1000:{
+                items:4
+            }
+        }
+    })
+
+});
+  </script>
+
+  
+
+  <script>
+    $(document).ready(function(){
+      jQuery('#main-nav').stellarNav();
+    });  
+  </script>
+  <script>
+    window.onscroll = function() {myFunction()};
+    var header = document.getElementById("myHeader");
+    var sticky = header.offsetTop;
+    function myFunction() {
+        if (window.pageYOffset >= sticky) {
+          header.classList.add("sticky");
+        } else {
+          header.classList.remove("sticky");
+        }
+    }
+  </script>
+  
+  <script>
+      /*Scroll to top when arrow up clicked BEGIN*/
+$(window).scroll(function() {
+    var height = $(window).scrollTop();
+    if (height > 100) {
+        $('#back2Top').fadeIn();
+    } else {
+        $('#back2Top').fadeOut();
+    }
+});
+$(document).ready(function() {
+    $("#back2Top").click(function(event) {
+        event.preventDefault();
+        $("html, body").animate({ scrollTop: 0 }, "slow");
+        return false;
+    });
+
+});
+ /*Scroll to top when arrow up clicked END*/
+    </script>
+<script>
+    $(document).ready(function(){
+      $(".fa-search").click(function(){
+            $(".fa-search").hide();
+            $(".fa-times").show();
+            $(".srch-box").show();
+        });
+
+        $(".fa-times").click(function(){
+          $(".fa-times").hide();
+          $(".fa-search").show();
+          $(".srch-box").hide();
+        });
+    });  
+  </script>
+
+
+    <script>
+     $(document).ready(function(){
+    $(".cm-cls").click(function(){
+    $(".login-wrapper").fadeToggle("slow", "linear");
+        $(".login-wrapper").hide("slow", "linear");
+    $(".reg-wrapper").fadeToggle("slow", "linear");
+     $(".reg-wrapper").show("slow", "linear");
+    
+    });
+    $(".cmr-cls").click(function(){
+    $(".reg-wrapper").fadeToggle("slow", "linear");
+        $(".reg-wrapper").hide("slow", "linear");
+    $(".login-wrapper").fadeToggle("slow", "linear");
+     $(".login-wrapper").show("slow", "linear");
+    
+    }); 
+     });
+  </script>
+
+
+<script>
+    $(document).ready(function(){  
+$('#slotform').validate({  
+  /// rules of error 
+  rules: {
+    "date": {
+    required: true
+    },
+
+"id": {
+    required: true
+    },
+"time":
+    {
+    required: true
+    }
+
+  },
+
+  messages: {
+    "date":{
+    required: 'Please enter date'
+  },
+"id":{
+    required: 'Please select trainer name'
+  },
+"time":{
+    required: 'Please select time'
+  }
+
+
+
+  }
+  });
+
+    });  
+  </script>
+
+<!-- For slot trainer -->
+
+  
 
 
   <!--Fontawesome script-->

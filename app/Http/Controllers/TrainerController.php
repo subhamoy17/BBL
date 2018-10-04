@@ -1905,14 +1905,14 @@ public function customersearch(Request $request)
 
   $query = $request->get('term','');
         
-        $products=DB::table('customers')->where('email','LIKE','%'.$query.'%')->get();
+        $products=DB::table('customers')->where('name','LIKE','%'.$query.'%')->get();
         
         $data=array();
          $data1=array();
         foreach ($products as $product) {
                
-          $data[]=array('value'=>$product->email,'id'=>$product->id);
-
+          // $data[]=array('value'=>$product->email,'id'=>$product->id);
+ $data[]=array('value'=>$product->name,'id'=>$product->id, 'email'=>$product->email );
                
         }
 

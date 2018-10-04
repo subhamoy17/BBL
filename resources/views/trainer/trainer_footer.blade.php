@@ -133,6 +133,7 @@ $('#right_arm').val(data.right_arm);
 }
 
 else{
+  $("#mail").hide();
       $('#right_arm').val('');
  $('#left_arm').val('');
   $('#chest').val('');
@@ -174,7 +175,8 @@ else{
                     
                     return {
                         value: item.value,
-                        id:item.id
+                        id:item.id,
+                        email: item.email
 
                     }
                 }));
@@ -190,7 +192,8 @@ else{
         minLength: 3,
         select: function(event, ui) {
         $("#apply3").val(ui.item.id);  // ui.item.value contains the id of the selected label
-
+        $("#mail").show();
+         $("#cus_e").text(ui.item.email);
          var Data = 
   {
     'id': ui.item.id

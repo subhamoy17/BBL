@@ -531,6 +531,7 @@ public function booking_slot()
   $remaining_session_request_now=Carbon::now()->toDateString();
   
   $data=DB::table('users')->whereNull('deleted_at')->where('is_active',1)->get();
+$data2=DB::table('slot_times')->get()->all();
 
   $sum_slots = DB::table('purchases_history')
   ->select('active_package','package_remaining','customer_id')
@@ -547,7 +548,7 @@ public function booking_slot()
 
   $total_remaining_session=$sum_slots+$sum_extra_slots;
 
-  return view('customerpanel.booking_slot')->with(compact('data','total_remaining_session'));
+  return view('customerpanel.booking_slot')->with(compact('data','total_remaining_session','data2'));
  
 }
 
@@ -573,7 +574,37 @@ public function booking_slot_times(Request $request)
   return json_encode($final_slot_time);
 }
 
+public function booking_slot_trainer(Request $request)
+{
 
+// $slot_time=DB::table('slot_times')->where('id',$slots_time_id)->first();
+
+  $slot_time=$request->slot_time;
+  $slot_date=$request->slot_date;
+
+  $get_slot_trainer=DB::table('slot_request')
+  ->where('slot_time_id',$slot_time)
+  ->where('slot_date',$slot_date)
+  ->where(function($q) {
+         $q->where('approval_id', 1)
+           ->orWhere('approval_id', 3);
+     })
+  ->pluck('trainer_id');
+
+  Log::debug(" get_slot_times ".print_r($get_slot_trainer,true));
+  $final_slot_trainer=DB::table('users')->whereNull('deleted_at')->where('is_active', 1)->whereNotIn('id',$get_slot_trainer)->get();
+
+   
+         
+        // foreach ($final_slot_trainer as $trainer) {
+               
+        //   $trainer_data=array('trainer_name'=>$trainer->name,'trainer_id'=>$trainer->id);
+               
+        // }
+
+  Log::debug(" final_slot_trainer ".print_r($final_slot_trainer,true));
+  return json_encode($final_slot_trainer);
+}
 
 public function slotinsert(Request $request)
 {

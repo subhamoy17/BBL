@@ -681,3 +681,10 @@ All error msg
 {
     background-color: white;
 }
+
+.asd {
+    position: absolute;
+    bottom: 0px;
+    font-size: 13px;
+    left: 0;
+}
