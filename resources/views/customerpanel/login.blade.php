@@ -69,6 +69,8 @@ $('#myform').validate({
 
 <body class="lg-body">
     <div class="whole-wrp"></div>
+    <!-- <div class="main_section_agile service inner">
+    </div> -->
     <div class="logo-m"><a href="{{route('bbldb')}}"><img src="{{asset('frontend/images/logo.png')}}"></a></div>
 
 <section class="login-section">

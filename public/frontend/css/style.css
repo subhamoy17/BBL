@@ -413,6 +413,26 @@ a.navbar-brand {
     min-height: 550px;
 }
 
+.main_section_agile.inner.contact_us  {
+    background: url(../images/contact_us.jpg)no-repeat 0px 0px !important;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    -ms-background-size: cover;
+    min-height: 550px;
+}
+
+.main_section_agile.inner.register  {
+    background: url(../images/about_1.jpg)no-repeat 0px 0px !important;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    -ms-background-size: cover;
+    min-height: 550px;
+}
+
 .main_section_agile.inner.service  {
     background: url(../images/service_1.jpg)no-repeat 0px 0px !important;
     background-size: cover;
@@ -1395,6 +1415,19 @@ img.zoom-img:hover {
     text-align: center;
     padding:5em 0;
 }
+
+.about-agile.second {
+    background: url(../images/about_2.jpg)no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -o-background-size: cover;
+    -ms-background-size: cover;
+    -moz-background-size: cover;
+    text-align: center;
+    padding:5em 0;
+}
+
 .about-bottom.inner-padding {
     padding: 5em 0;
 }
@@ -5259,6 +5292,36 @@ a.sign-btn2 {
 .whole-wrp {
     /*background-image: linear-gradient(to left top, #953107, #7e3b00, #683f00, #544000, #423f05);*/
     background-image: url(../images/banner1.jpg);
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    min-height: 100vh;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.whole-wrp.login{
+    /*background-image: linear-gradient(to left top, #953107, #7e3b00, #683f00, #544000, #423f05);*/
+    background-image: url(../images/login.jpg);
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    min-height: 100vh;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.whole-wrp.reg{
+    /*background-image: linear-gradient(to left top, #953107, #7e3b00, #683f00, #544000, #423f05);*/
+    background-image: url(../images/reg.jpg);
     width: 100%;
     background-repeat: no-repeat;
     background-position: center center;

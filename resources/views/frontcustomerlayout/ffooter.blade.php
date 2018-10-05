@@ -7,10 +7,10 @@
 					    <li><a href="{{route('exercise')}}"><img src="{{asset('frontend/images/banner33.jpg')}}" alt="" class="img-responsive" /></a></li>
 						<li><a href="{{route('exercise')}}"><img src="{{asset('frontend/images/banner44.jpg')}}" alt="" class="img-responsive" /></a></li>
 						<li><a href="{{route('exercise')}}"><img src="{{asset('frontend/images/banner11.jpg')}}" alt="" class="img-responsive" /></a></li>
-						<li><a href="{{route('exercise')}}"><img src="{{asset('frontend/images/banner22.jpg')}}" alt="" class="img-responsive" /></a></li>
-					    <li><a href="{{route('exercise')}}"><img src="{{asset('frontend/images/banner33.jpg')}}" alt="" class="img-responsive" /></a></li>
-						 <li><a href="{{route('exercise')}}"><img src="{{asset('frontend/images/banner11.jpg')}}" alt="" class="img-responsive" /></a></li>
-						<li><a href="{{route('exercise')}}"><img src="{{asset('frontend/images/banner44.jpg')}}" alt="" class="img-responsive" /></a></li>
+						<li><a href="{{route('exercise')}}"><img src="{{asset('frontend/images/55.jpg')}}" alt="" class="img-responsive" /></a></li>
+					    <li><a href="{{route('exercise')}}"><img src="{{asset('frontend/images/66.jpg')}}" alt="" class="img-responsive" /></a></li>
+						 <li><a href="{{route('exercise')}}"><img src="{{asset('frontend/images/77.jpg')}}" alt="" class="img-responsive" /></a></li>
+						<li><a href="{{route('exercise')}}"><img src="{{asset('frontend/images/88.jpg')}}" alt="" class="img-responsive" /></a></li>
 				     </ul>
 					
 				</div>

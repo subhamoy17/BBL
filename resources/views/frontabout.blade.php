@@ -17,7 +17,7 @@
 				<div class="clearfix"> </div>
 			</div>
 </div>
-<div class="about-agile inner-padding">
+<div class="about-agile inner-padding second">
 	<div class="container">
 		<h3 class="heading-agileinfo white-gyls">Body by Lekan is the right place to begin a healthy life with a strong will that will keep you fit for days to come.</h3>
 		<p>To know more about the services we offer.</p>

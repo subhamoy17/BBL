@@ -2,8 +2,8 @@
 @section('content')
 
 <!-- banner -->
-	<div class="inner">
-	</div>
+	<div class="main_section_agile inner contact_us">
+  </div>
 	<!-- //banner -->
 	<!--Inner Section body-->
    <section class="inner-body">
