@@ -22,7 +22,7 @@
 			</div>
 			<div class="clearfix"></div>
 			<div class="col-lg-6 col-sm-6 col-xs-12">
-				<a href="#" data-toggle="modal" data-target="#myModal1"><img src="{{asset('frontend/images/7.jpg')}}" alt="blog image" class="img-responsive" /></a>
+				<a href="#" data-toggle="modal" data-target="#myModal1"><img src="{{asset('frontend/images/2_2.jpg')}}" alt="blog image" class="img-responsive" /></a>
 			</div>
 			<div class="col-lg-6 col-sm-6 col-xs-12">
 				<div class="blog-txt">
@@ -31,7 +31,6 @@
 					<p>We provide personalized trainers for advising and guiding you on the best exercises and dietary regime to keep your body fit. Personal attention given by our experienced trainers will go a long way in giving you the fitness you always wanted. Your trainer can also provide you training at home at your convenient time.</p>
 					
 				</div>
-				<a href="#" data-toggle="modal" data-target="#myModal1"><img src="{{asset('frontend/images/2_2.jpg')}}" alt="blog image" class="img-responsive" /></a>
 				
 			</div>
 			<div class="clearfix"></div>
@@ -47,7 +46,7 @@
 			</div>
 			<div class="clearfix"></div>
 			<div class="col-lg-6 col-sm-6 col-xs-12">
-				<a href="#" data-toggle="modal" data-target="#myModal1"><img src="{{asset('frontend/images/2.jpg')}}" alt="blog image" class="img-responsive" /></a>
+				<a href="#" data-toggle="modal" data-target="#myModal1"><img src="{{asset('frontend/images/4_4.jpg')}}" alt="blog image" class="img-responsive" /></a>
 			</div>
 			<div class="col-lg-6 col-sm-6 col-xs-12">
 				<div class="blog-txt">
@@ -56,7 +55,7 @@
 					<p>We provide a multitude of health packages to suit your need and budget. Customized health packages are also provided in consultation with our training experts to give your body the best. We accept bulk booking for institutions and corporates at discounted rates. Our registered customers will also enjoy the benefit of tracking their personal training calendar and diet charts online.</p>
 					
 				</div>
-				<a href="#" data-toggle="modal" data-target="#myModal1"><img src="{{asset('frontend/images/4_4.jpg')}}" alt="blog image" class="img-responsive" /></a>
+				
 				
 			</div>
 			<div class="clearfix"></div>
