@@ -148,8 +148,8 @@
       <div class="hstry-box">
         <!-- @if($total_remaining_session>0) -->
       <ul class="tabs">
-        <li class="active bb" rel="tab5"><a href="#">Book By Trainer</a></li>
-        <li class="bb" rel="tab6"><a href="#">Book By Time</a></li>
+        <li class="active bb" rel="tab5"><a href="#"  data-toggle="tab" class="li1">Book By Trainer</a></li>
+        <li class="bb" rel="tab6"><a href="#"  data-toggle="tab" class="li2">Book By Time</a></li>
       </ul>
       <!-- @endif -->
       <div class="tab_container">
@@ -219,20 +219,15 @@
                               <select class="form-control" name="time" id="slot_time">
                                 
                               </select>
-                            </div>
-                            
+                            </div>   
                         </div>
                          
-                              <div  class="col-md-6 col-sm-12 col-xs-12" id='loadingimg' style='display:none'  >
-                                <div class="form-group" >
-                              <img src="{{asset('backend/images/loader_session_time.gif')}}" style="width: 98px;margin-top: -2px;margin-left: -28px;"/>
-                            </div>
-                            </div>
+                        
 
                         <div id="old_session_data">
                         </div>
 
-                        <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-md-6 col-sm-12 col-xs-12">
                         <div class="form-group">
                           <input name="form_botcheck" class="form-control" value="" type="hidden">
                           <input type="hidden" id="session_no" name="session_no" value="1">
@@ -240,10 +235,18 @@
                         </div>
 
                 </div>
+
+                 <div  class="col-md-6 col-sm-12 col-xs-12" id='loadingimg' style="display: none;">
+                                <div class="form-group" >
+                              <img src="{{asset('backend/images/loader_session_time.gif')}}" style="width: 85px;margin-top: -30px;margin-left: -21px;"/>
+                            </div>
+                            </div> 
+
+                
              
             </div>
 <div id="sesssion_table">
-  <form action="{{route('customer.slotinsert')}}" method="post" enctype="multipart/form-data" class="form-horizontal" id="">
+  <form action="{{route('customer.slotinsert')}}" method="post" enctype="multipart/form-data" class="form-horizontal" id="add_session_form1">
 
     <input type="hidden" name="_token" value="{{csrf_token()}}">
     <input type="hidden" name="idd" id="id" value="{{Auth::guard('customer')->user()->id}}">
@@ -251,7 +254,7 @@
 
     </div>
             
-      <button type="submit" name="submit" class="btn btn-dark btn-theme-colored btn-flat btn-drk2 save_button"  style="display:none;" id="save_btn" onclick="button_name_change()">Book Session (S)</button>
+      <button type="submit" name="submit" class="btn btn-dark btn-theme-colored btn-flat btn-drk2 save_button"  style="display:none;" id="save_btn" onclick="button_name_change()">Book Session(s)</button>
        </form>
     </div>
 
@@ -338,18 +341,12 @@
                             </div>
                         </div>
                         <!-- <div class="clearfix"></div> -->
-                       
-                         
-                              <div  class="col-md-6 col-sm-12 col-xs-12" id='loadingimg2' style='display:none'  >
-                                <div class="form-group" >
-                              <img src="{{asset('backend/images/loader_session_time.gif')}}" style="width: 98px;margin-top: -2px;margin-left: -28px;"/>
-                            </div>
-                            </div>
+                      
 
                         <div id="old_session_data2">
                         </div>
 
-                        <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-md-6 col-sm-12 col-xs-12">
                         <div class="form-group">
                           <input name="form_botcheck" class="form-control" value="" type="hidden">
                           <input type="hidden" id="session_no2" name="session_no2" value="1">
@@ -357,10 +354,16 @@
                         </div>
 
                         </div>
+
+                        <div  class="col-md-6 col-sm-12 col-xs-12" id='loadingimg2' style="display: none;">
+                                <div class="form-group" >
+                              <img src="{{asset('backend/images/loader_session_time.gif')}}" style="width: 85px;margin-top: -30px;margin-left: -21px;"/>
+                            </div>
+                            </div> 
               </div>
             
 <div id="sesssion_table">
-  <form action="{{route('customer.slotinsert')}}" method="post" enctype="multipart/form-data" class="form-horizontal" id="">
+  <form action="{{route('customer.slotinsert')}}" method="post" enctype="multipart/form-data" class="form-horizontal" id="add_session_form2">
 
     <input type="hidden" name="_token" value="{{csrf_token()}}">
     <input type="hidden" name="idd" id="id" value="{{Auth::guard('customer')->user()->id}}">
@@ -368,7 +371,7 @@
 
     </div>
             
-      <button type="submit" name="submit" class="btn btn-dark btn-theme-colored btn-flat btn-drk2 save_button"  style="display:none;" id="save_btn2" onclick="button_name_change()">Book Session (S)</button>
+      <button type="submit" name="submit" class="btn btn-dark btn-theme-colored btn-flat btn-drk2 save_button"  style="display:none;" id="save_btn2" onclick="button_name_change()">Book Session(s)</button>
        </form>
     </div>
 
@@ -599,18 +602,18 @@
     else{
 
 
-      add_session_req.innerHTML = add_session_req.innerHTML +'<input type=text class="form-control"  readonly name="trainer_name[]"' + 'id="trainer_name[]"' + 'value="' + trainer_name + '"/>&nbsp;'
+      add_session_req.innerHTML = add_session_req.innerHTML +'<input type=text class="form-control blank1"  readonly name="trainer_name[]"' + 'id="trainer_name[]"' + 'value="' + trainer_name + '"/>&nbsp;'
 
 
-    add_session_req.innerHTML = add_session_req.innerHTML +'<input type=text class="form-control" readonly name="slots_date[]"' + 'id="slots_date[]"' + 'value="' + slots_date + '" />&nbsp;'
+    add_session_req.innerHTML = add_session_req.innerHTML +'<input type=text class="form-control blank1" readonly name="slots_date[]"' + 'id="slots_date[]"' + 'value="' + slots_date + '" />&nbsp;'
 
-    add_session_req.innerHTML = add_session_req.innerHTML +'<input type=text class="form-control" readonly name="slots_time[]"' +'id="slots_time[]"' +'value="' + slots_time + '" />&nbsp;'
+    add_session_req.innerHTML = add_session_req.innerHTML +'<input type=text class="form-control blank1" readonly name="slots_time[]"' +'id="slots_time[]"' +'value="' + slots_time + '" />&nbsp;'
 
-    add_session_req.innerHTML = add_session_req.innerHTML +'<input type=hidden class="form-control"  readonly name="trainer_id[]"' + 'id="trainer_id[]"' + 'value="' + trainer_id + '" />&nbsp;'
+    add_session_req.innerHTML = add_session_req.innerHTML +'<input type=hidden class="form-control blank1"  readonly name="trainer_id[]"' + 'id="trainer_id[]"' + 'value="' + trainer_id + '" />&nbsp;'
 
-    add_session_req.innerHTML = add_session_req.innerHTML +'<input type=hidden class="form-control" readonly name="slots_time_id[]"' +'id="slots_time_id[]"' +'value="' + slots_time_id + '" />&nbsp;'
+    add_session_req.innerHTML = add_session_req.innerHTML +'<input type=hidden class="form-control blank1" readonly name="slots_time_id[]"' +'id="slots_time_id[]"' +'value="' + slots_time_id + '" />&nbsp;'
 
-    add_session_req.innerHTML = add_session_req.innerHTML +'<input type=hidden  readonly name=total_slots '+ 'id=total_slots ' + 'value="' + i + '" />&nbsp;'
+    add_session_req.innerHTML = add_session_req.innerHTML +'<input type=hidden class="form-control blank1"  readonly name=total_slots '+ 'id=total_slots ' + 'value="' + i + '" />&nbsp;'
     
     add_session_req.innerHTML = add_session_req.innerHTML +'<br>'
 
@@ -618,7 +621,7 @@
     var duplicatvalue=trainer_id + '#' + slots_date + '#' + slots_time_id;
 
 
-    old_session_data.innerHTML = old_session_data.innerHTML +'<input type=hidden class="duplicate"  readonly name="all_previous_data[]"' + 'id="all_previous_data[]"' + 'value="' + duplicatvalue + '" />&nbsp;'
+    old_session_data.innerHTML = old_session_data.innerHTML +'<input type=hidden class="duplicate blank1"  readonly name="all_previous_data[]"' + 'id="all_previous_data[]"' + 'value="' + duplicatvalue + '" />&nbsp;'
         
 
     $('#save_btn').show();
@@ -662,7 +665,7 @@
 
       var all_data=trainer_id + '#' + slots_date + '#' + slots_time_id;
 
-      var inputs = $(".duplicate");
+      var inputs = $(".duplicate2");
 
     for(var k = 0; k < inputs.length; k++)
     {
@@ -682,7 +685,7 @@
 
       else if(duplicate_flag==1)
       {
-        alert ("You can't choose same time and date for a same trainer"); 
+        alert ("You can't choose same time and date for a same trainer  fgdfgdfgfdg"); 
 
         return false;
       }
@@ -696,18 +699,18 @@
     else{
 
 
-      add_session_req2.innerHTML = add_session_req2.innerHTML +'<input type=text class="form-control"  readonly name="trainer_name[]"' + 'id="trainer_name[]"' + 'value="' + trainer_name + '"/>&nbsp;'
+    add_session_req2.innerHTML = add_session_req2.innerHTML +'<input type=text class="form-control blank2"  readonly name="trainer_name[]"' + 'id="trainer_name[]"' + 'value="' + trainer_name + '"/>&nbsp;'
 
 
-    add_session_req2.innerHTML = add_session_req2.innerHTML +'<input type=text class="form-control" readonly name="slots_date[]"' + 'id="slots_date[]"' + 'value="' + slots_date + '" />&nbsp;'
+    add_session_req2.innerHTML = add_session_req2.innerHTML +'<input type=text class="form-control blank2" readonly name="slots_date[]"' + 'id="slots_date[]"' + 'value="' + slots_date + '" />&nbsp;'
 
-    add_session_req2.innerHTML = add_session_req2.innerHTML +'<input type=text class="form-control" readonly name="slots_time[]"' +'id="slots_time[]"' +'value="' + slots_time + '" />&nbsp;'
+    add_session_req2.innerHTML = add_session_req2.innerHTML +'<input type=text class="form-control blank2" readonly name="slots_time[]"' +'id="slots_time[]"' +'value="' + slots_time + '" />&nbsp;'
 
-    add_session_req2.innerHTML = add_session_req2.innerHTML +'<input type=hidden class="form-control"  readonly name="trainer_id[]"' + 'id="trainer_id[]"' + 'value="' + trainer_id + '" />&nbsp;'
+    add_session_req2.innerHTML = add_session_req2.innerHTML +'<input type=hidden class="form-control blank2"  readonly name="trainer_id[]"' + 'id="trainer_id[]"' + 'value="' + trainer_id + '" />&nbsp;'
 
-    add_session_req2.innerHTML = add_session_req2.innerHTML +'<input type=hidden class="form-control" readonly name="slots_time_id[]"' +'id="slots_time_id[]"' +'value="' + slots_time_id + '" />&nbsp;'
+    add_session_req2.innerHTML = add_session_req2.innerHTML +'<input type=hidden class="form-control blank2" readonly name="slots_time_id[]"' +'id="slots_time_id[]"' +'value="' + slots_time_id + '" />&nbsp;'
 
-    add_session_req2.innerHTML = add_session_req2.innerHTML +'<input type=hidden  readonly name=total_slots '+ 'id=total_slots ' + 'value="' + i + '" />&nbsp;'
+    add_session_req2.innerHTML = add_session_req2.innerHTML +'<input type=hidden class="form-control blank2"  readonly name=total_slots '+ 'id=total_slots ' + 'value="' + i + '" />&nbsp;'
     
     add_session_req2.innerHTML = add_session_req2.innerHTML +'<br>'
 
@@ -715,7 +718,7 @@
     var duplicatvalue=trainer_id + '#' + slots_date + '#' + slots_time_id;
 
 
-    old_session_data2.innerHTML = old_session_data2.innerHTML +'<input type=hidden class="duplicate"  readonly name="all_previous_data[]"' + 'id="all_previous_data[]"' + 'value="' + duplicatvalue + '" />&nbsp;'
+    old_session_data2.innerHTML = old_session_data2.innerHTML +'<input type=hidden class="duplicate2 blank2"  readonly name="all_previous_data[]"' + 'id="all_previous_data[]"' + 'value="' + duplicatvalue + '" />&nbsp;'
         
 
     $('#save_btn2').show();
@@ -936,38 +939,32 @@ $(document).ready(function() {
 
 <script>
     $(document).ready(function(){  
-$('#slotform').validate({  
-  /// rules of error 
-  rules: {
-    "date": {
-    required: true
-    },
 
-"id": {
-    required: true
-    },
-"time":
-    {
-    required: true
-    }
+$('a[data-toggle="tab"]').on('click', function (e) { 
+  var tab_val=$(this).prop('class'); 
+  if(tab_val=='li2')
+  {
+   $('#trainer_id').val('');
+   $('#slots_datepicker').val('');
+   $('#slot_time').val('');
+   $('#session_no').val(1);
+   
+   add_session_req.innerHTML='';
+   old_session_data.innerHTML='';
 
-  },
-
-  messages: {
-    "date":{
-    required: 'Please enter date'
-  },
-"id":{
-    required: 'Please select trainer name'
-  },
-"time":{
-    required: 'Please select time'
+   $('#save_btn').hide();
   }
-
-
-
+  else if(tab_val=='li1')
+  {
+    $('#trainer_id2').val('');
+   $('#slots_datepicker2').val('');
+   $('#slot_time2').val('');
+   $('#session_no2').val(1);
+   add_session_req2.innerHTML='';
+   old_session_data2.innerHTML='';
+   $('#save_btn2').hide();
   }
-  });
+});
 
     });  
   </script>
