@@ -71,7 +71,7 @@
 						</li>
 						<li>
 						<div class="col-md-4 we-gyl">
-								<img src="{{asset('frontend/images/2.jpg')}}" alt="" class="img-responsive" />
+								<img src="{{asset('frontend/images/3.jpg')}}" alt="" class="img-responsive" />
 							</div>
 							<div class="col-md-8 in-block">
 								<h5>DIET PLANS</h5>
@@ -81,7 +81,7 @@
 						</li>
 						<li>
 							<div class="col-md-4 we-gyl">
-								<img src="{{asset('frontend/images/3.jpg')}}" alt="" class="img-responsive" />
+								<img src="{{asset('frontend/images/2.jpg')}}" alt="" class="img-responsive" />
 							</div>
 							<div class="col-md-8 in-block">
 								<h5>HEALTH PACKAGES</h5>
