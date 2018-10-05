@@ -179,7 +179,7 @@ messages: {
 
 <div  class="col-md-6 col-sm-12 col-xs-12" id='loadingimg' style='display:none'>
   <div class="form-group" >
-    <img src="{{asset('backend/images/loader_session_time.gif')}}" style="width: 80px;margin-top: 10px;margin-left: -28px;"/>
+    <img src="{{asset('backend/images/loader-gif-time.gif')}}" style="width: 70px;margin-top: 10px;margin-left: -8px;"/>
   </div>
 </div>
 
