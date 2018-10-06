@@ -1981,8 +1981,6 @@ Log::debug(" Check customer_id  ".print_r($customer_id,true));
       $slots_data['slot_time_id']=$slots_time_id;
       $slots_data['approval_id']=3;
 
-      Log::debug(" Check session request data1 ".print_r($slots_data,true));
-
       $new_remaining_package['extra_package_remaining']=$package_remaining-1;
       
       $insert_slot_session=DB::table('slot_request')->insert($slots_data);
@@ -1990,9 +1988,6 @@ Log::debug(" Check customer_id  ".print_r($customer_id,true));
       $update_package_purchase=DB::table('purchases_history')
       ->where('id',$oldest_package_id)
       ->update($new_remaining_package);
-      
-
-      Log::debug(" all_package ".print_r($all_package,true));
 
       $customer_details=Customer::find($customer_id);
       $trainer_details=User::find($trainer_id);
@@ -2004,14 +1999,13 @@ Log::debug(" Check customer_id  ".print_r($customer_id,true));
       $notifydata['status']='Sent Session Request To Trainer';
       $notifydata['session_booking_date']=$slots_date;
       $notifydata['session_booking_time']=$slot_time->time;
-     $notifydata['trainer_name']=$trainer_details->name;
+      $notifydata['trainer_name']=$trainer_details->name;
 
-      Log::debug("Sent Session Request notification to trainer ".print_r($notifydata,true));
-
+      $trainer_details->notify(new SessionRequestNotificationToTrainer($notifydata));
 
    return redirect()->route('add_session')->with("success","Your session booking request is sent successfully !");
 
-      $trainer_details->notify(new SessionRequestNotificationToTrainer($notifydata));
+      
     }
     elseif($all_package)
     {
@@ -2027,8 +2021,6 @@ Log::debug(" Check customer_id  ".print_r($customer_id,true));
       $slots_data['slot_time_id']=$slots_time_id;
       $slots_data['approval_id']=3;
 
-      Log::debug(" Check session request data1 ".print_r($slots_data,true));
-
       $insert_slot_session=DB::table('slot_request')->insert($slots_data);
 
       $new_remaining_package['package_remaining']=$package_remaining-1;
@@ -2038,11 +2030,10 @@ Log::debug(" Check customer_id  ".print_r($customer_id,true));
       ->where('id',$oldest_package_id)
       ->update($new_remaining_package);
 
-      Log::debug(" all_package ".print_r($all_package,true));
-
       $customer_details=Customer::find($customer_id);
       $trainer_details=User::find($trainer_id);
 
+      
       $notifydata['url'] = '/trainer-login';
       $notifydata['customer_name']=$customer_details->name;
       $notifydata['customer_email']=$customer_details->email;
@@ -2052,11 +2043,12 @@ Log::debug(" Check customer_id  ".print_r($customer_id,true));
       $notifydata['session_booking_time']=$slot_time->time;
       $notifydata['trainer_name']=$trainer_details->name;
 
-      Log::debug("Sent Session Request notification to trainer ".print_r($notifydata,true));
+      $trainer_details->notify(new SessionRequestNotificationToTrainer($notifydata));
+      
 
    return redirect()->route('add_session')->with("success","Your session booking request is sent successfully!");
 
-      $trainer_details->notify(new SessionRequestNotificationToTrainer($notifydata));
+      
     }
    
     else
