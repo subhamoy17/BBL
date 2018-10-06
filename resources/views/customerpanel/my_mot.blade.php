@@ -68,8 +68,8 @@
                 <thead>
                   <tr>
                     <th>Trainer Name</th>
-                    <th>Date</th>
-                    <th>View More</th>
+                    <th>Measured On</th>
+                    <th>View MOT</th>
                     
                   </tr>
                 </thead>
