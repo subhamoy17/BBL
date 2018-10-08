@@ -37,7 +37,7 @@
       <span id="gg" class="toolclip" data-tooltipster='{"side":"left","animation":"fade"}' data-tooltip-content="#tooltip_content"><i class="fa fa-info-circle" style="margin-left: 5px;font-size: 15px;"></i></span>
               <div class="tooltip_templates">
           <span id="tooltip_content">
-              <strong>Note: Please use this name used in bank transfer.</strong>
+              <strong>Note: Please use the same reference used in bank transfer.</strong>
               <strong>Photo Upload: Alternatively you can provide the screenshot of the bank transfer.</strong>              
           </span>
       </div>
