@@ -2121,7 +2121,7 @@ public function trainer_slotinsert(Request $request)
       $notifydata['session_booking_time']=$slot_time->time;
       $notifydata['trainer_name']=$trainer_details->name;
 
-      //$trainer_details->notify(new SessionRequestNotificationToTrainer($notifydata));
+      $trainer_details->notify(new SessionRequestNotificationToTrainer($notifydata));
 
 
     }
@@ -2143,7 +2143,7 @@ public function trainer_slotinsert(Request $request)
     $notifydata['decline_reason']=' ';
 
 
-    //$customer_details->notify(new SessionRequestNotification($notifydata));
+    $customer_details->notify(new SessionRequestNotification($notifydata));
   }
     }
     elseif($all_package)
@@ -2186,7 +2186,7 @@ public function trainer_slotinsert(Request $request)
       $notifydata['trainer_name']=$trainer_details->name;
 
 
-      //$trainer_details->notify(new SessionRequestNotificationToTrainer($notifydata));
+      $trainer_details->notify(new SessionRequestNotificationToTrainer($notifydata));
 
     }
 
@@ -2207,7 +2207,7 @@ public function trainer_slotinsert(Request $request)
     $notifydata['decline_reason']=' ';
 
 
-    //$customer_details->notify(new SessionRequestNotification($notifydata));
+    $customer_details->notify(new SessionRequestNotification($notifydata));
   }
     }
     else
