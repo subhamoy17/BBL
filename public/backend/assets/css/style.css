@@ -848,3 +848,98 @@ textarea.parsley-error {
 	color: white;
 }
 }
+
+/*@totan 071018*/
+
+ul.tabs li.active a {
+    color: #fff;
+}
+
+ul.tabs li a {
+    padding: 10px 18px;
+    display: inline-block;
+    text-align: center;
+    letter-spacing: initial;
+    font-family: 'Montserrat', sans-serif;
+    color: #d28a1e;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.tabs li a {
+    position: relative !important;
+}
+
+ul.tabs li.active {
+    color: #333;
+    display: block;
+    border: 2px solid rgba(245,42,46,1.00);
+    background-color: rgba(245,42,46,1.00) !important;
+}
+
+ul.tabs li.bb {
+    /* padding: 10px 60.43px; */
+    display: inline-block;
+    text-align: center;
+}
+
+.tabs li.active {
+    /* background: #212629 !important; */
+    color: #fb5b21 !important;
+    /* border-bottom: none !important; */
+}
+
+ul.tabs li {
+    float: left;
+    margin: 0 15px 10px 0;
+    cursor: pointer;
+    height: 45px;
+    line-height: 24px;
+    font-size: 13px;
+    color: #ccc;
+    /* overflow: hidden; */
+    position: relative;
+    border: 2px solid rgb(120, 134, 155);
+    background-color: #fff !important;
+}
+.tabs li {
+    background: none !important;
+    color: #fff !important;
+}
+
+.tab_container {
+    /* border: 1px solid #333; */
+    border-top: none;
+    clear: both;
+    float: left;
+    width: 100%;
+    background: #fff;
+    position: relative;
+    margin-bottom: 30px;
+}
+
+#add_session_req input{
+    width: 32.1%;
+    display: inline-block;
+    margin: 7.5px 0;
+} 
+
+#add_session_req2 input{
+    width: 32.1%;
+    display: inline-block;
+    margin: 7.5px 0;
+} 
+
+div#sesssion_table {
+    padding-left: 30px;
+}
+
+#total_session_request_add input{
+    width: 32.1%;
+    display: inline-block;
+    margin: 7.5px 0;
+} 
+
+/*#sesssion_table .save_button{
+  padding-left: 30px;
+}*/

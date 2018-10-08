@@ -164,7 +164,7 @@
 
 
     </div>
-    
+    <?php Session::forget('success'); ?>
   @endif
 
 
@@ -309,6 +309,14 @@
                             </div>
                         </div>              
 
+
+                          <div class="col-md-6 col-sm-12 col-xs-12">
+                          <label>Date <small>*</small></label>
+                          <input type="text" id="slots_datepicker2" name="date" class="form-control date-control" onchange="jsfunction2(); gettime();" readonly="true">
+
+                        </div>
+
+
                          <div class="col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group" >
 
@@ -316,23 +324,9 @@
                               <label>Booking Time <small>*</small></label>
                               <select class="form-control" name="slot_time2" id="slot_time2" onchange="jsfunction2()">
                                 
-                                <option value=""> Please select time</option>
-                                 @foreach($data2 as $mydata)
-                                <option value="{{$mydata->id}}"> 
-                                  {{date('h A', strtotime($mydata->time))}}
-                                </option>
-                                @endforeach
                               </select>
                             </div>
                             
-                        </div>
-
-                          <div class="col-md-6 col-sm-12 col-xs-12">
-                          <label>Date <small>*</small></label>
-                          <input type="text" id="slots_datepicker2" name="date" class="form-control date-control" onchange="jsfunction2()" readonly="true">
-
-                        
-
                         </div>
 
                         <div class="col-md-6 col-sm-12 col-xs-12">
@@ -400,31 +394,6 @@
     </div>
   </div> 
 
-<div id="booking" class="modal fade  mot-mod" role="dialog" >
-  <div class="modal-dialog">
-    
-    <div class="modal-content">
-    <div class="modal-header">
-      <h4 class="modal-title">My MOT</h4>
-     <input type="text" id="name" value="{{old('trainer_name[]')}}">
-      
-    </div>
-      <div class="modal-body" id="hall_details_edit">
-        <div class="row clearfix">
-          <div class="col-sm-12 col-xs-12">
-            <br class="clear" />
-        </div>
-        <div class="col-sm-12 col-xs-12">
-      <div class="row">
-          
-    </div>
-      </div>
-  </div>
-</div>
-
-</div>
-</div>
-</div>
 
 <!-- end -->
 
@@ -460,7 +429,7 @@
 
 
   <script src="{{url('frontend/js/accotab.js')}}"></script>
-    <script src="{{url('frontend/js/accotab.js')}}"></script>
+
 
 <script>
    
@@ -483,32 +452,16 @@
                     console.log(data);
 
                     var obj = $.parseJSON(data);
-                    var convert_time=0;
-                    var set_am=0;
-                    var set_pm=0;
+                   var convert_time=0;
 
                     if(obj.length > 0){ 
                     for(var i = 0; i < obj.length; i++){
 
-                      convert_time=obj[i]['time'].substring(0,obj[i]['time'].indexOf(':'));
-                      
-                      if(convert_time==12) { set_am_pm='12 PM';}
-                      else if(convert_time==13) { set_am_pm='1 PM';}
-                      else if(convert_time==14) { set_am_pm='2 PM';}
-                      else if(convert_time==15) { set_am_pm='3 PM';}
-                      else if(convert_time==16) { set_am_pm='4 PM';}
-                      else if(convert_time==17) { set_am_pm='5 PM';}
-                      else if(convert_time==18) { set_am_pm='6 PM';}
-                      else if(convert_time==19) { set_am_pm='7 PM';}
-                      else if(convert_time==20) { set_am_pm='8 PM';}
-                      else if(convert_time==21) { set_am_pm='9 PM';}
-                      else if(convert_time==22) { set_am_pm='10 PM';}
-                      else if(convert_time==23) { set_am_pm='11 PM';}
-                      else if(convert_time==24) { set_am_pm='12 AM';}
-                      else { set_am_pm=convert_time  + ' AM';}
+                      convert_time=obj[i]['time'];
+                     
                       
                     slot_time.append(
-                $('<option>', {value: obj[i]['id']}).text(set_am_pm));
+                $('<option>', {value: obj[i]['id']}).text(convert_time));
                   }
                   }
                     
@@ -997,18 +950,64 @@ $('a[data-toggle="tab"]').on('click', function (e) {
 
     });  
   </script>
-@if (session('success'))
 
+<script>
+  $(document).ready(function(){
+  $('#slot_time2').mouseover(function() {
+    if($('#slots_datepicker2').val()=='')
+    {
+      return gettime();
+    } 
+   
+  });
 
-  <script>
-    $(document).ready(function(){ 
+  });
 
+</script>
 
-    $('#booking').modal('show');
-    });
+<script>
+   
+   function  gettime(){
+    
+    if($('#slots_datepicker2').val()!='')
+    {
+
+      $('#loadingimg2').show();
+      var slot_trainer = $('#slot_time2');
+                    slot_trainer.prop("disabled",false);
+                    slot_trainer.empty();
+                    slot_trainer.append(
+                $('<option>', {value: ''}).text('Please select time'));
+    $.ajax({
+                  type: "GET",
+                  url: "{{route('customer_get_time')}}",
+                  data: {'slot_date': $('#slots_datepicker2').val()},
+                  success: function (data){
+                    $('#loadingimg2').hide();
+                    //console.log(data);
+
+                    var obj = $.parseJSON(data);
+                    
+
+                    if(obj.length > 0){ 
+                    for(var i = 0; i < obj.length; i++){
+
+                     slot_trainer.append(
+                 $('<option>', {value: obj[i]['id']}).text(obj[i]['time']));
+                   }
+                 }
+                  }
+      });
+  }
+
+  else
+  {
+    $('#slot_time2').attr('disabled','disabled');
+  }
+    
+  }
+  
   </script>
-    <?php Session::forget('success'); ?>
-  @endif
 
 <!-- For slot trainer -->
 

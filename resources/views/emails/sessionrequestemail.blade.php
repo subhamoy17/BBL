@@ -114,6 +114,11 @@ th {
     {{$customer_name}} has cancelled the session request with you on {{date('d F Y', strtotime($session_booking_date))}} at {{$session_booking_time}} due to some reason. <a href="{{URL::to($url)}}">Click Here </a> to see list of cacellation request.
     @endif
 
+    @if($status=='Sent Session Request by trainer') 
+    your session on {{date('d F Y', strtotime($session_booking_date))}} at {{$session_booking_time}} has been booked with {{$trainer_name}}. <a href="{{URL::to($url)}}">Click Here </a> to see your session booking details.
+    @endif
+
+    
 
     </th> 
      </tr>

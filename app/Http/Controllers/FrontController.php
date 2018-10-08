@@ -1,7 +1,5 @@
 <?php
 
-
-
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -558,6 +556,7 @@ public function booking_slot_times(Request $request)
 
   $trainer_id=$request->trainer_id;
   $slot_date=$request->slot_date;
+  
 
   $get_slot_times=DB::table('slot_request')
   ->where('trainer_id',$trainer_id)
@@ -568,9 +567,29 @@ public function booking_slot_times(Request $request)
      })
   ->pluck('slot_time_id');
 
-  Log::debug(" get_slot_times ".print_r($get_slot_times,true));
-  $final_slot_time=DB::table('slot_times')->whereNotIn('id',$get_slot_times)->get()->all();
-  Log::debug(" final_slot_times ".print_r($final_slot_time,true));
+foreach($get_slot_times as $key=>$hour) {
+
+}
+
+  $length=$key+1;
+  $upto=$length*4;
+
+  for($i=$length;$i<$upto;$i++)
+{
+  $get_slot_times[$i]=$get_slot_times[$i-$length]+1;
+
+}
+
+
+$final_slot_time=DB::table('slot_times')->whereNotIn('id',$get_slot_times)
+  ->get()->all();
+
+
+  foreach($final_slot_time as $myslot_time)
+  {
+    $myslot_time->time=date('h:i A', strtotime($myslot_time->time));
+  }
+  
   return json_encode($final_slot_time);
 }
 
@@ -824,5 +843,45 @@ public function exercise()
   return view('customerpanel.front_gym')->with(compact('data'));
 }
 
+
+public function customer_get_time(Request $request)
+{
+
+  $slot_date=$request->slot_date;
+
+
+  $get_slot_times=DB::table('slot_request')
+  ->where('slot_date',$slot_date)
+  ->where(function($q) {
+         $q->where('approval_id', 1)
+           ->orWhere('approval_id', 3);
+     })
+  ->pluck('slot_time_id');
+
+  foreach($get_slot_times as $key=>$hour) {
+
+}
+
+  $length=$key+1;
+  $upto=$length*4;
+
+  for($i=$length;$i<$upto;$i++)
+{
+  $get_slot_times[$i]=$get_slot_times[$i-$length]+1;
+
+}
+
+
+$final_slot_time=DB::table('slot_times')->whereNotIn('id',$get_slot_times)
+  ->get()->all();
+
+
+  foreach($final_slot_time as $myslot_time)
+  {
+    $myslot_time->time=date('h:i A', strtotime($myslot_time->time));
+  }
+
+  return json_encode($final_slot_time);
+}
 
 }

@@ -16,6 +16,9 @@
     <script src="{{asset('backend/assets/js/lib/vector-map/jquery.vmap.min.js')}}"></script>
     <script src="{{asset('backend/assets/js/lib/vector-map/jquery.vmap.sampledata.js')}}"></script>
     <script src="{{asset('backend/assets/js/lib/vector-map/country/jquery.vmap.world.js')}}"></script>
+
+    
+    
     <script>
         ( function ( $ ) {
             "use strict";
@@ -175,6 +178,7 @@ else{
 
    @if(Request::segment(1) == 'trainer' && Request::segment(2) == 'add_session') 
 <script>
+  
    $(document).ready(function() {
     src = "{{ route('customersearch') }}";
      $("#apply2").autocomplete({
@@ -192,12 +196,17 @@ else{
                     return {
                         value: item.value,
                         id:item.id,
-                        email: item.email
+                        email:item.email,
+                        ph_no:item.ph_no,
 
                     }
+
                 }));
 
 
+                    $('#right').hide();
+                    $('#wrong').hide();
+                    $('#mail').hide();
                     
                    
                 }
@@ -207,20 +216,53 @@ else{
         },
         minLength: 3,
         select: function(event, ui) {
-        $("#apply3").val(ui.item.id);  // ui.item.value contains the id of the selected label
+        $("#customer_id").val(ui.item.id);  // ui.item.value contains the id of the selected label
+        $("#customer_idd").val(ui.item.id);  // ui.item.value contains the id of the selected label
         $("#mail").show();
-         $("#cus_e").text(ui.item.email);
+        
+        $("#cus_det").text(ui.item.value + ", " + ui.item.email + ", " + ui.item.ph_no);
+
          var Data = 
   {
     'id': ui.item.id
  
   }
+    $.ajax({
+          url: "{{route('check_customer_session')}}",
+          json_enc: Data,
+          type: "GET",
+          dataType: "json",
+          data:
+          {
+            'data': Data,
+          },
+          success: function (data)
+          {
 
+         if(data>0)
+         {
+
+          $('#total_slots').val(data);
+          $('#total_slots2').val(data);
+          $('#right').show();
+         }
+         else
+         {
+          $('#total_slots').val(data);
+          $('#total_slots2').val(data);
+          $('#wrong').show();
+         }
+       
+          }
+        });
     }
     });
 });
+
 </script>
+
 @endif
 
+<script src="{{url('frontend/js/accotab.js')}}"></script>
 </body>
 </html>

@@ -62,23 +62,31 @@ messages: {
   });
 </script>
 
+<script>
+
+  $(function () {
+    $( ".date-control").datepicker({
+  dateFormat: "yy-mm-dd",
+  beforeShowDay: NotBeforeToday
+});
+  } );
+
+  function NotBeforeToday(date)
+{
+    var now = new Date();//this gets the current date and time
+    if (date.getFullYear() == now.getFullYear() && date.getMonth() == now.getMonth() && date.getDate() > now.getDate())
+        return [true];
+    if (date.getFullYear() >= now.getFullYear() && date.getMonth() > now.getMonth())
+       return [true];
+     if (date.getFullYear() > now.getFullYear())
+       return [true];
+    return [false];
+}
+
+
+  </script>
 
 @if(Auth::user()->master_trainer==1)
-
-<div class="tab_container">
-  @if (session('success'))
-  <div class="alert alert-success">
-    {{ session('success') }}
-  </div>
-  <?php Session::forget('success'); ?>
-  @endif
-  @if (session('danger'))
-  <div class="alert alert-danger">
-    {{ session('danger') }}
-  </div>
-
-  <?php Session::forget('danger'); ?>
-  @endif
 
 
   <div class="breadcrumbs">
@@ -91,118 +99,769 @@ messages: {
     </div>    
   </div>
 
-  <div class="form-box">
-
-<!--  <form  method="get" enctype="multipart/form-data" class="form-horizontal" id="cus_search">
-<div class="col-md-6 col-sm-12 col-xs-12">
-<input type="hidden" name="_token" value="{{csrf_token()}}">
-<div class="form-group" >
-<label>Customer Email<small>*</small></label>
-<input type="text" name="cust_email"  id="cust_email" value="">
-</div> 
-<button type="submit" name="submit" class="btn btn-dark btn-theme-colored btn-flat btn-drk2 save_button"  id="search_cus">Search</button>
-</div>
-</form> -->
 
 
-
-  <form action="{{route('trainer_slotinsert')}}" method="post" enctype="multipart/form-data" class="form-horizontal" id="add_slot">
-    <div class="col-md-12 col-sm-12 col-xs-12" style="width:100%" >
-      <input type="hidden" name="_token" value="{{csrf_token()}}">
-
-      <div class="col-md-6 col-sm-12 col-xs-12" >
-        <div class="form-group">
-          <label>Location<small class="required_field_color">*</small></label>
-          <select class="form-control" >
-            <option value="Basingstoke">Basingstoke</option>
-
-          </select>
-
-
-
+  <div class="breadcrumbs">
+    <div class="col-sm-12">
+      <div class="page-header float-left">
+        <div class="page-title">
+          <label>Customer Info. :<small class="required_field_color">*</small></label>
+    <input type="text" id="apply2" name="apply2" placeholder="Customer info" class="form-control apply2 required" >
         </div>
       </div>
-
-
-<div class="col-md-6 col-sm-12 col-xs-12">
-  <div class="form-group">
-    <label>Customer Name<small class="required_field_color">*</small></label>
-
-
-    <input type="text" id="apply2" name="apply2" placeholder="Please select customer name" class="form-control apply2 required" >
-
-    <input type="hidden" id="apply3" name="apply3" >
-
+    </div>    
   </div>
-</div>
-<div class="col-md-6 col-sm-12 col-xs-12">
-  <div class="form-group">
 
-
-    <label>Trainer Name <small class="required_field_color">*</small></label>
-    <select class="form-control" name="trainer_id" id="trainer_id" onchange="jsfunction()">
-      <option value=""> Please select a name</option>
-      @foreach($data as $mydata)
-      <option value="{{$mydata->id}}"> {{$mydata->name}}</option>
-      @endforeach
-    </select>
-
-
-
-  </div>
-</div>
-<div class="col-md-6 col-sm-12 col-xs-12">
+ <div class="col-md-6 col-sm-12 col-xs-12">
 <div class="row"  id="mail" style="display: none;">
-        
+        <label>Customer Details</label>
           <div class=" col-lg-12">
-              <div  id="cus_e" name="cus_e" class="col-lg-12 asd">
-           
-           </div>
+              <div  id="cus_det"></div>
+              
           </div>
         </div>
       </div>
+    <div class="inner-padding"  id="right"  style="display: none;">
 
-<div class="col-md-6 col-sm-12 col-xs-12 datepicker_trainer">
-  <label>Date <small class="required_field_color">*</small></label>
-  <input type="text" id="slots_datepicker" name="slots_datepicker" class="form-control slots_date_trainer" onchange="jsfunction()" readonly="true">
+    <div class="container">
+      <div class="hstry-box">
+        <!-- @if($total_remaining_session>0) -->
+      <ul class="tabs">
+        <li class="active bb" rel="tab5"><a href="#"  data-toggle="tab" class="li1">Book By Trainer</a></li>
+        <li class="bb" rel="tab6"><a href="#"  data-toggle="tab" class="li2">Book By Time</a></li>
+      </ul>
+      <!-- @endif -->
+      <div class="tab_container">
+        @if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+
+    <?php Session::forget('success'); ?>
+  @endif
+          <!-- #tab1 -->
+
+
+
+          
+          <div id="tab5" class="tab_content">
+            <div class="form-box">
+                
+                
+                
+                <div class="row">
+                  <div class="col-md-12 col-sm-12 col-xs-12">
+
+                 
+                    <div class="col-md-6 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                              
+                              <input type="hidden" id="total_slots" class="form-control">
+                              <label>Location<small>*</small></label>
+                              <select class="form-control" >
+                                <option value="Basingstoke">Basingstoke</option>
+                                
+                              </select>
+
+                              
+
+                            </div>
+                        </div>
+
+              
+                  <div class="col-md-6 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                              
+                            
+                              <label>Trainer Name <small>*</small></label>
+                              <select class="form-control" name="id" id='trainer_id' onchange="jsfunction()">
+                                <option value=""> Please select a name</option>
+                                 @foreach($trainer_data as $mydata)
+                                <option value="{{$mydata->id}}"> {{$mydata->name}}</option>
+                                @endforeach
+                              </select>
+
+                              
+
+                            </div>
+                        </div>
+
+                          <div class="col-md-6 col-sm-12 col-xs-12">
+                          <label>Date <small>*</small></label>
+                          <input type="text" id="slots_datepicker" name="date" class="form-control date-control" onchange="jsfunction()" readonly="true">
+
+                        
+
+                        </div>
+                        <!-- <div class="clearfix"></div> -->
+                        <div class="col-md-6 col-sm-12 col-xs-12">
+                            <div class="form-group" >
+                              <label>Available Time <small>*</small></label>
+                              <select class="form-control" name="time" id="slot_time">
+                                
+                              </select>
+                            </div>   
+                        </div>
+                         
+                        
+
+                        <div id="old_session_data">
+                        </div>
+
+                        <div class="col-md-6 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                          <input name="form_botcheck" class="form-control" value="" type="hidden">
+                          <input type="hidden" id="session_no" name="session_no" value="1">
+                          <button id="add_sess" class="btn btn-dark btn-theme-colored btn-flat">Add Session</button>
+                        </div>
+
+                </div>
+
+                 <div  class="col-md-6 col-sm-12 col-xs-12" id='loadingimg' style="display: none;">
+                                <div class="form-group" >
+                              <img src="{{asset('backend/images/loader_session_time.gif')}}" style="width: 85px;margin-top: -30px;margin-left: -21px;"/>
+                            </div>
+                            </div> 
+
+                
+             
+            </div>
+<div id="sesssion_table">
+  <form class="form-horizontal" id="add_session_form1">
+
+    <input type="hidden" name="_token" value="{{csrf_token()}}">
+    <input type="hidden" name="customer_id" id="customer_id">
+
+    <div id="add_session_req" >
+
+    </div>
+            
+      
+      <button type="button" name="submit" class="btn btn-dark btn-theme-colored btn-flat btn-drk2 save_button"  style="display:none;" id="save_btn" onclick="button_name_change()">Submit</button>
+       </form>
+    </div>
+
+                </div>
+
+              </div>
+          </div>
+
+
+
+          <div id="tab6" class="tab_content" style="display:none;">
+            <div class="form-box">
+
+                <div class="row">
+                  <div class="col-md-12 col-sm-12 col-xs-12">
+
+                 
+                    <div class="col-md-6 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                              
+                              <input type="hidden" id="total_slots2" class="form-control"  >
+                              <label>Location<small>*</small></label>
+                              <select class="form-control" >
+                                <option value="Basingstoke">Basingstoke</option>
+                                
+                              </select>
+
+                              
+
+                            </div>
+                        </div>              
+
+                        
+                          <div class="col-md-6 col-sm-12 col-xs-12">
+                          <label>Date <small>*</small></label>
+                          <input type="text" id="slots_datepicker2" name="date" class="form-control date-control" onchange="jsfunction2(); gettime();" readonly="true">
+
+                        
+
+                        </div>
+
+                         <div class="col-md-6 col-sm-12 col-xs-12">
+                            <div class="form-group" >
+
+
+                              <label>Booking Time <small>*</small></label>
+                              <select class="form-control" name="slot_time2" id="slot_time2" onchange="jsfunction2()">
+                               
+                                
+                              </select>
+                            </div>
+                            
+                        </div>
+
+
+                        <div class="col-md-6 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                              
+                            
+                              <label>Available Trainer<small>*</small></label>
+                              <select class="form-control" name="trainer_id2" id='trainer_id2'>
+                               
+                              </select>
+
+                              
+
+                            </div>
+                        </div>
+                        <!-- <div class="clearfix"></div> -->
+                      
+
+                        <div id="old_session_data2">
+                        </div>
+
+                        <div class="col-md-6 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                          <input name="form_botcheck" class="form-control" value="" type="hidden">
+                          <input type="hidden" id="session_no2" name="session_no2" value="1">
+                          <button id="add_sess2" class="btn btn-dark btn-theme-colored btn-flat">Add Session</button>
+                        </div>
+
+                        </div>
+
+                        <div  class="col-md-6 col-sm-12 col-xs-12" id='loadingimg2' style="display: none;">
+                                <div class="form-group" >
+                              <img src="{{asset('backend/images/loader_session_time.gif')}}" style="width: 85px;margin-top: -30px;margin-left: -21px;"/>
+                            </div>
+                            </div> 
+              </div>
+            
+<div id="sesssion_table">
+  <form  class="form-horizontal" id="add_session_form2">
+
+    <input type="hidden" name="_token" value="{{csrf_token()}}">
+    <input type="hidden" name="customer_id" id="customer_idd">
+    <div id="add_session_req2" >
+
+    </div>
+            
+      <button type="button" name="submit" class="btn btn-dark btn-theme-colored btn-flat btn-drk2 save_button"  style="display:none;" id="save_btn2" onclick="button_name_change()">Submit</button>
+       </form>
+    </div>
+
+                </div>
+
+
+                
+
+              </div>
+          </div>
+
+
+
+              
+
+                
+
+      </div>
+      </div>
+      <!-- .tab_container -->
+    </div>
+  </div> 
+<div class="inner-padding" id="wrong" style="display: none;">
+   This customer's have not any available session.
 </div>
-<div class="clearfix"></div>
-<div class="col-md-6 col-sm-12 col-xs-12">
-  <div class="form-group" >
-    <label>Available Time <small class="required_field_color">*</small></label>
-    <select class="form-control" name="slot_time" id="slot_time">
 
-    </select>
-  </div>
-
-</div>
-
-<div  class="col-md-6 col-sm-12 col-xs-12" id='loadingimg' style='display:none'>
-  <div class="form-group" >
-    <img src="{{asset('backend/images/loader-gif-time.gif')}}" style="width: 70px;margin-top: 10px;margin-left: -8px;"/>
-  </div>
-</div>
-
-
-<div id="old_session_data">
-</div>
-
-<div class="col-md-12 col-sm-12 col-xs-12">
-  <div class="form-group">
-    <input name="form_botcheck" class="form-control" value="" type="hidden">
-    <input type="hidden" id="session_no" name="session_no" value="1">
-    <button type="submit" name="submit" class="btn btn-dark btn-theme-colored btn-flat btn-drk2 save_button"  id="save_btn">Book Session</button>
-  </div>
-
-</div>
-
-</div>
-</form>
- 
-</div>
-
-</div>
 @endif
+
+
+<script>
+    $(document).ready(function(){  
+
+$('a[data-toggle="tab"]').on('click', function (e) { 
+  var tab_val=$(this).prop('class'); 
+  if(tab_val=='li2')
+  {
+   $('#trainer_id').val('');
+   $('#slots_datepicker').val('');
+   $('#slot_time').val('');
+   $('#session_no').val(1);
+   
+   add_session_req.innerHTML='';
+   old_session_data.innerHTML='';
+   
+
+   $('#save_btn').hide();
+  }
+  else if(tab_val=='li1')
+  {
+    $('#trainer_id2').val('');
+   $('#slots_datepicker2').val('');
+   $('#slot_time2').val('');
+   $('#session_no2').val(1);
+   add_session_req2.innerHTML='';
+   old_session_data2.innerHTML='';
+   
+   $('#save_btn2').hide();
+  }
+});
+
+    });  
+  </script>
+
+<script>
+  $(document).ready(function(){
+  $('#slot_time').mouseover(function() {
+    if($('#trainer_id').val()=='' || $('#slots_datepicker').val()=='')
+    {
+      return jsfunction();
+    } 
+   
+  });
+
+  });
+
+</script>
+
+<script>
+  $(document).ready(function(){
+  $('#trainer_id2').mouseover(function() {
+    if($('#slot_time2').val()=='' || $('#slots_datepicker2').val()=='')
+    {
+      return jsfunction2();
+    } 
+   
+  });
+
+  });
+
+</script>
+
+<script>
+  $(document).ready(function(){
+  $('#slot_time2').mouseover(function() {
+    if($('#slots_datepicker2').val()=='')
+    {
+      return gettime();
+    } 
+   
+  });
+
+  });
+
+</script>
+
+<script>
+   
+   function  jsfunction(){
+    
+    if($('#trainer_id').val()!='' && $('#slots_datepicker').val()!='')
+    {
+    
+      $('#loadingimg').show();
+      var slot_time = $('#slot_time');
+                    slot_time.prop("disabled",false);
+                    slot_time.empty();
+                    slot_time.append(
+                $('<option>', {value: ''}).text('Please select time'));
+    $.ajax({
+                  type: "GET",
+                  url: "{{route('admin_get_slot_time')}}",
+                  data: {'trainer_id': $('#trainer_id').val(),'slot_date': $('#slots_datepicker').val(),'customer_id': $('#customer_id').val()},
+                  success: function (data){
+                    $('#loadingimg').hide();
+                    console.log(data);
+
+                    var obj = $.parseJSON(data);
+                    var convert_time=0;
+
+                    if(obj.length > 0){ 
+                    for(var i = 0; i < obj.length; i++){
+
+                      convert_time=obj[i]['time'];
+                     
+                      
+                    slot_time.append(
+                $('<option>', {value: obj[i]['id']}).text(convert_time));
+                  }
+                  }
+                    
+                  }
+      });
+  }
+
+  else
+  {
+    $('#slot_time').attr('disabled','disabled');
+  }
+    
+  }
+  
+  </script>
+
+  <script>
+   
+   function  jsfunction2(){
+    
+    if($('#slot_time2').val()!='' && $('#slots_datepicker2').val()!='')
+    {
+
+      $('#loadingimg2').show();
+      var slot_trainer = $('#trainer_id2');
+                    slot_trainer.prop("disabled",false);
+                    slot_trainer.empty();
+                    slot_trainer.append(
+                $('<option>', {value: ''}).text('Please select trainer'));
+    $.ajax({
+                  type: "GET",
+                  url: "{{route('admin_get_slot_trainer')}}",
+                  data: {'slot_time': $('#slot_time2').val(),'slot_date': $('#slots_datepicker2').val()},
+                  success: function (data){
+                    $('#loadingimg2').hide();
+                    //console.log(data);
+
+                    var obj = $.parseJSON(data);
+                    
+
+                    if(obj.length > 0){ 
+                    for(var i = 0; i < obj.length; i++){
+
+                     slot_trainer.append(
+                 $('<option>', {value: obj[i]['id']}).text(obj[i]['name']));
+                   }
+                 }
+                  }
+      });
+  }
+
+  else
+  {
+    $('#trainer_id2').attr('disabled','disabled');
+  }
+    
+  }
+  
+
+  </script>
+
+
+
+  <script>
+   
+   function  gettime(){
+    
+    if($('#slots_datepicker2').val()!='')
+    {
+
+      $('#loadingimg2').show();
+      var slot_trainer = $('#slot_time2');
+                    slot_trainer.prop("disabled",false);
+                    slot_trainer.empty();
+                    slot_trainer.append(
+                $('<option>', {value: ''}).text('Please select time'));
+    $.ajax({
+                  type: "GET",
+                  url: "{{route('admin_get_time')}}",
+                  data: {'slot_date': $('#slots_datepicker2').val()},
+                  success: function (data){
+                    $('#loadingimg2').hide();
+                    //console.log(data);
+
+                    var obj = $.parseJSON(data);
+                    
+
+                    if(obj.length > 0){ 
+                    for(var i = 0; i < obj.length; i++){
+
+                     slot_trainer.append(
+                 $('<option>', {value: obj[i]['id']}).text(obj[i]['time']));
+                   }
+                 }
+                  }
+      });
+  }
+
+  else
+  {
+    $('#slot_time2').attr('disabled','disabled');
+  }
+    
+  }
+  
+  </script>
+
+  <script>
+   $('#add_sess').click(function()
+    {
+     
+      duplicate_flag=0;
+      i=$('#session_no').val();
+
+      trainer_name=$("#trainer_id option:selected").text();
+      slots_date=$("#slots_datepicker").val();
+      slots_time=$("#slot_time option:selected").text();
+
+      trainer_id=$("#trainer_id").val();
+
+      slots_time_id=$("#slot_time").val();
+
+      total_remaining_session=$("#total_slots").val();
+
+      var all_data=trainer_id + '#' + slots_date + '#' + slots_time_id;
+
+      
+
+      var inputs = $(".duplicate");
+
+    for(var k = 0; k < inputs.length; k++)
+    {
+      if($(inputs[k]).val()==all_data)
+      {
+        duplicate_flag=1;
+      }
+    }
+
+
+
+      if(parseInt(i)>parseInt(total_remaining_session))
+      {
+        alertify.alert("This customer's have not any available session to add"); 
+        return false;
+      }
+
+      else if(duplicate_flag==1)
+      {
+        alertify.alert("You can't choose same time and date for a same trainer"); 
+
+        return false;
+      }
+
+    else if ($( "#trainer_id" ).val().length==0 || $("#slots_datepicker").val().length==0 || $("#slot_time").val().length==0 )
+    {
+    alertify.alert("Please choose trainer name, date and time"); 
+      
+      return false;
+    }
+    else{
+
+
+      add_session_req.innerHTML = add_session_req.innerHTML +'<input type=text class="form-control blank1"  readonly name="trainer_name[]"' + 'id="trainer_name[]"' + 'value="' + trainer_name + '"/>&nbsp;'
+
+
+    add_session_req.innerHTML = add_session_req.innerHTML +'<input type=text class="form-control blank1" readonly name="slots_date[]"' + 'id="slots_date[]"' + 'value="' + slots_date + '" />&nbsp;'
+
+    add_session_req.innerHTML = add_session_req.innerHTML +'<input type=text class="form-control blank1" readonly name="slots_time[]"' +'id="slots_time[]"' +'value="' + slots_time + '" />&nbsp;'
+
+    add_session_req.innerHTML = add_session_req.innerHTML +'<input type=hidden class="form-control blank1"  readonly name="trainer_id[]"' + 'id="trainer_id[]"' + 'value="' + trainer_id + '" />&nbsp;'
+
+    add_session_req.innerHTML = add_session_req.innerHTML +'<input type=hidden class="form-control blank1" readonly name="slots_time_id[]"' +'id="slots_time_id[]"' +'value="' + slots_time_id + '" />&nbsp;'
+
+    add_session_req.innerHTML = add_session_req.innerHTML +'<input type=hidden class="form-control blank1"  readonly name=total_slots '+ 'id=total_slots ' + 'value="' + i + '" />&nbsp;'
+    
+    add_session_req.innerHTML = add_session_req.innerHTML +'<br>'
+
+
+    var duplicatvalue=trainer_id + '#' + slots_date + '#' + slots_time_id;
+
+
+    old_session_data.innerHTML = old_session_data.innerHTML +'<input type=hidden class="duplicate blank1"  readonly name="all_previous_data[]"' + 'id="all_previous_data[]"' + 'value="' + duplicatvalue + '" />&nbsp;'
+
+        
+
+    $('#save_btn').show();
+    
+    $("#trainer_id").val("");
+    $("#slots_datepicker").val("");
+    $("#slot_time").val("");
+    
+    i=1+parseInt(i);
+    $("#session_no").val(i);
+
+    
+}
+
+    });
+  
+</script>
+
+
+<script>
+   $('#add_sess2').click(function()
+    {
+      
+      
+      duplicate_flag=0;
+    
+
+      i=$('#session_no2').val();
+
+      trainer_name=$("#trainer_id2 option:selected").text();
+      slots_date=$("#slots_datepicker2").val();
+      slots_time=$("#slot_time2 option:selected").text();
+
+      trainer_id=$("#trainer_id2").val();
+
+      slots_time_id=$("#slot_time2").val();
+
+      total_remaining_session=$("#total_slots2").val();
+
+      var all_data=trainer_id + '#' + slots_date + '#' + slots_time_id;
+
+      var inputs = $(".duplicate2");
+
+    for(var k = 0; k < inputs.length; k++)
+    {
+      if($(inputs[k]).val()==all_data)
+      {
+        duplicate_flag=1;
+      }
+    }
+
+
+
+      if(parseInt(i)>parseInt(total_remaining_session))
+      {
+       alertify.alert("This customer's have not any available session to add"); 
+        return false;
+      }
+
+      else if(duplicate_flag==1)
+      {
+        alertify.alert("You can't choose same time and date for a same trainer  fgdfgdfgfdg"); 
+
+        return false;
+      }
+
+    else if ($( "#trainer_id2" ).val().length==0 || $("#slots_datepicker2").val().length==0 || $("#slot_time2").val().length==0 )
+    {
+    alertify.alert("Please choose trainer name, date and time"); 
+      
+      return false;
+    }
+    else{
+
+
+    add_session_req2.innerHTML = add_session_req2.innerHTML +'<input type=text class="form-control blank2"  readonly name="trainer_name[]"' + 'id="trainer_name[]"' + 'value="' + trainer_name + '"/>&nbsp;'
+
+
+    add_session_req2.innerHTML = add_session_req2.innerHTML +'<input type=text class="form-control blank2" readonly name="slots_date[]"' + 'id="slots_date[]"' + 'value="' + slots_date + '" />&nbsp;'
+
+    add_session_req2.innerHTML = add_session_req2.innerHTML +'<input type=text class="form-control blank2" readonly name="slots_time[]"' +'id="slots_time[]"' +'value="' + slots_time + '" />&nbsp;'
+
+    add_session_req2.innerHTML = add_session_req2.innerHTML +'<input type=hidden class="form-control blank2"  readonly name="trainer_id[]"' + 'id="trainer_id[]"' + 'value="' + trainer_id + '" />&nbsp;'
+
+    add_session_req2.innerHTML = add_session_req2.innerHTML +'<input type=hidden class="form-control blank2" readonly name="slots_time_id[]"' +'id="slots_time_id[]"' +'value="' + slots_time_id + '" />&nbsp;'
+
+    add_session_req2.innerHTML = add_session_req2.innerHTML +'<input type=hidden class="form-control blank2"  readonly name=total_slots '+ 'id=total_slots ' + 'value="' + i + '" />&nbsp;'
+    
+    add_session_req2.innerHTML = add_session_req2.innerHTML +'<br>'
+
+
+    var duplicatvalue=trainer_id + '#' + slots_date + '#' + slots_time_id;
+
+
+    old_session_data2.innerHTML = old_session_data2.innerHTML +'<input type=hidden class="duplicate2 blank2"  readonly name="all_previous_data[]"' + 'id="all_previous_data[]"' + 'value="' + duplicatvalue + '" />&nbsp;'
+        
+
+    $('#save_btn2').show();
+    
+    $("#trainer_id2").val("");
+    $("#slots_datepicker2").val("");
+    $("#slot_time2").val("");
+    
+    i=1+parseInt(i);
+    $("#session_no2").val(i);
+
+    
+}
+
+
+  
+    });
+  
+</script>
+
+
+<script>
+$(document).ready(function(){
+var form=$("#add_session_form1");
+$("#save_btn").click(function(){ 
+
+$.ajax({
+        type:"POST",
+        url:"{{route('trainer_slotinsert')}}",
+        data:form.serialize(),
+        success: function(response){ 
+            if(response.success==1 && response.session_remaining>0)
+            {
+             alertify.alert('Your session booking request is sent successfully!');
+              $('#trainer_id').val('');
+              $('#slots_datepicker').val('');
+              $('#slot_time').val('');
+              $('#session_no').val(1);
+   
+              add_session_req.innerHTML='';
+              old_session_data.innerHTML='';
+
+              $('#save_btn').hide();
+            }
+            else
+            {
+              $('#trainer_id').val('');
+              $('#slots_datepicker').val('');
+              $('#slot_time').val('');
+              $('#session_no').val(1);
+   
+              add_session_req.innerHTML='';
+              old_session_data.innerHTML='';
+
+              $('#save_btn').hide();
+              $('#right').hide();
+              $('#wrong').show();
+
+            }
+        }
+    });
+
+ 
+});
+});
+</script>
+
+<script>
+$(document).ready(function(){
+var form=$("#add_session_form2");
+$("#save_btn2").click(function(){ 
+$.ajax({
+        type:"POST",
+        url:"{{route('trainer_slotinsert')}}",
+        data:form.serialize(),
+        success: function(response){
+            if(response.success==1 && response.session_remaining>0)
+            {
+              alertify.alert('Your session booking request is sent successfully!');
+              
+              $('#trainer_id2').val('');
+              $('#slots_datepicker2').val('');
+              $('#slot_time2').val('');
+              $('#session_no2').val(1);
+              add_session_req2.innerHTML='';
+              old_session_data2.innerHTML='';
+              $('#save_btn2').hide();
+
+            }
+            else
+            {
+              $('#trainer_id2').val('');
+              $('#slots_datepicker2').val('');
+              $('#slot_time2').val('');
+              $('#session_no2').val(1);
+              add_session_req2.innerHTML='';
+              old_session_data2.innerHTML='';
+              $('#save_btn2').hide();
+              $('#right').hide();
+              $('#wrong').show();
+
+            }
+        }
+    });
+});
+});
+</script>
+
+
 
 @endsection
 
