@@ -609,6 +609,7 @@ public function booking_slot_trainer(Request $request)
 public function slotinsert(Request $request)
 {
   
+  Log::debug(" slotinsert ".print_r($request->all(),true));
 
   $total_slots=$request->total_slots;
   $customer_id=$request->idd; //customer_id
@@ -769,7 +770,7 @@ public function slotinsert(Request $request)
 
     $customer_details->notify(new SessionRequestNotification($notifydata));
 
-    return redirect()->back()->with("success","Your session booking request is sent successfully !");
+    return redirect()->back()->with("success","Your session booking request is sent successfully !")->withInput($request->input());
   }
   else
   {

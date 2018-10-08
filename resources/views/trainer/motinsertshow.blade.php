@@ -380,19 +380,18 @@ $('.weightconvert').on('change', function(){
 
          <div class="row form-group"  id="mail" style="display: none;">
           <div class="col col-md-3">
-            <label>Customer Email</label>
+            <label>Customer Details</label>
           </div>
-          <div class=" col-lg-9">
+          
            <div class="row">
-              <div  id="cus_e" name="cus_e" class="col-lg-12">
-           
-            
-            <!-- <input type="text" id="cus_e" name="cus_e" > -->
-             <!-- <div id="cus_e" name="cus_e"></div> -->
-           </div>
-         </div>
-          </div>
-        </div>
+              <div  id="cus_n" name="cus_n"></div><span>,</span>&nbsp;&nbsp;
+              <div  id="cus_e" name="cus_e"></div><span>,</span>&nbsp;&nbsp;
+              
+              <div  id="cus_p" name="cus_p"></div>
+                
+      </div>
+    </div>
+  
         <div class="row form-group">
           <div class="col-lg-3"><label for="text-input" class=" form-control-label">Right Arm</label></div>
           <div class="col-lg-9">

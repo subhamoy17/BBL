@@ -68,6 +68,8 @@
                 <thead>
                   <tr>
                     <th>Trainer Name</th>
+                    <th>Start Waight</th>
+                    <th>End Waight</th>
                     <th>Measured On</th>
                     <th>View MOT</th>
                     
@@ -78,6 +80,8 @@
                    @foreach($data as $key=>$mydata)
                   <tr>
                     <td>{{$mydata->users_name}}</td>
+                    <td>{{$mydata->starting_weight}} Kg</td>
+                    <td>{{$mydata->ending_weight}} Kg</td>
                     <td>{{date('d F Y', strtotime($mydata->date))}}</td>
                      <td>
                          

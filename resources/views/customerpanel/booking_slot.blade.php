@@ -40,6 +40,11 @@
 
 <body>
   <header>
+<!-- modal -->
+
+
+
+
       <div class="header-top">
         <div class="container">
           <div class="row">
@@ -156,10 +161,13 @@
         @if (session('success'))
     <div class="alert alert-success">
         {{ session('success') }}
-    </div>
 
-    <?php Session::forget('success'); ?>
+
+    </div>
+    
   @endif
+
+
           <!-- #tab1 -->
           <h3 class="ed-p">Session Booking Form</h3>
           <h3 class="d_active tab_drawer_heading" rel="tab5">Tab 5</h3>
@@ -254,7 +262,7 @@
 
     </div>
             
-      <button type="submit" name="submit" class="btn btn-dark btn-theme-colored btn-flat btn-drk2 save_button"  style="display:none;" id="save_btn" onclick="button_name_change()">Book Session(s)</button>
+      <button type="submit" name="submit" class="btn btn-dark btn-theme-colored btn-flat btn-drk2 save_button"  style="display:none;" id="save_btn" onclick="button_name_change()">Submit</button>
        </form>
     </div>
 
@@ -371,7 +379,7 @@
 
     </div>
             
-      <button type="submit" name="submit" class="btn btn-dark btn-theme-colored btn-flat btn-drk2 save_button"  style="display:none;" id="save_btn2" onclick="button_name_change()">Book Session(s)</button>
+      <button type="submit" name="submit" class="btn btn-dark btn-theme-colored btn-flat btn-drk2 save_button"  style="display:none;" id="save_btn2" onclick="button_name_change()">Submit</button>
        </form>
     </div>
 
@@ -384,13 +392,7 @@
                 
 
               </div>
-          </div>
-
-
-
-              
-
-                
+          </div>         
 
       </div>
       </div>
@@ -398,8 +400,33 @@
     </div>
   </div> 
 
+<div id="booking" class="modal fade  mot-mod" role="dialog" >
+  <div class="modal-dialog">
+    
+    <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title">My MOT</h4>
+     <input type="text" id="name" value="{{old('trainer_name[]')}}">
+      
+    </div>
+      <div class="modal-body" id="hall_details_edit">
+        <div class="row clearfix">
+          <div class="col-sm-12 col-xs-12">
+            <br class="clear" />
+        </div>
+        <div class="col-sm-12 col-xs-12">
+      <div class="row">
+          
+    </div>
+      </div>
+  </div>
+</div>
 
+</div>
+</div>
+</div>
 
+<!-- end -->
 
 
 <!-- js -->
@@ -437,7 +464,7 @@
 
 <script>
    
-   function  jsfunction(){
+   function  jsfunction(){ 
     
     if($('#trainer_id').val()!='' && $('#slots_datepicker').val()!='')
     {
@@ -499,7 +526,9 @@
   
   </script>
 <script>
-   
+  
+
+
    function  jsfunction2(){
     
     if($('#slot_time2').val()!='' && $('#slots_datepicker2').val()!='')
@@ -968,6 +997,18 @@ $('a[data-toggle="tab"]').on('click', function (e) {
 
     });  
   </script>
+@if (session('success'))
+
+
+  <script>
+    $(document).ready(function(){ 
+
+
+    $('#booking').modal('show');
+    });
+  </script>
+    <?php Session::forget('success'); ?>
+  @endif
 
 <!-- For slot trainer -->
 

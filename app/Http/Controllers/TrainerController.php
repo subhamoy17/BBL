@@ -1205,18 +1205,18 @@ public function motinsertshowauto(Request $request)
 
   $query = $request->get('term','');
         
-        $products=DB::table('customers')->where('name','LIKE','%'.$query.'%')->get();
+        $products=DB::table('customers')->where('name','LIKE','%'.$query.'%')->orwhere('email','LIKE','%'.$query.'%')->orwhere('ph_no','LIKE','%'.$query.'%')->get();
         
         $data=array();
         $data1=array();
         foreach ($products as $product) {
                
-          $data[]=array('value'=>$product->name,'id'=>$product->id, 'email'=>$product->email );
+          $data[]=array('value'=>$product->name,'id'=>$product->id, 'email'=>$product->email,'ph_no'=>$product->ph_no );
 
                
         }
 
-       // Log::debug ( " :: motinsertshowauto :: ".print_r ($data,true));
+        Log::debug ( " :: motinsertshowauto :: ".print_r ($data,true));
 
         if(count($data))
         {

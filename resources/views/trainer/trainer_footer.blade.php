@@ -65,18 +65,12 @@
                 response( $.map( data, function( item ) {
                   
                     
-                    return {
-
-                        //if(item.value!='No Result Found')
-                        //{
+                    return {  
                         value: item.value,
                         id:item.id,
-                        email: item.email
-                        //}
-                        //else
-                        //{
-
-                        //}
+                        email: item.email,
+                         ph_no: item.ph_no,
+                       
                     }
                 }));
 
@@ -86,10 +80,32 @@
         },
         minLength: 3,
         select: function(event, ui) {
+          console.log(ui.item);
+
         $("#apply").val(ui.item.id); 
-        $("#mail").show();
+
+        // alert($("#b").val(ui.item.ph_no));
+        
+$("#mail").show();
          $("#cus_e").text(ui.item.email);
-         // ui.item.value contains the id of the selected label
+         $("#cus_n").text(ui.item.value);
+         $("#cus_p").text(ui.item.ph_no);
+
+
+        //var d= a + + b + + c;
+        
+
+        // $("#mail").show();
+
+        // // var a=$("#a").val(ui.item.value); 
+        // // var b=$("#b").val(ui.item.ph_no); 
+        // // var c=$("#c").val(ui.item.email); 
+
+        // // alert($("#b").val(ui.item.ph_no));
+        // // var alldata=ui.item.value +, + ui.item.ph_no +, + ui.item.email;
+        // // alert(alldata);
+        //  $("#cus_e").text(d);
+        
 
          var Data = 
   {
