@@ -567,6 +567,8 @@ public function booking_slot_times(Request $request)
      })
   ->pluck('slot_time_id');
 
+  if(count($get_slot_times))
+{
 foreach($get_slot_times as $key=>$hour) {
 
 }
@@ -580,7 +582,7 @@ foreach($get_slot_times as $key=>$hour) {
 
 }
 
-
+}
 $final_slot_time=DB::table('slot_times')->whereNotIn('id',$get_slot_times)
   ->get()->all();
 
@@ -858,6 +860,7 @@ public function customer_get_time(Request $request)
      })
   ->pluck('slot_time_id');
 
+  if(count($get_slot_times)){
   foreach($get_slot_times as $key=>$hour) {
 
 }
@@ -871,7 +874,7 @@ public function customer_get_time(Request $request)
 
 }
 
-
+}
 $final_slot_time=DB::table('slot_times')->whereNotIn('id',$get_slot_times)
   ->get()->all();
 

@@ -1857,7 +1857,7 @@ function cheecktestimonialname(Request $request)
 
   public function booking_slot_times(Request $request)
 {
-
+    
   $trainer_id=$request->trainer_id;
   $slot_date=$request->slot_date;
   $customer_id=$request->customer_id;
@@ -1871,6 +1871,9 @@ function cheecktestimonialname(Request $request)
      })
   ->pluck('slot_time_id');
 
+
+  if(count($get_slot_times))
+{
 foreach($get_slot_times as $key=>$hour) {
 
 }
@@ -1884,6 +1887,7 @@ foreach($get_slot_times as $key=>$hour) {
 
 }
 
+}
 
 $final_slot_time=DB::table('slot_times')->whereNotIn('id',$get_slot_times)
   ->get()->all();
@@ -1939,6 +1943,8 @@ public function admin_get_time(Request $request)
      })
   ->pluck('slot_time_id');
 
+  if(count($get_slot_times)){
+
   foreach($get_slot_times as $key=>$hour) {
 
 }
@@ -1952,6 +1958,7 @@ public function admin_get_time(Request $request)
 
 }
 
+}
 
 $final_slot_time=DB::table('slot_times')->whereNotIn('id',$get_slot_times)
   ->get()->all();
