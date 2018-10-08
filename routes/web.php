@@ -179,6 +179,19 @@ Route::post('cheecktestimonialname', 'TrainerController@cheecktestimonialname');
 Route::post('cheecktestimonialname_edit', 'TrainerController@cheecktestimonialname_edit');
 
 Route::get('allCustomers', 'TrainerController@all_customers')->name('allCustomers');
+
+// @totan 071018
+
+Route::get('admin_get_slot_time', 'TrainerController@booking_slot_times')->name('admin_get_slot_time');
+Route::get('admin_get_slot_trainer', 'TrainerController@admin_get_slot_trainer')->name('admin_get_slot_trainer');
+
+Route::get('check_customer_session', 'TrainerController@check_customer_session')->name('check_customer_session');
+Route::get('admin_get_time', 'TrainerController@admin_get_time')->name('admin_get_time');
+
+
+
+
+
 });
 
 
@@ -318,6 +331,9 @@ Route::get('show_purchase_history','FrontController@show_purchase_history')->nam
 
 
 Route::get('my_mot','FrontController@my_mot')->name('my_mot');
+Route::get('customer_get_time','FrontController@customer_get_time')->name('customer_get_time');
+
+
 
 
 
