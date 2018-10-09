@@ -270,26 +270,28 @@ messages: {
                             </div>
                         </div>              
 
-                        
-                          <div class="col-md-6 col-sm-12 col-xs-12">
-                          <label>Date <small>*</small></label>
-                          <input type="text" id="slots_datepicker2" name="date" class="form-control date-control" onchange="jsfunction2(); gettime();" readonly="true">
-
-                        
-
-                        </div>
 
                          <div class="col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group" >
+                              <label>Date <small>*</small></label>
+                          <input type="text" id="slots_datepicker2" name="date" class="form-control date-control" onchange="jsfunction2(); gettime();" readonly="true">
+                            </div>
+                            
+                        </div>
 
+                        
+                        
+                          <div class="col-md-6 col-sm-12 col-xs-12">
+                          
+
+                        
 
                               <label>Booking Time <small>*</small></label>
                               <select class="form-control" name="slot_time2" id="slot_time2" onchange="jsfunction2()">
                                
                                 
                               </select>
-                            </div>
-                            
+
                         </div>
 
 
