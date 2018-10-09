@@ -14,8 +14,8 @@
       <div class="d-flex">
         
         <div class="about1"> 
-          <h4>CrossFit and TrainHard GYM </h4>
-          <p class="details">Nullam pulvinar vulputate aliquam. Pellentesque venenatis ut mi ac porta. Praesent interdum nibh libero, id malesuada libero aliquet quis. Donec at odio nibh.</p>
+          <h4>GYM TRAINING & WORKOUT PLANS FOR A HEALTHY YOU</h4>
+          <p class="details">From Gym training to diet plans and comprehensive health packages. We design your daily workout to fit your mind and body at its best.</p>
           <ul class="about-list">
             <li>
               <div class="col-md-4 we-gyl">
