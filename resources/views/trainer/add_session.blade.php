@@ -156,7 +156,7 @@ messages: {
                             <div class="form-group">
                               
                               <input type="hidden" id="total_slots" class="form-control">
-                              <label>Location<small>*</small></label>
+                              <label>Location <small>*</small></label>
                               <select class="form-control" >
                                 <option value="Basingstoke">Basingstoke</option>
                                 
@@ -258,7 +258,7 @@ messages: {
                             <div class="form-group">
                               
                               <input type="hidden" id="total_slots2" class="form-control"  >
-                              <label>Location<small>*</small></label>
+                              <label>Location <small>*</small></label>
                               <select class="form-control" >
                                 <option value="Basingstoke">Basingstoke</option>
                                 
@@ -298,7 +298,7 @@ messages: {
                             <div class="form-group">
                               
                             
-                              <label>Available Trainer<small>*</small></label>
+                              <label>Available Trainer <small>*</small></label>
                               <select class="form-control" name="trainer_id2" id='trainer_id2'>
                                
                               </select>
