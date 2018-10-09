@@ -104,23 +104,26 @@ messages: {
   <div class="breadcrumbs">
     <div class="col-sm-12">
       <div class="page-header float-left">
-        <div class="page-title">
+        <div class="page-title ttl-wrp">
           <label>Customer Info</label>
     <input type="text" id="apply2" name="apply2" placeholder="Customer info" class="form-control apply2 required" >
         </div>
       </div>
     </div>    
   </div>
-
- <div class="col-md-6 col-sm-12 col-xs-12">
-<div class="row"  id="mail" style="display: none;">
+  <div class="breadcrumbs">
+<div class="col-lg-12 ct-d">
+ <div class="col-md-12 col-sm-12 col-xs-12">
+<div class=""  id="mail" style="display: none;">
         <label>Customer Details</label>
-          <div class=" col-lg-12">
+          <div class="">
               <div  id="cus_det"></div>
               
           </div>
         </div>
       </div>
+	  </div>
+	  </div>
     <div class="inner-padding"  id="right"  style="display: none;">
     <div class="container">
       <div class="hstry-box">
@@ -361,10 +364,11 @@ messages: {
       <!-- .tab_container -->
     </div>
   </div> 
+  <div class="breadcrumbs">
 <div class="inner-padding" id="wrong" style="display: none;">
    This customer's have not any available session.
 </div>
-
+</div>
 @endif
 
 
