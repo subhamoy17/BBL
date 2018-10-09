@@ -14,8 +14,8 @@
 
                 <div class="col-sm-5">
                     <div class="user-area dropdown float-right">
+                        Welcome {{Auth::user()->name}} &nbsp;
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                           Welcome {{Auth::user()->name}} &nbsp;
                             <img class="user-avatar rounded-circle" src="{{asset('backend/images')}}/{{Auth::user()->image}}" alt="Trainer">
                         </a>
 
