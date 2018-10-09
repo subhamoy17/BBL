@@ -962,11 +962,10 @@ ul.tabs li.active a{
 
 @media only screen and (max-width: 767px) {
 	aside.left-panel {
-	display: block !important;
+	display: table-cell !important;
 	height: auto !important;
 	min-height: inherit !important;
 	padding: 0 15px !important;
-	width: 100% !important;
 }
 body{
 	overflow-x: hidden !important;
@@ -1047,6 +1046,22 @@ body{
     -ms-flex-preferred-size: auto !important;
     flex-basis: auto !important;
 
+}
+#bootstrap-slot-data-table thead tr th {
+	padding: 6px;
+	font-size: 13px;
+}
+.header-menu .col-sm-5 {
+	width: 100% !important;
+}
+}
+@media only screen and (max-width: 576px) {
+	aside.left-panel {
+	display: block !important;
+	height: auto !important;
+	min-height: inherit !important;
+	padding: 0 15px !important;
+	width: 100% !important;
 }
 }
 @media only screen and (max-width: 420px) {
