@@ -68,8 +68,8 @@
                 <thead>
                   <tr>
                     <th>Trainer Name</th>
-                    <th>Start Waight</th>
-                    <th>End Waight</th>
+                    <th>Start Weight</th>
+                    <th>End Weight</th>
                     <th>Measured On</th>
                     <th>View MOT</th>
                     
