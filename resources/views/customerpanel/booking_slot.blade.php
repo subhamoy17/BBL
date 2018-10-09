@@ -705,7 +705,6 @@
 <script>
    $('#add_sess2').click(function()
     {
-// alert('dfd');
       
       duplicate_flag=0;
     
@@ -734,24 +733,21 @@
       }
     }
 
-
-
       if(parseInt(i)>parseInt(total_remaining_session))
       {
-        alert ("You don't have any session"); 
+        alert("You don't have any session"); 
         return false;
       }
-
       else if(duplicate_flag==1)
       {
-        alert ("You can't choose same time and date for a same trainer  fgdfgdfgfdg"); 
+        alert("You can't choose same time and date for a same trainer  fgdfgdfgfdg"); 
 
         return false;
       }
 
-    else if ($( "#trainer_id2" ).val().length==0 || $("#slots_datepicker2").val().length==0 || $("#slot_time2").val().length==0 )
+    else if ($("#slots_datepicker2").val().length==0 || $( "#trainer_id2" ).val().length==0 || $("#slot_time2").val().length==0 )
     {
-    alert ("Please choose trainer name, date and time"); 
+    alert("Please choose trainer name, date and time"); 
       
       return false;
     }

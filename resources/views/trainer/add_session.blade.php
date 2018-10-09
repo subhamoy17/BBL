@@ -842,7 +842,7 @@ $('a[data-toggle="tab"]').on('click', function (e) {
         return false;
       }
 
-    else if ($( "#trainer_id2" ).val().length==0 || $("#slots_datepicker2").val().length==0 || $("#slot_time2").val().length==0 )
+    else if ($("#slots_datepicker2").val().length==0 || $( "#trainer_id2" ).val().length==0 || $("#slot_time2").val().length==0 )
     {
     alertify.alert("Please choose trainer name, date and time"); 
       
