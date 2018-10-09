@@ -718,7 +718,7 @@ public function slotinsert(Request $request)
   $total_slots=$request->total_slots;
   $customer_id=$request->idd; //customer_id
   $remaining_session_request_now=Carbon::now()->toDateString(); // current date
-
+  $nd_btn=$request->nd_btn;
   for($i=0;$i<$total_slots;$i++)
   {
     $all_package=DB::table('purchases_history')
@@ -874,8 +874,17 @@ public function slotinsert(Request $request)
 
     $customer_details->notify(new SessionRequestNotification($notifydata));
 
-    return redirect()->back()->with("success","Your session booking request is sent successfully !")->withInput($request->input());
+      if($nd_btn==1)
+      {
+      return redirect()->back()->with("success","Your session booking request is sent successfully !");
+    }
+    else
+    {
+      return redirect()->back()->with("success1","Your session booking request is sent successfully !");
+    }
+    
   }
+
   else
   {
     return redirect()->back()->with("success","You don't have any available session!");

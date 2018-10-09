@@ -10,13 +10,10 @@
   <!-- //custom-theme -->
 <title>{{ config('app.customerpaneltitle') }}</title>
 
-
-
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <link href="{{url('frontend/css/bootstrap.css')}}" rel="stylesheet" type="text/css" media="all" />
       
-
   <!-- Owl-carousel-CSS -->
   
   <!-- Testimonials-slider-css-files -->
@@ -146,27 +143,35 @@
         </div>
       </div>
     </header>
- 
-  <div class="inner-padding">
 
-    <div class="container">
-      <div class="hstry-box">
-        <!-- @if($total_remaining_session>0) -->
-      <ul class="tabs">
-        <li class="active bb" rel="tab5"><a href="#"  data-toggle="tab" class="li1">Book By Trainer</a></li>
-        <li class="bb" rel="tab6"><a href="#"  data-toggle="tab" class="li2">Book By Time</a></li>
-      </ul>
-      <!-- @endif -->
-      <div class="tab_container">
-        @if (session('success'))
-    <div class="alert alert-success">
+@if (session('success'))
+    <div  class="alert alert-success">
         {{ session('success') }}
-
-
     </div>
-    <?php Session::forget('success'); ?>
+  <?php Session::forget('success'); ?>
   @endif
 
+  <div class="tab_container">
+        @if (session('success1'))
+    <div  class="alert alert-success">
+        {{ session('success1') }}
+    </div>
+  <?php Session::forget('success1'); ?>
+  @endif
+      
+ 
+  <div class="inner-padding">
+    <div class="container">
+      <div class="hstry-box">
+      
+  
+      <ul class="tabs">
+        <li class="active bb" id="t5" rel="tab5"><a href="#"  data-toggle="tab" class="li1">Book By Trainer</a></li>
+        <li class="bb" rel="tab6" id="t6" ><a href="#"  data-toggle="tab" class="li2">Book By Time</a></li>
+      </ul>
+
+<div class="tab_container">
+        
 
           <!-- #tab1 -->
           <h3 class="ed-p">Session Booking Form</h3>
@@ -184,7 +189,7 @@
                             <div class="form-group">
                               
                               <input type="hidden" id="total_slots" class="form-control" value="{{Session::get('sum_slots')}}"  >
-                              <label>Location<small>*</small></label>
+                              <label>Location <small>*</small></label>
                               <select class="form-control" >
                                 <option value="Basingstoke">Basingstoke</option>
                                 
@@ -258,6 +263,7 @@
 
     <input type="hidden" name="_token" value="{{csrf_token()}}">
     <input type="hidden" name="idd" id="id" value="{{Auth::guard('customer')->user()->id}}">
+    <input type="hidden" name="nd_btn" id="nd_btn" value="1">
     <div id="add_session_req" >
 
     </div>
@@ -298,7 +304,7 @@
                             <div class="form-group">
                               
                               <input type="hidden" id="total_slots2" class="form-control" value="{{Session::get('sum_slots')}}"  >
-                              <label>Location<small>*</small></label>
+                              <label>Location <small>*</small></label>
                               <select class="form-control" >
                                 <option value="Basingstoke">Basingstoke</option>
                                 
@@ -335,7 +341,7 @@
                             <div class="form-group">
                               
                             
-                              <label>Available Trainer<small>*</small></label>
+                              <label>Available Trainer <small>*</small></label>
                               <select class="form-control" name="trainer_id2" id='trainer_id2'>
                                
                               </select>
@@ -371,6 +377,7 @@
 
     <input type="hidden" name="_token" value="{{csrf_token()}}">
     <input type="hidden" name="idd" id="id" value="{{Auth::guard('customer')->user()->id}}">
+     <input type="hidden" name="nd_btn" id="nd_btn" value="2">
     <div id="add_session_req2" >
 
     </div>
@@ -807,6 +814,7 @@
 
 <script>
   $(document).ready(function(){
+
   $('#slot_time').mouseover(function() {
     if($('#trainer_id').val()=='' || $('#slots_datepicker').val()=='')
     {
@@ -1142,6 +1150,50 @@ $('a[data-toggle="tab"]').on('click', function (e) {
   
   </script>
 
+<script>
+$(document).ready(function(){
+var form=$("#add_session_form2");
+$("#save_btn2").click(function(){ 
+$.ajax({
+        type:"POST",
+        url:"{{route('trainer_slotinsert')}}",
+        data:form.serialize(),
+        success: function(response){
+            if(response.success==1 && response.session_remaining>0)
+            {
+              alertify.alert('Your session booking request is sent successfully!');
+              
+              $('#trainer_id2').val('');
+              $('#slots_datepicker2').val('');
+              $('#slot_time2').val('');
+              $('#session_no2').val(1);
+              add_session_req2.innerHTML='';
+              old_session_data2.innerHTML='';
+              $('#save_btn2').hide();
+               $('#tab5').hide();
+              $('#tab6').show();
+
+            }
+            else
+            {
+              $('#trainer_id2').val('');
+              $('#slots_datepicker2').val('');
+              $('#slot_time2').val('');
+              $('#session_no2').val(1);
+              add_session_req2.innerHTML='';
+              old_session_data2.innerHTML='';
+              $('#save_btn2').hide();
+              $('#right').hide();
+              $('#wrong').show();
+
+
+            }
+        }
+    });
+});
+});
+</script>
+
 <!-- For slot trainer -->
 
   
@@ -1149,6 +1201,8 @@ $('a[data-toggle="tab"]').on('click', function (e) {
 
   <!--Fontawesome script-->
   <!--<script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js" integrity="sha384-3LK/3kTpDE/Pkp8gTNp2gR/2gOiwQ6QaO7Td0zV76UFJVhqLl4Vl3KL1We6q6wR9" crossorigin="anonymous"></script>-->
+
+
 </body>
 
 </html>

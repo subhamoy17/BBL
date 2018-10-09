@@ -105,7 +105,7 @@ messages: {
     <div class="col-sm-12">
       <div class="page-header float-left">
         <div class="page-title">
-          <label>Customer Info. :<small class="required_field_color">*</small></label>
+          <label>Customer Info</label>
     <input type="text" id="apply2" name="apply2" placeholder="Customer info" class="form-control apply2 required" >
         </div>
       </div>
@@ -122,13 +122,12 @@ messages: {
         </div>
       </div>
     <div class="inner-padding"  id="right"  style="display: none;">
-
     <div class="container">
       <div class="hstry-box">
         <!-- @if($total_remaining_session>0) -->
       <ul class="tabs">
-        <li class="active bb" rel="tab5"><a href="#"  data-toggle="tab" class="li1">Book By Trainer</a></li>
-        <li class="bb" rel="tab6"><a href="#"  data-toggle="tab" class="li2">Book By Time</a></li>
+        <li class="active bb" rel="tab5" id="t5"><a href="#"  data-toggle="tab" class="li1">Book By Trainer</a></li>
+        <li class="bb" rel="tab6" id="t6"><a href="#"  data-toggle="tab" class="li2">Book By Time</a></li>
       </ul>
       <!-- @endif -->
       <div class="tab_container">
@@ -279,7 +278,7 @@ messages: {
                             
                         </div>
 
-                        
+
                         
                           <div class="col-md-6 col-sm-12 col-xs-12">
                           
@@ -838,7 +837,7 @@ $('a[data-toggle="tab"]').on('click', function (e) {
 
       else if(duplicate_flag==1)
       {
-        alertify.alert("You can't choose same time and date for a same trainer  fgdfgdfgfdg"); 
+        alertify.alert("You can't choose same time and date for a same trainer"); 
 
         return false;
       }
@@ -963,6 +962,8 @@ $.ajax({
               add_session_req2.innerHTML='';
               old_session_data2.innerHTML='';
               $('#save_btn2').hide();
+               $('#tab5').hide();
+              $('#tab6').show();
 
             }
             else
@@ -976,6 +977,7 @@ $.ajax({
               $('#save_btn2').hide();
               $('#right').hide();
               $('#wrong').show();
+
 
             }
         }
