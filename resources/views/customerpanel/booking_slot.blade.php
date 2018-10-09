@@ -144,20 +144,7 @@
       </div>
     </header>
 
-@if (session('success'))
-    <div  class="alert alert-success">
-        {{ session('success') }}
-    </div>
-  <?php Session::forget('success'); ?>
-  @endif
 
-  <div class="tab_container">
-        @if (session('success1'))
-    <div  class="alert alert-success">
-        {{ session('success1') }}
-    </div>
-  <?php Session::forget('success1'); ?>
-  @endif
       
  
   <div class="inner-padding">
@@ -171,6 +158,20 @@
       </ul>
 
 <div class="tab_container">
+
+  @if (session('success'))
+    <div  class="alert alert-success">
+        {{ session('success') }}
+    </div>
+  <?php Session::forget('success'); ?>
+  @endif
+
+  <div class="tab_container">
+        @if (session('success1'))
+    <div  class="alert alert-success">
+        {{ session('success1') }}
+    </div> 
+  @endif
         
 
           <!-- #tab1 -->
@@ -1150,49 +1151,6 @@ $('a[data-toggle="tab"]').on('click', function (e) {
   
   </script>
 
-<script>
-$(document).ready(function(){
-var form=$("#add_session_form2");
-$("#save_btn2").click(function(){ 
-$.ajax({
-        type:"POST",
-        url:"{{route('trainer_slotinsert')}}",
-        data:form.serialize(),
-        success: function(response){
-            if(response.success==1 && response.session_remaining>0)
-            {
-              alertify.alert('Your session booking request is sent successfully!');
-              
-              $('#trainer_id2').val('');
-              $('#slots_datepicker2').val('');
-              $('#slot_time2').val('');
-              $('#session_no2').val(1);
-              add_session_req2.innerHTML='';
-              old_session_data2.innerHTML='';
-              $('#save_btn2').hide();
-               $('#tab5').hide();
-              $('#tab6').show();
-
-            }
-            else
-            {
-              $('#trainer_id2').val('');
-              $('#slots_datepicker2').val('');
-              $('#slot_time2').val('');
-              $('#session_no2').val(1);
-              add_session_req2.innerHTML='';
-              old_session_data2.innerHTML='';
-              $('#save_btn2').hide();
-              $('#right').hide();
-              $('#wrong').show();
-
-
-            }
-        }
-    });
-});
-});
-</script>
 
 <!-- For slot trainer -->
 
@@ -1201,7 +1159,17 @@ $.ajax({
 
   <!--Fontawesome script-->
   <!--<script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js" integrity="sha384-3LK/3kTpDE/Pkp8gTNp2gR/2gOiwQ6QaO7Td0zV76UFJVhqLl4Vl3KL1We6q6wR9" crossorigin="anonymous"></script>-->
+ @if (session('success1'))
+    <script>
 
+      $(document).ready(function(){
+       $(".li2").trigger('click');
+      });
+
+    </script>
+<?php Session::forget('success1'); ?>
+
+  @endif
 
 </body>
 
