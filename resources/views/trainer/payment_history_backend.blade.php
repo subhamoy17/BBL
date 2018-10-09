@@ -160,7 +160,6 @@ $(document).ready(function() {
                             Payment Success
                               @endif 
 
-
                  </td>
 
 
