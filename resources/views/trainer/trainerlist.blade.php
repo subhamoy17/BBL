@@ -100,7 +100,7 @@ $('#bootstrap-slot-data-table').DataTable({
         </div>
     </div>
     <div class="col-sm-3">
-        <div class="page-header float-left" style="padding-top: 2%;padding-left: 21%;">
+        <div class="page-header float-left trn-list" style="padding-top: 2%;">
             <a href="{{route('addtrainer')}}">
                 <button type="button" class="btn btn-success"><i class="fa fa-plus"></i>&nbsp;Add New Trainer</button>
             </a>
@@ -132,7 +132,7 @@ $('#bootstrap-slot-data-table').DataTable({
                                     }
                             </script>
                       <div class="card-body">
-                        <table id="bootstrap-slot-data-table" class="table table-striped table-bordered">
+                        <table id="bootstrap-slot-data-table" class="display responsive table-striped table-bordered" width="100%">
                             <thead>
                                 <tr>
                                     <th id="slno">Sl. No.</th>
@@ -357,6 +357,8 @@ alertify.confirm("Are you sure you will be approve this trainer?", function (e) 
     <script src="{{asset('backend/assets/js/lib/data-table/buttons.print.min.js')}}"></script>
     <script src="{{asset('backend/assets/js/lib/data-table/buttons.colVis.min.js')}}"></script>
     <script src="{{asset('backend/assets/js/lib/data-table/datatables-init.js')}}"></script>
+	<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
           $('#bootstrap-data-table-export').DataTable();

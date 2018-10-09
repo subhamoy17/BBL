@@ -283,6 +283,27 @@
 		position: relative;
 		top: -3px;
 	}
+	.forgot-p{
+		float: right;
+	}
+	.input-box{
+		padding: 5px 15px 30px 15px;
+	}
+	.checkbox1 {
+	/* width: 150px; */
+		display: none;
+	}
+	.nw-user a {
+		color: #b9b3b3;
+		font-size: 13px;
+	}
+	.login-section .container-fluid {
+		padding: 0;
+	}
+	.gt-strt {
+		background-image: url(../images/sml1.jpg);
+		min-height: 380px;
+	}
 
 	.stellarnav li.active a {
     color: #ec7f0a;

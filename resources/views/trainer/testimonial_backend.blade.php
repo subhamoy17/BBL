@@ -142,7 +142,7 @@ $('#name').keyup(function(){
                                         {{ session('success') }}
                                     </div>
                                 @endif
-                      <div class="card-body card-block">
+                      <div class="card-body card-block col-emg">
                         <form action="{{route('testimonial_insert')}}" method="post" enctype="multipart/form-data" class="form-horizontal" id="traineraddform">
 
                             <input type="hidden" name="_token" value="{{csrf_token()}}">
@@ -173,10 +173,10 @@ $('#name').keyup(function(){
 
                            <div class="row form-group">
                               <div class="col col-md-3">
-                                 <label for="file-input" class=" form-control-label">Image<span class="required_field_color">*</span></label>
+                                 <label for="file-input" class="form-control-label no-white">Image<span class="required_field_color">*</span></label>
                               </div>
                               <div class="col-3 col-md-4">
-                                 <input type="file" id="image" name="image" class="form-control" >
+                                 <input type="file" id="image" name="image" class="form-control no-white" >
                               </div>
                               <div class="col-9 col-md-4">
                                  <img id="profile_thumbnail" height="150"  width="200" style="display: none;">

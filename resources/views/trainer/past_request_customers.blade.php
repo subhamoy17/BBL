@@ -100,7 +100,7 @@ table.dataTable thead>tr>th[id='image'].sorting_asc::after{display: none}
            <div class="group">
             <div id="loading-img"></div>
           <div class="card-body">
-            <table id="bootstrap-slot-data-table" class="table table-striped table-bordered">
+            <table id="bootstrap-slot-data-table" class="display responsive table-striped table-bordered" width="100%">
               <thead>
                 <tr>
                   <th id='slno'>Sl. No.</th>
@@ -158,6 +158,7 @@ table.dataTable thead>tr>th[id='image'].sorting_asc::after{display: none}
 <script src="{{asset('backend/assets/js/lib/data-table/buttons.print.min.js')}}"></script>
 <script src="{{asset('backend/assets/js/lib/data-table/buttons.colVis.min.js')}}"></script>
 <script src="{{asset('backend/assets/js/lib/data-table/datatables-init.js')}}"></script>
-
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
 
 @endsection

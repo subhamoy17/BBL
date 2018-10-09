@@ -32,6 +32,8 @@
     <link rel="stylesheet" href="{{ asset('backend/assets/css/themify-icons.css') }}">
     <link rel="stylesheet" href="{{ asset('backend/assets/css/flag-icon.min.css') }}">
     <link rel="stylesheet" href="{{ asset('backend/assets/css/cs-skin-elastic.css') }}">
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
     <!-- <link rel="stylesheet" href="assets/css/bootstrap-select.less"> -->
     <link rel="stylesheet" href="{{ asset('backend/assets/scss/style.css')}}">
 

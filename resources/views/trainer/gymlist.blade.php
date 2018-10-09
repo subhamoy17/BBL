@@ -58,7 +58,7 @@ table.dataTable thead>tr>th[id='action'].sorting_asc::after{display: none}
         </div>
     </div>
     <div class="col-sm-3">
-        <div class="page-header float-left" style="padding-top: 2%;padding-left: 17%;">
+        <div class="page-header float-left ex3" style="padding-top: 2%;">
             <a href="{{route('add_exercise_trainer')}}">
                 <button type="button" class="btn btn-success"><i class="fa fa-plus"></i>&nbsp;Add New Exercise</button>
             </a>
@@ -95,7 +95,7 @@ table.dataTable thead>tr>th[id='action'].sorting_asc::after{display: none}
                                 });
                             }
                         </script>
-                        <table id="bootstrap-slot-data-table" class="table table-striped table-bordered">
+                        <table id="bootstrap-slot-data-table" class="display responsive table-striped table-bordered" width="100%">
                             <thead>
                                 <tr>
                                     <th id="slno">Sl. No.</th>
@@ -152,7 +152,8 @@ table.dataTable thead>tr>th[id='action'].sorting_asc::after{display: none}
 <script src="{{asset('backend/assets/js/lib/data-table/buttons.print.min.js')}}"></script>
 <script src="{{asset('backend/assets/js/lib/data-table/buttons.colVis.min.js')}}"></script>
 <script src="{{asset('backend/assets/js/lib/data-table/datatables-init.js')}}"></script>
-
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
 
 <script type="text/javascript">
     $(document).ready(function() {

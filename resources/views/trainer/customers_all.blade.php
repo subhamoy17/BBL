@@ -50,7 +50,7 @@ $('#bootstrap-slot-data-table').DataTable({
                 <div class="card">
                     <div class="card-header" style="padding-left: 0px;padding-right: 0px;padding-bottom: 0px;padding-top: 10px;"></div>
                     <div class="card-body">
-                        <table id="bootstrap-slot-data-table" class="table table-striped table-bordered">
+                        <table id="bootstrap-slot-data-table" class="display responsive table-striped table-bordered" width="100%">
                             <thead>
                                 <tr>
                                     <th id="slno">Sl. No.</th>
@@ -109,14 +109,14 @@ $('#bootstrap-slot-data-table').DataTable({
     <script src="{{asset('backend/assets/js/lib/data-table/buttons.print.min.js')}}"></script>
     <script src="{{asset('backend/assets/js/lib/data-table/buttons.colVis.min.js')}}"></script>
     <script src="{{asset('backend/assets/js/lib/data-table/datatables-init.js')}}"></script>
-
-
+	<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+	
     <script type="text/javascript">
-        $(document).ready(function() {
-          $('#bootstrap-data-table-export').DataTable();
-        } );
+          $('#bootstrap-data-table-export').DataTable({
+			  responsive: true,
+		  });
     </script>
-
     
 
 @endsection

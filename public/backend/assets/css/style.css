@@ -37,7 +37,9 @@ body {
   display: table;
   font-family: 'Open Sans' sans-serif;
   font-size: 16px;
-  width: 100%; }
+  width: 100%;
+	table-layout: fixed;
+	}
 
 div[class*="col-"] {
   float: left; }
@@ -823,14 +825,28 @@ textarea.parsley-error {
 	width:130px;
 }
 /*82118*/
-
+/*.page-header.float-left{
+	padding-left: 21%;
+}
+.page-header.float-left.gh{
+	padding-left: 7%;
+}*/
 @media only screen and (max-width: 767px) {
 	aside.left-panel {
 	display: block !important;
 	height: auto !important;
 	min-height: inherit !important;
 	padding: 0 15px !important;
-	width: 74vh !important;
+	width: 100% !important;
+}
+body{
+	overflow-x: hidden;
+}
+.header-menu .col-sm-5 {
+	float: left !important;
+}
+.user-area .user-avatar{
+	margin-top: 0;
 }
 .right-panel {
 	display: block !important;
@@ -847,8 +863,52 @@ textarea.parsley-error {
 	width: 7%;
 	color: white;
 }
+#bootstrap-slot-data-table_length {
+	float: left;
+	width: 100%;
+	text-align: left;
 }
-
+#bootstrap-slot-data-table_filter {
+	float: left;
+}
+.page-header.float-left{
+	padding-left: 0;
+}
+#bootstrap-slot-data-table_info {
+	float: left;
+}
+#bootstrap-slot-data-table_paginate {
+	float: left;
+}
+#motaddform .col-lg-12 input, #motaddform .col-lg-12 select{
+	width: 48%;
+}
+.col-emg .col{
+	flex: inherit !important;
+}
+.no-white{
+	background: none !important;
+	border: none; 
+	padding: 0;
+}
+.dtr-title {
+	float: left;
+}
+.payment.btn.btn-info.btn-sm {
+	margin-left: 2px;
+	padding: 6px 7px;
+	margin-top: 2px;
+}
+.card-title.add-n-cl.cl-list {
+	float: left;
+}
+}
+@media only screen and (max-width: 420px) {
+	#motaddform .col-lg-12 input, #motaddform .col-lg-12 select {
+		width: 47%;
+	}
+}
+}
 /*@totan 071018*/
 
 ul.tabs li.active a {
@@ -938,8 +998,13 @@ div#sesssion_table {
     width: 32.1%;
     display: inline-block;
     margin: 7.5px 0;
+}
+.ex3{
+	padding-left: 17%;
 } 
-
+.trn-list{
+	padding-left:21%;
+}
 /*#sesssion_table .save_button{
   padding-left: 30px;
 }*/
