@@ -283,6 +283,10 @@
 		position: relative;
 		top: -3px;
 	}
+
+	.stellarnav li.active a {
+    color: #ec7f0a;
+}
 }
 @media only screen and (max-width: 640px) {}
 @media only screen and (max-width: 580px) {}
