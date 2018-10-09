@@ -952,6 +952,9 @@ ul.tabs li.active a{
 #cus_det {
 	margin-bottom: 10px;
 }
+.breadcrumbs #wrong {
+    color: red;
+}
 /*#sesssion_table .save_button{
   padding-left: 30px;
 }*/
