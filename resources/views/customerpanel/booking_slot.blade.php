@@ -160,7 +160,7 @@
 <div class="tab_container">
 
   @if (session('success'))
-    <div  class="alert alert-success">
+    <div  class="alert alert-success first-success">
         {{ session('success') }}
     </div>
   <?php Session::forget('success'); ?>
@@ -168,7 +168,7 @@
 
   <div class="tab_container">
         @if (session('success1'))
-    <div  class="alert alert-success">
+    <div  class="alert alert-success second-success" >
         {{ session('success1') }}
     </div> 
   @endif
@@ -1018,6 +1018,8 @@ $('a[data-toggle="tab"]').on('click', function (e) {
    add_session_req.innerHTML='';
    old_session_data.innerHTML='';
 
+   $('.first-success').hide();
+
    $('#save_btn').hide();
   }
   else if(tab_val=='li1')
@@ -1028,6 +1030,7 @@ $('a[data-toggle="tab"]').on('click', function (e) {
    $('#session_no2').val(1);
    add_session_req2.innerHTML='';
    old_session_data2.innerHTML='';
+   $('.second-success').hide();
    $('#save_btn2').hide();
   }
 });
