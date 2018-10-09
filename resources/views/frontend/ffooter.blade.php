@@ -17,7 +17,7 @@
 				<div class="col-md-2 gylayouts_footer_grid">
 					<h3>Popular <span>Links</span> </h3>
 					  <ul class="links">
-							<li><a href="{{url('customer/bbl')}}">Home</a></li>
+							<li><a href="{{url('/')}}">Home</a></li>
 							<li><a href="{{url('customer/services')}}">Services</a></li>
 							<li><a href="{{url('customer/pricing')}}">Pricing</a></li>
 						
