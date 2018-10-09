@@ -557,7 +557,6 @@ public function booking_slot_times(Request $request)
   $trainer_id=$request->trainer_id;
   $slot_date=$request->slot_date;
   
-
   $get_slot_times=DB::table('slot_request')
   ->where('trainer_id',$trainer_id)
   ->where('slot_date',$slot_date)
@@ -582,7 +581,91 @@ foreach($get_slot_times as $key=>$hour) {
 
 }
 
+foreach($get_slot_times as $key=>$hour) {
+
 }
+
+$length=$key+1;
+$upto=$length*4;
+
+  for($i=$length;$i<$upto;$i++)
+{
+  $get_slot_times[$i]=$get_slot_times[$i-$length]-1;
+
+}
+
+}
+
+$final_slot_time=DB::table('slot_times')->whereNotIn('id',$get_slot_times)
+  ->get()->all();
+
+
+  foreach($final_slot_time as $myslot_time)
+  {
+    $myslot_time->time=date('h:i A', strtotime($myslot_time->time));
+  }
+  
+  return json_encode($final_slot_time);
+}
+
+
+
+public function get_current_slot_time(Request $request)
+{
+
+  $trainer_id=$request->trainer_id;
+  $slot_date=$request->slot_date;
+
+  //Log::debug(" Check get_slot_times ".print_r($request->all(),true));
+  
+  $get_slot_times=DB::table('slot_request')
+  ->where('trainer_id',$trainer_id)
+  ->where('slot_date',$slot_date)
+  ->where(function($q) {
+         $q->where('approval_id', 1)
+           ->orWhere('approval_id', 3);
+     })
+  ->pluck('slot_time_id')->all();
+
+  $get_slot_times2=DB::table('slot_times')
+  ->wherein('id',$request->time_id)
+  ->pluck('id')->all();
+
+  $get_slot_times=array_merge($get_slot_times,$get_slot_times2);
+
+Log::debug(" Check get_slot_times2 ".print_r($get_slot_times,true));
+
+  if(count($get_slot_times))
+{
+foreach($get_slot_times as $key=>$hour) {
+
+}
+
+  $length=$key+1;
+  $upto=$length*4;
+
+  for($i=$length;$i<$upto;$i++)
+{
+  $get_slot_times[$i]=$get_slot_times[$i-$length]+1;
+
+}
+
+foreach($get_slot_times as $key=>$hour) {
+
+}
+
+$length=$key+1;
+$upto=$length*4;
+
+  for($i=$length;$i<$upto;$i++)
+{
+  $get_slot_times[$i]=$get_slot_times[$i-$length]-1;
+
+}
+
+}
+
+
 $final_slot_time=DB::table('slot_times')->whereNotIn('id',$get_slot_times)
   ->get()->all();
 
@@ -871,6 +954,79 @@ public function customer_get_time(Request $request)
   for($i=$length;$i<$upto;$i++)
 {
   $get_slot_times[$i]=$get_slot_times[$i-$length]+1;
+
+}
+
+foreach($get_slot_times as $key=>$hour) {
+
+}
+
+  $length=$key+1;
+  $upto=$length*4;
+
+  for($i=$length;$i<$upto;$i++)
+{
+  $get_slot_times[$i]=$get_slot_times[$i-$length]-1;
+
+}
+
+}
+$final_slot_time=DB::table('slot_times')->whereNotIn('id',$get_slot_times)
+  ->get()->all();
+
+
+  foreach($final_slot_time as $myslot_time)
+  {
+    $myslot_time->time=date('h:i A', strtotime($myslot_time->time));
+  }
+
+  return json_encode($final_slot_time);
+}
+
+public function customer_get_current_time(Request $request)
+{
+
+  $slot_date=$request->slot_date;
+
+
+  $get_slot_times=DB::table('slot_request')
+  ->where('slot_date',$slot_date)
+  ->where(function($q) {
+         $q->where('approval_id', 1)
+           ->orWhere('approval_id', 3);
+     })
+  ->pluck('slot_time_id')->all();
+
+  $get_slot_times2=DB::table('slot_times')
+  ->wherein('id',$request->time_id)
+  ->pluck('id')->all();
+
+  $get_slot_times=array_merge($get_slot_times,$get_slot_times2);
+
+  if(count($get_slot_times)){
+  foreach($get_slot_times as $key=>$hour) {
+
+}
+
+  $length=$key+1;
+  $upto=$length*4;
+
+  for($i=$length;$i<$upto;$i++)
+{
+  $get_slot_times[$i]=$get_slot_times[$i-$length]+1;
+
+}
+
+foreach($get_slot_times as $key=>$hour) {
+
+}
+
+  $length=$key+1;
+  $upto=$length*4;
+
+  for($i=$length;$i<$upto;$i++)
+{
+  $get_slot_times[$i]=$get_slot_times[$i-$length]-1;
 
 }
 

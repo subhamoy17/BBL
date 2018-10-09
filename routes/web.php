@@ -183,10 +183,12 @@ Route::get('allCustomers', 'TrainerController@all_customers')->name('allCustomer
 // @totan 071018
 
 Route::get('admin_get_slot_time', 'TrainerController@booking_slot_times')->name('admin_get_slot_time');
+Route::get('admin_get_current_slot_time', 'TrainerController@admin_get_current_slot_time')->name('admin_get_current_slot_time');
 Route::get('admin_get_slot_trainer', 'TrainerController@admin_get_slot_trainer')->name('admin_get_slot_trainer');
 
 Route::get('check_customer_session', 'TrainerController@check_customer_session')->name('check_customer_session');
 Route::get('admin_get_time', 'TrainerController@admin_get_time')->name('admin_get_time');
+Route::get('admin_get_current_time', 'TrainerController@admin_get_current_time')->name('admin_get_current_time');
 
 
 
@@ -314,6 +316,9 @@ Route::get('purchase_history','FrontController@purchases_history')->name('custom
 
 Route::get('booking_slot','FrontController@booking_slot')->name('booking_slot');
 Route::get('booking_slot_time','FrontController@booking_slot_times')->name('get_slot_time');
+Route::get('get_current_slot_time','FrontController@get_current_slot_time')->name('get_current_slot_time');
+Route::get('customer_get_current_time','FrontController@customer_get_current_time')->name('customer_get_current_time');
+
 Route::get('booking_slot_trainer','FrontController@booking_slot_trainer')->name('get_slot_trainer');
 
 

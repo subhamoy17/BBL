@@ -452,7 +452,64 @@ $('a[data-toggle="tab"]').on('click', function (e) {
     if($('#trainer_id').val()!='' && $('#slots_datepicker').val()!='')
     {
     
+    var get_current_time=0;
+      var get_current_date_trainer=0;
+      var same_trainer_date=$('#trainer_id').val() + '#' + $('#slots_datepicker').val();
+
+      var all_previous_time = $(".all_previous_time");
+      var all_previous_trainer_date = $(".all_previous_trainer_date");
+
+      var all_time=new Array();
+
+    for(var k = 0; k < all_previous_time.length; k++)
+    {
+      
+      if($(all_previous_time[k]).val()!='' && $(all_previous_trainer_date[k]).val()==same_trainer_date)
+      {
+        get_current_time=1;
+      }
+
+      all_time[k]=$(all_previous_time[k]).val();
+
+    }
+
+    if(get_current_time==1)
+    {
+
       $('#loadingimg').show();
+      var slot_time = $('#slot_time');
+                    slot_time.prop("disabled",false);
+                    slot_time.empty();
+                    slot_time.append(
+                $('<option>', {value: ''}).text('Please select time'));
+    $.ajax({
+                  type: "GET",
+                  url: "{{route('admin_get_current_slot_time')}}",
+                  data: {'trainer_id': $('#trainer_id').val(),'slot_date': $('#slots_datepicker').val(),'time_id':all_time},
+                  success: function (data){
+                    $('#loadingimg').hide();
+                    console.log(data);
+
+                    var obj = $.parseJSON(data);
+                    var convert_time=0;
+
+                    if(obj.length > 0){ 
+                    for(var i = 0; i < obj.length; i++){
+
+                      convert_time=obj[i]['time'];
+                     
+                      
+                    slot_time.append(
+                $('<option>', {value: obj[i]['id']}).text(convert_time));
+                  }
+                  }
+                    
+                  }
+      });
+
+  }else{
+
+    $('#loadingimg').show();
       var slot_time = $('#slot_time');
                     slot_time.prop("disabled",false);
                     slot_time.empty();
@@ -482,6 +539,8 @@ $('a[data-toggle="tab"]').on('click', function (e) {
                     
                   }
       });
+
+  }
   }
 
   else
@@ -547,7 +606,60 @@ $('a[data-toggle="tab"]').on('click', function (e) {
     if($('#slots_datepicker2').val()!='')
     {
 
+      var get_current_time=0;
+      var get_current_date_trainer=0;
+      var same_trainer_date=$('#slots_datepicker2').val();
+
+      var all_previous_time = $(".all_previous_time");
+      var all_previous_trainer_date = $(".all_previous_trainer_date");
+
+      var all_time=new Array();
+
+    for(var k = 0; k < all_previous_time.length; k++)
+    {
+      
+      if($(all_previous_time[k]).val()!='' && $(all_previous_trainer_date[k]).val()==same_trainer_date)
+      {
+        get_current_time=1;
+      }
+
+      all_time[k]=$(all_previous_time[k]).val();
+
+    }
+
+    if(get_current_time==1)
+    {
+
       $('#loadingimg2').show();
+      var slot_trainer = $('#slot_time2');
+                    slot_trainer.prop("disabled",false);
+                    slot_trainer.empty();
+                    slot_trainer.append(
+                $('<option>', {value: ''}).text('Please select time'));
+    $.ajax({
+                  type: "GET",
+                  url: "{{route('admin_get_current_time')}}",
+                  data: {'slot_date': $('#slots_datepicker2').val(),'time_id': all_time},
+                  success: function (data){
+                    $('#loadingimg2').hide();
+                    //console.log(data);
+
+                    var obj = $.parseJSON(data);
+                    
+
+                    if(obj.length > 0){ 
+                    for(var i = 0; i < obj.length; i++){
+
+                     slot_trainer.append(
+                 $('<option>', {value: obj[i]['id']}).text(obj[i]['time']));
+                   }
+                 }
+                  }
+      });
+  }
+  else
+  {
+    $('#loadingimg2').show();
       var slot_trainer = $('#slot_time2');
                     slot_trainer.prop("disabled",false);
                     slot_trainer.empty();
@@ -573,6 +685,7 @@ $('a[data-toggle="tab"]').on('click', function (e) {
                  }
                   }
       });
+  }
   }
 
   else
@@ -657,10 +770,14 @@ $('a[data-toggle="tab"]').on('click', function (e) {
 
     var duplicatvalue=trainer_id + '#' + slots_date + '#' + slots_time_id;
 
+    var duplicattarinerdate=trainer_id + '#' + slots_date;
 
     old_session_data.innerHTML = old_session_data.innerHTML +'<input type=hidden class="duplicate blank1"  readonly name="all_previous_data[]"' + 'id="all_previous_data[]"' + 'value="' + duplicatvalue + '" />&nbsp;'
 
-        
+
+    old_session_data.innerHTML = old_session_data.innerHTML +'<input type=hidden class="all_previous_time"  readonly name="all_previous_time[]"' + 'id="all_previous_time[]"' + 'value="' + slots_time_id + '" />&nbsp;'
+
+    old_session_data.innerHTML = old_session_data.innerHTML +'<input type=hidden class="all_previous_trainer_date"  readonly name="all_previous_trainer_date[]"' + 'id="all_previous_trainer_date[]"' + 'value="' + duplicattarinerdate + '" />&nbsp;'
 
     $('#save_btn').show();
     
@@ -755,6 +872,10 @@ $('a[data-toggle="tab"]').on('click', function (e) {
 
 
     old_session_data2.innerHTML = old_session_data2.innerHTML +'<input type=hidden class="duplicate2 blank2"  readonly name="all_previous_data[]"' + 'id="all_previous_data[]"' + 'value="' + duplicatvalue + '" />&nbsp;'
+
+    old_session_data2.innerHTML = old_session_data2.innerHTML +'<input type=hidden class="all_previous_time"  readonly name="all_previous_time[]"' + 'id="all_previous_time[]"' + 'value="' + slots_time_id + '" />&nbsp;'
+
+    old_session_data2.innerHTML = old_session_data2.innerHTML +'<input type=hidden class="all_previous_trainer_date"  readonly name="all_previous_trainer_date[]"' + 'id="all_previous_trainer_date[]"' + 'value="' + slots_date + '" />&nbsp;'
         
 
     $('#save_btn2').show();

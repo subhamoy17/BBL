@@ -9,7 +9,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 
- // implements ShouldQueue
+
 
 class SessionRequestNotification extends Notification implements ShouldQueue
 {
