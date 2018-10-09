@@ -1,14 +1,14 @@
 @extends('frontend.submain') 
 @section('content')
 
- @if(count($data)>0)
+ 
 
       <div class="tab_container">
           <h3 class="d_active tab_drawer_heading" rel="tab3">Tab 3</h3>
           <div id="tab3" class="tab_content">
            <h3 class="ed-p">My Profile</h3>
             <div class="form-box">
-              
+              @if($data)
                 <div class="row">
                   <div class="col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group">
@@ -55,20 +55,16 @@
                         </div>
                 </div>
                 </div>
-              
+                   @endif
               </div>
           </div>
 
          
       </div>
 
-        @endif
-      </div>
-      <!-- .tab_container -->
-    </div>
-  </div>
-  
- 
 
+
+   
+     
 
 @endsection
