@@ -39,6 +39,10 @@ body {
   font-size: 16px;
   width: 100%;
 	table-layout: fixed;
+	position: relative;
+	overflow-x: hidden !important;
+	margin: 0 auto;
+	padding: 0;
 	}
 
 div[class*="col-"] {
@@ -352,7 +356,9 @@ body.open .navbar .navbar-brand.hidden {
   -moz-transition: all .35s ease;
   -ms-transition: all .35s ease;
   -o-transition: all .35s ease;
-  transition: all .35s ease; }
+  transition: all .35s ease;
+	width: 100%;
+  }
 
 .right-panel header.header {
   background: #fff;
@@ -831,84 +837,7 @@ textarea.parsley-error {
 .page-header.float-left.gh{
 	padding-left: 7%;
 }*/
-@media only screen and (max-width: 767px) {
-	aside.left-panel {
-	display: block !important;
-	height: auto !important;
-	min-height: inherit !important;
-	padding: 0 15px !important;
-	width: 100% !important;
-}
-body{
-	overflow-x: hidden;
-}
-.header-menu .col-sm-5 {
-	float: left !important;
-}
-.user-area .user-avatar{
-	margin-top: 0;
-}
-.right-panel {
-	display: block !important;
-}
-.navbar-brand {
-	margin-top: 0 !important;
-}
-.navbar-brand img {
-	width: 100px;
-	position: relative;
-	top: 7px;
-}
-#main-menu ul li i {
-	width: 7%;
-	color: white;
-}
-#bootstrap-slot-data-table_length {
-	float: left;
-	width: 100%;
-	text-align: left;
-}
-#bootstrap-slot-data-table_filter {
-	float: left;
-}
-.page-header.float-left{
-	padding-left: 0;
-}
-#bootstrap-slot-data-table_info {
-	float: left;
-}
-#bootstrap-slot-data-table_paginate {
-	float: left;
-}
-#motaddform .col-lg-12 input, #motaddform .col-lg-12 select{
-	width: 48%;
-}
-.col-emg .col{
-	flex: inherit !important;
-}
-.no-white{
-	background: none !important;
-	border: none; 
-	padding: 0;
-}
-.dtr-title {
-	float: left;
-}
-.payment.btn.btn-info.btn-sm {
-	margin-left: 2px;
-	padding: 6px 7px;
-	margin-top: 2px;
-}
-.card-title.add-n-cl.cl-list {
-	float: left;
-}
-}
-@media only screen and (max-width: 420px) {
-	#motaddform .col-lg-12 input, #motaddform .col-lg-12 select {
-		width: 47%;
-	}
-}
-}
+
 /*@totan 071018*/
 
 ul.tabs li.active a {
@@ -1005,6 +934,121 @@ div#sesssion_table {
 .trn-list{
 	padding-left:21%;
 }
+.ttl-wrp label {
+	display: inline-block;
+	width: 150px;
+}
+.ttl-wrp #apply2 {
+	display: inline-block;
+	width: 420px;
+	margin-top: 6px;
+}
+.ct-d #mail {
+	padding-left: 5px;
+}
+ul.tabs li.active a{
+	color: #fff !important;
+}
+#cus_det {
+	margin-bottom: 10px;
+}
 /*#sesssion_table .save_button{
   padding-left: 30px;
 }*/
+
+
+@media only screen and (max-width: 767px) {
+	aside.left-panel {
+	display: block !important;
+	height: auto !important;
+	min-height: inherit !important;
+	padding: 0 15px !important;
+	width: 100% !important;
+}
+body{
+	overflow-x: hidden !important;
+}
+.header-menu .col-sm-5 {
+	float: left !important;
+}
+.user-area .user-avatar{
+	margin-top: 0;
+}
+.right-panel {
+	display: block !important;
+}
+.navbar-brand {
+	margin-top: 0 !important;
+}
+.navbar-brand img {
+	width: 100px;
+	position: relative;
+	top: 7px;
+}
+#main-menu ul li i {
+	width: 7%;
+	color: white;
+}
+#bootstrap-slot-data-table_length {
+	float: left;
+	width: 100%;
+	text-align: left;
+}
+#bootstrap-slot-data-table_filter {
+	float: left;
+}
+.page-header.float-left{
+	padding-left: 0;
+}
+#bootstrap-slot-data-table_info {
+	float: left;
+}
+#bootstrap-slot-data-table_paginate {
+	float: left;
+}
+#motaddform .col-lg-12 input, #motaddform .col-lg-12 select{
+	width: 48%;
+}
+.col-emg .col{
+	flex: inherit !important;
+}
+.no-white{
+	background: none !important;
+	border: none; 
+	padding: 0;
+}
+.dtr-title {
+	float: left;
+}
+.payment.btn.btn-info.btn-sm {
+	margin-left: 2px;
+	padding: 6px 7px;
+	margin-top: 2px;
+}
+.card-title.add-n-cl.cl-list {
+	float: left;
+}
+.ttl-wrp #apply2 {
+	display: inline-block;
+	width: 100%;
+	margin-top: 6px;
+}
+.hstry-box .tabs li a {
+	padding: 10px 5px;
+}
+.navbar-expand-sm .navbar-collapse {
+
+    display: -webkit-box !important !important;
+    display: -ms-flexbox !important !important;
+    display: flex !important !important;
+    -ms-flex-preferred-size: auto !important;
+    flex-basis: auto !important;
+
+}
+}
+@media only screen and (max-width: 420px) {
+	#motaddform .col-lg-12 input, #motaddform .col-lg-12 select {
+		width: 47%;
+	}
+}
+}
