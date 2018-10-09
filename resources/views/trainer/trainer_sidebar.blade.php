@@ -25,9 +25,9 @@
 
                      @if(Auth::user()->master_trainer==1)
 
-                       @if(Request::segment(1) == "allCustomers")
-                       
-                  <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('allCustomers')}}" style="color: #fff !important;">All Customers</a></li>
+                  @if(Request::segment(2) == "allCustomers")
+
+                  <li class="active"><i class="menu-icon fa fa-dashboard"></i><a href="{{route('allCustomers')}}" style="color: #fff !important;">All Customers</a></li>
                   @else
                  
                   <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('allCustomers')}}">All Customers</a></li>
