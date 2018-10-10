@@ -955,6 +955,21 @@ ul.tabs li.active a{
 .breadcrumbs #wrong {
     color: red;
 }
+table.dataTable thead .sorting::after, table.dataTable thead .sorting_asc::after, table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc_disabled::after, table.dataTable thead .sorting_desc_disabled::after {
+	display: none;
+}
+table.dataTable thead .sorting::before, table.dataTable thead .sorting_asc::before, table.dataTable thead .sorting_desc::before, table.dataTable thead .sorting_asc_disabled::before, table.dataTable thead .sorting_desc_disabled::before {
+	display: none;
+}
+.loader {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url('../images/ajax-document-loader.gif') 50% 50% no-repeat rgb(249,249,249);
+}
 /*#sesssion_table .save_button{
   padding-left: 30px;
 }*/
@@ -1004,12 +1019,25 @@ body{
 }
 #bootstrap-slot-data-table_info {
 	float: left;
+	width: 100%;
+	white-space: inherit;
+	text-align: left;
 }
 #bootstrap-slot-data-table_paginate {
 	float: left;
+	width: 100%;
+	text-align: left;
+}
+div.dataTables_wrapper div.dataTables_paginate {
+	margin: 0;
+	white-space: inherit !important;
+	/* text-align: right; */
 }
 #motaddform .col-lg-12 input, #motaddform .col-lg-12 select{
 	width: 48%;
+}
+.fa.fa-gbp {
+	margin-right: 2px;
 }
 .col-emg .col{
 	flex: inherit !important;
@@ -1053,6 +1081,31 @@ body{
 }
 .header-menu .col-sm-5 {
 	width: 100% !important;
+}
+.card-body {
+	overflow: hidden;
+}
+table.dataTable > tbody > tr.child span.dtr-title {
+	display: inline-block;
+	min-width: 119px;
+	font-weight: bold;
+	font-size: 13px;
+}
+.dtr-data {
+	font-size: 13px;
+	vertical-align: top;
+}
+table.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] > td:first-child, table.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] > th:first-child {
+	position: relative;
+	padding-left: 30px;
+	cursor: pointer;
+	vertical-align: top;
+}
+table.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] > td:first-child::before, table.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] > th:first-child::before {
+	top: 9px;
+}
+#bootstrap-slot-data-table tbody td {
+	font-size: 13px;
 }
 }
 @media only screen and (max-width: 576px) {

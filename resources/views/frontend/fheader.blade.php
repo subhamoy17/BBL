@@ -1,4 +1,5 @@
 <body>
+<div class="loader"></div>
 	<header>
     	<div class="header-top">
     		<div class="container">

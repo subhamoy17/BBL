@@ -264,5 +264,10 @@ else{
 @endif
 
 <script src="{{url('frontend/js/accotab.js')}}"></script>
+<script type="text/javascript">
+		$(window).ready(function() {
+		$(".loader").fadeOut("fast");
+	});
+</script>
 </body>
 </html>

@@ -34,6 +34,10 @@
     </script>
 
 <script src="{{asset('backend/assets/js/totanjs/alertify.min.js')}}"></script>
-    
+<script type="text/javascript">
+		$(window).ready(function() {
+		$(".loader").fadeOut("fast");
+	});
+</script>    
 </body>
 </html>

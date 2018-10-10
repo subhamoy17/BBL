@@ -159,7 +159,7 @@
 </audio>
 <div class="container">
   
- <!--  <div  class="error">
+  <div  class="error">
     <p class="p">4</p>
     <span class="dracula">      
       <div class="con">
@@ -179,16 +179,8 @@
       <p class="page-msg"> Oops, the page you're looking for Disappeared </p>
      <a href="/"> <button class="go-back">Go Back</button></a>
     </div>
-</div> -->
+</div>
   
-<div class="gif" align="center"><img src="{{url('frontend/images/404.png')}}">
-      <p class="nt-fnd-text text-center" style="margin-bottom: 20px;">
-        <h3 align="center">Oops!!!</h3>
-        <h3 align="center" style="margin-bottom: 20px;">Back to<a href="/"> Homepage </a>
-        </h3>
-      </p>
-
-    </div>
 
 <!--  <p>Auto back to home page</p> -->
   </div>

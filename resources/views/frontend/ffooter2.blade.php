@@ -1044,7 +1044,11 @@ $("#extra_session").mouseover(function(){
         });
     </script>
 
-    
+    <script type="text/javascript">
+		$(window).ready(function() {
+		$(".loader").fadeOut("fast");
+	});
+</script>
 
 </body>
 
