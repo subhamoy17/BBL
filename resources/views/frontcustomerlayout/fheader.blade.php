@@ -7,9 +7,9 @@
     				<div class="col-lg-12">
     					<div class="all-links">
     						<ul>
-    							 <li><a href="https://www.instagram.com" target="_blank"><i class="fa fa-instagram"></i></a></li>
+    							 <li><a href="https://www.instagram.com/lekanfitness" target="_blank"><i class="fa fa-instagram"></i></a></li>
                                  <li><a href="mailto:info@example.com"><i class="fa fa-envelope"></i></a></li>
-                                <li><a href="https://www.facebook.com" target="_blank"><i class="fa fa-facebook-f"></i></a></li>
+                                <li><a href="https://www.facebook.com/bodybylekan" target="_blank"><i class="fa fa-facebook-f"></i></a></li>
                                 <li><a href="https://www.twitter.com" target="_blank"><i class="fa fa-twitter"></i></a></li>
                                 <!-- <li><a href="#"><i class="fa fa-google-plus"></i></a></li> -->
                                 <li><a href="https://www.youtube.com" target="_blank"><i class="fa fa-youtube"></i></a></li>
