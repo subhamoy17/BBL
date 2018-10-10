@@ -924,6 +924,8 @@ $.ajax({
               $('#save_btn').hide();
               $('#add_sess').show();
               $('.save_button').text('Submit');
+
+              $('.save_button').prop('disabled',false);
             }
             else
             {
@@ -940,12 +942,14 @@ $.ajax({
               $('#wrong').show();
               $('#add_sess').show();
               $('.save_button').text('Submit');
+               $('.save_button').prop('disabled',false);
             }
         }
     });
 
   $('#add_sess').hide();
   $('.save_button').text('Please wait...');
+  $('.save_button').attr('disabled','disabled');
  
 });
 });
@@ -976,6 +980,7 @@ $.ajax({
 
               $('#add_sess2').show();
               $('.save_button').text('Submit');
+              $('.save_button').prop('disabled',false);
             }
             else
             {
@@ -991,11 +996,13 @@ $.ajax({
 
               $('#add_sess2').show();
               $('.save_button').text('Submit');
+              $('.save_button').prop('disabled',false);
 
             }
         }
     });
 $('.save_button').text('Please wait...');
+$('.save_button').attr('disabled','disabled');
 $('#add_sess2').hide();
 });
 });

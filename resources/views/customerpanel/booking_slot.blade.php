@@ -802,7 +802,7 @@
     $('.save_button').text('Please wait...');
     $('#add_sess').hide();
     $('#add_sess2').hide();
-    
+    $('.save_button').attr('disabled','disabled');    
 }
 </script>
 
