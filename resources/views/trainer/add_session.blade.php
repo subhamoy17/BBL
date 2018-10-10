@@ -912,7 +912,7 @@ $.ajax({
         success: function(response){ 
             if(response.success==1 && response.session_remaining>0)
             {
-             alertify.alert('Your session booking request is sent successfully!');
+             alertify.alert('All session booking request is sent successfully!');
               $('#trainer_id').val('');
               $('#slots_datepicker').val('');
               $('#slot_time').val('');
@@ -957,7 +957,7 @@ $.ajax({
         success: function(response){
             if(response.success==1 && response.session_remaining>0)
             {
-              alertify.alert('Your session booking request is sent successfully!');
+              alertify.alert('All session booking request is sent successfully!');
               
               $('#trainer_id2').val('');
               $('#slots_datepicker2').val('');
