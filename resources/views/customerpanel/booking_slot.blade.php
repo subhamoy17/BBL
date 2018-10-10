@@ -818,7 +818,7 @@ $(document).ready(function(){
 
 $('#save_btn2').on('click',function(e){
   
-    $('#add_sess').hide();
+    $('#add_sess2').hide();
    $('.save_button').attr('disabled','disabled');
     $('.save_button').text('Please wait...');
     $('ul.tabs li').removeAttr('rel');
