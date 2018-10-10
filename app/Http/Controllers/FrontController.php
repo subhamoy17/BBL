@@ -451,7 +451,7 @@ public function booking_history(Request $request)
 
     session(['sum_slots' => $total_remaining_session]);
 
-    Log::debug(" session_value ".print_r(session('sum_slots'),true));
+   
 
     $future_pending_count=DB::table('purchases_history')
     ->join('slots','slots.id','purchases_history.slot_id')
@@ -470,7 +470,7 @@ public function booking_history(Request $request)
     ->where('slot_request.slot_date','>=',$remaining_session_request_now )
     ->where('slot_request.approval_id',3 )->count();
 
-    Log::debug(" Check id ".print_r($sum_slots,true));  
+     
 
     if($request->ajax())
     {
@@ -716,7 +716,7 @@ public function booking_slot_trainer(Request $request)
 public function slotinsert(Request $request)
 {
   
-  Log::debug(" slotinsert ".print_r($request->all(),true));
+  
 
   $total_slots=$request->total_slots;
   $customer_id=$request->idd; //customer_id
@@ -764,7 +764,7 @@ public function slotinsert(Request $request)
       $slots_data['slot_time_id']=$slots_time_id;
       $slots_data['approval_id']=1;
 
-      Log::debug(" Check session request data1 ".print_r($slots_data,true));
+     
 
       $new_remaining_package['extra_package_remaining']=$package_remaining-1;
       
@@ -774,8 +774,6 @@ public function slotinsert(Request $request)
       ->where('id',$oldest_package_id)
       ->update($new_remaining_package);
       
-
-      Log::debug(" all_package ".print_r($all_package,true));
 
       $customer_details=Customer::find($customer_id);
       $trainer_details=User::find($trainer_id);
@@ -789,7 +787,7 @@ public function slotinsert(Request $request)
       $notifydata['session_booking_time']=$slot_time->time;
       $notifydata['trainer_name']=$trainer_details->name;
 
-      Log::debug("Sent Session Request notification to trainer ".print_r($notifydata,true));
+  
 
       $trainer_details->notify(new SessionRequestNotificationToTrainer($notifydata));
     }
@@ -807,7 +805,7 @@ public function slotinsert(Request $request)
       $slots_data['slot_time_id']=$slots_time_id;
       $slots_data['approval_id']=1;
 
-      Log::debug(" Check session request data1 ".print_r($slots_data,true));
+      
 
       $insert_slot_session=DB::table('slot_request')->insert($slots_data);
 
@@ -818,7 +816,7 @@ public function slotinsert(Request $request)
       ->where('id',$oldest_package_id)
       ->update($new_remaining_package);
 
-      Log::debug(" all_package ".print_r($all_package,true));
+      
 
       $customer_details=Customer::find($customer_id);
       $trainer_details=User::find($trainer_id);
@@ -832,7 +830,7 @@ public function slotinsert(Request $request)
       $notifydata['session_booking_time']=$slot_time->time;
       $notifydata['trainer_name']=$trainer_details->name;
 
-      Log::debug("Sent Session Request notification to trainer ".print_r($notifydata,true));
+      
 
       $trainer_details->notify(new SessionRequestNotificationToTrainer($notifydata));
     }
@@ -877,7 +875,7 @@ public function slotinsert(Request $request)
     $notifydata['decline_reason']=' ';
 
 
-    Log::debug("Sent Session Request notification ".print_r($notifydata,true));
+    
 
     $customer_details->notify(new SessionRequestNotification($notifydata));
 
