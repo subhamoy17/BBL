@@ -35,7 +35,7 @@ So get set to go for a healthier you. So, no matter if you are planning to work 
 		<h3 class="heading-agileinfo white-gyls">TrainHard is the right place to start new life as an athletic, strong and healthy person with a strong will.</h3>
 		<p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia .</p>
 			<div class="more-button">
-				<a href="mailto:info@example.com">Mail Us</a>
+				<a href="mailto:info@bodybylekan.com">Mail Us</a>
 			</div>
 	</div>
 </div>
