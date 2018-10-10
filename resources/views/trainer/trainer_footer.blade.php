@@ -2,7 +2,11 @@
 
 
     <script src="{{asset('backend/assets/js/vendor/jquery-2.1.4.min.js')}}"></script>
-	
+	<script>
+		$(document).ready(function({	
+			$('body').css('overflow-x', 'hidden');
+		});
+	</script>
 	<script type="text/javascript">
 		$(document).ready(function() {
 		$(".loader").fadeOut("slow");

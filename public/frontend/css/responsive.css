@@ -352,11 +352,11 @@ ul.tabs li {
 	
 	margin: 10px auto 0;
 }
-#tab2 .btn.btn-success.bk-slt-btn {
+/*#tab2 .btn.btn-success.bk-slt-btn {
 	margin: 0 0 80px;
-}
+}*/
 #tab2 .tbl-srch.tbl-srch2 {
-	position: absolute;
+	position: static;
 	top: 50px;
 	left: 0;
 }
