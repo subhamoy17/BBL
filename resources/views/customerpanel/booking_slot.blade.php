@@ -265,7 +265,7 @@
 
     </div>
             
-      <button type="submit" name="submit" class="btn btn-dark btn-theme-colored btn-flat btn-drk2 save_button"  style="display:none;" id="save_btn" onclick="button_name_change()">Submit</button>
+      <button class="btn btn-dark btn-theme-colored btn-flat btn-drk2 save_button"  style="display:none;" id="save_btn">Submit</button>
        </form>
     </div>
 
@@ -377,7 +377,7 @@
 
     </div>
             
-      <button type="submit" name="submit" class="btn btn-dark btn-theme-colored btn-flat btn-drk2 save_button"  style="display:none;" id="save_btn2" onclick="button_name_change()">Submit</button>
+      <button class="btn btn-dark btn-theme-colored btn-flat btn-drk2 save_button"  style="display:none;" id="save_btn2">Submit</button>
        </form>
     </div>
 
@@ -797,28 +797,36 @@
 
 <script type="text/javascript">
   
-
-$('#save_btn').on('submit',function(e){
-    e.preventDefault();
+$(document).ready(function(){
+$('#save_btn').on('click',function(e){
+   
     $('#add_sess').hide();
-    $('.save_button').attr('disabled','disabled');
+   $('.save_button').attr('disabled','disabled');
     $('.save_button').text('Please wait...');
     $('ul.tabs li').removeAttr('rel');
     $('#add_session_form1').submit();
 
   });
 
-$('#save_btn2').on('submit',function(e){
-    e.preventDefault();
+
+
+ });
+
+
+$(document).ready(function(){
+
+
+$('#save_btn2').on('click',function(e){
+  
     $('#add_sess').hide();
-    $('.save_button').attr('disabled','disabled');
+   $('.save_button').attr('disabled','disabled');
     $('.save_button').text('Please wait...');
     $('ul.tabs li').removeAttr('rel');
     $('#add_session_form2').submit();
 
   });
 
-
+ });
 </script>
 
 <script>
