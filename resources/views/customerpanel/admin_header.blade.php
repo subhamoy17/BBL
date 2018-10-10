@@ -20,7 +20,7 @@
                         </a>
 
                         <div class="user-menu dropdown-menu">
-                                <a class="nav-link" href="{{url('adminpanel/home')}}/{{Auth::user()->id}}"><i class="fa fa- user"></i>My Profile</a>
+                                <a class="nav-link" href="{{url('adminpanel/showprofile')}}"><i class="fa fa- user"></i>My Profile</a>
 
                                 <a class="nav-link" href="{{url('adminpanel/home/editprofile')}}/{{Auth::user()->id}}"><i class="fa fa -cog"></i>Edit Profile</a>
 

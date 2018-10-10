@@ -21,9 +21,9 @@
 
 
                         <div class="user-menu dropdown-menu">
-                                <a class="nav-link" href="{{url('trainer/home')}}/{{Auth::user()->id}}"><i class="fa fa- user"></i>My Profile</a>
+                                <a class="nav-link" href="{{route('showprofile')}}"><i class="fa fa- user"></i>My Profile</a>
 
-                                <a class="nav-link" href="{{url('trainer/editprofile')}}/{{Auth::user()->id}}"><i class="fa fa -cog"></i>Edit Profile</a>
+                                <a class="nav-link" href="{{url('trainer/editprofile')}}"><i class="fa fa -cog"></i>Edit Profile</a>
 
 
                                 <a class="nav-link" href="{{ route('trainer.changepassword') }}"><i class="fa fa -cog"></i>Change Password</a>

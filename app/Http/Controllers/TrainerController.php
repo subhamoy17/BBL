@@ -81,19 +81,19 @@ Log::debug(":: total_booking_qtr data :: ".print_r($qtrMonth,true));
 * Show trainer own profile
 *
 */
-public function showprofile($id)
+public function showprofile()
 {
-  Log::debug(":: Show Profile :: ".print_r($id,true));
+  // Log::debug(":: Show Profile :: ".print_r($id,true));
 
-  $data=DB::table('users')->where('Id',$id)->first();
+  $data=DB::table('users')->where('Id',Auth::user()->id)->first();
   Log::debug(":: Trainer data :: ".print_r($data,true));
   return view('trainer.trainerprofile')->with(compact('data'));
 }
 
 // open the update form of trainer
-public function showupdateform($id)
+public function showupdateform()
 {
-  $data= DB::table('users')->where('id',$id)->first();
+  $data= DB::table('users')->where('Id',Auth::user()->id)->first();
   Log::debug(" data ".print_r($data,true));
 
   return view ("trainer.editform")->with(compact('data'));

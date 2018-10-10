@@ -199,19 +199,22 @@ public function paypal_payment_success()
 }
 
 
-public function customer_profile($id)
+public function customer_profile()
 {  
-  Log::debug(":: Show Profile :: ".print_r($id,true));
+ 
+  // Log::debug(":: Show Profile :: ".print_r($id,true));
 
-  $data=DB::table('customers')->where('id',$id)->first();
+  $data=DB::table('customers')->where('id',Auth::guard('customer')->user()->id)->first();
   Log::debug(":: customers data :: ".print_r($data,true));
   return view('customerpanel.profile')->with(compact('data'));
+
+  
 }
 
 
-public function customer_showupdateform($id)
+public function customer_showupdateform()
 {
-  $data= DB::table('customers')->where('id',$id)->first();
+  $data= DB::table('customers')->where('id',Auth::guard('customer')->user()->id)->first();
   Log::debug(" data ".print_r($data,true));
   return view ("customerpanel.editprofile")->with(compact('data'));
 }

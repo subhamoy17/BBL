@@ -8,7 +8,7 @@
           <div id="tab3" class="tab_content">
            <h3 class="ed-p">My Profile</h3>
             <div class="form-box">
-              @if($data)
+              @if($data)>0)
                 <div class="row">
                   <div class="col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group">
@@ -51,7 +51,7 @@
                         <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="form-group">
                           <input name="form_botcheck" class="form-control" value="" type="hidden">
-                         <a href="{{url('customer/editprofile')}}/{{Auth::user()->id}}"><button type="submit"  class="btn btn-dark btn-theme-colored btn-flat" data-loading-text="Please wait..."> Edit</button></a>
+                         <a href="{{url('customer/editprofile')}}"><button type="submit"  class="btn btn-dark btn-theme-colored btn-flat" data-loading-text="Please wait..."> Edit</button></a>
                         </div>
                 </div>
                 </div>

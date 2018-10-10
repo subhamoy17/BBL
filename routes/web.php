@@ -32,10 +32,10 @@ Route::group ( [
 Route::get('home', 'TrainerController@index')->name('home');
 
 // for show own profile of trainer
-Route::get('home/{id}', 'TrainerController@showprofile');
+Route::get('showprofile', 'TrainerController@showprofile')->name('showprofile');
 
 // for show own profile of trainer
-Route::get('editprofile/{id}', 'TrainerController@showupdateform');
+Route::get('editprofile', 'TrainerController@showupdateform');
 Route::POST('updateprofile','TrainerController@updateprofile')->name('trainer.profileupdate');
 
 /// route for admin change password 
@@ -274,7 +274,8 @@ Route::get('approveCustomer', 'TrainerController@approve_customer_request')->nam
 
 
 //fronted work here//
-Route::prefix('customer')->group(function () {
+
+  Route::group (['prefix' => 'customer'], function () {
 
 Route::get('bbl','FrontController@bbl')->name('bbl');
 
@@ -303,11 +304,13 @@ Route::post('bankpaymentsuccess','BankPaymentController@bank_payment_success');
 Route::get('bankpaymentcomplete','BankPaymentController@bank_payment_complete')->name('bankpaymentcomplete');
 
 //customer profile//
-Route::get('profile/{id}','FrontController@customer_profile')->name('profile');
+
+Route::get('profile','FrontController@customer_profile')->name('profile');
 
 //edit profile//
-Route::get('editprofile/{id}', 'FrontController@customer_showupdateform')->name('customer.editprofile');
+Route::get('editprofile', 'FrontController@customer_showupdateform')->name('customer.editprofile');
 Route::POST('updateprofile','FrontController@updateprofile')->name('customer.profileupdate');
+
 
 
 Route::get('purchase_history','FrontController@purchases_history')->name('customer_purchases_history');

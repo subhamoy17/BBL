@@ -20,7 +20,7 @@
                                 <span class="caret"></span></button>
                                 <ul class="dropdown-menu">
                                     <li><a href="{{url('customer/mybooking')}}">My Dashboard</a></li>
-                                    <li><a href="{{url('customer/profile')}}/{{Auth::guard('customer')->user()->id}}">My Profile</a></li>
+                                    <li><a href="{{url('customer/profile')}}">My Profile</a></li>
                                     <li><a href="{{ route('customerpanel.logout') }}" onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();">Logout</a></li>
                                     <form id="logout-form" action="{{ route('customerpanel.logout') }}" method="POST" style="display: none;">
