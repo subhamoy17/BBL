@@ -30,7 +30,7 @@
               <div class="contact-info text-center">
                 <i class="fa fa-envelope font-36 mb-10 text-theme-colored"></i>
                 <h4>Email</h4>
-                <h6 class="text-gray">you@yourdomain.com</h6>
+                <h6 class="text-gray">info@bodybylekan.com</h6>
               </div>
             </div>
           </div>
