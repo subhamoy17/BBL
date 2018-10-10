@@ -2373,6 +2373,7 @@ public function trainer_slotinsert(Request $request)
     $notifydata['session_booking_time']=$slot_time->time;
     $notifydata['trainer_name']=$trainer_details->name;
     $notifydata['decline_reason']=' ';
+    $notifydata['sending_trainer']=Auth::user()->name;
 
 
     $customer_details->notify(new SessionRequestNotification($notifydata));

@@ -48,7 +48,8 @@ class SessionRequestNotification extends Notification implements ShouldQueue
     {
         Log::debug(" Mail ".print_r($this,true));
 
-
+             if($this->notifydata['status']=='Sent Session Request by trainer')
+        {
             return (new MailMessage)->view(
               'emails.sessionrequestemail',
               [
@@ -62,11 +63,29 @@ class SessionRequestNotification extends Notification implements ShouldQueue
             'session_booking_date'=>$this->notifydata['session_booking_date'],
             'session_booking_time'=>$this->notifydata['session_booking_time'],
             'trainer_name'=>$this->notifydata['trainer_name'],
-            'decline_reason'=>$this->notifydata['decline_reason'],
-
-
-            
+            'decline_reason'=>$this->notifydata['decline_reason'],            
+            'sending_trainer'=>$this->notifydata['sending_trainer'],            
           ]);
+        }
+
+        else
+        {
+             return (new MailMessage)->view(
+              'emails.sessionrequestemail',
+              [
+            'enquiredTime' => Carbon::now(),
+            'customer_name'=>$this->notifydata['customer_name'],
+            'customer_email'=>$this->notifydata['customer_email'],
+            'customer_phone'=>$this->notifydata['customer_phone'],
+            'status'=>$this->notifydata['status'],
+            'url'=>$this->notifydata['url'],
+            'session_booked_on'=>$this->notifydata['session_booked_on'],
+            'session_booking_date'=>$this->notifydata['session_booking_date'],
+            'session_booking_time'=>$this->notifydata['session_booking_time'],
+            'trainer_name'=>$this->notifydata['trainer_name'],
+            'decline_reason'=>$this->notifydata['decline_reason'],            
+          ]);
+        }
 
     }
 }
