@@ -101,7 +101,7 @@ messages: {
 
 
 
-  <div class="breadcrumbs">
+  <div class="breadcrumbs opacity_div">
     <div class="col-sm-12">
       <div class="page-header float-left">
         <div class="page-title ttl-wrp">
@@ -111,7 +111,7 @@ messages: {
       </div>
     </div>    
   </div>
-  <div class="breadcrumbs">
+  <div class="breadcrumbs opacity_div">
 <div class="col-lg-12 ct-d">
  <div class="col-md-12 col-sm-12 col-xs-12">
 <div class=""  id="mail" style="display: none;">
@@ -124,7 +124,7 @@ messages: {
       </div>
 	  </div>
 	  </div>
-    <div class="inner-padding"  id="right"  style="display: none;">
+    <div class="inner-padding opacity_div"  id="right"  style="display: none;">
     <div class="container">
       <div class="hstry-box">
         <!-- @if($total_remaining_session>0) -->
@@ -364,7 +364,7 @@ messages: {
       <!-- .tab_container -->
     </div>
   </div> 
-  <div class="breadcrumbs">
+  <div class="breadcrumbs opacity_div">
 <div class="inner-padding" id="wrong" style="display: none;">
    This customer's have not any available session.
 </div>
@@ -901,7 +901,7 @@ $('a[data-toggle="tab"]').on('click', function (e) {
 
 
 <script>
-$(document).ready(function(){
+$(document).ready(function(){  
 var form=$("#add_session_form1");
 $("#save_btn").click(function(){ 
 
@@ -913,6 +913,7 @@ $.ajax({
             if(response.success==1 && response.session_remaining>0)
             {
              alertify.alert('All session booking request is sent successfully!');
+             $('ul.tabs li').attr('rel','tab5');
               $('#trainer_id').val('');
               $('#slots_datepicker').val('');
               $('#slot_time').val('');
@@ -924,11 +925,12 @@ $.ajax({
               $('#save_btn').hide();
               $('#add_sess').show();
               $('.save_button').text('Submit');
-
               $('.save_button').prop('disabled',false);
+              
             }
             else
             {
+              $('ul.tabs li').attr('rel','tab5');
               $('#trainer_id').val('');
               $('#slots_datepicker').val('');
               $('#slot_time').val('');
@@ -943,6 +945,7 @@ $.ajax({
               $('#add_sess').show();
               $('.save_button').text('Submit');
                $('.save_button').prop('disabled',false);
+              
             }
         }
     });
@@ -950,7 +953,10 @@ $.ajax({
   $('#add_sess').hide();
   $('.save_button').text('Please wait...');
   $('.save_button').attr('disabled','disabled');
- 
+  
+  $('ul.tabs li').removeAttr('rel');
+
+
 });
 });
 </script>
@@ -967,7 +973,7 @@ $.ajax({
             if(response.success==1 && response.session_remaining>0)
             {
               alertify.alert('All session booking request is sent successfully!');
-              
+              $('ul.tabs li').prop('rel','tab6');
               $('#trainer_id2').val('');
               $('#slots_datepicker2').val('');
               $('#slot_time2').val('');
@@ -981,9 +987,11 @@ $.ajax({
               $('#add_sess2').show();
               $('.save_button').text('Submit');
               $('.save_button').prop('disabled',false);
+              
             }
             else
             {
+              $('ul.tabs li').prop('rel','tab6');
               $('#trainer_id2').val('');
               $('#slots_datepicker2').val('');
               $('#slot_time2').val('');
@@ -997,6 +1005,7 @@ $.ajax({
               $('#add_sess2').show();
               $('.save_button').text('Submit');
               $('.save_button').prop('disabled',false);
+              
 
             }
         }
@@ -1004,6 +1013,9 @@ $.ajax({
 $('.save_button').text('Please wait...');
 $('.save_button').attr('disabled','disabled');
 $('#add_sess2').hide();
+$('ul.tabs li').removeAttr('rel');
+
+
 });
 });
 </script>

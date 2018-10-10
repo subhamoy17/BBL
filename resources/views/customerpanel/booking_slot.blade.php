@@ -143,7 +143,7 @@
 
       
  
-  <div class="inner-padding">
+  <div class="inner-padding opacity_div">
     <div class="container">
       <div class="hstry-box">
       
@@ -398,7 +398,7 @@
     </div>
   </div> 
 
-
+</div>
 <!-- end -->
 
 
@@ -797,13 +797,28 @@
 
 <script type="text/javascript">
   
-  function button_name_change() // no ';' here
-{
-    $('.save_button').text('Please wait...');
+
+$('#save_btn').on('submit',function(e){
+    e.preventDefault();
     $('#add_sess').hide();
-    $('#add_sess2').hide();
-    $('.save_button').attr('disabled','disabled');    
-}
+    $('.save_button').attr('disabled','disabled');
+    $('.save_button').text('Please wait...');
+    $('ul.tabs li').removeAttr('rel');
+    $('#add_session_form1').submit();
+
+  });
+
+$('#save_btn2').on('submit',function(e){
+    e.preventDefault();
+    $('#add_sess').hide();
+    $('.save_button').attr('disabled','disabled');
+    $('.save_button').text('Please wait...');
+    $('ul.tabs li').removeAttr('rel');
+    $('#add_session_form2').submit();
+
+  });
+
+
 </script>
 
 <script>
