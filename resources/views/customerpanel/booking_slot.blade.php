@@ -313,8 +313,6 @@
                         </div>              
 
 
-
-
                          <div class="col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group" >
 
@@ -802,6 +800,9 @@
   function button_name_change() // no ';' here
 {
     $('.save_button').text('Please wait...');
+    $('#add_sess').hide();
+    $('#add_sess2').hide();
+    
 }
 </script>
 

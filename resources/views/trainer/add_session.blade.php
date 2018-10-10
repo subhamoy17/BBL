@@ -239,7 +239,7 @@ messages: {
     </div>
             
       
-      <button type="button" name="submit" class="btn btn-dark btn-theme-colored btn-flat btn-drk2 save_button"  style="display:none;" id="save_btn" onclick="button_name_change()">Submit</button>
+      <button type="button" name="submit" class="btn btn-dark btn-theme-colored btn-flat btn-drk2 save_button"  style="display:none;" id="save_btn">Submit</button>
        </form>
     </div>
 
@@ -341,7 +341,7 @@ messages: {
 
     </div>
             
-      <button type="button" name="submit" class="btn btn-dark btn-theme-colored btn-flat btn-drk2 save_button"  style="display:none;" id="save_btn2" onclick="button_name_change()">Submit</button>
+      <button type="button" name="submit" class="btn btn-dark btn-theme-colored btn-flat btn-drk2 save_button"  style="display:none;" id="save_btn2">Submit</button>
        </form>
     </div>
 
@@ -922,6 +922,8 @@ $.ajax({
               old_session_data.innerHTML='';
 
               $('#save_btn').hide();
+              $('#add_sess').show();
+              $('.save_button').text('Submit');
             }
             else
             {
@@ -936,11 +938,14 @@ $.ajax({
               $('#save_btn').hide();
               $('#right').hide();
               $('#wrong').show();
-
+              $('#add_sess').show();
+              $('.save_button').text('Submit');
             }
         }
     });
 
+  $('#add_sess').hide();
+  $('.save_button').text('Please wait...');
  
 });
 });
@@ -969,6 +974,8 @@ $.ajax({
                $('#tab5').hide();
               $('#tab6').show();
 
+              $('#add_sess2').show();
+              $('.save_button').text('Submit');
             }
             else
             {
@@ -982,15 +989,17 @@ $.ajax({
               $('#right').hide();
               $('#wrong').show();
 
+              $('#add_sess2').show();
+              $('.save_button').text('Submit');
 
             }
         }
     });
+$('.save_button').text('Please wait...');
+$('#add_sess2').hide();
 });
 });
 </script>
-
-
 
 @endsection
 
