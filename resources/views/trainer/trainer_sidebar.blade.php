@@ -3,6 +3,7 @@
 <head>
 </head>
 <body>
+<div class="loader"></div>
   <link href="{{url('backend/assets/css/style.css')}}" rel="stylesheet">
   <aside id="left-panel" class="left-panel">
     <nav class="navbar navbar-expand-sm navbar-default">
