@@ -1030,7 +1030,7 @@ $.ajax({
             if(response.success==1 && response.session_remaining>0)
             {
               alertify.alert('All session booking request is sent successfully!');
-              $('ul.tabs li#t6').prop('rel','tab6');
+              $('ul.tabs li#t6').attr('rel','tab6');
               $('ul.tabs li#t5').attr('rel','tab5');
              
               if($('#executive_trainer2').val()=='')
@@ -1054,7 +1054,7 @@ $.ajax({
             }
             else
             {
-              $('ul.tabs li#t6').prop('rel','tab6');
+              $('ul.tabs li#t6').attr('rel','tab6');
               $('ul.tabs li#t5').attr('rel','tab5');
               if($('#executive_trainer2').val()=='')
               {
