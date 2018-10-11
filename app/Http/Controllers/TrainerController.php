@@ -44,6 +44,37 @@ public function index()
 {
   $cur_date =Carbon::now()->toDateString();
 
+if(Auth::user()->master_trainer==1)
+{
+  //number of future pending request
+  $future_pending_request=DB::table('slot_request')->where('slot_date','>=',$cur_date)->where('approval_id',1)->count(); 
+
+  //number of future approve request 
+  $future_approve_request=DB::table('slot_request')
+  ->where(function($q) {
+    $q->where('approval_id', 3)
+      ->orWhere('approval_id', 4);
+  })->where('slot_date','>=',$cur_date)->count(); 
+
+  //number of past request
+  $past_request=DB::table('slot_request')->where('approval_id','<>',2)->where('slot_date','<',$cur_date)->count();
+
+  //number of decline request
+  $decline_request=DB::table('slot_request')->where('approval_id',4)->count();
+
+  $total_number_of_trainer=DB::table('users')->where('master_trainer',2)->whereNull('deleted_at')->count();
+  $total_number_of_customer=DB::table('customers')->where('confirmed',1)->whereNull('deleted_at')->count();
+
+  $currentMonth = date('m');
+  $total_booking_count_month = DB::table("slot_request")
+            ->whereRaw('MONTH(slot_date) = ?',[$currentMonth])
+            ->count();
+
+  $qtrMonth=Carbon::now()->subMonth(3);
+  $total_booking_qtr=DB::table('slot_request')->where('slot_date','>=',$qtrMonth)->count();
+}
+else
+{
   //number of future pending request
   $future_pending_request=DB::table('slot_request')->where('trainer_id',Auth::user()->id)->where('slot_date','>=',$cur_date)->where('approval_id',1)->count(); 
 
@@ -65,11 +96,13 @@ public function index()
 
   $currentMonth = date('m');
   $total_booking_count_month = DB::table("slot_request")
-            ->whereRaw('MONTH(slot_date) = ?',[$currentMonth])
+            ->whereRaw('MONTH(slot_date) = ?',[$currentMonth])->where('trainer_id',Auth::user()->id)
             ->count();
 
   $qtrMonth=Carbon::now()->subMonth(3);
-  $total_booking_qtr=DB::table('slot_request')->where('slot_date','>=',$qtrMonth)->count();
+  $total_booking_qtr=DB::table('slot_request')->where('slot_date','>=',$qtrMonth)->where('trainer_id',Auth::user()->id)->count();
+}
+  
 
 Log::debug(":: total_booking_qtr data :: ".print_r($qtrMonth,true));
 

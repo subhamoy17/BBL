@@ -184,9 +184,11 @@ messages: {
                                 <option value="{{$mydata->id}}"> {{$mydata->name}}</option>
                                 @endforeach
                               </select>
+                              <input type="hidden"  id='executive_trainer' value="">
                               @else
-                              <input type="text" class="form-control" name="id" id='trainer_id' readonly="true" value="{{Auth::user()->name}}">
+                              <input type="text" class="form-control" name="id" id='executive_trainer_name' readonly="true" value="{{Auth::user()->name}}">
                               <input type="hidden"  id='executive_trainer' value="executive_trainer">
+                               <input type="hidden" name="trainer_id" id='trainer_id' value="{{Auth::user()->id}}">
                               
                               @endif
 
@@ -303,7 +305,7 @@ messages: {
 
                         </div>
 
-
+                        @if(Auth::user()->master_trainer==1)
                         <div class="col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group">
                               
@@ -312,11 +314,29 @@ messages: {
                               <select class="form-control" name="trainer_id2" id='trainer_id2'>
                                
                               </select>
+                               <input type="hidden"  id='executive_trainer2' value="">
+                              
+
+                            </div>
+                        </div>
+                        @else
+                        <div class="col-md-6 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                              
+                            
+                              <label>Trainer Name<small>*</small></label>
+
+                              <input type="text" class="form-control" name="id" id='executive_trainer_name2' readonly="true" value="{{Auth::user()->name}}">
+
+                              <input type="hidden" name="trainer_id2" id='trainer_id2' value="{{Auth::user()->id}}">
+                               
+                          <input type="hidden"  id='executive_trainer2' value="executive_trainer2">
 
                               
 
                             </div>
                         </div>
+                        @endif
                         <!-- <div class="clearfix"></div> -->
                       
 
@@ -386,7 +406,11 @@ $('a[data-toggle="tab"]').on('click', function (e) {
   var tab_val=$(this).prop('class'); 
   if(tab_val=='li2')
   {
-   $('#trainer_id').val('');
+    if($('#executive_trainer').val()=='' || $('#executive_trainer2').val()=='')
+    {
+      $('#trainer_id').val('');
+    }
+  
    $('#slots_datepicker').val('');
    $('#slot_time').val('');
    $('#session_no').val(1);
@@ -399,7 +423,11 @@ $('a[data-toggle="tab"]').on('click', function (e) {
   }
   else if(tab_val=='li1')
   {
-    $('#trainer_id2').val('');
+    if($('#executive_trainer').val()=='' || $('#executive_trainer2').val()=='')
+    {
+       $('#trainer_id2').val('');
+    }
+    
    $('#slots_datepicker2').val('');
    $('#slot_time2').val('');
    $('#session_no2').val(1);
@@ -716,17 +744,18 @@ $('a[data-toggle="tab"]').on('click', function (e) {
 
       if($('#executive_trainer').val()=='')
       {
+
         trainer_name=$("#trainer_id option:selected").text();
+        
       }
       else
       {
-        trainer_name=$("#trainer_id").val();
+        trainer_name=$("#executive_trainer_name").val();
+        
       }
-      
+      trainer_id=$("#trainer_id").val();
       slots_date=$("#slots_datepicker").val();
       slots_time=$("#slot_time option:selected").text();
-
-      trainer_id=$("#trainer_id").val();
 
       slots_time_id=$("#slot_time").val();
 
@@ -828,7 +857,15 @@ $('a[data-toggle="tab"]').on('click', function (e) {
 
       i=$('#session_no2').val();
 
+if($('#executive_trainer2').val()=='')
+      {
       trainer_name=$("#trainer_id2 option:selected").text();
+    }
+
+    else
+    {
+      trainer_name=$("#executive_trainer_name2").val();
+    }
       slots_date=$("#slots_datepicker2").val();
       slots_time=$("#slot_time2 option:selected").text();
 
@@ -902,7 +939,11 @@ $('a[data-toggle="tab"]').on('click', function (e) {
 
     $('#save_btn2').show();
     
-    $("#trainer_id2").val("");
+    if($('#executive_trainer2').val()=='')
+    {
+      $("#trainer_id2").val("");
+    }
+    
     $("#slots_datepicker2").val("");
     $("#slot_time2").val("");
     
@@ -932,8 +973,13 @@ $.ajax({
             if(response.success==1 && response.session_remaining>0)
             {
              alertify.alert('All session booking request is sent successfully!');
-             $('ul.tabs li').attr('rel','tab5');
+            
+             if($('#executive_trainer').val()=='')
+             {
+               $('ul.tabs li').attr('rel','tab5');
               $('#trainer_id').val('');
+             }
+              
               $('#slots_datepicker').val('');
               $('#slot_time').val('');
               $('#session_no').val(1);
@@ -949,8 +995,12 @@ $.ajax({
             }
             else
             {
+              
+              if($('#executive_trainer').val()=='')
+             {
               $('ul.tabs li').attr('rel','tab5');
               $('#trainer_id').val('');
+             }
               $('#slots_datepicker').val('');
               $('#slot_time').val('');
               $('#session_no').val(1);
@@ -963,7 +1013,7 @@ $.ajax({
               $('#wrong').show();
               $('#add_sess').show();
               $('.save_button').text('Submit');
-               $('.save_button').prop('disabled',false);
+              $('.save_button').prop('disabled',false);
               
             }
         }
@@ -972,8 +1022,11 @@ $.ajax({
   $('#add_sess').hide();
   $('.save_button').text('Please wait...');
   $('.save_button').attr('disabled','disabled');
+    if($('#executive_trainer').val()=='')
+    {
+      $('ul.tabs li').removeAttr('rel');
+    }
   
-  $('ul.tabs li').removeAttr('rel');
 
 
 });
@@ -992,8 +1045,13 @@ $.ajax({
             if(response.success==1 && response.session_remaining>0)
             {
               alertify.alert('All session booking request is sent successfully!');
-              $('ul.tabs li').prop('rel','tab6');
-              $('#trainer_id2').val('');
+              
+              if($('#executive_trainer2').val()=='')
+              {
+                $('ul.tabs li').prop('rel','tab6');
+                $('#trainer_id2').val('');
+              }
+              
               $('#slots_datepicker2').val('');
               $('#slot_time2').val('');
               $('#session_no2').val(1);
@@ -1010,8 +1068,12 @@ $.ajax({
             }
             else
             {
-              $('ul.tabs li').prop('rel','tab6');
-              $('#trainer_id2').val('');
+             
+              if($('#executive_trainer2').val()=='')
+              {
+                 $('ul.tabs li').prop('rel','tab6');
+                $('#trainer_id2').val('');
+              }
               $('#slots_datepicker2').val('');
               $('#slot_time2').val('');
               $('#session_no2').val(1);
@@ -1032,7 +1094,11 @@ $.ajax({
 $('.save_button').text('Please wait...');
 $('.save_button').attr('disabled','disabled');
 $('#add_sess2').hide();
-$('ul.tabs li').removeAttr('rel');
+if($('#executive_trainer2').val()=='')
+{
+  $('ul.tabs li').removeAttr('rel');
+}
+
 
 
 });

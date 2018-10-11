@@ -206,6 +206,7 @@
         </div> <!-- .content -->
 
         <div class="content mt-3">
+            @if(Auth::user()->master_trainer==1)
            <div class="col-sm-6 col-lg-3">
                 <div class="text-white bg-flat-color-1">
                     <div class="card-body pb-0">
@@ -235,8 +236,9 @@
 
                 </div>
             </div>
+            @endif
             <!--/.col-->
-
+            @if(Auth::user()->master_trainer==1)
             <div class="col-sm-6 col-lg-3">
                 <div class="text-white bg-flat-color-2">
                     <div class="card-body pb-0">
@@ -264,6 +266,7 @@
                     </div>
                 </div>
             </div>
+            @endif
             <!--/.col-->
 
             <div class="col-sm-6 col-lg-3">
