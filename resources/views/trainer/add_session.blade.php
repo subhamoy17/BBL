@@ -305,26 +305,18 @@ messages: {
 
                         </div>
 
-                        @if(Auth::user()->master_trainer==1)
+                        
                         <div class="col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group">
                               
-                            
+                            @if(Auth::user()->master_trainer==1)
                               <label>Available Trainer <small>*</small></label>
                               <select class="form-control" name="trainer_id2" id='trainer_id2'>
                                
                               </select>
                                <input type="hidden"  id='executive_trainer2' value="">
-                              
-
-                            </div>
-                        </div>
-                        @else
-                        <div class="col-md-6 col-sm-12 col-xs-12">
-                            <div class="form-group">
-                              
-                            
-                              <label>Trainer Name<small>*</small></label>
+                            @else
+                            <label>Trainer Name<small>*</small></label>
 
                               <input type="text" class="form-control" name="id" id='executive_trainer_name2' readonly="true" value="{{Auth::user()->name}}">
 
@@ -332,11 +324,11 @@ messages: {
                                
                           <input type="hidden"  id='executive_trainer2' value="executive_trainer2">
 
-                              
-
+                          @endif
                             </div>
                         </div>
-                        @endif
+                        
+                        
                         <!-- <div class="clearfix"></div> -->
                       
 
@@ -417,9 +409,20 @@ $('a[data-toggle="tab"]').on('click', function (e) {
    
    add_session_req.innerHTML='';
    old_session_data.innerHTML='';
-   
-
    $('#save_btn').hide();
+
+   if($('#executive_trainer').val()=='' || $('#executive_trainer2').val()=='')
+    {
+       $('#trainer_id2').val('');
+    }
+    
+   $('#slots_datepicker2').val('');
+   $('#slot_time2').val('');
+   $('#session_no2').val(1);
+   add_session_req2.innerHTML='';
+   old_session_data2.innerHTML='';
+   
+   $('#save_btn2').hide();
   }
   else if(tab_val=='li1')
   {
@@ -973,10 +976,10 @@ $.ajax({
             if(response.success==1 && response.session_remaining>0)
             {
              alertify.alert('All session booking request is sent successfully!');
-            
+             $('ul.tabs li#t5').attr('rel','tab5');
+             $('ul.tabs li#t6').attr('rel','tab6');
              if($('#executive_trainer').val()=='')
-             {
-               $('ul.tabs li').attr('rel','tab5');
+             {      
               $('#trainer_id').val('');
              }
               
@@ -995,10 +998,10 @@ $.ajax({
             }
             else
             {
-              
+              $('ul.tabs li#t5').attr('rel','tab5');
+              $('ul.tabs li#t6').attr('rel','tab6');
               if($('#executive_trainer').val()=='')
              {
-              $('ul.tabs li').attr('rel','tab5');
               $('#trainer_id').val('');
              }
               $('#slots_datepicker').val('');
@@ -1021,13 +1024,8 @@ $.ajax({
 
   $('#add_sess').hide();
   $('.save_button').text('Please wait...');
-  $('.save_button').attr('disabled','disabled');
-    if($('#executive_trainer').val()=='')
-    {
-      $('ul.tabs li').removeAttr('rel');
-    }
-  
-
+  $('.save_button').attr('disabled','disabled'); 
+  $('ul.tabs li').removeAttr('rel');
 
 });
 });
@@ -1045,10 +1043,11 @@ $.ajax({
             if(response.success==1 && response.session_remaining>0)
             {
               alertify.alert('All session booking request is sent successfully!');
-              
+              $('ul.tabs li#t6').prop('rel','tab6');
+              $('ul.tabs li#t5').attr('rel','tab5');
+             
               if($('#executive_trainer2').val()=='')
-              {
-                $('ul.tabs li').prop('rel','tab6');
+              {   
                 $('#trainer_id2').val('');
               }
               
@@ -1068,10 +1067,10 @@ $.ajax({
             }
             else
             {
-             
+              $('ul.tabs li#t6').prop('rel','tab6');
+              $('ul.tabs li#t5').attr('rel','tab5');
               if($('#executive_trainer2').val()=='')
               {
-                 $('ul.tabs li').prop('rel','tab6');
                 $('#trainer_id2').val('');
               }
               $('#slots_datepicker2').val('');
@@ -1094,12 +1093,7 @@ $.ajax({
 $('.save_button').text('Please wait...');
 $('.save_button').attr('disabled','disabled');
 $('#add_sess2').hide();
-if($('#executive_trainer2').val()=='')
-{
-  $('ul.tabs li').removeAttr('rel');
-}
-
-
+$('ul.tabs li').removeAttr('rel');
 
 });
 });
