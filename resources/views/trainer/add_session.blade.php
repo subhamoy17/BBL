@@ -86,7 +86,7 @@ messages: {
 
   </script>
 
-@if(Auth::user()->master_trainer==1)
+
 
 
   <div class="breadcrumbs">
@@ -176,12 +176,19 @@ messages: {
                               
                             
                               <label>Trainer Name <small>*</small></label>
+
+                              @if(Auth::user()->master_trainer==1)
                               <select class="form-control" name="id" id='trainer_id' onchange="jsfunction()">
                                 <option value=""> Please select a name</option>
                                  @foreach($trainer_data as $mydata)
                                 <option value="{{$mydata->id}}"> {{$mydata->name}}</option>
                                 @endforeach
                               </select>
+                              @else
+                              <input type="text" class="form-control" name="id" id='trainer_id' readonly="true" value="{{Auth::user()->name}}">
+                              <input type="hidden"  id='executive_trainer' value="executive_trainer">
+                              
+                              @endif
 
                               
 
@@ -369,7 +376,7 @@ messages: {
    This customer's have not any available session.
 </div>
 </div>
-@endif
+
 
 
 <script>
@@ -707,7 +714,15 @@ $('a[data-toggle="tab"]').on('click', function (e) {
       duplicate_flag=0;
       i=$('#session_no').val();
 
-      trainer_name=$("#trainer_id option:selected").text();
+      if($('#executive_trainer').val()=='')
+      {
+        trainer_name=$("#trainer_id option:selected").text();
+      }
+      else
+      {
+        trainer_name=$("#trainer_id").val();
+      }
+      
       slots_date=$("#slots_datepicker").val();
       slots_time=$("#slot_time option:selected").text();
 
@@ -784,9 +799,13 @@ $('a[data-toggle="tab"]').on('click', function (e) {
 
     $('#save_btn').show();
     
+    if($('#executive_trainer').val()=='')
+    {
     $("#trainer_id").val("");
+    }
     $("#slots_datepicker").val("");
     $("#slot_time").val("");
+    
     
     i=1+parseInt(i);
     $("#session_no").val(i);

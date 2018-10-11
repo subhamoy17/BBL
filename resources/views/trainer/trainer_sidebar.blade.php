@@ -198,7 +198,15 @@
                   <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('gymType')}}">Exercise List</a></li>
                   @endif
  -->
-
+                      @if(Request::segment(2) == "add_session")
+                 <ul class="nav navbar-nav">
+                 <li class="active">
+                  <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('add_session')}}" style="color: #fff !important;">Add Session</a></li>
+                  @else
+                  <ul class="nav navbar-nav">
+                  <li class="active">
+                  <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('add_session')}}">Add Session</a></li>
+                  @endif
 
                       @if(Request::segment(1) == "pastRequestlist" || Request::segment(1) == "futureRequestlist" || Request::segment(1) == "futurePendingRequestlist" || Request::segment(1) == "canelledlist")                   
                       <li class="menu-item-has-children dropdown show">
