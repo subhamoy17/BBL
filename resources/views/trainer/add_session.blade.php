@@ -410,19 +410,6 @@ $('a[data-toggle="tab"]').on('click', function (e) {
    add_session_req.innerHTML='';
    old_session_data.innerHTML='';
    $('#save_btn').hide();
-
-   if($('#executive_trainer').val()=='' || $('#executive_trainer2').val()=='')
-    {
-       $('#trainer_id2').val('');
-    }
-    
-   $('#slots_datepicker2').val('');
-   $('#slot_time2').val('');
-   $('#session_no2').val(1);
-   add_session_req2.innerHTML='';
-   old_session_data2.innerHTML='';
-   
-   $('#save_btn2').hide();
   }
   else if(tab_val=='li1')
   {
