@@ -6,7 +6,7 @@
 
 <script type="text/javascript">
 
-  $(document).ready(function(){
+  $(document).ready(function(){  
     $('#add_slot').validate({  
 /// rules of error 
 rules: {
@@ -949,7 +949,6 @@ if($('#executive_trainer2').val()=='')
   
 </script>
 
-
 <script>
 $(document).ready(function(){  
 var form=$("#add_session_form1");
@@ -960,9 +959,28 @@ $.ajax({
         url:"{{route('trainer_slotinsert')}}",
         data:form.serialize(),
         success: function(response){ 
+            
+
+            
+
             if(response.success==1 && response.session_remaining>0)
             {
-             alertify.alert('All session booking request is sent successfully!');
+
+             $('#reason_modal').modal('show');
+
+             var total_slots=response.all_data.total_slots;
+
+             var table = "<table class='table table-border' width='100%'><thead><tr><th>Trainer Name</th><th>Date</th><th>Time</th></tr></thead><tbody>";
+
+             for(var k=0; k<total_slots;k++)
+            {
+               table += "<tr><td>"+response.all_data.trainer_name[k]+"</td><td>"+response.all_data.slots_date[k]+"</td><td>"+response.all_data.slots_time[k]+"</td></tr>";
+            }
+
+            table+='</tbody></table>';
+
+            $('#hall_details_edit').html(table);
+
              $('ul.tabs li#t5').attr('rel','tab5');
              $('ul.tabs li#t6').attr('rel','tab6');
              if($('#executive_trainer').val()=='')
@@ -985,6 +1003,8 @@ $.ajax({
             }
             else
             {
+              alertify.alert("This customer's have not any available session");
+
               $('ul.tabs li#t5').attr('rel','tab5');
               $('ul.tabs li#t6').attr('rel','tab6');
               if($('#executive_trainer').val()=='')
@@ -1029,7 +1049,21 @@ $.ajax({
         success: function(response){
             if(response.success==1 && response.session_remaining>0)
             {
-              alertify.alert('All session booking request is sent successfully!');
+              $('#reason_modal').modal('show');
+
+             var total_slots=response.all_data.total_slots;
+
+             var table = "<table class='table table-border' width='100%'><thead><tr><th>Trainer Name</th><th>Date</th><th>Time</th></tr></thead><tbody>";
+
+             for(var k=0; k<total_slots;k++)
+            {
+               table += "<tr><td>"+response.all_data.trainer_name[k]+"</td><td>"+response.all_data.slots_date[k]+"</td><td>"+response.all_data.slots_time[k]+"</td></tr>";
+            }
+
+            table+='</tbody></table>';
+
+            $('#hall_details_edit').html(table);
+            
               $('ul.tabs li#t6').attr('rel','tab6');
               $('ul.tabs li#t5').attr('rel','tab5');
              
@@ -1054,6 +1088,7 @@ $.ajax({
             }
             else
             {
+              alertify.alert("This customer's have not any available session");
               $('ul.tabs li#t6').attr('rel','tab6');
               $('ul.tabs li#t5').attr('rel','tab5');
               if($('#executive_trainer2').val()=='')
@@ -1085,6 +1120,39 @@ $('ul.tabs li').removeAttr('rel');
 });
 });
 </script>
+
+
+<div id="reason_modal" class="modal fade  mot-mod" role="dialog" >
+  <div class="modal-dialog success_modal">
+    
+    <div class="modal-content">
+    <div class="modal-header">
+      <h2 style="font-size: 20px;text-align: center;">You have successfully schedule the bellow PT session(s).</h2>
+      
+    </div>
+      <div class="modal-body" id="hall_details_edit">
+
+
+        <div class="row clearfix">
+          <div class="col-sm-12 col-xs-12">
+            <br class="clear" />
+        </div>
+        <div class="col-sm-12 col-xs-12">
+      <div class="row">
+          
+    </div>
+      </div>
+  </div>
+
+</div>
+<button type="button" class="btn btn-default success-close" data-dismiss="modal">Close</button>
+</div>
+</div>
+</div>
+
+
+
+ 
 
 @endsection
 

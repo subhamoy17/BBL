@@ -46,6 +46,8 @@
     <link rel="stylesheet" href="{{ asset('backend/assets/css/totancss/style.css') }}"></script>
     <link rel="stylesheet" href="{{url('frontend/css/jquery-ui.css')}}">
 
+    <script type="text/javascript" src="{{url('frontend/js/bootstrap-3.1.1.min.js')}}"></script>
+
 
 @if(Request::segment(2) == 'add_session')
 

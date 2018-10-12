@@ -6237,3 +6237,16 @@ ul.con_inner_text.midimg {
 .noification-d {
     vertical-align: bottom;
 }
+
+.success-close {
+    position: relative;
+    float: right;
+    background: red;
+    color: white;
+    top: -36px;
+    left: -11px;
+}
+.session-modal h2{
+    font-size: 24px;
+    text-align: center;
+}

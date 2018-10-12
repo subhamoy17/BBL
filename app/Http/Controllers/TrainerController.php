@@ -2444,13 +2444,9 @@ public function trainer_slotinsert(Request $request)
     $a->slots_date=$slots_date;
     $a->slots_time=$slots_time;
     $a->total_slots=$total_slots;
-    $all_data=array($a);
-
-    Log::debug(" data ".print_r($all_data,true)); 
+        
+    $successdata=array('success'=>1,'session_remaining'=>$total_remaining_session,'all_data'=>$a);
     
-    $successdata=array('success'=>1,'session_remaining'=>$total_remaining_session);
-    
-
     return response()->json($successdata);
   }
   else

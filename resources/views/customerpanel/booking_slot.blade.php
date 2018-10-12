@@ -390,14 +390,15 @@
 
 
 
-<div id="reason_modal" class="modal fade  mot-mod" role="dialog" >
+<div id="reason_modal" class="modal fade  mot-mod session-modal" role="dialog" >
   <div class="modal-dialog">
     
     <div class="modal-content">
     <div class="modal-header">
-      <h2 style="font-size: 25px;text-align: center;">You have successfully sent the bellow PT session request(s).</h2>
-      <br>
-      @if (session('success1') || session('success'))
+      <h2>You have successfully sent the bellow PT session request(s).</h2>
+    </div>
+      <div class="modal-body" id="hall_details_edit">
+        @if (session('success1') || session('success'))
       <table class="table table-border" width="100%">
         <tbody>
         <tr><td>Trainer Name</td><td>Date</td><td>Time</td></tr>
@@ -417,16 +418,10 @@
     </td>
     </tr>
     @endfor
-     @endforeach
-
-    
-     
+     @endforeach    
      </tbody>
    </table>
       @endif
-      
-    </div>
-      <div class="modal-body" id="hall_details_edit">
         <div class="row clearfix">
           <div class="col-sm-12 col-xs-12">
             <br class="clear" />
@@ -438,7 +433,7 @@
       </div>
   </div>
 </div>
-
+<button type="button" class="btn btn-default success-close" data-dismiss="modal">Close</button>
 </div>
 </div>
 </div>

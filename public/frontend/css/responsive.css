@@ -308,6 +308,12 @@
 	.stellarnav li.active a {
     color: #ec7f0a;
 }
+.session-modal h2{
+	font-size: 18px;
+}
+.session-modal {
+    z-index: 9999999;
+}
 }
 @media only screen and (max-width: 640px) {}
 @media only screen and (max-width: 580px) {}
