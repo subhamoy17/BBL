@@ -163,10 +163,19 @@ public function purchase_form($id)
   Log::debug(":: slot_id :: ".print_r($slot_id,true));
 
   $package_details=DB::table('slots')->where('id',$slot_id)->first();
-      
+     
   $data=DB::table('customers')->where('id',Auth::guard('customer')->user()->id)->first();
   Log::debug(":: purchase details :: ".print_r($data,true));
-  return view('customerpanel.purchases')->with(compact('data','package_details'));
+ 
+  if($data && $package_details )
+  {
+     return view('customerpanel.purchases')->with(compact('data','package_details'));
+  }
+ 
+  else
+  {
+     return abort(404);
+   }
 }
 
 
