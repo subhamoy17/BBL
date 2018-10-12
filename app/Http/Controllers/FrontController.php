@@ -17,6 +17,7 @@ use App\Customer;
 use App\User;
 use App\Notifications\SessionRequestNotification;
 use App\Notifications\SessionRequestNotificationToTrainer;
+use Illuminate\Support\Facades\Input;
 
 
 
@@ -874,18 +875,29 @@ public function slotinsert(Request $request)
     $notifydata['trainer_name']=' ';
     $notifydata['decline_reason']=' ';
 
+    $trainer_name = Input::get('trainer_name');
+    $slots_date = Input::get('slots_date');
+    $slots_time = Input::get('slots_time');
+    $total_slots = Input::get('total_slots');
 
+    $a=new \stdClass;
+
+    $a->trainer_name=$trainer_name;
+    $a->slots_date=$slots_date;
+    $a->slots_time=$slots_time;
+    $a->total_slots=$total_slots;
+    $all_data=array($a);
     
 
     $customer_details->notify(new SessionRequestNotification($notifydata));
 
       if($nd_btn==1)
       {
-      return redirect()->back()->with("success","Your session booking request is sent successfully!");
+      return redirect()->back()->with(["success"=>"Your session booking request is sent successfully!",'all_data'=>$all_data]);
     }
     else
     {
-      return redirect()->back()->with("success1","Your session booking request is sent successfully!");
+      return redirect()->back()->with(["success1"=>"Your session booking request is sent successfully!",'all_data'=>$all_data]);
     }
     
   }
@@ -918,7 +930,7 @@ public function customer_contact()
 public function front_contact_insert(Request $request)
 {  
 
-  Log::debug(" data ".print_r($request->all(),true)); 
+ // Log::debug(" data ".print_r($request->all(),true)); 
   $data['user_name']=$request->form_name;
   $data['user_email']=$request->form_email;
   $data['user_subject']=$request->form_subject;
