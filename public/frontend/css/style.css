@@ -5935,9 +5935,9 @@ a.sign-btn2 {
 .noification-d small {
 	font-size: 14px;
 	color: #fff;
-	position: absolute;
-	top: -5px;
-	right: -12px;
+	position: relative;
+	top: -9px;
+	right: 4px;
 	font-weight: 600;
 }
 .tab_container h3 {
