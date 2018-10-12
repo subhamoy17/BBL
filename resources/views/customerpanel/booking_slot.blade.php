@@ -395,7 +395,7 @@
     
     <div class="modal-content">
     <div class="modal-header">
-      <h2 style="font-size: 19px;text-align: center;color: #fb5b21;">Your session request is successfully sent. Please see the below detials of your session request.</h2>
+      <h2 style="font-size: 25px;text-align: center;">You have successfully sent the bellow PT session request(s).</h2>
       <br>
       @if (session('success1') || session('success'))
       <table class="table table-border" width="100%">

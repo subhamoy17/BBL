@@ -12,7 +12,7 @@ $('#bootstrap-slot-data-table').DataTable({
         lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
         
         // disable shorting from slno,image and action columns
-        "columnDefs": [ { "orderable": false, "targets": [0,7] } ],
+        "columnDefs": [ { "orderable": false, "targets": [0,8] } ],
         
     });
  } );
@@ -93,6 +93,7 @@ $('#bootstrap-slot-data-table').DataTable({
                                 <tr>
                                     <th id="slno">Sl. No.</th>
                                     <th>Name</th>
+                                    <th>Email</th>
                                     <th>Height</th>
                                     <th>Chest</th>
                                     <th>Waist</th>
@@ -107,6 +108,7 @@ $('#bootstrap-slot-data-table').DataTable({
                                 <tr>
                                     <td>{{++$key}}</td>
                                     <td>@if(!empty($mydata->name)) {{$mydata->name}} @else N/A @endif</td>
+                                    <td>@if(!empty($mydata->email)) {{$mydata->email}} @else N/A @endif</td>
                                     <td>@if(!empty($mydata->height)){{$mydata->height}} @else N/A @endif</td>
                                    <td>@if(!empty($mydata->chest)){{$mydata->chest}} @else N/A @endif</td>
                                     <td>@if(!empty($mydata->waist)) {{$mydata->waist}} @else N/A @endif</td>

@@ -1221,7 +1221,7 @@ public function mot_show(Request $request)
 
   $data=DB::table('customer_mot')
   ->join('customers','customers.id','customer_mot.customer_id')
-  ->select('customer_mot.*','customers.name')->where('customer_mot.deleted_at',null)->get();
+  ->select('customer_mot.*','customers.name','customers.ph_no','customers.email')->where('customer_mot.deleted_at',null)->get();
   return view('trainer.customer_mot')->with(compact('data'));
 }
 
@@ -1654,10 +1654,6 @@ public function client_edit_view($id)
 
 
 }
-
-
-
-
 
 public function client_update(Request $request)
 { 
@@ -2437,7 +2433,20 @@ public function trainer_slotinsert(Request $request)
 
     $total_remaining_session=$sum_slots+$sum_extra_slots;
 
-    
+    $trainer_name = Input::get('trainer_name');
+    $slots_date = Input::get('slots_date');
+    $slots_time = Input::get('slots_time');
+    $total_slots = Input::get('total_slots');
+
+    $a=new \stdClass;
+
+    $a->trainer_name=$trainer_name;
+    $a->slots_date=$slots_date;
+    $a->slots_time=$slots_time;
+    $a->total_slots=$total_slots;
+    $all_data=array($a);
+
+    Log::debug(" data ".print_r($all_data,true)); 
     
     $successdata=array('success'=>1,'session_remaining'=>$total_remaining_session);
     
