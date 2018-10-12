@@ -129,8 +129,8 @@ messages: {
       <div class="hstry-box">
         <!-- @if($total_remaining_session>0) -->
       <ul class="tabs">
-        <li class="active bb" rel="tab5" id="t5"><a href="#"  data-toggle="tab" class="li1">Book By Trainer</a></li>
-        <li class="bb" rel="tab6" id="t6"><a href="#"  data-toggle="tab" class="li2">Book By Time</a></li>
+        <li class="active bb" rel="tab5" id="t5"><a href="#"  data-toggle="tab" class="li1 not-click">Book By Trainer</a></li>
+        <li class="bb" rel="tab6" id="t6"><a href="#"  data-toggle="tab" class="li2 not-click">Book By Time</a></li>
       </ul>
       <!-- @endif -->
       <div class="tab_container">
@@ -983,6 +983,7 @@ $.ajax({
 
              $('ul.tabs li#t5').attr('rel','tab5');
              $('ul.tabs li#t6').attr('rel','tab6');
+            $('.not-click').unbind('click');
              if($('#executive_trainer').val()=='')
              {      
               $('#trainer_id').val('');
@@ -1007,6 +1008,7 @@ $.ajax({
 
               $('ul.tabs li#t5').attr('rel','tab5');
               $('ul.tabs li#t6').attr('rel','tab6');
+              $('.not-click').unbind('click');
               if($('#executive_trainer').val()=='')
              {
               $('#trainer_id').val('');
@@ -1033,6 +1035,7 @@ $.ajax({
   $('.save_button').text('Please wait...');
   $('.save_button').attr('disabled','disabled'); 
   $('ul.tabs li').removeAttr('rel');
+  $('.not-click').click(function () {return false;});
 
 });
 });
@@ -1066,6 +1069,7 @@ $.ajax({
             
               $('ul.tabs li#t6').attr('rel','tab6');
               $('ul.tabs li#t5').attr('rel','tab5');
+              $('.not-click').unbind('click');
              
               if($('#executive_trainer2').val()=='')
               {   
@@ -1091,6 +1095,7 @@ $.ajax({
               alertify.alert("This customer's have not any available session");
               $('ul.tabs li#t6').attr('rel','tab6');
               $('ul.tabs li#t5').attr('rel','tab5');
+              $('.not-click').unbind('click');
               if($('#executive_trainer2').val()=='')
               {
                 $('#trainer_id2').val('');
@@ -1116,7 +1121,7 @@ $('.save_button').text('Please wait...');
 $('.save_button').attr('disabled','disabled');
 $('#add_sess2').hide();
 $('ul.tabs li').removeAttr('rel');
-
+$('.not-click').click(function () {return false;});
 });
 });
 </script>
