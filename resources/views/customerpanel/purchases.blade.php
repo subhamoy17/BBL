@@ -62,7 +62,7 @@
                               <div class="clear"></div>
                           <div class="form-group btn-wrp">
                     <input name="form_botcheck" class="form-control" value="" type="hidden">
-                        <button type="submit" class="btn btn-dark btn-theme-colored btn-flat" data-loading-text="Please wait...">Submit</button>
+                        <button type="submit" id="aqb" class="btn btn-dark btn-theme-colored btn-flat">Submit</button>
                         </div> 
                 		</div> 
                         
@@ -80,11 +80,12 @@
     </section>
   <link rel="stylesheet" href="{{url('frontend/css/jquery-ui.css')}}">
  <link href="{{url('frontend/css/style.css')}}" rel="stylesheet" type="text/css" media="all" />
-  <script src="{{url('frontend/css/jquery-ui.js')}}"></script>
- <script src="{{url('frontend/css/jquery-1.12.4.js')}}"></script>
-    <script>
+  <!-- <script src="{{url('frontend/css/jquery-ui.js')}}"></script> -->
+ <!-- <script src="{{url('frontend/css/jquery-1.12.4.js')}}"></script> -->
+   <!--  <script>
   $( function() {
     $("#datepicker").datepicker();
   } );
-  </script>
+  </script> -->
+  
 @endsection

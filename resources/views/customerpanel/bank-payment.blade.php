@@ -45,7 +45,7 @@
     </label><textarea  name="package_description" id="package_description"></textarea><br>
     <label>Upload Payment Document</label><input type="file" name="package_image" id="package_image">
        
-  <button class="btn btn-dark btn-theme-colored btn-flat">Pay with Bank</button>
+  <button class="btn btn-dark btn-theme-colored btn-flat" id="aba">Pay with Bank</button>
 </form>
 </div>
 </div>
