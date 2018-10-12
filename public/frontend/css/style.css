@@ -6233,3 +6233,7 @@ div#add_session_req2 {
 ul.con_inner_text.midimg {
     display: inline-block;
 }
+
+.noification-d {
+    vertical-align: bottom;
+}
