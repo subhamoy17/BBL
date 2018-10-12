@@ -155,19 +155,6 @@
 
 <div class="tab_container">
 
-  @if (session('success'))
-    <div  class="alert alert-success first-success">
-        {{ session('success') }}
-    </div>
-  <?php Session::forget('success'); ?>
-  @endif
-
-  <div class="tab_container">
-        @if (session('success1'))
-    <div  class="alert alert-success second-success" >
-        {{ session('success1') }}
-    </div> 
-  @endif
         
 
           <!-- #tab1 -->
@@ -402,6 +389,63 @@
 <!-- end -->
 
 
+
+<div id="reason_modal" class="modal fade  mot-mod" role="dialog" >
+  <div class="modal-dialog">
+    
+    <div class="modal-content">
+    <div class="modal-header">
+      <h2 style="font-size: 19px;text-align: center;color: #fb5b21;">Your session request is successfully sent. Please see the below detials of your session request.</h2>
+      <br>
+      @if (session('success1') || session('success'))
+      <table class="table table-border" width="100%">
+        <tbody>
+        <tr><td>Trainer Name</td><td>Date</td><td>Time</td></tr>
+        
+      @foreach(session('all_data') as $key => $eachdata)
+    
+      @for($i=0;$i<$eachdata->total_slots;$i++)
+      <tr>
+      <td>
+        {{$eachdata->trainer_name[$i]}}
+      </td>
+      <td>
+        {{$eachdata->slots_date[$i]}}
+      </td>
+      <td>
+        {{$eachdata->slots_time[$i]}}
+    </td>
+    </tr>
+    @endfor
+     @endforeach
+
+    
+     
+     </tbody>
+   </table>
+      @endif
+      
+    </div>
+      <div class="modal-body" id="hall_details_edit">
+        <div class="row clearfix">
+          <div class="col-sm-12 col-xs-12">
+            <br class="clear" />
+        </div>
+        <div class="col-sm-12 col-xs-12">
+      <div class="row">
+          
+    </div>
+      </div>
+  </div>
+</div>
+
+</div>
+</div>
+</div>
+
+
+
+
 <!-- js -->
   <script type="text/javascript" src="{{url('frontend/js/jquery-2.1.4.min.js')}}"></script>
   <!-- //js -->
@@ -411,7 +455,28 @@
 
  <script src="{{url('frontend/js/jquery-ui.js')}}"></script>
 
+@if (session('success1'))
+    <script>
 
+      $(document).ready(function(){
+       $(".li2").trigger('click');
+
+       $('#reason_modal').modal('show');
+      });
+    </script>
+<?php Session::forget('success1'); ?>
+
+  @endif
+
+  @if (session('success'))
+   <script>
+      $(document).ready(function(){
+       $('#reason_modal').modal('show');
+      });
+    </script>
+<?php Session::forget('success'); ?>
+
+  @endif
 
   
   <script type="text/javascript" src="{{url('frontend/js/bootstrap-3.1.1.min.js')}}"></script>
@@ -1168,25 +1233,7 @@ $('a[data-toggle="tab"]').on('click', function (e) {
   
   </script>
 
-
-<!-- For slot trainer -->
-
-  
-
-
-  <!--Fontawesome script-->
-  <!--<script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js" integrity="sha384-3LK/3kTpDE/Pkp8gTNp2gR/2gOiwQ6QaO7Td0zV76UFJVhqLl4Vl3KL1We6q6wR9" crossorigin="anonymous"></script>-->
- @if (session('success1'))
-    <script>
-
-      $(document).ready(function(){
-       $(".li2").trigger('click');
-      });
-
-    </script>
-<?php Session::forget('success1'); ?>
-
-  @endif
+ 
 
 </body>
 
