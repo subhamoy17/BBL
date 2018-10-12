@@ -149,8 +149,8 @@
       
   
       <ul class="tabs">
-        <li class="active bb" id="t5" rel="tab5"><a href="#"  data-toggle="tab" class="li1">Book By Trainer</a></li>
-        <li class="bb" rel="tab6" id="t6" ><a href="#"  data-toggle="tab" class="li2">Book By Time</a></li>
+        <li class="active bb" id="t5" rel="tab5"><a href="#"  data-toggle="tab" class="li1 not-click">Book By Trainer</a></li>
+        <li class="bb" rel="tab6" id="t6" ><a href="#"  data-toggle="tab" class="li2 not-click">Book By Time</a></li>
       </ul>
 
 <div class="tab_container">
@@ -856,14 +856,17 @@
 
 
 <script type="text/javascript">
+
   
-$(document).ready(function(){
-$('#save_btn').on('click',function(e){
-   
+$(document).ready(function(){ 
+
+$('#save_btn').on('click',function(e){ 
+
     $('#add_sess').hide();
    $('.save_button').attr('disabled','disabled');
     $('.save_button').text('Please wait...');
     $('ul.tabs li').removeAttr('rel');
+    $('.not-click').click(function () {return false;});
     $('#add_session_form1').submit();
 
   });
@@ -880,6 +883,7 @@ $('#save_btn2').on('click',function(e){
    $('.save_button').attr('disabled','disabled');
     $('.save_button').text('Please wait...');
     $('ul.tabs li').removeAttr('rel');
+    $('.not-click').click(function () {return false;});
     $('#add_session_form2').submit();
 
   });
