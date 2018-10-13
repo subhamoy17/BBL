@@ -148,9 +148,9 @@
       <div class="hstry-box">
       
   
-      <ul class="tabs">
-        <li class="active bb" id="t5" rel="tab5"><a href="#"  data-toggle="tab" id="li1" class="not-click">Book By Trainer</a></li>
-        <li class="bb" rel="tab6" id="t6" ><a href="#"  data-toggle="tab" id="li2" class="not-click">Book By Time</a></li>
+      <ul class="tabs" id="hide-menu">
+        <li class="active bb" id="t5" rel="tab5"><a href="#"  data-toggle="tab" id="li1" class="li1">Book By Trainer</a></li>
+        <li class="bb" rel="tab6" id="t6" ><a href="#"  data-toggle="tab" id="li2" class="li2">Book By Time</a></li>
       </ul>
 
 <div class="tab_container">
@@ -453,7 +453,7 @@
 @if (session('success1'))
     <script>
 
-      $(document).ready(function(){
+      $(document).ready(function(){ 
        $("#li2").trigger('click');
 
        $('#reason_modal').modal('show');
@@ -861,12 +861,11 @@
 $(document).ready(function(){ 
 
 $('#save_btn').on('click',function(e){ 
-
     $('#add_sess').hide();
    $('.save_button').attr('disabled','disabled');
     $('.save_button').text('Please wait...');
     $('ul.tabs li').removeAttr('rel');
-    $('.not-click').click(function () {return false;});
+    $("ul.tabs").hide();
     $('#add_session_form1').submit();
 
   });
@@ -883,7 +882,7 @@ $('#save_btn2').on('click',function(e){
    $('.save_button').attr('disabled','disabled');
     $('.save_button').text('Please wait...');
     $('ul.tabs li').removeAttr('rel');
-    $('.not-click').click(function () {return false;});
+    $("ul.tabs").hide();
     $('#add_session_form2').submit();
 
   });

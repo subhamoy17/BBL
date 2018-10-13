@@ -1928,18 +1928,6 @@ foreach($get_slot_times as $key=>$hour) {
 
 }
 
-foreach($get_slot_times as $key=>$hour) {
-
-}
-
-$length=$key+1;
-$upto=$length*4;
-
-  for($i=$length;$i<$upto;$i++)
-{
-  $get_slot_times[$i]=$get_slot_times[$i-$length]-1;
-
-}
 
 }
 

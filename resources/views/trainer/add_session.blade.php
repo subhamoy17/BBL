@@ -129,8 +129,8 @@ messages: {
       <div class="hstry-box">
         <!-- @if($total_remaining_session>0) -->
       <ul class="tabs">
-        <li class="active bb" rel="tab5" id="t5"><a href="#"  data-toggle="tab" class="li1 not-click">Book By Trainer</a></li>
-        <li class="bb" rel="tab6" id="t6"><a href="#"  data-toggle="tab" class="li2 not-click">Book By Time</a></li>
+        <li class="active bb" rel="tab5" id="t5"><a href="#"  data-toggle="tab" id="li1" class="li1">Book By Trainer</a></li>
+        <li class="bb" rel="tab6" id="t6"><a href="#" id="li2"  data-toggle="tab" class="li2">Book By Time</a></li>
       </ul>
       <!-- @endif -->
       <div class="tab_container">
@@ -395,8 +395,9 @@ messages: {
     $(document).ready(function(){  
 
 $('a[data-toggle="tab"]').on('click', function (e) { 
-  var tab_val=$(this).prop('class'); 
-  if(tab_val=='li2 not-click')
+  var tab_val=$(this).attr('id'); 
+
+  if(tab_val=='li2')
   {
     if($('#executive_trainer').val()=='' || $('#executive_trainer2').val()=='')
     {
@@ -411,7 +412,7 @@ $('a[data-toggle="tab"]').on('click', function (e) {
    old_session_data.innerHTML='';
    $('#save_btn').hide();
   }
-  else if(tab_val=='li1 not-click')
+  else if(tab_val=='li1')
   {
     if($('#executive_trainer').val()=='' || $('#executive_trainer2').val()=='')
     {
@@ -967,6 +968,7 @@ $.ajax({
             {
 
              $('#reason_modal').modal('show');
+             $("ul.tabs").show();
 
              var total_slots=response.all_data.total_slots;
 
@@ -979,11 +981,17 @@ $.ajax({
 
             table+='</tbody></table>';
 
+            var current_slot=$('#total_slots').val();
+
+            current_slot=parseInt(current_slot)-total_slots;
+
+            $('#total_slots').val(current_slot);
+            $('#total_slots2').val(current_slot);
+
             $('#hall_details_edit').html(table);
 
              $('ul.tabs li#t5').attr('rel','tab5');
              $('ul.tabs li#t6').attr('rel','tab6');
-            $('.not-click').unbind('click');
              if($('#executive_trainer').val()=='')
              {      
               $('#trainer_id').val('');
@@ -1005,10 +1013,9 @@ $.ajax({
             else
             {
               alertify.alert("This customer's have not any available session");
-
+              $("ul.tabs").show();
               $('ul.tabs li#t5').attr('rel','tab5');
               $('ul.tabs li#t6').attr('rel','tab6');
-              $('.not-click').unbind('click');
               if($('#executive_trainer').val()=='')
              {
               $('#trainer_id').val('');
@@ -1035,7 +1042,7 @@ $.ajax({
   $('.save_button').text('Please wait...');
   $('.save_button').attr('disabled','disabled'); 
   $('ul.tabs li').removeAttr('rel');
-  $('.not-click').click(function () {return false;});
+  $("ul.tabs").hide();
 
 });
 });
@@ -1053,6 +1060,7 @@ $.ajax({
             if(response.success==1 && response.session_remaining>0)
             {
               $('#reason_modal').modal('show');
+              $("ul.tabs").show();
 
              var total_slots=response.all_data.total_slots;
 
@@ -1065,11 +1073,17 @@ $.ajax({
 
             table+='</tbody></table>';
 
+            var current_slot2=$('#total_slots2').val();
+
+            current_slot2=parseInt(current_slot2)-total_slots;
+
+            $('#total_slots').val(current_slot2);
+            $('#total_slots2').val(current_slot2);
+
             $('#hall_details_edit').html(table);
             
               $('ul.tabs li#t6').attr('rel','tab6');
               $('ul.tabs li#t5').attr('rel','tab5');
-              $('.not-click').unbind('click');
              
               if($('#executive_trainer2').val()=='')
               {   
@@ -1093,9 +1107,9 @@ $.ajax({
             else
             {
               alertify.alert("This customer's have not any available session");
+              $("ul.tabs").show();
               $('ul.tabs li#t6').attr('rel','tab6');
               $('ul.tabs li#t5').attr('rel','tab5');
-              $('.not-click').unbind('click');
               if($('#executive_trainer2').val()=='')
               {
                 $('#trainer_id2').val('');
@@ -1121,7 +1135,7 @@ $('.save_button').text('Please wait...');
 $('.save_button').attr('disabled','disabled');
 $('#add_sess2').hide();
 $('ul.tabs li').removeAttr('rel');
-$('.not-click').click(function () {return false;});
+$("ul.tabs").hide();
 });
 });
 </script>
