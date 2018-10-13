@@ -51,7 +51,7 @@ $('#bootstrap-slot-data-table').DataTable({
         </div>
     </div>
     <div class="col-sm-4">
-        <div class="page-header float-left" style="padding-top: 2%;">
+        <div class="page-header float-left nw-mot" style="padding-top: 2%;">
             <a href="{{route('motinsertshow_page')}}">
                 <button type="button" class="btn btn-success"><i class="fa fa-plus"></i>&nbsp;Add New Customer's MOT</button>
             </a>

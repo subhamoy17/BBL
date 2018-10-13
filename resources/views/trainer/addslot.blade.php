@@ -47,7 +47,7 @@ $('#bootstrap-slot-data-table').DataTable({
         </div>
     </div>
     <div class="col-sm-3">
-        <div class="page-header float-left" style="padding-top: 2%;">
+        <div class="page-header float-left add-pck" style="padding-top: 2%;">
             <a href="{{route('addslotrecord')}}">
                 <button type="button" class="btn btn-success"><i class="fa fa-plus"></i>&nbsp;Add New Package</button>
             </a>

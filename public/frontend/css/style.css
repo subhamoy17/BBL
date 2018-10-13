@@ -5218,10 +5218,10 @@ a.sign-btn2 {
     height: 45px;
     border: 1px solid #eeeeee;
 }
-.btn-dark.btn-theme-colored{
-    color: #fff;
-    background: #fb5b21;
-    border-radius: 0;
+.btn-dark.btn-theme-colored {
+	color: #fff;
+	background: rgba(245,42,46,1.00);
+	border-radius: 0;
 }
 .btn-dark.btn-theme-colored a{
     color: #fff;
@@ -5426,7 +5426,7 @@ a.sign-btn2 {
     /* margin: 0 auto; */
 }
 .lg-in5 {
-    background: #e9ac08;
+    background: rgba(245,42,46,1.00);
     border: none;
     color: #fff;
     padding: 10px 10px;
