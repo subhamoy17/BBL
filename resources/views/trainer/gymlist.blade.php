@@ -101,7 +101,7 @@ table.dataTable thead>tr>th[id='action'].sorting_asc::after{display: none}
                                     <th id="slno">Sl. No.</th>
                                     <th>Category</th>
                                     <th>Description</th>
-                                    <th id="image" style="width: 200px;">Image</th>
+                                    <th id="image" style="width: 200px;">Image/Video</th>
                                     <th id="action" style="width: 70px;">Action</th>
                                 </tr>
                             </thead>
