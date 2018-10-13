@@ -612,7 +612,7 @@ $upto=$length*4;
 $final_slot_time=DB::table('slot_times')->whereNotIn('id',$get_slot_times)
   ->get()->all();
 
-date_default_timezone_set('Asia/Kolkata');
+
   foreach($final_slot_time as $myslot_time)
   {
     $myslot_time->time=date('h:i A', strtotime($myslot_time->time));
@@ -682,7 +682,7 @@ $upto=$length*4;
 $final_slot_time=DB::table('slot_times')->whereNotIn('id',$get_slot_times)
   ->get()->all();
 
-date_default_timezone_set('Asia/Kolkata');
+
 
   foreach($final_slot_time as $myslot_time)
   {
@@ -1001,8 +1001,8 @@ foreach($get_slot_times as $key=>$hour) {
 }
 $final_slot_time=DB::table('slot_times')->whereNotIn('id',$get_slot_times)
   ->get()->all();
-  
-date_default_timezone_set('Asia/Kolkata');
+
+
 
   foreach($final_slot_time as $myslot_time)
   {
@@ -1063,7 +1063,7 @@ foreach($get_slot_times as $key=>$hour) {
 $final_slot_time=DB::table('slot_times')->whereNotIn('id',$get_slot_times)
   ->get()->all();
 
-date_default_timezone_set('Asia/Kolkata');
+
   foreach($final_slot_time as $myslot_time)
   {
     $myslot_time->time=date('h:i A', strtotime($myslot_time->time));
