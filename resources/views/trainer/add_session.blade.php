@@ -396,7 +396,7 @@ messages: {
 
 $('a[data-toggle="tab"]').on('click', function (e) { 
   var tab_val=$(this).prop('class'); 
-  if(tab_val=='li2')
+  if(tab_val=='li2 not-click')
   {
     if($('#executive_trainer').val()=='' || $('#executive_trainer2').val()=='')
     {
@@ -411,7 +411,7 @@ $('a[data-toggle="tab"]').on('click', function (e) {
    old_session_data.innerHTML='';
    $('#save_btn').hide();
   }
-  else if(tab_val=='li1')
+  else if(tab_val=='li1 not-click')
   {
     if($('#executive_trainer').val()=='' || $('#executive_trainer2').val()=='')
     {

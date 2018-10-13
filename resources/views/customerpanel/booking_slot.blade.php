@@ -149,8 +149,8 @@
       
   
       <ul class="tabs">
-        <li class="active bb" id="t5" rel="tab5"><a href="#"  data-toggle="tab" class="li1 not-click">Book By Trainer</a></li>
-        <li class="bb" rel="tab6" id="t6" ><a href="#"  data-toggle="tab" class="li2 not-click">Book By Time</a></li>
+        <li class="active bb" id="t5" rel="tab5"><a href="#"  data-toggle="tab" id="li1" class="not-click">Book By Trainer</a></li>
+        <li class="bb" rel="tab6" id="t6" ><a href="#"  data-toggle="tab" id="li2" class="not-click">Book By Time</a></li>
       </ul>
 
 <div class="tab_container">
@@ -454,7 +454,7 @@
     <script>
 
       $(document).ready(function(){
-       $(".li2").trigger('click');
+       $("#li2").trigger('click');
 
        $('#reason_modal').modal('show');
       });
@@ -1085,9 +1085,10 @@ $(document).ready(function() {
     $(document).ready(function(){  
 
 $('a[data-toggle="tab"]').on('click', function (e) { 
-  var tab_val=$(this).prop('class'); 
+  var tab_val=$(this).attr('id'); 
+ 
   if(tab_val=='li2')
-  {
+  { 
    $('#trainer_id').val('');
    $('#slots_datepicker').val('');
    $('#slot_time').val('');

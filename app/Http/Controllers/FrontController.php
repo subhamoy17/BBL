@@ -612,7 +612,7 @@ $upto=$length*4;
 $final_slot_time=DB::table('slot_times')->whereNotIn('id',$get_slot_times)
   ->get()->all();
 
-
+date_default_timezone_set('Asia/Kolkata');
   foreach($final_slot_time as $myslot_time)
   {
     $myslot_time->time=date('h:i A', strtotime($myslot_time->time));
@@ -646,7 +646,7 @@ public function get_current_slot_time(Request $request)
 
   $get_slot_times=array_merge($get_slot_times,$get_slot_times2);
 
-Log::debug(" Check get_slot_times2 ".print_r($get_slot_times,true));
+
 
   if(count($get_slot_times))
 {
@@ -682,6 +682,7 @@ $upto=$length*4;
 $final_slot_time=DB::table('slot_times')->whereNotIn('id',$get_slot_times)
   ->get()->all();
 
+date_default_timezone_set('Asia/Kolkata');
 
   foreach($final_slot_time as $myslot_time)
   {
@@ -711,15 +712,7 @@ public function booking_slot_trainer(Request $request)
   Log::debug(" get_slot_times ".print_r($get_slot_trainer,true));
   $final_slot_trainer=DB::table('users')->whereNull('deleted_at')->where('is_active', 1)->whereNotIn('id',$get_slot_trainer)->get();
 
-   
-         
-        // foreach ($final_slot_trainer as $trainer) {
-               
-        //   $trainer_data=array('trainer_name'=>$trainer->name,'trainer_id'=>$trainer->id);
-               
-        // }
-
-  Log::debug(" final_slot_trainer ".print_r($final_slot_trainer,true));
+  //Log::debug(" final_slot_trainer ".print_r($final_slot_trainer,true));
   return json_encode($final_slot_trainer);
 }
 
@@ -1008,7 +1001,8 @@ foreach($get_slot_times as $key=>$hour) {
 }
 $final_slot_time=DB::table('slot_times')->whereNotIn('id',$get_slot_times)
   ->get()->all();
-
+  
+date_default_timezone_set('Asia/Kolkata');
 
   foreach($final_slot_time as $myslot_time)
   {
@@ -1069,7 +1063,7 @@ foreach($get_slot_times as $key=>$hour) {
 $final_slot_time=DB::table('slot_times')->whereNotIn('id',$get_slot_times)
   ->get()->all();
 
-
+date_default_timezone_set('Asia/Kolkata');
   foreach($final_slot_time as $myslot_time)
   {
     $myslot_time->time=date('h:i A', strtotime($myslot_time->time));
