@@ -38,6 +38,8 @@ class ChangePasswordController extends Controller
      * Show the form to change the user password.
      */
     public function showChagePasswordForm(){
+
+        $this->cart_delete_customer();
         return view('customerpanel.customer_change_password');
     }
  
@@ -49,6 +51,8 @@ class ChangePasswordController extends Controller
      */
     public function updateAdminPassword(Request $request)
     {
+        $this->cart_delete_customer();
+
         // if (!(Hash::check($request->get('current-password'), Auth::user()->password))) {
         //     // The passwords matches
         //     return redirect()->back()->with("error","Your current password does not matches with the password you provided. Please try again.");
@@ -83,5 +87,10 @@ class ChangePasswordController extends Controller
  
     }
 
+
+     public function cart_delete_customer()
+    {
+        $cart_delete=DB::table('cart_slot_request')->where('request_customer_id',Auth::guard('customer')->user()->id)->delete();
+    }
    
 }

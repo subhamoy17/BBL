@@ -284,8 +284,14 @@ messages: {
 
                          <div class="col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group" >
+
                               <label>Date <small>*</small></label>
-                          <input type="text" id="slots_datepicker2" name="date" class="form-control date-control" onchange="jsfunction2(); gettime();" readonly="true">
+                              @if(Auth::user()->master_trainer==1)
+                          <input type="text" id="slots_datepicker2" name="date" class="form-control date-control" onchange="jsfunction2();" readonly="true">
+                          @else
+                          <input type="text" id="slots_datepicker2" name="date" class="form-control date-control" onchange="gettime();" readonly="true">
+                          @endif
+
                             </div>
                             
                         </div>
@@ -293,15 +299,25 @@ messages: {
 
                         
                           <div class="col-md-6 col-sm-12 col-xs-12">
-                          
 
-                        
+                            @if(Auth::user()->master_trainer==1)
 
                               <label>Booking Time <small>*</small></label>
+
+                                <select class="form-control" name="slot_time2" id="slot_time2" onchange="jsfunction2();">
+                                <option value="">Plese select time</option>
+                                @foreach($all_times as $each_times)
+                                <option value="{{$each_times->id}}"> {{date('h:i A', strtotime($each_times->time))}}</option>
+                                @endforeach 
+                              </select>
+                            @else
+
+                            <label>Available Time <small>*</small></label>
                               <select class="form-control" name="slot_time2" id="slot_time2" onchange="jsfunction2()">
                                
                                 
                               </select>
+                            @endif
 
                         </div>
 
@@ -359,6 +375,12 @@ messages: {
     <div id="add_session_req2" >
 
     </div>
+
+
+      <div style="display: none;" id='add_session_loadingimg'>
+          <img src="{{asset('backend/images/loader_session_time.gif')}}" style="width: 85px;margin-top: -30px;margin-left: -21px;"/>
+        </div>
+
             
       <button type="button" name="submit" class="btn btn-dark btn-theme-colored btn-flat btn-drk2 save_button"  style="display:none;" id="save_btn2">Submit</button>
        </form>
@@ -414,6 +436,16 @@ $('a[data-toggle="tab"]').on('click', function (e) {
   }
   else if(tab_val=='li1')
   {
+
+    var form=$("#add_session_form2");
+   $.ajax({
+        type:"get",
+        url:"{{route('cart_data_delete_trainer')}}",
+        data:form.serialize(),
+        success: function(response){ 
+
+ }
+});
     if($('#executive_trainer').val()=='' || $('#executive_trainer2').val()=='')
     {
        $('#trainer_id2').val('');
@@ -461,27 +493,13 @@ $('a[data-toggle="tab"]').on('click', function (e) {
 </script>
 
 <script>
-  $(document).ready(function(){
-  $('#slot_time2').mouseover(function() {
-    if($('#slots_datepicker2').val()=='')
-    {
-      return gettime();
-    } 
-   
-  });
-
-  });
-
-</script>
-
-<script>
    
    function  jsfunction(){
     
     if($('#trainer_id').val()!='' && $('#slots_datepicker').val()!='')
     {
     
-    var get_current_time=0;
+      var get_current_time=0;
       var get_current_date_trainer=0;
       var same_trainer_date=$('#trainer_id').val() + '#' + $('#slots_datepicker').val();
 
@@ -581,6 +599,8 @@ $('a[data-toggle="tab"]').on('click', function (e) {
   
   </script>
 
+
+  @if(Auth::user()->master_trainer==1)
   <script>
    
    function  jsfunction2(){
@@ -620,112 +640,15 @@ $('a[data-toggle="tab"]').on('click', function (e) {
   {
     $('#trainer_id2').attr('disabled','disabled');
   }
-    
-  }
-  
-
-  </script>
-
-
-
-  <script>
-   
-   function  gettime(){
-    
-    if($('#slots_datepicker2').val()!='')
-    {
-
-      var get_current_time=0;
-      var get_current_date_trainer=0;
-      var same_trainer_date=$('#slots_datepicker2').val();
-
-      var all_previous_time = $(".all_previous_time");
-      var all_previous_trainer_date = $(".all_previous_trainer_date");
-
-      var all_time=new Array();
-
-    for(var k = 0; k < all_previous_time.length; k++)
-    {
-      
-      if($(all_previous_time[k]).val()!='' && $(all_previous_trainer_date[k]).val()==same_trainer_date)
-      {
-        get_current_time=1;
-      }
-
-      all_time[k]=$(all_previous_time[k]).val();
-
-    }
-
-    if(get_current_time==1)
-    {
-
-      $('#loadingimg2').show();
-      var slot_trainer = $('#slot_time2');
-                    slot_trainer.prop("disabled",false);
-                    slot_trainer.empty();
-                    slot_trainer.append(
-                $('<option>', {value: ''}).text('Please select time'));
-    $.ajax({
-                  type: "GET",
-                  url: "{{route('admin_get_current_time')}}",
-                  data: {'slot_date': $('#slots_datepicker2').val(),'time_id': all_time},
-                  success: function (data){
-                    $('#loadingimg2').hide();
-                    //console.log(data);
-
-                    var obj = $.parseJSON(data);
-                    
-
-                    if(obj.length > 0){ 
-                    for(var i = 0; i < obj.length; i++){
-
-                     slot_trainer.append(
-                 $('<option>', {value: obj[i]['id']}).text(obj[i]['time']));
-                   }
-                 }
-                  }
-      });
-  }
-  else
-  {
-    $('#loadingimg2').show();
-      var slot_trainer = $('#slot_time2');
-                    slot_trainer.prop("disabled",false);
-                    slot_trainer.empty();
-                    slot_trainer.append(
-                $('<option>', {value: ''}).text('Please select time'));
-    $.ajax({
-                  type: "GET",
-                  url: "{{route('admin_get_time')}}",
-                  data: {'slot_date': $('#slots_datepicker2').val()},
-                  success: function (data){
-                    $('#loadingimg2').hide();
-                    //console.log(data);
-
-                    var obj = $.parseJSON(data);
-                    
-
-                    if(obj.length > 0){ 
-                    for(var i = 0; i < obj.length; i++){
-
-                     slot_trainer.append(
-                 $('<option>', {value: obj[i]['id']}).text(obj[i]['time']));
-                   }
-                 }
-                  }
-      });
-  }
-  }
-
-  else
-  {
-    $('#slot_time2').attr('disabled','disabled');
-  }
-    
   }
   
   </script>
 
+  @endif
+
+
+
+  
   <script>
    $('#add_sess').click(function()
     {
@@ -901,6 +824,16 @@ if($('#executive_trainer2').val()=='')
     }
     else{
 
+      $('#add_session_loadingimg').show();
+    $.ajax({
+                  type: "GET",
+                  url: "{{route('slot_insert_to_cart_trainer')}}",
+                  data: {'trainer_id': trainer_id,'slot_date': slots_date,'slots_time_id': slots_time_id},
+                  success: function (data){
+
+                    var cart_id=data;
+                    $('#add_session_loadingimg').hide();
+
 
     add_session_req2.innerHTML = add_session_req2.innerHTML +'<input type=text class="form-control blank2"  readonly name="trainer_name[]"' + 'id="trainer_name[]"' + 'value="' + trainer_name + '"/>&nbsp;'
 
@@ -941,6 +874,10 @@ if($('#executive_trainer2').val()=='')
     i=1+parseInt(i);
     $("#session_no2").val(i);
 
+     }
+      });
+
+
     
 }
 
@@ -960,9 +897,6 @@ $.ajax({
         url:"{{route('trainer_slotinsert')}}",
         data:form.serialize(),
         success: function(response){ 
-            
-
-            
 
             if(response.success==1 && response.session_remaining>0)
             {
@@ -1139,6 +1073,123 @@ $("ul.tabs").hide();
 });
 });
 </script>
+
+@if(Auth::user()->master_trainer==2)
+
+<script>
+  $(document).ready(function(){
+  $('#slot_time2').mouseover(function() {
+    if($('#slots_datepicker2').val()=='')
+    {
+      return gettime();
+    } 
+   
+  });
+
+  });
+
+</script>
+
+ <script>
+   
+   function  gettime(){
+    
+    if($('#slots_datepicker2').val()!='')
+    {
+
+      var get_current_time=0;
+      var get_current_date_trainer=0;
+      var same_trainer_date=$('#slots_datepicker2').val();
+
+      var all_previous_time = $(".all_previous_time");
+      var all_previous_trainer_date = $(".all_previous_trainer_date");
+
+      var all_time=new Array();
+
+    for(var k = 0; k < all_previous_time.length; k++)
+    {
+      
+      if($(all_previous_time[k]).val()!='' && $(all_previous_trainer_date[k]).val()==same_trainer_date)
+      {
+        get_current_time=1;
+      }
+
+      all_time[k]=$(all_previous_time[k]).val();
+
+    }
+
+    if(get_current_time==1)
+    {
+
+      $('#loadingimg2').show();
+      var slot_trainer = $('#slot_time2');
+                    slot_trainer.prop("disabled",false);
+                    slot_trainer.empty();
+                    slot_trainer.append(
+                $('<option>', {value: ''}).text('Please select time'));
+    $.ajax({
+                  type: "GET",
+                  url: "{{route('admin_get_current_time')}}",
+                  data: {'slot_date': $('#slots_datepicker2').val(),'time_id': all_time},
+                  success: function (data){
+                    $('#loadingimg2').hide();
+                    //console.log(data);
+
+                    var obj = $.parseJSON(data);
+                    
+
+                    if(obj.length > 0){ 
+                    for(var i = 0; i < obj.length; i++){
+
+                     slot_trainer.append(
+                 $('<option>', {value: obj[i]['id']}).text(obj[i]['time']));
+                   }
+                 }
+                  }
+      });
+  }
+  else
+  {
+    $('#loadingimg2').show();
+      var slot_trainer = $('#slot_time2');
+                    slot_trainer.prop("disabled",false);
+                    slot_trainer.empty();
+                    slot_trainer.append(
+                $('<option>', {value: ''}).text('Please select time'));
+    $.ajax({
+                  type: "GET",
+                  url: "{{route('admin_get_time')}}",
+                  data: {'slot_date': $('#slots_datepicker2').val()},
+                  success: function (data){
+                    $('#loadingimg2').hide();
+                    //console.log(data);
+
+                    var obj = $.parseJSON(data);
+                    
+
+                    if(obj.length > 0){ 
+                    for(var i = 0; i < obj.length; i++){
+
+                     slot_trainer.append(
+                 $('<option>', {value: obj[i]['id']}).text(obj[i]['time']));
+                   }
+                 }
+                  }
+      });
+  }
+  }
+
+  else
+  {
+    $('#slot_time2').attr('disabled','disabled');
+  }
+    
+  }
+  
+  </script>
+
+
+  @endif
 
 
 <div id="reason_modal" class="modal fade  mot-mod" role="dialog" >

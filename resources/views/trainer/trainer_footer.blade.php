@@ -192,6 +192,7 @@ else{
    $(document).ready(function() {
     src = "{{ route('customersearch') }}";
      $("#apply2").autocomplete({
+
         source: function(request, response) {
             $.ajax({
                 url: src,
@@ -200,7 +201,6 @@ else{
                     term : request.term
                 },
                 success: function(data) {
-                  
                 response( $.map( data, function( item ) {
                     
                     return {
@@ -223,14 +223,22 @@ else{
 
 
             });
+
+
         },
         minLength: 3,
         select: function(event, ui) {
+
+         
         $("#customer_id").val(ui.item.id);  // ui.item.value contains the id of the selected label
         $("#customer_idd").val(ui.item.id);  // ui.item.value contains the id of the selected label
         $("#mail").show();
+
         
-        $("#cus_det").text(ui.item.value + ", " + ui.item.email + ", " + ui.item.ph_no);
+          $("#cus_det").text(ui.item.value + ", " + ui.item.email + ", " + ui.item.ph_no);
+        
+        
+        
 
          var Data = 
   {
@@ -265,7 +273,38 @@ else{
        
           }
         });
+
+
+    if($('#executive_trainer').val()=='' || $('#executive_trainer2').val()=='')
+    {
+      $('#trainer_id').val('');
     }
+  
+   $('#slots_datepicker').val('');
+   $('#slot_time').val('');
+   $('#session_no').val(1);
+   
+   add_session_req.innerHTML='';
+   old_session_data.innerHTML='';
+   $('#save_btn').hide();
+
+   if($('#executive_trainer').val()=='' || $('#executive_trainer2').val()=='')
+    {
+       $('#trainer_id2').val('');
+    }
+    
+   $('#slots_datepicker2').val('');
+   $('#slot_time2').val('');
+   $('#session_no2').val(1);
+   add_session_req2.innerHTML='';
+   old_session_data2.innerHTML='';
+   
+   $('#save_btn2').hide();
+
+    }
+
+
+
     });
 });
 

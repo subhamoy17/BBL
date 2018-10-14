@@ -42,6 +42,7 @@ public function __construct()
 public function index()
 
 {
+  $this->cart_delete_trainer();
   $cur_date =Carbon::now()->toDateString();
 
 if(Auth::user()->master_trainer==1)
@@ -117,7 +118,7 @@ Log::debug(":: total_booking_qtr data :: ".print_r($qtrMonth,true));
 public function showprofile()
 {
   // Log::debug(":: Show Profile :: ".print_r($id,true));
-
+  $this->cart_delete_trainer();
   $data=DB::table('users')->where('Id',Auth::user()->id)->first();
   Log::debug(":: Trainer data :: ".print_r($data,true));
   return view('trainer.trainerprofile')->with(compact('data'));
@@ -126,6 +127,7 @@ public function showprofile()
 // open the update form of trainer
 public function showupdateform()
 {
+  $this->cart_delete_trainer();
   $data= DB::table('users')->where('Id',Auth::user()->id)->first();
   Log::debug(" data ".print_r($data,true));
 
@@ -136,6 +138,7 @@ public function showupdateform()
 // update profile of trainer
 public function updateprofile(Request $request)
 {
+  $this->cart_delete_trainer();
 
   if($request->image!="")
   {
@@ -163,6 +166,7 @@ public function updateprofile(Request $request)
 */
 public function showslot()
 {
+  $this->cart_delete_trainer();
   $data=DB::table('slots')->where('deleted_at',null)->get();
   //Log::debug(":: Slots Data :: ".print_r($data,true));
   return view('trainer.addslot')->with(compact('data'));
@@ -175,6 +179,7 @@ public function showslot()
 */
 public function addslot()
 {
+  $this->cart_delete_trainer();
   return view('trainer.addslotrecord');
 }
 
@@ -184,6 +189,7 @@ public function addslot()
 */
 public function insertslot(Request $request)
 {
+  $this->cart_delete_trainer();
   // create log for showing error and print result
   Log::debug(" data ".print_r($request->all(),true)); 
   // validation of data
@@ -210,6 +216,7 @@ public function insertslot(Request $request)
 // open the edit form of slots
 public function showslotseditform($id)
 {
+  $this->cart_delete_trainer();
   $data= DB::table('slots')->where('id',$id)->first();
   Log::debug(" data ".print_r($data,true));
   return view ("trainer.slotseditform")->with(compact('data'));
@@ -218,6 +225,7 @@ public function showslotseditform($id)
 // update the slots
 public function slotsedit(Request $request)
 {
+  $this->cart_delete_trainer();
   $slotsdata['slots_name']=$request->slots_name;
   $slotsdata['slots_number']=$request->slots_number;
   $slotsdata['slots_price']=$request->slots_price;
@@ -231,6 +239,7 @@ public function slotsedit(Request $request)
 // delete the slots
 public function slotsdelete($id)
 {
+  $this->cart_delete_trainer();
   $slotsdata['deleted_at']=Carbon::now();
 
   DB::table('slots')->where('id',$id)->update($slotsdata);
@@ -241,6 +250,7 @@ public function slotsdelete($id)
 
 public function showlist()
 {
+  $this->cart_delete_trainer();
   $data=DB::table('users')->where('master_trainer',2)->whereNull('deleted_at')->get()->all();
   return view('trainer.trainerlist')->with(compact('data'));
 }
@@ -249,6 +259,7 @@ public function showlist()
 //trainer ajax function//
 public function trainer_active_deactive(Request $request)
 {
+  $this->cart_delete_trainer();
   $data=$request->get('data');
   $id=$data['id'];
   $action=$data['action'];
@@ -388,12 +399,14 @@ public function trainer_active_deactive(Request $request)
 
 public function addtrainer()
 {
+  $this->cart_delete_trainer();
     return view('trainer.addtrainer');
 }
 
 
 public function trainerdelete($id)
 {
+  $this->cart_delete_trainer();
   $updatedata['deleted_at']=Carbon::now();
 
   DB::table('users')->where('id',$id)->update($updatedata);
@@ -512,6 +525,7 @@ public function trainerdelete($id)
 
 public function inserttrainer(Request $request)
 {
+  $this->cart_delete_trainer();
 
   $validator=Validator::make($request->all(), [
 
@@ -559,6 +573,7 @@ public function inserttrainer(Request $request)
 
 public function showtrainerseditform($id)
 {
+  $this->cart_delete_trainer();
   $data= DB::table('users')->where('id',$id)->first();
   Log::debug(" data ".print_r($data,true));
   return view ("trainer.edittrainer")->with(compact('data'));
@@ -567,6 +582,7 @@ public function showtrainerseditform($id)
 
 public function traineredit(Request $request)
 { 
+  $this->cart_delete_trainer();
   if($request->image!="")
   {
     $myimage=$request->image;
@@ -592,6 +608,7 @@ public function traineredit(Request $request)
 //past customer list//
 public function pastshowlist(Request $request)
 {
+  $this->cart_delete_trainer();
   $id=$request->id;
   $cur_date =Carbon::now()->toDateString();
   $cur_time =date("H:i:s");
@@ -626,7 +643,7 @@ public function pastshowlist(Request $request)
 //past customer list//
 public function cancelledshowlist()
 {
-  
+  $this->cart_delete_trainer();
   if(Auth::user()->master_trainer==1)
   {
     $data=DB::table('slot_request')
@@ -655,7 +672,7 @@ public function cancelledshowlist()
 //future customer ajax function//
 public function approve_customer_request(Request $request)
 {
-
+  $this->cart_delete_trainer();
   $remaining_session_request_now=Carbon::now()->toDateString();
   $data=$request->get('data');
   $id=$data['id'];
@@ -827,7 +844,7 @@ public function approve_customer_request(Request $request)
 //future customer list//
 public function futureshowlist(Request $request)
 {
-
+  $this->cart_delete_trainer();
   $id=$request->id;
   $cur_date =Carbon::now()->toDateString();
 
@@ -872,6 +889,7 @@ else{
 
 public function future_pending_showlist(Request $request)
 {
+  $this->cart_delete_trainer();
   $id=$request->id;
   $cur_date =Carbon::now()->toDateString();
   $cur_time =date("H:i:s");
@@ -902,6 +920,7 @@ public function future_pending_showlist(Request $request)
 //future  pending customer request ajax function//
 public function approve_pending_request(Request $request)
 {
+  $this->cart_delete_trainer();
   $data=$request->get('data');
   $id=$data['id'];
   $action=$data['action'];   
@@ -1019,18 +1038,21 @@ public function approve_pending_request(Request $request)
 //all customers table//
 public function all_customers()
 {
+  $this->cart_delete_trainer();
   $data=DB::table('customers')->whereNull('deleted_at')->where('confirmed',1)->get();
   return view('trainer.customers_all')->with(compact('data'));
 }
 //gym insert form//
 public function add_exercise_trainer()
 {
+  $this->cart_delete_trainer();
   return view('trainer.exercise_insert_details');
 }
 
 //gym insert function//
 public function exercise_user_insert(Request $request)
 {
+  $this->cart_delete_trainer();
   // Log::debug(" data ".print_r($request->all(),true)); /// create log for showing error and print resul
   if($request->image!="")
   {
@@ -1059,7 +1081,7 @@ public function exercise_user_insert(Request $request)
 //gym view function//
 public function gym_showlist(Request $request)
 { 
-
+  $this->cart_delete_trainer();
   $trainer_details=DB::table('users')->where('users.id',Auth::user()->id)->value('master_trainer');
   if($trainer_details==2)
   {
@@ -1076,13 +1098,15 @@ public function gym_showlist(Request $request)
 
 //gym delete function//
 public function gymdelete($id)
-{
+{ 
+  $this->cart_delete_trainer();
   DB::table('exercise_details')->delete($id);
   return redirect()->back()->with("delete","You have successfully deleted one exercise.");;
 }
 //gym edit form//
 public function show_edit_exercise_form($id)
 {
+  $this->cart_delete_trainer();
   $data= DB::table('exercise_details')->where('id',$id)->first();
   //Log::debug(" data ".print_r($data,true));
   return view ("trainer.editexercise")->with(compact('data'));
@@ -1091,7 +1115,7 @@ public function show_edit_exercise_form($id)
 //gym edit function//
 public function update_exercise(Request $request)
 { 
-
+  $this->cart_delete_trainer();
   
   if($request->image!="")
   {
@@ -1123,6 +1147,7 @@ public function update_exercise(Request $request)
 //feedback function//
 public function feedbacklist(Request $request)
 {
+  $this->cart_delete_trainer();
   $data=DB::table('feedback')->orderBy('feedback.id','desc')->get();
   return view('trainer.feedbacklist')->with(compact('data'));
 }
@@ -1130,6 +1155,7 @@ public function feedbacklist(Request $request)
 // For contact details
 public function contactlist(Request $request)
 {
+  $this->cart_delete_trainer();
   $data=DB::table('contact_us')->orderBy('contact_us.id','desc')->get();
   return view('trainer.contactlist')->with(compact('data'));
 }
@@ -1137,6 +1163,7 @@ public function contactlist(Request $request)
 
 public function testimonial_view()
 {
+  $this->cart_delete_trainer();
   $data=DB::table('testimonial')->where('deleted_at',null)->get();
   return view('trainer.testimonial_view')->with(compact('data'));
 }
@@ -1144,12 +1171,13 @@ public function testimonial_view()
 
 public function testimonialshow()
 {
+  $this->cart_delete_trainer();
   return view('trainer.testimonial_backend');
 }
 
 public function testimonialinsert(Request $request)
 {
-
+  $this->cart_delete_trainer();
   if($request->image!="")
   {
     $request->validate
@@ -1176,6 +1204,7 @@ public function testimonialinsert(Request $request)
 // open the edit form of slots
 public function testimonialedit($id)
 {
+  $this->cart_delete_trainer();
   $data= DB::table('testimonial')->where('id',$id)->first();
   Log::debug(" data ".print_r($data,true));
   return view ("trainer.edit_testimonial")->with(compact('data'));
@@ -1184,7 +1213,7 @@ public function testimonialedit($id)
 public function testimonialupdate(Request $request)
 { 
 
-    
+  $this->cart_delete_trainer();
   if($request->image!="")
   {
     $myimage=$request->image;
@@ -1209,6 +1238,7 @@ public function testimonialupdate(Request $request)
 
 public function testimonialdelete($id)
 {
+  $this->cart_delete_trainer();
   $updatedata['deleted_at']=Carbon::now();
 
   DB::table('testimonial')->where('id',$id)->update($updatedata);
@@ -1218,7 +1248,7 @@ public function testimonialdelete($id)
 
 public function mot_show(Request $request)
 {
-
+  $this->cart_delete_trainer();
   $data=DB::table('customer_mot')
   ->join('customers','customers.id','customer_mot.customer_id')
   ->select('customer_mot.*','customers.name','customers.ph_no','customers.email')->where('customer_mot.deleted_at',null)->get();
@@ -1227,6 +1257,7 @@ public function mot_show(Request $request)
 
 public function motinsertshow()
 {
+  $this->cart_delete_trainer();
   $data=DB::table('customers')->get();
   return view('trainer.motinsertshow')->with(compact('data'));
 }
@@ -1235,7 +1266,7 @@ public function motinsertshow()
 public function motinsertshowauto(Request $request)
 {
   
-
+$this->cart_delete_trainer();
   $query = $request->get('term','');
         
         $products=DB::table('customers')->where('name','LIKE','%'.$query.'%')->orwhere('email','LIKE','%'.$query.'%')->orwhere('ph_no','LIKE','%'.$query.'%')->get();
@@ -1269,8 +1300,8 @@ public function motinsertshowauto(Request $request)
 
 public function motinsert(Request $request)
 {
-
-  Log::debug(" metric ".print_r($request->right_arm_credential,true));
+  $this->cart_delete_trainer();
+  //Log::debug(" metric ".print_r($request->right_arm_credential,true));
 
   if($request->right_arm_credential=="metric")
     {
@@ -1431,6 +1462,7 @@ public function motinsert(Request $request)
 
 public function mot_customer_request(Request $request)
 {
+  $this->cart_delete_trainer();
   $data=$request->get('data');
   $id=$data['id'];
   $positions = DB::table('customer_mot')->where('customer_id',$id)->orderBy('date','DESC')->first();
@@ -1440,6 +1472,7 @@ public function mot_customer_request(Request $request)
 
 public function moteditshow($id)
 {
+  $this->cart_delete_trainer();
   $data=DB::table('customer_mot')
   ->join('customers','customers.id','customer_mot.customer_id')
   ->join('users','users.id','customer_mot.trainer_id')
@@ -1452,7 +1485,7 @@ public function moteditshow($id)
 
 public function motedit(Request $request){
 
-
+  $this->cart_delete_trainer();
     if($request->right_arm_credential=="metric")
     {
         $right_arm =$request->right_arm;
@@ -1594,7 +1627,7 @@ if($request->left_calf_credential=="metric")
 
 public function motdelete($id)
 {
-    
+  $this->cart_delete_trainer();
   $updatedata['deleted_at']=Carbon::now();
   DB::table('customer_mot')->where('id',$id)->update($updatedata);
   return redirect('trainer/mot_show')->with("delete","You have successfully deleted one customer's MOT.");
@@ -1602,6 +1635,7 @@ public function motdelete($id)
 
 public function our_client_show()
 {
+  $this->cart_delete_trainer();
   $data=DB::table('our_client')->where('deleted_at',null)->get();
   return view('trainer.our_client_list')->with(compact('data'));
 }
@@ -1609,12 +1643,14 @@ public function our_client_show()
 
 public function client_insert_view()
 {
+  $this->cart_delete_trainer();
   return view('trainer.client_insert_view');
 }
 
 
 public function client_insert(Request $request)
 {
+  $this->cart_delete_trainer();
     if($request->image!="")
     {
         $request->validate
@@ -1647,7 +1683,7 @@ public function client_insert(Request $request)
 
 public function client_edit_view($id)
 {
-
+  $this->cart_delete_trainer();
     $data= DB::table('our_client')->where('id',$id)->first();
     Log::debug(" data ".print_r($data,true));
     return view ("trainer.client_edit_view")->with(compact('data'));
@@ -1657,6 +1693,7 @@ public function client_edit_view($id)
 
 public function client_update(Request $request)
 { 
+  $this->cart_delete_trainer();
     if($request->image!="")
     {
         $myimage=$request->image;
@@ -1683,6 +1720,7 @@ public function client_update(Request $request)
 
 public function client_delete($id)
 {
+  $this->cart_delete_trainer();
     $updatedata['deleted_at']=Carbon::now();
 
     DB::table('our_client')->where('id',$id)->update($updatedata);
@@ -1696,7 +1734,7 @@ public function client_delete($id)
 
 public function payment_history_backend()
 {
-
+  $this->cart_delete_trainer();
 
     $data=DB::table('purchases_history')
     ->join('customers','customers.id','purchases_history.customer_id')
@@ -1711,6 +1749,7 @@ public function payment_history_backend()
 
 public function payment_history_backend_request(Request $request)
 {
+  $this->cart_delete_trainer();
     $data=$request->get('data');
     $purchase_history_id=$data['id'];
     $action=$data['action'];
@@ -1793,6 +1832,7 @@ public function payment_history_backend_request(Request $request)
 
   function cheeck_exercise_category(Request $request)
   {
+    $this->cart_delete_trainer();
     $category=$request->title;
     $category=preg_replace('/\s+/', ' ', $category);
     
@@ -1811,6 +1851,7 @@ public function payment_history_backend_request(Request $request)
 
 function cheeckexercisecategory_edit(Request $request)
   {
+    $this->cart_delete_trainer();
     $category=$request->title;
     $category=preg_replace('/\s+/', ' ', $category);
     
@@ -1838,6 +1879,8 @@ function cheeckexercisecategory_edit(Request $request)
   }
 function cheecktestimonialname(Request $request)
   {
+    $this->cart_delete_trainer();
+
     $name=$request->name;
     $name=preg_replace('/\s+/', ' ', $name);
     
@@ -1855,6 +1898,8 @@ function cheecktestimonialname(Request $request)
 
   function cheecktestimonialname_edit(Request $request)
   {
+    $this->cart_delete_trainer();
+
     $name=$request->name;
     $name=preg_replace('/\s+/', ' ', $name);
     
@@ -1886,7 +1931,7 @@ function cheecktestimonialname(Request $request)
 
   public function booking_slot_times(Request $request)
 {
-    
+  $this->cart_delete_trainer();
   $trainer_id=$request->trainer_id;
   $slot_date=$request->slot_date;
 
@@ -1945,7 +1990,7 @@ $final_slot_time=DB::table('slot_times')->whereNotIn('id',$get_slot_times)
 
 public function admin_get_current_slot_time(Request $request)
 {
-
+  $this->cart_delete_trainer();
   $trainer_id=$request->trainer_id;
   $slot_date=$request->slot_date;
   
@@ -2011,8 +2056,6 @@ $final_slot_time=DB::table('slot_times')->whereNotIn('id',$get_slot_times)
 public function admin_get_slot_trainer(Request $request)
 {
 
-// $slot_time=DB::table('slot_times')->where('id',$slots_time_id)->first();
-
   $slot_time=$request->slot_time;
   $slot_date=$request->slot_date;
 
@@ -2025,141 +2068,137 @@ public function admin_get_slot_trainer(Request $request)
      })
   ->pluck('trainer_id');
 
+  $old_slot_time_id=DB::table('slot_request')
+  ->where('slot_date',$slot_date)
+  ->where(function($q) {
+         $q->where('approval_id', 1)
+           ->orWhere('approval_id', 3);
+     })
+  ->pluck('slot_time_id')->toArray();
 
-  Log::debug(" get_slot_times ".print_r($get_slot_trainer,true));
-  $final_slot_trainer=DB::table('users')->whereNull('deleted_at')->where('is_active', 1)->whereNotIn('id',$get_slot_trainer)->get();
+  $cart_slot_time_id=DB::table('cart_slot_request')
+  ->where('slot_date',$slot_date)
+  ->where(function($q) {
+         $q->where('approval_id', 1)
+           ->orWhere('approval_id', 3);
+     })
+  ->pluck('slot_time_id')->toArray();
 
+  if($cart_slot_time_id)
+  {
+    $old_slot_time_id=array_merge($old_slot_time_id,$cart_slot_time_id);
+  }
+
+  $old_trainer_id=DB::table('slot_request')
+  ->where('slot_date',$slot_date)
+  ->where(function($q) {
+         $q->where('approval_id', 1)
+           ->orWhere('approval_id', 3);
+     })
+  ->pluck('trainer_id')->toArray();
+
+  $cart_trainer_id=DB::table('cart_slot_request')
+  ->where('slot_date',$slot_date)
+  ->where(function($q) {
+         $q->where('approval_id', 1)
+           ->orWhere('approval_id', 3);
+     })
+  ->pluck('trainer_id')->toArray();
+
+  if($cart_trainer_id)
+  {
+    $old_trainer_id=array_merge($old_trainer_id,$cart_trainer_id);
+  }
+
+  $length=count($old_slot_time_id);
+  $upto=$length*4;
+
+  for($i=$length;$i<$upto;$i++)
+  {
+    $old_slot_time_id[$i]=$old_slot_time_id[$i-$length]+1;
+  }
+
+  $choose_slot_times=array();
+  $choose_slot_times[0]=$slot_time;
+  $slot_date=array();
+  $slot_date[0]=$slot_date;
+
+  $length=1;
+  $upto=$length*4;
+
+  for($i=$length;$i<$upto;$i++)
+  {
+    $choose_slot_times[$i]=$choose_slot_times[$i-$length]+1;
+  }
+
+
+  if(array_intersect($old_slot_time_id, $choose_slot_times))
+  {
+    
+    $final_slot_trainer=DB::table('users')->whereNull('deleted_at')->where('is_active', 1)->whereNotIn('id',$old_trainer_id)->get();
+  }
+ else
+  {
+    //Log::debug(" not equal");
+    $final_slot_trainer=DB::table('users')->whereNull('deleted_at')->where('is_active', 1)->whereNotIn('id',$get_slot_trainer)->get();
+  }
+
+  
   return json_encode($final_slot_trainer);
 }
 
 
-public function admin_get_time(Request $request)
+
+
+public function slot_insert_to_cart_trainer(Request $request)
 {
+  $cart_data['trainer_id']=$request->trainer_id;
+  $cart_data['slot_date']=$request->slot_date;
+  $cart_data['slot_time_id']=$request->slots_time_id;
+  $cart_data['approval_id']=3;
+  $cart_data['request_trainer_id']=Auth::user()->id;
 
-  $slot_date=$request->slot_date;
+  $insert_cart=DB::table('cart_slot_request')->insert($cart_data);
 
+  $id = DB::getPdo()->lastInsertId();
 
-  //$time_data=DB::table('slot_times')->get()->all();
-
-  $get_slot_times=DB::table('slot_request')
-  ->where('slot_date',$slot_date)
-  ->where(function($q) {
-         $q->where('approval_id', 1)
-           ->orWhere('approval_id', 3);
-     })
-  ->pluck('slot_time_id');
-
-  if(count($get_slot_times)){
-
-  foreach($get_slot_times as $key=>$hour) {
+   return json_encode($id);
 
 }
 
-  $length=$key+1;
-  $upto=$length*4;
-
-  for($i=$length;$i<$upto;$i++)
+public function cart_data_delete_trainer(Request $request)
 {
-  $get_slot_times[$i]=$get_slot_times[$i-$length]+1;
+  Log::debug("cart data delete");
 
-}
-
-  foreach($get_slot_times as $key=>$hour) {
-
-}
-
-  $length=$key+1;
-  $upto=$length*4;
-
-  for($i=$length;$i<$upto;$i++)
-{
-  $get_slot_times[$i]=$get_slot_times[$i-$length]-1;
-
-}
-}
-
-$final_slot_time=DB::table('slot_times')->whereNotIn('id',$get_slot_times)
-  ->get()->all();
-
-
-  foreach($final_slot_time as $myslot_time)
+  $total_slots=$request->total_slots;
+  for($i=0;$i<$total_slots;$i++)
   {
-    $myslot_time->time=date('h:i A', strtotime($myslot_time->time));
+
+     $trainer_id=$request->trainer_id[$i];
+    $slots_date=$request->slots_date[$i];
+    $slots_time_id=$request->slots_time_id[$i];
+
+    $delete_from_cart=DB::table('cart_slot_request')
+    ->where('trainer_id',$trainer_id)
+    ->where('slot_date',$slots_date)
+    ->where('slot_time_id',$slots_time_id)
+    ->delete();
+
+    return json_encode($delete_from_cart);
+
   }
 
-  return json_encode($final_slot_time);
 }
 
-public function admin_get_current_time(Request $request)
-{
-
-  $slot_date=$request->slot_date;
-
-  $get_slot_times=DB::table('slot_request')
-  ->where('slot_date',$slot_date)
-  ->where(function($q) {
-         $q->where('approval_id', 1)
-           ->orWhere('approval_id', 3);
-     })
-  ->pluck('slot_time_id')->all();
-
-  $get_slot_times2=DB::table('slot_times')
-  ->wherein('id',$request->time_id)
-  ->pluck('id')->all();
-
-  $get_slot_times=array_merge($get_slot_times,$get_slot_times2);
-
-  if(count($get_slot_times)){
-
-  foreach($get_slot_times as $key=>$hour) {
-
-}
-
-  $length=$key+1;
-  $upto=$length*4;
-
-  for($i=$length;$i<$upto;$i++)
-{
-  $get_slot_times[$i]=$get_slot_times[$i-$length]+1;
-
-}
-
-  foreach($get_slot_times as $key=>$hour) {
-
-}
-
-  $length=$key+1;
-  $upto=$length*4;
-
-  for($i=$length;$i<$upto;$i++)
-{
-  $get_slot_times[$i]=$get_slot_times[$i-$length]-1;
-
-}
-}
-
-$final_slot_time=DB::table('slot_times')->whereNotIn('id',$get_slot_times)
-  ->get()->all();
 
 
-  foreach($final_slot_time as $myslot_time)
+  public function add_session(Request $request)
   {
-    $myslot_time->time=date('h:i A', strtotime($myslot_time->time));
-  }
-
-  return json_encode($final_slot_time);
-}
-
-
-
-
-
-  function add_session(Request $request)
-  {
-
+    $this->cart_delete_trainer();
   $remaining_session_request_now=Carbon::now()->toDateString();  
   $customers=DB::table('customers')->whereNull('deleted_at')->where('confirmed',1)->get();
   $data=DB::table('users')->whereNull('deleted_at')->where('is_active',1)->get();
+  $all_times=DB::table('slot_times')->get()->all();
 
   $sum_slots = DB::table('purchases_history')
   ->select('active_package','package_remaining','customer_id')  
@@ -2174,15 +2213,15 @@ $final_slot_time=DB::table('slot_times')->whereNotIn('id',$get_slot_times)
 
   $trainer_data=DB::table('users')->whereNull('deleted_at')->where('is_active',1)->get();
  
-
   $total_remaining_session=$sum_slots+$sum_extra_slots;
-    return view('trainer.add_session')->with(compact('data','total_remaining_session','customers','trainer_data'));
+    return view('trainer.add_session')->with(compact('data','total_remaining_session','customers','trainer_data','all_times'));
   }
 
   
 
 public function customersearch(Request $request)
 {
+  $this->cart_delete_trainer();
 
   $query = $request->get('term','');   
   $products=DB::table('customers')
@@ -2217,6 +2256,7 @@ public function customersearch(Request $request)
   public function check_customer_session(Request $request)
   {
 
+    $this->cart_delete_trainer();
     $remaining_session_request_now=Carbon::now()->toDateString(); // current date
 
   $sum_slots = DB::table('purchases_history')
@@ -2239,7 +2279,8 @@ public function customersearch(Request $request)
 
 public function trainer_slotinsert(Request $request)
 {
-  
+  $this->cart_delete_trainer();
+
   $req_type=$request->req_type;
   $total_slots=$request->total_slots;
   $customer_id=$request->customer_id; //customer_id
@@ -2400,6 +2441,8 @@ public function trainer_slotinsert(Request $request)
     {
       $insert_slot_session=0;
     }
+
+    
   }
 
   if($insert_slot_session && $update_package_purchase) 
@@ -2450,6 +2493,8 @@ public function trainer_slotinsert(Request $request)
 public function add_customer_session(Request $request)
 {
 
+  $this->cart_delete_trainer();
+
   Log::debug(" data customer_email ".print_r($request->all(),true)); 
   $remaining_session_request_now=Carbon::now()->toDateString();
    $customer_email=$request->user_email;
@@ -2472,6 +2517,131 @@ Log::debug(" Check all_package  ".print_r($customer_email,true));
       return response()->json(2);
     }
   
+}
+
+public function admin_get_time(Request $request)
+{
+
+  $this->cart_delete_trainer();
+  $slot_date=$request->slot_date;
+
+
+  //$time_data=DB::table('slot_times')->get()->all();
+
+  $get_slot_times=DB::table('slot_request')
+  ->where('slot_date',$slot_date)
+  ->where(function($q) {
+         $q->where('approval_id', 1)
+           ->orWhere('approval_id', 3);
+     })
+  ->pluck('slot_time_id');
+
+  if(count($get_slot_times)){
+
+  foreach($get_slot_times as $key=>$hour) {
+
+}
+
+  $length=$key+1;
+  $upto=$length*4;
+
+  for($i=$length;$i<$upto;$i++)
+{
+  $get_slot_times[$i]=$get_slot_times[$i-$length]+1;
+
+}
+
+  foreach($get_slot_times as $key=>$hour) {
+
+}
+
+  $length=$key+1;
+  $upto=$length*4;
+
+  for($i=$length;$i<$upto;$i++)
+{
+  $get_slot_times[$i]=$get_slot_times[$i-$length]-1;
+
+}
+}
+
+$final_slot_time=DB::table('slot_times')->whereNotIn('id',$get_slot_times)
+  ->get()->all();
+
+
+  foreach($final_slot_time as $myslot_time)
+  {
+    $myslot_time->time=date('h:i A', strtotime($myslot_time->time));
+  }
+
+  return json_encode($final_slot_time);
+}
+
+public function admin_get_current_time(Request $request)
+{
+
+  $this->cart_delete_trainer();
+
+  $slot_date=$request->slot_date;
+
+  $get_slot_times=DB::table('slot_request')
+  ->where('slot_date',$slot_date)
+  ->where(function($q) {
+         $q->where('approval_id', 1)
+           ->orWhere('approval_id', 3);
+     })
+  ->pluck('slot_time_id')->all();
+
+  $get_slot_times2=DB::table('slot_times')
+  ->wherein('id',$request->time_id)
+  ->pluck('id')->all();
+
+  $get_slot_times=array_merge($get_slot_times,$get_slot_times2);
+
+  if(count($get_slot_times)){
+
+  foreach($get_slot_times as $key=>$hour) {
+
+}
+
+  $length=$key+1;
+  $upto=$length*4;
+
+  for($i=$length;$i<$upto;$i++)
+{
+  $get_slot_times[$i]=$get_slot_times[$i-$length]+1;
+
+}
+
+  foreach($get_slot_times as $key=>$hour) {
+
+}
+
+  $length=$key+1;
+  $upto=$length*4;
+
+  for($i=$length;$i<$upto;$i++)
+{
+  $get_slot_times[$i]=$get_slot_times[$i-$length]-1;
+
+}
+}
+
+$final_slot_time=DB::table('slot_times')->whereNotIn('id',$get_slot_times)
+  ->get()->all();
+
+
+  foreach($final_slot_time as $myslot_time)
+  {
+    $myslot_time->time=date('h:i A', strtotime($myslot_time->time));
+  }
+
+  return json_encode($final_slot_time);
+}
+
+  public function cart_delete_trainer()
+{
+  $cart_delete=DB::table('cart_slot_request')->where('request_trainer_id',Auth::user()->id)->delete();
 }
 
 }

@@ -17,24 +17,12 @@ class FrontSimpleController extends Controller
 {
 
 
-
-
-
 public function index(Request $request)
   {
    
  $data=DB::table('slots')->where('deleted_at',null)->get();
      return view('bbl')->with(compact('data'));
   }
-
-
-
-
-
-
-
-
-
 
 
   public function about()
@@ -48,6 +36,7 @@ public function index(Request $request)
 
 public function details()
    {	
+    
     return view('frontdetails');
    }
 
@@ -56,17 +45,20 @@ public function details()
 
 public function history()
    {	
+    
     return view('fronthistory');
    }
 
 public function frontlogin()
    {	
+    
     return view('frontlogin_registration');
    }
 
 
 public function frontprice(Request $request)
 {
+  
     $data=DB::table('slots')->where('deleted_at',null)->get();
     return view('frontpricing')->with(compact('data'));
 }
@@ -74,6 +66,7 @@ public function frontprice(Request $request)
 
 public function services()
    {	
+    
     return view('frontservices');
    }
 
@@ -85,6 +78,7 @@ public function services()
 public function testimonial(Request $request)
 {
 
+ 
 $data=DB::table('testimonial')->where('deleted_at',null)->get();
 return view('testimonial')->with(compact('data'));
 
@@ -95,8 +89,7 @@ return view('testimonial')->with(compact('data'));
 
  public function front_contact()
    {  
-
-
+    
 
     return view('frontcontact');
    }
@@ -106,6 +99,7 @@ return view('testimonial')->with(compact('data'));
 
  public function front_contact_insert(Request $request)
    {  
+    
 
 Log::debug(" data ".print_r($request->all(),true)); 
 $data['user_name']=$request->form_name;
@@ -127,13 +121,12 @@ DB::table('contact_us')->insert($data);
 public function gym_gallery()
    {  
 
+    
+
 $data=DB::table('exercise_details')->where('deleted_at',null)->get();
     
     return view('frontgym')->with(compact('data'));
    }
-
-
-
 
 
 

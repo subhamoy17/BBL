@@ -187,8 +187,14 @@ Route::get('admin_get_current_slot_time', 'TrainerController@admin_get_current_s
 Route::get('admin_get_slot_trainer', 'TrainerController@admin_get_slot_trainer')->name('admin_get_slot_trainer');
 
 Route::get('check_customer_session', 'TrainerController@check_customer_session')->name('check_customer_session');
-Route::get('admin_get_time', 'TrainerController@admin_get_time')->name('admin_get_time');
+
+Route::get('slot_insert_to_cart_trainer', 'TrainerController@slot_insert_to_cart_trainer')->name('slot_insert_to_cart_trainer');
+
+Route::get('cart_data_delete_trainer', 'TrainerController@cart_data_delete_trainer')->name('cart_data_delete_trainer');
+
 Route::get('admin_get_current_time', 'TrainerController@admin_get_current_time')->name('admin_get_current_time');
+Route::get('admin_get_time', 'TrainerController@admin_get_time')->name('admin_get_time');
+
 
 
 
@@ -318,11 +324,10 @@ Route::get('purchase_history','FrontController@purchases_history')->name('custom
 
 
 Route::get('booking_slot','FrontController@booking_slot')->name('booking_slot');
-Route::get('booking_slot_time','FrontController@booking_slot_times')->name('get_slot_time');
+Route::get('get_slot_time','FrontController@get_slot_time')->name('get_slot_time');
 Route::get('get_current_slot_time','FrontController@get_current_slot_time')->name('get_current_slot_time');
-Route::get('customer_get_current_time','FrontController@customer_get_current_time')->name('customer_get_current_time');
 
-Route::get('booking_slot_trainer','FrontController@booking_slot_trainer')->name('get_slot_trainer');
+Route::get('get_slot_trainer','FrontController@get_slot_trainer')->name('get_slot_trainer');
 
 
 
@@ -339,15 +344,17 @@ Route::get('show_purchase_history','FrontController@show_purchase_history')->nam
 
 
 Route::get('my_mot','FrontController@my_mot')->name('my_mot');
-Route::get('customer_get_time','FrontController@customer_get_time')->name('customer_get_time');
-
-
-
-
 
 
 Route::get('contact-us','FrontController@customer_contact')->name('contact-us');
 Route::get('customer_contact_insert','FrontController@customer_contact_insert')->name('customer_contact_insert');
+
+Route::get('slot_insert_to_cart','FrontController@slot_insert_to_cart')->name('slot_insert_to_cart');
+
+Route::get('cart_data_delete','FrontController@cart_data_delete')->name('cart_data_delete');
+
+
+
 
 
 

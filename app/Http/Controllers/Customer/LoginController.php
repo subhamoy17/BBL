@@ -23,6 +23,8 @@ class LoginController extends Controller
     |
     */
 
+
+
     use AuthenticatesUsers;
 
     /**
@@ -50,6 +52,7 @@ class LoginController extends Controller
      */
     public function showLoginForm()
     {
+        
         return view('customerpanel.frontlogin_registration');
     }
 
@@ -57,7 +60,6 @@ class LoginController extends Controller
 public function login(Request $request)
     {
       Log::debug("yiyik login ".print_r($request->all(),true));
-      
       
         // $request->request->add(['email' => $request->user]);
       
@@ -95,7 +97,10 @@ public function login(Request $request)
 
     public function logout(Request $request)
     {
-        Log::debug("customer logout");
+
+   
+  $cart_delete=DB::table('cart_slot_request')->where('request_customer_id',Auth::guard('customer')->user()->id)->delete();
+       Log::debug("customer logout");
         $this->guard()->logout();
         $request->session()->invalidate();
          return redirect()->route('customerpanel.frontlogin_registration');
@@ -112,6 +117,9 @@ public function login(Request $request)
     {
         return Auth::guard('customer');
     }
+
+
+    
 
 
     

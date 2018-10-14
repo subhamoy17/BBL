@@ -62,7 +62,7 @@
                 <span class="caret"></span></button>
                 <ul class="dropdown-menu">
                   <li><a href="{{url('customer/mybooking')}}">My Dashboard</a></li>
-                  <li><a href="{{url('customer/profile')}}/{{Auth::user()->id}}">My Profile</a></li>
+                  <li><a href="{{url('customer/profile')}}">My Profile</a></li>
                   <li><a href="{{ route('customerpanel.logout') }}" onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();">Logout</a></li>
                                     <form id="logout-form" action="{{ route('customerpanel.logout') }}" method="POST" style="display: none;">
@@ -147,11 +147,12 @@
     <div class="container">
       <div class="hstry-box">
       
-  
+     @if($total_remaining_slots>0)
       <ul class="tabs" id="hide-menu">
         <li class="active bb" id="t5" rel="tab5"><a href="#"  data-toggle="tab" id="li1" class="li1">Book By Trainer</a></li>
         <li class="bb" rel="tab6" id="t6" ><a href="#"  data-toggle="tab" id="li2" class="li2">Book By Time</a></li>
       </ul>
+    @endif
 
 <div class="tab_container">
 
@@ -163,7 +164,7 @@
           <div id="tab5" class="tab_content">
             <div class="form-box">
                 
-                @if($total_remaining_session>0)
+                @if($total_remaining_slots>0)
                 
                 <div class="row">
                   <div class="col-md-12 col-sm-12 col-xs-12">
@@ -260,7 +261,7 @@
 
                 @endif
 
-                @if($total_remaining_session<=0)
+                @if($total_remaining_slots<=0)
 
                 <h3>You don't have any purchased session & to book a new session you have to purchase a new package, So do you want to purchase?</h3><br>
                 <a href="{{url('customer/pricing')}}"class="btn btn-dark btn-theme-colored btn-flat">Yes</a>
@@ -278,7 +279,7 @@
 
 
                 
-                @if($total_remaining_session>0)
+                @if($total_remaining_slots>0)
                 
                 <div class="row">
                   <div class="col-md-12 col-sm-12 col-xs-12">
@@ -288,14 +289,12 @@
                             <div class="form-group">
                               
                               <input type="hidden" id="total_slots2" class="form-control" value="{{Session::get('sum_slots')}}"  >
+
                               <label>Location <small>*</small></label>
                               <select class="form-control" >
                                 <option value="Basingstoke">Basingstoke</option>
                                 
                               </select>
-
-                              
-
                             </div>
                         </div>              
 
@@ -303,19 +302,31 @@
                          <div class="col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group" >
 
-                              <label>Date <small>*</small></label>
-                          <input type="text" id="slots_datepicker2" name="date" class="form-control date-control" onchange="jsfunction2(); gettime();" readonly="true">
+                               <label>Date <small>*</small></label>
+                          <input type="text" id="slots_datepicker2" name="date" class="form-control date-control" onchange="jsfunction2();" readonly="true">
+
+                              
+
                             </div>
                             
                         </div>
 
-
-
                           <div class="col-md-6 col-sm-12 col-xs-12">
+                         
+                            
+                        
                           <label>Booking Time <small>*</small></label>
                               <select class="form-control" name="slot_time2" id="slot_time2" onchange="jsfunction2()">
+                                <option value="">Plese select time</option>
+                                @foreach($all_times as $each_times)
+                                <option value="{{$each_times->id}}"> {{date('h:i A', strtotime($each_times->time))}}</option>
+                                @endforeach
+
                                 
                               </select>
+
+
+
 
                         </div>
 
@@ -361,6 +372,10 @@
     <input type="hidden" name="idd" id="id" value="{{Auth::guard('customer')->user()->id}}">
      <input type="hidden" name="nd_btn" id="nd_btn" value="2">
     <div id="add_session_req2" >
+
+      <div style="display: none;" id='add_session_loadingimg'>
+          <img src="{{asset('backend/images/loader_session_time.gif')}}" style="width: 85px;margin-top: -30px;margin-left: -21px;"/>
+        </div>
 
     </div>
             
@@ -421,6 +436,7 @@
      @endforeach    
      </tbody>
    </table>
+
       @endif
         <div class="row clearfix">
           <div class="col-sm-12 col-xs-12">
@@ -472,6 +488,8 @@
 <?php Session::forget('success'); ?>
 
   @endif
+
+
 
   
   <script type="text/javascript" src="{{url('frontend/js/bootstrap-3.1.1.min.js')}}"></script>
@@ -610,9 +628,8 @@
     
     if($('#slot_time2').val()!='' && $('#slots_datepicker2').val()!='')
     {
-
-
-        // alert('gg');
+      
+      
       $('#loadingimg2').show();
       var slot_trainer = $('#trainer_id2');
                     slot_trainer.prop("disabled",false);
@@ -759,7 +776,7 @@
 <script>
    $('#add_sess2').click(function()
     {
-      
+
       duplicate_flag=0;
     
 
@@ -808,6 +825,17 @@
     else{
 
 
+        $('#add_session_loadingimg').show();
+    $.ajax({
+                  type: "GET",
+                  url: "{{route('slot_insert_to_cart')}}",
+                  data: {'trainer_id': trainer_id,'slot_date': slots_date,'slots_time_id': slots_time_id},
+                  success: function (data){
+
+                    var cart_id=data;
+                    $('#add_session_loadingimg').hide();
+
+
     add_session_req2.innerHTML = add_session_req2.innerHTML +'<input type=text class="form-control blank2"  readonly name="trainer_name[]"' + 'id="trainer_name[]"' + 'value="' + trainer_name + '"/>&nbsp;'
 
 
@@ -832,9 +860,7 @@
     old_session_data2.innerHTML = old_session_data2.innerHTML +'<input type=hidden class="all_previous_time"  readonly name="all_previous_time[]"' + 'id="all_previous_time[]"' + 'value="' + slots_time_id + '" />&nbsp;'
 
     old_session_data2.innerHTML = old_session_data2.innerHTML +'<input type=hidden class="all_previous_trainer_date"  readonly name="all_previous_trainer_date[]"' + 'id="all_previous_trainer_date[]"' + 'value="' + slots_date + '" />&nbsp;'
-        
-
-
+    
 
     $('#save_btn2').show();
     
@@ -845,7 +871,10 @@
     i=1+parseInt(i);
     $("#session_no2").val(i);
 
-    
+                    
+                  }
+      });
+
 }
 
 
@@ -1064,7 +1093,7 @@ $(document).ready(function() {
      $(document).ready(function(){
     $(".cm-cls").click(function(){
     $(".login-wrapper").fadeToggle("slow", "linear");
-        $(".login-wrapper").hide("slow", "linear");
+    $(".login-wrapper").hide("slow", "linear");
     $(".reg-wrapper").fadeToggle("slow", "linear");
      $(".reg-wrapper").show("slow", "linear");
     
@@ -1085,7 +1114,6 @@ $(document).ready(function() {
 
 $('a[data-toggle="tab"]').on('click', function (e) { 
   var tab_val=$(this).attr('id'); 
- 
   if(tab_val=='li2')
   { 
    $('#trainer_id').val('');
@@ -1097,11 +1125,20 @@ $('a[data-toggle="tab"]').on('click', function (e) {
    old_session_data.innerHTML='';
 
    $('.first-success').hide();
-
    $('#save_btn').hide();
   }
   else if(tab_val=='li1')
   {
+
+    var form=$("#add_session_form2");
+   $.ajax({
+        type:"get",
+        url:"{{route('cart_data_delete')}}",
+        data:form.serialize(),
+        success: function(response){ 
+
+ }
+});
     $('#trainer_id2').val('');
    $('#slots_datepicker2').val('');
    $('#slot_time2').val('');
@@ -1110,129 +1147,15 @@ $('a[data-toggle="tab"]').on('click', function (e) {
    old_session_data2.innerHTML='';
    $('.second-success').hide();
    $('#save_btn2').hide();
+
+
   }
 });
 
     });  
   </script>
 
-<script>
-  $(document).ready(function(){
-  $('#slot_time2').mouseover(function() {
-    if($('#slots_datepicker2').val()=='')
-    {
-      return gettime();
-    } 
-   
-  });
 
-  });
-
-</script>
-
-<script>
-   
-   function  gettime(){
-    
-    if($('#slots_datepicker2').val()!='')
-    {
-
-      var get_current_time=0;
-      var get_current_date_trainer=0;
-      var same_trainer_date=$('#slots_datepicker2').val();
-
-      var all_previous_time = $(".all_previous_time");
-      var all_previous_trainer_date = $(".all_previous_trainer_date");
-
-      var all_time=new Array();
-
-    for(var k = 0; k < all_previous_time.length; k++)
-    {
-      
-      if($(all_previous_time[k]).val()!='' && $(all_previous_trainer_date[k]).val()==same_trainer_date)
-      {
-        get_current_time=1;
-      }
-
-      all_time[k]=$(all_previous_time[k]).val();
-
-    }
-
-    if(get_current_time==1)
-    {
-      $('#loadingimg2').show();
-      var slot_trainer = $('#slot_time2');
-                    slot_trainer.prop("disabled",false);
-                    slot_trainer.empty();
-                    slot_trainer.append(
-                $('<option>', {value: ''}).text('Please select time'));
-    $.ajax({
-                  type: "GET",
-                  url: "{{route('customer_get_current_time')}}",
-                  data: {'slot_date': $('#slots_datepicker2').val(),'time_id': all_time},
-                  success: function (data){
-                    $('#loadingimg2').hide();
-                    //console.log(data);
-
-                    var obj = $.parseJSON(data);
-                    
-
-                    if(obj.length > 0){ 
-                    for(var i = 0; i < obj.length; i++){
-
-                     slot_trainer.append(
-                 $('<option>', {value: obj[i]['id']}).text(obj[i]['time']));
-                   }
-                 }
-                  }
-      });
-    }
-
-    else
-    {
-
-      $('#loadingimg2').show();
-      var slot_trainer = $('#slot_time2');
-                    slot_trainer.prop("disabled",false);
-                    slot_trainer.empty();
-                    slot_trainer.append(
-                $('<option>', {value: ''}).text('Please select time'));
-    $.ajax({
-                  type: "GET",
-                  url: "{{route('customer_get_time')}}",
-                  data: {'slot_date': $('#slots_datepicker2').val()},
-                  success: function (data){
-                    $('#loadingimg2').hide();
-                    //console.log(data);
-
-                    var obj = $.parseJSON(data);
-                    
-
-                    if(obj.length > 0){ 
-                    for(var i = 0; i < obj.length; i++){
-
-                     slot_trainer.append(
-                 $('<option>', {value: obj[i]['id']}).text(obj[i]['time']));
-                   }
-                 }
-                  }
-      });
-
-  }
-  }
-
-  else
-  {
-    $('#slot_time2').attr('disabled','disabled');
-    $('#slot_time2').attr("style",'background:#3d3648');
-       
-  }
-    
-  }
-  
-  </script>
-
- 
 
 </body>
 

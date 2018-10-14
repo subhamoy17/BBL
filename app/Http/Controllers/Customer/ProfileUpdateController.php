@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Auth;
 
 class ProfileUpdateController extends Controller
 {
@@ -23,6 +24,7 @@ class ProfileUpdateController extends Controller
     // open the update form
 	public function showupdateform($id)
     {
+        $this->cart_delete_customer();
     	 $data= DB::table('admins')->where('id',$id)->first();
     	 Log::debug(" data ".print_r($data,true));
 
@@ -35,6 +37,8 @@ class ProfileUpdateController extends Controller
     // update profile of admin
     public function updateprofile(Request $request)
     {
+        $this->cart_delete_customer();
+
         $mydata['name']=$request->name;
         $mydata['address']=$request->address;
         $mydata['phone']=$request->phone;
@@ -70,6 +74,8 @@ class ProfileUpdateController extends Controller
     //Show the profile of admin
     public function showprofile($id)
     {
+        $this->cart_delete_customer();
+        
         Log::debug(":: Show Profile :: ".print_r($id,true));
         // echo "asd";die();
         $data=DB::table('admins')->where('Id',$id)->first();
@@ -78,5 +84,9 @@ class ProfileUpdateController extends Controller
     }
 
 
+    public function cart_delete_customer()
+    {
+        $cart_delete=DB::table('cart_slot_request')->where('request_customer_id',Auth::guard('customer')->user()->id)->delete();
+    }
 
 }

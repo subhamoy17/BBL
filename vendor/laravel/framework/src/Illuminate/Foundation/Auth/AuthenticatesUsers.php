@@ -182,6 +182,7 @@ trait AuthenticatesUsers
      */
     public function logout(Request $request)
     {
+        $this->cart_delete_trainer();
         $this->guard()->logout();
 
         $request->session()->invalidate();
@@ -198,4 +199,9 @@ trait AuthenticatesUsers
     {
         return Auth::guard();
     }
+
+    public function cart_delete_trainer()
+{
+  $cart_delete=DB::table('cart_slot_request')->where('request_trainer_id',Auth::user()->id)->delete();
+}
 }
