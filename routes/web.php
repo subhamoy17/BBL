@@ -369,6 +369,14 @@ Route::get('bbl','FrontSimpleController@bbl')->name('bbl');
 Route::get('about-us','FrontSimpleController@about')->name('about-us');
 
 
+Route::get('gym-training','FrontSimpleController@gym_training')->name('gym_training');
+Route::get('diet-plan','FrontSimpleController@diet_plans')->name('diet_plans');
+Route::get('health-package','FrontSimpleController@health_package')->name('health_package');
+Route::get('personal-instructor','FrontSimpleController@personal_instructor')->name('personal_instructor');
+
+
+
+
 Route::get('details','FrontSimpleController@details')->name('details');
 Route::get('history','FrontSimpleController@history')->name('history');
 

@@ -20,8 +20,8 @@
   <h6>Pay from here</h6>
   <div class="acnt-det">
     <p><h5>Name: </h5> <span>Body By Lekan</span></p>
-    <p><h5>Account No: </h5> <span> 686968789800</span></p>
     <p><h5>Sort Code: </h5><span> FGB00068</span></p>
+    <p><h5>Account No: </h5> <span> 686968789800</span></p>
   </div>
   <label class="w3-text-blue"><b>Payable amount is </b>&nbsp;  <span class="pay-pal-price"><i class="fa fa-gbp"></i> {{$data['slots_price']}}</span></label>
   <input class="w3-input w3-border" name="slots_price" type="hidden" value="{{$data['slots_price']}}" readonly >
@@ -32,18 +32,21 @@
   <input class="w3-input w3-border" name="purchases_date" type="hidden" value="{{$data['purchases_date']}}" >
   <input class="w3-input w3-border" name="package_validity_date" type="hidden" value="{{$data['package_validity_date']}}" >
   <input class="w3-input w3-border" name="customer_id" type="hidden" value="{{$data['customer_id']}}" >
-    <label>Description 
+    <label>Description
+    </br> <strong>Please use the same reference used in bank transfer</strong>
 
-      <span id="gg" class="toolclip" data-tooltipster='{"side":"left","animation":"fade"}' data-tooltip-content="#tooltip_content"><i class="fa fa-info-circle" style="margin-left: 5px;font-size: 15px;"></i></span>
+     <!--  <span id="gg" class="toolclip" data-tooltipster='{"side":"left","animation":"fade"}' data-tooltip-content="#tooltip_content"><i class="fa fa-info-circle" style="margin-left: 5px;font-size: 15px;"></i></span>
               <div class="tooltip_templates">
           <span id="tooltip_content">
-              <strong>Note: Please use the same reference used in bank transfer.</strong>
-              <strong>Photo Upload: Alternatively you can provide the screenshot of the bank transfer.</strong>              
+              
+                            
           </span>
-      </div>
+      </div> -->
 
     </label><textarea  name="package_description" id="package_description"></textarea><br>
-    <label>Upload Payment Document</label><input type="file" name="package_image" id="package_image">
+    <label>Upload Payment Document </br>
+      <strong>Alternatively you can provide the screenshot of the bank transfer</strong>
+    </label><input type="file" name="package_image" id="package_image">
        
   <button class="btn btn-dark btn-theme-colored btn-flat" id="aba">Pay with Bank</button>
 </form>

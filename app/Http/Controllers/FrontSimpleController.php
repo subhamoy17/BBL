@@ -32,6 +32,26 @@ public function index(Request $request)
     return view('frontabout')->with(compact('data'));
     }
 
+    public function gym_training()
+    {     
+      
+    return view('gym_training');
+    }
+
+    public function diet_plans()
+    {     
+    return view('diet_plans');
+    }
+
+    public function health_package()
+    {     
+    return view('health_package');
+    }
+
+    public function personal_instructor()
+    {     
+    return view('personal_instructor');
+    }
 
 
 public function details()

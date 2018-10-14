@@ -115,7 +115,7 @@
     					<div class="sr-text">
     						<h4>GYM TRAINING</h4>
     						<p>Fitness training in a state of art modern gym</p>
-    						<a href="#" class="rd-btn2">read more <i class="fa fa-long-arrow-right"></i></a>
+    						<a href="{{route('gym_training')}}" class="rd-btn2">read more <i class="fa fa-long-arrow-right"></i></a>
     					</div>
     				</div>
     			</div>
@@ -128,7 +128,7 @@
     					<div class="sr-text">
     						<h4>DIET PLANS</h4>
     						<p>Customized diet plans to fit all body types</p>
-    						<a href="#" class="rd-btn2">read more <i class="fa fa-long-arrow-right"></i></a>
+    						<a href="{{route('diet_plans')}}" class="rd-btn2">read more <i class="fa fa-long-arrow-right"></i></a>
     					</div>
     				</div>
     			</div>
@@ -141,7 +141,7 @@
     					<div class="sr-text">
     						<h4>HEALTH PACKAGES</h4>
     						<p>Multiple health packages to suit all</p>
-    						<a href="#" class="rd-btn2">read more <i class="fa fa-long-arrow-right"></i></a>
+    						<a href="{{route('health_package')}}" class="rd-btn2">read more <i class="fa fa-long-arrow-right"></i></a>
     					</div>
     				</div>
     			</div>
@@ -154,7 +154,7 @@
     					<div class="sr-text">
     						<h4>INSTRUCTIONAL VIDEOS</h4>
     						<p>Access to online gym videos for constant guidance</p>
-    						<a href="#" class="rd-btn2">read more <i class="fa fa-long-arrow-right"></i></a>
+    						<a href="{{url('/exercise')}}" class="rd-btn2">read more <i class="fa fa-long-arrow-right"></i></a>
     					</div>
     				</div>
     			</div>
@@ -167,7 +167,7 @@
     					<div class="sr-text">
     						<h4>PERSONAL INSTRUCTORS</h4>
     						<p>Personal fitness trainers, available at your convenience</p>
-    						<a href="#" class="rd-btn2">read more <i class="fa fa-long-arrow-right"></i></a>
+    						<a href="{{route('personal_instructor')}}" class="rd-btn2">read more <i class="fa fa-long-arrow-right"></i></a>
     					</div>
     				</div>
     			</div>
@@ -180,7 +180,7 @@
     					<div class="sr-text">
     						<h4>ONLINE BOOKING</h4>
     						<p>Easy online booking of packages and tracking your health plan</p>
-    						<a href="#" class="rd-btn2">read more <i class="fa fa-long-arrow-right"></i></a>
+    						<a href="{{url('/pricing')}}" class="rd-btn2">read more <i class="fa fa-long-arrow-right"></i></a>
     					</div>
     				</div>
     			</div>
