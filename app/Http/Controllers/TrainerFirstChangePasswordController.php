@@ -25,7 +25,7 @@ class TrainerFirstChangePasswordController extends Controller
      */
     public function updateTrainerPassword(Request $request)
     {
-        $this->cart_delete_trainer();
+        
         // if (!(Hash::check($request->get('current-password'), Auth::user()->password))) {
         //     // The passwords matches
         //     return redirect()->back()->with("error","Your current password does not matches with the password you provided. Please try again.");
@@ -65,10 +65,6 @@ class TrainerFirstChangePasswordController extends Controller
  
     }
 
-    public function cart_delete_trainer()
-{
-  $cart_delete=DB::table('cart_slot_request')->where('request_trainer_id',Auth::user()->id)->delete();
-}
-
+    
    
 }
