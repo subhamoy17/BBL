@@ -347,8 +347,18 @@ if ($result->getState() == 'approved') {
       ->select('active_package','package_remaining','customer_id')
       ->where('customer_id',$customer_id)
       ->where('active_package',1 )
+      ->where('package_remaining','>=',0)
       ->where('package_validity_date','>=',$remaining_session_request_now)
       ->sum('package_remaining');
+
+      $sum_extra_slots = DB::table('purchases_history')
+    ->select('active_package','package_remaining','extra_package_remaining','customer_id')
+    ->where('customer_id',$customer_id)
+    ->where('active_package',1)
+    ->where('extra_package_remaining','>=',0)
+    ->sum('extra_package_remaining');
+
+    $sum_slots=$sum_slots+$sum_extra_slots;
 
       session(['sum_slots' => $sum_slots]);
 

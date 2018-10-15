@@ -373,6 +373,7 @@ public function trainer_active_deactive(Request $request)
       $remaining_package=DB::table('purchases_history')
       ->where('customer_id',$my_total->customer_id)
       ->where('active_package',1)
+      ->where('package_remaining','>=',0)
       ->orderBy('package_validity_date','DESC')
       ->first();
 
@@ -380,6 +381,7 @@ public function trainer_active_deactive(Request $request)
       ->select('id','package_validity_date','package_remaining','extra_package_remaining')
       ->where('customer_id',$customer_id)
       ->where('active_package',1)
+      ->where('extra_package_remaining','>=',0)
       ->orderBy('package_validity_date', 'DESC')
       ->first();
 
@@ -503,6 +505,7 @@ public function trainerdelete($id)
     $remaining_package=DB::table('purchases_history')
     ->where('customer_id',$my_total->customer_id)
     ->where('active_package',1)
+    ->where('package_remaining','>=',0)
     ->where('package_validity_date','>=',$remaining_session_request_now)
     ->orderBy('package_validity_date','DESC')
     ->first();
@@ -511,6 +514,7 @@ public function trainerdelete($id)
     ->select('id','purchases_date','package_validity_date','package_remaining','extra_package_remaining')
     ->where('customer_id',$my_total->customer_id)
     ->where('active_package',1)
+    ->where('extra_package_remaining','>=',0)
     ->orderBy('package_validity_date', 'DESC')
     ->first();
 
@@ -818,7 +822,7 @@ public function approve_customer_request(Request $request)
     ->select('id','purchases_date','package_validity_date','package_remaining','extra_package_remaining')
     ->where('customer_id',$customer_id->customer_id)
     ->where('active_package',1)
-    ->where('extra_package_remaining','>',0)
+    ->where('extra_package_remaining','>=',0)
     ->orderBy('package_validity_date', 'DESC')
     ->first();
 
@@ -888,6 +892,7 @@ public function approve_customer_request(Request $request)
     $package_history=DB::table('purchases_history')
     ->where('customer_id',$customer_id->customer_id)
     ->where('purchases_history.active_package',1)
+    ->where('package_remaining','>=',0)
     ->where('purchases_history.package_validity_date','>=',$remaining_session_request_now)
     ->orderBy('package_validity_date','DESC')->first();
 
@@ -895,6 +900,7 @@ public function approve_customer_request(Request $request)
     ->select('id','purchases_date','package_validity_date','package_remaining','extra_package_remaining')
     ->where('customer_id',$customer_id->customer_id)
     ->where('active_package',1)
+    ->where('extra_package_remaining','>=',0)
     ->orderBy('package_validity_date', 'DESC')
     ->first();
 
@@ -1097,6 +1103,7 @@ public function approve_pending_request(Request $request)
     $package_history=DB::table('purchases_history')
     ->where('customer_id',$customer_id->customer_id)
     ->where('purchases_history.active_package',1)
+    ->where('package_remaining','>=',0)
     ->where('purchases_history.package_validity_date','>=',$remaining_session_request_now)
     ->orderBy('package_validity_date','DESC')->first();
 
@@ -1104,6 +1111,7 @@ public function approve_pending_request(Request $request)
     ->select('id','purchases_date','package_validity_date','package_remaining','extra_package_remaining')
     ->where('customer_id',$customer_id->customer_id)
     ->where('active_package',1)
+    ->where('extra_package_remaining','>=',0)
     ->orderBy('package_validity_date', 'DESC')
     ->first();
 
@@ -2607,7 +2615,7 @@ public function trainer_slotinsert(Request $request)
     ->select('id','purchases_date','package_validity_date','package_remaining')
     ->where('customer_id',$customer_id)
     ->where('active_package',1)
-    ->where('package_remaining','>',0)
+    ->where('package_remaining','>=',0)
     ->where('package_validity_date','>=',$remaining_session_request_now)
     ->orderBy('package_validity_date', 'ASC')
     ->first();
@@ -2615,7 +2623,7 @@ public function trainer_slotinsert(Request $request)
     $extra_package=DB::table('purchases_history')
     ->select('id','purchases_date','package_validity_date','package_remaining','extra_package_remaining')
     ->where('customer_id',$customer_id)
-    ->where('extra_package_remaining','>',0)
+    ->where('extra_package_remaining','>=',0)
     ->where('active_package',1)
     ->first();
 
@@ -2767,7 +2775,7 @@ public function trainer_slotinsert(Request $request)
     select('active_package','package_remaining','customer_id')
     ->where('customer_id',$customer_id)
     ->where('active_package',1)
-    ->where('package_remaining','>',0)
+    ->where('package_remaining','>=',0)
     ->where('package_validity_date','>=',$remaining_session_request_now)
     ->sum('package_remaining');
 
@@ -2775,6 +2783,7 @@ public function trainer_slotinsert(Request $request)
     ->select('active_package','package_remaining','extra_package_remaining','customer_id')
     ->where('customer_id',$customer_id)
     ->where('active_package',1)
+    ->where('extra_package_remaining','>=',0)
     ->sum('extra_package_remaining');
 
     $total_remaining_session=$sum_slots+$sum_extra_slots;
