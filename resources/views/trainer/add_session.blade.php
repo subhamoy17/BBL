@@ -652,7 +652,7 @@ $('a[data-toggle="tab"]').on('click', function (e) {
   <script>
    $('#add_sess').click(function()
     {
-     
+     $('#add_sess').hide();
       duplicate_flag=0;
       i=$('#session_no').val();
 
@@ -694,20 +694,21 @@ $('a[data-toggle="tab"]').on('click', function (e) {
       if(parseInt(i)>parseInt(total_remaining_session))
       {
         alertify.alert("This customer's have not any available session to add"); 
+        $('#add_sess').show();
         return false;
       }
 
       else if(duplicate_flag==1)
       {
         alertify.alert("You can't choose same time and date for a same trainer"); 
-
+        $('#add_sess').show();
         return false;
       }
 
     else if ($( "#trainer_id" ).val().length==0 || $("#slots_datepicker").val().length==0 || $("#slot_time").val().length==0 )
     {
     alertify.alert("Please choose trainer name, date and time"); 
-      
+      $('#add_sess').show();
       return false;
     }
     else{
@@ -753,7 +754,7 @@ $('a[data-toggle="tab"]').on('click', function (e) {
     i=1+parseInt(i);
     $("#session_no").val(i);
 
-    
+     $('#add_sess').show();
 }
 
     });
@@ -764,7 +765,7 @@ $('a[data-toggle="tab"]').on('click', function (e) {
 <script>
    $('#add_sess2').click(function()
     {
-      
+       $('#add_sess2').hide();
       
       duplicate_flag=0;
     
@@ -806,20 +807,21 @@ if($('#executive_trainer2').val()=='')
       if(parseInt(i)>parseInt(total_remaining_session))
       {
        alertify.alert("This customer's have not any available session to add"); 
+        $('#add_sess2').show();
         return false;
       }
 
       else if(duplicate_flag==1)
       {
         alertify.alert("You can't choose same time and date for a same trainer"); 
-
+         $('#add_sess2').show();
         return false;
       }
 
     else if ($("#slots_datepicker2").val().length==0 || $( "#trainer_id2" ).val().length==0 || $("#slot_time2").val().length==0 )
     {
     alertify.alert("Please choose trainer name, date and time"); 
-      
+       $('#add_sess2').show();
       return false;
     }
     else{
@@ -833,7 +835,7 @@ if($('#executive_trainer2').val()=='')
 
                     var cart_id=data;
                     $('#add_session_loadingimg').hide();
-
+                     $('#add_sess2').show();
 
     add_session_req2.innerHTML = add_session_req2.innerHTML +'<input type=text class="form-control blank2"  readonly name="trainer_name[]"' + 'id="trainer_name[]"' + 'value="' + trainer_name + '"/>&nbsp;'
 

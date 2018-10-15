@@ -675,6 +675,7 @@
    $('#add_sess').click(function()
     {
 
+      $('#add_sess').hide();
       
       duplicate_flag=0;
     
@@ -706,20 +707,21 @@
       if(parseInt(i)>parseInt(total_remaining_session))
       {
         alert ("You don't have any session"); 
+        $('#add_sess').show();
         return false;
       }
 
       else if(duplicate_flag==1)
       {
         alert ("You can't choose same time and date for a same trainer"); 
-
+        $('#add_sess').show();
         return false;
       }
 
     else if ($( "#trainer_id" ).val().length==0 || $("#slots_datepicker").val().length==0 || $("#slot_time").val().length==0 )
     {
     alert ("Please choose trainer name, date and time"); 
-      
+      $('#add_sess').show();
       return false;
     }
     else{
@@ -765,6 +767,8 @@
     i=1+parseInt(i);
     $("#session_no").val(i);
 
+    $('#add_sess').show();
+
     
 }
 
@@ -778,6 +782,9 @@
 <script>
    $('#add_sess2').click(function()
     {
+
+
+      $('#add_sess2').hide();
 
       duplicate_flag=0;
     
@@ -809,19 +816,20 @@
       if(parseInt(i)>parseInt(total_remaining_session))
       {
         alert("You don't have any session"); 
+        $('#add_sess2').show();
         return false;
       }
       else if(duplicate_flag==1)
       {
         alert("You can't choose same time and date for a same trainer  fgdfgdfgfdg"); 
-
+         $('#add_sess2').show();
         return false;
       }
 
     else if ($("#slots_datepicker2").val().length==0 || $( "#trainer_id2" ).val().length==0 || $("#slot_time2").val().length==0 )
     {
     alert("Please choose trainer name, date and time"); 
-      
+       $('#add_sess2').show();
       return false;
     }
     else{
@@ -833,6 +841,8 @@
                   url: "{{route('slot_insert_to_cart')}}",
                   data: {'trainer_id': trainer_id,'slot_date': slots_date,'slots_time_id': slots_time_id},
                   success: function (data){
+
+                    $('#add_sess2').show();
 
                     var cart_id=data;
                     $('#add_session_loadingimg').hide();
@@ -1157,19 +1167,7 @@ $('a[data-toggle="tab"]').on('click', function (e) {
     });  
   </script>
 
-  <script>
-
-$(document).ready(function() { 
-
-   //Use this inside your document ready jQuery 
-   $(window).on('popstate', function() {
-
-      location.reload(true);
-   });
-
-});
-
-</script>
+ 
 
 <script type="text/javascript">
     $(window).ready(function() {
