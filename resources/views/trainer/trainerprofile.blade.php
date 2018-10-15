@@ -17,13 +17,15 @@
 <div class="container-fluid">
   <div class="wrp-1">
 <div class="row">
+      @if(Auth::user()->image)
         <div class="col-lg-3">
-          @if(Auth::user()->image)
+          
           <img src="{{asset('backend/images')}}/{{Auth::user()->image}}">
-          @else
-          <img src="{{asset('backend/images/no-profile-image.jpg')}}">
-          @endif
+          
+          
+         
         </div>
+         @endif
         <div class="col-lg-9">
         <div class="card">
                       <div class="card-body card-block  col-lg-12">
