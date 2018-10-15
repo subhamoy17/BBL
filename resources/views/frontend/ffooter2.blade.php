@@ -1050,27 +1050,6 @@ $("#extra_session").mouseover(function(){
 	});
 </script>
 
-<script type="text/javascript">
-    $(document).ready(function(){ 
-        $("#aba").on('click',function(e){
-      
-      $('#aba').attr('disabled','disabled');
-        $('#aba').text('Please wait...');
-   $('#bank_payment-form').submit();
-
-        });
-
-         $("#aqb").on('click',function(e){
-      
-      $('#aqb').attr('disabled','disabled');
-        $('#aqb').text('Please wait...');
-   $('#frm1').submit();
-
-        });
-        
-      });
-  </script>
-
 </body>
 
 </html>
