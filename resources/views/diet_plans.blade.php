@@ -22,13 +22,13 @@
 								<img src="{{asset('frontend/images/t3.jpg')}}">
 							</div>
 							<div class="pt-name">
-								<h5>Personal Instructor 1</h5>
-								<h6>Designation</h6>
+								<h5>Diet Plan 1</h5>
+								<h6>Don't Fall for Fad Diets</h6>
 							</div>
 						</div>
 						<div class="clearfix"></div>
 						<div class="pt-text">
-							<p>When working as personal trainer you’ll be at a more advanced level than those working as a fitness instructor; as you’ll be trained to level 3. It’s also worth noting that those who become fitness instructors, often train and advance to being personal trainers.</p>
+							<p>Discover how high-protein diets may help you lose weight and feel full. Find out the best sources of protein for weight loss.</p>
 						</div>
 						<button type="button">Purchase</button>
 					</div>
@@ -44,14 +44,14 @@
 								<img src="{{asset('frontend/images/t2.jpg')}}">
 							</div>
 							<div class="pt-name">
-								<h5>Personal Instructor 2</h5>
-								<h6>Designation</h6>
+								<h5>Diet Plan 2</h5>
+								<h6>Don't Fall for Fad Diets</h6>
 							</div>
 
 						</div>
 						<div class="clearfix"></div>
 						<div class="pt-text">
-							<p>Most personal trainers are also self-employed, with almost 50% of those within the sector becoming their own boss [1]. With this, many different leisure centres, health clubs and gyms will have different propositions they give to self-employed staff; where they’ll take a percentage of what they earn, in order for the trainer to use the establishment’s facilities to train their clients. Most personal trainers charge between £20 and £40 an hour [1]; this also mean that things such as tax is the responsibility of the personal trainer.</p>
+							<p>Numerous weight loss products and diets promise rapid weight loss. Learn about rapid weight loss claims, types of diets, and the risks and benefits of rapid weight loss.</p>
 						</div>
 						<button type="button">Purchase</button>
 					</div>
