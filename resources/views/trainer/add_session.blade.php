@@ -209,7 +209,7 @@ messages: {
                         <!-- <div class="clearfix"></div> -->
                         <div class="col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group" >
-                              <label>Available Time <small>*</small></label>
+                              <label class="avl-tm">Available Time <small>*</small></label>
                               <select class="form-control" name="time" id="slot_time">
                                 
                               </select>

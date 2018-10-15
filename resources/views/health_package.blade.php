@@ -1,7 +1,7 @@
 @extends('frontcustomerlayout.main') 
 @section('content')
 	<!-- banner -->
-	<div class="main_section_agile about inner">
+	<div class="main_section_agile about">
 	</div>
 	<!-- //banner -->
 	<!-- about inner -->
@@ -11,9 +11,14 @@
 				<h3 class="gyl_header">Health <span>Packages</span></h3>
 			</div>
 				<div class="about-bott-right">
-					 <h5>MULTIPLE HEALTH PACKAGES TO SUIT ALL</h5>
-					
-<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+					<div class="col-lg-5 col-xs-12">
+						<div class="hp-img">
+							<img src="{{asset('frontend/images/hp1.png')}}">
+						</div>
+					</div>
+					<div class="col-lg-7 col-xs-12 hp-text">
+						<p>A health assessment is a set of tests and examinations that give you an overview of your current health. You might choose to have a health assessment because of a specific health concern, or you’d like support to improve your health. These health checks will be carried out by trained health advisers and nurses. With most of our assessments you will spend quality time with a Bupa doctor going through your results.</p>
+					</div>
 				</div>
 				<div class="clearfix"> </div>
 			</div>

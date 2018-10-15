@@ -314,6 +314,16 @@
 .session-modal {
     z-index: 9999999;
 }
+.pt-name h5 {
+	font-size: 16px;
+	letter-spacing: 0;
+}
+.pti button {
+	margin-bottom: 25px;
+}
+.pt-vd-box iframe{
+	height: auto;
+}
 }
 @media only screen and (max-width: 640px) {}
 @media only screen and (max-width: 580px) {}

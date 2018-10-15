@@ -6259,3 +6259,87 @@ h5.line-h5{
 .paymnt-paypal2 h6 {
     margin-bottom: 15px;
 }
+.pt-img {
+	float: left;
+	width: 60px;
+	text-align: left;
+}
+.pt-name {
+	display: inline-block;
+	width: 280px;
+	text-align: left;
+}
+.pt-img img {
+	width: 100%;
+}
+.pt-name {
+	display: inline-block;
+	width: auto;
+	float: left;
+	text-align: left;
+	margin-left: 15px;
+}
+.pt-text p, .hp-text p{
+	font-size: 15px;
+	font-weight: 400;
+	text-align: justify;
+	line-height: 26px;
+	margin-top: 15px;
+}
+.pt-box {
+	display: inline-block;
+	width: 100%;
+	position:relative;
+}
+.pt-name h6 {
+	font-size: 16px;
+	color: #4d4f56;
+}
+.pt-box::before {
+	content: "";
+	position: absolute;
+	bottom: 0;
+	background: #ece9e9;
+	height: 1px;
+	width: 100%;
+	left: 0;
+	bottom: 0;
+}
+.pt-box::after {
+	content: "";
+	position: absolute;
+	bottom: 0;
+	background: #cc9e12;
+	height: 1px;
+	width: 50%;
+	left: 0;
+	bottom: 0;
+}
+.pt-text {
+	
+}
+.pt-vd-box iframe{
+	margin-bottom: 40px;
+}
+.pti button {
+	margin-top: 15px;
+	padding: 8px 30px;
+	background: #4a4b68;
+	color: #fff;
+	text-transform: uppercase;
+	border: none;
+	text-align: ;
+	float: left;
+}
+.gm-tr .col-lg-6.col-sm-6.col-xs-12 {
+	padding: 0;
+}
+.gm-tr img {
+	width: 100%;
+}
+.hp-img img {
+	width: 100%;
+}
+.pt-vd-box iframe{
+	height: 400px;
+}

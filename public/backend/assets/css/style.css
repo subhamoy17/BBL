@@ -1021,6 +1021,21 @@ table.dataTable thead .sorting::before, table.dataTable thead .sorting_asc::befo
 .login-form {
 	top: 40px !important;
 }
+.avl-tm{
+	margin-top: 15px;
+}
+#save_btn {
+	margin-top: 30px;
+}
+#traineraddform .col.col-md-2 {
+	text-align: right;
+}
+#storeform .col.col-md-2 {
+	text-align: right;
+}
+#editslotsform .col.col-md-2 {
+	text-align: right;
+}
 /*#sesssion_table .save_button{
   padding-left: 30px;
 }*/
