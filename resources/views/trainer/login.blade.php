@@ -41,7 +41,7 @@ $('#myform').validate({
 
         <div class="container">
             <div class="login-content">
-                <div class="login-form">
+                <div class="login-form" style="position: relative; top: 40px;">
 
                     @if (session('fisr_change_password_success'))
                         <div class="alert alert-success">

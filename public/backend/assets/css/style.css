@@ -10,6 +10,9 @@
 * License URI: http://www.gnu.org/licenses/gpl-2.0.html
 * Tags: html, themplate, Sufee-Admin
 --------------------------------------------------------- */
+html{
+	overflow-x: hidden;
+}
 .bg-flat-color-1 {
   background: #20a8d8; }
 
@@ -757,7 +760,7 @@ textarea.parsley-error {
     width: 30px;
     margin: 2px;
     padding: 0;
-    height: 35px;
+    height: 31px;
     font-size: 14px;
 }
 /*81118*/
@@ -985,8 +988,38 @@ table.dataTable thead .sorting::before, table.dataTable thead .sorting_asc::befo
 .breadcrumbs .col-sm-3 {
 	text-align: right !important;
 }
-.ex3, .add-pck, .gh, .nw-mot {
+.ex3, .add-pck, .gh, .nw-mot, .trn-list {
 	float: right !important;
+}
+.payment.btn.btn-info.btn-sm {
+	padding: 4px 7px;
+	position: relative;
+	right: 13.5px;
+	top: 2px;
+}
+#motaddform .col.col-md-2 {
+	text-align: right;
+}
+#hall_details_edit thead {
+	background: #3f3a44;
+	color: #fff;
+}
+#hall_details_edit tbody tr {
+	background: #e6e7e7;
+}
+.mot-mod .btn.btn-default.success-close {
+	width: 100px;
+	margin: 0 auto 20px;
+}
+.sufee-login.d-flex.align-content-center.flex-wrap .logo-m {
+
+    margin: 0 auto;
+    position: relative;
+    top: 30px !important;
+
+}
+.login-form {
+	top: 40px !important;
 }
 /*#sesssion_table .save_button{
   padding-left: 30px;
@@ -1156,7 +1189,7 @@ div#sesssion_table {
 .breadcrumbs .col-sm-3 {
 	text-align: left !important;
 }
-.ex3, .add-pck, .gh, .nw-mot {
+.ex3, .add-pck, .gh, .nw-mot, .trn-list {
 	float: left !important;
 }
 }

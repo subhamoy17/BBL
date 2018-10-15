@@ -6250,3 +6250,12 @@ ul.con_inner_text.midimg {
     font-size: 24px;
     text-align: center;
 }
+h5.line-h5{
+	display: inline-block;
+    font-size: 16px;
+    color: #e9ac08;
+	margin-bottom: 5px;
+}
+.paymnt-paypal2 h6 {
+    margin-bottom: 15px;
+}

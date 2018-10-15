@@ -1194,7 +1194,7 @@ $("ul.tabs").hide();
   @endif
 
 
-<div id="reason_modal" class="modal fade  mot-mod" role="dialog" >
+<div id="reason_modal" class="modal fade mot-mod" role="dialog" >
   <div class="modal-dialog success_modal">
     
     <div class="modal-content">
