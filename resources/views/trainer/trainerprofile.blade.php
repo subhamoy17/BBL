@@ -18,7 +18,11 @@
   <div class="wrp-1">
 <div class="row">
         <div class="col-lg-3">
-          <img src="{{asset('backend/images')}}/{{Auth::user()->image}}" alt="User Avatar">
+          @if(Auth::user()->image)
+          <img src="{{asset('backend/images')}}/{{Auth::user()->image}}">
+          @else
+          <img src="{{asset('backend/images/no-profile-image.jpg')}}">
+          @endif
         </div>
         <div class="col-lg-9">
         <div class="card">

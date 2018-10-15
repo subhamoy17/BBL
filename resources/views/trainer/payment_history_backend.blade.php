@@ -121,8 +121,8 @@ $(document).ready(function() {
             <table id="bootstrap-slot-data-table" class="display responsive table-striped table-bordered" width="100%">
               <thead>
                 <tr>
-                  <th id='slno'>Sl. No.</th>
-                    <th>Customers </th>
+                  <th>Sl. No.</th>
+                  <th>Customers </th>
                   <th> Package</th>
                   <th> Price</th>
                   <th>Payment Mode</th>

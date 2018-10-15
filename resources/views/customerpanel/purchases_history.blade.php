@@ -66,11 +66,15 @@
               @if($total_package_remaining>$mydata->slots_number)
               
               <?php $others=$total_package_remaining-$mydata->slots_number;?>
-              {{$mydata->slots_number}} <font style="color: #ffa461;"> + {{$others}}</font>
+
+              {{$total_package_remaining}}
+               <!-- <font style="color: #ffa461;">aa</font> -->
               <span id="gg" class="toolclip" data-tooltipster='{"side":"left","animation":"fade"}' data-tooltip-content="#tooltip_content"><i class="fa fa-info-circle" style="margin-left: 5px;font-size: 15px;"></i></span>
               <div class="tooltip_templates">
           <span id="tooltip_content">
-              <strong>Remaining Slot is higher than Total Slot available. This is happen due to</strong>
+              <strong>{{$mydata->slots_number}}  + {{$others}} = {{$total_package_remaining}}</strong>
+              <strong>{{$mydata->slots_number}} is remainig slot</strong>
+              <strong>For extra {{$others}} slot read the below details</strong>
               <strong>a) If any slot was cancelled/declined from any previous active package.</strong>
               <strong>b) If any slot request from any previous active package is not entertained by any trainer.</strong>
               

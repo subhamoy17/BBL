@@ -70,7 +70,7 @@ $('#bootstrap-slot-data-table').DataTable({
   <i class="icon fa fa-check"></i>Hi!
  One request has been active successfully.
 </div>
-<div id="decline-msg" class="alert alert-warning alert-dismissible" style="display: none;">
+<div id="decline-msg" class="alert alert-success alert-dismissible" style="display: none;">
   <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
   <i class="icon fa fa-info-circle"></i>Hi!
  One request has been deactive successfully.

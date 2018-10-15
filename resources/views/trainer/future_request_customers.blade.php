@@ -7,7 +7,7 @@ $(document).ready(function() {
   $('#bootstrap-slot-data-table').DataTable({
     lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
 // disable shorting from slno,image and action columns
-"columnDefs": [ { "orderable": false, "targets": [0,5,6] } ],
+"columnDefs": [ { "orderable": false, "targets": [0,6,7] } ],
 });
 } );
 </script>
@@ -92,7 +92,7 @@ table.dataTable thead>tr>th[id='action'].sorting_asc::after{display: none}
   <i class="icon fa fa-check"></i>Hi!
  One request has been approved successfully.
 </div>
-<div id="decline-msg" class="alert alert-warning alert-dismissible" style="display: none;">
+<div id="decline-msg" class="alert alert-success alert-dismissible" style="display: none;">
   <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
   <i class="icon fa fa-info-circle"></i>Hi!
  One request has been declined successfully.

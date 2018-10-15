@@ -83,7 +83,7 @@ $('#editslotsform').validate({
 
 
               <div class="row form-group">
-                            <div class="col col-md-3"><label for="text-input" class=" form-control-label"> Package Name<span class="required_field_color">*</span></label></div>
+                            <div class="col col-md-3"><label for="text-input" class=" form-control-label"> Package Name <span class="required_field_color">*</span></label></div>
                             <div class="col-12 col-md-9">
                               <input type="text" id="slots_name" name="slots_name" placeholder="Package Name" class="form-control{{ $errors->has('slots_name') ? ' is-invalid' : '' }}" value="{{$data->slots_name}}">
                               @if ($errors->has('slots_name'))
@@ -99,7 +99,7 @@ $('#editslotsform').validate({
 
 
                           <div class="row form-group">
-                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">No. of Slots<span class="required_field_color">*</span></label></div>
+                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">No. of Slots <span class="required_field_color">*</span></label></div>
                             <div class="col-12 col-md-9">
                               <input type="text" id="slots_number" name="slots_number" placeholder="No. of Slots" class="form-control{{ $errors->has('slots_number') ? ' is-invalid' : '' }}" value="{{$data->slots_number}}">
                               @if ($errors->has('slots_number'))
@@ -112,7 +112,7 @@ $('#editslotsform').validate({
 
 
                           <div class="row form-group">
-                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Price<span class="required_field_color">*</span></label></div>
+                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Price (<i class="fa fa-gbp"></i>)<span class="required_field_color">*</span></label></div>
                             <div class="col-12 col-md-9">
                               <input type="text" id="slots_price" name="slots_price" placeholder="Price" class="form-control{{ $errors->has('slots_price') ? ' is-invalid' : '' }}"  value="{{$data->slots_price}}">
                               @if ($errors->has('slots_price'))

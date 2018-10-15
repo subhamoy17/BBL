@@ -76,7 +76,7 @@ rules: {
                             {{ csrf_field() }}
                             
                           <div class="row form-group">
-                              <div class="col col-md-3"><label for="text-input" class="form-control-label"> Package Name<span class="required_field_color">*</span></label></div>
+                              <div class="col col-md-3"><label for="text-input" class="form-control-label"> Package Name <span class="required_field_color">*</span></label></div>
                               <div class="col-12 col-md-9"><input type="text" id="slots_name" name="slots_name" placeholder="Package Name" class="form-control{{ $errors->has('slots_name') ? ' is-invalid' : '' }}" value="{{old('slots_name')}}">
                               @if ($errors->has('slots_name'))
                                 <span class="invalid-feedback">
@@ -87,7 +87,7 @@ rules: {
                           </div>
 
                           <div class="row form-group">
-                              <div class="col col-md-3"><label for="text-input" class=" form-control-label">No. of Slots<span class="required_field_color">*</span></label></div>
+                              <div class="col col-md-3"><label for="text-input" class=" form-control-label">No. of Slots <span class="required_field_color">*</span></label></div>
                               <div class="col-12 col-md-9"><input type="text" id="slots_number" name="slots_number" placeholder="No. of Slots" class="form-control{{ $errors->has('slots_number') ? ' is-invalid' : '' }}" value="{{old('slots_number')}}">
                               @if ($errors->has('slots_number'))
                                 <span class="invalid-feedback">
@@ -98,7 +98,7 @@ rules: {
                           </div>
 
                           <div class="row form-group">
-                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Price<span class="required_field_color">*</span></label></div>
+                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Price (<i class="fa fa-gbp"></i>)<span class="required_field_color">*</span></label></div>
                             <div class="col-12 col-md-9"><input type="text" id="slots_price" name="slots_price" placeholder="Price" class="form-control{{ $errors->has('slots_price') ? ' is-invalid' : '' }}"  value="{{old('slots_price')}}">
                              @if ($errors->has('slots_price'))
                                 <span class="invalid-feedback">
@@ -109,7 +109,7 @@ rules: {
                             
                           </div>
                           <div class="row form-group">
-                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Validity (In Days)<span class="required_field_color">*</span></label></div>
+                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Validity (In Days) <span class="required_field_color">*</span></label></div>
                             <div class="col-12 col-md-9"><input type="text" id="slots_validity" name="slots_validity" placeholder="Validity" class="form-control{{ $errors->has('slots_validity') ? ' is-invalid' : '' }}" value="{{old('slots_validity')}}">
                               @if ($errors->has('slots_validity'))
                                 <span class="invalid-feedback">

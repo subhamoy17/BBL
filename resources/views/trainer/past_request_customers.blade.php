@@ -7,7 +7,7 @@ $(document).ready(function() {
   $('#bootstrap-slot-data-table').DataTable({
     lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
 // disable shorting from slno,image and action columns
-"columnDefs": [ { "orderable": false, "targets": [0,5] } ],
+"columnDefs": [ { "orderable": false, "targets": [0,6] } ],
 });
 } );
 </script>

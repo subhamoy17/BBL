@@ -102,7 +102,7 @@ $('#bootstrap-slot-data-table').DataTable({
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Subject</th>
-                                    <th>Ph.no.</th>
+                                    <th>Phone No.</th>
                                     <th>Message</th>
                                 </tr>
                             </thead>
