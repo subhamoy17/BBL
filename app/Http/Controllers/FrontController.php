@@ -981,15 +981,15 @@ public function slotinsert(Request $request)
     ->select('id','purchases_date','package_validity_date','package_remaining')
     ->where('customer_id',$customer_id)
     ->where('active_package',1)
-    ->where('package_remaining','>=',0)
-    ->where('package_validity_date','>=',$remaining_session_request_now)
+    ->where('package_remaining','>',0)
+    ->where('package_validity_date','>',$remaining_session_request_now)
     ->orderBy('package_validity_date', 'ASC')
     ->first();
 
     $extra_package=DB::table('purchases_history')
     ->select('id','purchases_date','package_validity_date','package_remaining','extra_package_remaining')
     ->where('customer_id',$customer_id)
-    ->where('extra_package_remaining','>=',0)
+    ->where('extra_package_remaining','>',0)
     ->where('active_package',1)
     // ->orderBy('package_validity_date', 'DESC')
     ->first();
