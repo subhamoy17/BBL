@@ -26,6 +26,8 @@ class BankPaymentController extends Controller
 
 public function bank_payment_success(Request $request)
 {
+  DB::beginTransaction();
+  try{
   $bank_data['customer_id']=$request->customer_id;
   $bank_data['slot_id']=$request->slot_id;
   $bank_data['purchases_date']=$request->purchases_date;
@@ -84,6 +86,8 @@ public function bank_payment_success(Request $request)
     Log::debug(" paypal Inconvenient error notification ".print_r($notifydata,true));
 
     $customer_details->notify(new PackagePurchaseNotification($notifydata));
+
+    DB::commit();
     return redirect()->route('bankpaymentcomplete'); 
   }
   else
@@ -110,8 +114,14 @@ public function bank_payment_success(Request $request)
 
     $customer_details->notify(new PackagePurchaseNotification($notifydata));
 
-
+    DB::commit();
     return redirect()->route('bankpaymentcomplete'); 
+  }
+
+}
+catch(\Exception $e) {
+      DB::rollback();
+      return abort(400);
   }
 
   

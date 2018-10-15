@@ -120,7 +120,10 @@ return view('testimonial')->with(compact('data'));
  public function front_contact_insert(Request $request)
    {  
     
+DB::beginTransaction();
 
+    try{
+ 
 Log::debug(" data ".print_r($request->all(),true)); 
 $data['user_name']=$request->form_name;
 $data['user_email']=$request->form_email;
@@ -129,9 +132,15 @@ $data['user_phone']=$request->form_phone;
 $data['message']=$request->form_message;
 $data['created_at']=Carbon::now();
 DB::table('contact_us')->insert($data);
+DB::commit();
  return redirect()->back()->with("success","Your Enquiry is submitted successfully!");
 
+}
 
+    catch(\Exception $e) {
+      DB::rollback();
+      return abort(400);
+  }  
 
    }
 

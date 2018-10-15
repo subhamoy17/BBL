@@ -42,6 +42,7 @@ public function __construct()
 public function index()
 
 {
+  try{
   $this->cart_delete_trainer();
   $cur_date =Carbon::now()->toDateString();
 
@@ -102,12 +103,17 @@ else
 
   $qtrMonth=Carbon::now()->subMonth(3);
   $total_booking_qtr=DB::table('slot_request')->where('slot_date','>=',$qtrMonth)->where('trainer_id',Auth::user()->id)->count();
+
+   
 }
   
 
-Log::debug(":: total_booking_qtr data :: ".print_r($qtrMonth,true));
-
   return view('trainer.home')->with(compact('future_pending_request','future_approve_request','past_request','decline_request','total_number_of_trainer','total_number_of_customer','total_booking_count_month','total_booking_qtr'));
+
+  }
+  catch(\Exception $e) {
+      return abort(200);
+  }
 }
 
 
@@ -118,26 +124,41 @@ Log::debug(":: total_booking_qtr data :: ".print_r($qtrMonth,true));
 public function showprofile()
 {
   // Log::debug(":: Show Profile :: ".print_r($id,true));
+  try{
   $this->cart_delete_trainer();
-  $data=DB::table('users')->where('Id',Auth::user()->id)->first();
+  $data=DB::table('users')->where('id',Auth::user()->id)->first();
   Log::debug(":: Trainer data :: ".print_r($data,true));
   return view('trainer.trainerprofile')->with(compact('data'));
+
+  }
+  catch(\Exception $e) {
+      return abort(200);
+  }
 }
 
 // open the update form of trainer
 public function showupdateform()
 {
+  try{
   $this->cart_delete_trainer();
-  $data= DB::table('users')->where('Id',Auth::user()->id)->first();
+  $data= DB::table('users')->where('id',Auth::user()->id)->first();
   Log::debug(" data ".print_r($data,true));
 
   return view ("trainer.editform")->with(compact('data'));
+
+
+  }
+  catch(\Exception $e) {
+      return abort(200);
+  }
 }
 
 
 // update profile of trainer
 public function updateprofile(Request $request)
 {
+  DB::beginTransaction();
+  try{
   $this->cart_delete_trainer();
 
   if($request->image!="")
@@ -157,7 +178,15 @@ public function updateprofile(Request $request)
     $data['updated_at']=Carbon::now();
 
     $data=DB::table('users')->where('id',$request->id)->update($mydata);
+
+    DB::commit();
     return redirect()->back()->with("success","Your profile has been updated successfully.");
+
+  }
+  catch(\Exception $e) {
+    DB::rollback();
+      return abort(200);
+  }
 }
 
 /**
@@ -166,10 +195,14 @@ public function updateprofile(Request $request)
 */
 public function showslot()
 {
+  try{
   $this->cart_delete_trainer();
   $data=DB::table('slots')->where('deleted_at',null)->get();
-  //Log::debug(":: Slots Data :: ".print_r($data,true));
   return view('trainer.addslot')->with(compact('data'));
+  }
+  catch(\Exception $e) {
+      return abort(200);
+  }
 }
 
 
@@ -189,6 +222,8 @@ public function addslot()
 */
 public function insertslot(Request $request)
 {
+  DB::beginTransaction();
+  try{
   $this->cart_delete_trainer();
   // create log for showing error and print result
   Log::debug(" data ".print_r($request->all(),true)); 
@@ -209,22 +244,36 @@ public function insertslot(Request $request)
   $data['created_at']=Carbon::now();
 
   DB::table('slots')->insert($data);
+  DB::commit();
   return redirect('trainer/add-slot')->with("success","You have successfully added one package");
+
+  }
+  catch(\Exception $e) {
+    DB::rollback();
+      return abort(200);
+  }
 }
 
 
 // open the edit form of slots
 public function showslotseditform($id)
 {
+  try{
   $this->cart_delete_trainer();
   $data= DB::table('slots')->where('id',$id)->first();
   Log::debug(" data ".print_r($data,true));
   return view ("trainer.slotseditform")->with(compact('data'));
 }
+  catch(\Exception $e) {
+      return abort(200);
+  }
+}
 
 // update the slots
 public function slotsedit(Request $request)
 {
+  DB::beginTransaction();
+  try{
   $this->cart_delete_trainer();
   $slotsdata['slots_name']=$request->slots_name;
   $slotsdata['slots_number']=$request->slots_number;
@@ -232,33 +281,55 @@ public function slotsedit(Request $request)
   $slotsdata['slots_validity']=$request->slots_validity;
   $slotsdata['updated_at']=Carbon::now();
   DB::table('slots')->where('id',$request->id)->update($slotsdata);
+  DB::commit();
   return redirect('trainer/add-slot')->with("success","You have successfully updated one package");
+  }
+  catch(\Exception $e) {
+      DB::rollback();
+      return abort(200);
+  }
 }
 
 
 // delete the slots
 public function slotsdelete($id)
 {
+  DB::beginTransaction();
+  try{
   $this->cart_delete_trainer();
   $slotsdata['deleted_at']=Carbon::now();
 
   DB::table('slots')->where('id',$id)->update($slotsdata);
+  DB::commit();
   return redirect('trainer/add-slot')->with("delete","You have successfully deleted one package");
+}
+  catch(\Exception $e) {
+      DB::rollback();
+      return abort(200);
+  }
 }
 
 
 
 public function showlist()
 {
+
+  try{
   $this->cart_delete_trainer();
   $data=DB::table('users')->where('master_trainer',2)->whereNull('deleted_at')->get()->all();
   return view('trainer.trainerlist')->with(compact('data'));
+  }
+  catch(\Exception $e) {
+      return abort(200);
+  }
+
 }
 
 
 //trainer ajax function//
 public function trainer_active_deactive(Request $request)
 {
+  
   $this->cart_delete_trainer();
   $data=$request->get('data');
   $id=$data['id'];
@@ -273,7 +344,7 @@ public function trainer_active_deactive(Request $request)
     $notifydata['status']='Trainer Active';
     $notifydata['trainer_name']=$trainer_details->name;
 
-    Log::debug("Trainer Active notification ".print_r($notifydata,true));
+    //Log::debug("Trainer Active notification ".print_r($notifydata,true));
 
     $trainer_details->notify(new TrainerActiveDeactiveNotification($notifydata));
 
@@ -294,7 +365,7 @@ public function trainer_active_deactive(Request $request)
     ->where('slot_date','>=',$remaining_session_request_now)
     ->get()->all();
 
-    Log::debug(" total_decline ".print_r($total_decline,true));
+    //Log::debug(" total_decline ".print_r($total_decline,true));
 
     $customer_id=0; $slot_date='';
     foreach($total_decline as $my_total)
@@ -388,7 +459,7 @@ public function trainer_active_deactive(Request $request)
     $notifydata['status']='Trainer Deactive';
     $notifydata['trainer_name']=$trainer_details->name;
 
-    Log::debug("Trainer Deactive notification ".print_r($notifydata,true));
+    //Log::debug("Trainer Deactive notification ".print_r($notifydata,true));
 
     $trainer_details->notify(new TrainerActiveDeactiveNotification($notifydata));
 
@@ -406,6 +477,8 @@ public function addtrainer()
 
 public function trainerdelete($id)
 {
+  DB::beginTransaction();
+  try{
   $this->cart_delete_trainer();
   $updatedata['deleted_at']=Carbon::now();
 
@@ -423,7 +496,7 @@ public function trainerdelete($id)
   ->get()->all();
 
 
-  Log::debug(" total_decline ".print_r($total_decline,true));
+  //Log::debug(" total_decline ".print_r($total_decline,true));
 
   foreach($total_decline as $my_total)
   {
@@ -467,7 +540,7 @@ public function trainerdelete($id)
       $notifydata['trainer_name']=$trainer_details->name;
       $notifydata['decline_reason']='Deleted Trainer';
 
-      Log::debug("Declined Session Request notification ".print_r($notifydata,true));
+      //Log::debug("Declined Session Request notification ".print_r($notifydata,true));
 
       $customer_details->notify(new SessionRequestNotification($notifydata));
     }
@@ -494,7 +567,7 @@ public function trainerdelete($id)
       $notifydata['trainer_name']=$trainer_details->name;
       $notifydata['decline_reason']='Deleted Trainer';
 
-      Log::debug("Declined Session Request notification ".print_r($notifydata,true));
+      //Log::debug("Declined Session Request notification ".print_r($notifydata,true));
 
       $customer_details->notify(new SessionRequestNotification($notifydata));
     }
@@ -505,7 +578,7 @@ public function trainerdelete($id)
   $notifydata['status']='Trainer Delete';
   $notifydata['trainer_name']=$trainer_details->name;
 
-  Log::debug("Trainer Delete notification ".print_r($notifydata,true));
+  //Log::debug("Trainer Delete notification ".print_r($notifydata,true));
 
   $trainer_details->notify(new TrainerActiveDeactiveNotification($notifydata));
 
@@ -518,13 +591,23 @@ public function trainerdelete($id)
   ->where('slot_date','>=',$remaining_session_request_now)
   ->update(['approval_id'=>4]);
 
+  DB::commit();
+
   return redirect('trainer/trainerlist')->with("delete","You have successfully deleted one trainer");
+  }
+  catch(\Exception $e) {
+      DB::rollback();
+      return abort(200);
+  }
 }
 
 
 
 public function inserttrainer(Request $request)
 {
+
+  DB::beginTransaction();
+  try{
   $this->cart_delete_trainer();
 
   $validator=Validator::make($request->all(), [
@@ -566,22 +649,38 @@ public function inserttrainer(Request $request)
   Mail::send('emails.enquirymail',['password' =>$password_code,'email' =>$data['email'],'name'=>$data['name']], function($message) {
     $message->to(Input::get('email'))->subject('Successfully add as a trainer');
     });
+
+  DB::commit();
   return redirect('trainer/trainerlist')->with("success","You have successfully added one trainer");
+  }
+
+  catch(\Exception $e) {
+      DB::rollback();
+      return abort(200);
+  }
 }
 
 
 
 public function showtrainerseditform($id)
 {
+
+  try{
   $this->cart_delete_trainer();
   $data= DB::table('users')->where('id',$id)->first();
   Log::debug(" data ".print_r($data,true));
   return view ("trainer.edittrainer")->with(compact('data'));
 }
+catch(\Exception $e) {
+      return abort(200);
+  }
+}
 
 
 public function traineredit(Request $request)
 { 
+  DB::beginTransaction();
+  try{
   $this->cart_delete_trainer();
   if($request->image!="")
   {
@@ -601,13 +700,21 @@ public function traineredit(Request $request)
     $data['updated_at']=Carbon::now();
 
     DB::table('users')->where('id',$request->id)->update($data);
+    DB::commit();
+
     return redirect('trainer/trainerlist')->with("success","You have successfully updated one trainer");
+    }
+    catch(\Exception $e) {
+      DB::rollback();
+      return abort(200);
+  }
 }
 
 
 //past customer list//
 public function pastshowlist(Request $request)
 {
+  try{
   $this->cart_delete_trainer();
   $id=$request->id;
   $cur_date =Carbon::now()->toDateString();
@@ -637,12 +744,19 @@ public function pastshowlist(Request $request)
   }
   
   return view('trainer.past_request_customers')->with(compact('data'));
+
+  }
+  catch(\Exception $e) {
+     
+      return abort(200);
+  }
 }
 
 
 //past customer list//
 public function cancelledshowlist()
 {
+  try{
   $this->cart_delete_trainer();
   if(Auth::user()->master_trainer==1)
   {
@@ -667,11 +781,16 @@ public function cancelledshowlist()
   }
   
   return view('trainer.cancelled_request_customers')->with(compact('data'));
+  }
+  catch(\Exception $e) {
+      return abort(200);
+  }
 }
 
 //future customer ajax function//
 public function approve_customer_request(Request $request)
 {
+
   $this->cart_delete_trainer();
   $remaining_session_request_now=Carbon::now()->toDateString();
   $data=$request->get('data');
@@ -844,6 +963,7 @@ public function approve_customer_request(Request $request)
 //future customer list//
 public function futureshowlist(Request $request)
 {
+  try{
   $this->cart_delete_trainer();
   $id=$request->id;
   $cur_date =Carbon::now()->toDateString();
@@ -882,6 +1002,12 @@ else{
   
   
   return view('trainer.future_request_customers')->with(compact('data'));
+
+}
+  catch(\Exception $e) {
+     
+      return abort(200);
+  }
 }
 
 
@@ -889,6 +1015,7 @@ else{
 
 public function future_pending_showlist(Request $request)
 {
+  try{
   $this->cart_delete_trainer();
   $id=$request->id;
   $cur_date =Carbon::now()->toDateString();
@@ -915,6 +1042,10 @@ public function future_pending_showlist(Request $request)
      }       
   
   return view('trainer.future_pending_request_customers')->with(compact('data'));
+}
+catch(\Exception $e) {
+      return abort(200);
+  }
 }
 
 //future  pending customer request ajax function//
@@ -1038,9 +1169,14 @@ public function approve_pending_request(Request $request)
 //all customers table//
 public function all_customers()
 {
+  try{
   $this->cart_delete_trainer();
   $data=DB::table('customers')->whereNull('deleted_at')->where('confirmed',1)->get();
   return view('trainer.customers_all')->with(compact('data'));
+}
+catch(\Exception $e) {
+      return abort(200);
+  }
 }
 //gym insert form//
 public function add_exercise_trainer()
@@ -1052,6 +1188,9 @@ public function add_exercise_trainer()
 //gym insert function//
 public function exercise_user_insert(Request $request)
 {
+
+  DB::beginTransaction();
+  try{
   $this->cart_delete_trainer();
   // Log::debug(" data ".print_r($request->all(),true)); /// create log for showing error and print resul
   if($request->image!="")
@@ -1075,12 +1214,19 @@ public function exercise_user_insert(Request $request)
   $data['created_at']=Carbon::now();
 
   DB::table('exercise_details')->insert($data);
+  DB::commit();
   return redirect('trainer/gymType')->with("success","You have successfully added one exercise.");
+}
+catch(\Exception $e) {
+      DB::rollback();
+      return abort(200);
+  }
 }
 
 //gym view function//
 public function gym_showlist(Request $request)
 { 
+  try{
   $this->cart_delete_trainer();
   $trainer_details=DB::table('users')->where('users.id',Auth::user()->id)->value('master_trainer');
   if($trainer_details==2)
@@ -1090,31 +1236,53 @@ public function gym_showlist(Request $request)
   }
   else
   {
-
     $data=DB::table('exercise_details')->get();
     return view('trainer.gymlist')->with(compact('data'));
+  }
+
+  }
+
+  catch(\Exception $e) {
+      return abort(200);
   }
 }
 
 //gym delete function//
 public function gymdelete($id)
 { 
+  DB::beginTransaction();
+  try{
   $this->cart_delete_trainer();
   DB::table('exercise_details')->delete($id);
-  return redirect()->back()->with("delete","You have successfully deleted one exercise.");;
+  DB::commit();
+  return redirect()->back()->with("delete","You have successfully deleted one exercise.");
+}
+catch(\Exception $e) {
+      DB::rollback();
+      return abort(200);
+  }
 }
 //gym edit form//
 public function show_edit_exercise_form($id)
 {
+  try{
   $this->cart_delete_trainer();
   $data= DB::table('exercise_details')->where('id',$id)->first();
   //Log::debug(" data ".print_r($data,true));
   return view ("trainer.editexercise")->with(compact('data'));
+  }
+  catch(\Exception $e) {
+     
+      return abort(200);
+  }
 }
 
 //gym edit function//
 public function update_exercise(Request $request)
 { 
+
+  DB::beginTransaction();
+  try{
   $this->cart_delete_trainer();
   
   if($request->image!="")
@@ -1138,7 +1306,16 @@ public function update_exercise(Request $request)
   $data['updated_at']=Carbon::now();
 
   DB::table('exercise_details')->where('id',$request->id)->update($data);
+
+  DB::commit();
   return redirect()->route("gymType")->with("success","You have successfully updated one exercise.");
+
+}
+
+  catch(\Exception $e) {
+      DB::rollback();
+      return abort(200);
+  }
 
 }
 
@@ -1147,36 +1324,58 @@ public function update_exercise(Request $request)
 //feedback function//
 public function feedbacklist(Request $request)
 {
+  try{
   $this->cart_delete_trainer();
   $data=DB::table('feedback')->orderBy('feedback.id','desc')->get();
   return view('trainer.feedbacklist')->with(compact('data'));
+}
+catch(\Exception $e) {
+      return abort(200);
+  }
 }
 
 // For contact details
 public function contactlist(Request $request)
 {
+  try{
   $this->cart_delete_trainer();
   $data=DB::table('contact_us')->orderBy('contact_us.id','desc')->get();
   return view('trainer.contactlist')->with(compact('data'));
+  }
+catch(\Exception $e) {
+      return abort(200);
+  }
 }
 
 
 public function testimonial_view()
 {
+  try{
   $this->cart_delete_trainer();
   $data=DB::table('testimonial')->where('deleted_at',null)->get();
   return view('trainer.testimonial_view')->with(compact('data'));
+  }
+catch(\Exception $e) {
+      return abort(200);
+  }
 }
 
 
 public function testimonialshow()
 {
+  try{
   $this->cart_delete_trainer();
   return view('trainer.testimonial_backend');
+}
+catch(\Exception $e) {
+      return abort(200);
+  }
 }
 
 public function testimonialinsert(Request $request)
 {
+  DB::beginTransaction();
+  try{
   $this->cart_delete_trainer();
   if($request->image!="")
   {
@@ -1197,22 +1396,33 @@ public function testimonialinsert(Request $request)
   $data['designation']=$request->designation;
   $data['description']=$request->description;
   DB::table('testimonial')->insert($data);
-
+  DB::commit();
   return redirect('trainer/testimonial_view')->with("success","You have successfully added one testimonial.");
+}
+catch(\Exception $e) {
+      DB::rollback();
+      return abort(200);
+  }
 }
 
 // open the edit form of slots
 public function testimonialedit($id)
 {
+  try{
   $this->cart_delete_trainer();
   $data= DB::table('testimonial')->where('id',$id)->first();
   Log::debug(" data ".print_r($data,true));
   return view ("trainer.edit_testimonial")->with(compact('data'));
 }
+catch(\Exception $e) {
+      return abort(200);
+  }
+}
 
 public function testimonialupdate(Request $request)
 { 
-
+DB::beginTransaction();
+  try{
   $this->cart_delete_trainer();
   if($request->image!="")
   {
@@ -1231,35 +1441,61 @@ public function testimonialupdate(Request $request)
   $data['updated_at']=Carbon::now();
 
   DB::table('testimonial')->where('id',$request->id)->update($data);
+  DB::commit();
   return redirect('trainer/testimonial_view')->with("success","You have successfully updated one testimonial.");
+}
+  catch(\Exception $e) {
+      DB::rollback();
+      return abort(200);
+  }
 
 }
 
 
 public function testimonialdelete($id)
 {
+  DB::beginTransaction();
+  try{
   $this->cart_delete_trainer();
   $updatedata['deleted_at']=Carbon::now();
 
   DB::table('testimonial')->where('id',$id)->update($updatedata);
-
+  DB::commit();
   return redirect('trainer/testimonial_view')->with("delete","You have successfully deleted one testimonial.");
+}
+  catch(\Exception $e) {
+      DB::rollback();
+      return abort(200);
+  }
 }
 
 public function mot_show(Request $request)
 {
+  try{
   $this->cart_delete_trainer();
   $data=DB::table('customer_mot')
   ->join('customers','customers.id','customer_mot.customer_id')
   ->select('customer_mot.*','customers.name','customers.ph_no','customers.email')->where('customer_mot.deleted_at',null)->get();
   return view('trainer.customer_mot')->with(compact('data'));
 }
+catch(\Exception $e) {
+      return abort(200);
+  }
+}
 
 public function motinsertshow()
 {
+DB::beginTransaction();
+  try{
   $this->cart_delete_trainer();
   $data=DB::table('customers')->get();
+  DB::commit();
   return view('trainer.motinsertshow')->with(compact('data'));
+}
+catch(\Exception $e) {
+      DB::rollback();
+      return abort(200);
+  }
 }
 
 
@@ -1300,6 +1536,8 @@ $this->cart_delete_trainer();
 
 public function motinsert(Request $request)
 {
+  DB::beginTransaction();
+  try{
   $this->cart_delete_trainer();
   //Log::debug(" metric ".print_r($request->right_arm_credential,true));
 
@@ -1452,8 +1690,14 @@ public function motinsert(Request $request)
 // print_r($data);die();
     DB::table('customer_mot')->insert($data);
     Log::debug(" customer_mot ".print_r($data,true));
-    return redirect('trainer/mot_show')->with("success","You have successfully added one customer's MOT.");
 
+    DB::commit();
+    return redirect('trainer/mot_show')->with("success","You have successfully added one customer's MOT.");
+  }
+  catch(\Exception $e) {
+      DB::rollback();
+      return abort(200);
+  }
 
 }
 
@@ -1472,6 +1716,7 @@ public function mot_customer_request(Request $request)
 
 public function moteditshow($id)
 {
+  try{
   $this->cart_delete_trainer();
   $data=DB::table('customer_mot')
   ->join('customers','customers.id','customer_mot.customer_id')
@@ -1479,11 +1724,18 @@ public function moteditshow($id)
   ->select('customer_mot.id as mot_id','customer_mot.height','customer_mot.customer_id as customer_id','customer_mot.trainer_id','customer_mot.right_arm','customer_mot.left_arm','customer_mot.chest','customer_mot.waist','customer_mot.hips','customer_mot.right_thigh','customer_mot.left_thigh','customer_mot.starting_weight','customer_mot.date','customer_mot.right_calf','customer_mot.left_calf','customer_mot.heart_beat','customers.name as current_customer_name','customer_mot.blood_pressure','customer_mot.ending_weight','customer_mot.description')->where('customer_mot.id',$id)->first();
 
   return view('trainer.moteditshow')->with(compact('data'));
+  }
+  catch(\Exception $e) {
+      return abort(200);
+  }
 }
 
 
 
 public function motedit(Request $request){
+
+  DB::beginTransaction();
+  try{
 
   $this->cart_delete_trainer();
     if($request->right_arm_credential=="metric")
@@ -1620,24 +1872,43 @@ if($request->left_calf_credential=="metric")
     $data['date']=(isset($request->date) && !empty($request->date)) ? $request->date : null;
     DB::table('customer_mot')->where('id',$request->id)->update($data);
     Log::debug(" Check id ".print_r($data,true));
+    DB::commit();
     return redirect('trainer/mot_show')->with("success","You have successfully updated one customer's MOT.");
+  }
+  catch(\Exception $e) {
+      DB::rollback();
+      return abort(200);
+  }
 
 }
 
 
 public function motdelete($id)
 {
+  DB::beginTransaction();
+  try{
   $this->cart_delete_trainer();
   $updatedata['deleted_at']=Carbon::now();
   DB::table('customer_mot')->where('id',$id)->update($updatedata);
+  DB::commit();
   return redirect('trainer/mot_show')->with("delete","You have successfully deleted one customer's MOT.");
+}
+catch(\Exception $e) {
+      DB::rollback();
+      return abort(200);
+  }
 }
 
 public function our_client_show()
 {
+  try{
   $this->cart_delete_trainer();
   $data=DB::table('our_client')->where('deleted_at',null)->get();
   return view('trainer.our_client_list')->with(compact('data'));
+}catch(\Exception $e) {
+      
+      return abort(200);
+  }
 }
 
 
@@ -1650,6 +1921,8 @@ public function client_insert_view()
 
 public function client_insert(Request $request)
 {
+  DB::beginTransaction();
+  try{
   $this->cart_delete_trainer();
     if($request->image!="")
     {
@@ -1678,21 +1951,36 @@ public function client_insert(Request $request)
 
     DB::table('our_client')->insert($data);
     Log::debug(" Check id ".print_r($data,true));
+
+    DB::commit();
     return redirect('trainer/our_trainer_list')->with("success","One trainer is insert successfully !");
+
+  }
+  catch(\Exception $e) {
+      DB::rollback();
+      return abort(200);
+  }
 }
 
 public function client_edit_view($id)
 {
+  try{
   $this->cart_delete_trainer();
     $data= DB::table('our_client')->where('id',$id)->first();
     Log::debug(" data ".print_r($data,true));
     return view ("trainer.client_edit_view")->with(compact('data'));
+  }
+  catch(\Exception $e) {
+      return abort(200);
+  }
 
 
 }
 
 public function client_update(Request $request)
 { 
+  DB::beginTransaction();
+  try{
   $this->cart_delete_trainer();
     if($request->image!="")
     {
@@ -1715,17 +2003,32 @@ public function client_update(Request $request)
     $data['updated_at']=Carbon::now();
 
     DB::table('our_client')->where('id',$request->id)->update($data);
+    DB::commit();
     return redirect('trainer/our_trainer_list')->with("success","One trainer details updated successfully!");
+  }
+  catch(\Exception $e) {
+      DB::rollback();
+      return abort(200);
+  }
+
 }
 
 public function client_delete($id)
 {
+  DB::beginTransaction();
+  try{
   $this->cart_delete_trainer();
     $updatedata['deleted_at']=Carbon::now();
 
     DB::table('our_client')->where('id',$id)->update($updatedata);
-
+    DB::commit();
     return redirect('trainer/our_trainer_list')->with("delete","One trainer is deleted successfully !");
+  }
+
+    catch(\Exception $e) {
+      DB::rollback();
+      return abort(200);
+  }
 }
 
 
@@ -1734,6 +2037,7 @@ public function client_delete($id)
 
 public function payment_history_backend()
 {
+  try{
   $this->cart_delete_trainer();
 
     $data=DB::table('purchases_history')
@@ -1743,6 +2047,12 @@ public function payment_history_backend()
     ->orderBy('payment_history.payment_mode','ASC')->orderBy('payment_history.id','DESC')->get()->all();
 
     return view('trainer.payment_history_backend')->with(compact('data'));
+  }
+
+  catch(\Exception $e) {
+      return abort(200);
+  }
+
 
 }
 
@@ -2152,6 +2462,7 @@ public function admin_get_slot_trainer(Request $request)
 
 public function slot_insert_to_cart_trainer(Request $request)
 {
+
   $cart_data['trainer_id']=$request->trainer_id;
   $cart_data['slot_date']=$request->slot_date;
   $cart_data['slot_time_id']=$request->slots_time_id;
@@ -2203,12 +2514,14 @@ public function cart_data_delete_trainer(Request $request)
   $sum_slots = DB::table('purchases_history')
   ->select('active_package','package_remaining','customer_id')  
   ->where('active_package',1 )
+  ->where('package_remaining','>',0)
   ->where('package_validity_date','>=',$remaining_session_request_now)
   ->sum('package_remaining');
 
   $sum_extra_slots = DB::table('purchases_history')
   ->select('active_package','package_remaining','extra_package_remaining','customer_id')
   ->where('active_package',1)
+  ->where('extra_package_remaining','>',0)
   ->sum('extra_package_remaining');
 
   $trainer_data=DB::table('users')->whereNull('deleted_at')->where('is_active',1)->get();
@@ -2263,6 +2576,7 @@ public function customersearch(Request $request)
   ->select('active_package','package_remaining','customer_id')
   ->where('customer_id',$request->get('data'))
   ->where('active_package',1 )
+  ->where('package_remaining','>',0)
   ->where('package_validity_date','>=',$remaining_session_request_now)
   ->sum('package_remaining');
 
@@ -2270,6 +2584,7 @@ public function customersearch(Request $request)
   ->select('active_package','package_remaining','extra_package_remaining','customer_id')
   ->where('customer_id',$request->get('data'))
   ->where('active_package',1)
+  ->where('extra_package_remaining','>',0)
   ->sum('extra_package_remaining');
 
   $total_remaining_session=$sum_slots+$sum_extra_slots;

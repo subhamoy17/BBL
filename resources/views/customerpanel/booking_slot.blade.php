@@ -103,8 +103,8 @@
               <div id="main-nav" class="stellarnav">
                 <ul>
 
-                <li class="{{ Request::segment(2) === 'bbl' ? 'active' : null }}">
-                        <a href="{{url('customer/bbl')}}">Home</a>
+                <li class="{{ Request::is('/') ? 'active' : null }}">
+                        <a href="{{route('bbldb')}}">Home</a>
                       </li>
                        <li class="{{ Request::segment(2) === 'about-us' ? 'active' : null }}">
                         <a href="{{url('customer/about-us')}}">About Us</a>
