@@ -585,7 +585,7 @@ public function booking_history(Request $request)
      }
 
     catch(\Exception $e) {
-
+// Log::debug(" Check id ".print_r($e->getMessage(),true));  
       return abort(400);
   }
 }

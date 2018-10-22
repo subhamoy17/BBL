@@ -223,7 +223,7 @@ public function addslot()
 public function insertslot(Request $request)
 {
   DB::beginTransaction();
-  try{
+  // try{
   $this->cart_delete_trainer();
   // create log for showing error and print result
   Log::debug(" data ".print_r($request->all(),true)); 
@@ -233,8 +233,9 @@ public function insertslot(Request $request)
     'slots_price'=>'required|numeric|between:1,999999.99',//accept only integer and must be minimum value of 1 is required
     'slots_validity'=>'required|integer|min:1',
     // same as slots_number
-
-    'slots_name'=>'required|max:255|unique:slots'
+   
+    // 'slots_name'=>'required|max:255|unique:slots'
+    'slots_name' => 'required|max:255|unique:slots,slots_name,NULL,id,deleted_at,NULL'
   ]);
 
   $data['slots_name']=$request->slots_name;
@@ -247,11 +248,11 @@ public function insertslot(Request $request)
   DB::commit();
   return redirect('trainer/add-slot')->with("success","You have successfully added one package");
 
-  }
-  catch(\Exception $e) {
-    DB::rollback();
-      return abort(200);
-  }
+  // }
+  // catch(\Exception $e) {
+  //   DB::rollback();
+  //     return abort(200);
+  // }
 }
 
 
@@ -732,7 +733,7 @@ public function pastshowlist(Request $request)
   ->join('slot_times','slot_times.id','slot_request.slot_time_id')
   ->select('slot_request.id','customers.name','customers.ph_no','customers.image','slot_approval.status','slot_request.created_at','slot_request.approval_id','slot_request.slot_date','slot_times.time as slot_time','users.name as trainer_name')
   ->where('slot_request.slot_date','<',$cur_date)
-  ->where('approval_id','<>',2)
+  ->where('approval_id','<>',2)->orderBy('slot_request.slot_date', 'ASC')
   ->get();
   }
   else{
@@ -744,7 +745,7 @@ public function pastshowlist(Request $request)
   ->select('slot_request.id','customers.name','customers.ph_no','customers.image','slot_approval.status','slot_request.created_at','slot_request.approval_id','slot_request.slot_date','slot_times.time as slot_time','users.name as trainer_name')
   ->where('slot_request.slot_date','<',$cur_date)
   ->where('approval_id','<>',2)
-  ->where('slot_request.trainer_id',$id)->get();
+  ->where('slot_request.trainer_id',$id)->orderBy('slot_request.slot_date', 'ASC')->get();
   }
   
   return view('trainer.past_request_customers')->with(compact('data'));
@@ -770,7 +771,7 @@ public function cancelledshowlist()
   ->join('slot_approval','slot_approval.id','slot_request.approval_id')
   ->join('slot_times','slot_times.id','slot_request.slot_time_id')
   ->select('slot_request.id','customers.name','customers.ph_no','customers.image','slot_approval.status','slot_request.created_at','slot_request.approval_id','slot_request.slot_date','slot_times.time as slot_time','users.name as trainer_name')
-  ->where('approval_id',2)
+  ->where('approval_id',2)->orderBy('slot_request.slot_date', 'ASC')
   ->get();
   }
   else{
@@ -781,7 +782,7 @@ public function cancelledshowlist()
   ->join('slot_times','slot_times.id','slot_request.slot_time_id')
   ->select('slot_request.id','customers.name','customers.ph_no','customers.image','slot_approval.status','slot_request.created_at','slot_request.approval_id','slot_request.slot_date','slot_times.time as slot_time','users.name as trainer_name')
   ->where('approval_id',2)
-  ->where('slot_request.trainer_id',Auth::user()->id)->get();
+  ->where('slot_request.trainer_id',Auth::user()->id)->orderBy('slot_request.slot_date', 'ASC')->get();
   }
   
   return view('trainer.cancelled_request_customers')->with(compact('data'));
@@ -989,7 +990,7 @@ Log::debug("id ".print_r($id,true));
   ->where(function($q) {
     $q->where('approval_id', 3)
       ->orWhere('approval_id', 4);
-  })->get();
+  })->orderBy('slot_request.slot_date', 'ASC')->get();
   
 }
 
@@ -1003,7 +1004,7 @@ else{
   ->where(function($q) {
     $q->where('approval_id', 3)
       ->orWhere('approval_id', 4);
-  })->where('slot_request.trainer_id',$id)->get();
+  })->where('slot_request.trainer_id',$id)->orderBy('slot_request.slot_date', 'ASC')->get();
 }
   
   
@@ -1033,7 +1034,7 @@ public function future_pending_showlist(Request $request)
   ->join('users','users.id','slot_request.trainer_id')
   ->join('slot_approval','slot_approval.id','slot_request.approval_id')
   ->join('slot_times','slot_times.id','slot_request.slot_time_id')
-  ->select( 'slot_request.id','customers.name','customers.ph_no','customers.image','slot_approval.status','slot_request.created_at','slot_request.approval_id','slot_request.slot_date','slot_times.time as slot_time','users.name as trainer_name')->where('slot_request.slot_date','>=',$cur_date)->where('slot_request.approval_id',1)->get();
+  ->select( 'slot_request.id','customers.name','customers.ph_no','customers.image','slot_approval.status','slot_request.created_at','slot_request.approval_id','slot_request.slot_date','slot_times.time as slot_time','users.name as trainer_name')->where('slot_request.slot_date','>=',$cur_date)->where('slot_request.approval_id',1)->orderBy('slot_request.slot_date', 'ASC')->get();
 
         }
 
@@ -1043,7 +1044,7 @@ public function future_pending_showlist(Request $request)
   ->join('users','users.id','slot_request.trainer_id')
   ->join('slot_approval','slot_approval.id','slot_request.approval_id')
   ->join('slot_times','slot_times.id','slot_request.slot_time_id')
-  ->select( 'slot_request.id','customers.name','customers.ph_no','customers.image','slot_approval.status','slot_request.created_at','slot_request.approval_id','slot_request.slot_date','slot_times.time as slot_time','users.name as trainer_name')->where('slot_request.slot_date','>=',$cur_date)->where('slot_request.approval_id',1)->where('slot_request.trainer_id',$id)->get();
+  ->select( 'slot_request.id','customers.name','customers.ph_no','customers.image','slot_approval.status','slot_request.created_at','slot_request.approval_id','slot_request.slot_date','slot_times.time as slot_time','users.name as trainer_name')->where('slot_request.slot_date','>=',$cur_date)->where('slot_request.approval_id',1)->where('slot_request.trainer_id',$id)->orderBy('slot_request.slot_date', 'ASC')->get();
 
      }       
   

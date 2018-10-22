@@ -17,7 +17,7 @@ rules: {
       min:1
     },
      "slots_name": {
-      required: true 
+      required: true
     },
     "slots_price": {
       required: true,
