@@ -2,12 +2,14 @@
 <html lang="zxx">
 
 <head>
-    <title>Gym Trainer a Sports Category Bootstrap Responsive Website Template | Home :: gylayouts</title>
-    <!-- custom-theme -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Register - Physical Training In Basingstoke | Body By Lekan</title>
+  <meta name="description" content="Register with us for a free and get health tips and fitness training from our best professional fitness trainer offers to transform your body in perfect shape.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.bodybylekan.com/customer-registration">
+   
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <!-- //custom-theme -->
-            <title>{{ config('app.customerpaneltitle') }}</title>
+           
             
             <meta name="csrf-token" content="{{ csrf_token() }}">
 

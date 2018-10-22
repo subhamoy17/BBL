@@ -4,16 +4,14 @@
 
 
 <head>
-    <title>Gym Trainer a Sports Category Bootstrap Responsive Website Template | Home :: gylayouts</title>
-    <!-- custom-theme -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <!-- //custom-theme -->
-
-      <title>{{ config('app.customerpaneltitle') }}</title>
+  
+      <title>Login - Fitness & Health Experts in Basingstoke | Body By Lekan</title>
+  <meta name="description" content="Login to book classes, view your calendar and timetable, manage your membership and get the latest health and fitness insights, tools and special offers.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.bodybylekan.com/customer-login">
             
             <meta name="csrf-token" content="{{ csrf_token() }}">
-
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link href="{{url('frontend/css/bootstrap.css')}}" rel="stylesheet" type="text/css" media="all" />
     <!-- Owl-carousel-CSS -->
 
