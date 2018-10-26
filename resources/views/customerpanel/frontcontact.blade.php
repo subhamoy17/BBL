@@ -23,7 +23,7 @@
               <div class="contact-info text-center">
                 <i class="fa fa-map-marker font-36 mb-10 text-theme-colored"></i>
                 <h4>Address</h4>
-                <h6 class="text-gray">121 King Street, Australia</h6>
+                <h6 class="text-gray">Oakridge Hall, Cherry Tree Walk, RG21 5RL Basingstoke</h6>
               </div>
             </div>
             <div class="col-sm-12 col-md-4">
