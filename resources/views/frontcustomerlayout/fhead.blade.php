@@ -67,12 +67,12 @@
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://www.bodybylekan.com/customer-login">
 @endif
-	<!-- <title>Gym Trainer a Sports Category Bootstrap Responsive Website Template | Home :: gylayouts</title>
+	
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
 
-  			<title>{{ config('app.customerpaneltitle') }}</title> -->
+  			
 
 
   			<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
