@@ -19,9 +19,9 @@
   {{ csrf_field() }}
   <h6>Pay from here</h6>
   <div class="acnt-det">
-    <p><h5>Name: </h5> <span>Body By Lekan</span></p>
-    <p><h5>Sort Code: </h5> <span> FGB00068</span></p>
-    <p><h5>Account No: </h5> <span> 686968789800</span></p>
+    <!-- <p><h5>Name: </h5> <span>Body By Lekan</span></p> -->
+    <p><h5>Sort Code: </h5> <span> 23-69-72</span></p>
+    <p><h5>Account No: </h5> <span> 04449181</span></p>
   </div>
   <label class="w3-text-blue"><b>Payable amount is </b>&nbsp;  <span class="pay-pal-price"><i class="fa fa-gbp"></i> {{$data['slots_price']}}</span></label>
   <input class="w3-input w3-border" name="slots_price" type="hidden" value="{{$data['slots_price']}}" readonly >
