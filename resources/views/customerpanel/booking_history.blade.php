@@ -9,7 +9,7 @@
           <div id="tab1" class="tab_content">
             <div class="table-responsive table-bordered">
               
-        <a href="{{url('customer/booking_slot')}}" class="btn btn-success bk-slt-btn">Book PT Session/Boot Camp Session</a>
+        <a href="{{url('customer/booking_slot')}}" class="btn btn-success bk-slt-btn">Book PT Session</a>
         
          @if (session('session_delete'))
                                 <div class="alert alert-danger session-delete">
