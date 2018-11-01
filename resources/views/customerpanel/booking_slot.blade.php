@@ -550,8 +550,7 @@
       var slot_time = $('#slot_time');
                     slot_time.prop("disabled",false);
                     slot_time.empty();
-                    slot_time.append(
-                $('<option>', {value: ''}).text('Please select time'));
+                    
     $.ajax({
                   type: "GET",
                   url: "{{route('get_current_slot_time')}}",
@@ -564,6 +563,8 @@
                    var convert_time=0;
 
                     if(obj.length > 0){ 
+                      slot_time.append(
+                $('<option>', {value: ''}).text('Please select time'));
                     for(var i = 0; i < obj.length; i++){
 
                       convert_time=obj[i]['time'];
@@ -573,7 +574,13 @@
                 $('<option>', {value: obj[i]['id']}).text(convert_time));
                   }
                   }
-                    
+                  else
+                  {
+                    slot_time.append(
+                $('<option>', {value: ''}).text('All slots are booked'));
+                    $('#slot_time').attr('disabled','disabled');
+                    $("#slot_time").css("background","#3d3648");
+                  }
                   }
       });
     }
@@ -583,8 +590,7 @@
       var slot_time = $('#slot_time');
                     slot_time.prop("disabled",false);
                     slot_time.empty();
-                    slot_time.append(
-                $('<option>', {value: ''}).text('Please select time'));
+                    
     $.ajax({
                   type: "GET",
                   url: "{{route('get_slot_time')}}",
@@ -597,6 +603,8 @@
                    var convert_time=0;
 
                     if(obj.length > 0){ 
+                      slot_time.append(
+                $('<option>', {value: ''}).text('Please select time'));
                     for(var i = 0; i < obj.length; i++){
 
                       convert_time=obj[i]['time'];
@@ -606,7 +614,14 @@
                 $('<option>', {value: obj[i]['id']}).text(convert_time));
                   }
                   }
-                    
+
+                  else
+                  {
+                    slot_time.append(
+                $('<option>', {value: ''}).text('All slots are booked'));
+                    $('#slot_time').attr('disabled','disabled');
+                    $("#slot_time").css("background","#3d3648");
+                  }
                   }
       });
 
@@ -636,8 +651,7 @@
       var slot_trainer = $('#trainer_id2');
                     slot_trainer.prop("disabled",false);
                     slot_trainer.empty();
-                    slot_trainer.append(
-                $('<option>', {value: ''}).text('Please select trainer'));
+                    
     $.ajax({
                   type: "GET",
                   url: "{{route('get_slot_trainer')}}",
@@ -646,15 +660,23 @@
                     $('#loadingimg2').hide();
                     //console.log(data);
 
-                    var obj = $.parseJSON(data);
-                    
+                    var obj = $.parseJSON(data); 
 
                     if(obj.length > 0){ 
+                      slot_trainer.append(
+                $('<option>', {value: ''}).text('Please select trainer'));
                     for(var i = 0; i < obj.length; i++){
 
                      slot_trainer.append(
                  $('<option>', {value: obj[i]['id']}).text(obj[i]['name']));
                    }
+                 }
+                 else
+                 {
+                  slot_trainer.append(
+                $('<option>', {value: ''}).text('All trainers are booked'));
+                  $('#trainer_id2').attr('disabled','disabled');
+                $("#trainer_id2").css("background","#3d3648");
                  }
                   }
       });

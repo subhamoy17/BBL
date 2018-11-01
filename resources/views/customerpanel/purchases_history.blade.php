@@ -71,6 +71,8 @@
                <!-- <font style="color: #ffa461;">aa</font> -->
               <span id="gg" class="toolclip" data-tooltipster='{"side":"left","animation":"fade"}' data-tooltip-content="#tooltip_content"><i class="fa fa-info-circle" style="margin-left: 5px;font-size: 15px;"></i></span>
               <div class="tooltip_templates">
+
+
           <span id="tooltip_content">
               <strong>{{$mydata->slots_number}}  + {{$others}} = {{$total_package_remaining}}</strong>
               <strong>{{$mydata->slots_number}} is remainig slot</strong>

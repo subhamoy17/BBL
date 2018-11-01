@@ -206,10 +206,10 @@ messages: {
                         
 
                         </div>
-                        <!-- <div class="clearfix"></div> -->
+                        <!-- <div class="clearfix"></div>  class="avl-tm" -->
                         <div class="col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group" >
-                              <label class="avl-tm">Available Time <small>*</small></label>
+                              <label>Available Time <small>*</small></label>
                               <select class="form-control" name="time" id="slot_time">
                                 
                               </select>
@@ -529,8 +529,7 @@ $('a[data-toggle="tab"]').on('click', function (e) {
       var slot_time = $('#slot_time');
                     slot_time.prop("disabled",false);
                     slot_time.empty();
-                    slot_time.append(
-                $('<option>', {value: ''}).text('Please select time'));
+                    
     $.ajax({
                   type: "GET",
                   url: "{{route('admin_get_current_slot_time')}}",
@@ -543,6 +542,8 @@ $('a[data-toggle="tab"]').on('click', function (e) {
                     var convert_time=0;
 
                     if(obj.length > 0){ 
+                      slot_time.append(
+                $('<option>', {value: ''}).text('Please select time'));
                     for(var i = 0; i < obj.length; i++){
 
                       convert_time=obj[i]['time'];
@@ -552,7 +553,13 @@ $('a[data-toggle="tab"]').on('click', function (e) {
                 $('<option>', {value: obj[i]['id']}).text(convert_time));
                   }
                   }
-                    
+                  else
+                  {
+                    slot_time.append(
+                    $('<option>', {value: ''}).text('All slots are booked'));
+                    $('#slot_time').attr('disabled','disabled');
+
+                  }
                   }
       });
 
@@ -562,8 +569,7 @@ $('a[data-toggle="tab"]').on('click', function (e) {
       var slot_time = $('#slot_time');
                     slot_time.prop("disabled",false);
                     slot_time.empty();
-                    slot_time.append(
-                $('<option>', {value: ''}).text('Please select time'));
+                    
     $.ajax({
                   type: "GET",
                   url: "{{route('admin_get_slot_time')}}",
@@ -576,6 +582,8 @@ $('a[data-toggle="tab"]').on('click', function (e) {
                     var convert_time=0;
 
                     if(obj.length > 0){ 
+                      slot_time.append(
+                $('<option>', {value: ''}).text('Please select time'));
                     for(var i = 0; i < obj.length; i++){
 
                       convert_time=obj[i]['time'];
@@ -584,6 +592,13 @@ $('a[data-toggle="tab"]').on('click', function (e) {
                     slot_time.append(
                 $('<option>', {value: obj[i]['id']}).text(convert_time));
                   }
+                  }
+                  else
+                  {
+                    slot_time.append(
+                    $('<option>', {value: ''}).text('All slots are booked'));
+                    $('#slot_time').attr('disabled','disabled');
+
                   }
                     
                   }
@@ -614,8 +629,7 @@ $('a[data-toggle="tab"]').on('click', function (e) {
       var slot_trainer = $('#trainer_id2');
                     slot_trainer.prop("disabled",false);
                     slot_trainer.empty();
-                    slot_trainer.append(
-                $('<option>', {value: ''}).text('Please select trainer'));
+                    
     $.ajax({
                   type: "GET",
                   url: "{{route('admin_get_slot_trainer')}}",
@@ -628,11 +642,19 @@ $('a[data-toggle="tab"]').on('click', function (e) {
                     
 
                     if(obj.length > 0){ 
+                      slot_trainer.append(
+                $('<option>', {value: ''}).text('Please select trainer'));
                     for(var i = 0; i < obj.length; i++){
 
                      slot_trainer.append(
                  $('<option>', {value: obj[i]['id']}).text(obj[i]['name']));
                    }
+                 }
+                 else
+                 {
+                  slot_trainer.append(
+                $('<option>', {value: ''}).text('All trainers are booked'));
+                  $('#trainer_id2').attr('disabled','disabled');
                  }
                   }
       });
@@ -1129,8 +1151,7 @@ $("ul.tabs").hide();
       var slot_trainer = $('#slot_time2');
                     slot_trainer.prop("disabled",false);
                     slot_trainer.empty();
-                    slot_trainer.append(
-                $('<option>', {value: ''}).text('Please select time'));
+                    
     $.ajax({
                   type: "GET",
                   url: "{{route('admin_get_current_time')}}",
@@ -1143,11 +1164,19 @@ $("ul.tabs").hide();
                     
 
                     if(obj.length > 0){ 
+                      slot_trainer.append(
+                $('<option>', {value: ''}).text('Please select time'));
                     for(var i = 0; i < obj.length; i++){
 
                      slot_trainer.append(
                  $('<option>', {value: obj[i]['id']}).text(obj[i]['time']));
                    }
+                 }
+                 else
+                 {
+                  slot_trainer.append(
+                $('<option>', {value: ''}).text('All slots are booked'));
+                  $('#slot_time2').attr('disabled','disabled');
                  }
                   }
       });
@@ -1158,8 +1187,7 @@ $("ul.tabs").hide();
       var slot_trainer = $('#slot_time2');
                     slot_trainer.prop("disabled",false);
                     slot_trainer.empty();
-                    slot_trainer.append(
-                $('<option>', {value: ''}).text('Please select time'));
+                    
     $.ajax({
                   type: "GET",
                   url: "{{route('admin_get_time')}}",
@@ -1172,11 +1200,19 @@ $("ul.tabs").hide();
                     
 
                     if(obj.length > 0){ 
+                      slot_trainer.append(
+                $('<option>', {value: ''}).text('Please select time'));
                     for(var i = 0; i < obj.length; i++){
 
                      slot_trainer.append(
                  $('<option>', {value: obj[i]['id']}).text(obj[i]['time']));
                    }
+                 }
+                 else
+                 {
+                  slot_trainer.append(
+                $('<option>', {value: ''}).text('All slots are booked'));
+                  $('#slot_time2').attr('disabled','disabled');
                  }
                   }
       });
