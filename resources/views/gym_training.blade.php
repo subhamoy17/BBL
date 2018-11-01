@@ -15,7 +15,7 @@
 			</div>
 			<div class="col-lg-6 col-sm-6 col-xs-12">			
 			<div class="blog-txt">
-				<h3><a href="#" data-toggle="modal" data-target="#myModal1">Piti Season</a></h3>
+				<h3><a href="#" data-toggle="modal" data-target="#myModal1">Personal Training</a></h3>
 				<!--<h4>December 15,2017</h4>-->
 				<p>Our advanced gym facilities come with the best equipment’s and trainers. Our fitness trainers will provide you with the latest fitness trends and methods to keep your body fit and healthy. You can use our state of art world class gym at any time of your convenience.</p>
 			</div>
