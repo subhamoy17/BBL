@@ -14,11 +14,11 @@
 				<div class="about-bott-right">
 					 <h5>Who We Are</h5>
 					 <p>Body By Lekan – Because each new day gives us a fresh opportunity to improve yourself… Join us and make the most of it!
-Begin your journey to fitness with Body by Lekan, your new health and fitness partner, since 1st March 2018.  The brain child of Lekan, a former world-class athlete whohas competed in manyNational and International sporting and fitness events. With his wide spread knowledge and experience in the field of fitness and well-being, his sole aim is to share his knowledge and experience with you to bring out the best in you and help you achieve your fitness goals.</p><br>
+Begin your journey to fitness with Body by Lekan, your new health and fitness partner, since 1st March 2018.  The brain child of Lekan, a former world-class athlete who has competed in many National and International sporting and fitness events. With his wide spread knowledge and experience in the field of fitness and well-being, his sole aim is to share his knowledge and experience with you to bring out the best in you and help you achieve your fitness goals.</p><br>
 
 <h5>Our Goal</h5>
 <p>
-To improveand help people live their life at the fullest through our comprehensive weight loss programs, muscle toning exercises and well planned nutrition plans with the help of our fitness experts. What’s more, we also ensure that you have fun working out with us!</p><br>
+To improve and help people live their life at the fullest through our comprehensive weight loss programs, muscle toning exercises and well planned nutrition plans with the help of our fitness experts. What’s more, we also ensure that you have fun working out with us!</p><br>
 
 <h5>Our Facilities</h5>
 <p>
