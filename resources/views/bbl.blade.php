@@ -10,25 +10,25 @@
 					<li>
 						<div class="agile_banner_text_info">
 							<h3>Become Strong And Healthy </h3>
-							<p>TrainHard is the right place to start new life as an athletic, strong and healthy person with a strong will.</p>
+							<p>Train hard is the right place to start new life as an athletic, strong and healthy person with a strong will.</p>
 						</div>
 					</li>
 					<li>
 						<div class="agile_banner_text_info">
 							<h3>Exceptional Life Fitness </h3>
-							<p>TrainHard is the right place to start new life as an athletic, strong and healthy person with a strong will.</p>
+							<p>Train hard is the right place to start new life as an athletic, strong and healthy person with a strong will.</p>
 						</div>
 					</li>
 					<li>
 						<div class="agile_banner_text_info">
 							<h3>Build Your Body With Us </h3>
-							<p>TrainHard is the right place to start new life as an athletic, strong and healthy person with a strong will.</p>
+							<p>Train hard is the right place to start new life as an athletic, strong and healthy person with a strong will.</p>
 						</div>
 					</li>
 					<li>
 						<div class="agile_banner_text_info">
 							<h3>Exceptional Life Fitness </h3>
-							<p>TrainHard is the right place to start new life as an athletic, strong and healthy person with a strong will.</p>
+							<p>Train hard is the right place to start new life as an athletic, strong and healthy person with a strong will.</p>
 						</div>
 					</li>
 				</ul>
