@@ -158,21 +158,4 @@ $data=DB::table('exercise_details')->where('deleted_at',null)->get();
    }
 
 
-
-  // public function slots_time_insert()
-  // {
-    
-  //   for ($i = 0; $i <= 23; $i++){
-  //     if(strlen($i)==1) 
-  //       {$i='0'.$i;}
-  //   for ($j = 0; $j <= 45; $j+=15){
-    
-  //   if(strlen($j)==1){$j='0'.$j;}
-
-  //   //inside the inner loop
-  //   echo "INSERT INTO `slot_times_new` (`time`) VALUES ('$i:$j:00')".';<br>';
-  //   }
-  // //inside the outer loop
-  //   }
-  // }
 }
