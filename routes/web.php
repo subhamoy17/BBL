@@ -12,8 +12,6 @@
 */
 
 
-//Route::get('/slots_time_insert', 'FrontSimpleController@slots_time_insert');
-
 
 Route::get('/', 'FrontSimpleController@index')->name('bbldb');
 
