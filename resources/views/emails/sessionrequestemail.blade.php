@@ -44,24 +44,8 @@ th {
       <?php 
       if($session_booking_time!= '')
       {
-       $session_booking_time=substr($session_booking_time,0,2); 
-      
-      if($session_booking_time==12 )    { $session_booking_time='12 PM';  }
-      elseif($session_booking_time==13) { $session_booking_time='1 PM'; }
-      elseif($session_booking_time==14)  { $session_booking_time='2 PM'; }
-      elseif($session_booking_time==15)  { $session_booking_time='3 PM'; }
-      elseif($session_booking_time==16)  { $session_booking_time='4 PM'; }
-      elseif($session_booking_time==17)  { $session_booking_time='5 PM'; }
-      elseif($session_booking_time==18)  { $session_booking_time='6 PM'; }
-      elseif($session_booking_time==19)  { $session_booking_time='7 PM'; }
-      elseif($session_booking_time==20)  { $session_booking_time='8 PM'; }
-      elseif($session_booking_time==21)  { $session_booking_time='9 PM'; }
-      elseif($session_booking_time==22)  { $session_booking_time='10 PM'; }
-      elseif($session_booking_time==23) { $session_booking_time='11 PM'; }
-      elseif($session_booking_time==24)  { $session_booking_time='12 AM'; }
-      else  { $session_booking_time=$session_booking_time.' AM'; }
-      
-    }
+       $session_booking_time=date('h:i A', strtotime($session_booking_time)); 
+      }
 
       ?>
 
