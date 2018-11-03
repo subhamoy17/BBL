@@ -44,6 +44,7 @@ th {
       <?php 
       if($session_booking_time!= '')
       {
+        
        $session_booking_time=date('h:i A', strtotime($session_booking_time)); 
       }
 
