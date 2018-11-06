@@ -67,6 +67,33 @@
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://www.bodybylekan.com/customer-login">
 @endif
+
+@if(Request::segment(1) == 'gym-training')
+<title>Best Fitness Gym Clubs at Basingstoke | Body By Lekan</title>
+
+  <meta name="description" content="Body By Lekan provide the best fitness training techniques which includes personal training, Strength training, group exercises, boot camp training & much more.">
+
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.bodybylekan.com/gym-training">
+@endif
+@if(Request::segment(1) == 'diet-plan')
+<title>Diet Plan for Body Building & Weight Loss | Body By Lekan</title>
+  <meta name="description" content="Scheduling nutritious diet plan is the key to get effective body along with regular fitness workout, follow these healthy tips to get perfect body shape.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.bodybylekan.com/diet-plan">
+@endif
+@if(Request::segment(1) == 'health-package')
+<title>Health & Fitness Packages in Basingstoke | Body By Lekan</title>
+  <meta name="description" content="Body By Lekan provide members with access to health and wellness packages designed by our certified health coach for your fitness and weight goals.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.bodybylekan.com/health-package">
+@endif
+	@if(Request::segment(1) == 'personal-instructor')
+<title>Personal Gym Instructor & Fitness Expert | Body By Lekan</title>
+  <meta name="description" content="Personal trainers help their members to achieve health and fitness goals by motivating and guiding. Enquire today for a personal trainer and achieve your goals.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.bodybylekan.com/personal-instructor">
+@endif
 	
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1">
