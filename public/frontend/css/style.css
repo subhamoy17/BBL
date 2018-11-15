@@ -6329,7 +6329,7 @@ h5.line-h5{
 	text-transform: uppercase;
 	border: none;
 	text-align: ;
-	float: left;
+	float: right;
 }
 .gm-tr .col-lg-6.col-sm-6.col-xs-12 {
 	padding: 0;
@@ -6343,6 +6343,25 @@ h5.line-h5{
 .pt-vd-box iframe{
 	height: 400px;
 }
+
+
+/*121118*/
+
+.ytp-chrome-top {
+	display: none;
+}
+.prc-amnt {
+	float: left;
+	margin-top: 19px;
+	letter-spacing: initial !important;
+}
+.prc-amnt span {
+	color: #51525a;
+	font-size: 18px;
+	letter-spacing: initial;
+}
+
+/*121118*/
 
 /*for coupon sumit*/
 #invalid_coupon {
