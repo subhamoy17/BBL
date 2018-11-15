@@ -2969,6 +2969,219 @@ $final_slot_time=DB::table('slot_times')->whereNotIn('id',$get_slot_times)
   $cart_delete=DB::table('cart_slot_request')->where('request_trainer_id',Auth::user()->id)->delete();
 }
 
+
+
+
+////Common diet plan controller////
+
+  //Show common diet plan list
+  public function common_diet_plan()
+  {
+    $diet = DB::table('common_diet_plan')->whereNull('deleted_at')->orderby('id','DESC')->get();
+    return view('trainer.common-diet-plan', compact('diet'));
+  }
+
+  //Add new diet plan
+   public function add_common_diet_plan()
+  {
+    return view('trainer.add-common-diet-plan'); 
+  }
+
+  public function insert_common_diet_plan(Request $request)
+  {
+    DB::beginTransaction();
+    try
+    {
+
+        $data['diet_plan_name'] = $request->diet_plan_name;
+        $data['description'] = $request->description;
+        $data['video'] = $request->video;
+        if($request->common_diet_image!="")
+        {
+          $image=$request->common_diet_image;
+          $folder="backend/common_diet_plan_images/"; 
+          $extension=$image->getClientOriginalExtension(); 
+          $image_name=time()."common_diet_plan_images.".$extension; 
+          $upload=$image->move($folder,$image_name); 
+          $data['image']=$image_name; 
+        }
+        if($request->diet_plan_pdf!="")
+        {
+          $pdf=$request->diet_plan_pdf;
+          $folder="backend/common_diet_plan_images/"; 
+          $extension=$pdf->getClientOriginalExtension(); 
+          $pdf_name=time()."common_diet_plan_pdf.".$extension; 
+          $upload=$pdf->move($folder,$pdf_name); 
+          $data['diet_plan_pdf']=$pdf_name; 
+        }
+        $data['price'] = $request->price;
+        $data['author_name'] = $request->author_name;
+        $data['author_designation'] = $request->author_designation;
+        if($request->author_image!="")
+        {
+          $auth_image=$request->author_image;
+          $folder="backend/common_diet_plan_images/"; 
+          $extension=$auth_image->getClientOriginalExtension(); 
+          $image_name=time()."common_diet_plan_auther_images.".$extension; 
+          $upload=$auth_image->move($folder,$image_name); 
+          $data['author_image']=$image_name; 
+        }
+        $data['inserted_by'] = Auth::user()->id;
+        DB::table('common_diet_plan')->insert($data);
+        DB::commit();
+        return redirect('trainer/common-diet-plan')->with("success","You have successfully added a diet plan.");
+        
+    }
+    catch(\Exception $e) 
+    {
+      DB::rollback();
+      return abort(400);
+    }
+  }
+
+  //Delete diet plan from list
+  public function delete_common_diet_plan($id)
+  {
+    DB::beginTransaction();
+    try{
+    $this->cart_delete_trainer();
+      $updatedata['deleted_at']=Carbon::now();
+      DB::table('common_diet_plan')->where('id',$id)->update($updatedata);
+      DB::commit();
+      return redirect('trainer/common-diet-plan')->with("delete","One diet plan is deleted successfully !");
+    }
+      catch(\Exception $e) {
+        DB::rollback();
+        return abort(200);
+    }
+  }
+
+  //Edit common diet plan
+  public function edit_common_diet_plan($id)
+  {
+    try{
+    $this->cart_delete_trainer();
+    $diet= DB::table('common_diet_plan')->find($id);
+    return view ("trainer.edit-common-diet-plan",compact('diet'));
+    }
+    catch(\Exception $e) {
+        return abort(200);
+    }
+  }
+
+  public function update_common_diet_plan(Request $request)
+  { 
+
+    DB::beginTransaction();
+    try
+    {
+      $this->cart_delete_trainer();  
+
+      $data['diet_plan_name']=$request->diet_plan_name;
+      $data['description']=$request->description;
+
+      if($request->common_diet_image!="")
+        {
+          $image=$request->common_diet_image;
+          $folder="backend/common_diet_plan_images/"; 
+          $extension=$image->getClientOriginalExtension(); 
+          $image_name=time()."common_diet_plan_images.".$extension; 
+          $upload=$image->move($folder,$image_name); 
+          $data['image']=(isset($request->video) && !empty($request->video)) ? null : $image_name; 
+        }
+      else
+      {
+        $data['image']= (isset($request->video) && !empty($request->video)) ? null : $request->oldimage; 
+      }
+      $data['video']=(isset($request->video) && !empty($request->video)) ? $request->video : null;
+      if($request->diet_plan_pdf!="")
+        {
+          $pdf=$request->diet_plan_pdf;
+          $folder="backend/common_diet_plan_images/"; 
+          $extension=$pdf->getClientOriginalExtension(); 
+          $pdf_name=time()."common_diet_plan_pdf.".$extension; 
+          $upload=$pdf->move($folder,$pdf_name); 
+          $data['diet_plan_pdf']=$pdf_name; 
+        }
+      $data['price'] = $request->price;
+      $data['author_name'] = $request->author_name;
+      $data['author_designation'] = $request->author_designation;
+      if($request->author_image!="")
+        {
+          $auth_image=$request->author_image;
+          $folder="backend/common_diet_plan_images/"; 
+          $extension=$auth_image->getClientOriginalExtension(); 
+          $image_name=time()."common_diet_plan_auther_images.".$extension; 
+          $upload=$auth_image->move($folder,$image_name); 
+          $data['author_image']=$image_name; 
+        }
+
+
+      $data['inserted_by'] = Auth::user()->id;
+      $data['updated_by'] = Auth::user()->id;
+      $data['updated_at'] = Carbon::now();
+
+      DB::table('common_diet_plan')->where('id',$request->id)->update($data);
+
+      DB::commit();
+      return redirect('trainer/common-diet-plan')->with("editsuccess","You have successfully update your diet plan");
+      
+    
+    }
+    catch(\Exception $e) {
+        DB::rollback();
+        return abort(200);
+    }
+  }
+
+  function checkDietPlan_duplicate(Request $request)
+  {
+
+    Log::debug(":: request :: ".print_r($request->all(),true));
+    
+    $dietPlanName=$request->diet_plan_name;
+    $dietPlanName=preg_replace('/\s+/', ' ', $dietPlanName);
+    
+    $dietPlanList=DB::table('common_diet_plan')->where('diet_plan_name',$dietPlanName)->count();
+
+    if($dietPlanList>0)
+    {
+      return 1;
+    }
+    else
+    {
+      return 0;
+    }
+  }
+
+  function check_editDietPlan_duplicate(Request $request)
+  {
+    $dietPlanName=$request->diet_plan_name;
+    $dietPlanName=preg_replace('/\s+/', ' ', $dietPlanName);
+
+    $all_diet_plan=DB::table('common_diet_plan')->where('id','!=',$request->id)->get()->all();
+
+    $duplicate_diet_plan=0;
+    foreach($all_diet_plan as $each_diet_plan)
+    {
+      if($each_diet_plan->diet_plan_name==$dietPlanName)
+      {
+        $duplicate_diet_plan=1;
+      }
+    }
+
+    if($duplicate_diet_plan==1)
+    {
+      return 1;
+    }
+    else
+    {
+      return 0;
+    }
+
+  }
+
+}
 public function searchslots(Request $request)
 {
   
