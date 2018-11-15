@@ -45,6 +45,17 @@
                   @endif
 
 
+                  @if(Request::segment(2) == "common-diet-plan")
+                  <ul class="nav navbar-nav">
+                 <li class="active">
+                  <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('common_diet_plan')}}" style="color: #fff !important;">Common Diet Plan</a></li>
+                  @else
+                  <ul class="nav navbar-nav">
+                  <li class="active">
+                  <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('common_diet_plan')}}">Common Diet Plan</a></li>
+                  @endif
+
+
                 @if(Request::segment(2) == "add_session")
                  <ul class="nav navbar-nav">
                  <li class="active">
