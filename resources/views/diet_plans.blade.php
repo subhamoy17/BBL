@@ -30,7 +30,9 @@
 						<div class="pt-text">
 							<p>When working as personal trainer you’ll be at a more advanced level than those working as a fitness instructor; as you’ll be trained to level 3. It’s also worth noting that those who become fitness instructors, often train and advance to being personal trainers.</p>
 						</div>
+						<h5 class="prc-amnt"><span>Price</span> <i class="fa fa-gbp"></i> 100</h5>
 						<button type="button">Purchase</button>
+						<div class="clearfix"></div>
 					</div>
 					<div class="clearfix"></div>
 					<div class="col-lg-5 col-xs-12">
@@ -53,6 +55,7 @@
 						<div class="pt-text">
 							<p>Most personal trainers are also self-employed, with almost 50% of those within the sector becoming their own boss [1]. With this, many different leisure centres, health clubs and gyms will have different propositions they give to self-employed staff; where they’ll take a percentage of what they earn, in order for the trainer to use the establishment’s facilities to train their clients. Most personal trainers charge between £20 and £40 an hour [1]; this also mean that things such as tax is the responsibility of the personal trainer.</p>
 						</div>
+						<h5 class="prc-amnt"><span>Price</span> <i class="fa fa-gbp"></i> 100</h5>
 						<button type="button">Purchase</button>
 					</div>
 				</div>
