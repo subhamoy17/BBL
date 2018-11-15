@@ -307,6 +307,36 @@ $('#contactusform').validate({
 		$(".loader").fadeOut("fast");
 	});
 </script>
+
+ <script>
+    $(document).ready(function() {  
+  // $('input[name="coupon_sub"]:checked');
+ 
+// $('input:checkbox[name=coupon_sub]').each(function() 
+// {   
+// // alert(); 
+//     if($(this).is(':checked'))
+//       alert($(this).val());
+// });
+$("#coupon_sub").find("checkbox").each(function(){
+    if ($(this).prop('checked')==true){ 
+        //do something
+         alert(); 
+    }
+});
+
+});
+  
+  </script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+   
+    $("#aqb").click(function(e){
+    alert('asd');
+    
+    });
+});
+  </script>
 	</body>
 
 </html>

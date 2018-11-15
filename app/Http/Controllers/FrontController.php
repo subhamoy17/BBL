@@ -233,8 +233,26 @@ public function purchase_payment_mode(Request $request)
 {
   try{
   $this->cart_delete_customer();
+  $coupon_code=$request->coupon_code;
+  $coupon_id=$request->coupon_id;
+  $new_package_price=$request->new_package_price;
+Log::debug(" coupon_code ".print_r($coupon_code,true));
+Log::debug(" coupon_id ".print_r($coupon_id,true));
+   Log::debug(" new_package_price ".print_r($new_package_price,true));
   $slot_details=DB::table('slots')->where('id',$request->id)->first();
 
+if($request->new_package_price)
+{
+  $data["slots_name"]=$slot_details->slots_name;
+  $data["slots_number"]=$slot_details->slots_number;
+  $data["slots_price"]=$new_package_price;
+  $data["customer_id"]=Auth::guard('customer')->user()->id;
+  $data['slot_id']=$request->id;
+  $data['payment_options']=$request->selector1;
+  $data['purchases_date']=Carbon::now();
+  $data['package_validity_date']=Carbon::now()->addDay($slot_details->slots_validity);
+}
+else{
   $data["slots_name"]=$slot_details->slots_name;
   $data["slots_number"]=$slot_details->slots_number;
   $data["slots_price"]=$slot_details->slots_price;
@@ -243,14 +261,15 @@ public function purchase_payment_mode(Request $request)
   $data['payment_options']=$request->selector1;
   $data['purchases_date']=Carbon::now();
   $data['package_validity_date']=Carbon::now()->addDay($slot_details->slots_validity);
+}
 
   if($request->selector1=='Paypal')
   {
-    return view('customerpanel.paypal-payment')->with(compact('data'));
+    return view('customerpanel.paypal-payment')->with(compact('data','coupon_code','coupon_id'));
   }
   if($request->selector1=='Bank Transfer')
   {
-    return view('customerpanel.bank-payment')->with(compact('data'));
+    return view('customerpanel.bank-payment')->with(compact('data','coupon_code','coupon_id'));
   }
 
   }
@@ -396,7 +415,7 @@ public function booking_history(Request $request)
     ->join('slot_times','slot_times.id','slot_request.slot_time_id')
     ->select('customers.name','slots.slots_name','slots.slots_number','slots.slots_price','slots.slots_validity','users.name as users_name','purchases_history.purchases_date','purchases_history.package_validity_date','slot_request.purchases_id as slot_purchases_id','slot_approval.status','slot_request.slot_date','slot_times.time as slot_time','slot_approval.status', 'slot_request.created_at')->where('slot_request.approval_id',4 )->whereBetween('slot_request.slot_date', [$start_date, $end_date])->where('slot_request.customer_id',Auth::guard('customer')->user()->id)->orderby('slot_request.id','DESC')->paginate(10);
   }
-  else if($request->option=='past_request' )
+  else if($request->option=='past_request')
   {
     $data=DB::table('slot_request')
     ->join('customers','customers.id','slot_request.customer_id')
@@ -610,7 +629,7 @@ public function purchases_history(Request $request)
     $purchases_data=DB::table('purchases_history')
     ->join('slots','slots.id','purchases_history.slot_id')
     ->join('customers','customers.id','purchases_history.customer_id')
-    ->select('purchases_history.slots_name','purchases_history.slots_price','slots.slots_validity','purchases_history.slots_number','purchases_history.payment_options','purchases_history.package_validity_date','purchases_history.id','slots.slots_number','purchases_history.purchases_date','purchases_history.active_package','purchases_history.package_remaining','purchases_history.extra_package_remaining','customers.id as customer_id')  
+    ->select('purchases_history.slots_name','purchases_history.slots_price','slots.slots_validity','purchases_history.slots_number','purchases_history.payment_options','purchases_history.package_validity_date','purchases_history.id','slots.slots_number','purchases_history.purchases_date','purchases_history.active_package','purchases_history.package_remaining','purchases_history.extra_package_remaining','customers.id as customer_id','purchases_history.payment_options as payment_options')  
     ->whereBetween('purchases_history.purchases_date', [$start_date, $end_date])
     ->where('purchases_history.customer_id',Auth::guard('customer')->user()->id)
     ->orderBy('purchases_history.active_package','DESC')
@@ -625,7 +644,7 @@ public function purchases_history(Request $request)
     $purchases_data=DB::table('purchases_history')
     ->join('slots','slots.id','purchases_history.slot_id')
     ->join('customers','customers.id','purchases_history.customer_id')
-    ->select('purchases_history.slots_name','purchases_history.slots_price','slots.slots_validity','purchases_history.slots_number','purchases_history.payment_options','purchases_history.package_validity_date','purchases_history.id','slots.slots_number','purchases_history.purchases_date','purchases_history.active_package','purchases_history.extra_package_remaining','purchases_history.package_remaining','customers.id as customer_id')
+    ->select('purchases_history.slots_name','purchases_history.slots_price','slots.slots_validity','purchases_history.slots_number','purchases_history.payment_options','purchases_history.package_validity_date','purchases_history.id','slots.slots_number','purchases_history.purchases_date','purchases_history.active_package','purchases_history.extra_package_remaining','purchases_history.package_remaining','customers.id as customer_id','purchases_history.payment_options as payment_options')
     ->where('purchases_history.customer_id',Auth::guard('customer')->user()->id)
     ->orderBy('purchases_history.active_package','DESC')
     ->orderby('purchases_history.id','DESC')
@@ -1268,5 +1287,87 @@ public function cart_delete_customer()
   $cart_delete=DB::table('cart_slot_request')->where('request_customer_id',Auth::guard('customer')->user()->id)->delete();
 }
 
+function couponchecking(Request $request)
+  {
+    $now = Carbon::now()->toDateString();
+    Log::debug(" data couponchecking ".print_r($request->all(),true));
+    $couponcode=$request->coupon_code;
+    $package_id=$request->package_id;
+    $package_price=$request->package_price;
+    $couponcode=preg_replace('/\s+/', ' ', $couponcode);
+     Log::debug(" data couponcode ".print_r($couponcode,true));
+
+    $newprice=DB::table('slots_discount_coupon')->where('coupon_code',$couponcode)->where('slots_id',$package_id)->where('is_active',1)->whereNull('slots_discount_coupon.deleted_at')->where('slots_discount_coupon.valid_to','>',$now)->value('discount_price');
+    $coupon_id=DB::table('slots_discount_coupon')->where('coupon_code',$couponcode)->where('slots_id',$package_id)->where('is_active',1)->whereNull('slots_discount_coupon.deleted_at')->value('slots_discount_coupon.id');
+     $ex_coupon_code=DB::table('slots_discount_coupon')->where('coupon_code',$couponcode)->where('slots_id',$package_id)->where('is_active',0)->whereNull('slots_discount_coupon.deleted_at')->value('slots_discount_coupon.coupon_code');
+Log::debug(" data startDate ".print_r($newprice,true));
+Log::debug(" data ex_coupon_code ".print_r($ex_coupon_code,true));
+  $new_package_price= $package_price-$newprice;
+$coupon_expair=DB::table('slots_discount_coupon')->where('coupon_code',$couponcode)->where('slots_id',$package_id)->where('is_active',1)->whereNull('slots_discount_coupon.deleted_at')->where('slots_discount_coupon.valid_to','<',$now)->value('slots_discount_coupon.coupon_code');
+
+$wrong_details=DB::table('slots_discount_coupon')->where('coupon_code',$couponcode)->where('slots_id',$package_id)->whereNull('slots_discount_coupon.deleted_at')->count();
+// $wrong=$wrong_details==0
+Log::debug(" data wrong_details ".print_r($wrong_details,true));
+    if($newprice)
+    {
+      
+      return response()->json(['new_package_price'=>$new_package_price, 'coupon_id'=>$coupon_id,'ex_coupon_code'=>$ex_coupon_code, 'coupon_expair'=>$coupon_expair,'now'=>$now, 'wrong_details'=>$wrong_details]);
+    }
+    else if($ex_coupon_code)
+    {
+      
+      return response()->json(['ex_coupon_code'=>$ex_coupon_code]);
+    }
+     else if($coupon_expair)
+    {
+      
+      return response()->json(['coupon_expair'=>$coupon_expair]);
+    }
+     else if($wrong_details<1)
+    {
+      
+      return response()->json(['wrong_details'=>$wrong_details]);
+    }
+    else
+    {
+       return response()->json(0);
+    }
+  }
+
+
+  function validcoupon(Request $request)
+  {
+     $now = Carbon::now()->toDateString();
+    $validcoupon=$request->coupon_code;
+    $package_id=$request->package_id;
+    $validcoupon=preg_replace('/\s+/', ' ', $validcoupon);
+    Log::debug(" data validcoupon ".print_r($validcoupon,true));
+    // $duplicatecoupon_details=DB::table('slots_discount_coupon')->where('coupon_code',$duplicatecoupon)->where('slots_id',$package_id)->whereNull('slots_discount_coupon.deleted_at')->count();
+
+     $coupon_code=DB::table('slots_discount_coupon')->where('coupon_code',$validcoupon)->where('slots_id',$package_id)->where('is_active',1)->whereNull('slots_discount_coupon.deleted_at')->get()->count();
+     $ex_coupon_code=DB::table('slots_discount_coupon')->where('coupon_code',$validcoupon)->where('slots_id',$package_id)->where('is_active',0)->whereNull('slots_discount_coupon.deleted_at')->value('slots_discount_coupon.coupon_code');
+     // $coupon_expair=DB::table('slots_discount_coupon')->where('coupon_code',$validcoupon)->where('slots_id',$package_id)->where('is_active',1)->whereNull('slots_discount_coupon.deleted_at')->where('slots_discount_coupon.valid_to','<',$now)->get();
+
+Log::debug(" data coupon_code ".print_r($coupon_code,true));
+Log::debug(" data ex_coupon_code ".print_r($ex_coupon_code,true));
+ // Log::debug(" data coupon_expair ".print_r($coupon_expair,true));
+
+    if($coupon_code == 1)
+    {
+      return 2;
+    }
+   else if($ex_coupon_code)
+    {
+      return 3;
+    }    
+    else
+    {
+      return 1;
+    }
+    //  if($coupon_expair)
+    // {
+    //   return 4;
+    // }
+  }
 
 }

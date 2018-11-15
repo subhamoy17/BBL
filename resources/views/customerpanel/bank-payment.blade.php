@@ -24,6 +24,11 @@
     <p><h5>Account No: </h5> <span> 04449181</span></p>
   </div>
   <label class="w3-text-blue"><b>Payable amount is </b>&nbsp;  <span class="pay-pal-price"><i class="fa fa-gbp"></i> {{$data['slots_price']}}</span></label>
+   @if($coupon_id)
+  <input class="w3-input w3-border" name="coupon_code" type="hidden" value="{{$coupon_code}}" readonly >
+ 
+  <input class="w3-input w3-border" name="coupon_id" type="hidden" value="{{$coupon_id}}" readonly >
+  @endif
   <input class="w3-input w3-border" name="slots_price" type="hidden" value="{{$data['slots_price']}}" readonly >
   <input class="w3-input w3-border" name="slots_name" type="hidden" value="{{$data['slots_name']}}">
   <input class="w3-input w3-border" name="slots_number" type="hidden" value="{{$data['slots_number']}}">
@@ -48,7 +53,7 @@
       <strong>Alternatively you can provide the screenshot of the bank transfer</strong>
     </label><input type="file" name="package_image" id="package_image">
        
-  <button class="btn btn-dark btn-theme-colored btn-flat" id="aba">Pay with Bank</button>
+  <button class="btn btn-dark btn-theme-colored btn-flat" name="submit" id="aba">Pay with Bank</button>
 </form>
 </div>
 </div>
@@ -63,6 +68,7 @@
 </div>
 </div>
 </div>
+
 
 
 @endsection

@@ -2969,4 +2969,233 @@ $final_slot_time=DB::table('slot_times')->whereNotIn('id',$get_slot_times)
   $cart_delete=DB::table('cart_slot_request')->where('request_trainer_id',Auth::user()->id)->delete();
 }
 
+public function searchslots(Request $request)
+{
+  
+
+  $query = $request->get('term','');   
+  $products=DB::table('slots')->whereNull('deleted_at')
+  ->where('slots_name','LIKE','%'.$query.'%')
+  ->get();
+        $data=array();
+         $data1=array();
+
+        foreach ($products as $product) {
+               
+          // $data[]=array('value'=>$product->email,'id'=>$product->id);
+ $data[]=array('value'=>$product->slots_name,'id'=>$product->id, 'slots_number'=>$product->slots_number,'slots_price'=>$product->slots_price, 'slots_validity'=>$product->slots_validity );
+               
+        }
+        if(count($data))
+        {
+          
+            return $data;
+                     
+            }
+        else{
+
+           $data1[]=array('value'=>'No Result Found');
+          return $data1;
+            // return ['value'=>'No Result Found','id'=>''];
+          }
+    
+    
+}
+
+public function add_coupon()
+{
+   $slots = DB::table('slots')->get()->all();
+  // $this->cart_delete_trainer();
+  return view('trainer.addcoupon')->with(compact('slots'));
+}
+
+public function coupon_insert(Request $request)
+{
+Log::debug(" data customer_email ".print_r($request->all(),true)); 
+     $daterange=$request->daterange; 
+    $mode_of_date=explode(" - ",$daterange);
+$format = 'Y-m-d';
+$startDate=$mode_of_date[0];
+$endDate=$mode_of_date[1];
+    // Log::debug(" data mode_of_payment ".print_r($mode_of_date[0],true));
+// Log::debug(" data endDate ".print_r($mode_of_date[1],true));
+     // $startDate=Carbon::createFromFormat('Y-m-d', $s);
+     // $endDate=Carbon::createFromFormat($format, '$e');
+
+// Log::debug(" data startDate ".print_r($startDate,true));
+    $cupon_data['slots_id']=$request->apply_slots; 
+    $cupon_data['coupon_code']=$request->coupon_code;
+    $cupon_data['discount_price']=$request->discount_price;
+     $cupon_data['valid_from']=$startDate;
+     $cupon_data['valid_to']= $endDate;
+    $cupon_data['is_active']=$request->is_active;
+    
+  DB::table('slots_discount_coupon')->insert($cupon_data);
+
+ 
+  return redirect('trainer/our_coupon_list')->with("success","You have successfully added one coupon");
+  }
+
+function duplicatecoupon(Request $request)
+  {
+    $this->cart_delete_trainer();
+    $duplicatecoupon=$request->coupon_code;
+    $apply_slots=$request->apply_slots;
+    $duplicatecoupon=preg_replace('/\s+/', ' ', $duplicatecoupon);
+    
+    $duplicatecoupon_details=DB::table('slots_discount_coupon')->where('coupon_code',$duplicatecoupon)->where('slots_id',$apply_slots)->whereNull('slots_discount_coupon.deleted_at')->count();
+
+    if($duplicatecoupon_details>0)
+    {
+      return 1;
+    }
+    else
+    {
+      return 0;
+    }
+  }
+
+public function our_coupon_list(Request $request)
+{
+   try{
+  $this->cart_delete_trainer();
+  $all_cupon_data=DB::table('slots_discount_coupon')->join('slots','slots.id','slots_discount_coupon.slots_id')->select('slots_discount_coupon.id as coupon_id','slots_discount_coupon.coupon_code','slots_discount_coupon.discount_price','slots_discount_coupon.valid_from','slots_discount_coupon.valid_to','slots.id as slots_id','slots.slots_name as slots_name')->whereNull('slots_discount_coupon.deleted_at')->get()->all();
+  return view('trainer.viewcoupon')->with(compact('all_cupon_data'));
+}catch(\Exception $e) {
+      
+      return abort(200);
+  }
+}
+
+
+public function our_coupon_edit_view($id)
+{
+  
+  try{
+  $this->cart_delete_trainer();
+    $edit_coupondata= DB::table('slots_discount_coupon')->join('slots','slots.id','slots_discount_coupon.slots_id')->select('slots_discount_coupon.id','slots_discount_coupon.coupon_code','slots_discount_coupon.discount_price','slots_discount_coupon.valid_from','slots_discount_coupon.valid_to','slots.id as slots_id','slots.slots_name as slots_name','slots_discount_coupon.is_active')->where('slots_discount_coupon.id',$id)->first();
+    Log::debug(" data ".print_r($edit_coupondata,true));
+    return view ("trainer.editcoupon")->with(compact('edit_coupondata'));
+  }
+catch(\Exception $e) {
+      
+      return abort(200);
+  }
+
+}
+
+public function coupon_edit_insert(Request $request)
+{
+    $daterange=$request->daterange; 
+    $mode_of_date=explode(" - ",$daterange);
+$format = 'Y-m-d';
+$startDate=$mode_of_date[0];
+$endDate=$mode_of_date[1];
+  DB::beginTransaction();
+  try{
+  $this->cart_delete_trainer();
+  $edit_coupondata['slots_id']=$request->slots_id;
+  $edit_coupondata['coupon_code']=$request->coupon_code;
+  $edit_coupondata['discount_price']=$request->discount_price;
+  $edit_coupondata['valid_from']=$startDate;
+  $edit_coupondata['valid_to']=$endDate;
+  $edit_coupondata['is_active']=$request->is_active;
+  $edit_coupondata['updated_at']=Carbon::now();
+  DB::table('slots_discount_coupon')->where('id',$request->id)->update($edit_coupondata);
+  DB::commit();
+  return redirect('trainer/our_coupon_list')->with("success","You have successfully updated one coupon");
+  }
+  catch(\Exception $e) {
+      DB::rollback();
+      return abort(200);
+  }
+}
+
+function duplicatecoupon_edit(Request $request)
+  {
+    $this->cart_delete_trainer();
+    $duplicatecoupon_edit=$request->coupon_code;
+    $apply_slots=$request->slots_id;
+    $duplicatecoupon_edit=preg_replace('/\s+/', ' ', $duplicatecoupon_edit);
+    
+    $edit_coupon=DB::table('slots_discount_coupon')->where('id',$request->id)->where('slots_id',$apply_slots)->whereNull('slots_discount_coupon.deleted_at')->pluck('coupon_code');
+    $all_coupon=DB::table('slots_discount_coupon')->where('id','!=',$request->id)->where('slots_id',$apply_slots)->whereNull('slots_discount_coupon.deleted_at')->get()->all();
+
+    $duplicate_cat=0;
+    foreach($all_coupon as $each_coupon)
+    {
+      if($each_coupon->coupon_code==$duplicatecoupon_edit)
+      {
+        $duplicate_cat=1;
+      }
+    }
+
+  
+    if($duplicate_cat==1)
+    {
+      return 1;
+    }
+    else
+    {
+      return 0;
+    }
+  }
+
+public function coupon_delete($id)
+{
+  DB::beginTransaction();
+  try{
+  $this->cart_delete_trainer();
+  $coupon_delete['deleted_at']=Carbon::now();
+
+  DB::table('slots_discount_coupon')->where('id',$id)->update($coupon_delete);
+  DB::commit();
+  return redirect('trainer/our_coupon_list')->with("success","You have successfully deleted one coupon");
+}
+  catch(\Exception $e) {
+      DB::rollback();
+      return abort(200);
+  }
+}
+
+function checkdiscount_price(Request $request)
+  {
+    $this->cart_delete_trainer();
+    $discount_price=$request->discount_price;
+    $apply_slots=$request->apply_slots;
+    $discount_price=preg_replace('/\s+/', ' ', $discount_price);
+    
+    // $checkdiscount_price=DB::table('slots_discount_coupon')->where('coupon_code',$duplicatecoupon)->where('slots_id',$apply_slots)->whereNull('slots_discount_coupon.deleted_at')->value('discount_price');
+ $checkdiscount_price=DB::table('slots')->where('slots.id',$apply_slots)->whereNull('slots.deleted_at')->value('slots_price');
+ Log::debug(" checkdiscount_price ".print_r($checkdiscount_price,true));
+    if($discount_price >= $checkdiscount_price  )
+    {
+      return 2;
+    }
+    else
+    {
+      return 0;
+    }
+  }
+
+function checkdiscount_price_edit(Request $request)
+  {
+    $this->cart_delete_trainer();
+    $discount_price=$request->discount_price;
+    $apply_slots=$request->slots_id;
+    $discount_price=preg_replace('/\s+/', ' ', $discount_price);
+
+ $checkdiscount_price=DB::table('slots')->where('slots.id',$apply_slots)->whereNull('slots.deleted_at')->value('slots_price');
+
+ Log::debug(" checkdiscount_price ".print_r($checkdiscount_price,true));
+ Log::debug(" discount_price ".print_r($discount_price,true));
+    if($discount_price >= $checkdiscount_price  )
+    {
+      return 2;
+    }
+    else
+    {
+      return 0;
+    }
+  }
 }

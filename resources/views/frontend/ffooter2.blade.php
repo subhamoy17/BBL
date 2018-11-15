@@ -1050,6 +1050,170 @@ $("#extra_session").mouseover(function(){
 	});
 </script>
 
+ <script type="text/javascript">
+    $(document).ready(function() {
+   
+    $("#coupon_sub").click(function(e){
+    // alert('asd');
+    
+      if($('#coupon_code').val()!='') 
+    { 
+      $('#coupon_sub').hide();
+      $('#aqb').attr('disabled','disabled');
+       $('#loadingimg2').show();
+       
+       var coupon_code = $('#coupon_code').val();
+      // var package_id = $(this).attr("package_id");
+       var package_id = $('#package_id').val();
+       var package_price = $('#package_price').val();
+        var coupon_id = $('#coupon_id').val();
+     
+       console.log(coupon_code);
+       console.log(package_id);
+       console.log(coupon_id);
+        $.ajax({
+          type: "GET",
+          url: "{{route('cus_couponsearch')}}",
+          data: {'coupon_code': coupon_code, 'package_id': package_id, 'package_price': package_price},
+           dataType: "json",
+        success: function(data){
+
+
+            if(data.new_package_price)
+            { 
+              $('#loadingimg2').hide();
+               $('#aqb').removeAttr('disabled');
+              $('#coupon_sub').show();
+              $('.rev-line').addClass('line_t');
+              
+              $('#new_price').show();
+              $('#new_p').html("Discounted Price - <h6><i class='fa fa-gbp'></i>"+data.new_package_price+" </h6>");
+               // $('#app_btn').hide();
+                $('#new_package_price').val(data.new_package_price);
+                $('#coupon_id').val(data.coupon_id);
+                console.log(data.coupon_id);
+                $("#invalid_coupon").hide();
+                 $("#success_coupon").show();
+               
+              $("#success_coupon").html("Thank you using your coupon code");
+
+            }
+             else if(data.ex_coupon_code)
+            { 
+              // alert('ddd');
+              $('#loadingimg2').hide();
+              $('#coupon_sub').show();
+              $('#aqb').attr('disabled','disabled');
+              $('.rev-line').removeClass('line_t');
+              $('#new_price').hide();
+              $('#new_package_price').val('');
+              $("#success_coupon").hide();
+              $("#invalid_coupon").show();
+              $("#invalid_coupon").html("Coupon code is not activated");
+              
+            }
+
+              else if(data.coupon_expair)
+            { 
+
+               // alert('drd');
+               $('#loadingimg2').hide();
+               $('#coupon_sub').show();
+               $('.rev-line').removeClass('line_t');
+               $('#aqb').attr('disabled','disabled');
+               $('#new_price').hide();
+              $('#new_package_price').val('');
+               $("#success_coupon").hide();
+              $("#invalid_coupon").show();
+              $("#invalid_coupon").html("Coupon code is expaired");
+              
+            }
+               else if(data.wrong_details==0)
+            { 
+              // alert('ddd');
+              $('#loadingimg2').hide();
+              $('#coupon_sub').show();
+              $('#aqb').attr('disabled','disabled');
+              $('.rev-line').removeClass('line_t');
+              $('#new_price').hide();
+              $('#new_package_price').val('');
+              $("#success_coupon").hide();
+              $("#invalid_coupon").show();
+              $("#invalid_coupon").html("Invalid coupon code");
+              
+            }
+            else
+            { 
+              $('#loadingimg2').hide();
+              $('#coupon_sub').show();
+              $('#aqb').attr('disabled','disabled');
+              $('#new_price').hide();
+              $('#new_package_price').val('');
+              $("#success_coupon").hide();
+               $("#invalid_coupon").show();
+              $("#invalid_coupon").html("Invalid coupon code");
+              
+            }
+  }
+     });
+    }
+else
+{
+   $("#invalid_coupon").show();
+   $("#invalid_coupon").html("Enter a coupon code");
+}
+
+     });
+});
+  </script>
+
+   <script>
+ 
+     function  jsnull(){
+// alert('sd');
+    if($('#coupon_code').val()=='') 
+    { 
+$('#coupon_sub').show();
+      $('#aqb').removeAttr('disabled');
+      $('#new_price').hide();
+       $('.rev-line').removeClass('line_t');
+      $('#new_package_price').val('');
+       $("#invalid_coupon").hide();
+       $("#success_coupon").hide();
+    }
+   }
+  
+  </script>
+
+ <script>
+  $(document).ready(function(){
+
+
+
+$('#bank_payment-form').bind('submit', function (e) {
+    var button = $('#aba');
+
+    // Disable the submit button while evaluating if the form should be submitted
+    button.prop('disabled', true);
+
+    var valid = true;    
+
+    // Do stuff (validations, etc) here and set
+    // "valid" to false if the validation fails
+
+    if (!valid) { 
+        // Prevent form from submitting if validation failed
+        e.preventDefault();
+
+        // Reactivate the button if the form was not submitted
+        button.prop('disabled', false);
+    }
+});
+});
+</script>
+ 
+
+
 </body>
 
 </html>

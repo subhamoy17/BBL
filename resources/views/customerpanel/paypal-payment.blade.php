@@ -20,6 +20,9 @@
   <label class="w3-text-blue"><b>Payable amount is </b>&nbsp;  <span class="pay-pal-price"><i class="fa fa-gbp"></i> {{$data['slots_price']}}</span></label>
   <input class="w3-input w3-border" name="amount" type="hidden" value="{{$data['slots_price']}}" readonly>
   <input class="w3-input w3-border" name="slots_name" type="hidden" value="{{$data['slots_name']}}">
+
+  <input class="w3-input w3-border" name="amount" type="hidden" value="{{$data['slots_price']}}" readonly>
+  <input class="w3-input w3-border" name="slots_name" type="hidden" value="{{$data['slots_name']}}">
   <input class="w3-input w3-border" name="slots_number" type="hidden" value="{{$data['slots_number']}}">
   <input class="w3-input w3-border" name="slot_id" type="hidden" value="{{$data['slot_id']}}" >
   <input class="w3-input w3-border" name="payment_options" type="hidden" value="{{$data['payment_options']}}" >

@@ -149,6 +149,19 @@ Route::get('slot_time','TrainerController@slot_times')->name('slot_time');
 Route::POST('trainer_slotinsert','TrainerController@trainer_slotinsert')->name('trainer_slotinsert');
 Route::get('add_customer','TrainerController@add_customer_session')->name('add_customer');
 
+//Add Coupon//
+Route::get('searchslots','TrainerController@searchslots')->name('searchslots');
+Route::get('add_coupon','TrainerController@add_coupon')->name('add_coupon');
+Route::POST('coupon_insert','TrainerController@coupon_insert')->name('coupon_insert');
+Route::get('our_coupon_list','TrainerController@our_coupon_list')->name('our_coupon_list');
+Route::get('our_coupon_edit_view/{id}','TrainerController@our_coupon_edit_view')->name('our_coupon_edit_view');
+Route::POST('coupon_edit_insert','TrainerController@coupon_edit_insert')->name('coupon_edit_insert');
+Route::get('coupon_delete/{id}', 'TrainerController@coupon_delete')->name('coupon_delete');
+Route::post('duplicatecoupon','TrainerController@duplicatecoupon')->name('duplicatecoupon');
+Route::post('duplicatecoupon_edit','TrainerController@duplicatecoupon_edit')->name('duplicatecoupon_edit');
+Route::post('checkdiscount_price','TrainerController@checkdiscount_price')->name('checkdiscount_price');
+Route::post('checkdiscount_price_edit','TrainerController@checkdiscount_price_edit')->name('checkdiscount_price_edit');
+
 //show our client//
 Route::get('our_trainer_list','TrainerController@our_client_show')->name('our_trainer_list');
 
@@ -309,6 +322,9 @@ Route::get('paypalpaymentsuccess','FrontController@paypal_payment_success');
 Route::post('bankpaymentsuccess','BankPaymentController@bank_payment_success');
 Route::get('bankpaymentcomplete','BankPaymentController@bank_payment_complete')->name('bankpaymentcomplete');
 
+// Front Coupon
+Route::get('cus_couponsearch','FrontController@couponchecking')->name('cus_couponsearch');
+Route::post('valid_coupon','FrontController@validcoupon')->name('valid_coupon');
 //customer profile//
 
 Route::get('profile','FrontController@customer_profile')->name('profile');

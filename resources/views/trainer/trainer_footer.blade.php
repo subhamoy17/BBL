@@ -2,11 +2,11 @@
 
 
     <script src="{{asset('backend/assets/js/vendor/jquery-2.1.4.min.js')}}"></script>
-	<script>
+	<!-- <script>
 		$(document).ready(function({	
 			$('body').css('overflow-x', 'hidden');
 		});
-	</script>
+	</script> -->
 	<script type="text/javascript">
 		$(document).ready(function() {
 		$(".loader").fadeOut("slow");
@@ -22,6 +22,7 @@
     <script src="{{asset('backend/assets/js/lib/chart-js/Chart.bundle.js')}}"></script>
     <script src="{{asset('backend/assets/js/dashboard.js')}}"></script>
     <script src="{{asset('backend/assets/js/widgets.js')}}"></script>
+    <!-- <script src="{{asset('backend/assets/js/daterangepicker.min.js')}}"></script> -->
     <script src="{{asset('backend/assets/js/lib/vector-map/jquery.vmap.js')}}"></script>
     <script src="{{asset('backend/assets/js/lib/vector-map/jquery.vmap.min.js')}}"></script>
     <script src="{{asset('backend/assets/js/lib/vector-map/jquery.vmap.sampledata.js')}}"></script>
@@ -310,8 +311,83 @@ else{
 
 </script>
 
+
+
 @endif
 
+<script>
+ $(document).ready(function() {
+    src = "{{ route('searchslots') }}";
+     $("#slots_name").autocomplete({
+        source: function(request, response) {
+            $.ajax({
+                url: src,
+                dataType: "json",
+                data: {
+                    term : request.term
+                },
+                success: function(data) { //alert(data);
+                response( $.map( data, function( item ) {
+                  
+                    
+                    return {  
+                        value: item.value,
+                        id:item.id,
+                        slots_number: item.slots_number,
+                         slots_price: item.slots_price,
+                       slots_validity: item.slots_validity,
+                    }
+                }));
+
+                }
+
+            });
+        },
+        minLength: 3,
+        select: function(event, ui) {
+          console.log(ui.item);
+
+        $("#apply_slots").val(ui.item.id); 
+       
+$("#slot_details").show();
+         $("#slots_number").text(ui.item.slots_number);
+         $("#slots_price").text(ui.item.slots_price);
+         $("#slots_validity").text(ui.item.slots_validity);
+
+         var Data = 
+  {
+    'id': ui.item.id
+ 
+  }
+// alert($('#slots_name'));
+   if($('#slots_name').val()=='')
+    {
+
+      $('#apply_slots').val('');
+      $("#slot_details").hide();
+    
+    }
+
+
+
+
+  if($("#apply_slots").val())
+  {
+$("#slot_details").show();
+
+
+ }
+
+else{
+ $("#slot_details").hide();
+ $("#apply_slots").val('');
+ 
+     }
+
+    }
+    });
+});
+</script>
 <script src="{{url('frontend/js/accotab.js')}}"></script>
 
 </body>

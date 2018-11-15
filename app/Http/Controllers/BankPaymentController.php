@@ -26,8 +26,17 @@ class BankPaymentController extends Controller
 
 public function bank_payment_success(Request $request)
 {
+  Log::debug(" data bank_payment_success ".print_r($request->all(),true));
+  $coupon_code=$request->coupon_code;
+  $coupon_id=$request->coupon_id;
+  Log::debug(" $coupon_id ".print_r($coupon_id,true));
+  Log::debug(" $coupon_code ".print_r($coupon_code,true));
   DB::beginTransaction();
   try{
+
+if($coupon_id)
+{
+
   $bank_data['customer_id']=$request->customer_id;
   $bank_data['slot_id']=$request->slot_id;
   $bank_data['purchases_date']=$request->purchases_date;
@@ -42,7 +51,7 @@ public function bank_payment_success(Request $request)
 
   $insert_bank_data=DB::table('purchases_history')->insert($bank_data);
 
-  $purchase_history_id = DB::getPdo()->lastInsertId();
+   $purchase_history_id = DB::getPdo()->lastInsertId();
   $data['purchase_history_id'] = $purchase_history_id;
   if($request->package_image!='')
   {
@@ -62,7 +71,9 @@ public function bank_payment_success(Request $request)
   $data['status']='Inprogress';
   $bank_data=DB::table('payment_history')->insert($data);
 
-  if ($insert_bank_data && $bank_data)
+// DB::table('slots_discount_coupon')->where('id',$coupon_id)->update(['is_active'=>0]);
+
+   if ($insert_bank_data && $bank_data)
   {
     Session::put('success_bank_pay', 'Your payment is success using bank transfer');
     Session::put('bank_payment_id',$data['payment_id']);
@@ -117,6 +128,103 @@ public function bank_payment_success(Request $request)
     DB::commit();
     return redirect()->route('bankpaymentcomplete'); 
   }
+}
+else
+{
+  $bank_data['customer_id']=$request->customer_id;
+  $bank_data['slot_id']=$request->slot_id;
+  $bank_data['purchases_date']=$request->purchases_date;
+  $bank_data['package_validity_date']=$request->package_validity_date;
+  $bank_data['payment_options']='Bank Transfer';
+  $bank_data['slots_name']=$request->slots_name;
+  $bank_data['slots_number']=$request->slots_number;
+  $bank_data['slots_price']=$request->slots_price;
+  $bank_data['active_package']=0;
+  $bank_data['package_remaining']=0;
+
+
+  $insert_bank_data=DB::table('purchases_history')->insert($bank_data);
+
+   $purchase_history_id = DB::getPdo()->lastInsertId();
+  $data['purchase_history_id'] = $purchase_history_id;
+  if($request->package_image!='')
+  {
+    $myimage=$request->package_image;
+    $folder="backend/bankpay_images/"; 
+    $extension=$myimage->getClientOriginalExtension(); 
+    $image_name=time()."_bankdocimg.".$extension; 
+    $upload=$myimage->move($folder,$image_name); 
+    $data['image']=$image_name;
+  } 
+
+  $data['payment_id']='BBL'.time();
+  $data['currency']=Null;
+  $data['amount']=$request->slots_price;
+  $data['payment_mode']='Bank Transfer';
+  $data['description']=$request->package_description;
+  $data['status']='Inprogress';
+  $bank_data=DB::table('payment_history')->insert($data);
+
+   if ($insert_bank_data && $bank_data)
+  {
+    Session::put('success_bank_pay', 'Your payment is success using bank transfer');
+    Session::put('bank_payment_id',$data['payment_id']);
+
+    $customer_details=Customer::find($request->customer_id);
+
+
+    $notifydata['package_name'] =$request->slots_name;
+    $notifydata['slots_number'] =$request->slots_number;
+    $notifydata['package_validity'] =substr($request->package_validity_date,0,10);
+    $notifydata['package_purchase_date'] =substr($request->purchases_date,0,10);
+    $notifydata['package_amount'] =$request->slots_price;
+    $notifydata['payment_id'] =$data['payment_id'];
+    $notifydata['payment_mode'] ='Bank Transfer';
+    $notifydata['url'] = '/customer/purchase_history';
+    $notifydata['customer_name']=$customer_details->name;
+    $notifydata['customer_email']=$customer_details->email;
+    $notifydata['customer_phone']=$customer_details->ph_no;
+    $notifydata['status']='Payment Success';
+
+    Log::debug(" paypal Inconvenient error notification ".print_r($notifydata,true));
+
+    $customer_details->notify(new PackagePurchaseNotification($notifydata));
+
+    DB::commit();
+    return redirect()->route('bankpaymentcomplete'); 
+  }
+  else
+  {
+    Session::put('failed_bank_pay', 'Your bank transfer payment is failed');
+
+    $customer_details=Customer::find($request->customer_id);
+
+
+    $notifydata['package_name'] =$request->slots_name;
+    $notifydata['slots_number'] =$request->slots_number;
+    $notifydata['package_validity'] =substr($request->package_validity_date,0,10);
+    $notifydata['package_purchase_date'] =substr($request->purchases_date,0,10);
+    $notifydata['package_amount'] =$request->slots_price;
+    $notifydata['payment_id'] =$data['payment_id'];
+    $notifydata['payment_mode'] ='Bank Transfer';
+    $notifydata['url'] = '/customer/purchase_history';
+    $notifydata['customer_name']=$customer_details->name;
+    $notifydata['customer_email']=$customer_details->email;
+    $notifydata['customer_phone']=$customer_details->ph_no;
+    $notifydata['status']='Payment Failed';
+
+    Log::debug(" paypal Inconvenient error notification ".print_r($notifydata,true));
+
+    $customer_details->notify(new PackagePurchaseNotification($notifydata));
+
+    DB::commit();
+    return redirect()->route('bankpaymentcomplete'); 
+  }
+}
+
+ 
+
+ 
 
 }
 catch(\Exception $e) {

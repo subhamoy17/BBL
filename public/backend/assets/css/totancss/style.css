@@ -663,6 +663,7 @@ All error msg
     text-transform: none;
     font-size: 13px;
 }
+
 #video_add_error {
     color: #dc3545;
     font-weight: 700;
@@ -688,3 +689,53 @@ All error msg
     font-size: 13px;
     left: 0;
 }
+
+/*for coupon sumit*/
+#duplicate_coupon {
+    color: #dc3545;
+    font-weight: 700;
+    text-transform: none;
+    font-size: 13px;
+}
+
+#lessthan_slot {
+    color: #dc3545;
+    font-weight: 700;
+    text-transform: none;
+    font-size: 13px;
+}
+#coupon_code-error{
+    color: #dc3545;
+    text-transform: uppercase;
+    font-weight: 700;
+    text-transform: none;
+    font-size: 13px;
+}
+#discount_price-error{
+    color: #dc3545;
+    text-transform: uppercase;
+    font-weight: 700;
+    text-transform: none;
+    font-size: 13px;
+}
+#valid_from-error{
+    color: #dc3545;
+    text-transform: uppercase;
+    font-weight: 700;
+    text-transform: none;
+    font-size: 13px;
+}
+#valid_to-error{
+    color: #dc3545;
+    text-transform: uppercase;
+    font-weight: 700;
+    text-transform: none;
+    font-size: 13px;
+}
+
+.sl{
+margin-left: 20px;
+    }
+    .sl{
+margin-left: 10px;
+    }

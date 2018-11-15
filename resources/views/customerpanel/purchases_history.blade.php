@@ -33,7 +33,9 @@
             <!-- <th>Payment Mode</th> -->
             <th>Total Slots </th>
             <th>Remaining Slot(s)</th>
+            <th>Payment Mode</th>
             <th>Status</th>
+            
           </tr>
         </thead>
         <tbody>
@@ -90,6 +92,7 @@
               @endif
               @endif
             </td>
+             <td>{{$mydata->payment_options}}</td>
             <td> 
 
               @if (($mydata->active_package==1 && $mydata->package_remaining>0 && ($mydata->package_validity_date >= $remaining_session_request_now) ) || $mydata->extra_package_remaining>0)
@@ -98,6 +101,7 @@
               Inactive
               @endif
             </td>
+           
           </tr>
           @endforeach
           @else
