@@ -142,7 +142,7 @@ public function showupdateform()
   try{
   $this->cart_delete_trainer();
   $data= DB::table('users')->where('id',Auth::user()->id)->first();
-  Log::debug(" data ".print_r($data,true));
+  //Log::debug(" data ".print_r($data,true));
 
   return view ("trainer.editform")->with(compact('data'));
 
@@ -2964,6 +2964,114 @@ $final_slot_time=DB::table('slot_times')->whereNotIn('id',$get_slot_times)
   return json_encode($final_slot_time);
 }
 
+
+public function bootcamp_plan()
+{
+
+  $address=DB::table('bootcamp_plan_address')->get();  
+  $all_bootcamp_plan=DB::table('bootcamp_plans')->get();
+
+  $form_location=DB::table('bootcamp_plan_address')->select('address_id','address_line1')->whereNotNull('address_line1')->whereNull('address_line2')->get(); 
+
+  $form_address=DB::table('bootcamp_plan_address')->select('address_id','address_line2')->whereNotNull('address_line2')->whereNull('address_line1')->get();
+
+  return view('trainer.add_bootcamp_plan')->with(compact('address','all_bootcamp_plan','form_location','form_address'));
+}
+
+
+
+public function insert_bootcamp_plan(Request $request)
+{
+  DB::beginTransaction();
+  try{
+  
+  //Log::debug(" insert_bootcamp_plan data ".print_r($request->all(),true));
+
+  if($request->location!='')
+  {
+  $location_address_data['address_line1']=$request->location;
+  $bootcamp_address=DB::table('bootcamp_plan_address')->insert($location_address_data);
+  $address_id=DB::getPdo()->lastInsertId();
+  }
+  elseif($request->address!='')
+  {
+    $location_address_data['address_line2']=$request->address;
+    $bootcamp_address=DB::table('bootcamp_plan_address')->insert($location_address_data);
+    $address_id=DB::getPdo()->lastInsertId();
+  }
+  elseif($request->location_select!='')
+  {
+    $address_id=$request->location_select;
+  }
+  elseif($request->address_select!='')
+  {
+    $address_id=$request->address_select;
+  }
+
+  
+  if($request->mon_session_flg!='')
+  $bootcamp_data['mon_session_flg']=1;
+  if($request->tue_session_flg!='')
+  $bootcamp_data['tue_session_flg']=1;
+  if($request->wed_session_flg!='')
+  $bootcamp_data['wed_session_flg']=1;
+  if($request->thu_session_flg!='')
+  $bootcamp_data['thu_session_flg']=1;
+  if($request->fri_session_flg!='')
+  $bootcamp_data['fri_session_flg']=1;
+  if($request->sat_session_flg!='')
+  $bootcamp_data['sat_session_flg']=1;
+  if($request->sun_session_flg!='') 
+  $bootcamp_data['sun_session_flg']=1;
+
+  $bootcamp_data['session_st_time']=date("H:i:s", strtotime($request->session_st_time));
+  $bootcamp_data['session_end_time']=date("H:i:s", strtotime($request->session_end_time));
+  $bootcamp_data['plan_st_date']=$request->plan_st_date;
+  if($request->never_expire!='')
+  {
+    $bootcamp_data['plan_end_date']='2099-12-30';
+    $bootcamp_data['never_expire']=1;
+  }
+  else
+  {
+    $bootcamp_data['plan_end_date']=$request->plan_end_date;
+  }
+  
+  $bootcamp_data['max_allowed']=$request->max_allowed;
+  $bootcamp_data['address_id']=$address_id;
+  $bootcamp_data['status']=1;
+
+  $bootcamp_details=DB::table('bootcamp_plans')->insert($bootcamp_data);
+  DB::commit();
+  return redirect()->back();
+  return redirect('trainer/bootcamp-plan')->with("success","You have successfully added one boot camp plan!");
+}
+  catch(\Exception $e) {
+    DB::rollback();
+    return abort(200);
+  }
+  
+}
+
+public function bootcamp_plan_list()
+{
+  try{
+  $this->cart_delete_trainer();
+  $bootcamp_details=DB::table('bootcamp_plans')
+  ->join('bootcamp_plan_address','bootcamp_plan_address.address_id','bootcamp_plans.address_id')
+  ->select('bootcamp_plans.bootcamp_plan_id as bootcamp_id','bootcamp_plans.mon_session_flg as monday','bootcamp_plans.tue_session_flg as tuesday','bootcamp_plans.wed_session_flg as wednesday','bootcamp_plans.thu_session_flg as thursday','bootcamp_plans.fri_session_flg as friday','bootcamp_plans.sat_session_flg as saturday','bootcamp_plans.sun_session_flg as sunday','bootcamp_plans.session_st_time as session_st_time','bootcamp_plans.session_end_time as session_end_time','bootcamp_plans.plan_st_date as plan_st_date','bootcamp_plans.plan_end_date as plan_end_date','bootcamp_plans.never_expire as never_expire','bootcamp_plans.max_allowed as max_allowed','bootcamp_plans.status as status','bootcamp_plan_address.address_line1 as location','bootcamp_plan_address.address_line2 as address')->orderby('bootcamp_plans.bootcamp_plan_id','DESC')->get();
+
+    return view('trainer.bootcamp_plan_list')->with(compact('bootcamp_details'));
+  }
+  catch(\Exception $e) {
+    return abort(200);
+  }
+  
+}
+
+
+
+
   public function cart_delete_trainer()
 {
   $cart_delete=DB::table('cart_slot_request')->where('request_trainer_id',Auth::user()->id)->delete();
@@ -3180,8 +3288,6 @@ $final_slot_time=DB::table('slot_times')->whereNotIn('id',$get_slot_times)
     }
 
   }
-
-
 public function searchslots(Request $request)
 {
   

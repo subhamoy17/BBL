@@ -214,7 +214,10 @@ Route::get('admin_get_current_time', 'TrainerController@admin_get_current_time')
 Route::get('admin_get_time', 'TrainerController@admin_get_time')->name('admin_get_time');
 
 
+Route::get('add-bootcamp-plan', 'TrainerController@bootcamp_plan')->name('bootcamp_plan');
 
+Route::post('insert-bootcamp-plan', 'TrainerController@insert_bootcamp_plan')->name('insert_bootcamp_plan');
+Route::get('bootcamp-plan', 'TrainerController@bootcamp_plan_list')->name('bootcamp_plan_list');
 ////// For common diet plan list//////
 
 Route::get('common-diet-plan', 'TrainerController@common_diet_plan')->name('common_diet_plan');
@@ -222,6 +225,11 @@ Route::get('common-diet-plan', 'TrainerController@common_diet_plan')->name('comm
 // Add new diet plan
 Route::get('add-common-diet-plan','TrainerController@add_common_diet_plan')->name('add_common_diet_plan');
 Route::post('insert-common-diet-plan', 'TrainerController@insert_common_diet_plan')->name('insert_common_diet_plan');
+
+
+
+
+
 
 //Update diet plan
 Route::get('edit-common-diet-plan/{id}', 'TrainerController@edit_common_diet_plan');
@@ -389,8 +397,13 @@ Route::get('slot_insert_to_cart','FrontController@slot_insert_to_cart')->name('s
 Route::get('cart_data_delete','FrontController@cart_data_delete')->name('cart_data_delete');
 
 
+Route::get('booking-bootcamp','FrontController@booking_bootcamp');
 
 
+Route::post('diet-plan-purchase','FrontController@common_diet_plan_purchase');
+Route::post('common-diet-plan-pay','PaypalPaymentController@common_diet_plan_pay');
+Route::get('diet-plan-pay-status','PaypalPaymentController@getCommonDietPlanPaymentStatus');
+Route::get('common-diet-plan-paymentsuccess','FrontController@common_diet_plan_paymentsuccess');
 
 
 });

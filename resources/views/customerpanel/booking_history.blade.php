@@ -8,8 +8,10 @@
           <h3 class="d_active tab_drawer_heading" rel="tab1">Tab 1</h3>
           <div id="tab1" class="tab_content">
             <div class="table-responsive table-bordered">
-              
+           <a href="{{url('customer/booking-bootcamp')}}" class="btn btn-success bk-slt-btn">Book Boot Camp Session</a>   
         <a href="{{url('customer/booking_slot')}}" class="btn btn-success bk-slt-btn">Book PT Session</a>
+
+        
         
          @if (session('session_delete'))
                                 <div class="alert alert-danger session-delete">

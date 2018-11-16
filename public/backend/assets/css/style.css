@@ -1036,6 +1036,23 @@ table.dataTable thead .sorting::before, table.dataTable thead .sorting_asc::befo
 #editslotsform .col.col-md-2 {
 	text-align: right;
 }
+
+.slct-margin .ui.search{
+	margin-bottom: 20px;
+	font-size: 13px;
+	color: #34373b;
+}
+.cxz input {
+	display: block;
+	width: 100%;
+}
+.cxz label {
+	font-size: 15px;
+}
+.row.cxz {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
 /*#sesssion_table .save_button{
   padding-left: 30px;
 }*/

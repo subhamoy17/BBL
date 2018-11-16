@@ -204,12 +204,12 @@ public function purchase_form($id)
   $this->cart_delete_customer();
   $slot_id=$id;
 
-  Log::debug(":: slot_id :: ".print_r($slot_id,true));
+  //Log::debug(":: slot_id :: ".print_r($slot_id,true));
 
   $package_details=DB::table('slots')->where('id',$slot_id)->first();
      
   $data=DB::table('customers')->where('id',Auth::guard('customer')->user()->id)->first();
-  Log::debug(":: purchase details :: ".print_r($data,true));
+  //Log::debug(":: purchase details :: ".print_r($data,true));
  
   if($data && $package_details )
   {
@@ -236,9 +236,9 @@ public function purchase_payment_mode(Request $request)
   $coupon_code=$request->coupon_code;
   $coupon_id=$request->coupon_id;
   $new_package_price=$request->new_package_price;
-Log::debug(" coupon_code ".print_r($coupon_code,true));
-Log::debug(" coupon_id ".print_r($coupon_id,true));
-   Log::debug(" new_package_price ".print_r($new_package_price,true));
+//Log::debug(" coupon_code ".print_r($coupon_code,true));
+//Log::debug(" coupon_id ".print_r($coupon_id,true));
+   //Log::debug(" new_package_price ".print_r($new_package_price,true));
   $slot_details=DB::table('slots')->where('id',$request->id)->first();
 
 if($request->new_package_price)
@@ -1282,6 +1282,30 @@ public function exercise()
 }
 
 
+public function booking_bootcamp()
+{
+  try{
+  $this->cart_delete_customer();
+  $remaining_session_request_now=Carbon::now()->toDateString();
+  
+  $bootcampaddress=DB::table('bootcamp_plan_address')->get();
+
+  $bootcampdate=DB::table('bootcamp_plan_shedules')->pluck('plan_date');
+
+
+
+  return view('customerpanel.booking_bootcamp')->with(compact('bootcampaddress','bootcampdate'));
+
+  }
+
+    catch(\Exception $e) {
+
+      return abort(400);
+  }
+ 
+}
+
+
 public function cart_delete_customer()
 {
   $cart_delete=DB::table('cart_slot_request')->where('request_customer_id',Auth::guard('customer')->user()->id)->delete();
@@ -1335,7 +1359,7 @@ Log::debug(" data wrong_details ".print_r($wrong_details,true));
   }
 
 
-  function validcoupon(Request $request)
+  public function validcoupon(Request $request)
   {
      $now = Carbon::now()->toDateString();
     $validcoupon=$request->coupon_code;
@@ -1348,8 +1372,8 @@ Log::debug(" data wrong_details ".print_r($wrong_details,true));
      $ex_coupon_code=DB::table('slots_discount_coupon')->where('coupon_code',$validcoupon)->where('slots_id',$package_id)->where('is_active',0)->whereNull('slots_discount_coupon.deleted_at')->value('slots_discount_coupon.coupon_code');
      // $coupon_expair=DB::table('slots_discount_coupon')->where('coupon_code',$validcoupon)->where('slots_id',$package_id)->where('is_active',1)->whereNull('slots_discount_coupon.deleted_at')->where('slots_discount_coupon.valid_to','<',$now)->get();
 
-// Log::debug(" data coupon_code ".print_r($coupon_code,true));
-// Log::debug(" data ex_coupon_code ".print_r($ex_coupon_code,true));
+//Log::debug(" data coupon_code ".print_r($coupon_code,true));
+//Log::debug(" data ex_coupon_code ".print_r($ex_coupon_code,true));
  // Log::debug(" data coupon_expair ".print_r($coupon_expair,true));
 
     if($coupon_code == 1)
@@ -1365,6 +1389,25 @@ Log::debug(" data wrong_details ".print_r($wrong_details,true));
       return 1;
     }
    
+  }
+
+
+  public function common_diet_plan_purchase(Request $request)
+  {
+    try{
+    //Log::debug(" data coupon_code ".print_r($request->all(),true));
+    $common_diet_plan=DB::table('common_diet_plan')->where('id',$request->common_diet_plan_id)->first();
+    return view('customerpanel.common_diet_plan_purchase')->with(compact('common_diet_plan'));
+    }
+    catch(\Exception $e) {
+      return abort(400);
+    }
+  }
+
+  public function common_diet_plan_paymentsuccess()
+  {
+    $this->cart_delete_customer();
+    return view('customerpanel.common_diet_plan_payment_success');
   }
 
 public function common_diet_plan_history(Request $request)

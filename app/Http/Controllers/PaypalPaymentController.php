@@ -29,7 +29,7 @@ use Carbon\Carbon;
 
 use PayPal\Exception\PayPalConnectionException;
 
-
+use Illuminate\Support\Facades\Mail;
 
 class PaypalPaymentController extends Controller
 {
@@ -305,14 +305,6 @@ public function getPaymentStatus()
 //try{
 $result = $payment->execute($execution, $this->_api_context);
 
-//echo "write".$result;
-//}
-//catch (\Exception $e)
-//{
-    //echo "wrong".$e->getData();
-//}
-
-//Log::debug(" paypal payment Failed For Unknown Error notification ".print_r($result->getUrl(),true));
 
 if ($result->getState() == 'approved') {
 
@@ -451,6 +443,197 @@ if ($result->getState() == 'approved') {
 
 \Session::put('failed_paypalpay', 'Payment failed');
         return Redirect::to('customer/paypalpaymentsuccess');
+}
+
+public function common_diet_plan_pay(Request $request)
+{
+
+  $diet_plan_id=$request->diet_plan_id;
+  $diet_plan_details=DB::table('common_diet_plan')->where('id',$diet_plan_id)->first();      
+
+  Session::put('plan_id', $diet_plan_id);
+  Session::put('plan_name', $diet_plan_details->diet_plan_name);
+  Session::put('plan_price', $diet_plan_details->price);
+
+  $payment_history_data['plan_id']=$diet_plan_id;
+  $payment_history_data['plan_name']=$diet_plan_details->diet_plan_name;
+  $payment_history_data['plan_price']=$diet_plan_details->price;
+  $payment_history_data['plan_purchase_by']=Auth::guard('customer')->user()->id;
+  $payment_history_data['purchase_date']=Carbon::now()->toDateString();
+        
+
+  $payer = new Payer();
+          $payer->setPaymentMethod('paypal');
+
+  $item_1 = new Item();
+  $item_1->setName($diet_plan_details->diet_plan_name) /** item name **/
+              ->setCurrency('GBP')
+              ->setQuantity(1)
+              ->setPrice($diet_plan_details->price); /** unit price **/
+  $item_list = new ItemList();
+          $item_list->setItems(array($item_1));
+  $amount = new Amount();
+          $amount->setCurrency('GBP')
+              ->setTotal($diet_plan_details->price);
+  $transaction = new Transaction();
+          $transaction->setAmount($amount)
+              ->setItemList($item_list)
+              ->setDescription('Your transaction description');
+  $redirect_urls = new RedirectUrls();
+          $redirect_urls->setReturnUrl(URL::to('customer/diet-plan-pay-status')) /** Specify return URL **/
+              ->setCancelUrl(URL::to('customer/diet-plan-pay-status'));
+  $payment = new Payment();
+          $payment->setIntent('Sale')
+              ->setPayer($payer)
+              ->setRedirectUrls($redirect_urls)
+              ->setTransactions(array($transaction));
+          
+          try {
+   //Log::debug(":: try :: ".print_r($payment,true));
+  $payment->create($this->_api_context);
+
+  } 
+  catch (PayPalConnectionException $ex) {
+
+  if (\Config::get('app.debug')) {
+  \Session::put('failed_paypalpay', 'Connection timeout');
+    $payment_history_data['status']='Connection timeout';
+
+    $purchases_history=DB::table('common_diet_plan_purchases_history')->insert($payment_history_data);
+
+    Session::forget('plan_id');
+    Session::forget('plan_name');
+    Session::forget('plan_price');
+
+    return Redirect::to('customer/common-diet-plan-paymentsuccess');
+  } else {
+
+  \Session::put('failed_paypalpay', 'Some error occur, sorry for inconvenient');
+    $payment_history_data['status']='Inconvenient error';
+    $purchases_history=DB::table('common_diet_plan_purchases_history')->insert($payment_history_data);
+
+    Session::forget('plan_id');
+    Session::forget('plan_name');
+    Session::forget('plan_price');
+
+    return Redirect::to('customer/common-diet-plan-paymentsuccess');
+  }
+  }
+  foreach ($payment->getLinks() as $link) {
+  if ($link->getRel() == 'approval_url') {
+  $redirect_url = $link->getHref();
+                  break;
+  }
+  }
+  /** add payment ID to session **/
+  Session::put('paypal_payment_id', $payment->getId());
+          
+
+  if (isset($redirect_url)) {
+  /** redirect to paypal **/
+    return Redirect::away($redirect_url);
+  }
+  \Session::put('failed_paypalpay', 'Unknown error occurred');
+  $payment_history_data['status']='Unknown error';
+  $purchases_history=DB::table('common_diet_plan_purchases_history')->insert($payment_history_data);
+
+  Session::forget('plan_id');
+  Session::forget('plan_name');
+  Session::forget('plan_price');
+     
+  return Redirect::to('customer/common-diet-plan-paymentsuccess');       
+}
+
+public function getCommonDietPlanPaymentStatus()
+{
+
+  $plan_id=Session('plan_id');
+  $plan_name=Session('plan_name');
+  $plan_price=Session('plan_price');
+
+  $purchases_history_data['plan_id']=$plan_id;
+  $purchases_history_data['plan_name']=$plan_name;
+  $purchases_history_data['plan_price']=$plan_price;
+  $purchases_history_data['plan_purchase_by']=Auth::guard('customer')->user()->id;
+  $purchases_history_data['purchase_date']=Carbon::now()->toDateString();
+  
+  /** Get the payment ID before session clear **/
+  $payment_id = Session::get('paypal_payment_id');
+/** clear the session payment ID **/
+        
+
+  if (empty(Input::get('PayerID')) || empty(Input::get('token'))) { 
+
+  $purchases_history_data['status']='Cancelled by customer';
+  
+  \Session::put('failed_paypalpay', 'Payment Cancelled by the customer');
+
+  $purchases_history_data=DB::table('common_diet_plan_purchases_history')->insert($purchases_history_data);
+
+  Mail::send('emails.common_diet_plan_mail',['email' =>Auth::guard('customer')->user()->email,'name' =>Auth::guard('customer')->user()->name,'status' =>'Cancelled by customer'],function($message) {
+            $message->to(Auth::guard('customer')->user()->email)->subject('Diet Plan Payment');   
+            });
+
+  Session::forget('plan_id');
+  Session::forget('plan_name');
+  Session::forget('plan_price');
+
+  return Redirect::to('customer/common-diet-plan-paymentsuccess');
+  }
+
+  Session::forget('paypal_payment_id');
+  $payment = Payment::get($payment_id, $this->_api_context);
+  $execution = new PaymentExecution();
+  $execution->setPayerId(Input::get('PayerID'));
+/**Execute the payment **/
+        
+//try{
+$result = $payment->execute($execution, $this->_api_context);
+
+
+if ($result->getState() == 'approved') {
+
+  
+  $amout=$result->getTransactions();
+  $transaction_details=$amout[0]->getAmount();
+
+  $purchases_history_data['payment_reference_id']=$payment_id;
+  $purchases_history_data['status']='Payment success';
+
+  //Log::debug(":: paypal return data :: ".print_r($paypal_history_data,true));
+
+  \Session::put('success_paypalpay', 'Payment success');
+  \Session::put('payment_id', $payment_id);
+
+  $purchases_history_data=DB::table('common_diet_plan_purchases_history')->insert($purchases_history_data);
+
+  $diet_plan_details=DB::table('common_diet_plan')->where('id',$plan_id)->first();
+
+  Session::forget('plan_id');
+  Session::forget('plan_name');
+  Session::forget('plan_price');
+
+  return Redirect::to('customer/common-diet-plan-paymentsuccess');
+}
+
+
+  $amout=$result->getTransactions();
+  $transaction_details=$amout[0]->getAmount();
+
+  $purchases_history_data['payment_reference_id']=$payment_id;
+  //$paypal_history_data['payer_id']=Input::get('PayerID');
+  $purchases_history_data['status']='Payment failed';
+
+  //Log::debug(":: paypal return data :: ".print_r($paypal_history_data,true));
+
+  \Session::put('failed_paypalpay', 'Payment failed');
+  $purchases_history_data=DB::table('common_diet_plan_purchases_history')->insert($purchases_history_data);
+
+  Session::forget('plan_id');
+  Session::forget('plan_name');
+  Session::forget('plan_price');
+
+  return Redirect::to('customer/common-diet-plan-paymentsuccess');
 }
 
 

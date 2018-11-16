@@ -39,8 +39,16 @@ public function index(Request $request)
     }
 
     public function diet_plans()
-    {     
-    return view('diet_plans');
+    {  
+      try
+      {
+        $all_common_diet_plan=DB::table('common_diet_plan')->whereNull('deleted_at')->get();
+        return view('diet_plans')->with(compact('all_common_diet_plan'));
+      }
+      catch(\Exception $e) 
+      {
+        return abort(400);
+      }
     }
 
     public function health_package()
@@ -124,7 +132,7 @@ DB::beginTransaction();
 
     try{
  
-Log::debug(" data ".print_r($request->all(),true)); 
+//Log::debug(" data ".print_r($request->all(),true)); 
 $data['user_name']=$request->form_name;
 $data['user_email']=$request->form_email;
 $data['user_subject']=$request->form_subject;

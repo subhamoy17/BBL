@@ -1,67 +1,69 @@
 @extends('frontcustomerlayout.main') 
 @section('content')
 	<!-- banner -->
-	<div class="main_section_agile about">
-	</div>
+<div class="main_section_agile about"></div>
 	<!-- //banner -->
 	<!-- about inner -->
 <div class="about-bottom inner-padding">
 	<div class="container">
 		<div class="wthree_head_section">
-				<h3 class="gyl_header">Diet <span>Plans</span></h3>
-			</div>
-				<div class="about-bott-right pti">
-					<div class="col-lg-5 col-xs-12">
-						<div class="pt-vd-box">
-							<iframe width="100%" src="https://www.youtube.com/embed/aYaFyAtPrB4" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-						</div>
-					</div>
-					<div class="col-lg-7 col-xs-12">
-						<div class="pt-box">
-							<div class="pt-img">
-								<img src="{{asset('frontend/images/t3.jpg')}}">
-							</div>
-							<div class="pt-name">
-								<h5>Personal Instructor 1</h5>
-								<h6>Designation</h6>
-							</div>
-						</div>
-						<div class="clearfix"></div>
-						<div class="pt-text">
-							<p>When working as personal trainer you’ll be at a more advanced level than those working as a fitness instructor; as you’ll be trained to level 3. It’s also worth noting that those who become fitness instructors, often train and advance to being personal trainers.</p>
-						</div>
-						<h5 class="prc-amnt"><span>Price</span> <i class="fa fa-gbp"></i> 100</h5>
-						<button type="button">Purchase</button>
-						<div class="clearfix"></div>
-					</div>
-					<div class="clearfix"></div>
-					<div class="col-lg-5 col-xs-12">
-						<div class="pt-vd-box">
-							<iframe width="100%" src="https://www.youtube.com/embed/tccdbY5xcf4" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-						</div>
-					</div>
-					<div class="col-lg-7 col-xs-12">
-						<div class="pt-box">
-							<div class="pt-img">
-								<img src="{{asset('frontend/images/t2.jpg')}}">
-							</div>
-							<div class="pt-name">
-								<h5>Personal Instructor 2</h5>
-								<h6>Designation</h6>
-							</div>
+			<h3 class="gyl_header">Diet <span>Plans</span></h3>
+		</div>
 
+			<div class="about-bott-right pti">
+				@if(!empty($all_common_diet_plan))
+					@foreach($all_common_diet_plan as $each_common_diet_plan)
+						<div class="col-lg-5 col-xs-12">
+							<div class="pt-vd-box  image_space">
+								@if($each_common_diet_plan->video!='')
+									<iframe width="100%" src="{{$each_common_diet_plan->video}}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+								@elseif($each_common_diet_plan->image!='')
+									<img width="100%" height="290px" src="{{url('backend/common_diet_plan_images')}}/{{$each_common_diet_plan->image}}">
+								@endif
+							</div>
+						</div>
+						<div class="col-lg-7 col-xs-12">
+							<div class="pt-box">
+								<div class="pt-img">
+									@if($each_common_diet_plan->author_image!='')
+										<img src="{{asset('backend/common_diet_plan_images')}}/{{$each_common_diet_plan->author_image}}" height="76px" width="60px">
+									@else
+										<img src="{{asset('backend/images/no-profile-image.jpg')}}" height="76px" width="60px">
+									@endif
+								</div>
+								<div class="pt-name">
+									<h5>{{$each_common_diet_plan->diet_plan_name}}</h5>
+									<h6>Author Name: {{$each_common_diet_plan->author_name}}, Designation: {{$each_common_diet_plan->author_designation}}</h6>
+								</div>
+							</div>
+							<div class="clearfix"></div>
+							<div class="pt-text">
+								<p>{{$each_common_diet_plan->description}}</p>
+							</div>
+							<h5 class="prc-amnt"><span>Price</span> <i class="fa fa-gbp"></i> {{$each_common_diet_plan->price}}</h5>
+							<!-- <button type="button" id="purchase_button">Purchase</button> -->
+							@if(Auth::guard('customer')->check())
+								<form action="{{url('customer/diet-plan-purchase')}}" method="post">
+									{{ csrf_field() }}
+									<input type="hidden" name="common_diet_plan_id" value="{{$each_common_diet_plan->id}}">
+									<button type="submit">Purchase</button>
+								</form>
+                <!-- <a href="{{url('diet-plan-purchase')}}" class="dietplan-purchase-btn2">Purchase</a> -->
+              @else
+                <a href="{{url('customer-login')}}" class="dietplan-purchase-btn2">Purchase</a>
+              @endif
+							<div class="clearfix"></div>
 						</div>
 						<div class="clearfix"></div>
-						<div class="pt-text">
-							<p>Most personal trainers are also self-employed, with almost 50% of those within the sector becoming their own boss [1]. With this, many different leisure centres, health clubs and gyms will have different propositions they give to self-employed staff; where they’ll take a percentage of what they earn, in order for the trainer to use the establishment’s facilities to train their clients. Most personal trainers charge between £20 and £40 an hour [1]; this also mean that things such as tax is the responsibility of the personal trainer.</p>
-						</div>
-						<h5 class="prc-amnt"><span>Price</span> <i class="fa fa-gbp"></i> 100</h5>
-						<button type="button">Purchase</button>
-					</div>
-				</div>
-				<div class="clearfix"> </div>
+					@endforeach
+				@else
+					No Record Found
+				@endif
 			</div>
+	</div>
 </div>
+
+  
 
 
 @endsection
