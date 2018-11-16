@@ -441,7 +441,7 @@ $(document).ready(function(){
             <label for="text-input" class=" form-control-label">Author Name</label>
           </div>
           <div class="col-12 col-md-9">
-            <input type="text" id="author_name" name="author_name" value="{{Auth::user()->name}}" class="form-control">
+            <input type="text" id="author_name" name="author_name" value="{{Auth::user()->name}}" readonly class="form-control">
           </div>
         </div>
 

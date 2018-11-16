@@ -1087,7 +1087,7 @@ $("#extra_session").mouseover(function(){
               $('.rev-line').addClass('line_t');
               
               $('#new_price').show();
-              $('#new_p').html("Discounted Price - <h6><i class='fa fa-gbp'></i>"+data.new_package_price+" </h6>");
+              $('#new_p').html("Discounted Price - <h6><i class='fa fa-gbp'></i> "+data.new_package_price+" </h6>");
                // $('#app_btn').hide();
                 $('#new_package_price').val(data.new_package_price);
                 $('#coupon_id').val(data.coupon_id);

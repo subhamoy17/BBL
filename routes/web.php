@@ -162,6 +162,11 @@ Route::post('duplicatecoupon_edit','TrainerController@duplicatecoupon_edit')->na
 Route::post('checkdiscount_price','TrainerController@checkdiscount_price')->name('checkdiscount_price');
 Route::post('checkdiscount_price_edit','TrainerController@checkdiscount_price_edit')->name('checkdiscount_price_edit');
 
+// end coupon
+
+Route::get('diet-plan-purchases-history','TrainerController@diet_plan_purchases')->name('diet_plan_purchases');
+
+
 //show our client//
 Route::get('our_trainer_list','TrainerController@our_client_show')->name('our_trainer_list');
 
@@ -351,7 +356,7 @@ Route::POST('updateprofile','FrontController@updateprofile')->name('customer.pro
 
 Route::get('purchase_history','FrontController@purchases_history')->name('customer_purchases_history');
 
-
+Route::get('my-diet-plan','FrontController@common_diet_plan_history')->name('customer_diet_plan');
 
 Route::get('booking_slot','FrontController@booking_slot')->name('booking_slot');
 Route::get('get_slot_time','FrontController@get_slot_time')->name('get_slot_time');

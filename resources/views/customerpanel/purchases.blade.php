@@ -70,12 +70,12 @@
                                         <input type="hidden" name="package_price" id="package_price" value="{{$package_details->slots_price}}">  
                                          <input type="hidden" name="new_package_price" id="new_package_price">
                                          <input type="hidden" name="coupon_id" id="coupon_id">                     
-                                  <button type="button" class="coupon_sub" id="coupon_sub">Apply</button>
+                                  <button type="button" class="coupon_sub" id="coupon_sub" ">Apply</button>
                                   </div>
                                   <!-- <div class="clearfix"></div> -->
                                    <span id='loadingimg2' style="display: none;" class="load_img">
                                 <span>
-                              <img src="{{asset('backend/images/loader_session_time.gif')}}" style="width: 50px;margin-top: -10px;margin-left: -11px;"/>
+                              <img src="{{asset('backend/images/loader_session_time.gif')}}" style="width: 40px;margin-left: -6px;"/>
                             </span>
                             </span> 
                                   

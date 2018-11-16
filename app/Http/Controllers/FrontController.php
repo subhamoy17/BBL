@@ -1341,15 +1341,15 @@ Log::debug(" data wrong_details ".print_r($wrong_details,true));
     $validcoupon=$request->coupon_code;
     $package_id=$request->package_id;
     $validcoupon=preg_replace('/\s+/', ' ', $validcoupon);
-    Log::debug(" data validcoupon ".print_r($validcoupon,true));
+    // Log::debug(" data validcoupon ".print_r($validcoupon,true));
     // $duplicatecoupon_details=DB::table('slots_discount_coupon')->where('coupon_code',$duplicatecoupon)->where('slots_id',$package_id)->whereNull('slots_discount_coupon.deleted_at')->count();
 
      $coupon_code=DB::table('slots_discount_coupon')->where('coupon_code',$validcoupon)->where('slots_id',$package_id)->where('is_active',1)->whereNull('slots_discount_coupon.deleted_at')->get()->count();
      $ex_coupon_code=DB::table('slots_discount_coupon')->where('coupon_code',$validcoupon)->where('slots_id',$package_id)->where('is_active',0)->whereNull('slots_discount_coupon.deleted_at')->value('slots_discount_coupon.coupon_code');
      // $coupon_expair=DB::table('slots_discount_coupon')->where('coupon_code',$validcoupon)->where('slots_id',$package_id)->where('is_active',1)->whereNull('slots_discount_coupon.deleted_at')->where('slots_discount_coupon.valid_to','<',$now)->get();
 
-Log::debug(" data coupon_code ".print_r($coupon_code,true));
-Log::debug(" data ex_coupon_code ".print_r($ex_coupon_code,true));
+// Log::debug(" data coupon_code ".print_r($coupon_code,true));
+// Log::debug(" data ex_coupon_code ".print_r($ex_coupon_code,true));
  // Log::debug(" data coupon_expair ".print_r($coupon_expair,true));
 
     if($coupon_code == 1)
@@ -1364,10 +1364,43 @@ Log::debug(" data ex_coupon_code ".print_r($ex_coupon_code,true));
     {
       return 1;
     }
-    //  if($coupon_expair)
-    // {
-    //   return 4;
-    // }
+   
   }
+
+public function common_diet_plan_history(Request $request)
+{
+  try{
+ $this->cart_delete_customer();
+ 
+  
+  if(isset($request->start_date) && isset($request->end_date) && !empty($request->start_date) && !empty($request->end_date))
+  {
+    $now = Carbon::now()->toDateString();
+    $start_date=$request->start_date;
+    $end_date=$request->end_date;
+    // echo $start_date."-".$end_date;die();
+    // Log::debug(" Check ".print_r($start_date,true)); 
+    // Log::debug(" Check id ".print_r($end_date,true)); 
+
+     $common_diet_plan=DB::table('common_diet_plan_purchases_history')->join('customers','customers.id','common_diet_plan_purchases_history.plan_purchase_by')->join('common_diet_plan','common_diet_plan.id','common_diet_plan_purchases_history.plan_id')->select('common_diet_plan_purchases_history.id as diet_plan_id','common_diet_plan_purchases_history.plan_name as plan_name','common_diet_plan_purchases_history.plan_price as plan_price','common_diet_plan_purchases_history.plan_purchase_by as plan_purchase_by','common_diet_plan_purchases_history.payment_reference_id as payment_reference_id','common_diet_plan_purchases_history.purchase_date as purchase_date', 'common_diet_plan_purchases_history.status as status', 'common_diet_plan.diet_plan_name as diet_plan_name','common_diet_plan.id as common_diet_plan_id','customers.id as customers_id')->whereBetween('common_diet_plan_purchases_history.purchase_date', [$start_date, $end_date])->where('common_diet_plan_purchases_history.plan_purchase_by',Auth::guard('customer')->user()->id)->paginate(10);
+   }
+
+   else
+   {
+     $common_diet_plan=DB::table('common_diet_plan_purchases_history')->join('common_diet_plan','common_diet_plan.id','common_diet_plan_purchases_history.plan_id')->select('common_diet_plan_purchases_history.id as diet_plan_id','common_diet_plan_purchases_history.plan_name as plan_name','common_diet_plan_purchases_history.plan_price as plan_price','common_diet_plan_purchases_history.plan_purchase_by as plan_purchase_by','common_diet_plan_purchases_history.payment_reference_id as payment_reference_id','common_diet_plan_purchases_history.purchase_date as purchase_date', 'common_diet_plan_purchases_history.status as status', 'common_diet_plan.diet_plan_name as diet_plan_name','common_diet_plan.id as common_diet_plan_id')->where('common_diet_plan_purchases_history.plan_purchase_by',Auth::guard('customer')->user()->id)->paginate(10);
+   }
+   // Log::debug(" data common_diet_plan ".print_r($common_diet_plan,true));
+  return view('customerpanel.common_diet_plan')->with(compact('common_diet_plan'));
+}
+
+catch(\Exception $e) {
+
+      return abort(400);
+  }
+
+  }
+ 
+  
+
 
 }

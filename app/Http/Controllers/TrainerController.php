@@ -3181,7 +3181,7 @@ $final_slot_time=DB::table('slot_times')->whereNotIn('id',$get_slot_times)
 
   }
 
-}
+
 public function searchslots(Request $request)
 {
   
@@ -3411,4 +3411,20 @@ function checkdiscount_price_edit(Request $request)
       return 0;
     }
   }
+
+  public function diet_plan_purchases(Request $request)
+{
+  
+   try{
+ $this->cart_delete_trainer();
+ $diet_plan_purchases=DB::table('common_diet_plan_purchases_history')->join('customers','customers.id','common_diet_plan_purchases_history.plan_purchase_by')->join('common_diet_plan','common_diet_plan.id','common_diet_plan_purchases_history.plan_id')->select('common_diet_plan_purchases_history.id as diet_plan_id','common_diet_plan_purchases_history.plan_name as plan_name','common_diet_plan_purchases_history.plan_price as plan_price','common_diet_plan_purchases_history.plan_purchase_by as plan_purchase_by','common_diet_plan_purchases_history.payment_reference_id as payment_reference_id','common_diet_plan_purchases_history.purchase_date as purchase_date', 'common_diet_plan_purchases_history.status as status','common_diet_plan.diet_plan_name as diet_plan_name','common_diet_plan.id as common_diet_plan_id','customers.id as customers_id','customers.name as customers_name')->get();
+
+ // Log::debug(" data diet_plan_purchases ".print_r($diet_plan_purchases,true));
+  return view('trainer.diet_plan_purchases_history')->with(compact('diet_plan_purchases'));
+}
+catch(\Exception $e) {
+
+      return abort(400);
+  }
+}
 }

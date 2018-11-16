@@ -189,9 +189,6 @@ $('#clienteditform').validate({
                             </div>
                           </div>
 
-
-
-
                              <div style="float: right">
                                 <button type="submit" name="submit" class="btn btn-primary btn-sm">
                                   <i class="fa fa-dot-circle-o"></i> Submit

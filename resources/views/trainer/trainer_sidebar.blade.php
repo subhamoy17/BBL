@@ -45,7 +45,7 @@
                   @endif
 
 
-                  @if(Request::segment(2) == "common-diet-plan")
+               <!--    @if(Request::segment(2) == "common-diet-plan")
                   <ul class="nav navbar-nav">
                  <li class="active">
                   <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('common_diet_plan')}}" style="color: #fff !important;">Common Diet Plan</a></li>
@@ -53,7 +53,33 @@
                   <ul class="nav navbar-nav">
                   <li class="active">
                   <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('common_diet_plan')}}">Common Diet Plan</a></li>
+                  @endif -->
+
+<!-- //////// -->
+
+@if(Request::segment(2) == "common-diet-plan" || Request::segment(2) == "diet-plan-purchases-history" || Request::segment(2) == "add-common-diet-plan" || Request::segment(2) == "edit-common-diet-plan" )
+
+<li class="menu-item-has-children dropdown show" >
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: #fff !important;"> <i class="menu-icon fa fa-dashboard"></i> Common Diet Plan</a>
+            <ul class="sub-menu children dropdown-menu show"> 
+              @else
+              <li class="menu-item-has-children dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"> <i class="menu-icon fa fa-dashboard"></i> Common Diet Plan</a>
+                <ul class="sub-menu children dropdown-menu">
+                  @endif 
+                  @if(Request::segment(2) == "add-common-diet-plan" || Request::segment(2) == "common-diet-plan" || Request::segment(2) == "edit-common-diet-plan")
+                  <li><i class="fa fa-id-card-o"></i><a href="{{route('common_diet_plan')}}" style="color: #fff !important;">View Common Diet Plan </a></li>
+                  @else
+                  <li><i class="fa fa-id-card-o"></i><a href="{{route('common_diet_plan')}}">View Common Diet Plan </a></li>
                   @endif
+
+                  @if(Request::segment(2) == "diet-plan-purchases-history")
+                  <li><i class="fa fa-id-card-o"></i><a href="{{route('diet_plan_purchases')}}" style="color: #fff !important;">Diet Plan Purchases History</a></li>
+                  @else 
+                  <li><i class="fa fa-id-card-o"></i><a href="{{route('diet_plan_purchases')}}">Diet Plan Purchases History</a></li>
+                  @endif
+                </ul></li>
+<!--  -->
 
 
                 @if(Request::segment(2) == "add_session")
@@ -167,6 +193,12 @@
                   <li><i class="fa fa-id-card-o"></i><a href="{{route('trainerlist')}}">Trainer List</a></li>
                   @endif
                 </ul></li>
+
+
+
+
+
+
                   @if(Request::segment(1) == "pastRequestlist" || Request::segment(1) == "futureRequestlist" || Request::segment(1) == "futurePendingRequestlist" || Request::segment(1) == "canelledlist")         
                 <li class="menu-item-has-children dropdown show">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i> Slot Request</a>
