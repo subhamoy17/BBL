@@ -3097,10 +3097,11 @@ public function bootcamp_plan_list()
 
   public function insert_common_diet_plan(Request $request)
   {
+
     DB::beginTransaction();
     try
     {
-
+    
         $data['diet_plan_name'] = $request->diet_plan_name;
         $data['description'] = $request->description;
         $data['video'] = $request->video;
@@ -3113,7 +3114,7 @@ public function bootcamp_plan_list()
           $upload=$image->move($folder,$image_name); 
           $data['image']=$image_name; 
         }
-        if($request->diet_plan_pdf!="")
+        if($request->hasFile('diet_plan_pdf'))
         {
           $pdf=$request->diet_plan_pdf;
           $folder="backend/common_diet_plan_images/"; 
@@ -3142,6 +3143,7 @@ public function bootcamp_plan_list()
     }
     catch(\Exception $e) 
     {
+      
       DB::rollback();
       return abort(200);
     }
@@ -3250,7 +3252,7 @@ public function bootcamp_plan_list()
     $dietPlanName=$request->diet_plan_name;
     $dietPlanName=preg_replace('/\s+/', ' ', $dietPlanName);
     
-    $dietPlanList=DB::table('common_diet_plan')->where('diet_plan_name',$dietPlanName)->count();
+    $dietPlanList=DB::table('common_diet_plan')->where('diet_plan_name',$dietPlanName)->whereNull('deleted_at')->count();
 
     if($dietPlanList>0)
     {
@@ -3267,7 +3269,7 @@ public function bootcamp_plan_list()
     $dietPlanName=$request->diet_plan_name;
     $dietPlanName=preg_replace('/\s+/', ' ', $dietPlanName);
 
-    $all_diet_plan=DB::table('common_diet_plan')->where('id','!=',$request->id)->get()->all();
+    $all_diet_plan=DB::table('common_diet_plan')->where('id','!=',$request->id)->whereNull('deleted_at')->get()->all();
 
     $duplicate_diet_plan=0;
     foreach($all_diet_plan as $each_diet_plan)
