@@ -1321,13 +1321,13 @@ function couponchecking(Request $request)
     $couponcode=preg_replace('/\s+/', ' ', $couponcode);
      Log::debug(" data couponcode ".print_r($couponcode,true));
 
-    $newprice=DB::table('slots_discount_coupon')->where('coupon_code',$couponcode)->where('slots_id',$package_id)->where('is_active',1)->whereNull('slots_discount_coupon.deleted_at')->where('slots_discount_coupon.valid_to','>',$now)->value('discount_price');
+    $newprice=DB::table('slots_discount_coupon')->where('coupon_code',$couponcode)->where('slots_id',$package_id)->where('is_active',1)->whereNull('slots_discount_coupon.deleted_at')->where('slots_discount_coupon.valid_to','>=',$now)->value('discount_price');
     $coupon_id=DB::table('slots_discount_coupon')->where('coupon_code',$couponcode)->where('slots_id',$package_id)->where('is_active',1)->whereNull('slots_discount_coupon.deleted_at')->value('slots_discount_coupon.id');
      $ex_coupon_code=DB::table('slots_discount_coupon')->where('coupon_code',$couponcode)->where('slots_id',$package_id)->where('is_active',0)->whereNull('slots_discount_coupon.deleted_at')->value('slots_discount_coupon.coupon_code');
 Log::debug(" data startDate ".print_r($newprice,true));
 Log::debug(" data ex_coupon_code ".print_r($ex_coupon_code,true));
   $new_package_price= $package_price-$newprice;
-$coupon_expair=DB::table('slots_discount_coupon')->where('coupon_code',$couponcode)->where('slots_id',$package_id)->where('is_active',1)->whereNull('slots_discount_coupon.deleted_at')->where('slots_discount_coupon.valid_to','<',$now)->value('slots_discount_coupon.coupon_code');
+$coupon_expair=DB::table('slots_discount_coupon')->where('coupon_code',$couponcode)->where('slots_id',$package_id)->where('is_active',1)->whereNull('slots_discount_coupon.deleted_at')->where('slots_discount_coupon.valid_to','<=',$now)->value('slots_discount_coupon.coupon_code');
 
 $wrong_details=DB::table('slots_discount_coupon')->where('coupon_code',$couponcode)->where('slots_id',$package_id)->whereNull('slots_discount_coupon.deleted_at')->count();
 // $wrong=$wrong_details==0
