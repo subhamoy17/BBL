@@ -3043,7 +3043,7 @@ public function insert_bootcamp_plan(Request $request)
 
   $bootcamp_details=DB::table('bootcamp_plans')->insert($bootcamp_data);
   DB::commit();
-  return redirect()->back();
+
   return redirect('trainer/bootcamp-plan')->with("success","You have successfully added one boot camp plan!");
 }
   catch(\Exception $e) {
@@ -3059,7 +3059,7 @@ public function bootcamp_plan_list()
   $this->cart_delete_trainer();
   $bootcamp_details=DB::table('bootcamp_plans')
   ->join('bootcamp_plan_address','bootcamp_plan_address.address_id','bootcamp_plans.address_id')
-  ->select('bootcamp_plans.bootcamp_plan_id as bootcamp_id','bootcamp_plans.mon_session_flg as monday','bootcamp_plans.tue_session_flg as tuesday','bootcamp_plans.wed_session_flg as wednesday','bootcamp_plans.thu_session_flg as thursday','bootcamp_plans.fri_session_flg as friday','bootcamp_plans.sat_session_flg as saturday','bootcamp_plans.sun_session_flg as sunday','bootcamp_plans.session_st_time as session_st_time','bootcamp_plans.session_end_time as session_end_time','bootcamp_plans.plan_st_date as plan_st_date','bootcamp_plans.plan_end_date as plan_end_date','bootcamp_plans.never_expire as never_expire','bootcamp_plans.max_allowed as max_allowed','bootcamp_plans.status as status','bootcamp_plan_address.address_line1 as location','bootcamp_plan_address.address_line2 as address')->orderby('bootcamp_plans.bootcamp_plan_id','DESC')->get();
+  ->select('bootcamp_plans.bootcamp_plan_id as bootcamp_id','bootcamp_plans.mon_session_flg as monday','bootcamp_plans.tue_session_flg as tuesday','bootcamp_plans.wed_session_flg as wednesday','bootcamp_plans.thu_session_flg as thursday','bootcamp_plans.fri_session_flg as friday','bootcamp_plans.sat_session_flg as saturday','bootcamp_plans.sun_session_flg as sunday','bootcamp_plans.session_st_time as session_st_time','bootcamp_plans.session_end_time as session_end_time','bootcamp_plans.plan_st_date as plan_st_date','bootcamp_plans.plan_end_date as plan_end_date','bootcamp_plans.never_expire as never_expire','bootcamp_plans.max_allowed as max_allowed','bootcamp_plans.status as status','bootcamp_plan_address.address_line1 as location','bootcamp_plan_address.address_line2 as address')->orderby('bootcamp_plans.bootcamp_plan_id','DESC')->whereNull('bootcamp_plans.deleted_at')->get();
 
     return view('trainer.bootcamp_plan_list')->with(compact('bootcamp_details'));
   }
@@ -3143,7 +3143,7 @@ public function bootcamp_plan_list()
     catch(\Exception $e) 
     {
       DB::rollback();
-      return abort(400);
+      return abort(200);
     }
   }
 
@@ -3323,37 +3323,48 @@ public function searchslots(Request $request)
 
 public function add_coupon()
 {
-   $slots = DB::table('slots')->get()->all();
-  // $this->cart_delete_trainer();
+  try{
+  $this->cart_delete_trainer();
+  $slots = DB::table('slots')->get()->all();
   return view('trainer.addcoupon')->with(compact('slots'));
+  }
+  catch(\Exception $e) {
+    return abort(200);
+  } 
 }
 
 public function coupon_insert(Request $request)
 {
-Log::debug(" data customer_email ".print_r($request->all(),true)); 
-     $daterange=$request->daterange; 
-    $mode_of_date=explode(" - ",$daterange);
-$format = 'Y-m-d';
-$startDate=$mode_of_date[0];
-$endDate=$mode_of_date[1];
-    // Log::debug(" data mode_of_payment ".print_r($mode_of_date[0],true));
-// Log::debug(" data endDate ".print_r($mode_of_date[1],true));
-     // $startDate=Carbon::createFromFormat('Y-m-d', $s);
-     // $endDate=Carbon::createFromFormat($format, '$e');
+//Log::debug(" data customer_email ".print_r($request->all(),true)); 
 
-// Log::debug(" data startDate ".print_r($startDate,true));
-    $cupon_data['slots_id']=$request->apply_slots; 
-    $cupon_data['coupon_code']=$request->coupon_code;
-    $cupon_data['discount_price']=$request->discount_price;
-     $cupon_data['valid_from']=$startDate;
-     $cupon_data['valid_to']= $endDate;
-    $cupon_data['is_active']=$request->is_active;
+  DB::beginTransaction();
+  try{
+
+  $daterange=$request->daterange; 
+  $mode_of_date=explode(" - ",$daterange);
+  $format = 'Y-m-d';
+  $startDate=$mode_of_date[0];
+  $endDate=$mode_of_date[1];
+    
+  $cupon_data['slots_id']=$request->apply_slots; 
+  $cupon_data['coupon_code']=$request->coupon_code;
+  $cupon_data['discount_price']=$request->discount_price;
+  $cupon_data['valid_from']=$startDate;
+  $cupon_data['valid_to']= $endDate;
+  $cupon_data['is_active']=$request->is_active;
     
   DB::table('slots_discount_coupon')->insert($cupon_data);
-
- 
+  DB::commit();
   return redirect('trainer/our_coupon_list')->with("success","You have successfully added one coupon");
+
   }
+
+  catch(\Exception $e) {
+      DB::rollback();
+      return abort(200);
+  }
+  
+}
 
 function duplicatecoupon(Request $request)
   {
@@ -3378,11 +3389,10 @@ public function our_coupon_list(Request $request)
 {
    try{
   $this->cart_delete_trainer();
-  $all_cupon_data=DB::table('slots_discount_coupon')->join('slots','slots.id','slots_discount_coupon.slots_id')->select('slots_discount_coupon.id as coupon_id','slots_discount_coupon.coupon_code','slots_discount_coupon.discount_price','slots_discount_coupon.valid_from','slots_discount_coupon.valid_to','slots.id as slots_id','slots.slots_name as slots_name')->whereNull('slots_discount_coupon.deleted_at')->get()->all();
+  $all_cupon_data=DB::table('slots_discount_coupon')->join('slots','slots.id','slots_discount_coupon.slots_id')->select('slots_discount_coupon.id as coupon_id','slots_discount_coupon.coupon_code','slots_discount_coupon.discount_price','slots_discount_coupon.valid_from','slots_discount_coupon.valid_to','slots_discount_coupon.is_active','slots.id as slots_id','slots.slots_name as slots_name')->whereNull('slots_discount_coupon.deleted_at')->get()->all();
   return view('trainer.viewcoupon')->with(compact('all_cupon_data'));
-}catch(\Exception $e) {
-      
-      return abort(200);
+}catch(\Exception $e) { 
+    return abort(200);
   }
 }
 
@@ -3407,9 +3417,9 @@ public function coupon_edit_insert(Request $request)
 {
     $daterange=$request->daterange; 
     $mode_of_date=explode(" - ",$daterange);
-$format = 'Y-m-d';
-$startDate=$mode_of_date[0];
-$endDate=$mode_of_date[1];
+    $format = 'Y-m-d';
+    $startDate=$mode_of_date[0];
+    $endDate=$mode_of_date[1];
   DB::beginTransaction();
   try{
   $this->cart_delete_trainer();

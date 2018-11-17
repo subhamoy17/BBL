@@ -200,9 +200,9 @@ $(document).ready(function(){
       // check the size of pdf
 
       var fileSize = (this.files[0].size / 1024); //size in KB
-      if (fileSize >1024) /// not more than 1 mb
+      if (fileSize >7024) /// not more than 1 mb
       {
-          alertify.alert("Please Upload maximum 1 MB file size of image");// if Maxsize from Model > real file size
+          alertify.alert("Please Upload maximum 6 MB file size of image");// if Maxsize from Model > real file size
           $("#diet_plan_pdf").val('');
           $("#Pdf_button").hide();
           return false;

@@ -42,7 +42,7 @@ public function index(Request $request)
     {  
       try
       {
-        $all_common_diet_plan=DB::table('common_diet_plan')->whereNull('deleted_at')->get();
+        $all_common_diet_plan=DB::table('common_diet_plan')->whereNull('deleted_at')->orderby('id','DESC')->get();
         return view('diet_plans')->with(compact('all_common_diet_plan'));
       }
       catch(\Exception $e) 

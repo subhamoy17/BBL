@@ -19,7 +19,7 @@
 <div class="col-lg-12">
 	<div class="card">
 		<div class="card-body card-block">
-			<form class="slct-margin" id="search_bootcamp">
+			<!-- <form class="slct-margin" id="search_bootcamp">
 					{{ csrf_field() }}
 				<div class="row">
 					<div class="col-lg-2">
@@ -52,7 +52,7 @@
  						 <option value="wed">Wednesday</option>
  						 <option value="thu">Thursday</option>
  						 <option value="fri">Friday</option>
- 						 <!-- Saving your scroll sanity !-->
+ 						 
  						 <option value="sat">Saturday</option>
  						 <option value="sun">Sunday</option>
 					</select>
@@ -134,9 +134,9 @@
 						</div>
 					</div>
 				</div>
-			</form>
+			</form> -->
 
-			<div class="add_bootcamp_div col-lg-12" style="display: none;">
+			<div class="add_bootcamp_div col-lg-12">
 				<form  action="{{route('insert_bootcamp_plan')}}" class="slct-margin" id="submit_bootcamp_session" method="post" autocomplete="off">
 					{{ csrf_field() }}
 				<div class="row cxz">
@@ -276,6 +276,7 @@
 </div>
 <script src="{{asset('backend/assets/js/semantic.js')}}"></script>
 <script src="{{asset('backend/assets/js/timepicki.js')}}"></script>
+<script src="{{asset('backend/assets/js/moment.min.js')}}"></script>
 <script>
 	$('#search-address,#search-day,#search-start-time,#search-end-time,#search-start-date,#search-end-date').dropdown();
 </script>
@@ -327,7 +328,12 @@ function toggleField1(hideObj,showObj){
             	$('#session_end_time').focus();
               return false;
             }
-            if($('#session_st_time').val()>=$('#session_end_time').val())
+
+            var startTime = moment($('#session_st_time').val(), ["h:mm A"]).format("HH:mm");
+
+    				var endTime = moment($('#session_end_time').val(), ["h:mm A"]).format("HH:mm");
+
+            if(startTime>=endTime)
             {
             	alertify.alert('Session end time is always upper than session start time');
             	$('#session_end_time').focus();
@@ -391,7 +397,7 @@ function toggleField1(hideObj,showObj){
   });
 </script>
 
-<script>
+<!-- <script>
 	$(document).ready(function(){ 
 		$('#add_new_session').on('click', function (e) {
 			e.preventDefault();
@@ -399,7 +405,7 @@ function toggleField1(hideObj,showObj){
 		});
 	});
 </script>
-
+ -->
 <script>
 
   $(function () {

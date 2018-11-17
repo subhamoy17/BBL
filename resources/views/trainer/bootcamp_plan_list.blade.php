@@ -117,8 +117,9 @@ $(document).ready(function() {
                       </td>
                       
                       <td style="width: 73px">
-                          <a href="{{url('trainer/editexercise')}}/{{$each_bootcamp->bootcamp_id}}" title="Edit Exercise"><button class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button></a>
-                          <button type="button" class="btn btn-danger btn-sm" onclick="delete_gym_type({!!$each_bootcamp->bootcamp_id!!})" style="width: 32px;" title="Delete Exercise"><i class="fa fa-trash-o"></i></button>
+                          <a href="" title="Edit Exercise"><button class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button></a>
+                          <button type="button" class="btn btn-danger btn-sm" style="width: 32px;" title="Delete Exercise"><i class="fa fa-trash-o"></i></button>
+                          <!-- <a href="#" class="payment btn btn-info btn-sm" style="padding: 4px 7px;position: relative; right: -1.5px; top: 0px;"><i class="fa fa-eye" title="view details"  aria-hidden="true"></i></a> -->
                       </td>
                     </tr>
                   @endforeach

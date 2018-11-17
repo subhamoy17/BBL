@@ -95,11 +95,11 @@
                   @if(Request::segment(2) == "add_coupon" || Request::segment(2) == "our_coupon_list" || Request::segment(2) == "our_coupon_edit_view")
                  <ul class="nav navbar-nav">
                  <li class="active">
-                  <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('our_coupon_list')}}" style="color: #fff !important;">View Coupon</a></li>
+                  <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('our_coupon_list')}}" style="color: #fff !important;">Discount Coupon</a></li>
                   @else
                   <ul class="nav navbar-nav">
                   <li class="active">
-                  <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('our_coupon_list')}}">View Coupon</a></li>
+                  <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('our_coupon_list')}}">Discount Coupon</a></li>
                   @endif
 
                 @if(Request::segment(2) == "testimonial_view" || Request::segment(2) == "testimonialshow" || Request::segment(2) == "testimonialedit")

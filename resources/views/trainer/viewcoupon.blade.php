@@ -11,33 +11,20 @@ $('#bootstrap-slot-data-table').DataTable({
         lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
         
         // disable shorting from slno,image and action columns
-        "columnDefs": [ { "orderable": false, "targets": [0,6] } ],
+        "columnDefs": [ { "orderable": false, "targets": [0,7] } ],
         
     });
  } );
 
 </script>
-
-<!-- <style>
-    /* disable shorting arrow from slno,image and action columns*/
-     table.dataTable thead>tr>th[id='slno'].sorting_asc::before{display: none}
-     table.dataTable thead>tr>th[id='slno'].sorting_asc::after{display: none}
-
-      table.dataTable thead>tr>th[id='image'].sorting_asc::before{display: none}
-     table.dataTable thead>tr>th[id='image'].sorting_asc::after{display: none}
-
-     table.dataTable thead>tr>th[id='action'].sorting_asc::before{display: none}
-     table.dataTable thead>tr>th[id='action'].sorting_asc::after{display: none}
-
-     /*for delete buton*/
-     .button-primary {
-    background: #d16879;
-    color: #FFF;
-    padding: 10px 20px;
-    font-weight: bold;
-    border:1px solid #FFC0CB;
-}
-</style> -->
+<script type="text/javascript">
+  $(document).ready(function()
+  { 
+  setTimeout(function(){ 
+                          $('.alert-success').hide();
+                      }, 3000);
+});
+</script>
 
 @if(Auth::user()->master_trainer==1)
 
@@ -68,7 +55,7 @@ $('#bootstrap-slot-data-table').DataTable({
         <div class="row">
             <div class="col-md-12">
                                 @if (session('delete'))
-                                    <div class="alert alert-danger">
+                                    <div class="alert alert-success">
                                         {{ session('delete') }}
                                     </div>
                                 @endif
@@ -102,9 +89,10 @@ $('#bootstrap-slot-data-table').DataTable({
                                     <th id="slno">Sl. No.</th>
                                     <th>Slot Name</th>
                                     <th>Coupon Code</th>
-                                    <th>Coupon Price <i class="fa fa-gbp"></i></th>
+                                    <th>Coupon Price (<i class="fa fa-gbp"></i>)</th>
                                     <th>Coupon Start Date</th>
                                     <th>Coupon End Date</th>
+                                    <th>Status</th>
                                     <th id="action">Action</th>
                                 </tr>
                             </thead>
@@ -120,7 +108,7 @@ $('#bootstrap-slot-data-table').DataTable({
 
                                     <td>{{date('d F Y', strtotime($mydata->valid_to))}}</td>
                                  
-
+                                    <td>@if($mydata->is_active==1) Active @else Inactive @endif</td>
                                    
                                         
                                         <td style="width: 70px"">

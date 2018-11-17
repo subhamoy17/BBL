@@ -173,7 +173,7 @@ required: "Please select a date"
                           <div class="row form-group">
                             <div class="col col-md-3"><label for="text-input" class=" form-control-label">Coupon Code<span class="required_field_color">*</span></label></div>
                             <div class="col-12 col-md-9"><input type="text" id="coupon_code" name="coupon_code" placeholder="Name" class="form-control" value="{{$edit_coupondata->coupon_code}}" >
-                               <div id="duplicate_coupon"></div>
+                               <div id="duplicate_coupon" style="color: #dc3545; font-weight: 700;    text-transform: none; font-size: 13px;"></div>
                             </div>
                           </div>
                           <div class="row form-group">
