@@ -105,7 +105,7 @@
             </div>
             <div class="col-lg-5 col-md-5 col-sm-12 colxs-12">
               <div class="map">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14735.757260694843!2d88.4397378!3d22.5813729!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x639638c83b7f297a!2sSoftclique+Software+Services+LLP!5e0!3m2!1sen!2sin!4v1518768352355" width="100%" height="467" frameborder="0" style="border:0" allowfullscreen></iframe>
+                <iframe src="https://maps.google.com/maps?q=Oakridge%20Hall%2C%20Cherry%20Tree%20Walk%2C%20RG21%205RL%20Basingstoke&t=&z=13&ie=UTF8&iwloc=&output=embed" width="100%" height="467" frameborder="0" style="border:0" allowfullscreen></iframe>
               </div>
             </div>
           </div>
