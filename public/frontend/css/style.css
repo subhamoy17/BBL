@@ -5083,9 +5083,10 @@ h3.heading-agileinfo.white-gyls {
     font-size: 44px;
     margin-top: 10px;
 }
-.p-box-head h1 span{
-    font-size: 16px;
-    display: block;
+.p-box-head h1 span {
+	font-size: 12px;
+	display: inline-block;
+	color: #daa50a;
 }
 .p-box-bdy {
     background: #ebeeef;
@@ -5110,12 +5111,13 @@ h3.heading-agileinfo.white-gyls {
     /* display: grid; */
     margin-top: 30px;
     transition: .5s all ease-in;
+	border-radius: 10px;
     
 }
-.price-box:hover {
+/*.price-box:hover {
     transform: scale(1.05);
     transition: .5s all ease-in;
-}
+}*/
 .p-box-bdy li {
     padding: 8px 0;
     border-bottom: 1px solid #fff;
@@ -6437,3 +6439,42 @@ span.line_t2 {
 }
 
 /*151118*/
+
+
+
+/*211118*/
+
+.date-time h5 {
+	font-weight: 500;
+	margin-bottom: 10px;
+}
+.date-time span {
+	color: #485271;
+	font-size: 12px;
+	font-weight: 500;
+}
+.cntrct {
+	background: #daa50a;
+	width: 150px;
+	margin: 11px auto 0;
+	border-radius: 5px;
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+.cntrct h5 {
+	font-size: 12px;
+}
+.cntrct {
+	background: #8471b9;
+	width: 140px;
+	margin: 0px auto 0;
+	border-radius: 5px;
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 6px;
+	padding: 3px;
+}
+/*// 211118*/
