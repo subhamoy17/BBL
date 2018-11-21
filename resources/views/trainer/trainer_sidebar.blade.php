@@ -34,6 +34,22 @@
                   <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('allCustomers')}}">All Customers</a></li>
                   @endif
 
+                  @if(Request::segment(2) == "add-product")
+          <li class="menu-item-has-children dropdown show">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i>Products</a>
+            <ul class="sub-menu children dropdown-menu show"> 
+              @else
+              <li class="menu-item-has-children dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i>Products</a>
+                <ul class="sub-menu children dropdown-menu">
+                  @endif 
+                  @if(Request::segment(2) == "add-product")
+                  <li><i class="fa fa-id-card-o"></i><a href="{{route('product')}}" style="color: #fff !important;">Add New Product</a></li>
+                  @else
+                  <li><i class="fa fa-id-card-o"></i><a href="{{route('product')}}">Add New Product</a></li>
+                  @endif
+                </ul></li>
+
                 @if(Request::segment(2) == "gymType" || Request::segment(2) == "add_exercise_trainer" || Request::segment(2) == "editexercise")
                        <ul class="nav navbar-nav">
                  <li class="active">
@@ -158,7 +174,7 @@
                   @endif
 
 
-                  @if(Request::segment(2) == "add-bootcamp-plan" || Request::segment(2) == "bootcamp-plan")
+                  @if(Request::segment(2) == "add-bootcamp-plan" || Request::segment(2) == "bootcamp-plan" || Request::segment(2) =='edit-bootcamp-plan')
           <li class="menu-item-has-children dropdown show">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i>Bootcamp Plan</a>
             <ul class="sub-menu children dropdown-menu show"> 
@@ -173,7 +189,7 @@
                   <li><i class="fa fa-id-card-o"></i><a href="{{route('bootcamp_plan')}}">Add Bootcamp Plan</a></li>
                   @endif
 
-                  @if(Request::segment(2) == "bootcamp-plan")
+                  @if(Request::segment(2) == "bootcamp-plan" || Request::segment(2) =='edit-bootcamp-plan')
                   <li><i class="fa fa-id-card-o"></i><a href="{{route('bootcamp_plan_list')}}" style="color: #fff !important;">All Bootcamp Plan</a></li>
                   @else
                   <li><i class="fa fa-id-card-o"></i><a href="{{route('bootcamp_plan_list')}}">All Bootcamp Plan</a></li>

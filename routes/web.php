@@ -231,10 +231,6 @@ Route::get('add-common-diet-plan','TrainerController@add_common_diet_plan')->nam
 Route::post('insert-common-diet-plan', 'TrainerController@insert_common_diet_plan')->name('insert_common_diet_plan');
 
 
-
-
-
-
 //Update diet plan
 Route::get('edit-common-diet-plan/{id}', 'TrainerController@edit_common_diet_plan');
 Route::post('update-diet-plan', 'TrainerController@update_common_diet_plan')->name('update_common_diet_plan');
@@ -244,6 +240,10 @@ Route::get('delete-common-diet-plan/{id}', 'TrainerController@delete_common_diet
 
 Route::post('checkDietPlan_duplicate', 'TrainerController@checkDietPlan_duplicate');
 Route::post('check_editDietPlan_duplicate', 'TrainerController@check_editDietPlan_duplicate');
+
+Route::post('check_editDietPlan_duplicate', 'TrainerController@check_editDietPlan_duplicate');
+
+
 
 });
 
