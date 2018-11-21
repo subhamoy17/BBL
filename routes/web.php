@@ -241,7 +241,7 @@ Route::get('delete-common-diet-plan/{id}', 'TrainerController@delete_common_diet
 Route::post('checkDietPlan_duplicate', 'TrainerController@checkDietPlan_duplicate');
 Route::post('check_editDietPlan_duplicate', 'TrainerController@check_editDietPlan_duplicate');
 
-Route::post('check_editDietPlan_duplicate', 'TrainerController@check_editDietPlan_duplicate');
+Route::get('add-product', 'TrainerController@add_product')->name('add_product');
 
 
 

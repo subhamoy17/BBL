@@ -3634,4 +3634,10 @@ public function bootcamp_plan_delete($id)
   }
 }
 
+
+public function add_product()
+{
+  return view('trainer/add_product');
+}
+
 }

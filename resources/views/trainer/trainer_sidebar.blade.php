@@ -44,9 +44,9 @@
                 <ul class="sub-menu children dropdown-menu">
                   @endif 
                   @if(Request::segment(2) == "add-product")
-                  <li><i class="fa fa-id-card-o"></i><a href="{{route('product')}}" style="color: #fff !important;">Add New Product</a></li>
+                  <li><i class="fa fa-id-card-o"></i><a href="{{route('add_product')}}" style="color: #fff !important;">Add New Product</a></li>
                   @else
-                  <li><i class="fa fa-id-card-o"></i><a href="{{route('product')}}">Add New Product</a></li>
+                  <li><i class="fa fa-id-card-o"></i><a href="{{route('add_product')}}">Add New Product</a></li>
                   @endif
                 </ul></li>
 
