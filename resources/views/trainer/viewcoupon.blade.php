@@ -32,7 +32,7 @@ $('#bootstrap-slot-data-table').DataTable({
     <div class="col-sm-9">
         <div class="page-header float-left">
             <div class="page-title">
-                <h1>Coupon List</h1>
+                <h1>Discount Coupon List</h1>
             </div>
        
                             
@@ -42,7 +42,7 @@ $('#bootstrap-slot-data-table').DataTable({
        
          <strong class="card-title add-n-cl cl-list">
                               <a href="{{route('add_coupon')}}">
-                                    <button class="btn btn-success"><i class="fa fa-plus"></i> Add Coupon</button>
+                                    <button class="btn btn-success"><i class="fa fa-plus"></i> Add Discount Coupon</button>
                                 </a>
                                 <br>
 
@@ -86,13 +86,13 @@ $('#bootstrap-slot-data-table').DataTable({
                         <table id="bootstrap-slot-data-table" class="display responsive table-striped table-bordered" width="100%">
                             <thead>
                                 <tr>
-                                    <th id="slno">Sl. No.</th>
-                                    <th>Slot Name</th>
-                                    <th>Coupon Code</th>
-                                    <th>Coupon Price (<i class="fa fa-gbp"></i>)</th>
-                                    <th>Coupon Start Date</th>
-                                    <th>Coupon End Date</th>
-                                    <th>Status</th>
+                                    <th id="slno" >Sl. No.</th>
+                                    <th>Package Name</th>
+                                    <th>Discount Coupon Code</th>
+                                    <th>Discount Coupon Price (<i class="fa fa-gbp"></i>)</th>
+                                    <th>Discount Coupon Start Date</th>
+                                    <th>Discount Coupon End Date</th>
+                                    <th>Discount Coupon Status</th>
                                     <th id="action">Action</th>
                                 </tr>
                             </thead>
@@ -103,7 +103,7 @@ $('#bootstrap-slot-data-table').DataTable({
                                     <td>{{++$key}}</td>
                                     <td>{{$mydata->slots_name}}</td>
                                      <td>{{$mydata->coupon_code}}</td>
-                                    <td>{{$mydata->discount_price}}</td>
+                                    <td>{{(float)$mydata->discount_price}}</td>
                                     <td>{{date('d F Y', strtotime($mydata->valid_from))}}</td>
 
                                     <td>{{date('d F Y', strtotime($mydata->valid_to))}}</td>

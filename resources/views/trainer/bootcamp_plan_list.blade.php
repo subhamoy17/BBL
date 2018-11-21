@@ -62,17 +62,19 @@ $(document).ready(function() {
           </div>
           <div class="card-body">
             <script type="text/javascript">
-              function delete_gym_type(id){ 
-                alertify.confirm("Are you sure you want to delete this exercise?", function (e) {
+              function delete_client(id){ 
+                alertify.confirm("Are you sure you want to delete this bootcamp plan?", function (e) {
                 if (e) {
                   // alertify.success("You've clicked OK");
-                  window.location.href="{{url('trainer/gymdelete')}}/"+id;
+                  window.location.href="{{url('trainer/bootcamp_plan_delete')}}/"+id;
                 } else {
                   // alertify.error("You've clicked Cancel");
                   }                                       
                 });
               }
             </script>
+
+
             <table id="bootstrap-slot-data-table" class="display responsive table-striped table-bordered" width="100%">
               <thead>
                 <tr>
@@ -117,8 +119,8 @@ $(document).ready(function() {
                       </td>
                       
                       <td style="width: 73px">
-                          <a href="" title="Edit Exercise"><button class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button></a>
-                          <button type="button" class="btn btn-danger btn-sm" style="width: 32px;" title="Delete Exercise"><i class="fa fa-trash-o"></i></button>
+                          <a href="{{url('trainer/edit-bootcamp-plan')}}/{{$each_bootcamp->bootcamp_id}}" title="Edit Exercise"><button class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button></a>
+                          <button type="button" onclick="delete_client({!!$each_bootcamp->bootcamp_id!!})" class="btn btn-danger btn-sm" style="width: 32px;" title="Delete Exercise"><i class="fa fa-trash-o"></i></button>
                           <!-- <a href="#" class="payment btn btn-info btn-sm" style="padding: 4px 7px;position: relative; right: -1.5px; top: 0px;"><i class="fa fa-eye" title="view details"  aria-hidden="true"></i></a> -->
                       </td>
                     </tr>

@@ -829,15 +829,24 @@ a.reset_time {
     text-transform: none;
     font-size: 13px;
 }
-}
+/*}*/
 
 /*for coupon sumit*/
-#duplicate_coupon {
+
+
+.coupon-error2 {
     color: #dc3545;
     font-weight: 700;
     text-transform: none;
     font-size: 13px;
 }
+.coupon-error3 {
+    color: #dc3545;
+    font-weight: 700;
+    text-transform: none;
+    font-size: 13px;
+}
+
 
 #lessthan_slot {
     color: #dc3545;
@@ -877,6 +886,6 @@ a.reset_time {
 .sl{
 margin-left: 20px;
     }
-    .sl{
-margin-left: 10px;
+    .sl2{
+margin-left: 5px;
     }

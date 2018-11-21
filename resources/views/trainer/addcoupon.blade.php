@@ -172,7 +172,7 @@ required: "Please select a date"
             <div class="col-sm-4">
                 <div class="page-header float-left">
                     <div class="page-title">
-                        <h1>Add Coupon</h1>
+                        <h1>Add Discount Coupon</h1>
                     </div>
                 </div>
             </div>    
@@ -185,9 +185,9 @@ required: "Please select a date"
                             <input type="hidden" name="_token" value="{{csrf_token()}}">
 
                           <div class="row form-group">
-                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Slots Name<span class="required_field_color">*</span></label></div>
+                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Package Name<span class="required_field_color">*</span></label></div>
                          
-                            <div class="col-12 col-md-9"><input type="text" id="slots_name" name="slots_name" placeholder="Enter Slot Name" class="form-control slots_name required" onkeyup=" return jsnull()">
+                            <div class="col-12 col-md-9"><input type="text" id="slots_name" name="slots_name" placeholder="Enter Package Name" class="form-control slots_name required" onkeyup=" return jsnull()">
                                <input type="hidden" id="apply_slots" name="apply_slots">
                             </div>
                           </div>
@@ -195,26 +195,26 @@ required: "Please select a date"
                           <div   id="slot_details" style="display: none;">
                             <div class="row form-group" id="s_d">
           <div class="col col-md-3">
-            <label for="text-input" class=" form-control-label">Slots Details</label>
+            <label for="text-input" class=" form-control-label">Package Details</label>
           </div>
           
            
-           <label class="sl">Slot Number:</label> <div class="so" id="slots_number" name="slots_number"></div><span>,</span>
-             <lable class="sl">Slot Price:</lable><div class="so" id="slots_price" name="slots_price"></div><span>(<i class="fa fa-gbp"></i>),</span>
+           <label class="sl">Session Number : </label> <div class="sl2" id="slots_number" name="slots_number"></div><span>,</span>
+             <lable class="sl">Package Price : <i class="fa fa-gbp"></i> </lable></span><div class="sl2" id="slots_price" name="slots_price"></div><span>,</span>
               
-              <label class="sl"> Slot Validity: </label><div class="so" id="slots_validity" name="slots_validity"></div>
+              <label class="sl"> Package Validity : </label><div class="sl2" id="slots_validity" name="slots_validity"></div>
                 
       </div>
  <div class="row form-group">
-                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Coupon Code<span class="required_field_color">*</span></label></div>
+                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Discount Coupon Code<span class="required_field_color">*</span></label></div>
                             <div class="col-12 col-md-9"><input type="text" id="coupon_code" name="coupon_code" placeholder="Coupon Code" class="form-control" >
-                              <div id="duplicate_coupon" style="color: #dc3545; font-weight: 700;    text-transform: none; font-size: 13px;"></div>
+                              <div id="duplicate_coupon" class="coupon-error2"></div>
                             </div>
                           </div>
                            <div class="row form-group">
-                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Discount Price(<i class="fa fa-gbp"></i>)<span class="required_field_color">*</span></label></div>
+                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Discount Coupon Price (<i class="fa fa-gbp"></i>)<span class="required_field_color">*</span></label></div>
                             <div class="col-12 col-md-9"><input type="text" id="discount_price" name="discount_price" placeholder="Discount Price" class="form-control" >
-                              <div id="lessthan_slot"></div>
+                              <div id="lessthan_slot" class="coupon-error2"></div>
                             </div>
                           </div>
 
@@ -226,25 +226,31 @@ required: "Please select a date"
 
 
                           <div class="row form-group">
-                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Validity<span class="required_field_color">*</span></label></div>
+                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Discount Coupon Validity<span class="required_field_color">*</span></label></div>
                             <div class="col-12 col-md-9"><input class="drange form-control" type="text" name="daterange" id="daterange" value="" placeholder="Select Date" readonly/>
                             </div>
                           </div>
 
 
                           <div class="row form-group">
-                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Coupon Activated<span class="required_field_color">*</span></label></div>
+                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Discount Coupon Status<span class="required_field_color">*</span></label></div>
                             <div class="col-12 col-md-9">
-                              <input type="radio"  id="is_active_yes" name="is_active" value="1" checked="checked">Yes &nbsp;
-                              <input type="radio"  id="is_active_no" name="is_active" value="0">No
+                              <input type="radio"  id="is_active_yes" name="is_active" value="1" checked="checked">Active &nbsp;
+                              <input type="radio"  id="is_active_no" name="is_active" value="0">Inactive
                             </div>
-                          </div>                        
-
-                            <div style="float: left">
-                                <button  id="cupon_sub" name="submit" class="btn btn-primary btn-sm cupon_sub">
-                                  <i class="fa fa-dot-circle-o"></i> Submit
+                          </div> 
+      
+                         <div class="row form-group">
+                          <div class="col col-md-10">
+                          </div>
+                            <div class="col col-md-2" >
+                                <button  type="submit" id="cupon_sub" name="submit" class="btn btn-primary cupon_sub" style="width: 65%; float: right;">
+                                   Submit
                                 </button>
                             </div>
+                          </div>
+                       
+
                         </form>
 
 
@@ -253,7 +259,7 @@ required: "Please select a date"
                            
                       </div>
                     </div>
-                    </div>
+                    <!-- </div> -->
 
 
 @endif
@@ -265,8 +271,8 @@ required: "Please select a date"
   $(document).ready(function(){
 var dis=false;
 var cup=false;
-
-
+$("#duplicate_coupon").hide();
+$("#lessthan_slot").hide();
 $('#couponaddform').bind('submit', function (e) {
     var button = $('#cupon_sub');
 
@@ -310,7 +316,7 @@ console.log(cup);
              
               $("#duplicate_coupon").show();
                // $("#lessthan_slot").hide();
-              $("#duplicate_coupon").html("Duplicate coupon name is not allow");
+              $("#duplicate_coupon").html("Duplicate coupon code is not allow");
                // $('.btn-primary').attr('disabled','disabled');
                dis=false;
         
@@ -343,7 +349,7 @@ check();
               
               $("#lessthan_slot").show();
               // $("#duplicate_coupon").hide();
-              $("#lessthan_slot").html("Discount price always lessthan of slot price");
+              $("#lessthan_slot").html("Discount price always lessthan of package price");
               // $('.btn-primary').attr('disabled','disabled');
                cup=false;
             }

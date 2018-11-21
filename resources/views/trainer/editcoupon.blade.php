@@ -153,7 +153,7 @@ required: "Please select a date"
             <div class="col-sm-4">
                 <div class="page-header float-left">
                     <div class="page-title">
-                        <h1>Edit Coupon</h1>
+                        <h1>Edit Discount Coupon</h1>
                     </div>
                 </div>
             </div>    
@@ -166,18 +166,18 @@ required: "Please select a date"
                               <input type="hidden" name="id" id="id" value="{{$edit_coupondata->id}}">
                               <input type="hidden" name="slots_id" id="slots_id" value="{{$edit_coupondata->slots_id}}">
                           <div class="row form-group">
-                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Slot Name<span class="required_field_color">*</span></label></div>
+                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Package Name<span class="required_field_color">*</span></label></div>
                             <div class="col-12 col-md-9"><input type="text" id="slots_name1" name="slots_name1" placeholder="Title" class="form-control" value="{{$edit_coupondata->slots_name}}" readonly>
                             </div>
                           </div>
                           <div class="row form-group">
-                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Coupon Code<span class="required_field_color">*</span></label></div>
+                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Discount Coupon Code<span class="required_field_color">*</span></label></div>
                             <div class="col-12 col-md-9"><input type="text" id="coupon_code" name="coupon_code" placeholder="Name" class="form-control" value="{{$edit_coupondata->coupon_code}}" >
-                               <div id="duplicate_coupon" style="color: #dc3545; font-weight: 700;    text-transform: none; font-size: 13px;"></div>
+                               <div id="duplicate_coupon" class="coupon-error3"></div>
                             </div>
                           </div>
                           <div class="row form-group">
-                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Coupon Discount Price(<i class="fa fa-gbp"></i>)<span class="required_field_color">*</span></label></div>
+                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Discount Coupon Price(<i class="fa fa-gbp"></i>)<span class="required_field_color">*</span></label></div>
                             <div class="col-12 col-md-9"><input type="text" id="discount_price" name="discount_price" placeholder="Name" class="form-control" value="{{$edit_coupondata->discount_price}}">
                                <div id="lessthan_slot"></div>
                             </div>
@@ -190,31 +190,36 @@ required: "Please select a date"
                             <input type="hidden" id="valid_to" name="valid_to" class="form-control" value="{{$edit_coupondata->valid_to}}">
                                                    
                             <div class="row form-group">
-                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Validity<span class="required_field_color">*</span></label></div>
+                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Discount Coupon Validity<span class="required_field_color">*</span></label></div>
                             <div class="col-12 col-md-9"><input class="drange form-control" type="text" name="daterange" id="daterange"  placeholder="Select Date" readonly/>
                             </div>
                           </div>
 
                            <div class="row form-group">
-                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Coupon Activated<span class="required_field_color">*</span></label></div>
+                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Discount Coupon Status<span class="required_field_color">*</span></label></div>
                             <div class="col-12 col-md-9">
                               @if($edit_coupondata->is_active==1)
-                              <input type="radio"  id="is_active_yes" name="is_active" value="1" checked="checked">Yes &nbsp;
-                              <input type="radio"  id="is_active_no" name="is_active" value="0">No
+                              <input type="radio"  id="is_active_yes" name="is_active" value="1" checked="checked">Active &nbsp;
+                              <input type="radio"  id="is_active_no" name="is_active" value="0">Inactive
                               @else
-                              <input type="radio"  id="is_active_yes" name="is_active" value="1">Yes &nbsp;
-                              <input type="radio"  id="is_active_no" name="is_active" value="0" checked="checked">No
+                              <input type="radio"  id="is_active_yes" name="is_active" value="1">Active &nbsp;
+                              <input type="radio"  id="is_active_no" name="is_active" value="0" checked="checked">Inactive
                               @endif
                             </div>
                           </div>
                            
 
 
-                             <div style="float: left">
-                                <button type="submit" id="cupon_sub" name="submit" class="btn btn-primary btn-sm">
-                                  <i class="fa fa-dot-circle-o"></i> Submit
+                             
+                            <div class="row form-group">
+                          <div class="col col-md-10">
+                          </div>
+                            <div class="col col-md-2" >
+                                <button  type="submit" id="cupon_sub" name="submit" class="btn btn-primary cupon_sub" style="width: 65%; float: right;">
+                                   Edit
                                 </button>
                             </div>
+                          </div>
                         </form>
                       </div>
                     </div>
@@ -274,7 +279,7 @@ console.log(cup);
              
               $("#duplicate_coupon").show();
                // $("#lessthan_slot").hide();
-              $("#duplicate_coupon").html("Duplicate coupon name is not allow");
+              $("#duplicate_coupon").html("Duplicate coupon code is not allow");
                // $('.btn-primary').attr('disabled','disabled');
                dis=false;
         
@@ -308,7 +313,7 @@ check();
               
               $("#lessthan_slot").show();
               // $("#duplicate_coupon").hide();
-              $("#lessthan_slot").html("Discount price always lessthan of slot price");
+              $("#lessthan_slot").html("Discount price always lessthan of package price");
               // $('.btn-primary').attr('disabled','disabled');
                cup=false;
             }

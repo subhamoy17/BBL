@@ -110,7 +110,7 @@ $('#frm1').validate({
 
   messages: {
     "selector1":{
-    required: 'Please enter your payment mode'
+    required: 'Please select your payment mode'
    
   }
 

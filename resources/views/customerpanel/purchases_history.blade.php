@@ -25,10 +25,11 @@
       <table class="table">
         <thead>
           <tr>
-            <th>Package Name</th>
-            <th>Package Price</th>
-            <th>Package validity</th>
-            <th>Purchases Date</th>
+            <th>Purchases Name</th>
+            <th>Purchases Price</th>
+            <!-- <th>Your Purchases Price</th> -->
+            <!-- <th>Purchases validity</th> -->
+            <th>Purchases On</th>
             <th>Purchases Validity</th>
             <!-- <th>Payment Mode</th> -->
             <th>Total Slots </th>
@@ -45,8 +46,13 @@
           <tr>
             <!--  -->
             <td>{{$mydata->slots_name}}</td>
-            <td> <i class="fa fa-gbp"></i> {{$mydata->slots_price}}</td>
-            <td>{{$mydata->slots_validity}} Days</td>
+            @if($mydata->price > $mydata->slots_price)
+            <td><span class="line_t2"> <i class="fa fa-gbp"></i> {{$mydata->price}}</span> <br>
+             <i class="fa fa-gbp"></i> {{$mydata->slots_price}}</td>
+             @else
+             <td> <i class="fa fa-gbp"></i> {{$mydata->price}} </td>
+             @endif
+            <!-- <td>{{$mydata->slots_validity}} Days</td> -->
             <td>{{date('d F Y', strtotime($mydata->purchases_date))}}</td>
             <td>{{date('d F Y', strtotime($mydata->package_validity_date))}}</td>
             <td>{{$mydata->slots_number}}</td>

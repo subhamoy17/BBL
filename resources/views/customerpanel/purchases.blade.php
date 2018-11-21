@@ -62,7 +62,7 @@
                                 </li>
                               </ul>
 
-                              <label for="selector1" class="error" style="display:none;"></label>
+                              <label for="selector1" id="check_error" class="error" style="display:none;"></label>
                               <div class="clear"></div>
                                      <div id="app_btn">                                        
                                   <input type="text" id="coupon_code" name="coupon_code" placeholder="Coupon Code" onkeyup=" return jsnull()">
