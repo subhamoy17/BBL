@@ -3608,6 +3608,13 @@ $edit_bootcamp_data['session_st_time']=date("H:i:s", strtotime($request->session
    $edit_bootcamp_data['plan_end_date']=$request->plan_end_date;
   
    $edit_bootcamp_data['max_allowed']=$request->max_allowed;
+   if($request->location_select){
+    $edit_bootcamp_data['address_id']=$request->location_select;
+   }
+   else
+   {
+    $edit_bootcamp_data['address_id']=$request->address_select;
+   }
   
   
   $edit_bootcamp_data['updated_at']=Carbon::now();
