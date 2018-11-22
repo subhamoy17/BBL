@@ -3643,7 +3643,10 @@ public function bootcamp_plan_delete($id)
 
 public function add_product()
 {
-  return view('trainer/add_product');
+  $all_traning_type=DB::table('training_type')->get();
+  $all_payment_type=DB::table('payment_type')->get();
+  $all_slot_time=DB::table('slot_times')->get();
+  return view('trainer/add_product')->with(compact('all_traning_type','all_payment_type','all_slot_time'));
 }
 
 }

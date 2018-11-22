@@ -4,7 +4,148 @@
 
 @section('content')
 
+<script>
+
+  $(document).ready(function(){
+
+
+
+    $.validator.addMethod("alpha", function(value, element){
+      return this.optional(element) || value == value.match(/^[a-zA-Z, '']+$/);
+    }, "Alphabetic characters only please");
+
+// mobile number can contant only numeric
+$.validator.addMethod('numericO nly', function (value) {
+  return /^[0-9]+$/.test(value);
+}, 'Please enter only numeric values');
+
+$.validator.addMethod('blood', function (value) {
+  return /^[0-9]*[/]?[0-9]*$/.test(value);
+}, 'Please enter only numeric values');
+
+$.validator.addMethod("alphanumeric", function(value, element) {
+  return this.optional(element) || /^[\w.]+$/i.test(value);
+}, "Letters, numbers, and underscores only please");
+
+
+$.validator.addMethod("dollarsscents", function(value, element) {
+  return this.optional(element) || /^\d{0,5}(\.\d{0,3})?$/i.test(value);
+}, "Please enter value betwwen 1 to 999990.99");
+
+$.validator.addMethod("greaterThanZero", function(value, element) {
+    return this.optional(element) || (parseFloat(value) != '');
+}, "Amount must be greater than zero");
+   
+   
+
+$('#submit_product').validate({  
+/// rules of error 
+rules: {
+
+  "training_type":
+  {
+    greaterThanZero: true,
+  },
+
+
+  "payment_type": {
+ greaterThanZero: true,
+
+
+},
+
+"price": {
+ required: true,
+number: true,
+range: [1, 99999.99]
+},
+"no_session": {
+required: true,
+number: true,
+range: [1, 99999.99]
+
+},
+"validity": {
+greaterThanZero: true,
+
+},
+"validity_2": {
+greaterThanZero: true,
+
+},
+"contant": {
+greaterThanZero: true,
+
+},
+
+"notice_period": {
+greaterThanZero: true,
+
+},
+
+"notice_period_2": {
+greaterThanZero: true,
+
+}
+
+},
+
+messages: {
+
+  "training_type":
+  {
+    greaterThanZero: "Please select training name"
+  },
+
+  "payment_type":
+  {
+    greaterThanZero: "Please select payment name"
+  },
+
+  "price":{
+ required: 'Please enter a price',
+number: 'Please enter decimal only',
+range: "Please enter value betwwen 1 to 99999.99"
+},
+
+"no_session":{
+required: "Please enter a number of session",
+number: 'Please enter decimal only',
+range: "Please enter value betwwen 1 to 99999.99"
+},
+
+"validity":{
+ greaterThanZero: "Please select validity value",
+ 
+},
+"validity_2":{
+ greaterThanZero: "Please select validity value",
+ 
+},
+"contant":{
+ greaterThanZero: "Please select contant",
+ 
+},
+"notice_period":{
+ greaterThanZero: "Please select notice period value",
+ 
+},
+"notice_period_2":{
+ greaterThanZero: "Please select notice period value",
+ 
+}
+
+}
+});
+
+
+});
+
+</script>
+
+
 @if(Auth::user()->master_trainer==1)
+
 
 
   <div class="breadcrumbs">
@@ -19,246 +160,338 @@
 <div class="col-lg-12">
 	<div class="card">
 		<div class="card-body card-block">
-			<!-- <form class="slct-margin" id="search_bootcamp">
-					{{ csrf_field() }}
-				<div class="row">
-					<div class="col-lg-2">
-						<label>Location/ Address:</label>
-					</div>
-					<div class="col-lg-4">
-						<select class="ui search selection dropdown form-control" id="search-address">
-							<option value="-">Location/ Address</option>
-							@if(!empty($address))
-									@foreach($address as $each_address)
- 						 				<option value="{{$each_address->address_id}}">
- 						 					@if($each_address->address_line1!='')
- 						 						{{$each_address->address_line1}}
- 						 					@else
- 						 						{{$each_address->address_line2}}
- 						 					@endif
- 						 				</option>
- 						 			@endforeach
- 						 	@endif
-						</select>
-					</div>
-					<div class="col-lg-2">
-						<label>Day:</label>
-					</div>
-					<div class="col-lg-4">
-						<select class="ui search selection dropdown form-control" id="search-day">
- 						 <option value="-">Day</option>
- 						 <option value="mon">Monaday</option>
- 						 <option value="tue">Tuesday</option>
- 						 <option value="wed">Wednesday</option>
- 						 <option value="thu">Thursday</option>
- 						 <option value="fri">Friday</option>
- 						 
- 						 <option value="sat">Saturday</option>
- 						 <option value="sun">Sunday</option>
-					</select>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-lg-2">
-						<label>Session Start Time:</label>
-					</div>
-					<div class="col-lg-4">
-						<select class="ui search selection dropdown form-control" id="search-start-time">
-	 						<option value="-">Session Start Time</option>
-	 						@if(!empty($all_bootcamp_plan))
-	 							@foreach($all_bootcamp_plan as $each_bootcamp_start_time)
-	 						 		<option value="{{$each_bootcamp_start_time->session_st_time}}">{{date("h:i A", strtotime($each_bootcamp_start_time->session_st_time))}}
-	 						 		</option>
-	 						 	@endforeach
-	 						@endif
-						</select>
-					</div>
-					<div class="col-lg-2">
-						<label>Session End Time:</label>
-					</div>
-					<div class="col-lg-4">
-						<select class="ui search selection dropdown form-control" id="search-end-time">
- 						 <option value="-">Session End Time</option>
- 						 	@if(!empty($all_bootcamp_plan))
-	 							@foreach($all_bootcamp_plan as $each_bootcamp_end_time)
-	 						 		<option value="{{$each_bootcamp_end_time->session_end_time}}">{{date("h:i A", strtotime($each_bootcamp_end_time->session_end_time))}}
-	 						 		</option>
-	 						 	@endforeach
-	 						@endif
-						</select>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-lg-2">
-						<label>Planned Start Date:</label>
-					</div>
-					<div class="col-lg-4">
-						<select class="ui search selection dropdown form-control" id="search-start-date">
- 						 	<option value="-">Planned Start Date</option>
- 						 	@if(!empty($all_bootcamp_plan))
-	 							@foreach($all_bootcamp_plan as $each_bootcamp_start_date)
-	 						 		<option value="{{$each_bootcamp_start_date->plan_st_date}}">{{$each_bootcamp_start_date->plan_st_date}}
-	 						 		</option>
-	 						 	@endforeach
-	 						@endif
-						</select>
-					</div>
-					<div class="col-lg-2">
-						<label>Planned End Date:</label>
-					</div>
-					<div class="col-lg-4">
-						<select class="ui search selection dropdown form-control" id="search-end-date">
- 						 <option value="-">Planned End Date</option>
- 						 	@if(!empty($all_bootcamp_plan))
-	 							@foreach($all_bootcamp_plan as $each_bootcamp_end_date)
-	 						 		<option value="{{$each_bootcamp_end_date->plan_end_date}}">
-	 						 			@if($each_bootcamp_end_date->plan_end_date=='2099-12-30')
-	 						 				{{$each_bootcamp_end_date->plan_end_date}} (Never Expired)
-	 						 			@else
-	 						 				{{$each_bootcamp_end_date->plan_end_date}}
-	 						 			@endif
-	 						 		</option>
-	 						 	@endforeach
-	 						@endif
-					</select>
-					</div>
-					<div class="col-lg-12">
-						<div class="row">
-							<div class="col-lg-8 col-xs-12"></div>
-							<div class="col-lg-4 col-xs-12">
-								<div class="gbtn-wrp pull-right">
-									<button  name="search" class="btn btn-primary gbtn1" style="width: 100px; margin-right:10px;">Search</button>
-									<button  name="add_new_session" id="add_new_session" class="btn btn-primary gbtn2" style="width: 130px;">Add New Session</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</form> -->
+			
 
 			<div class="add_bootcamp_div col-lg-12">
-				<form  action="{{route('insert_bootcamp_plan')}}" class="slct-margin" id="submit_bootcamp_session" method="post" autocomplete="off">
+				<form  action="{{route('insert_bootcamp_plan')}}" class="slct-margin" id="submit_product" method="post" autocomplete="off">
 					{{ csrf_field() }}
-				<div class="row cxz">
-					<div class="col-lg-2">
-						<label>Monday <input type="checkbox" id="mon_session_flg" class="day_flg" name="mon_session_flg"></label>
-					</div>
-					<div class="col-lg-2">
-						<label>Tuesday <input type="checkbox" id="tue_session_flg" class="day_flg" name="tue_session_flg"></label>
-					</div>
-					<div class="col-lg-2">
-						<label>Wednesday <input type="checkbox" id="wed_session_flg" class="day_flg" name="wed_session_flg"></label>
-					</div>
-					<div class="col-lg-2">
-						<label>Thursday <input type="checkbox" id="thu_session_flg" class="day_flg" name="thu_session_flg"></label>
-					</div>
-					<div class="col-lg-2">
-						<label>Friday <input type="checkbox" id="fri_session_flg" class="day_flg" name="fri_session_flg"></label>
-					</div>
-					<div class="col-lg-1">
-						<label>Saturday <input type="checkbox" id="sat_session_flg" class="day_flg" name="sat_session_flg"></label>
-					</div>
-					<div class="col-lg-1">
-						<label>Sunday <input type="checkbox" id="sun_session_flg" class="day_flg" name="sun_session_flg"></label>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-lg-2">
-						<label>Session Start<br> Time <span class="required_field_color">*</span></label>
+				
+				<div class="row form-group">
+                            <div class="col col-md-4"><label for="text-input" class=" form-control-label"> Training Type<span class="required_field_color">*</span></label></div>
+                            <div class="col-12 col-md-8"><select name="training_type" id="training_type" class="form-control" placeholder="Training Type">
+		            <option value="0">Select Any Training Type</option>
+		            @if(!empty($all_traning_type))
+		            	@foreach($all_traning_type as $each_traning_type)
+            		<option value="{{$each_traning_type->id}}">{{$each_traning_type->training_name}}</option>
+            	    @endforeach
+			            @endif
+			        </select>
+                              <div id="err" class="err"></div>
+                            </div>
+                            
+                          </div>
+
+                          <div class="row form-group">
+                            <div class="col col-md-4"><label for="text-input" class=" form-control-label"> Payment Type<span class="required_field_color">*</span></label></div>
+                            <div class="col-12 col-md-8">
+                	<select name="payment_type" id="payment_type" class="form-control" onchange="valueUnlimitep()">
+		            <option value="0">Select Any Payment Type</option>
+		            @if(!empty($all_payment_type))
+		            	@foreach($all_payment_type as $each_payment_type)
+            		<option value="{{$each_payment_type->id}}">{{$each_payment_type->payment_type_name}}</option>
+            	    @endforeach
+			            @endif
+			        </select>
+                              <div id="err1" class="err1"></div>
+                            </div>
+                          </div>
+
+                          <div class="row form-group">
+                            <div class="col col-md-4"><label for="text-input" class=" form-control-label"> No. of Available Session<span class="required_field_color">*</span></label></div>
+                            <div class="col-12 col-md-6"><input type="text" id="no_session" name="no_session" placeholder="No. of Available Session" class="form-control" >
+                              
+                            </div>
+                            <div class="col-12 col-md-2"><input type="checkbox" name="unlimited" id="unlimited" class="unlimited" onchange="valueUnlimited()">&nbsp; &nbsp;<label for="text-input" class="form-control-label">Unlimited</label>
+                              
+                            </div>
+                            <!-- <div class="col col-md-1"><label for="text-input" class=" form-control-label">Unlimited</label></div> -->
+                          </div>
+
+                          <div class="row form-group">
+                            <div class="col col-md-4"><label for="text-input" class=" form-control-label"> Price<span class="required_field_color">*</span></label></div>
+                            <div class="col-12 col-md-6"><input type="text" id="price" name="price" placeholder="Price" class="form-control" >
+                              
+                            </div>
+                            <div class="col-12 col-md-2 ses" id="session"><label for="text-input" class=" form-control-label">/Session</label>
+                              
+                            </div>
+                            <div class="col-12 col-md-2 mon" id="month" style="display: none;"><label for="text-input" class=" form-control-label">/Month</label>
+                              
+                            </div>
+                          </div>
+
+                          <div class="row form-group" id="total_p">
+                            <div class="col col-md-4"><label for="text-input" class=" form-control-label">Total Price<span class="required_field_color">*</span></label></div>
+                            <div class="col-12 col-md-8"><input type="text" id="total_price" name="total_price" placeholder="Name" class="form-control" >
+                              
+                            </div>
+                          </div>
+
+				<div class="row form-group">
+					<div class="col-lg-4">
+						<label>Validity<span class="required_field_color">*</span></label>
 					</div>
 					<div class="col-lg-4">
-						<input type="text" id="session_st_time" name="session_st_time" class="form-control">
+						<select name="validity" id="validity" class="form-control">
+		            <option value="0">Select Any One</option>
+		            
+            		<option value="1">1</option>
+            	    <option value="2">2</option>
+            	    <option value="3">3</option>
+            	    <option value="4">4</option>
+            	    <option value="5">5</option>
+            	    <option value="6">6</option>
+            	    <option value="7">7</option>
+            	    <option value="8">8</option>
+            	    <option value="9">9</option>
+            	    <option value="10">10</option>
+            	    <option value="11">11</option>
+            	    <option value="12">12</option>
+			        </select>
 					</div>
-					<div class="col-lg-2">
-						<label>Session End Time <span class="required_field_color">*</span></label>
-					</div>
-					<div class="col-lg-4">
-						<input type="text" id="session_end_time" name="session_end_time" class="form-control">
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-lg-2">
-						<label>Planned Start<br> Date <span class="required_field_color">*</span></label>
-					</div>
-					<div class="col-lg-4">
-						<input type="text" id="plan_st_date" name="plan_st_date" class="form-control" readonly="true">
-					</div>
-					<div class="col-lg-2">
-						<label>Planned End Date </label>
-					</div>
-					<div class="col-lg-4">
-						<input type="text" id="plan_end_date" name="plan_end_date" class="form-control" readonly="true">
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-lg-2">
-						
-					</div>
-					<div class="col-lg-4">
-						
-					</div>
-					<div class="col-lg-2">
-						<label>Planned Never Ending</label>
-					</div>
-					<div class="col-lg-4">
-						<input type="checkbox" name="never_expire" id="never_expire" >
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-lg-2">
-						<label>Maximum Allowed Booking <span class="required_field_color">*</span></label>
-					</div>
-					<div class="col-lg-4">
-						<input type="text" id="max_allowed" name="max_allowed" class="form-control"  onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')">
-					</div>
-					<div class="col-lg-2">
-						<label>Location </label>
-					</div>
-					<div class="col-lg-4">
-						<select name="location_select" id="location_select" class="form-control"
-          onchange="if(this.options[this.selectedIndex].value=='customOption'){
-              toggleField(this,this.nextSibling);
-              this.selectedIndex='0';
-          }">
-          	<option></option>
-            <option value="customOption">Click to type a custom location</option>
-            @if(!empty($form_location))
-            	@foreach($form_location as $each_form_location)
-            		<option value="{{$each_form_location->address_id}}">{{$each_form_location->address_line1}}</option>
-            	@endforeach
-            @endif
-        </select><input name="location" style="display:none;" disabled="disabled" 
-            onblur="if(this.value==''){toggleField(this,this.previousSibling);}" class="form-control" placeholder="Location" id="location">
-						
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-lg-2">
-						
-					</div>
-					<div class="col-lg-4">
 					
-					</div>
-					<div class="col-lg-2">
-						<label>Address </label>
-					</div>
 					<div class="col-lg-4">
-						<select name="address_select" id="address_select" class="ui search form-control"
-          onchange="if(this.options[this.selectedIndex].value=='customOption'){
-              toggleField1(this,this.nextSibling);
-              this.selectedIndex='0';
-          }">
-          	<option></option>
-            <option value="customOption">Click to type a custom address</option>
-            @if(!empty($form_address))
-            	@foreach($form_address as $each_form_address)
-            		<option value="{{$each_form_address->address_id}}">{{$each_form_address->address_line2}}</option>
-            	@endforeach
-            @endif
-        </select><input name="address" style="display:none;" disabled="disabled" 
-            onblur="if(this.value==''){toggleField1(this,this.previousSibling);}" class="ui search form-control" placeholder="Address" id="address">						
+							<select name="validity_2" id="validity_2" class="form-control">
+		            <option value="0">Select Any One</option>
+		            
+            		<option value="7">Week</option>
+            	    <option value="30">Month</option>
+            	    
+			        </select>
 					</div>
 				</div>
+				 <div class="row form-group">
+                            <div class="col col-md-4"><label for="text-input" class=" form-control-label">Contract<span class="required_field_color">*</span></label></div>
+                            <div class="col-12 col-md-8">
+                            	<select name="contant" id="contant" class="form-control">
+		            <option value="0">Select Any One</option>
+		            
+            		<option value="30">Monthly</option>
+            	    <option value="365">Annually</option>
+            	    <option value="n/a">N/A</option>
+			        </select>
+                              
+                            </div>
+                          </div>
+                          <div></div>
+
+                          	<div class="row form-group">
+					<div class="col-lg-4">
+						<label>Notice Period<span class="required_field_color">*</span></label>
+					</div>
+					<div class="col-lg-4">
+						<select name="notice_period" id="notice_period" class="form-control">
+		            <option value="0">Select Any One</option>
+		            
+            		<option value="1">1</option>
+            	    <option value="2">2</option>
+            	    <option value="3">3</option>
+            	    <option value="4">4</option>
+            	    <option value="5">5</option>
+            	    <option value="6">6</option>
+            	    <option value="7">7</option>
+            	    <option value="8">8</option>
+            	    <option value="9">9</option>
+            	    <option value="10">10</option>
+            	    <option value="11">11</option>
+            	    <option value="12">12</option>
+			        </select>
+					</div>
+					
+					<div class="col-lg-4">
+						<select name="notice_period_2" id="notice_period_2" class="form-control">
+		            <option value="0">Select Any One</option>
+		            
+            		<option value="7">Week</option>
+            	    <option value="30">Month</option>
+            	    
+			        </select>
+					</div>
+				</div>
+				
+				<div class="row form-group">
+                            <div class="col col-md-1"><label for="text-input" class=" form-control-label">Monday</label></div>
+                            <div class="col col-md-3"><input type="checkbox" name="monday" id="monday"  class="monday" onchange="valueChanged()"></div>
+                            <div class="col col-md-8 monday_show_time" style="display: none">
+                            <div class="col col-md-6">
+                           <select name="st_time" id="st_time" class="form-control">
+		            <option>Chose Start Time</option>
+		            
+		            	@foreach($all_slot_time as $each_slot_time)
+            		<option value="{{$each_slot_time->id}}">{{date('h:i A', strtotime($each_slot_time->time))}}</option>
+            	    @endforeach
+			           
+			        </select></div>
+                            	<div class="col col-md-6">
+                            <select name="end_time" id="end_time" class="form-control">
+		            <option>Chose End Time</option>
+		            
+		            	@foreach($all_slot_time as $each_slot_time)
+            		<option value="{{$each_slot_time->id}}">{{date('h:i A', strtotime($each_slot_time->time))}}</option>
+            	    @endforeach
+			           
+			        </select>
+                              
+                            </div>
+                        </div>
+                            </div>
+                          <div class="row form-group">
+                            <div class="col col-md-1"><label for="text-input" class="form-control-label">Tuesday</label></div>
+                            <div class="col-12 col-md-3"><input type="checkbox" name="tuesday" id="tuesday" class="tuesday" onchange="valueChanged1()"></div>
+                               <div class="col col-md-8 tuesday_show_time" style="display: none">
+                              <div class="col col-md-6">
+                           <select name="training_type" id="training_type" class="form-control">
+		            <option>Chose Start Time</option>
+		            
+		            	@foreach($all_slot_time as $each_slot_time)
+            		<option value="{{$each_slot_time->id}}">{{date('h:i A', strtotime($each_slot_time->time))}}</option>
+            	    @endforeach
+			           
+			        </select></div>
+                            	<div class="col col-md-6">
+                            <select name="training_type" id="training_type" class="form-control">
+		            <option>Chose End Time</option>
+		            
+		            	@foreach($all_slot_time as $each_slot_time)
+            		<option value="{{$each_slot_time->id}}">{{date('h:i A', strtotime($each_slot_time->time))}}</option>
+            	    @endforeach
+			           
+			        </select>
+                              
+                            </div>
+                        </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-1"><label for="text-input" class="form-control-label">Wednesday</label></div>
+                            <div class="col-12 col-md-3"><input type="checkbox" name="wednesday" id="wednesday" class="wednesday" onchange="valueChanged2()"></div>
+                                <div class="col col-md-8 wednesday_show_time" style="display: none">
+                             <div class="col col-md-6">
+                           <select name="training_type" id="training_type" class="form-control">
+		            <option>Chose Start Time</option>
+		            
+		            	@foreach($all_slot_time as $each_slot_time)
+            		<option value="{{$each_slot_time->id}}">{{date('h:i A', strtotime($each_slot_time->time))}}</option>
+            	    @endforeach
+			           
+			        </select></div>
+                            	<div class="col col-md-6">
+                            <select name="training_type" id="training_type" class="form-control">
+		            <option>Chose End Time</option>
+		            
+		            	@foreach($all_slot_time as $each_slot_time)
+            		<option value="{{$each_slot_time->id}}">{{date('h:i A', strtotime($each_slot_time->time))}}</option>
+            	    @endforeach
+			           
+			        </select>
+                              
+                            </div>
+                        </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-1"><label for="text-input" class="form-control-label">Thursday</label></div>
+                            <div class="col-12 col-md-3"><input type="checkbox" name="thursday" id="thursday" class="thursday" onchange="valueChanged3()"></div>
+                              <div class="col col-md-8 thursday_show_time" style="display: none">
+                             <div class="col col-md-6">
+                           <select name="training_type" id="training_type" class="form-control">
+		            <option>Chose Start Time</option>
+		            
+		            	@foreach($all_slot_time as $each_slot_time)
+            		<option value="{{$each_slot_time->id}}">{{date('h:i A', strtotime($each_slot_time->time))}}</option>
+            	    @endforeach
+			           
+			        </select></div>
+                            	<div class="col col-md-6">
+                            <select name="training_type" id="training_type" class="form-control">
+		            <option>Chose End Time</option>
+		            
+		            	@foreach($all_slot_time as $each_slot_time)
+            		<option value="{{$each_slot_time->id}}">{{date('h:i A', strtotime($each_slot_time->time))}}</option>
+            	    @endforeach
+			           
+			        </select>
+                              
+                            </div>
+                        </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-1"><label for="text-input" class="form-control-label">Friday</label></div>
+                            <div class="col-12 col-md-3"><input type="checkbox" name="friday" id="friday" class="friday" onchange="valueChanged4()"></div>
+                            <div class="col col-md-8 friday_show_time" style="display: none">
+                              <div class="col col-md-6">
+                           <select name="training_type" id="training_type" class="form-control">
+		            <option>Chose Start Time</option>
+		            
+		            	@foreach($all_slot_time as $each_slot_time)
+            		<option value="{{$each_slot_time->id}}">{{date('h:i A', strtotime($each_slot_time->time))}}</option>
+            	    @endforeach
+			           
+			        </select></div>
+                            	<div class="col col-md-6">
+                            <select name="training_type" id="training_type" class="form-control">
+		            <option>Chose End Time</option>
+		            
+		            	@foreach($all_slot_time as $each_slot_time)
+            		<option value="{{$each_slot_time->id}}">{{date('h:i A', strtotime($each_slot_time->time))}}</option>
+            	    @endforeach
+			           
+			        </select>
+                              
+                            </div>
+                        </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-1"><label for="text-input" class="form-control-label">Saturday</label></div>
+                            <div class="col-12 col-md-3"><input type="checkbox" name="saturday" id="saturday" class="saturday" onchange="valueChanged5()"></div>
+                            <div class="col col-md-8 saturday_show_time" style="display: none">
+                             <div class="col col-md-6">
+                           <select name="training_type" id="training_type" class="form-control">
+		            <option>Chose Start Time</option>
+		            
+		            	@foreach($all_slot_time as $each_slot_time)
+            		<option value="{{$each_slot_time->id}}">{{date('h:i A', strtotime($each_slot_time->time))}}</option>
+            	    @endforeach
+			           
+			        </select></div>
+                            	<div class="col col-md-6">
+                            <select name="training_type" id="training_type" class="form-control">
+		            <option>Chose End Time</option>
+		            
+		            	@foreach($all_slot_time as $each_slot_time)
+            		<option value="{{$each_slot_time->id}}">{{date('h:i A', strtotime($each_slot_time->time))}}</option>
+            	    @endforeach
+			           
+			        </select>
+                              
+                            </div>
+                        </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-1"><label for="text-input" class="form-control-label">Sunday</label></div>
+                            <div class="col col-md-3"><input type="checkbox" name="sunday" id="sunday" class="sunday" onchange="valueChanged6()"></div>
+                               <div class="col col-md-8 sunday_show_time" style="display: none">
+                              <div class="col col-md-6">
+                           <select name="training_type" id="training_type" class="form-control">
+		            <option>Chose Start Time</option>
+		            
+		            	@foreach($all_slot_time as $each_slot_time)
+            		<option value="{{$each_slot_time->id}}">{{date('h:i A', strtotime($each_slot_time->time))}}</option>
+            	    @endforeach
+			           
+			        </select></div>
+                            	<div class="col col-md-6">
+                            <select name="training_type" id="training_type" class="form-control">
+		            <option>Chose End Time</option>
+		            
+		            	@foreach($all_slot_time as $each_slot_time)
+            		<option value="{{$each_slot_time->id}}">{{date('h:i A', strtotime($each_slot_time->time))}}</option>
+            	    @endforeach
+			           
+			        </select>
+                              
+                            </div>
+                        </div>
+                        </div>
+				
 				<div class="row">
 					<div class="col-lg-12">
 						<div class="row">
@@ -301,112 +534,85 @@ function toggleField1(hideObj,showObj){
 }
 </script>
 
-<script>
-	$(document).ready(function() {
-
-		                                                     
-    $("#submit_bootcamp_session").validate({
-        submitHandler: function(form) {
-            // see if selectone is even being used
-            var boxes = $('.day_flg:checkbox');
-            if(boxes.length > 0) {
-                if( $('.day_flg:checkbox:checked').length < 1) {
-                    alertify.alert('Please select at least one boot camp plan day');
-                    boxes[0].focus();
-                    return false;
-                }
-            }
-            if($('#session_st_time').val()=='')
-            {
-            	alertify.alert('Session start time is required');
-            	$('#session_st_time').focus();
-              return false;
-            }
-						if($('#session_end_time').val()=='')
-            {
-            	alertify.alert('Session end time is required');
-            	$('#session_end_time').focus();
-              return false;
-            }
-
-            var startTime = moment($('#session_st_time').val(), ["h:mm A"]).format("HH:mm");
-
-    				var endTime = moment($('#session_end_time').val(), ["h:mm A"]).format("HH:mm");
-
-            if(startTime>=endTime)
-            {
-            	alertify.alert('Session end time is always upper than session start time');
-            	$('#session_end_time').focus();
-              return false;
-            }
-
-            if($('#plan_st_date').val()=='')
-            {
-            	alertify.alert('Plan start date is required');
-            	$('#plan_st_date').focus();
-              return false;
-            }
-
-            if($('#plan_end_date').val()!='' && $('#plan_st_date').val()>=$('#plan_end_date').val())
-            {
-            	alertify.alert('Plan end date always upper than plan start date');
-            	$('#plan_end_date').focus();
-              return false;
-            }
-
-						if($('#plan_end_date').val()=='' && !$('#never_expire').is(':checked'))
-            {
-            	alertify.alert('Plan end date or never ending is required');
-            	$('#plan_end_date').focus();
-              return false;
-            }
-
-            if($('#plan_end_date').val()!='' && $('#never_expire').is(':checked'))
-            {
-            	alertify.alert('Either plan end date or never ending is required');
-            	$('#plan_end_date').focus();
-              return false;
-            }
-
-            if($('#max_allowed').val()=='')
-            {
-            	alertify.alert('Maximum Allowed Booking');
-            	$('#max_allowed').focus();
-              return false;
-            }
-
-            if($('#location').val()=='' && $('#address').val()=='' && $('#location_select').val()=='' && $('#address_select').val()=='')
-            {
-            	alertify.alert('Location or address is required');
-            	$('#location').focus();
-              return false;
-            }
-
-            if(($('#location').val()!='' || $('#location_select').val()!='') && ($('#address').val()!=''  || $('#address_select').val()!=''))
-            {
-            	alertify.alert('Either location or address is required');
-            	$('#location').focus();
-              return false;
-            }
-
-           form.submit();
-        }
-    }); 
-
+<script>		                                                     
+function valueChanged()
+{
+	
+    if($('.monday').is(":checked"))   
+        $(".monday_show_time").show();
+    
+    else
+        $(".monday_show_time").hide();
    
-  });
+}
+  function valueChanged1()
+{
+	
+    if($('.tuesday').is(":checked"))   
+        $(".tuesday_show_time").show();
+    else
+        $(".tuesday_show_time").hide();
+}
+function valueChanged2()
+{
+	
+    if($('.wednesday').is(":checked"))   
+        $(".wednesday_show_time").show();
+    else
+        $(".wednesday_show_time").hide();
+}
+function valueChanged3()
+{
+	
+    if($('.thursday').is(":checked"))   
+        $(".thursday_show_time").show();
+    else
+        $(".thursday_show_time").hide();
+}
+function valueChanged4()
+{
+	
+    if($('.friday').is(":checked"))   
+        $(".friday_show_time").show();
+    else
+        $(".friday_show_time").hide();
+}
+function valueChanged5()
+{
+	
+    if($('.saturday').is(":checked"))   
+        $(".saturday_show_time").show();
+    else
+        $(".saturday_show_time").hide();
+}
+function valueChanged6()
+{
+	
+    if($('.sunday').is(":checked"))   
+        $(".sunday_show_time").show();
+    else
+        $(".sunday_show_time").hide();
+}
+function valueUnlimited()
+{
+	
+    if($('.unlimited').is(":checked"))  {
+
+
+        $(".mon").show();
+    	$(".ses").hide();
+		}
+
+    else {
+    	 $(".mon").hide();
+    	 $(".ses").show();
+   		 }
+        
+}
 </script>
+
 
 <!-- <script>
-	$(document).ready(function(){ 
-		$('#add_new_session').on('click', function (e) {
-			e.preventDefault();
-			$('.add_bootcamp_div').show();
-		});
-	});
-</script>
- -->
-<script>
 
   $(function () {
     $( "#plan_st_date" ).datepicker({
@@ -439,7 +645,7 @@ function toggleField1(hideObj,showObj){
        return [true];
     return [false];
 	}
-</script>
+</script> -->
 
 <script>
   $(document).ready(function(){
@@ -447,40 +653,7 @@ function toggleField1(hideObj,showObj){
     $("#session_end_time").timepicki();
   });
 </script>
-<script>
-$(document).ready(function() {
-  var autocomplete;
-    initAutocomplete();
-  function initAutocomplete() {
-    // Create the autocomplete object, restricting the search to geographical location types.
-    autocomplete = new google.maps.places.Autocomplete( (document.getElementById('address')),
-    {types: ['geocode'], componentRestrictions: {country: 'uk'}});
-    autocomplete.addListener('place_changed', function() {
-      var place = autocomplete.getPlace();
 
-
-      if(place.geometry.location)
-      {
-      	console.log(place.geometry.location);
-        // $("#lat").val(place.geometry.location.lat());
-        // $("#lng").val(place.geometry.location.lng());
-      }
-    });
-  }
-  // $("#address").on('submit',function(e){
-  //   if($('#autolocation').val() && !$('#lat').val() && !$('#lng').val())
-  //   {
-  //     alert("Please enter a valid location");
-  //     return false;
-  //   }
-  // });
-
-  // $('#search_form input').on('keypress', function(e)
-  // {
-  //   return e.which !== 13;
-   });
-
-</script>
 
 
 
