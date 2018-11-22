@@ -6287,6 +6287,7 @@ h5.line-h5{
 	text-align: justify;
 	line-height: 26px;
 	margin-top: 15px;
+	letter-spacing: inherit;
 }
 .pt-box {
 	display: inline-block;
@@ -6476,5 +6477,8 @@ span.line_t2 {
 	right: 0;
 	bottom: 6px;
 	padding: 3px;
+}
+.hp-text p {
+	margin-top: 0;
 }
 /*// 211118*/
