@@ -6,7 +6,6 @@
 
 @if(Auth::user()->master_trainer==1)
 
-
   <div class="breadcrumbs">
     <div class="col-sm-4">
       <div class="page-header float-left">
@@ -19,123 +18,6 @@
 <div class="col-lg-12">
 	<div class="card">
 		<div class="card-body card-block">
-			<!-- <form class="slct-margin" id="search_bootcamp">
-					{{ csrf_field() }}
-				<div class="row">
-					<div class="col-lg-2">
-						<label>Location/ Address:</label>
-					</div>
-					<div class="col-lg-4">
-						<select class="ui search selection dropdown form-control" id="search-address">
-							<option value="-">Location/ Address</option>
-							@if(!empty($address))
-									@foreach($address as $each_address)
- 						 				<option value="{{$each_address->address_id}}">
- 						 					@if($each_address->address_line1!='')
- 						 						{{$each_address->address_line1}}
- 						 					@else
- 						 						{{$each_address->address_line2}}
- 						 					@endif
- 						 				</option>
- 						 			@endforeach
- 						 	@endif
-						</select>
-					</div>
-					<div class="col-lg-2">
-						<label>Day:</label>
-					</div>
-					<div class="col-lg-4">
-						<select class="ui search selection dropdown form-control" id="search-day">
- 						 <option value="-">Day</option>
- 						 <option value="mon">Monaday</option>
- 						 <option value="tue">Tuesday</option>
- 						 <option value="wed">Wednesday</option>
- 						 <option value="thu">Thursday</option>
- 						 <option value="fri">Friday</option>
- 						 
- 						 <option value="sat">Saturday</option>
- 						 <option value="sun">Sunday</option>
-					</select>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-lg-2">
-						<label>Session Start Time:</label>
-					</div>
-					<div class="col-lg-4">
-						<select class="ui search selection dropdown form-control" id="search-start-time">
-	 						<option value="-">Session Start Time</option>
-	 						@if(!empty($all_bootcamp_plan))
-	 							@foreach($all_bootcamp_plan as $each_bootcamp_start_time)
-	 						 		<option value="{{$each_bootcamp_start_time->session_st_time}}">{{date("h:i A", strtotime($each_bootcamp_start_time->session_st_time))}}
-	 						 		</option>
-	 						 	@endforeach
-	 						@endif
-						</select>
-					</div>
-					<div class="col-lg-2">
-						<label>Session End Time:</label>
-					</div>
-					<div class="col-lg-4">
-						<select class="ui search selection dropdown form-control" id="search-end-time">
- 						 <option value="-">Session End Time</option>
- 						 	@if(!empty($all_bootcamp_plan))
-	 							@foreach($all_bootcamp_plan as $each_bootcamp_end_time)
-	 						 		<option value="{{$each_bootcamp_end_time->session_end_time}}">{{date("h:i A", strtotime($each_bootcamp_end_time->session_end_time))}}
-	 						 		</option>
-	 						 	@endforeach
-	 						@endif
-						</select>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-lg-2">
-						<label>Planned Start Date:</label>
-					</div>
-					<div class="col-lg-4">
-						<select class="ui search selection dropdown form-control" id="search-start-date">
- 						 	<option value="-">Planned Start Date</option>
- 						 	@if(!empty($all_bootcamp_plan))
-	 							@foreach($all_bootcamp_plan as $each_bootcamp_start_date)
-	 						 		<option value="{{$each_bootcamp_start_date->plan_st_date}}">{{$each_bootcamp_start_date->plan_st_date}}
-	 						 		</option>
-	 						 	@endforeach
-	 						@endif
-						</select>
-					</div>
-					<div class="col-lg-2">
-						<label>Planned End Date:</label>
-					</div>
-					<div class="col-lg-4">
-						<select class="ui search selection dropdown form-control" id="search-end-date">
- 						 <option value="-">Planned End Date</option>
- 						 	@if(!empty($all_bootcamp_plan))
-	 							@foreach($all_bootcamp_plan as $each_bootcamp_end_date)
-	 						 		<option value="{{$each_bootcamp_end_date->plan_end_date}}">
-	 						 			@if($each_bootcamp_end_date->plan_end_date=='2099-12-30')
-	 						 				{{$each_bootcamp_end_date->plan_end_date}} (Never Expired)
-	 						 			@else
-	 						 				{{$each_bootcamp_end_date->plan_end_date}}
-	 						 			@endif
-	 						 		</option>
-	 						 	@endforeach
-	 						@endif
-					</select>
-					</div>
-					<div class="col-lg-12">
-						<div class="row">
-							<div class="col-lg-8 col-xs-12"></div>
-							<div class="col-lg-4 col-xs-12">
-								<div class="gbtn-wrp pull-right">
-									<button  name="search" class="btn btn-primary gbtn1" style="width: 100px; margin-right:10px;">Search</button>
-									<button  name="add_new_session" id="add_new_session" class="btn btn-primary gbtn2" style="width: 130px;">Add New Session</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</form> -->
-
 			<div class="add_bootcamp_div col-lg-12">
 				<form  action="{{route('bootcamp_plan_edit_insert')}}" class="slct-margin" id="edit_bootcamp_session" enctype="multipart/form-data" method="post" autocomplete="off">
 					{{ csrf_field() }}
@@ -230,7 +112,12 @@
 						<label>Planned End Date </label>
 					</div>
 					<div class="col-lg-4">
-						<input type="text" id="plan_end_date" name="plan_end_date" class="form-control" readonly="true" value="{{$edit_bootcamp->plan_end_date}}">
+						@if($edit_bootcamp->never_expire==0)
+							<?php $plan_end_date=$edit_bootcamp->plan_end_date;?>
+						@else
+							<?php $plan_end_date='';?>
+						@endif
+						<input type="text" id="plan_end_date" name="plan_end_date" class="form-control" readonly="true" value="{{$plan_end_date}}">
 					</div>
 				</div>
 				<div class="row">
@@ -336,14 +223,25 @@
 		</div>
 	</div>
 </div>
+
 <script src="{{asset('backend/assets/js/semantic.js')}}"></script>
 <script src="{{asset('backend/assets/js/timepicki.js')}}"></script>
 <script src="{{asset('backend/assets/js/moment.min.js')}}"></script>
+
+
+
 <script>
 	$('#search-address,#search-day,#search-start-time,#search-end-time,#search-start-date,#search-end-date').dropdown();
 </script>
  
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDK5MydVx-HkNyQcPTBdDyIyrqbwVPST0&&libraries=places"></script>
+
+<script>
+  $(document).ready(function(){
+  	$('#session_st_time').timepicki();
+    $("#session_end_time").timepicki();
+  });
+</script>
 
 <script>
 function toggleField(hideObj,showObj){
@@ -468,6 +366,7 @@ function toggleField1(hideObj,showObj){
 	});
 </script>
  -->
+
 <script>
 
   $(function () {
@@ -503,12 +402,6 @@ function toggleField1(hideObj,showObj){
 	}
 </script>
 
-<script>
-  $(document).ready(function(){
-  	$('#session_st_time').timepicki();
-    $("#session_end_time").timepicki();
-  });
-</script>
 <script>
 $(document).ready(function() {
   var autocomplete;

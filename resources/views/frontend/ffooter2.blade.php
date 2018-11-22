@@ -1213,7 +1213,29 @@ $('#bank_payment-form').bind('submit', function (e) {
 </script>
  
 
-
+<script>
+   $('#bootcamp-slider,#bootcamp-slider2,#bootcamp-slider3').owlCarousel({
+    autoplay: true,
+    items: 3,
+    loop:true,
+    margin:30,
+    nav:false,
+    dots: true,
+    smartSpeed: 1500,
+    autoplayHoverPause:true,   
+    responsive:{
+      0:{
+        items:1
+      },
+      600:{
+        items:1
+      },
+      1000:{
+        items:3
+      }
+    }
+  });
+</script>
 </body>
 
 </html>

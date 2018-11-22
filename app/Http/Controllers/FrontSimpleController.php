@@ -87,8 +87,103 @@ public function frontlogin()
 public function frontprice(Request $request)
 {
   
-    $data=DB::table('slots')->where('deleted_at',null)->get();
-    return view('frontpricing')->with(compact('data'));
+  $data=DB::table('slots')->where('deleted_at',null)->get();
+
+  $personal_training_product_details=DB::table('products')
+  ->join('training_type','products.training_type_id','training_type.id')
+  ->join('payment_type','products.payment_type_id','payment_type.id')
+  ->select('products.id as product_id','training_type.training_name as training_name','payment_type.payment_type_name as payment_type_name','products.total_sessions as total_sessions','products.price_session_or_month as price_session_or_month','products.total_price as total_price','products.validity as validity','products.contract as contract','products.notice_period as notice_period')
+  ->whereNull('products.deleted_at')
+  ->where('training_type.id',1)
+  ->orderby('products.id','DESC')->get();
+
+  // Log::debug(":: personal_training_product_details :: ".print_r($personal_training_product_details,true));
+  foreach($personal_training_product_details as $pt)
+  {
+    
+    $pt->personal_training_day=DB::table('products_day_time')
+    ->join('product_days','product_days.id','products_day_time.day_id')
+    ->select('product_days.product_days as product_days')
+    ->where('products_day_time.product_id',$pt->product_id)
+    ->distinct('products_day_time.day_id')->get();
+
+    $pt->personal_training_st_time=DB::table('products_day_time')
+    ->join('slot_times','slot_times.id','products_day_time.product_st_time')
+    ->select('slot_times.time as product_st_time')
+    ->where('products_day_time.product_id',$pt->product_id)
+    ->get();
+
+    $pt->personal_training_end_time=DB::table('products_day_time')
+    ->join('slot_times','slot_times.id','products_day_time.product_end_time')
+    ->select('slot_times.time as product_end_time')
+    ->where('products_day_time.product_id',$pt->product_id)
+    ->get();
+  }
+
+  $bootcamp_product_details=DB::table('products')
+  ->join('training_type','products.training_type_id','training_type.id')
+  ->join('payment_type','products.payment_type_id','payment_type.id')
+  ->select('products.id as product_id','training_type.training_name as training_name','payment_type.payment_type_name as payment_type_name','products.total_sessions as total_sessions','products.price_session_or_month as price_session_or_month','products.total_price as total_price','products.validity as validity','products.contract as contract','products.notice_period as notice_period')
+  ->whereNull('products.deleted_at')
+  ->where('training_type.id',2)
+  ->orderby('products.id','DESC')->get();
+
+  // Log::debug(":: personal_training_product_details :: ".print_r($personal_training_product_details,true));
+  foreach($bootcamp_product_details as $bc)
+  {
+    
+    $bc->bootcamp_day=DB::table('products_day_time')
+    ->join('product_days','product_days.id','products_day_time.day_id')
+    ->select('product_days.product_days as product_days')
+    ->where('products_day_time.product_id',$pt->product_id)
+    ->distinct('products_day_time.day_id')->get();
+
+    $bc->bootcamp_st_time=DB::table('products_day_time')
+    ->join('slot_times','slot_times.id','products_day_time.product_st_time')
+    ->select('slot_times.time as product_st_time')
+    ->where('products_day_time.product_id',$pt->product_id)
+    ->get();
+
+    $bc->bootcamp_end_time=DB::table('products_day_time')
+    ->join('slot_times','slot_times.id','products_day_time.product_end_time')
+    ->select('slot_times.time as product_end_time')
+    ->where('products_day_time.product_id',$pt->product_id)
+    ->get();
+  }
+
+  $gym_product_details=DB::table('products')
+  ->join('training_type','products.training_type_id','training_type.id')
+  ->join('payment_type','products.payment_type_id','payment_type.id')
+  ->select('products.id as product_id','training_type.training_name as training_name','payment_type.payment_type_name as payment_type_name','products.total_sessions as total_sessions','products.price_session_or_month as price_session_or_month','products.total_price as total_price','products.validity as validity','products.contract as contract','products.notice_period as notice_period')
+  ->whereNull('products.deleted_at')
+  ->where('training_type.id',3)
+  ->orderby('products.id','DESC')->get();
+
+  // Log::debug(":: personal_training_product_details :: ".print_r($personal_training_product_details,true));
+  foreach($gym_product_details as $gym)
+  {
+    
+    $gym->gym_day=DB::table('products_day_time')
+    ->join('product_days','product_days.id','products_day_time.day_id')
+    ->select('product_days.product_days as product_days')
+    ->where('products_day_time.product_id',$pt->product_id)
+    ->distinct('products_day_time.day_id')->get();
+
+    $gym->gym_st_time=DB::table('products_day_time')
+    ->join('slot_times','slot_times.id','products_day_time.product_st_time')
+    ->select('slot_times.time as product_st_time')
+    ->where('products_day_time.product_id',$pt->product_id)
+    ->get();
+
+    $gym->gym_end_time=DB::table('products_day_time')
+    ->join('slot_times','slot_times.id','products_day_time.product_end_time')
+    ->select('slot_times.time as product_end_time')
+    ->where('products_day_time.product_id',$pt->product_id)
+    ->get();
+  }
+  
+  
+  return view('frontpricing')->with(compact('data','personal_training_product_details','bootcamp_product_details','gym_product_details'));
 }
 
 

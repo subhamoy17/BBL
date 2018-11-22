@@ -3552,16 +3552,15 @@ public function bootcamp_plan_edit_view($id)
    try{
   $this->cart_delete_trainer();
 
-  $address=DB::table('bootcamp_plan_address')->get();  
-  $all_bootcamp_plan=DB::table('bootcamp_plans')->get();
+  $plan_id=\Crypt::decrypt($id);
 
   $form_location=DB::table('bootcamp_plan_address')->select('address_id','address_line1')->whereNotNull('address_line1')->whereNull('address_line2')->get(); 
 
   $form_address=DB::table('bootcamp_plan_address')->select('address_id','address_line2')->whereNotNull('address_line2')->whereNull('address_line1')->get();
 
-    $edit_bootcamp= DB::table('bootcamp_plans')->join('bootcamp_plan_address','bootcamp_plan_address.address_id','bootcamp_plans.address_id')->select('bootcamp_plans.bootcamp_plan_id as bootcamp_plan_id','bootcamp_plans.mon_session_flg as mon_session_flg','bootcamp_plans.tue_session_flg as tue_session_flg','bootcamp_plans.wed_session_flg as wed_session_flg','bootcamp_plans.thu_session_flg as thu_session_flg','bootcamp_plans.fri_session_flg as fri_session_flg','bootcamp_plans.sat_session_flg as sat_session_flg','bootcamp_plans.sun_session_flg as sun_session_flg','bootcamp_plans.session_st_time as session_st_time','bootcamp_plans.session_end_time as session_end_time','bootcamp_plans.address_id as address_id','bootcamp_plans.plan_st_date as plan_st_date','bootcamp_plans.plan_end_date as plan_end_date','bootcamp_plans.never_expire as never_expire','bootcamp_plans.max_allowed as max_allowed','bootcamp_plan_address.address_line1 as address_line1','bootcamp_plan_address.address_line2 as address_line2')->where('bootcamp_plans.bootcamp_plan_id',$id)->first();
-    Log::debug(" edit_bootcamp ".print_r($edit_bootcamp,true));
-    return view ("trainer.editbootcamp")->with(compact('edit_bootcamp','address','all_bootcamp_plan','form_location','form_address'));
+  $edit_bootcamp= DB::table('bootcamp_plans')->join('bootcamp_plan_address','bootcamp_plan_address.address_id','bootcamp_plans.address_id')->select('bootcamp_plans.bootcamp_plan_id as bootcamp_plan_id','bootcamp_plans.mon_session_flg as mon_session_flg','bootcamp_plans.tue_session_flg as tue_session_flg','bootcamp_plans.wed_session_flg as wed_session_flg','bootcamp_plans.thu_session_flg as thu_session_flg','bootcamp_plans.fri_session_flg as fri_session_flg','bootcamp_plans.sat_session_flg as sat_session_flg','bootcamp_plans.sun_session_flg as sun_session_flg','bootcamp_plans.session_st_time as session_st_time','bootcamp_plans.session_end_time as session_end_time','bootcamp_plans.address_id as address_id','bootcamp_plans.plan_st_date as plan_st_date','bootcamp_plans.plan_end_date as plan_end_date','bootcamp_plans.never_expire as never_expire','bootcamp_plans.max_allowed as max_allowed','bootcamp_plan_address.address_line1 as address_line1','bootcamp_plan_address.address_line2 as address_line2')->where('bootcamp_plans.bootcamp_plan_id',$plan_id)->first();
+    //Log::debug(" edit_bootcamp ".print_r($edit_bootcamp,true));
+    return view ("trainer.editbootcamp")->with(compact('edit_bootcamp','form_location','form_address'));
   }
 catch(\Exception $e) {
       
@@ -3571,7 +3570,7 @@ catch(\Exception $e) {
 }
   public function bootcamp_plan_edit_insert(Request $request)
 {
-Log::debug(" data bootcamp_plan_edit_insert ".print_r($request->all(),true)); 
+//Log::debug(" data bootcamp_plan_edit_insert ".print_r($request->all(),true)); 
 $this->cart_delete_trainer();
  
 
@@ -3618,7 +3617,7 @@ $edit_bootcamp_data['session_st_time']=date("H:i:s", strtotime($request->session
   
   
   $edit_bootcamp_data['updated_at']=Carbon::now();
-  Log::debug(" edit_bootcamp_data ".print_r($edit_bootcamp_data,true));
+  //Log::debug(" edit_bootcamp_data ".print_r($edit_bootcamp_data,true));
   DB::table('bootcamp_plans')->where('bootcamp_plan_id',$request->id)->update($edit_bootcamp_data);
 
   return redirect('trainer/bootcamp-plan')->with("success","You have successfully updated one bootcamp plan");

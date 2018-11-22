@@ -82,7 +82,8 @@ $(document).ready(function() {
                   <th>Day</th>
                   <th>Session Start Time</th>
                   <th>Session End Time</th>
-                  <th>Location/ Address</th>
+                  <th style="width: 116px;">Location/ Address</th>
+                  <th>Validity</th>
                   <th>Status</th>
                   <th>Action</th>
                 </tr>
@@ -111,6 +112,9 @@ $(document).ready(function() {
                         @endif
                       </td>
                       <td>
+                        {{$each_bootcamp->plan_st_date}} To {{$each_bootcamp->plan_end_date}}
+                      </td>
+                      <td>
                         @if($each_bootcamp->status==1)
                         Active
                         @else
@@ -119,7 +123,10 @@ $(document).ready(function() {
                       </td>
                       
                       <td style="width: 73px">
-                          <a href="{{url('trainer/edit-bootcamp-plan')}}/{{$each_bootcamp->bootcamp_id}}" title="Edit Exercise"><button class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button></a>
+
+                        
+
+                         <a href="{{route('bootcamp_plan_edit',['plan_id' => Crypt::encrypt($each_bootcamp->bootcamp_id) ])}}" title="Edit Exercise"><button class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button></a>
                           <button type="button" onclick="delete_client({!!$each_bootcamp->bootcamp_id!!})" class="btn btn-danger btn-sm" style="width: 32px;" title="Delete Exercise"><i class="fa fa-trash-o"></i></button>
                           <!-- <a href="#" class="payment btn btn-info btn-sm" style="padding: 4px 7px;position: relative; right: -1.5px; top: 0px;"><i class="fa fa-eye" title="view details"  aria-hidden="true"></i></a> -->
                       </td>
