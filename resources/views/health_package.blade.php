@@ -17,13 +17,13 @@
 						</div>
 					</div>
 					<div class="col-lg-7 col-xs-12 hp-text">
-						<p>BBL Bootcamp was created to provide you with two important things…
-“Maximum Possible Weight Loss In The Shortest Space Of Time”
+						<p><strong>BBL Bootcamp was created to provide you with two important things…</strong></p>
+<p>“Maximum Possible Weight Loss In The Shortest Space Of Time”
 -and-
 “A Place For You To Unplug From The World & Completely Reset”
 Weight Loss and Body Image are tied into just about every other facet of our lives. It affects our confidence, our choices, our relationships and ultimately our happiness.
-BBL Bootcamp have personally known the trials and tribulations of being overweight and unhappy with how they look.
-They also know the feeling of getting things back in check, on track – and being able to enjoy their fitter, happier, healthier bodies once again.There are so many demands placed on you in today’s world… work, family, friends… it’s difficult to place the focus purely on YOU. So making healthy choices and taking time out to exercise becomes harder and harder.
+BBL Bootcamp have personally known the trials and tribulations of being overweight and unhappy with how they look.</p>
+<p>They also know the feeling of getting things back in check, on track – and being able to enjoy their fitter, happier, healthier bodies once again.There are so many demands placed on you in today’s world… work, family, friends… it’s difficult to place the focus purely on YOU. So making healthy choices and taking time out to exercise becomes harder and harder.
 That’s why here at BBL Bootcamp, the focus IS purely on YOU.</p>
 					</div>
 				</div>
