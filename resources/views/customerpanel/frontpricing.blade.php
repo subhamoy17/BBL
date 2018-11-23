@@ -67,17 +67,19 @@
                 @endif
               </h2>
               <div class="date-time">
-                <h5>Timing <span>(@foreach($each_personal_training_product->personal_training_st_time as $each_pt_st_time)
+                <h5>Timing 
+                  <span>
+                   @foreach($personal_training_product_details[0]->personal_training_st_time as $each_pt_st_time)
                   
-                {{date('h:i A', strtotime($each_pt_st_time->product_st_time))}}
-
+                {{date('h:i A', strtotime($each_pt_st_time->product_st_time))}} To
+                {{date('h:i A', strtotime($each_pt_st_time->product_end_time))}},
                 @endforeach 
-                To
-                @foreach($each_personal_training_product->personal_training_end_time as $each_pt_end_time)
-                   
+               
 
-                 {{date('h:i A', strtotime($each_pt_end_time->product_end_time))}},
-                @endforeach)</span></h5>
+           </span>
+
+
+              </h5>
                 <h5>Days of a Week <span>
                 (
                 @foreach($each_personal_training_product->personal_training_day as $each_pt_day)
@@ -86,7 +88,12 @@
                 @endforeach
               )</span</h5>
               </div>
+
+
               <div class="clearfix"></div>
+
+
+
               <a href="" class="sign-btn2">Subscribe</a>
               </div>
             </div>
@@ -129,24 +136,28 @@
                 @endif
               </h2>
               <div class="date-time">
-                <h5>Timing <span>(@foreach($each_bootcamp_product->bootcamp_st_time as $each_bootcamp_st_time)
+                <h5>Timing 
+                 
+
+                <span>
+                   @foreach($bootcamp_product_details[0]->bootcamp_st_time as $each_pt_st_time)
                   
-                {{date('h:i A', strtotime($each_bootcamp_st_time->product_st_time))}}
-
+                {{date('h:i A', strtotime($each_pt_st_time->product_st_time))}} To
+                {{date('h:i A', strtotime($each_pt_st_time->product_end_time))}},
                 @endforeach 
-                To
-                @foreach($each_bootcamp_product->bootcamp_end_time as $each_bootcamp_end_time)
-                   
+               
 
-                 {{date('h:i A', strtotime($each_bootcamp_end_time->product_end_time))}},
-                @endforeach)</span></h5>
+           </span>
+
+              </h5>
                 <h5>Days of a Week <span>
                 (
                 @foreach($each_bootcamp_product->bootcamp_day as $each_bootcamp_day)
 
                   {{$each_bootcamp_day->product_days}},
                 @endforeach
-              )</span</h5>
+              )</span></h5>
+
               </div>
               <div class="clearfix"></div>
               <a href="" class="sign-btn2">Subscribe</a>
@@ -189,24 +200,19 @@
                 @endif
               </h2>
               <div class="date-time">
-                <h5>Timing <span>(@foreach($each_gym_product->gym_st_time as $each_gym_st_time)
+                <h5>Timing 
                   
-                {{date('h:i A', strtotime($each_gym_st_time->product_st_time))}}
 
+              <span>
+                   @foreach($gym_product_details[0]->gym_st_time as $each_pt_st_time)
+                  
+                {{date('h:i A', strtotime($each_pt_st_time->product_st_time))}} To
+                {{date('h:i A', strtotime($each_pt_st_time->product_end_time))}},
                 @endforeach 
-                To
-                @foreach($each_gym_product->gym_end_time as $each_gym_end_time)
-                   
+               
 
-                 {{date('h:i A', strtotime($each_gym_end_time->product_end_time))}},
-                @endforeach)</span></h5>
-                <h5>Days of a Week <span>
-                (
-                @foreach($each_gym_product->gym_day as $each_gym_day)
-
-                  {{$each_gym_day->product_days}},
-                @endforeach
-              )</span</h5>
+           </span>
+            </h5>
               </div>
               <div class="clearfix"></div>
               <a href="" class="sign-btn2">Subscribe</a>

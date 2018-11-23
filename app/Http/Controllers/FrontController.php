@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 use Auth;
 use Session;
-
+// use Illuminate\Database\Eloquent\Collection;
 use App\Customer;
 use App\User;
 use App\Notifications\SessionRequestNotification;
@@ -189,7 +189,7 @@ public function frontprice(Request $request)
   ->where('training_type.id',1)
   ->orderby('products.id','DESC')->get();
 
-  // Log::debug(":: personal_training_product_details :: ".print_r($personal_training_product_details,true));
+
   foreach($personal_training_product_details as $pt)
   {
     
@@ -210,7 +210,18 @@ public function frontprice(Request $request)
     ->select('slot_times.time as product_end_time')
     ->where('products_day_time.product_id',$pt->product_id)
     ->get();
+
+foreach($pt->personal_training_st_time as $key=>$st_time)
+  {
+$st_time->product_end_time=$pt->personal_training_end_time[$key]->product_end_time;
+
   }
+
+     Log::debug(":: personal_training_st_time :: ".print_r($pt->personal_training_st_time,true));
+  }
+
+
+  // Log::debug(":: personal_training_product_details :: ".print_r($pt->personal_training_product_details,true));
 
   $bootcamp_product_details=DB::table('products')
   ->join('training_type','products.training_type_id','training_type.id')
@@ -241,6 +252,13 @@ public function frontprice(Request $request)
     ->select('slot_times.time as product_end_time')
     ->where('products_day_time.product_id',$pt->product_id)
     ->get();
+
+    foreach($bc->bootcamp_st_time as $key=>$st_time)
+  {
+$st_time->product_end_time=$bc->bootcamp_end_time[$key]->product_end_time;
+
+  }
+
   }
 
   $gym_product_details=DB::table('products')
@@ -251,7 +269,6 @@ public function frontprice(Request $request)
   ->where('training_type.id',3)
   ->orderby('products.id','DESC')->get();
 
-  // Log::debug(":: personal_training_product_details :: ".print_r($personal_training_product_details,true));
   foreach($gym_product_details as $gym)
   {
     
@@ -272,6 +289,13 @@ public function frontprice(Request $request)
     ->select('slot_times.time as product_end_time')
     ->where('products_day_time.product_id',$pt->product_id)
     ->get();
+
+      foreach($gym->gym_st_time as $key=>$st_time)
+  {
+$st_time->product_end_time=$gym->gym_end_time[$key]->product_end_time;
+
+  }
+
   }
   
   
