@@ -34,7 +34,7 @@
                   <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('allCustomers')}}">All Customers</a></li>
                   @endif
 
-                  @if(Request::segment(2) == "add-product")
+                 <!--  @if(Request::segment(2) == "add-product")
           <li class="menu-item-has-children dropdown show">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i>Products</a>
             <ul class="sub-menu children dropdown-menu show"> 
@@ -48,7 +48,37 @@
                   @else
                   <li><i class="fa fa-id-card-o"></i><a href="{{route('add_product')}}">Add New Product</a></li>
                   @endif
+
+                   @if(Request::segment(2) == "all-products")
+                  <li><i class="fa fa-id-card-o"></i><a href="{{route('view_product')}}" style="color: #fff !important;">All Products</a></li>
+                  @else 
+                  <li><i class="fa fa-id-card-o"></i><a href="{{route('view_product')}}">All Products</a></li>
+                  @endif
+                </ul></li> -->
+
+                @if(Request::segment(2) == "all-products" || Request::segment(2) == "add-product" || Request::segment(2) == "insert-product")
+
+<li class="menu-item-has-children dropdown show" >
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: #fff !important;"> <i class="menu-icon fa fa-dashboard"></i> Products</a>
+            <ul class="sub-menu children dropdown-menu show"> 
+              @else
+              <li class="menu-item-has-children dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"> <i class="menu-icon fa fa-dashboard"></i> Products</a>
+                <ul class="sub-menu children dropdown-menu">
+                  @endif 
+                  @if(Request::segment(2) == "add-product" || Request::segment(2) == "insert-product" )
+                  <li><i class="fa fa-id-card-o"></i><a href="{{route('add_product')}}" style="color: #fff !important;">Add Products</a></li>
+                  @else
+                  <li><i class="fa fa-id-card-o"></i><a href="{{route('add_product')}}">Add Products </a></li>
+                  @endif
+
+                  @if(Request::segment(2) == "all-products")
+                  <li><i class="fa fa-id-card-o"></i><a href="{{route('view_product')}}" style="color: #fff !important;">All Products</a></li>
+                  @else 
+                  <li><i class="fa fa-id-card-o"></i><a href="{{route('view_product')}}">All Products</a></li>
+                  @endif
                 </ul></li>
+
 
                 @if(Request::segment(2) == "gymType" || Request::segment(2) == "add_exercise_trainer" || Request::segment(2) == "editexercise")
                        <ul class="nav navbar-nav">
@@ -59,6 +89,7 @@
                   <li class="active">
                   <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('gymType')}}">Exercise List</a></li>
                   @endif
+
 
 
                <!--    @if(Request::segment(2) == "common-diet-plan")

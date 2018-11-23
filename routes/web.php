@@ -244,7 +244,7 @@ Route::post('check_editDietPlan_duplicate', 'TrainerController@check_editDietPla
 Route::get('add-product', 'TrainerController@add_product')->name('add_product');
 Route::post('insert-product', 'TrainerController@insert_product')->name('insert_product');
 
-
+Route::get('all-products', 'TrainerController@view_product')->name('view_product');
 
 });
 

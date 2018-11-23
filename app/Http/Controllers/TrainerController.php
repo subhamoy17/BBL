@@ -3771,4 +3771,87 @@ public function insert_product(Request $request)
 
 }
 
+
+public function view_product(Request $request)
+{
+   // try{
+  $this->cart_delete_trainer();
+  
+
+  $all_products_data=DB::table('products')
+  ->join('training_type','products.training_type_id','training_type.id')
+  ->join('payment_type','products.payment_type_id','payment_type.id')
+  ->select('products.id as product_id','training_type.training_name as training_name','payment_type.payment_type_name as payment_type_name','products.total_sessions as total_sessions','products.price_session_or_month as price_session_or_month','products.total_price as total_price','products.validity as validity','products.contract as contract','products.notice_period as notice_period')
+  ->whereNull('products.deleted_at')
+  ->orderby('products.id','DESC')->get();
+
+  // Log::debug(":: personal_training_product_details :: ".print_r($personal_training_product_details,true));
+  
+
+    
+   foreach($all_products_data as $pt)
+  {
+    
+    $pt->personal_training_day=DB::table('products_day_time')
+    ->join('product_days','product_days.id','products_day_time.day_id')
+    ->select('product_days.product_days as product_days','products_day_time.day_id as day_id')
+    ->where('products_day_time.product_id',$pt->product_id)
+    ->distinct('products_day_time.day_id')->get();
+
+$all_day = $pt->personal_training_day;
+
+    $pt->personal_training_st_time=DB::table('products_day_time')
+    ->join('slot_times','slot_times.id','products_day_time.product_st_time')
+    ->select('slot_times.time as product_st_time')
+    ->where('products_day_time.product_id',$pt->product_id)
+    ->get();
+
+    $pt->personal_training_end_time=DB::table('products_day_time')
+    ->join('slot_times','slot_times.id','products_day_time.product_end_time')
+    ->select('slot_times.time as product_end_time')
+    ->where('products_day_time.product_id',$pt->product_id)
+    ->get();
+
+foreach($pt->personal_training_st_time as $key=>$st_time)
+  {
+$st_time->product_end_time=$pt->personal_training_end_time[$key]->product_end_time;
+
+  }
+
+     // Log::debug(":: personal_training_st_time :: ".print_r($pt->personal_training_st_time,true));
+  }
+
+  // foreach($all_day as $days)
+  // {
+  //   $days->personal_training_st_time=DB::table('products_day_time')
+  //   ->join('slot_times','slot_times.id','products_day_time.product_st_time')
+  //   ->select('slot_times.time as product_st_time')
+  //   ->where('products_day_time.day_id',$days->day_id)
+  //   ->get();
+
+  //   $days->personal_training_end_time=DB::table('products_day_time')
+  //   ->join('slot_times','slot_times.id','products_day_time.product_end_time')
+  //   ->select('slot_times.time as product_end_time')
+  //   ->where('products_day_time.day_id',$days->day_id)
+  //   ->get();
+
+  //   Log::debug(":: days :: ".print_r($days,true));
+  // }
+ 
+
+// $day_time=DB::table('products_day_time')
+//     ->join('slot_times','slot_times.id','products_day_time.product_st_time')
+//     ->join('products','products.id','products_day_time.product_id')
+//     ->join('product_days','product_days.id','products_day_time.day_id')
+//     ->join('slot_times','slot_times.id','products_day_time.product_end_time')
+//     ->where('products_day_time.product_id','products.id')
+//     ->get()->all();
+  // Log::debug(":: day_time :: ".print_r($day_time,true));
+
+  return view('trainer.allproducts')->with(compact('all_products_data','products_day_time','products_st_time','products_end_time'));
+// }catch(\Exception $e) { 
+//     return abort(200);
+//   }
+}
+
 }
