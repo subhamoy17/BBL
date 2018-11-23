@@ -222,11 +222,11 @@ public function addslot()
 */
 public function insertslot(Request $request)
 {
-  DB::beginTransaction();
-  // try{
+  //DB::beginTransaction();
+   //try{
   $this->cart_delete_trainer();
   // create log for showing error and print result
-  Log::debug(" data ".print_r($request->all(),true)); 
+  //Log::debug(" data ".print_r($request->all(),true)); 
   // validation of data
   $request->validate
   ([ 'slots_number'=>'required|integer|min:1', //accept only integer and must be minimum value of 1 is required
@@ -245,14 +245,14 @@ public function insertslot(Request $request)
   $data['created_at']=Carbon::now();
 
   DB::table('slots')->insert($data);
-  DB::commit();
+  //DB::commit();
   return redirect('trainer/add-slot')->with("success","You have successfully added one package");
 
-  // }
-  // catch(\Exception $e) {
-  //   DB::rollback();
-  //     return abort(200);
-  // }
+   // }
+   // catch(\Exception $e) {
+   //   DB::rollback();
+   //     return abort(200);
+   // }
 }
 
 
@@ -3647,6 +3647,128 @@ public function add_product()
   $all_payment_type=DB::table('payment_type')->get();
   $all_slot_time=DB::table('slot_times')->get();
   return view('trainer/add_product')->with(compact('all_traning_type','all_payment_type','all_slot_time'));
+}
+
+public function insert_product(Request $request)
+{
+  Log::debug(" insert_product ".print_r($request->all(),true));
+
+  $products_data['training_type_id']=$request->training_type;
+  $products_data['payment_type_id']=$request->payment_type;
+
+  if($request->session_unlimited=='on')
+  {
+    $products_data['total_sessions']='Unlimited';
+  }
+  elseif($request->no_session!='')
+  {
+    $products_data['total_sessions']=$request->no_session;
+  }
+  $products_data['price_session_or_month']=$request->price;
+  $products_data['total_price']=$request->final_total_price;
+  $products_data['validity']=$request->validity*$request->validity_2;
+  $products_data['contract']=$request->contract;
+
+  if($request->notice_period>0 && $request->notice_period_2>0)
+  {
+    $products_data['notice_period']=$request->notice_period*$request->notice_period_2;
+  }
+  elseif($request->notice_period>0 && $request->notice_period_2==0)
+  {
+    $products_data['notice_period']=$request->notice_period;
+  }
+
+  $insert_products=DB::table('products')->insert($products_data);
+
+
+  if($request->monday=='on')
+  {
+    for($mon=0;$mon<count($request->monday_start_time);$mon++)
+    {
+      $moday_data['product_id']=DB::getPdo()->lastInsertId();;
+      $moday_data['day_id']=1;
+      $moday_data['product_st_time']=$request->monday_start_time[$mon];
+      $moday_data['product_end_time']=$request->monday_end_time[$mon];
+
+      $day_time_insert_monday=DB::table('products_day_time')->insert($moday_data);
+    }
+  }
+  if($request->tuesday=='on')
+  {
+    for($tue=0;$tue<count($request->tuesday_start_time);$tue++)
+    {
+      $tuesday_data['product_id']=DB::getPdo()->lastInsertId();;
+      $tuesday_data['day_id']=2;
+      $tuesday_data['product_st_time']=$request->tuesday_start_time[$tue];
+      $tuesday_data['product_end_time']=$request->tuesday_end_time[$tue];
+
+      $day_time_insert_tuesday=DB::table('products_day_time')->insert($tuesday_data);
+    }
+  }
+  if($request->wednesday=='on')
+  {
+    for($wed=0;$wed<count($request->wednesday_start_time);$wed++)
+    {
+      $wednesday_data['product_id']=DB::getPdo()->lastInsertId();;
+      $wednesday_data['day_id']=3;
+      $wednesday_data['product_st_time']=$request->wednesday_start_time[$wed];
+      $wednesday_data['product_end_time']=$request->wednesday_end_time[$wed];
+
+      $day_time_insert_wednesday=DB::table('products_day_time')->insert($wednesday_data);
+    }
+  }
+  if($request->thursday=='on')
+  {
+    for($thu=0;$thu<count($request->thursday_start_time);$thu++)
+    {
+      $thursday_data['product_id']=DB::getPdo()->lastInsertId();;
+      $thursday_data['day_id']=4;
+      $thursday_data['product_st_time']=$request->thursday_start_time[$thu];
+      $thursday_data['product_end_time']=$request->thursday_end_time[$thu];
+
+      $day_time_insert_thursday=DB::table('products_day_time')->insert($thursday_data);
+    }
+  }
+
+  if($request->friday=='on')
+  {
+    for($fri=0;$fri<count($request->friday_start_time);$fri++)
+    {
+      $friday_data['product_id']=DB::getPdo()->lastInsertId();;
+      $friday_data['day_id']=4;
+      $friday_data['product_st_time']=$request->friday_start_time[$fri];
+      $friday_data['product_end_time']=$request->friday_end_time[$fri];
+
+      $day_time_insert_friday=DB::table('products_day_time')->insert($friday_data);
+    }
+  }
+
+  if($request->saturday=='on')
+  {
+    for($sat=0;$sat<count($request->saturday_start_time);$sat++)
+    {
+      $saturday_data['product_id']=DB::getPdo()->lastInsertId();;
+      $saturday_data['day_id']=4;
+      $saturday_data['product_st_time']=$request->saturday_start_time[$sat];
+      $saturday_data['product_end_time']=$request->saturday_end_time[$sat];
+
+      $day_time_insert_saturday=DB::table('products_day_time')->insert($saturday_data);
+    }
+  }
+
+  if($request->sunday=='on')
+  {
+    for($sun=0;$sun<count($request->sunday_start_time);$sun++)
+    {
+      $sunday_data['product_id']=DB::getPdo()->lastInsertId();;
+      $sunday_data['day_id']=4;
+      $sunday_data['product_st_time']=$request->sunday_start_time[$sun];
+      $sunday_data['product_end_time']=$request->sunday_end_time[$sun];
+
+      $day_time_insert_sunday=DB::table('products_day_time')->insert($sunday_data);
+    }
+  }
+
 }
 
 }

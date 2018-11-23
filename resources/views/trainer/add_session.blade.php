@@ -307,7 +307,7 @@ messages: {
                               <label>Booking Time <small>*</small></label>
 
                                 <select class="form-control" name="slot_time2" id="slot_time2" onchange="jsfunction2();">
-                                <option value="">Please select time</option>
+                                <option value=" ">Please select time</option>
                                 @foreach($all_times as $each_times)
                                 <option value="{{$each_times->id}}"> {{date('h:i A', strtotime($each_times->time))}}</option>
                                 @endforeach 

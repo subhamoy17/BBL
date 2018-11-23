@@ -35,7 +35,14 @@ $('#bootstrap-slot-data-table').DataTable({
     border:1px solid #FFC0CB;
 }
 </style>
-
+<script type="text/javascript">
+  $(document).ready(function()
+  { 
+  setTimeout(function(){ 
+                          $('.alert-success').hide();
+                      }, 5000);
+});
+</script>
 @if(Auth::user()->master_trainer==1)
 
 <div class="breadcrumbs">
@@ -67,7 +74,7 @@ $('#bootstrap-slot-data-table').DataTable({
                             </div>
                             @endif
                             @if (session('delete'))
-                                <div class="alert alert-danger">
+                                <div class="alert alert-success">
                                     {{ session('delete') }}
                                 </div>
                             @endif

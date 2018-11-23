@@ -9,10 +9,6 @@
   setTimeout(function(){ 
                           $('.alert-success').hide();
                       }, 5000);
-
-  setTimeout(function(){ 
-                          $('.alert-danger').hide();
-                      }, 5000);
 });
 </script>
 
@@ -77,7 +73,7 @@ table.dataTable thead>tr>th[id='action'].sorting_asc::after{display: none}
                         </div>
                         @endif
                         @if (session('delete'))
-                            <div class="alert alert-danger">
+                            <div class="alert alert-success">
                                 {{ session('delete') }}
                             </div>
                         @endif
