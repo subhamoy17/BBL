@@ -3657,7 +3657,7 @@ public function insert_product(Request $request)
   $products_data['training_type_id']=$request->training_type;
   $products_data['payment_type_id']=$request->payment_type;
 
-  if($request->session_unlimited=='on')
+  if($request->has('session_unlimited'))
   {
     $products_data['total_sessions']='Unlimited';
   }
@@ -3831,14 +3831,14 @@ public function edit_product($id)
 
 public function update_product(Request $request)
 {
-  Log::debug(":: product_details :: ".print_r($request->all(),true));
+  //Log::debug(":: product_details :: ".print_r($request->all(),true));
 
   DB::beginTransaction();
    try{
   $products_data['training_type_id']=$request->training_type;
   $products_data['payment_type_id']=$request->payment_type;
 
-  if($request->session_unlimited=='on')
+  if($request->has('session_unlimited'))
   {
     $products_data['total_sessions']='Unlimited';
   }
@@ -4013,7 +4013,7 @@ public function product_delete($id)
   try{
   $delete_data['deleted_at']=Carbon::now();
   $delete_product=DB::table('products')->where('id',$id)->update($delete_data);
-  $delete_day_time=DB::table('products_day_time')->where('product_id',$id)->delete();
+  $delete_day_time=DB::table('products_day_time')->where('product_id',$id)->update($delete_data);
   return redirect('trainer/all-products')->with("success","You have successfully deleted one product");
   }
   catch(\Exception $e) {

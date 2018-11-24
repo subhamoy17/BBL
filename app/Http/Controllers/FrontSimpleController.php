@@ -86,7 +86,7 @@ public function frontlogin()
 
 public function frontprice(Request $request)
 {
-  
+  try {
   $data=DB::table('slots')->where('deleted_at',null)->get();
 
   $personal_training_product_details=DB::table('products')
@@ -125,7 +125,7 @@ $st_time->product_end_time=$pt->personal_training_end_time[$key]->product_end_ti
 
   }
 
-     Log::debug(":: personal_training_st_time :: ".print_r($pt->personal_training_st_time,true));
+     //Log::debug(":: personal_training_st_time :: ".print_r($pt->personal_training_st_time,true));
   }
 
   $bootcamp_product_details=DB::table('products')
@@ -206,6 +206,11 @@ $st_time->product_end_time=$gym->gym_end_time[$key]->product_end_time;
   
   
   return view('frontpricing')->with(compact('data','personal_training_product_details','bootcamp_product_details','gym_product_details'));
+
+}
+    catch(\Exception $e) {
+      return abort(400);
+  }
 }
 
 
