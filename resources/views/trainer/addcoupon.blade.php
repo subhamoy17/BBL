@@ -400,6 +400,14 @@ function check(){
     { 
       $('#apply_slots').val('');
        $("#slot_details").hide();
+       $('#slots_number').val('');
+       $('#slots_price').val('');
+       $('#slots_validity').val('');
+       $('#coupon_code').val('');
+       $('#discount_price').val('');
+       // $('#couponaddform').trigger("reset");
+       $("#lessthan_slot").hide();
+       $("#duplicate_coupon").hide();
     }
    }
   
