@@ -124,7 +124,7 @@ $('#bootstrap-slot-data-table').DataTable({
                   
                 {{date('h:i A', strtotime($each_pt_st_time->product_st_time))}} To
                 {{date('h:i A', strtotime($each_pt_st_time->product_end_time))}},
-                @endforeach "  data-personal-contract="{{$my_productdata->contract}}" data-personal-notice-period="{{$my_productdata->notice_period}}" data-personal-training-name="{{$my_productdata->training_name}}" data-personal-price-session-or-month="{{(float)$my_productdata->price_session_or_month}}" data-personal-total-price="{{(float)$my_productdata->total_price}}" data-personal-total-sessions="{{$my_productdata->total_sessions}}" data-personal-payment-type-name="{{$my_productdata->payment_type_name}}" data-personal-training-day="@foreach($my_productdata->personal_training_day as $each_pt_day)
+                @endforeach "  data-personal-contract="{{$my_productdata->contract}}" data-personal-notice-period="{{$my_productdata->notice_period}}" data-personal-training-name="{{$my_productdata->training_name}}" data-personal-price-session-or-month="{{(float)$my_productdata->price_session_or_month}}" data-personal-total-price="{{(float)$my_productdata->total_price}}" data-personal-total-sessions="{{$my_productdata->total_sessions}}" data-personal-notice-period-value="{{$my_productdata->notice_period_value}}" data-personal-payment-type-name="{{$my_productdata->payment_type_name}}" data-personal-training-day="@foreach($my_productdata->personal_training_day as $each_pt_day)
 
                   {{$each_pt_day->product_days}},
                 @endforeach">Click here</a></td>
@@ -296,7 +296,7 @@ $('#bootstrap-slot-data-table').DataTable({
      var each_pt_st_time = $(this).data("personal-training-st-time");
     var contract = $(this).data("personal-contract");
     var product_days = $(this).data("personal-training-day");
-   
+   var notice_period_value= $(this).data("personal-notice-period-value");
     var notice_period= $(this).data("personal-notice-period");
     var training_name = $(this).data("personal-training-name");
     var payment_type_name = $(this).data("personal-payment-type-name");
@@ -307,7 +307,7 @@ $('#bootstrap-slot-data-table').DataTable({
     $('#contract').text(contract);
     $('#product_days').text(product_days);
     
-     $('#notice_period').text(notice_period);
+     
     $('#training_name').text(training_name);
     $('#payment_type_name').text(payment_type_name);
     $('#total_sessions').text(total_sessions);
@@ -318,6 +318,15 @@ $('#bootstrap-slot-data-table').DataTable({
   }
 else{
     $('#price_session_or_month').text(price_session_or_month+'/Session');
+    }
+
+     if($(this).data("personal-notice-period-value")=='NA')
+  {
+   $('#notice_period').text(notice_period_value);
+   
+  }
+else{
+    $('#notice_period').text(notice_period+' Days');
     }
     
     $('#total_price').text(total_price);
