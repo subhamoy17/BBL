@@ -240,38 +240,27 @@ maxlength: 'Please enter number less than 50 numbers.'
 						<label>Validity<span class="required_field_color">*</span></label>
 					</div>
 					<div class="col-lg-4">
-            @if(($product_details->validity)%7==0)
-            <?php $current_validity=($product_details->validity)/7; ?>
-            @else
-            <?php $current_validity=($product_details->validity)/30; ?>
-            @endif
-
 						<select name="validity" id="validity" class="form-control">
 	            <option value="0">Select Any One</option>
-          		<option value="1" @if($current_validity==1) selected @endif>1</option>
-        	    <option value="2" @if($current_validity==2) selected @endif>2</option>
-        	    <option value="3" @if($current_validity==3) selected @endif>3</option>
-        	    <option value="4" @if($current_validity==4) selected @endif>4</option>
-        	    <option value="5" @if($current_validity==5) selected @endif>5</option>
-        	    <option value="6" @if($current_validity==6) selected @endif>6</option>
-        	    <option value="7" @if($current_validity==7) selected @endif>7</option>
-        	    <option value="8" @if($current_validity==8) selected @endif>8</option>
-        	    <option value="9" @if($current_validity==9) selected @endif>9</option>
-        	    <option value="10" @if($current_validity==10) selected @endif>10</option>
-        	    <option value="11" @if($current_validity==11) selected @endif>11</option>
-        	    <option value="12" @if($current_validity==12) selected @endif>12</option>
+          		<option value="1" @if($product_details->validity_value==1) selected @endif>1</option>
+        	    <option value="2" @if($product_details->validity_value==2) selected @endif>2</option>
+        	    <option value="3" @if($product_details->validity_value==3) selected @endif>3</option>
+        	    <option value="4" @if($product_details->validity_value==4) selected @endif>4</option>
+        	    <option value="5" @if($product_details->validity_value==5) selected @endif>5</option>
+        	    <option value="6" @if($product_details->validity_value==6) selected @endif>6</option>
+        	    <option value="7" @if($product_details->validity_value==7) selected @endif>7</option>
+        	    <option value="8" @if($product_details->validity_value==8) selected @endif>8</option>
+        	    <option value="9" @if($product_details->validity_value==9) selected @endif>9</option>
+        	    <option value="10" @if($product_details->validity_value==10) selected @endif>10</option>
+        	    <option value="11" @if($product_details->validity_value==11) selected @endif>11</option>
+        	    <option value="12" @if($product_details->validity_value==12) selected @endif>12</option>
 			      </select>
 					</div>
 					<div class="col-lg-4">
 							<select name="validity_2" id="validity_2" class="form-control">
 		            <option value="0">Select Any One</option>
-                @if(($product_details->validity)%7==0)
-              		<option value="7" selected>Week</option>
-                  <option value="30">Month</option>
-                @else
-              	  <option value="7">Week</option>
-                  <option value="30" selected>Month</option>
-                @endif  
+              		<option value="7" @if($product_details->validity_duration==7) selected @endif>Week</option>
+                  <option value="30" @if($product_details->validity_duration==30) selected @endif>Month</option> 
 			        </select>
 					</div>
 				</div>
@@ -294,41 +283,28 @@ maxlength: 'Please enter number less than 50 numbers.'
 						<label>Notice Period<span class="required_field_color">*</span></label>
 					</div>
 					<div class="col-lg-4">
-            @if($product_details->notice_period=='NA')
-            <?php $current_notice_period='NA'; $current_notice_period_month_week=''; ?>
-            @elseif(($product_details->notice_period)%7==0)
-            <?php 
-              $current_notice_period=($product_details->notice_period)/7; 
-              $current_notice_period_month_week='Week';
-            ?>
-            @else
-            <?php 
-              $current_notice_period=($product_details->notice_period)/30;
-              $current_notice_period_month_week='Month';
-             ?>
-            @endif
-						<select name="notice_period" id="notice_period" class="form-control" onchange="notice_period_duration();">
+            <select name="notice_period" id="notice_period" class="form-control" onchange="notice_period_duration();">
 	            <option value="0">Select Any One</option>
-          		<option value="1" @if($current_notice_period==1) selected @endif>1</option>
-        	    <option value="2" @if($current_notice_period==2) selected @endif>2</option>
-        	    <option value="3" @if($current_notice_period==3) selected @endif>3</option>
-        	    <option value="4" @if($current_notice_period==4) selected @endif>4</option>
-        	    <option value="5" @if($current_notice_period==5) selected @endif>5</option>
-        	    <option value="6" @if($current_notice_period==6) selected @endif>6</option>
-        	    <option value="7" @if($current_notice_period==7) selected @endif>7</option>
-        	    <option value="8" @if($current_notice_period==8) selected @endif>8</option>
-        	    <option value="9" @if($current_notice_period==9) selected @endif>9</option>
-        	    <option value="10" @if($current_notice_period==10) selected @endif>10</option>
-        	    <option value="11" @if($current_notice_period==11) selected @endif>11</option>
-              <option value="12" @if($current_notice_period==12) selected @endif>12</option>
-        	    <option value="NA" @if($current_notice_period=='NA') selected @endif>N/A</option>
+          		<option value="1" @if($product_details->notice_period_value==1) selected @endif>1</option>
+        	    <option value="2" @if($product_details->notice_period_value==2) selected @endif>2</option>
+        	    <option value="3" @if($product_details->notice_period_value==3) selected @endif>3</option>
+        	    <option value="4" @if($product_details->notice_period_value==4) selected @endif>4</option>
+        	    <option value="5" @if($product_details->notice_period_value==5) selected @endif>5</option>
+        	    <option value="6" @if($product_details->notice_period_value==6) selected @endif>6</option>
+        	    <option value="7" @if($product_details->notice_period_value==7) selected @endif>7</option>
+        	    <option value="8" @if($product_details->notice_period_value==8) selected @endif>8</option>
+        	    <option value="9" @if($product_details->notice_period_value==9) selected @endif>9</option>
+        	    <option value="10" @if($product_details->notice_period_value==10) selected @endif>10</option>
+        	    <option value="11" @if($product_details->notice_period_value==11) selected @endif>11</option>
+              <option value="12" @if($product_details->notice_period_value==12) selected @endif>12</option>
+        	    <option value="NA" @if($product_details->notice_period_value=='NA') selected @endif>N/A</option>
 			      </select>
 					</div>
 					<div class="col-lg-4">
 						<select name="notice_period_2" id="notice_period_2" class="form-control">
 		            <option value="0">Select Any One</option>
-                  <option value="7" @if($current_notice_period_month_week=='Week') selected @endif>Week</option>
-                  <option value="30" @if($current_notice_period_month_week=='Month') selected @endif>Month</option>
+                  <option value="7" @if($product_details->notice_period_duration==7) selected @endif>Week</option>
+                  <option value="30" @if($product_details->notice_period_duration==30) selected @endif>Month</option>
 			        </select>
 					</div>
 				</div>

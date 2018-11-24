@@ -489,7 +489,7 @@ maxlength: 'Please enter number less than 50 numbers.'
 						<div class="row">
 						<div class="col-lg-10"></div>
 							<div class="col-lg-2">
-								<button name="bootcamp_session_submit" id="bootcamp_session_submit" class="btn btn-primary pull-right" style="width: 100px;">Submit</button>
+								<button name="product_submit_btn" id="product_submit_btn" class="btn btn-primary pull-right" style="width: 100px;">Submit</button>
 							</div>
 						</div>
 					</div>
@@ -866,6 +866,8 @@ function valueUnlimited()
     }
   }
 </script>
+
+
 
 
 @endif

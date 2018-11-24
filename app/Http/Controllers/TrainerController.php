@@ -3667,17 +3667,12 @@ public function insert_product(Request $request)
   }
   $products_data['price_session_or_month']=$request->price;
   $products_data['total_price']=$request->final_total_price;
-  $products_data['validity']=$request->validity*$request->validity_2;
+  $products_data['validity_value']=$request->validity;
+  $products_data['validity_duration']=$request->validity_2;
   $products_data['contract']=$request->contract;
-
-  if($request->notice_period>0 && $request->notice_period_2>0)
-  {
-    $products_data['notice_period']=$request->notice_period*$request->notice_period_2;
-  }
-  elseif($request->notice_period>0 && $request->notice_period_2==0)
-  {
-    $products_data['notice_period']=$request->notice_period;
-  }
+  $products_data['notice_period_value']=$request->notice_period;
+  $products_data['notice_period_duration']=$request->notice_period_2;
+  
 
   $insert_products=DB::table('products')->insert($products_data);
 
@@ -3791,7 +3786,7 @@ public function edit_product($id)
   $product_details=DB::table('products')
   ->join('training_type','products.training_type_id','training_type.id')
   ->join('payment_type','products.payment_type_id','payment_type.id')
-  ->select('products.id as product_id','training_type.training_name as training_name','training_type.id as training_type_id','payment_type.payment_type_name as payment_type_name','payment_type.id as payment_type_id','products.total_sessions as total_sessions','products.price_session_or_month as price_session_or_month','products.total_price as total_price','products.validity as validity','products.contract as contract','products.notice_period as notice_period')
+  ->select('products.id as product_id','training_type.training_name as training_name','training_type.id as training_type_id','payment_type.payment_type_name as payment_type_name','payment_type.id as payment_type_id','products.total_sessions as total_sessions','products.price_session_or_month as price_session_or_month','products.total_price as total_price','products.validity_value as validity_value','products.validity_duration as validity_duration','products.contract as contract','products.notice_period_value as notice_period_value','products.notice_period_duration as notice_period_duration')
   ->where('products.id',$product_id)
   ->first();
 
@@ -3848,17 +3843,11 @@ public function update_product(Request $request)
   }
   $products_data['price_session_or_month']=$request->price;
   $products_data['total_price']=$request->final_total_price;
-  $products_data['validity']=$request->validity*$request->validity_2;
+  $products_data['validity_value']=$request->validity;
+  $products_data['validity_duration']=$request->validity_2;
   $products_data['contract']=$request->contract;
-
-  if($request->notice_period>0 && $request->notice_period_2>0)
-  {
-    $products_data['notice_period']=$request->notice_period*$request->notice_period_2;
-  }
-  elseif($request->notice_period>0 && $request->notice_period_2==0)
-  {
-    $products_data['notice_period']=$request->notice_period;
-  }
+  $products_data['notice_period_value']=$request->notice_period;
+  $products_data['notice_period_duration']=$request->notice_period_2;
 
   $update_products=DB::table('products')->where('id',$request->product_id)->update($products_data);
 

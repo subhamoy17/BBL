@@ -69,11 +69,11 @@
               <div class="date-time">
                 <h5>Timing 
                   <span>
-                   @foreach($personal_training_product_details[$pt_key]->personal_training_st_time as $each_pt_st_time)
+                   (@foreach($personal_training_product_details[$pt_key]->personal_training_st_time as $each_pt_st_time)
                   
                 {{date('h:i A', strtotime($each_pt_st_time->product_st_time))}} To
                 {{date('h:i A', strtotime($each_pt_st_time->product_end_time))}},
-                @endforeach 
+                @endforeach) 
                
 
            </span>
@@ -140,11 +140,11 @@
                  
 
                 <span>
-                   @foreach($bootcamp_product_details[$bc_key]->bootcamp_st_time as $each_pt_st_time)
+                   (@foreach($bootcamp_product_details[$bc_key]->bootcamp_st_time as $each_pt_st_time)
                   
                 {{date('h:i A', strtotime($each_pt_st_time->product_st_time))}} To
                 {{date('h:i A', strtotime($each_pt_st_time->product_end_time))}},
-                @endforeach 
+                @endforeach) 
                
 
            </span>
@@ -204,11 +204,11 @@
                   
 
               <span>
-                   @foreach($gym_product_details[$gym_key]->gym_st_time as $each_pt_st_time)
+                   (@foreach($gym_product_details[$gym_key]->gym_st_time as $each_pt_st_time)
                   
                 {{date('h:i A', strtotime($each_pt_st_time->product_st_time))}} To
                 {{date('h:i A', strtotime($each_pt_st_time->product_end_time))}},
-                @endforeach 
+                @endforeach) 
                
 
            </span>
