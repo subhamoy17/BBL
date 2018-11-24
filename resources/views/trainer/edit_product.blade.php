@@ -229,7 +229,7 @@ maxlength: 'Please enter number less than 50 numbers.'
           </div>
 
           <div class="row form-group" id="total_price_div">
-            <div class="col col-md-4"><label for="text-input" class=" form-control-label">Total Price</label></div>
+            <div class="col col-md-4"><label for="text-input" class=" form-control-label">Total Price (<i class="fa fa-gbp"></i>)</label></div>
             <div class="col-12 col-md-8"><label for="text-input" class="total_price">{{$product_details->total_price}}</label>
             <input type="hidden" name="final_total_price" id="final_total_price" value="{{$product_details->total_price}}">
             </div>

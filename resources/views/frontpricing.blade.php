@@ -38,7 +38,7 @@
         <h3 class="gyl_header">Choose <span>Your Personal Training Plan</span></h3>
           <div class="row">
         <div id="bootcamp-slider" class="owl-carousel">
-            @foreach($personal_training_product_details as $each_personal_training_product)
+            @foreach($personal_training_product_details as $pt_key=>$each_personal_training_product)
             <div class="price-box">
               <div class="p-box-head cmn-3">
               <h3><span>{{$each_personal_training_product->training_name}}</span></h3>
@@ -63,11 +63,13 @@
               <div class="date-time">
                 <h5>Timing 
                   <span>
-                   @foreach($personal_training_product_details[0]->personal_training_st_time as $each_pt_st_time)
+                    
+                   @foreach($personal_training_product_details[$pt_key]->personal_training_st_time as $each_pt_st_time)
                   
                 {{date('h:i A', strtotime($each_pt_st_time->product_st_time))}} To
                 {{date('h:i A', strtotime($each_pt_st_time->product_end_time))}},
                 @endforeach 
+                
                
 
            </span>
@@ -107,7 +109,7 @@
         <h3 class="gyl_header">Choose <span>Your Bootcamp Plan</span></h3>
           <div class="row">
         <div id="bootcamp-slider2" class="owl-carousel">
-            @foreach($bootcamp_product_details as $each_bootcamp_product)
+            @foreach($bootcamp_product_details as $bc_key=>$each_bootcamp_product)
             <div class="price-box">
               <div class="p-box-head cmn-3">
               <h3><span>{{$each_bootcamp_product->training_name}}</span></h3>
@@ -134,7 +136,7 @@
                  
 
                 <span>
-                   @foreach($bootcamp_product_details[0]->bootcamp_st_time as $each_pt_st_time)
+                   @foreach($bootcamp_product_details[$bc_key]->bootcamp_st_time as $each_pt_st_time)
                   
                 {{date('h:i A', strtotime($each_pt_st_time->product_st_time))}} To
                 {{date('h:i A', strtotime($each_pt_st_time->product_end_time))}},
@@ -171,7 +173,7 @@
         <h3 class="gyl_header">Choose <span>Your Gym Plan</span></h3>
           <div class="row">
         <div id="bootcamp-slider3" class="owl-carousel">
-            @foreach($gym_product_details as $each_gym_product)
+            @foreach($gym_product_details as $gym_key=>$each_gym_product)
             <div class="price-box">
               <div class="p-box-head cmn-3">
               <h3><span>{{$each_gym_product->training_name}}</span></h3>
@@ -198,7 +200,7 @@
                   
 
               <span>
-                   @foreach($gym_product_details[0]->gym_st_time as $each_pt_st_time)
+                   @foreach($gym_product_details[$gym_key]->gym_st_time as $each_pt_st_time)
                   
                 {{date('h:i A', strtotime($each_pt_st_time->product_st_time))}} To
                 {{date('h:i A', strtotime($each_pt_st_time->product_end_time))}},
