@@ -312,7 +312,7 @@ maxlength: 'Please enter number less than 50 numbers.'
         </div>
 
         <div class="row form-group"  id="add_monday_time_div">
-          <div class="col col-md-4"></div>
+          
           
         </div> 
         <div class="row form-group">
@@ -341,7 +341,7 @@ maxlength: 'Please enter number less than 50 numbers.'
             </div>
           </div>
           <div class="row form-group"  id="add_tuesday_time_div">
-            <div class="col col-md-4"></div>
+            
           </div> 
           <div class="row form-group">
             <div class="col col-md-1"><label for="text-input" class="form-control-label">Wednesday</label></div>
@@ -369,7 +369,7 @@ maxlength: 'Please enter number less than 50 numbers.'
               </div>
             </div>
             <div class="row form-group"  id="add_wednesday_time_div">
-              <div class="col col-md-4"></div>
+              
             </div> 
             <div class="row form-group">
               <div class="col col-md-1"><label for="text-input" class="form-control-label">Thursday</label></div>
@@ -398,7 +398,7 @@ maxlength: 'Please enter number less than 50 numbers.'
               </div>
             </div>
             <div class="row form-group"  id="add_thursday_time_div">
-              <div class="col col-md-4"></div>
+              
             </div> 
             <div class="row form-group">
               <div class="col col-md-1"><label for="text-input" class="form-control-label">Friday</label></div>
@@ -426,7 +426,7 @@ maxlength: 'Please enter number less than 50 numbers.'
               </div>
             </div>
             <div class="row form-group"  id="add_friday_time_div">
-              <div class="col col-md-4"></div>
+              
             </div>
             <div class="row form-group">
               <div class="col col-md-1"><label for="text-input" class="form-control-label">Saturday</label></div>
@@ -454,7 +454,7 @@ maxlength: 'Please enter number less than 50 numbers.'
                   </div>
                 </div>
                 <div class="row form-group"  id="add_saturday_time_div">
-                  <div class="col col-md-4"></div>
+                  
                 </div>
                 <div class="row form-group">
                   <div class="col col-md-1"><label for="text-input" class="form-control-label">Sunday</label></div>
@@ -482,7 +482,7 @@ maxlength: 'Please enter number less than 50 numbers.'
                     </div>
                   </div>
                   <div class="row form-group"  id="add_sunday_time_div">
-                    <div class="col col-md-4"></div>
+                    
                   </div>
 				<div class="row">
 					<div class="col-lg-12">
@@ -517,7 +517,8 @@ maxlength: 'Please enter number less than 50 numbers.'
     }
     else
     {
-      $("#add_monday_time_div").append('<div class="conMon col col-md-8"><div class="col col-md-4"><input readonly type="text" value="' + mon_st_time_text + '" /></div>' + '<div class="col col-md-4"><input readonly type="text" value="' + mon_end_time_text + '"/></div>' + '<input readonly type="hidden" name="monday_start_time[]" value="' + mon_st_time_id + '"/>'  + '<input readonly type="hidden" name="monday_end_time[]" value="' + mon_end_time_id + '"/>' + '<div class="col col-md-4"><input type="button" class="btnRemoveMon btn-dark btn-theme-colored btn-flat" value="Delete Monday Time"/></div></div>');
+      $("#add_monday_time_div").append('<div class="conMon col col-md-12"><div class="col col-md-4"></div><div class="col col-md-8"><div class="col col-md-4"><input readonly type="text" value="' + mon_st_time_text + '" /></div>' + '<div class="col col-md-4"><input readonly type="text" value="' + mon_end_time_text + '"/></div>' + '<input readonly type="hidden" name="monday_start_time[]" value="' + mon_st_time_id + '"/>'  + '<input readonly type="hidden" name="monday_end_time[]" value="' + mon_end_time_id + '"/>' + '<div class="col col-md-4"><input type="button" class="btnRemoveMon btn-dark btn-theme-colored btn-flat" value="Delete Monday Time"/></div></div></div><br>');
+      $("#add_monday_time_div").append('<br>');
       $("#mon_st_time").val('-'); $("#mon_end_time").val('-');
     }
   });
@@ -545,7 +546,8 @@ maxlength: 'Please enter number less than 50 numbers.'
     }
     else
     {
-    $("#add_tuesday_time_div").append('<div class="conTue col col-md-8"><div class="col col-md-4"><input readonly type="text" value="' + tue_st_time_text + '" /></div>' + '<div class="col col-md-4"><input readonly type="text" value="' + tue_end_time_text + '"/></div>'  + '<input readonly type="hidden" name="tuesday_start_time[]" value="' + tue_st_time_id + '"/>'  + '<input readonly type="hidden" name="tuesday_end_time[]" value="' + tue_end_time_id + '"/>' + '<div class="col col-md-4"><input type="button" class="btnRemoveTue btn-dark btn-theme-colored btn-flat" value="Delete Tuesday Time"/></div></div>');
+    $("#add_tuesday_time_div").append('<div class="conTue col col-md-12"><div class="col col-md-4"></div><div class="col col-md-8"><div class="col col-md-4"><input readonly type="text" value="' + tue_st_time_text + '" /></div>' + '<div class="col col-md-4"><input readonly type="text" value="' + tue_end_time_text + '"/></div>'  + '<input readonly type="hidden" name="tuesday_start_time[]" value="' + tue_st_time_id + '"/>'  + '<input readonly type="hidden" name="tuesday_end_time[]" value="' + tue_end_time_id + '"/>' + '<div class="col col-md-4"><input type="button" class="btnRemoveTue btn-dark btn-theme-colored btn-flat" value="Delete Tuesday Time"/></div></div></div><br>');
+    $("#add_tuesday_time_div").append('<br>');
     $("#tue_st_time").val('-');$("#tue_end_time").val('-');
     }
   });
@@ -574,7 +576,8 @@ maxlength: 'Please enter number less than 50 numbers.'
     }
     else
     {
-    $("#add_wednesday_time_div").append('<div class="conWed col col-md-8"><div class="col col-md-4"><input readonly type="text" value="' + wed_st_time_text + '" /></div>' + '<div class="col col-md-4"><input readonly type="text" value="' + wed_end_time_text + '"/></div>'  + '<input readonly type="hidden" name="wednesday_start_time[]" value="' + wed_st_time_id + '"/>'  + '<input readonly type="hidden" name="wednesday_end_time[]" value="' + wed_end_time_id + '"/>' + '<div class="col col-md-4"><input type="button" class="btnRemoveWed btn-dark btn-theme-colored btn-flat" value="Delete Wednesday Time"/></div></div>');
+    $("#add_wednesday_time_div").append('<div class="conWed col col-md-12"><div class="col col-md-4"></div><div class="col col-md-8"><div class="col col-md-4"><input readonly type="text" value="' + wed_st_time_text + '" /></div>' + '<div class="col col-md-4"><input readonly type="text" value="' + wed_end_time_text + '"/></div>'  + '<input readonly type="hidden" name="wednesday_start_time[]" value="' + wed_st_time_id + '"/>'  + '<input readonly type="hidden" name="wednesday_end_time[]" value="' + wed_end_time_id + '"/>' + '<div class="col col-md-4"><input type="button" class="btnRemoveWed btn-dark btn-theme-colored btn-flat" value="Delete Wednesday Time"/></div></div></div><br>');
+    $("#add_wednesday_time_div").append('<br>');
     $("#wed_st_time").val('-');$("#wed_end_time").val('-');
   }
   });
@@ -603,7 +606,8 @@ maxlength: 'Please enter number less than 50 numbers.'
     }
     else
     {
-    $("#add_thursday_time_div").append('<div class="conThu col col-md-8"><div class="col col-md-4"><input readonly type="text" value="' + thu_st_time_text + '" /></div>' + '<div class="col col-md-4"><input readonly type="text" value="' + thu_end_time_text + '"/></div>' + '<input readonly type="hidden" name="thursday_start_time[]" value="' + thu_st_time_id + '"/>'  + '<input readonly type="hidden" name="thursday_end_time[]" value="' + thu_end_time_id + '"/>' + '<div class="col col-md-4"><input type="button" class="btnRemoveThu btn-dark btn-theme-colored btn-flat" value="Delete Wednesday Time"/></div></div>');
+    $("#add_thursday_time_div").append('<div class="conThu col col-md-12"><div class="col col-md-4"></div><div class="col col-md-8"><div class="col col-md-4"><input readonly type="text" value="' + thu_st_time_text + '" /></div>' + '<div class="col col-md-4"><input readonly type="text" value="' + thu_end_time_text + '"/></div>' + '<input readonly type="hidden" name="thursday_start_time[]" value="' + thu_st_time_id + '"/>'  + '<input readonly type="hidden" name="thursday_end_time[]" value="' + thu_end_time_id + '"/>' + '<div class="col col-md-4"><input type="button" class="btnRemoveThu btn-dark btn-theme-colored btn-flat" value="Delete Wednesday Time"/></div></div></div><br>');
+    $("#add_thursday_time_div").append('<br>');
     $("#thu_st_time").val('-');$("#thu_end_time").val('-');
   }
   });
@@ -632,7 +636,8 @@ maxlength: 'Please enter number less than 50 numbers.'
     }
     else
     {
-    $("#add_friday_time_div").append('<div class="conFri col col-md-8"><div class="col col-md-4"><input readonly type="text" value="' + fri_st_time_text + '" /></div>' + '<div class="col col-md-4"><input readonly type="text" value="' + fri_end_time_text + '"/></div>' + '<input readonly type="hidden" name="friday_start_time[]" value="' + fri_st_time_id + '"/>'  + '<input readonly type="hidden" name="friday_end_time[]" value="' + fri_end_time_id + '"/>' + '<div class="col col-md-4"><input type="button" class="btnRemoveFri btn-dark btn-theme-colored btn-flat" value="Delete Friday Time"/></div></div>');
+    $("#add_friday_time_div").append('<div class="conFri col col-md-12"><div class="col col-md-4"></div><div class="col col-md-8"><div class="col col-md-4"><input readonly type="text" value="' + fri_st_time_text + '" /></div>' + '<div class="col col-md-4"><input readonly type="text" value="' + fri_end_time_text + '"/></div>' + '<input readonly type="hidden" name="friday_start_time[]" value="' + fri_st_time_id + '"/>'  + '<input readonly type="hidden" name="friday_end_time[]" value="' + fri_end_time_id + '"/>' + '<div class="col col-md-4"><input type="button" class="btnRemoveFri btn-dark btn-theme-colored btn-flat" value="Delete Friday Time"/></div></div></div><br>');
+    $("#add_friday_time_div").append('<br>');
     $("#fri_st_time").val('-');$("#fri_end_time").val('-');
   }
   });
@@ -661,7 +666,8 @@ maxlength: 'Please enter number less than 50 numbers.'
     }
     else
     {
-    $("#add_saturday_time_div").append('<div class="conSat col col-md-8"><div class="col col-md-4"><input readonly type="text" value="' + sat_st_time_text + '" /></div>' + '<div class="col col-md-4"><input readonly type="text" value="' + sat_end_time_text + '"/></div>' + '<input readonly type="hidden" name="saturday_start_time[]" value="' + sat_st_time_id + '"/>'  + '<input readonly type="hidden" name="saturday_end_time[]" value="' + sat_end_time_id + '"/>' + '<div class="col col-md-4"><input type="button" class="btnRemoveSat btn-dark btn-theme-colored btn-flat" value="Delete Saturday Time"/></div></div>');
+    $("#add_saturday_time_div").append('<div class="conSat col col-md-12"><div class="col col-md-4"></div><div class="col col-md-8"><div class="col col-md-4"><input readonly type="text" value="' + sat_st_time_text + '" /></div>' + '<div class="col col-md-4"><input readonly type="text" value="' + sat_end_time_text + '"/></div>' + '<input readonly type="hidden" name="saturday_start_time[]" value="' + sat_st_time_id + '"/>'  + '<input readonly type="hidden" name="saturday_end_time[]" value="' + sat_end_time_id + '"/>' + '<div class="col col-md-4"><input type="button" class="btnRemoveSat btn-dark btn-theme-colored btn-flat" value="Delete Saturday Time"/></div></div></div><br>');
+    $("#add_saturday_time_div").append('<br>');
     $("#sat_st_time").val('-');$("#sat_end_time").val('-');
   }
   });
@@ -691,7 +697,8 @@ maxlength: 'Please enter number less than 50 numbers.'
     else
     {
 
-    $("#add_sunday_time_div").append('<div class="conSun col col-md-8"><div class="col col-md-4"><input readonly type="text" value="' + sun_st_time_text + '" /></div>' + '<div class="col col-md-4"><input readonly type="text" value="' + sun_end_time_text + '"/></div>' + '<input readonly type="hidden" name="sunday_start_time[]" value="' + sun_st_time_id + '"/>'  + '<input readonly type="hidden" name="sunday_end_time[]" value="' + sun_end_time_id + '"/>' + '<div class="col col-md-4"><input type="button" class="btnRemoveSun btn-dark btn-theme-colored btn-flat" value="Delete Saturday Time"/></div></div>');
+    $("#add_sunday_time_div").append('<div class="conSun col col-md-12"><div class="col col-md-4"></div><div class="col col-md-8"><div class="col col-md-4"><input readonly type="text" value="' + sun_st_time_text + '" /></div>' + '<div class="col col-md-4"><input readonly type="text" value="' + sun_end_time_text + '"/></div>' + '<input readonly type="hidden" name="sunday_start_time[]" value="' + sun_st_time_id + '"/>'  + '<input readonly type="hidden" name="sunday_end_time[]" value="' + sun_end_time_id + '"/>' + '<div class="col col-md-4"><input type="button" class="btnRemoveSun btn-dark btn-theme-colored btn-flat" value="Delete Saturday Time"/></div></div></div><br>');
+    $("#add_sunday_time_div").append('<br>');
     $("#sun_st_time").val('-');$("#sun_end_time").val('-');
   }
   });
@@ -831,7 +838,7 @@ function valueUnlimited()
     } 
     else if($('.unlimited').is(":checked") && $('#price').val()!='')
     {
-      var total_price=30*parseInt($('#price').val());
+      var total_price=12*parseInt($('#price').val());
       $('.total_price').html(total_price);
       $("#total_price_div").show();
       $("#final_total_price").val(total_price);

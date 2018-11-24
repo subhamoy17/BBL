@@ -3682,7 +3682,7 @@ public function insert_product(Request $request)
   $insert_products=DB::table('products')->insert($products_data);
 
   $product_id=DB::getPdo()->lastInsertId();
-  if($request->has('monday'))
+  if($request->has('monday') && $request->has('monday_start_time'))
   {
     for($mon=0;$mon<count($request->monday_start_time);$mon++)
     {
@@ -3694,7 +3694,7 @@ public function insert_product(Request $request)
       $day_time_insert_monday=DB::table('products_day_time')->insert($moday_data);
     }
   }
-  if($request->has('tuesday'))
+  if($request->has('tuesday') && $request->has('tuesday_start_time'))
   {
     for($tue=0;$tue<count($request->tuesday_start_time);$tue++)
     {
@@ -3706,7 +3706,7 @@ public function insert_product(Request $request)
       $day_time_insert_tuesday=DB::table('products_day_time')->insert($tuesday_data);
     }
   }
-  if($request->has('wednesday'))
+  if($request->has('wednesday') && $request->has('wednesday_start_time'))
   {
     for($wed=0;$wed<count($request->wednesday_start_time);$wed++)
     {
@@ -3718,7 +3718,7 @@ public function insert_product(Request $request)
       $day_time_insert_wednesday=DB::table('products_day_time')->insert($wednesday_data);
     }
   }
-  if($request->has('thursday'))
+  if($request->has('thursday') && $request->has('thursday_start_time'))
   {
     for($thu=0;$thu<count($request->thursday_start_time);$thu++)
     {
@@ -3731,7 +3731,7 @@ public function insert_product(Request $request)
     }
   }
 
-  if($request->has('friday'))
+  if($request->has('friday') && $request->has('friday_start_time'))
   {
     for($fri=0;$fri<count($request->friday_start_time);$fri++)
     {
@@ -3744,7 +3744,7 @@ public function insert_product(Request $request)
     }
   }
 
-  if($request->has('saturday'))
+  if($request->has('saturday') && $request->has('saturday_start_time'))
   {
     for($sat=0;$sat<count($request->saturday_start_time);$sat++)
     {
@@ -3757,7 +3757,7 @@ public function insert_product(Request $request)
     }
   }
 
-  if($request->has('sunday'))
+  if($request->has('sunday') && $request->has('sunday_start_time'))
   {
     for($sun=0;$sun<count($request->sunday_start_time);$sun++)
     {
