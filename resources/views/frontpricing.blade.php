@@ -209,6 +209,13 @@
 
            </span>
             </h5>
+             <h5>Days of a Week <span>
+                (
+                @foreach($each_gym_product->gym_day as $each_gym_day)
+
+                  {{$each_gym_day->product_days}},
+                @endforeach
+              )</span></h5>
               </div>
               <div class="clearfix"></div>
               <a href="" class="sign-btn2">Subscribe</a>

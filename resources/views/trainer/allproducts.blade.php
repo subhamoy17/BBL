@@ -95,7 +95,7 @@ $('#bootstrap-slot-data-table').DataTable({
                                     <th>Training Type Name</th>
                                     <th>Payment Type Name</th>
                                     <th>Total Session</th>
-                                    <th>Price/Session or Month(<i class="fa fa-gbp"></i>)</th>
+                                    <th>Price(<i class="fa fa-gbp"></i>)</th>
                                     <th>Total Price(<i class="fa fa-gbp"></i>)</th>
                                     <th>Product Validity</th>
                                     <th>Product Details</th>
@@ -111,6 +111,7 @@ $('#bootstrap-slot-data-table').DataTable({
                                     <td>{{$my_productdata->training_name}}</td>
                                      <td>{{$my_productdata->payment_type_name}}</td>
                                      <td>{{$my_productdata->total_sessions}}</td>
+                                     <!-- {{$my_productdata->total_sessions}} -->
                                      @if($my_productdata->total_sessions=='Unlimited')
                                     <td>{{(float)$my_productdata->price_session_or_month}}/Month</td>
                                     @else
@@ -185,6 +186,7 @@ $('#bootstrap-slot-data-table').DataTable({
                                     </p>                                
                                 </div>
                             </div> 
+                            
                             <div class="col-lg-4 col-xs-12">
                                 <label>Total Session</label>
                                 <div class="dispClass">
@@ -193,13 +195,18 @@ $('#bootstrap-slot-data-table').DataTable({
                                 </div>
                             </div> 
                             <div></div>
+                           
                             <div class="col-lg-4 col-xs-12">
-                                <label>Price/session or Price/month</label>
+                                <label>Price</label>
                                 <div class="dispClass">
-                                    <p class="detail-txt2"> <i class="fa fa-gbp"></i> <span id="price_session_or_month"></span>      
-                                    </p>                                
+                                    <p class="detail-txt2"> <i class="fa fa-gbp"></i> 
+                                         <span id="price_session_or_month"></span>
+                                                                            
+                                         
+                                    </p>                             
                                 </div>
                             </div> 
+                        
                            <div class="col-lg-4 col-xs-12">
                                 <label>Total Price</label>
                                 <div class="dispClass">
@@ -210,7 +217,7 @@ $('#bootstrap-slot-data-table').DataTable({
                             <div class="col-lg-4 col-xs-12">
                                 <label>Notice Period (Days)</label>
                                 <div class="dispClass">
-                                    <p class="detail-txt2"> <span id="notice_period"></span>
+                                    <p class="detail-txt2"> <span id="notice_period"></span> 
 
                                     </p>                                
                                 </div>
@@ -289,6 +296,7 @@ $('#bootstrap-slot-data-table').DataTable({
      var each_pt_st_time = $(this).data("personal-training-st-time");
     var contract = $(this).data("personal-contract");
     var product_days = $(this).data("personal-training-day");
+   
     var notice_period= $(this).data("personal-notice-period");
     var training_name = $(this).data("personal-training-name");
     var payment_type_name = $(this).data("personal-payment-type-name");
@@ -298,12 +306,20 @@ $('#bootstrap-slot-data-table').DataTable({
     $('#each_pt_st_time').text(each_pt_st_time);
     $('#contract').text(contract);
     $('#product_days').text(product_days);
+    
      $('#notice_period').text(notice_period);
-   
     $('#training_name').text(training_name);
     $('#payment_type_name').text(payment_type_name);
     $('#total_sessions').text(total_sessions);
-    $('#price_session_or_month').text(price_session_or_month);
+  if($(this).data("personal-total-sessions")=='Unlimited')
+  {
+   
+   $('#price_session_or_month').text(price_session_or_month+'/Month');
+  }
+else{
+    $('#price_session_or_month').text(price_session_or_month+'/Session');
+    }
+    
     $('#total_price').text(total_price);
     $('#reason_modal').modal('show');
     });
