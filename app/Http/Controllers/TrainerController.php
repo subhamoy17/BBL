@@ -4026,14 +4026,14 @@ public function product_delete($id)
 
 public function view_product(Request $request)
 {
-   // try{
+   try{
   $this->cart_delete_trainer();
   
 
   $all_products_data=DB::table('products')
   ->join('training_type','products.training_type_id','training_type.id')
   ->join('payment_type','products.payment_type_id','payment_type.id')
-  ->select('products.id as product_id','training_type.training_name as training_name','payment_type.payment_type_name as payment_type_name','products.total_sessions as total_sessions','products.price_session_or_month as price_session_or_month','products.total_price as total_price','products.validity as validity','products.contract as contract','products.notice_period as notice_period')
+  ->select('products.id as product_id','training_type.training_name as training_name','payment_type.payment_type_name as payment_type_name','products.total_sessions as total_sessions','products.price_session_or_month as price_session_or_month','products.total_price as total_price','products.validity_value as validity_value','products.validity_duration as validity_duration','products.contract as contract','products.notice_period_value as notice_period_value','products.notice_period_duration as notice_period_duration',(DB::raw('products.validity_value * products.validity_duration  as validity')),(DB::raw('products.notice_period_value * products.notice_period_duration  as notice_period')))
   ->whereNull('products.deleted_at')
   ->orderby('products.id','DESC')->get();
 
@@ -4101,9 +4101,9 @@ $st_time->product_end_time=$pt->personal_training_end_time[$key]->product_end_ti
   // Log::debug(":: day_time :: ".print_r($day_time,true));
 
   return view('trainer.allproducts')->with(compact('all_products_data','products_day_time','products_st_time','products_end_time'));
-// }catch(\Exception $e) { 
-//     return abort(200);
-//   }
+}catch(\Exception $e) { 
+    return abort(200);
+  }
 }
 
 }
