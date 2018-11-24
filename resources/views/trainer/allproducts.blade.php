@@ -130,9 +130,9 @@ $('#bootstrap-slot-data-table').DataTable({
                                  
                                    
                                         
-                                        <td style="width: 70px"">
-                                        <a href=""><button class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button></a>
-                                        <button type="button" class="btn btn-danger btn-sm" onclick="" style="width: 32px;" title="Delete Exercise"><i class="fa fa-trash-o"></i></button>
+                                        <td style="width: 70px">
+                                        <a href="{{route('edit_product',['product_id' => Crypt::encrypt($my_productdata->product_id)])}}"><button class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button></a>
+                                        <button type="button" class="btn btn-danger btn-sm" onclick="delete_client({!!$my_productdata->product_id!!})" style="width: 32px;" title="Delete Exercise"><i class="fa fa-trash-o"></i></button>
                                     </td>
 
 
@@ -311,7 +311,18 @@ $('#bootstrap-slot-data-table').DataTable({
 });
 </script>
 
-
+<script type="text/javascript">
+              function delete_client(id){ 
+                alertify.confirm("Are you sure you want to delete this product?", function (e) {
+                if (e) {
+                  // alertify.success("You've clicked OK");
+                  window.location.href="{{url('trainer/product-delete')}}/"+id;
+                } else {
+                  // alertify.error("You've clicked Cancel");
+                  }                                       
+                });
+              }
+            </script>
     
 
 @endsection

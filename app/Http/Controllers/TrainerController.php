@@ -3651,8 +3651,9 @@ public function add_product()
 
 public function insert_product(Request $request)
 {
-  Log::debug(" insert_product ".print_r($request->all(),true));
-
+  //Log::debug(" insert_product ".print_r($request->all(),true));
+  DB::beginTransaction();
+   try{
   $products_data['training_type_id']=$request->training_type;
   $products_data['payment_type_id']=$request->payment_type;
 
@@ -3680,12 +3681,12 @@ public function insert_product(Request $request)
 
   $insert_products=DB::table('products')->insert($products_data);
 
-
-  if($request->monday=='on')
+  $product_id=DB::getPdo()->lastInsertId();
+  if($request->has('monday'))
   {
     for($mon=0;$mon<count($request->monday_start_time);$mon++)
     {
-      $moday_data['product_id']=DB::getPdo()->lastInsertId();;
+      $moday_data['product_id']=$product_id;
       $moday_data['day_id']=1;
       $moday_data['product_st_time']=$request->monday_start_time[$mon];
       $moday_data['product_end_time']=$request->monday_end_time[$mon];
@@ -3693,11 +3694,11 @@ public function insert_product(Request $request)
       $day_time_insert_monday=DB::table('products_day_time')->insert($moday_data);
     }
   }
-  if($request->tuesday=='on')
+  if($request->has('tuesday'))
   {
     for($tue=0;$tue<count($request->tuesday_start_time);$tue++)
     {
-      $tuesday_data['product_id']=DB::getPdo()->lastInsertId();;
+      $tuesday_data['product_id']=$product_id;
       $tuesday_data['day_id']=2;
       $tuesday_data['product_st_time']=$request->tuesday_start_time[$tue];
       $tuesday_data['product_end_time']=$request->tuesday_end_time[$tue];
@@ -3705,11 +3706,11 @@ public function insert_product(Request $request)
       $day_time_insert_tuesday=DB::table('products_day_time')->insert($tuesday_data);
     }
   }
-  if($request->wednesday=='on')
+  if($request->has('wednesday'))
   {
     for($wed=0;$wed<count($request->wednesday_start_time);$wed++)
     {
-      $wednesday_data['product_id']=DB::getPdo()->lastInsertId();;
+      $wednesday_data['product_id']=$product_id;
       $wednesday_data['day_id']=3;
       $wednesday_data['product_st_time']=$request->wednesday_start_time[$wed];
       $wednesday_data['product_end_time']=$request->wednesday_end_time[$wed];
@@ -3717,11 +3718,11 @@ public function insert_product(Request $request)
       $day_time_insert_wednesday=DB::table('products_day_time')->insert($wednesday_data);
     }
   }
-  if($request->thursday=='on')
+  if($request->has('thursday'))
   {
     for($thu=0;$thu<count($request->thursday_start_time);$thu++)
     {
-      $thursday_data['product_id']=DB::getPdo()->lastInsertId();;
+      $thursday_data['product_id']=$product_id;
       $thursday_data['day_id']=4;
       $thursday_data['product_st_time']=$request->thursday_start_time[$thu];
       $thursday_data['product_end_time']=$request->thursday_end_time[$thu];
@@ -3730,12 +3731,12 @@ public function insert_product(Request $request)
     }
   }
 
-  if($request->friday=='on')
+  if($request->has('friday'))
   {
     for($fri=0;$fri<count($request->friday_start_time);$fri++)
     {
-      $friday_data['product_id']=DB::getPdo()->lastInsertId();;
-      $friday_data['day_id']=4;
+      $friday_data['product_id']=$product_id;
+      $friday_data['day_id']=5;
       $friday_data['product_st_time']=$request->friday_start_time[$fri];
       $friday_data['product_end_time']=$request->friday_end_time[$fri];
 
@@ -3743,12 +3744,12 @@ public function insert_product(Request $request)
     }
   }
 
-  if($request->saturday=='on')
+  if($request->has('saturday'))
   {
     for($sat=0;$sat<count($request->saturday_start_time);$sat++)
     {
-      $saturday_data['product_id']=DB::getPdo()->lastInsertId();;
-      $saturday_data['day_id']=4;
+      $saturday_data['product_id']=$product_id;
+      $saturday_data['day_id']=6;
       $saturday_data['product_st_time']=$request->saturday_start_time[$sat];
       $saturday_data['product_end_time']=$request->saturday_end_time[$sat];
 
@@ -3756,18 +3757,269 @@ public function insert_product(Request $request)
     }
   }
 
-  if($request->sunday=='on')
+  if($request->has('sunday'))
   {
     for($sun=0;$sun<count($request->sunday_start_time);$sun++)
     {
-      $sunday_data['product_id']=DB::getPdo()->lastInsertId();;
-      $sunday_data['day_id']=4;
+      $sunday_data['product_id']=$product_id;
+      $sunday_data['day_id']=7;
       $sunday_data['product_st_time']=$request->sunday_start_time[$sun];
       $sunday_data['product_end_time']=$request->sunday_end_time[$sun];
 
       $day_time_insert_sunday=DB::table('products_day_time')->insert($sunday_data);
     }
   }
+DB::commit();
+  return redirect('trainer/all-products')->with("success","You have successfully inserted one product");
+  }
+   catch(\Exception $e) {
+     DB::rollback();
+       return abort(200);
+   }
+
+}
+
+public function edit_product($id)
+{
+
+  try{
+  $product_id=\Crypt::decrypt($id);
+  $all_traning_type=DB::table('training_type')->get();
+  $all_payment_type=DB::table('payment_type')->get();
+  $all_slot_time=DB::table('slot_times')->get();
+
+  $product_details=DB::table('products')
+  ->join('training_type','products.training_type_id','training_type.id')
+  ->join('payment_type','products.payment_type_id','payment_type.id')
+  ->select('products.id as product_id','training_type.training_name as training_name','training_type.id as training_type_id','payment_type.payment_type_name as payment_type_name','payment_type.id as payment_type_id','products.total_sessions as total_sessions','products.price_session_or_month as price_session_or_month','products.total_price as total_price','products.validity as validity','products.contract as contract','products.notice_period as notice_period')
+  ->where('products.id',$product_id)
+  ->first();
+
+  $product_day=DB::table('products_day_time')
+  ->join('product_days','product_days.id','products_day_time.day_id')
+  ->select('product_days.product_days as product_days','products_day_time.day_id as day_id')
+  ->where('products_day_time.product_id',$product_id)
+  ->distinct('products_day_time.day_id')
+  ->get();
+
+  foreach($product_day as $each_day)
+  {
+    $each_day->product_st_time=DB::table('products_day_time')
+    ->join('slot_times','slot_times.id','products_day_time.product_st_time')
+    ->select('slot_times.time as product_st_time','slot_times.id as time_id')
+    ->where('products_day_time.product_id',$product_id)
+    ->where('products_day_time.day_id',$each_day->day_id)
+    ->get();
+
+    $each_day->product_end_time=DB::table('products_day_time')
+    ->join('slot_times','slot_times.id','products_day_time.product_end_time')
+    ->select('slot_times.time as product_end_time','slot_times.id as time_id')
+    ->where('products_day_time.product_id',$product_id)
+    ->where('products_day_time.day_id',$each_day->day_id)
+    ->get();
+  }
+
+  
+  //Log::debug(":: product_details :: ".print_r($product_details,true));
+
+  return view('trainer.edit_product')->with(compact('product_details','all_traning_type','all_payment_type','all_slot_time','product_day'));
+  }
+  catch(\Exception $e) {
+      return abort(200);
+   }
+}
+
+public function update_product(Request $request)
+{
+  Log::debug(":: product_details :: ".print_r($request->all(),true));
+
+  DB::beginTransaction();
+   try{
+  $products_data['training_type_id']=$request->training_type;
+  $products_data['payment_type_id']=$request->payment_type;
+
+  if($request->session_unlimited=='on')
+  {
+    $products_data['total_sessions']='Unlimited';
+  }
+  elseif($request->no_session!='')
+  {
+    $products_data['total_sessions']=$request->no_session;
+  }
+  $products_data['price_session_or_month']=$request->price;
+  $products_data['total_price']=$request->final_total_price;
+  $products_data['validity']=$request->validity*$request->validity_2;
+  $products_data['contract']=$request->contract;
+
+  if($request->notice_period>0 && $request->notice_period_2>0)
+  {
+    $products_data['notice_period']=$request->notice_period*$request->notice_period_2;
+  }
+  elseif($request->notice_period>0 && $request->notice_period_2==0)
+  {
+    $products_data['notice_period']=$request->notice_period;
+  }
+
+  $update_products=DB::table('products')->where('id',$request->product_id)->update($products_data);
+
+  if($request->has('monday') && $request->has('monday_start_time'))
+  {
+    for($mon=0;$mon<count($request->monday_start_time);$mon++)
+    {
+      $moday_data['product_id']=$request->product_id;
+      $moday_data['day_id']=1;
+      $moday_data['product_st_time']=$request->monday_start_time[$mon];
+      $moday_data['product_end_time']=$request->monday_end_time[$mon];
+      $day_time_insert_monday=DB::table('products_day_time')->insert($moday_data);
+    }
+  }
+  else
+  {
+    if($request->has('monday')=='')
+    {
+    $day_time_delete_monday=DB::table('products_day_time')->where('product_id',$request->product_id)->where('day_id',1)->delete();
+    }
+  }
+  if($request->has('tuesday') && $request->has('tuesday_start_time'))
+  {
+    for($tue=0;$tue<count($request->tuesday_start_time);$tue++)
+    {
+      $tuesday_data['product_id']=$request->product_id;
+      $tuesday_data['day_id']=2;
+      $tuesday_data['product_st_time']=$request->tuesday_start_time[$tue];
+      $tuesday_data['product_end_time']=$request->tuesday_end_time[$tue];
+
+      $day_time_insert_tuesday=DB::table('products_day_time')->insert($tuesday_data);
+    }
+  }
+  else
+  {
+    if($request->has('tuesday')=='')
+    {
+    $day_time_delete_monday=DB::table('products_day_time')->where('product_id',$request->product_id)->where('day_id',2)->delete();
+    }
+  }
+  if($request->has('wednesday') && $request->has('wednesday_start_time'))
+  {
+    for($wed=0;$wed<count($request->wednesday_start_time);$wed++)
+    {
+      $wednesday_data['product_id']=$request->product_id;
+      $wednesday_data['day_id']=3;
+      $wednesday_data['product_st_time']=$request->wednesday_start_time[$wed];
+      $wednesday_data['product_end_time']=$request->wednesday_end_time[$wed];
+
+      $day_time_insert_wednesday=DB::table('products_day_time')->insert($wednesday_data);
+    }
+  }
+  else
+  {
+    if($request->has('wednesday')=='')
+    {
+    $day_time_delete_monday=DB::table('products_day_time')->where('product_id',$request->product_id)->where('day_id',3)->delete();
+    }
+  }
+  if($request->has('thursday') && $request->has('thursday_start_time'))
+  {
+    for($thu=0;$thu<count($request->thursday_start_time);$thu++)
+    {
+      $thursday_data['product_id']=$request->product_id;
+      $thursday_data['day_id']=4;
+      $thursday_data['product_st_time']=$request->thursday_start_time[$thu];
+      $thursday_data['product_end_time']=$request->thursday_end_time[$thu];
+
+      $day_time_insert_thursday=DB::table('products_day_time')->insert($thursday_data);
+    }
+  }
+  else
+  {
+    if($request->has('thursday')=='')
+    {
+      $day_time_delete_monday=DB::table('products_day_time')->where('product_id',$request->product_id)->where('day_id',4)->delete();
+    }
+  }
+
+  if($request->has('friday') && $request->has('friday_start_time'))
+  {
+    for($fri=0;$fri<count($request->friday_start_time);$fri++)
+    {
+      $friday_data['product_id']=$request->product_id;
+      $friday_data['day_id']=5;
+      $friday_data['product_st_time']=$request->friday_start_time[$fri];
+      $friday_data['product_end_time']=$request->friday_end_time[$fri];
+
+      $day_time_insert_friday=DB::table('products_day_time')->insert($friday_data);
+    }
+  }
+  else
+  {
+    if($request->has('friday')=='')
+    {
+      $day_time_delete_monday=DB::table('products_day_time')->where('product_id',$request->product_id)->where('day_id',5)->delete();
+    }
+  }
+
+  if($request->has('saturday') && $request->has('saturday_start_time'))
+  {
+    for($sat=0;$sat<count($request->saturday_start_time);$sat++)
+    {
+      $saturday_data['product_id']=$request->product_id;
+      $saturday_data['day_id']=6;
+      $saturday_data['product_st_time']=$request->saturday_start_time[$sat];
+      $saturday_data['product_end_time']=$request->saturday_end_time[$sat];
+
+      $day_time_insert_saturday=DB::table('products_day_time')->insert($saturday_data);
+    }
+  }
+  else
+  {
+    if($request->has('saturday')=='')
+    {
+      $day_time_delete_monday=DB::table('products_day_time')->where('product_id',$request->product_id)->where('day_id',6)->delete();
+    }
+  }
+
+  if($request->has('sunday') && $request->has('sunday_start_time'))
+  {
+    for($sun=0;$sun<count($request->sunday_start_time);$sun++)
+    {
+      $sunday_data['product_id']=$request->product_id;
+      $sunday_data['day_id']=7;
+      $sunday_data['product_st_time']=$request->sunday_start_time[$sun];
+      $sunday_data['product_end_time']=$request->sunday_end_time[$sun];
+
+      $day_time_insert_sunday=DB::table('products_day_time')->insert($sunday_data);
+    }
+  }
+  else
+  {
+    if($request->has('sunday')=='')
+    {
+      $day_time_delete_monday=DB::table('products_day_time')->where('product_id',$request->product_id)->where('day_id',7)->delete();
+    }
+  }
+    DB::commit();
+  return redirect('trainer/all-products')->with("success","You have successfully updated one product");
+  }
+   catch(\Exception $e) {
+     DB::rollback();
+       return abort(200);
+   }
+
+  
+}
+
+public function product_delete($id)
+{
+  try{
+  $delete_data['deleted_at']=Carbon::now();
+  $delete_product=DB::table('products')->where('id',$id)->update($delete_data);
+  $delete_day_time=DB::table('products_day_time')->where('product_id',$id)->delete();
+  return redirect('trainer/all-products')->with("success","You have successfully deleted one product");
+  }
+  catch(\Exception $e) {
+     
+      return abort(200);
+   }
 
 }
 

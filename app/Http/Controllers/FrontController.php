@@ -217,7 +217,7 @@ $st_time->product_end_time=$pt->personal_training_end_time[$key]->product_end_ti
 
   }
 
-     Log::debug(":: personal_training_st_time :: ".print_r($pt->personal_training_st_time,true));
+     //Log::debug(":: personal_training_st_time :: ".print_r($pt->personal_training_st_time,true));
   }
 
 

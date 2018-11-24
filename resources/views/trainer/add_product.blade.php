@@ -167,7 +167,7 @@ maxlength: 'Please enter number less than 50 numbers.'
           <div class="row form-group">
             <div class="col col-md-4"><label for="text-input" class=" form-control-label"> Payment Type<span class="required_field_color">*</span></label></div>
               <div class="col-12 col-md-8">
-                <select name="payment_type" id="payment_type" class="form-control" onchange="valueUnlimitep()">
+                <select name="payment_type" id="payment_type" class="form-control">
 		              <option value="0">Select Payment Type</option>
 		                @if(!empty($all_payment_type))
 		            	    @foreach($all_payment_type as $each_payment_type)
@@ -184,10 +184,10 @@ maxlength: 'Please enter number less than 50 numbers.'
             <div class="col-12 col-md-6"><input type="text" id="no_session" name="no_session" placeholder="No. of Available Session" class="form-control" onkeyup="total_price_cal();">
               
             </div>
-            <div class="col-12 col-md-2"><input type="checkbox" name="session_unlimited" id="session_unlimited" class="unlimited" onchange="valueUnlimited(); total_price_cal();" onkeyup="">&nbsp; &nbsp;<label for="text-input" class="form-control-label">Unlimited</label>
+            <div class="col-12 col-md-2"><input type="checkbox" name="session_unlimited" id="session_unlimited" class="unlimited" onchange="valueUnlimited(); total_price_cal();">&nbsp; &nbsp;<label for="text-input" class="form-control-label">Unlimited</label>
               
             </div>
-            <!-- <div class="col col-md-1"><label for="text-input" class=" form-control-label">Unlimited</label></div> -->
+            
           </div>
 
           <div class="row form-group">
@@ -206,7 +206,7 @@ maxlength: 'Please enter number less than 50 numbers.'
           <div class="row form-group" id="total_price_div" style="display: none;">
             <div class="col col-md-4"><label for="text-input" class=" form-control-label">Total Price</label></div>
             <div class="col-12 col-md-8"><label for="text-input" class="total_price"></label>
-            <input type="text" name="final_total_price" id="final_total_price">
+            <input type="hidden" name="final_total_price" id="final_total_price">
             </div>
           </div>
 
@@ -258,7 +258,7 @@ maxlength: 'Please enter number less than 50 numbers.'
 						<label>Notice Period<span class="required_field_color">*</span></label>
 					</div>
 					<div class="col-lg-4">
-						<select name="notice_period" id="notice_period" class="form-control">
+						<select name="notice_period" id="notice_period" class="form-control" onchange="notice_period_duration();">
 	            <option value="0">Select Any One</option>
           		<option value="1">1</option>
         	    <option value="2">2</option>
@@ -290,7 +290,7 @@ maxlength: 'Please enter number less than 50 numbers.'
           <div class="col col-md-8 monday_show_time" style="display: none">
             <div class="col col-md-4">
               <select id="mon_st_time" class="form-control">
-		            <option>Choose Start Time</option>
+		            <option value="-">Choose Start Time</option>
 		            @foreach($all_slot_time as $each_slot_time)
             		<option value="{{$each_slot_time->id}}">{{date('h:i A', strtotime($each_slot_time->time))}}</option>
             	    @endforeach
@@ -298,7 +298,7 @@ maxlength: 'Please enter number less than 50 numbers.'
             </div>
             <div class="col col-md-4">
               <select id="mon_end_time" class="form-control">
-		            <option>Choose End Time</option>
+		            <option value="-">Choose End Time</option>
 		            @foreach($all_slot_time as $each_slot_time)
             		<option value="{{$each_slot_time->id}}">{{date('h:i A', strtotime($each_slot_time->time))}}</option>
             	  @endforeach 
@@ -307,20 +307,21 @@ maxlength: 'Please enter number less than 50 numbers.'
 
             <div class="col col-md-4">
               <button id="add_monday_time_button" class="btn btn-dark btn-theme-colored btn-flat">Add Monday Time</button>
-            </div>
-
-            <div id="add_monday_time_div"  class="col col-md-4"></div>
-
-                            
+            </div>                            
           </div>
         </div>
+
+        <div class="row form-group"  id="add_monday_time_div">
+          <div class="col col-md-4"></div>
+          
+        </div> 
         <div class="row form-group">
           <div class="col col-md-1"><label for="text-input" class="form-control-label">Tuesday</label></div>
           <div class="col-12 col-md-3"><input type="checkbox" name="tuesday" id="tuesday" class="tuesday" onchange="valueChanged1()"></div>
             <div class="col col-md-8 tuesday_show_time" style="display: none">
               <div class="col col-md-4">
                 <select id="tue_st_time" class="form-control">
-		              <option>Choose Start Time</option>
+		              <option value="-">Choose Start Time</option>
 		            	@foreach($all_slot_time as $each_slot_time)
             		  <option value="{{$each_slot_time->id}}">{{date('h:i A', strtotime($each_slot_time->time))}}</option>
             	    @endforeach
@@ -328,7 +329,7 @@ maxlength: 'Please enter number less than 50 numbers.'
               </div>
               <div class="col col-md-4">
                 <select id="tue_end_time" class="form-control">
-		              <option>Choose End Time</option>
+		              <option value="-">Choose End Time</option>
 		            	@foreach($all_slot_time as $each_slot_time)
             		  <option value="{{$each_slot_time->id}}">{{date('h:i A', strtotime($each_slot_time->time))}}</option>
             	    @endforeach
@@ -337,17 +338,18 @@ maxlength: 'Please enter number less than 50 numbers.'
               <div class="col col-md-4">
               <button id="add_tuesday_time_button" class="btn btn-dark btn-theme-colored btn-flat">Add Tuesday Time</button>
               </div>
-
-              <div id="add_tuesday_time_div"  class="col col-md-4"></div>
             </div>
           </div>
+          <div class="row form-group"  id="add_tuesday_time_div">
+            <div class="col col-md-4"></div>
+          </div> 
           <div class="row form-group">
             <div class="col col-md-1"><label for="text-input" class="form-control-label">Wednesday</label></div>
               <div class="col-12 col-md-3"><input type="checkbox" name="wednesday" id="wednesday" class="wednesday" onchange="valueChanged2()"></div>
                 <div class="col col-md-8 wednesday_show_time" style="display: none">
                   <div class="col col-md-4">
                     <select id="wed_st_time" class="form-control">
-		                  <option>Choose Start Time</option>
+		                  <option value="-">Choose Start Time</option>
 		            	    @foreach($all_slot_time as $each_slot_time)
             		      <option value="{{$each_slot_time->id}}">{{date('h:i A', strtotime($each_slot_time->time))}}</option>
             	       @endforeach
@@ -355,7 +357,7 @@ maxlength: 'Please enter number less than 50 numbers.'
                   </div>
                 <div class="col col-md-4">
                   <select id="wed_end_time" class="form-control">
-		                <option>Choose End Time</option>
+		                <option value="-">Choose End Time</option>
 		            	  @foreach($all_slot_time as $each_slot_time)
             		    <option value="{{$each_slot_time->id}}">{{date('h:i A', strtotime($each_slot_time->time))}}</option>
             	      @endforeach 
@@ -364,17 +366,18 @@ maxlength: 'Please enter number less than 50 numbers.'
                 <div class="col col-md-4">
                   <button id="add_wednesday_time_button" class="btn btn-dark btn-theme-colored btn-flat">Add Wednesday Time</button>
                 </div>
-
-                <div id="add_wednesday_time_div"  class="col col-md-4"></div>
               </div>
             </div>
+            <div class="row form-group"  id="add_wednesday_time_div">
+              <div class="col col-md-4"></div>
+            </div> 
             <div class="row form-group">
               <div class="col col-md-1"><label for="text-input" class="form-control-label">Thursday</label></div>
                 <div class="col-12 col-md-3"><input type="checkbox" name="thursday" id="thursday" class="thursday" onchange="valueChanged3()"></div>
                   <div class="col col-md-8 thursday_show_time" style="display: none">
                     <div class="col col-md-4">
                       <select id="thu_st_time" class="form-control">
-		                    <option>Choose Start Time</option>
+		                    <option value="-">Choose Start Time</option>
 		            	      @foreach($all_slot_time as $each_slot_time)
             		        <option value="{{$each_slot_time->id}}">{{date('h:i A', strtotime($each_slot_time->time))}}</option>
             	          @endforeach 
@@ -382,7 +385,7 @@ maxlength: 'Please enter number less than 50 numbers.'
                     </div>
                   <div class="col col-md-4">
                     <select id="thu_end_time" class="form-control">
-		                  <option>Choose End Time</option>
+		                  <option value="-">Choose End Time</option>
 		            	    @foreach($all_slot_time as $each_slot_time)
             		      <option value="{{$each_slot_time->id}}">{{date('h:i A', strtotime($each_slot_time->time))}}</option>
             	        @endforeach
@@ -392,17 +395,18 @@ maxlength: 'Please enter number less than 50 numbers.'
                   <div class="col col-md-4">
                     <button id="add_thursday_time_button" class="btn btn-dark btn-theme-colored btn-flat">Add Thursday Time</button>
                   </div>
-
-                  <div id="add_thursday_time_div"  class="col col-md-4"></div>
               </div>
             </div>
+            <div class="row form-group"  id="add_thursday_time_div">
+              <div class="col col-md-4"></div>
+            </div> 
             <div class="row form-group">
               <div class="col col-md-1"><label for="text-input" class="form-control-label">Friday</label></div>
                 <div class="col-12 col-md-3"><input type="checkbox" name="friday" id="friday" class="friday" onchange="valueChanged4()"></div>
                   <div class="col col-md-8 friday_show_time" style="display: none">
                     <div class="col col-md-4">
                       <select id="fri_st_time" class="form-control">
-		                    <option>Choose Start Time</option>
+		                    <option value="-">Choose Start Time</option>
 		            	      @foreach($all_slot_time as $each_slot_time)
             		        <option value="{{$each_slot_time->id}}">{{date('h:i A', strtotime($each_slot_time->time))}}</option>
             	          @endforeach
@@ -410,7 +414,7 @@ maxlength: 'Please enter number less than 50 numbers.'
                     </div>
                   <div class="col col-md-4">
                     <select id="fri_end_time" class="form-control">
-		                  <option>Choose End Time</option>
+		                  <option value="-">Choose End Time</option>
 		            	    @foreach($all_slot_time as $each_slot_time)
             		      <option value="{{$each_slot_time->id}}">{{date('h:i A', strtotime($each_slot_time->time))}}</option>
             	        @endforeach
@@ -419,9 +423,10 @@ maxlength: 'Please enter number less than 50 numbers.'
                   <div class="col col-md-4">
                     <button id="add_friday_time_button" class="btn btn-dark btn-theme-colored btn-flat">Add Friday Time</button>
                   </div>
-
-                  <div id="add_friday_time_div"  class="col col-md-4"></div>
               </div>
+            </div>
+            <div class="row form-group"  id="add_friday_time_div">
+              <div class="col col-md-4"></div>
             </div>
             <div class="row form-group">
               <div class="col col-md-1"><label for="text-input" class="form-control-label">Saturday</label></div>
@@ -429,7 +434,7 @@ maxlength: 'Please enter number less than 50 numbers.'
                   <div class="col col-md-8 saturday_show_time" style="display: none">
                     <div class="col col-md-4">
                       <select id="sat_st_time" class="form-control">
-		                    <option>Choose Start Time</option>
+		                    <option value="-">Choose Start Time</option>
 		            	      @foreach($all_slot_time as $each_slot_time)
             		        <option value="{{$each_slot_time->id}}">{{date('h:i A', strtotime($each_slot_time->time))}}</option>
             	          @endforeach
@@ -437,7 +442,7 @@ maxlength: 'Please enter number less than 50 numbers.'
                     </div>
                     <div class="col col-md-4">
                       <select id="sat_end_time" class="form-control">
-		                    <option>Choose End Time</option>
+		                    <option value="-">Choose End Time</option>
 		            	      @foreach($all_slot_time as $each_slot_time)
             		        <option value="{{$each_slot_time->id}}">{{date('h:i A', strtotime($each_slot_time->time))}}</option>
             	          @endforeach
@@ -446,8 +451,10 @@ maxlength: 'Please enter number less than 50 numbers.'
                     <div class="col col-md-4">
                       <button id="add_saturday_time_button" class="btn btn-dark btn-theme-colored btn-flat">Add Saturday Time</button>
                     </div>
-                    <div id="add_saturday_time_div"  class="col col-md-4"></div>
                   </div>
+                </div>
+                <div class="row form-group"  id="add_saturday_time_div">
+                  <div class="col col-md-4"></div>
                 </div>
                 <div class="row form-group">
                   <div class="col col-md-1"><label for="text-input" class="form-control-label">Sunday</label></div>
@@ -455,7 +462,7 @@ maxlength: 'Please enter number less than 50 numbers.'
                       <div class="col col-md-8 sunday_show_time" style="display: none">
                         <div class="col col-md-4">
                           <select id="sun_st_time" class="form-control">
-		                        <option>Choose Start Time</option>
+		                        <option value="-">Choose Start Time</option>
 		            	          @foreach($all_slot_time as $each_slot_time)
             		            <option value="{{$each_slot_time->id}}">{{date('h:i A', strtotime($each_slot_time->time))}}</option>
             	              @endforeach
@@ -463,7 +470,7 @@ maxlength: 'Please enter number less than 50 numbers.'
                         </div>
                         <div class="col col-md-4">
                           <select id="sun_end_time" class="form-control">
-		                        <option>Choose End Time</option>
+		                        <option value="-">Choose End Time</option>
 		            	          @foreach($all_slot_time as $each_slot_time)
             		            <option value="{{$each_slot_time->id}}">{{date('h:i A', strtotime($each_slot_time->time))}}</option>
             	              @endforeach
@@ -472,8 +479,10 @@ maxlength: 'Please enter number less than 50 numbers.'
                         <div class="col col-md-4">
                           <button id="add_sunday_time_button" class="btn btn-dark btn-theme-colored btn-flat">Add Sunday Time</button>
                         </div>
-                        <div id="add_sunday_time_div"  class="col col-md-4"></div>
                     </div>
+                  </div>
+                  <div class="row form-group"  id="add_sunday_time_div">
+                    <div class="col col-md-4"></div>
                   </div>
 				<div class="row">
 					<div class="col-lg-12">
@@ -496,19 +505,24 @@ maxlength: 'Please enter number less than 50 numbers.'
    $(document).ready(function() {
     $('body').on('click','#add_monday_time_button',function(e) {
       e.preventDefault();
-
     var mon_st_time_text=$("#mon_st_time option:selected").text();
     var mon_end_time_text=$("#mon_end_time option:selected").text();
 
     var mon_st_time_id=$("#mon_st_time").val();
     var mon_end_time_id=$("#mon_end_time").val();
 
-
-    $("#add_monday_time_div").append('<div class="conMon"><input readonly type="text" value="' + mon_st_time_text + '" />' + '<input readonly type="text" value="' + mon_end_time_text + '"/>' + '<input readonly type="text" name="monday_start_time[]" value="' + mon_st_time_id + '"/>'  + '<input readonly type="text" name="monday_end_time[]" value="' + mon_end_time_id + '"/>' + '<input type="button" class="btnRemoveMon btn-dark btn-theme-colored btn-flat" value="Delete Monday Time"/></div>');
+    if(mon_st_time_id=='-' || mon_end_time_id=='-')
+    {
+      alertify.alert('Please select monday start time and end time');
+    }
+    else
+    {
+      $("#add_monday_time_div").append('<div class="conMon col col-md-8"><div class="col col-md-4"><input readonly type="text" value="' + mon_st_time_text + '" /></div>' + '<div class="col col-md-4"><input readonly type="text" value="' + mon_end_time_text + '"/></div>' + '<input readonly type="hidden" name="monday_start_time[]" value="' + mon_st_time_id + '"/>'  + '<input readonly type="hidden" name="monday_end_time[]" value="' + mon_end_time_id + '"/>' + '<div class="col col-md-4"><input type="button" class="btnRemoveMon btn-dark btn-theme-colored btn-flat" value="Delete Monday Time"/></div></div>');
+      $("#mon_st_time").val('-'); $("#mon_end_time").val('-');
+    }
   });
-  $('body').on('click','.btnRemoveMon',function() {
-    $(this).parent('div.conMon').remove()
-
+  $('body').on('click','.btnRemoveMon',function() { 
+    $(this).closest('div.conMon').remove();
   });
 });
   
@@ -525,11 +539,18 @@ maxlength: 'Please enter number less than 50 numbers.'
     var tue_st_time_id=$("#tue_st_time").val();
     var tue_end_time_id=$("#tue_end_time").val();
 
-
-    $("#add_tuesday_time_div").append('<div class="conTue"><input readonly type="text" value="' + tue_st_time_text + '" />' + '<input readonly type="text" value="' + tue_end_time_text + '"/>'  + '<input readonly type="text" name="tuesday_start_time[]" value="' + tue_st_time_id + '"/>'  + '<input readonly type="text" name="tuesday_end_time[]" value="' + tue_end_time_id + '"/>' + '<input type="button" class="btnRemoveTue btn-dark btn-theme-colored btn-flat" value="Delete Tuesday Time"/></div>');
+    if(tue_st_time_id=='-' || tue_end_time_id=='-')
+    {
+      alertify.alert('Please select tuesday start time and end time');
+    }
+    else
+    {
+    $("#add_tuesday_time_div").append('<div class="conTue col col-md-8"><div class="col col-md-4"><input readonly type="text" value="' + tue_st_time_text + '" /></div>' + '<div class="col col-md-4"><input readonly type="text" value="' + tue_end_time_text + '"/></div>'  + '<input readonly type="hidden" name="tuesday_start_time[]" value="' + tue_st_time_id + '"/>'  + '<input readonly type="hidden" name="tuesday_end_time[]" value="' + tue_end_time_id + '"/>' + '<div class="col col-md-4"><input type="button" class="btnRemoveTue btn-dark btn-theme-colored btn-flat" value="Delete Tuesday Time"/></div></div>');
+    $("#tue_st_time").val('-');$("#tue_end_time").val('-');
+    }
   });
   $('body').on('click','.btnRemoveTue',function() {
-    $(this).parent('div.conTue').remove()
+    $(this).closest('div.conTue').remove()
 
   });
 });
@@ -547,11 +568,18 @@ maxlength: 'Please enter number less than 50 numbers.'
     var wed_st_time_id=$("#wed_st_time").val();
     var wed_end_time_id=$("#wed_end_time").val();
 
-
-    $("#add_wednesday_time_div").append('<div class="conWed"><input readonly type="text" value="' + wed_st_time_text + '" />' + '<input readonly type="text" value="' + wed_end_time_text + '"/>'  + '<input readonly type="text" name="wednesday_start_time[]" value="' + wed_st_time_id + '"/>'  + '<input readonly type="text" name="wednesday_end_time[]" value="' + wed_end_time_id + '"/>' + '<input type="button" class="btnRemoveWed btn-dark btn-theme-colored btn-flat" value="Delete Wednesday Time"/></div>');
+    if(wed_st_time_id=='-' || wed_end_time_id=='-')
+    {
+      alertify.alert('Please select wednesday start time and end time');
+    }
+    else
+    {
+    $("#add_wednesday_time_div").append('<div class="conWed col col-md-8"><div class="col col-md-4"><input readonly type="text" value="' + wed_st_time_text + '" /></div>' + '<div class="col col-md-4"><input readonly type="text" value="' + wed_end_time_text + '"/></div>'  + '<input readonly type="hidden" name="wednesday_start_time[]" value="' + wed_st_time_id + '"/>'  + '<input readonly type="hidden" name="wednesday_end_time[]" value="' + wed_end_time_id + '"/>' + '<div class="col col-md-4"><input type="button" class="btnRemoveWed btn-dark btn-theme-colored btn-flat" value="Delete Wednesday Time"/></div></div>');
+    $("#wed_st_time").val('-');$("#wed_end_time").val('-');
+  }
   });
   $('body').on('click','.btnRemoveWed',function() {
-    $(this).parent('div.conWed').remove()
+    $(this).closest('div.conWed').remove()
 
   });
 });
@@ -569,11 +597,18 @@ maxlength: 'Please enter number less than 50 numbers.'
     var thu_st_time_id=$("#thu_st_time").val();
     var thu_end_time_id=$("#thu_end_time").val();
 
-
-    $("#add_thursday_time_div").append('<div class="conThu"><input readonly type="text" value="' + thu_st_time_text + '" />' + '<input readonly type="text" value="' + thu_end_time_text + '"/>' + '<input readonly type="text" name="thursday_start_time[]" value="' + thu_st_time_id + '"/>'  + '<input readonly type="text" name="thursday_end_time[]" value="' + thu_end_time_id + '"/>' + '<input type="button" class="btnRemoveThu btn-dark btn-theme-colored btn-flat" value="Delete Wednesday Time"/></div>');
+    if(thu_st_time_id=='-' || thu_end_time_id=='-')
+    {
+      alertify.alert('Please select thursday start time and end time');
+    }
+    else
+    {
+    $("#add_thursday_time_div").append('<div class="conThu col col-md-8"><div class="col col-md-4"><input readonly type="text" value="' + thu_st_time_text + '" /></div>' + '<div class="col col-md-4"><input readonly type="text" value="' + thu_end_time_text + '"/></div>' + '<input readonly type="hidden" name="thursday_start_time[]" value="' + thu_st_time_id + '"/>'  + '<input readonly type="hidden" name="thursday_end_time[]" value="' + thu_end_time_id + '"/>' + '<div class="col col-md-4"><input type="button" class="btnRemoveThu btn-dark btn-theme-colored btn-flat" value="Delete Wednesday Time"/></div></div>');
+    $("#thu_st_time").val('-');$("#thu_end_time").val('-');
+  }
   });
   $('body').on('click','.btnRemoveThu',function() {
-    $(this).parent('div.conThu').remove()
+    $(this).closest('div.conThu').remove()
 
   });
 });
@@ -591,11 +626,18 @@ maxlength: 'Please enter number less than 50 numbers.'
     var fri_st_time_id=$("#fri_st_time").val();
     var fri_end_time_id=$("#fri_end_time").val();
 
-
-    $("#add_friday_time_div").append('<div class="conFri"><input readonly type="text" value="' + fri_st_time_text + '" />' + '<input readonly type="text" value="' + fri_end_time_text + '"/>' + '<input readonly type="text" name="friday_start_time[]" value="' + fri_st_time_id + '"/>'  + '<input readonly type="text" name="friday_end_time[]" value="' + fri_end_time_id + '"/>' + '<input type="button" class="btnRemoveFri btn-dark btn-theme-colored btn-flat" value="Delete Friday Time"/></div>');
+    if(fri_st_time_id=='-' || fri_end_time_id=='-')
+    {
+      alertify.alert('Please select friday start time and end time');
+    }
+    else
+    {
+    $("#add_friday_time_div").append('<div class="conFri col col-md-8"><div class="col col-md-4"><input readonly type="text" value="' + fri_st_time_text + '" /></div>' + '<div class="col col-md-4"><input readonly type="text" value="' + fri_end_time_text + '"/></div>' + '<input readonly type="hidden" name="friday_start_time[]" value="' + fri_st_time_id + '"/>'  + '<input readonly type="hidden" name="friday_end_time[]" value="' + fri_end_time_id + '"/>' + '<div class="col col-md-4"><input type="button" class="btnRemoveFri btn-dark btn-theme-colored btn-flat" value="Delete Friday Time"/></div></div>');
+    $("#fri_st_time").val('-');$("#fri_end_time").val('-');
+  }
   });
   $('body').on('click','.btnRemoveFri',function() {
-    $(this).parent('div.conFri').remove()
+    $(this).closest('div.conFri').remove()
 
   });
 });
@@ -613,11 +655,18 @@ maxlength: 'Please enter number less than 50 numbers.'
     var sat_st_time_id=$("#sat_st_time").val();
     var sat_end_time_id=$("#sat_end_time").val();
 
-
-    $("#add_saturday_time_div").append('<div class="conSat"><input readonly type="text" value="' + sat_st_time_text + '" />' + '<input readonly type="text" value="' + sat_end_time_text + '"/>' + '<input readonly type="text" name="saturday_start_time[]" value="' + sat_st_time_id + '"/>'  + '<input readonly type="text" name="saturday_end_time[]" value="' + sat_end_time_id + '"/>' + '<input type="button" class="btnRemoveSat btn-dark btn-theme-colored btn-flat" value="Delete Saturday Time"/></div>');
+     if(sat_st_time_id=='-' || sat_end_time_id=='-')
+    {
+      alertify.alert('Please select saturday start time and end time');
+    }
+    else
+    {
+    $("#add_saturday_time_div").append('<div class="conSat col col-md-8"><div class="col col-md-4"><input readonly type="text" value="' + sat_st_time_text + '" /></div>' + '<div class="col col-md-4"><input readonly type="text" value="' + sat_end_time_text + '"/></div>' + '<input readonly type="hidden" name="saturday_start_time[]" value="' + sat_st_time_id + '"/>'  + '<input readonly type="hidden" name="saturday_end_time[]" value="' + sat_end_time_id + '"/>' + '<div class="col col-md-4"><input type="button" class="btnRemoveSat btn-dark btn-theme-colored btn-flat" value="Delete Saturday Time"/></div></div>');
+    $("#sat_st_time").val('-');$("#sat_end_time").val('-');
+  }
   });
   $('body').on('click','.btnRemoveSat',function() {
-    $(this).parent('div.conSat').remove()
+    $(this).closest('div.conSat').remove()
 
   });
 });
@@ -635,11 +684,19 @@ maxlength: 'Please enter number less than 50 numbers.'
     var sun_st_time_id=$("#sun_st_time").val();
     var sun_end_time_id=$("#sun_end_time").val();
 
+    if(sun_st_time_id=='-' || sun_end_time_id=='-')
+    {
+      alertify.alert('Please select sunday start time and end time');
+    }
+    else
+    {
 
-    $("#add_sunday_time_div").append('<div class="conSun"><input readonly type="text" value="' + sun_st_time_text + '" />' + '<input readonly type="text" value="' + sun_end_time_text + '"/>' + '<input readonly type="text" name="sunday_start_time[]" value="' + sun_st_time_id + '"/>'  + '<input readonly type="text" name="sunday_end_time[]" value="' + sun_end_time_id + '"/>' + '<input type="button" class="btnRemoveSun btn-dark btn-theme-colored btn-flat" value="Delete Saturday Time"/></div>');
+    $("#add_sunday_time_div").append('<div class="conSun col col-md-8"><div class="col col-md-4"><input readonly type="text" value="' + sun_st_time_text + '" /></div>' + '<div class="col col-md-4"><input readonly type="text" value="' + sun_end_time_text + '"/></div>' + '<input readonly type="hidden" name="sunday_start_time[]" value="' + sun_st_time_id + '"/>'  + '<input readonly type="hidden" name="sunday_end_time[]" value="' + sun_end_time_id + '"/>' + '<div class="col col-md-4"><input type="button" class="btnRemoveSun btn-dark btn-theme-colored btn-flat" value="Delete Saturday Time"/></div></div>');
+    $("#sun_st_time").val('-');$("#sun_end_time").val('-');
+  }
   });
   $('body').on('click','.btnRemoveSun',function() {
-    $(this).parent('div.conSun').remove()
+    $(this).closest('div.conSun').remove()
 
   });
 });
@@ -650,60 +707,95 @@ maxlength: 'Please enter number less than 50 numbers.'
 function valueChanged()
 {
 	
-    if($('.monday').is(":checked"))   
-        $(".monday_show_time").show();
-    
-    else
-        $(".monday_show_time").hide();
-   
+  if($('.monday').is(":checked"))
+  {
+    $(".monday_show_time").show();
+    $(".conMon").show();
+  }   
+  else
+  {
+    $(".monday_show_time").hide();
+    $(".conMon").hide();
+  }
+      
 }
   function valueChanged1()
 {
-	
-    if($('.tuesday').is(":checked"))   
-        $(".tuesday_show_time").show();
-    else
-        $(".tuesday_show_time").hide();
+	if($('.tuesday').is(":checked"))
+  {
+    $(".tuesday_show_time").show();
+    $(".conTue").show();
+  }   
+  else
+  {
+    $(".tuesday_show_time").hide();
+    $(".conTue").hide();
+  }
 }
 function valueChanged2()
 {
-	
-    if($('.wednesday').is(":checked"))   
-        $(".wednesday_show_time").show();
-    else
-        $(".wednesday_show_time").hide();
+	if($('.wednesday').is(":checked"))
+  {
+    $(".wednesday_show_time").show();
+    $(".conWed").show();
+  }   
+  else
+  {
+    $(".wednesday_show_time").hide();
+    $(".conWed").hide();
+  }
 }
 function valueChanged3()
 {
-	
-    if($('.thursday').is(":checked"))   
-        $(".thursday_show_time").show();
-    else
-        $(".thursday_show_time").hide();
+	if($('.thursday').is(":checked"))
+  {
+    $(".thursday_show_time").show();
+    $(".conThu").show();
+  }   
+  else
+  {
+    $(".thursday_show_time").hide();
+    $(".conThu").hide();
+  }
 }
 function valueChanged4()
 {
-	
-    if($('.friday').is(":checked"))   
-        $(".friday_show_time").show();
-    else
-        $(".friday_show_time").hide();
+	if($('.friday').is(":checked"))
+  {
+    $(".friday_show_time").show();
+    $(".conFri").show();
+  }   
+  else
+  {
+    $(".friday_show_time").hide();
+    $(".conFri").hide();
+  }
 }
 function valueChanged5()
 {
-	
-    if($('.saturday').is(":checked"))   
-        $(".saturday_show_time").show();
-    else
-        $(".saturday_show_time").hide();
+	if($('.saturday').is(":checked"))
+  {
+    $(".saturday_show_time").show();
+    $(".conSat").show();
+  }   
+  else
+  {
+    $(".saturday_show_time").hide();
+    $(".conSat").hide();
+  }
 }
 function valueChanged6()
 {
-	
-    if($('.sunday').is(":checked"))   
-        $(".sunday_show_time").show();
-    else
-        $(".sunday_show_time").hide();
+	if($('.sunday').is(":checked"))
+  {
+    $(".sunday_show_time").show();
+    $(".conSun").show();
+  }   
+  else
+  {
+    $(".sunday_show_time").hide();
+    $(".conSun").hide();
+  }
 }
 function valueUnlimited()
 {
@@ -748,6 +840,22 @@ function valueUnlimited()
     {
       $("#total_price_div").hide();
       $("#final_total_price").val('');
+    }
+  }
+</script>
+
+
+<script>
+  function notice_period_duration()
+  {
+    if($('#notice_period').val()=='NA')
+    {
+      $('#notice_period_2').val('0');
+      $('#notice_period_2').attr('disabled',true);
+    }
+    else
+    {
+      $('#notice_period_2').removeAttr('disabled');
     }
   }
 </script>
