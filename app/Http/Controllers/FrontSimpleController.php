@@ -51,9 +51,9 @@ public function index(Request $request)
       }
     }
 
-    public function health_package()
+    public function bootcamp_training()
     {     
-    return view('health_package');
+    return view('bootcamp_training');
     }
 
     public function personal_instructor()

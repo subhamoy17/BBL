@@ -388,6 +388,7 @@ $(document).ready(function(){
             <div class="col-12 col-md-4">
               @if(isset($diet->image) && !empty($diet->image))
                   <img id="profile_thumbnail" src="{{asset('backend/common_diet_plan_images')}}/{{$diet->image}}" height="100" width="150"/>
+                  
                 @else
                   <img id="profile_thumbnail" src="" height="100" width="150" style="display: none;" />
                 @endif
@@ -441,14 +442,7 @@ $(document).ready(function(){
             </div>
         </div>
 
-        <div class="row form-group">
-            <div class="col col-md-3">
-            	<label for="text-input" class=" form-control-label">Author Designation<span class="required_field_color">*</span></label>
-            </div>
-            <div class="col-12 col-md-9">
-            	<input type="text" id="author_designation" name="author_designation" class="form-control{{ $errors->has('author_designation') ? ' is-invalid' : '' }}" value="{{$diet->author_designation}}">
-            </div>
-        </div>
+       
 
         <div class="row form-group">
             <div class="col col-md-3">
@@ -461,6 +455,8 @@ $(document).ready(function(){
             <div class="col-12 col-md-4">
             	@if(isset($diet->author_image) && !empty($diet->author_image))
               		<img id="profile2_thumbnail" src="{{asset('backend/common_diet_plan_images')}}/{{$diet->author_image}}" height="100" width="150"/>
+                  @elseif (Auth::user()->image)
+                        <img id="profile2_thumbnail" src="{{asset('backend/images')}}/{{Auth::user()->image}}" alt="Author Image" width="150"/>
               	@else
               		<img id="profile2_thumbnail" src="" height="100" width="150" style="display: none;"/>
               	@endif

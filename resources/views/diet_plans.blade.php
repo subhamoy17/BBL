@@ -33,7 +33,7 @@
 								</div>
 								<div class="pt-name">
 									<h5>{{$each_common_diet_plan->diet_plan_name}}</h5>
-									<h6>Author Name: {{$each_common_diet_plan->author_name}}, Designation: {{$each_common_diet_plan->author_designation}}</h6>
+									<h6>By {{$each_common_diet_plan->author_name}}</h6>
 								</div>
 							</div>
 							<div class="clearfix"></div>

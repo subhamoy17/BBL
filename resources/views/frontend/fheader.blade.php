@@ -87,6 +87,9 @@
                       <li class="{{ Request::segment(2) === 'exercise' ? 'active' : null }}">
                         <a href="{{url('customer/exercise')}}">Exercise</a>
                       </li>
+                      <li class="{{ Request::segment(1) === 'diet-plan' ? 'active' : null }}">
+                        <a href="{{route('diet_plans')}}">Diet Plans</a>
+                      </li>
 
                   <li class="{{ Request::segment(2) === 'contact-us' ? 'active' : null }}">
                         <a href="{{url('customer/contact-us')}}">Contact Us</a>

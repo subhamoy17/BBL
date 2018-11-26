@@ -10,7 +10,7 @@ $(document).ready(function() {
         lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
 
 // disable shorting from slno,image and action columns
-"columnDefs": [ { "orderable": false, "targets": [0,2,3,7,8] } ],
+"columnDefs": [ { "orderable": false, "targets": [0,2,3,6,7] } ],
 
 });
 });
@@ -115,7 +115,7 @@ th
                 <th>Diet Plan PDF</th>
                 <th>Price (<i class="fa fa-gbp"></i>)</th>
                 <th>Auther Name</th>
-                <th>Auther Designation</th>
+                
                 <th id="autherImage" style="width: 100px;">Auther Image</th>
                 <th id="action" style="width: 70px;">Action</th>
             </tr>
@@ -139,10 +139,12 @@ th
                     <td><button style="background: #F9E79F; font-size: 12px;"><a href="{{url('backend/common_diet_plan_images')}}/{{$mydiet->diet_plan_pdf}}" target="_blank"><b>View PDF</b></a></button></td>
                     <td>{{$mydiet->price}}</td>
                     <td>{{$mydiet->author_name}}</td>
-                    <td>{{$mydiet->author_designation}}</td>
+                   
                     <td>
                         @if($mydiet->author_image)
                         <img src="{{url('backend/common_diet_plan_images')}}/{{$mydiet->author_image}}" width="70px" height="70px">
+                        @elseif (Auth::user()->image)
+                        <img id="profile2_thumbnail" src="{{asset('backend/images')}}/{{Auth::user()->image}}" alt="Excersise Image" width="70px"/>
                         @else
                         N/A
                         @endif

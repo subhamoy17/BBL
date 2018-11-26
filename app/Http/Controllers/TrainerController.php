@@ -1510,10 +1510,12 @@ catch(\Exception $e) {
 
 public function motinsertshowauto(Request $request)
 {
-  
+  Log::debug(" motinsertshowauto ".print_r($request->all(),true)); 
 $this->cart_delete_trainer();
   $query = $request->get('term','');
-        
+    
+      
+        Log::debug ( " :: query :: ".print_r ($query,true));    
         $products=DB::table('customers')->where('name','LIKE','%'.$query.'%')->orwhere('email','LIKE','%'.$query.'%')->orwhere('ph_no','LIKE','%'.$query.'%')->get();
         
         $data=array();
@@ -1526,6 +1528,7 @@ $this->cart_delete_trainer();
         }
 
         Log::debug ( " :: motinsertshowauto :: ".print_r ($data,true));
+        Log::debug ( " :: products :: ".print_r ($products,true));
 
         if(count($data))
         {
@@ -3097,7 +3100,7 @@ public function bootcamp_plan_list()
 
   public function insert_common_diet_plan(Request $request)
   {
-
+// Log::debug(":: insert_common_diet_plan :: ".print_r($request->all(),true));
     DB::beginTransaction();
     try
     {
@@ -3125,7 +3128,7 @@ public function bootcamp_plan_list()
         }
         $data['price'] = $request->price;
         $data['author_name'] = $request->author_name;
-        $data['author_designation'] = $request->author_designation;
+        // $data['author_designation'] = $request->author_designation;
         if($request->author_image!="")
         {
           $auth_image=$request->author_image;
@@ -3135,6 +3138,9 @@ public function bootcamp_plan_list()
           $upload=$auth_image->move($folder,$image_name); 
           $data['author_image']=$image_name; 
         }
+
+
+
         $data['inserted_by'] = Auth::user()->id;
         DB::table('common_diet_plan')->insert($data);
         DB::commit();
@@ -3215,7 +3221,7 @@ public function bootcamp_plan_list()
         }
       $data['price'] = $request->price;
       $data['author_name'] = $request->author_name;
-      $data['author_designation'] = $request->author_designation;
+      // $data['author_designation'] = $request->author_designation;
       if($request->author_image!="")
         {
           $auth_image=$request->author_image;

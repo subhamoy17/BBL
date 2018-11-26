@@ -84,11 +84,11 @@
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://www.bodybylekan.com/diet-plan">
 @endif
-@if(Request::segment(1) == 'health-package')
-<title>Health & Fitness Packages in Basingstoke | Body By Lekan</title>
-  <meta name="description" content="Body By Lekan provide members with access to health and wellness packages designed by our certified health coach for your fitness and weight goals.">
+@if(Request::segment(1) == 'bootcamp-training')
+<title>Fitness & Weight Loss Bootcamp Training | Body By Lekan</title>
+  <meta name="description" content="Get a complete high intensity bootcamp training sessions with us & burn excess calories by full-body workout that targets the major muscles of your body parts.">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://www.bodybylekan.com/health-package">
+  <link rel="canonical" href="https://www.bodybylekan.com/bootcamp-training">
 @endif
   @if(Request::segment(1) == 'personal-instructor')
 <title>Personal Gym Instructor & Fitness Expert | Body By Lekan </title>

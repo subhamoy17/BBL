@@ -940,7 +940,7 @@ h3.agile_tittle span {
     opacity: 1;
 }
 .blog-txt {
-    padding: 80px;
+    padding: 20px;
     background-color: #282F36;
         max-width: 100%;
 		height: 100%;
@@ -5526,6 +5526,14 @@ a.sign-btn2 {
     border: none;
     color: #fff;
 }
+
+.form-box input.coupon_st {
+    background: #353d42;
+     height: 25px;  
+    border-radius: 8px;
+    padding-left: 17px;
+    color: #fff;
+}
 .form-box select {
     background: #3d3648;
     border: none;
@@ -6371,21 +6379,21 @@ h5.line-h5{
     color: #dc3545;
     font-weight: 500;
     text-transform: none;
-    font-size: 13px;
+    font-size: 14px;
 }
 
 #check_error {
     color: #dc3545;
     font-weight: 500;
     text-transform: none;
-    font-size: 15px;
+    font-size: 14px !important;
 }
 
 #success_coupon {
-    color: #006400;
+    color: #12ca87db;
     font-weight: 500;
     text-transform: none;
-    font-size: 13px;
+    font-size: 14px;
 }
 
 .load_img {

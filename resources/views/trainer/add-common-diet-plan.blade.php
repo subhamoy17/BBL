@@ -170,6 +170,7 @@ $(document).ready(function(){
       var reader = new FileReader();
       reader.onload = function (e) {
         $('#profile2_thumbnail').attr('src', e.target.result);
+        $('#recently_uploaded2_image').val(true);
         }
         $("#profile2_thumbnail").show();
         reader.readAsDataURL(this.files[0]);
@@ -444,27 +445,26 @@ $(document).ready(function(){
             <input type="text" id="author_name" name="author_name" value="{{Auth::user()->name}}" readonly class="form-control">
           </div>
         </div>
-
-        <div class="row form-group">
-          <div class="col col-md-3">
-            <label for="text-input" class=" form-control-label">Author Designation<span class="required_field_color">*</span></label>
-          </div>
-          <div class="col-12 col-md-9">
-            <input type="text" id="author_designation" name="author_designation" placeholder="Auther Designation" class="form-control">
-          </div>
-        </div>
-
+     
         <div class="row form-group">
             <div class="col col-md-3">
-              <label for="file-input" class="form-control-label">Author Image</label>
+              <label for="file-input" class=" form-control-label">Author Image
+              </label>
             </div>
-            <div class="col-12 col-md-4">
-              <input type="file" id="author_image" name="author_image" class="form-control">
+            <div class="col-12 col-md-4">                         
+              <input type="file" id="author_image" name="author_image" class="form-control-file" >
+              <input type="hidden" id="oldimage" name="oldimage" class="form-control-file" value="{{Auth::user()->image}}">
             </div>
-            <div class="col-12 col-md-4">
-              <img id="profile2_thumbnail" height="100" width="150" style="display: none;"/>
+            <div class="col-12 col-md-5">
+              @if( isset(Auth::user()->image) && !empty(Auth::user()->image))                         
+                <img id="profile2_thumbnail" src="{{asset('backend/images')}}/{{Auth::user()->image}}" alt="Author Image" width="100"/>
+              @else
+                <img id="profile2_thumbnail" src="" alt="Author Image" width="100" style="display: none;"/>
+                @endif
+                <input type="hidden" id="recently_uploaded2_image" name="recently_uploaded2_image" value="false">
             </div>
-        </div>
+           
+          </div>
 
         <div class="row form-group">
           <div class="col col-md-10">

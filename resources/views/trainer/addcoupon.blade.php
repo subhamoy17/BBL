@@ -199,7 +199,7 @@ required: "Please select a date"
           </div>
           
            
-           <label class="sl">Session Number : </label> <div class="sl2" id="slots_number" name="slots_number"></div><span>,</span>
+           <label class="sl3">Session Number : </label> <div class="sl2" id="slots_number" name="slots_number"></div><span>,</span>
              <lable class="sl">Package Price : <i class="fa fa-gbp"></i> </lable></span><div class="sl2" id="slots_price" name="slots_price"></div><span>,</span>
               
               <label class="sl"> Package Validity : </label><div class="sl2" id="slots_validity" name="slots_validity"></div>
@@ -404,8 +404,7 @@ function check(){
        $('#slots_price').val('');
        $('#slots_validity').val('');
        $('#coupon_code').val('');
-       $('#discount_price').val('');
-       // $('#couponaddform').trigger("reset");
+       $('#discount_price').val('');     
        $("#lessthan_slot").hide();
        $("#duplicate_coupon").hide();
     }

@@ -62,20 +62,20 @@
                                 </li>
                               </ul>
 
-                              <label for="selector1" id="check_error" class="error" style="display:none;"></label>
+                              <label for="selector1" id="check_error" class="error coupon-err-st" style="display:none;"></label>
                               <div class="clear"></div>
                                      <div id="app_btn">                                        
-                                  <input type="text" id="coupon_code" name="coupon_code" placeholder="Coupon Code" onkeyup=" return jsnull()">
+                                  <input type="text" id="coupon_code" class="coupon_st" name="coupon_code" placeholder="Coupon Code" onkeyup=" return jsnull()">
                                        <input type="hidden" name="package_id" id="package_id" value="{{$package_details->id}}"> 
                                         <input type="hidden" name="package_price" id="package_price" value="{{$package_details->slots_price}}">  
                                          <input type="hidden" name="new_package_price" id="new_package_price">
                                          <input type="hidden" name="coupon_id" id="coupon_id">                     
-                                  <button type="button" class="coupon_sub" id="coupon_sub" ">Apply</button>
+                                  <button type="button" class="coupon_sub" id="coupon_sub"  style="margin-left: 6px;">Apply</button>
                                   </div>
                                   <!-- <div class="clearfix"></div> -->
                                    <span id='loadingimg2' style="display: none;" class="load_img">
                                 <span>
-                              <img src="{{asset('backend/images/loader_session_time.gif')}}" style="width: 40px;margin-left: -6px;"/>
+                              <img src="{{asset('backend/images/loader_session_time.gif')}}" style="width: 42px;margin-left: -5px;"/>
                             </span>
                             </span> 
                                   

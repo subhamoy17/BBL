@@ -75,7 +75,8 @@
                 data: {
                     term : request.term
                 },
-                success: function(data) { //alert(data);
+                success: function(data) { 
+                 console.log(data);
                 response( $.map( data, function( item ) {
                   
                     
@@ -315,6 +316,7 @@ else{
 
 @endif
 
+@if(Request::segment(1) == 'trainer' && Request::segment(2) == 'add_coupon')
 <script>
  $(document).ready(function() {
     src = "{{ route('searchslots') }}";
@@ -388,6 +390,7 @@ else{
     });
 });
 </script>
+@endif
 <script src="{{url('frontend/js/accotab.js')}}"></script>
 
 </body>

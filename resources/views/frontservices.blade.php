@@ -11,13 +11,19 @@
 				<h3 class="gyl_header">Our <span>Services</span></h3>
 		</div>
 			<div class="col-lg-6 col-sm-6 col-xs-12">
-				<a href="#" data-toggle="modal" data-target="#myModal1"><img src="{{asset('frontend/images/1_1.jpg')}}" alt="blog image" class="img-responsive" /></a>
+				<a href="#" data-toggle="modal" data-target="#myModal1"><img src="{{asset('frontend/images/hp31.jpg')}}" alt="blog image" class="img-responsive" /></a>
 			</div>
 			<div class="col-lg-6 col-sm-6 col-xs-12">			
 			<div class="blog-txt">
-				<h3><a href="#" data-toggle="modal" data-target="#myModal1">Gym Services</a></h3>
+				<h3><a href="#" data-toggle="modal" data-target="#myModal1">BOOTCAMP TRAINING</a></h3>
 				<h4>December 15,2017</h4>
-				<p>Our advanced gym facilities come with the best equipment’s and trainers. Our fitness trainers will provide you with the latest fitness trends and methods to keep your body fit and healthy. You can use our state of art world class gym at any time of your convenience.</p>
+				<p>“Maximum Possible Weight Loss In The Shortest Space Of Time”
+-and-
+“A Place For You To Unplug From The World & Completely Reset”.
+Weight loss and body image are tied into just about every other facet of our lives. It affects our confidence, our choices, our relationships and ultimately our happiness.
+BBL Bootcamp have personally known the trials and tribulations of being overweight and unhappy with how they look.</p>
+<p>They also know the feeling of getting things back in check, on track – and being able to enjoy their fitter, happier, healthier bodies once again.There are so many demands placed on you in today’s world, work, family, friend. It’s difficult to place the focus purely on you. So making healthy choices and taking time out to exercise becomes harder and harder.
+That’s why here at BBL Bootcamp, the focus is purely on you.</p>
 			</div>
 			</div>
 			<div class="clearfix"></div>
@@ -26,10 +32,10 @@
 			</div>
 			<div class="col-lg-6 col-sm-6 col-xs-12">
 				<div class="blog-txt">
-					<h3><a href="#" data-toggle="modal" data-target="#myModal1">Personalized Trainers</a></h3>
+					<h3><a href="#" data-toggle="modal" data-target="#myModal1">Personalised Trainers</a></h3>
 					<h4>December 25,2017</h4>
-					<p>We provide personalized trainers for advising and guiding you on the best exercises and dietary regime to keep your body fit. Personal attention given by our experienced trainers will go a long way in giving you the fitness you always wanted. Your trainer can also provide you training at home at your convenient time.</p>
-					
+					<p>We provide personalised trainers for advising and guiding you on the best exercises and dietary regime to keep your body fit. Personal attention given by our experienced trainers will go a long way in giving you the fitness you always wanted. Your trainer can also provide you training at home at your convenient time.</p>
+					<p>It includes weight training, cardio training, cross fit training, olympic lifting training, boxing training and more.</p>
 				</div>
 				
 			</div>
@@ -46,13 +52,13 @@
 			</div>
 			<div class="clearfix"></div>
 			<div class="col-lg-6 col-sm-6 col-xs-12">
-				<a href="#" data-toggle="modal" data-target="#myModal1"><img src="{{asset('frontend/images/4_4.jpg')}}" alt="blog image" class="img-responsive" /></a>
+				<a href="#" data-toggle="modal" data-target="#myModal1"><img src="{{asset('frontend/images/1_1.jpg')}}" alt="blog image" class="img-responsive" /></a>
 			</div>
 			<div class="col-lg-6 col-sm-6 col-xs-12">
 				<div class="blog-txt">
-					<h3><a href="#" data-toggle="modal" data-target="#myModal1">Health Packages</a></h3>
-					<h4>December 25,2017</h4>
-					<p>We provide a multitude of health packages to suit your need and budget. Customized health packages are also provided in consultation with our training experts to give your body the best. We accept bulk booking for institutions and corporates at discounted rates. Our registered customers will also enjoy the benefit of tracking their personal training calendar and diet charts online.</p>
+					<h3><a href="#" data-toggle="modal" data-target="#myModal1">Gym Services</a></h3>
+					<h4>December 15,2017</h4>
+					<p>Our advanced gym facilities come with the best equipment’s and trainers. Our fitness trainers will provide you with the latest fitness trends and methods to keep your body fit and healthy. You can use our state of art world class gym at any time of your convenience.</p>
 					
 				</div>
 				

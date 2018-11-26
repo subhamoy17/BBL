@@ -890,6 +890,10 @@ margin-left: 20px;
 margin-left: 5px;
     }
 
+    .sl3{
+margin-left: 28px;
+    }
+
 #training_type-error{
     color: #dc3545;
     text-transform: uppercase;

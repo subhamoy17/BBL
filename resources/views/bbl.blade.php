@@ -135,13 +135,13 @@
     			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
     				<div class="box-hover-effect thumb-cross-effect forservice">
     					<div class="effect-wrapper">
-    						<div class="thumb"><img src="{{asset('frontend/images/sr3.jpg')}}"></div>
+    						<div class="thumb"><img src="{{asset('frontend/images/hp1.jpg')}}"></div>
     						<a class="hover-link">View more</a>
     					</div>
     					<div class="sr-text">
-    						<h4>HEALTH PACKAGES</h4>
-    						<p>Multiple health packages to suit all</p>
-    						<a href="{{route('health_package')}}" class="rd-btn2">read more <i class="fa fa-long-arrow-right"></i></a>
+    						<h4>BOOTCAMP TRAINING</h4>
+    						<p>Bootcamp training sessions</p>
+    						<a href="{{route('bootcamp_training')}}" class="rd-btn2">read more <i class="fa fa-long-arrow-right"></i></a>
     					</div>
     				</div>
     			</div>
