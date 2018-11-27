@@ -103,7 +103,7 @@ $('#bootstrap-slot-data-table').DataTable({
                                     <td>{{++$key}}</td>
                                     <td>{{$mydata->slots_name}}</td>
                                      <td>{{$mydata->coupon_code}}</td>
-                                    <td>{{(float)$mydata->discount_price}}</td>
+                                    <td>{{$mydata->discount_price}}</td>
                                     <td>{{date('d F Y', strtotime($mydata->valid_from))}}</td>
 
                                     <td>{{date('d F Y', strtotime($mydata->valid_to))}}</td>

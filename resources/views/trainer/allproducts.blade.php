@@ -113,11 +113,11 @@ $('#bootstrap-slot-data-table').DataTable({
                                      <td>{{$my_productdata->total_sessions}}</td>
                                      <!-- {{$my_productdata->total_sessions}} -->
                                      @if($my_productdata->total_sessions=='Unlimited')
-                                    <td><i class="fa fa-gbp">{{(float)$my_productdata->price_session_or_month}}/Month</td>
+                                    <td><i class="fa fa-gbp">{{$my_productdata->price_session_or_month}}/Month</td>
                                     @else
-                                     <td><i class="fa fa-gbp">{{(float)$my_productdata->price_session_or_month}}/Session</td>
+                                     <td><i class="fa fa-gbp">{{$my_productdata->price_session_or_month}}/Session</td>
                                      @endif
-                                    <td><i class="fa fa-gbp">{{(float)$my_productdata->total_price}}</td>
+                                    <td><i class="fa fa-gbp">{{$my_productdata->total_price}}</td>
                                      <td>{{$my_productdata->validity}} Days</td>
 
                                     <td><a class="detail-products-modal-btn1" id="{{$my_productdata->product_id}}" href="#" data-personal-training-st-time=" @foreach($my_productdata->personal_training_st_time as $each_pt_st_time)
