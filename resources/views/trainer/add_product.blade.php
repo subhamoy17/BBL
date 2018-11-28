@@ -145,6 +145,32 @@ maxlength: 'Please enter number less than 50 numbers.'
 
 </script>
 
+<script>
+
+//// Add button disable ////
+$(document).ready(function(){
+  $('#submit_product').bind('submit', function (e) {
+    var button = $('#product_submit_btn');
+
+    // Disable the submit button while evaluating if the form should be submitted
+    button.prop('disabled', true);
+
+    var valid = true;    
+
+    // Do stuff (validations, etc) here and set
+    // "valid" to false if the validation fails
+
+    if (!valid) { 
+        // Prevent form from submitting if validation failed
+        e.preventDefault();
+
+        // Reactivate the button if the form was not submitted
+        button.prop('disabled', false);
+    }
+});
+});
+</script>
+
 
 @if(Auth::user()->master_trainer==1)
 
@@ -340,7 +366,7 @@ maxlength: 'Please enter number less than 50 numbers.'
 						<div class="row">
 						<div class="col-lg-10"></div>
 							<div class="col-lg-2">
-								<button name="submit" id="product_submit_btn" class="btn btn-primary pull-right" style="width: 100px;">Submit</button>
+								<button type="submit" name="submit" id="product_submit_btn" class="btn btn-primary pull-right" style="width: 100px;">Submit</button>
 							</div>
 						</div>
 					</div>
@@ -351,35 +377,7 @@ maxlength: 'Please enter number less than 50 numbers.'
 	</div>
 </div>
 
-<script type="text/javascript">
-  
-  $(document).ready(function(){
-   
-    $('#submit_product').bind('submit', function (e) {
-    var button = $('#product_submit_btn');
 
-    // Disable the submit button while evaluating if the form should be submitted
-    button.prop('disabled', true);
-
-    var valid = true;    
-
-    // Do stuff (validations, etc) here and set
-    // "valid" to false if the validation fails
-
-    if (!valid) { 
-        // Prevent form from submitting if validation failed
-        e.preventDefault();
-
-        // Reactivate the button if the form was not submitted
-        button.prop('disabled', false);
-    }
-
-   
-});
-
-      });
-
-</script>
 <script>
   function total_price_cal()
   {
@@ -444,18 +442,38 @@ function paymentType()
 	// $( "#myselect option:selected" ).text();
   if($( "#payment_type" ).val()==1)
   {
-    // alert('jhhj');
+    
+    
     $("#pay_as_you_go").show();
     $("#subscription").hide();
-     $('.btn-primary').attr('disabled','disabled');
+
+    $("#no_session_mon").val('');
+    $("#sub_price").val('');
+   
+    $('#contract').prop('selectedIndex',0);
+    $('#notice_period').prop('selectedIndex',0);
+    $('#notice_period_2').prop('selectedIndex',0);
+    $('.unlimited').attr('checked', false);
+    $('#no_session_mon').removeAttr('disabled');
+    $("#total_price_div_2").hide();
+      $("#anual_total_price").val('');
+     // $('.btn-primary').attr('disabled','disabled');
   }   
   else if($( "#payment_type" ).val()==2)
   {
-    // alert('jjj');
+    
     $("#pay_as_you_go").hide();
     $("#subscription").show();
+    $("#no_session").val('');
+    $("#price").val('');
+    $('#validity').prop('selectedIndex',0);
+    $('#validity_2').prop('selectedIndex',0);
+   
+    
     $("#no_session-error").val('');
-     $('.btn-primary').attr('disabled','disabled');
+    $("#total_price_div").hide();
+      $("#final_total_price").val('');
+     // $('.btn-primary').attr('disabled','disabled');
   }
   else{
      $("#pay_as_you_go").hide();
@@ -490,6 +508,8 @@ function valueUnlimited()
 
 
 </script>
+
+
 
 
 
