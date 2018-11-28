@@ -278,7 +278,7 @@ maxlength: 'Please enter number less than 50 numbers.'
           </div>
 
           <div class="row form-group" id="total_price_div_2" style="display: none;">
-            <div class="col col-md-4"><label for="text-input" class=" form-control-label">Anual Subscription Price (<i class="fa fa-gbp"></i>)</label></div>
+            <div class="col col-md-4"><label for="text-input" class=" form-control-label">Annual Subscription Price (<i class="fa fa-gbp"></i>)</label></div>
             <div class="col-12 col-md-8"><label for="text-input" class="total_price_2"></label>
             <input type="hidden" name="anual_total_price" id="anual_total_price">
             </div>
