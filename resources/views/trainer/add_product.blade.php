@@ -243,7 +243,7 @@ maxlength: 'Please enter number less than 50 numbers.'
 			       </select>
 					</div>
 					<div class="col-lg-4">
-							<select name="validity_2" id="validity_2" class="form-control">
+							<select name="validity_2" id="validity_2" class="form-control" onchange="valid_cal2()">
 		            <option value="0">Select Any One</option>
             		<option value="7">Week</option>
             	  <option value="30">Month</option>   
@@ -322,7 +322,7 @@ maxlength: 'Please enter number less than 50 numbers.'
             </select>
           </div>
           <div class="col-lg-4">
-            <select name="notice_period_2" id="notice_period_2" class="form-control">
+            <select name="notice_period_2" id="notice_period_2" class="form-control" onchange="valid_cal();">
                 <option value="0">Select Any One</option>
                 <option value="7">Week</option>
                 <option value="30">Month</option>  
@@ -396,6 +396,24 @@ maxlength: 'Please enter number less than 50 numbers.'
       $("#final_total_price").val('');
     }
   }
+
+  function valid_cal()
+  {
+    // alert('ss');
+    if($("#submit_product").valid()){
+      // alert('11ss');
+       $('.btn-primary').removeAttr('disabled');
+    }
+  }
+
+  function valid_cal2()
+  {
+    // alert('ss');
+    if($("#submit_product").valid()){
+      // alert('11ss');
+       $('.btn-primary').removeAttr('disabled');
+    }
+  }
 </script>
 
 <script>
@@ -426,7 +444,7 @@ function paymentType()
     // alert('jhhj');
     $("#pay_as_you_go").show();
     $("#subscription").hide();
-     
+     $('.btn-primary').attr('disabled','disabled');
   }   
   else if($( "#payment_type" ).val()==2)
   {
@@ -434,7 +452,7 @@ function paymentType()
     $("#pay_as_you_go").hide();
     $("#subscription").show();
     $("#no_session-error").val('');
-     
+     $('.btn-primary').attr('disabled','disabled');
   }
   else{
      $("#pay_as_you_go").hide();
