@@ -133,7 +133,7 @@ $(document).ready(function(){
     if($.inArray(ext, ['gif','png','jpg','jpeg']) == -1) {
     alertify.alert('Only accept gif/png/jpg/jpeg extension formate of image');
     $("#author_image").val('');
-    $("#profile2_thumbnail").hide();
+    // $("#profile2_thumbnail").hide();
     return false;
     }
 
@@ -143,7 +143,7 @@ $(document).ready(function(){
     {
         alertify.alert("Please Upload maximum 200KB file size of image");// if Maxsize from Model > real file size
         $("#author_image").val('');
-        $("#profile2_thumbnail").hide();
+        // $("#profile2_thumbnail").hide();
         return false;
     }
 
@@ -158,7 +158,7 @@ $(document).ready(function(){
               if( height >200 && width >300){
                 alertify.alert("Height and Width must not exceed 200px and 300px");
                 $("#author_image").val('');
-                $("#profile2_thumbnail").hide();
+                // $("#profile2_thumbnail").hide();
                 return false;
               }
           };
