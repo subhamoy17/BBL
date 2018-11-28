@@ -45,10 +45,11 @@
               <h1><i class="fa fa-gbp"></i> {{$each_personal_training_product->total_price}} <span>/ ({{$each_personal_training_product->payment_type_name}})</span></h1>
               <span class="small-msg">No. of slots</span>
               <span class="small-msg">{{$each_personal_training_product->total_sessions}}</span>
-              <span class="small-msg">/ Validity {{$each_personal_training_product->validity}} Days</span>
+              <span class="small-msg">/ Validity {{$each_personal_training_product->validity? $each_personal_training_product->validity.' Days' : 'N/A'}} </span>
               <div class="btm-arow"><i class="fa fa-arrow-circle-down"></i></div>
               <div class="plan-batch bch-3">Premium</div>
-              <div class="cntrct"><h5>Contract <span> - {{$each_personal_training_product->contract}}</span></h5></div>
+              <div class="cntrct"><h5>Contract <span> - 
+              {{$each_personal_training_product->contract? $each_personal_training_product->contract : 'N/A'}}</span></h5></div>
               </div>
               <div class="p-box-bdy">
               
@@ -60,30 +61,7 @@
                   {{substr($each_personal_training_product->total_sessions,0,1)}}<span>{{substr($each_personal_training_product->total_sessions,1,8)}}</span>
                 @endif
               </h2>
-              <div class="date-time">
-                <h5>Timing 
-                  <span>
-                   ( 
-                   @foreach($personal_training_product_details[$pt_key]->personal_training_st_time as $each_pt_st_time)
-                  
-                {{date('h:i A', strtotime($each_pt_st_time->product_st_time))}} To
-                {{date('h:i A', strtotime($each_pt_st_time->product_end_time))}},
-                @endforeach )
-                
-               
-
-           </span>
-
-
-              </h5>
-                <h5>Days of a Week <span>
-                (
-                @foreach($each_personal_training_product->personal_training_day as $each_pt_day)
-
-                  {{$each_pt_day->product_days}},
-                @endforeach
-              )</span</h5>
-              </div>
+              
 
 
               <div class="clearfix"></div>
@@ -116,10 +94,10 @@
               <h1><i class="fa fa-gbp"></i> {{$each_bootcamp_product->total_price}} <span>/ ({{$each_bootcamp_product->payment_type_name}})</span></h1>
               <span class="small-msg">No. of slots</span>
               <span class="small-msg">{{$each_bootcamp_product->total_sessions}}</span>
-              <span class="small-msg">/ Validity {{$each_bootcamp_product->validity}} Days</span>
+              <span class="small-msg">/ Validity {{$each_bootcamp_product->validity? $each_bootcamp_product->validity.' Days' : 'N/A'}} </span>
               <div class="btm-arow"><i class="fa fa-arrow-circle-down"></i></div>
               <div class="plan-batch bch-3">Premium</div>
-              <div class="cntrct"><h5>Contract <span> - {{$each_bootcamp_product->contract}}</span></h5></div>
+              <div class="cntrct"><h5>Contract <span> - {{$each_bootcamp_product->contract? $each_bootcamp_product->contract : 'N/A'}}</span></h5></div>
               </div>
               <div class="p-box-bdy">
               
@@ -131,30 +109,7 @@
                   {{substr($each_bootcamp_product->total_sessions,0,1)}}<span>{{substr($each_bootcamp_product->total_sessions,1,8)}}</span>
                 @endif
               </h2>
-              <div class="date-time">
-                <h5>Timing 
-                 
-
-                <span>
-                  ( @foreach($bootcamp_product_details[$bc_key]->bootcamp_st_time as $each_pt_st_time)
-                  
-                {{date('h:i A', strtotime($each_pt_st_time->product_st_time))}} To
-                {{date('h:i A', strtotime($each_pt_st_time->product_end_time))}},
-                @endforeach )
-               
-
-           </span>
-
-              </h5>
-                <h5>Days of a Week <span>
-                (
-                @foreach($each_bootcamp_product->bootcamp_day as $each_bootcamp_day)
-
-                  {{$each_bootcamp_day->product_days}},
-                @endforeach
-              )</span></h5>
-
-              </div>
+              
               <div class="clearfix"></div>
               <a href="" class="sign-btn2">Subscribe</a>
               </div>
@@ -180,10 +135,10 @@
               <h1><i class="fa fa-gbp"></i> {{$each_gym_product->total_price}} <span>/ ({{$each_gym_product->payment_type_name}})</span></h1>
               <span class="small-msg">No. of slots</span>
               <span class="small-msg">{{$each_gym_product->total_sessions}}</span>
-              <span class="small-msg">/ Validity {{$each_gym_product->validity}} Days</span>
+              <span class="small-msg">/ Validity {{$each_gym_product->validity? $each_gym_product->validity.' Days' : 'N/A'}} </span>
               <div class="btm-arow"><i class="fa fa-arrow-circle-down"></i></div>
               <div class="plan-batch bch-3">Premium</div>
-              <div class="cntrct"><h5>Contract <span> - {{$each_gym_product->contract}}</span></h5></div>
+              <div class="cntrct"><h5>Contract <span> - {$each_gym_product->contract? $each_gym_product->contract : 'N/A'}}</span></h5></div>
               </div>
               <div class="p-box-bdy">
               
@@ -195,28 +150,7 @@
                   {{substr($each_gym_product->total_sessions,0,1)}}<span>{{substr($each_gym_product->total_sessions,1,8)}}</span>
                 @endif
               </h2>
-              <div class="date-time">
-                <h5>Timing 
-                  
-
-              <span>
-                 ( @foreach($gym_product_details[$gym_key]->gym_st_time as $each_pt_st_time)
-                  
-                {{date('h:i A', strtotime($each_pt_st_time->product_st_time))}} To
-                {{date('h:i A', strtotime($each_pt_st_time->product_end_time))}},
-                @endforeach )
-               
-
-           </span>
-            </h5>
-             <h5>Days of a Week <span>
-                (
-                @foreach($each_gym_product->gym_day as $each_gym_day)
-
-                  {{$each_gym_day->product_days}},
-                @endforeach
-              )</span></h5>
-              </div>
+              
               <div class="clearfix"></div>
               <a href="" class="sign-btn2">Subscribe</a>
               </div>

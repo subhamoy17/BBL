@@ -12,7 +12,10 @@ $.validator.addMethod("greaterThanZero", function(value, element) {
     return this.optional(element) || (parseFloat(value) != '');
 }, "Amount must be greater than zero");
    
-   
+  $.validator.addMethod("dollarsscents", function(value, element) {
+  return this.optional(element) || /^\d{0,5}(\.\d{0,3})?$/i.test(value);
+}, "Please enter value betwwen 1 to 99999.99");
+ 
 
 $('#submit_product').validate({  
 /// rules of error 
@@ -31,11 +34,24 @@ rules: {
 },
 
 "price": {
- required: true,
+required: true,
 number: true,
+
+range: [1, 99999]
+},
+
+"sub_price": {
+required: true,
+number: true,
+
 range: [1, 99999]
 },
 "no_session": {
+required: true,
+digits: true,
+maxlength: 50
+},
+"no_session_mon": {
 required: true,
 digits: true,
 maxlength: 50
@@ -44,33 +60,23 @@ maxlength: 50
 greaterThanZero: true,
 
 },
-"validity_2": {
-greaterThanZero: true,
-
-},
 "contract": {
 greaterThanZero: true,
 
 },
-
 "notice_period": {
 greaterThanZero: true,
 
 },
-
 "notice_period_2": {
-greaterThanZero: 
-                    function() {
-                        //returns true if video & previous image is empty   
+greaterThanZero: true,
 
-                        if($("#notice_period").val()!='NA'){
-                          return true;
-                        }else{
-                          return false;
-                        }
-                    },
+},
+"validity_2": {
+greaterThanZero: true,
 
 }
+
 
 },
 
@@ -92,8 +98,20 @@ number: 'Please enter decimal only',
 range: "Please enter value betwwen 1 to 99999.99"
 },
 
+ "sub_price":{
+ required: 'Please enter subscription price',
+number: 'Please enter decimal only',
+range: "Please enter value betwwen 1 to 99999.99"
+},
+
 "no_session":{
 required: "Please enter number of session",
+digits: 'Please enter only digits',
+maxlength: 'Please enter number less than 50 numbers.'
+},
+
+"no_session_mon":{
+required: "Please enter available number of session",
 digits: 'Please enter only digits',
 maxlength: 'Please enter number less than 50 numbers.'
 },
@@ -102,12 +120,8 @@ maxlength: 'Please enter number less than 50 numbers.'
  greaterThanZero: "Please select validity value",
  
 },
-"validity_2":{
- greaterThanZero: "Please select validity value",
- 
-},
 "contract":{
- greaterThanZero: "Please select contract",
+ greaterThanZero: "Please select contract value",
  
 },
 "notice_period":{
@@ -116,6 +130,10 @@ maxlength: 'Please enter number less than 50 numbers.'
 },
 "notice_period_2":{
  greaterThanZero: "Please select notice period value",
+ 
+},
+"validity_2":{
+ greaterThanZero: "Please select validity value",
  
 }
 
@@ -167,7 +185,7 @@ maxlength: 'Please enter number less than 50 numbers.'
           <div class="row form-group">
             <div class="col col-md-4"><label for="text-input" class=" form-control-label"> Payment Type<span class="required_field_color">*</span></label></div>
               <div class="col-12 col-md-8">
-                <select name="payment_type" id="payment_type" class="form-control">
+                <select name="payment_type" id="payment_type" class="form-control" onchange="paymentType()">
 		              <option value="0">Select Payment Type</option>
 		                @if(!empty($all_payment_type))
 		            	    @foreach($all_payment_type as $each_payment_type)
@@ -178,33 +196,26 @@ maxlength: 'Please enter number less than 50 numbers.'
                 <div id="err1" class="err1"></div>
               </div>
           </div>
-
+<div id=pay_as_you_go style="display: none">
           <div class="row form-group">
             <div class="col col-md-4"><label for="text-input" class=" form-control-label"> No. of Available Session<span class="required_field_color">*</span></label></div>
-            <div class="col-12 col-md-6"><input type="text" id="no_session" name="no_session" placeholder="No. of Available Session" class="form-control" onkeyup="total_price_cal();">
+            <div class="col-12 col-md-8"><input type="text" id="no_session" name="no_session" placeholder="No. of Available Session" class="form-control" >
               
             </div>
-            <div class="col-12 col-md-2"><input type="checkbox" name="session_unlimited" id="session_unlimited" class="unlimited" onchange="valueUnlimited(); total_price_cal();">&nbsp; &nbsp;<label for="text-input" class="form-control-label">Unlimited</label>
-              
-            </div>
+          
             
           </div>
 
           <div class="row form-group">
-            <div class="col col-md-4"><label for="text-input" class=" form-control-label"> Price (<i class="fa fa-gbp"></i>)<span class="required_field_color">*</span></label></div>
-            <div class="col-12 col-md-6"><input type="text" id="price" name="price" placeholder="Price" class="form-control" onkeyup="total_price_cal();">
+            <div class="col col-md-4"><label for="text-input" class=" form-control-label"> Price (<i class="fa fa-gbp"></i>)/Session<span class="required_field_color">*</span></label></div>
+            <div class="col-12 col-md-8"><input type="text" id="price" name="price" placeholder="Price" class="form-control" onkeyup="total_price_cal();">
               
             </div>
-            <div class="col-12 col-md-2 ses" id="session"><label for="text-input" class=" form-control-label">/Session</label>
-              
-            </div>
-            <div class="col-12 col-md-2 mon" id="month" style="display: none;"><label for="text-input" class=" form-control-label">/Month</label>
-              
-            </div>
+           
           </div>
 
           <div class="row form-group" id="total_price_div" style="display: none;">
-            <div class="col col-md-4"><label for="text-input" class=" form-control-label">Total Price (<i class="fa fa-gbp"></i>)</label></div>
+            <div class="col col-md-4"><label for="text-input" class=" form-control-label">Total Package Price (<i class="fa fa-gbp"></i>)</label></div>
             <div class="col-12 col-md-8"><label for="text-input" class="total_price"></label>
             <input type="hidden" name="final_total_price" id="final_total_price">
             </div>
@@ -239,11 +250,46 @@ maxlength: 'Please enter number less than 50 numbers.'
 			        </select>
 					</div>
 				</div>
-				<div class="row form-group">
+
+      </div>
+				
+
+        <!-- Subscription -->
+
+<div id="subscription" style="display: none">
+
+        <div class="row form-group">
+            <div class="col col-md-4"><label for="text-input" class=" form-control-label"> No. of Available Session/Month<span class="required_field_color">*</span></label></div>
+            <div class="col-12 col-md-6"><input type="text" id="no_session_mon" name="no_session_mon" placeholder="No. of Available Session" class="form-control" >
+              
+            </div>
+            <div class="col-12 col-md-2"><input type="checkbox" name="session_unlimited" id="session_unlimited" class="unlimited" onchange="valueUnlimited()">&nbsp; &nbsp;<label for="text-input" class="form-control-label" >Unlimited</label>
+              
+            </div>
+            
+          </div>
+
+          <div class="row form-group">
+            <div class="col col-md-4"><label for="text-input" class=" form-control-label">Subscription Price (<i class="fa fa-gbp"></i>)/Month<span class="required_field_color">*</span></label></div>
+            <div class="col-12 col-md-8"><input type="text" id="sub_price" name="sub_price" placeholder="Subscription Price" class="form-control" onkeyup="total_price_cal_2();">
+              
+            </div>
+            
+          </div>
+
+          <div class="row form-group" id="total_price_div_2" style="display: none;">
+            <div class="col col-md-4"><label for="text-input" class=" form-control-label">Anual Subscription Price (<i class="fa fa-gbp"></i>)</label></div>
+            <div class="col-12 col-md-8"><label for="text-input" class="total_price_2"></label>
+            <input type="hidden" name="anual_total_price" id="anual_total_price">
+            </div>
+          </div>
+
+        
+        <div class="row form-group">
           <div class="col col-md-4">
             <label for="text-input" class=" form-control-label">Contract<span class="required_field_color">*</span></label></div>
           <div class="col-12 col-md-8">
-          	<select name="contract" id="contract" class="form-control">
+            <select name="contract" id="contract" class="form-control">
               <option value="0">Select Any One</option>
               <option value="Monthly">Monthly</option>
               <option value="Annually">Annually</option>
@@ -254,242 +300,46 @@ maxlength: 'Please enter number less than 50 numbers.'
         <div></div>
 
         <div class="row form-group">
-					<div class="col-lg-4">
-						<label>Notice Period<span class="required_field_color">*</span></label>
-					</div>
-					<div class="col-lg-4">
-						<select name="notice_period" id="notice_period" class="form-control" onchange="notice_period_duration();">
-	            <option value="0">Select Any One</option>
-          		<option value="1">1</option>
-        	    <option value="2">2</option>
-        	    <option value="3">3</option>
-        	    <option value="4">4</option>
-        	    <option value="5">5</option>
-        	    <option value="6">6</option>
-        	    <option value="7">7</option>
-        	    <option value="8">8</option>
-        	    <option value="9">9</option>
-        	    <option value="10">10</option>
-        	    <option value="11">11</option>
+          <div class="col-lg-4">
+            <label>Notice Period<span class="required_field_color">*</span></label>
+          </div>
+          <div class="col-lg-4">
+            <select name="notice_period" id="notice_period" class="form-control" >
+              <option value="0">Select Any One</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+              <option value="11">11</option>
               <option value="12">12</option>
-        	    <option value="NA">N/A</option>
-			      </select>
-					</div>
-					<div class="col-lg-4">
-						<select name="notice_period_2" id="notice_period_2" class="form-control">
-		            <option value="0">Select Any One</option>
-            		<option value="7">Week</option>
-            	  <option value="30">Month</option>  
-			        </select>
-					</div>
-				</div>
-				
-				<div class="row form-group">
-          <div class="col col-md-1"><label for="text-input" class=" form-control-label">Monday</label></div>
-          <div class="col col-md-3"><input type="checkbox" name="monday" id="monday"  class="monday" onchange="valueChanged()"></div>
-          <div class="col col-md-8 monday_show_time" style="display: none">
-            <div class="col col-md-4">
-              <select id="mon_st_time" class="form-control">
-		            <option value="-">Choose Start Time</option>
-		            @foreach($all_slot_time as $each_slot_time)
-            		<option value="{{$each_slot_time->id}}">{{date('h:i A', strtotime($each_slot_time->time))}}</option>
-            	    @endforeach
-			        </select>
-            </div>
-            <div class="col col-md-4">
-              <select id="mon_end_time" class="form-control">
-		            <option value="-">Choose End Time</option>
-		            @foreach($all_slot_time as $each_slot_time)
-            		<option value="{{$each_slot_time->id}}">{{date('h:i A', strtotime($each_slot_time->time))}}</option>
-            	  @endforeach 
-			        </select>
-            </div>
-
-            <div class="col col-md-4">
-              <button id="add_monday_time_button" class="btn btn-dark btn-theme-colored btn-flat">Add Monday Time</button>
-            </div>                            
+              <option value="NA">N/A</option>
+            </select>
+          </div>
+          <div class="col-lg-4">
+            <select name="notice_period_2" id="notice_period_2" class="form-control">
+                <option value="0">Select Any One</option>
+                <option value="7">Week</option>
+                <option value="30">Month</option>  
+              </select>
           </div>
         </div>
 
-        <div class="row form-group"  id="add_monday_time_div">
-          
-          
-        </div> 
-        <div class="row form-group">
-          <div class="col col-md-1"><label for="text-input" class="form-control-label">Tuesday</label></div>
-          <div class="col-12 col-md-3"><input type="checkbox" name="tuesday" id="tuesday" class="tuesday" onchange="valueChanged1()"></div>
-            <div class="col col-md-8 tuesday_show_time" style="display: none">
-              <div class="col col-md-4">
-                <select id="tue_st_time" class="form-control">
-		              <option value="-">Choose Start Time</option>
-		            	@foreach($all_slot_time as $each_slot_time)
-            		  <option value="{{$each_slot_time->id}}">{{date('h:i A', strtotime($each_slot_time->time))}}</option>
-            	    @endforeach
-			          </select>
-              </div>
-              <div class="col col-md-4">
-                <select id="tue_end_time" class="form-control">
-		              <option value="-">Choose End Time</option>
-		            	@foreach($all_slot_time as $each_slot_time)
-            		  <option value="{{$each_slot_time->id}}">{{date('h:i A', strtotime($each_slot_time->time))}}</option>
-            	    @endforeach
-			          </select>
-              </div>
-              <div class="col col-md-4">
-              <button id="add_tuesday_time_button" class="btn btn-dark btn-theme-colored btn-flat">Add Tuesday Time</button>
-              </div>
-            </div>
-          </div>
-          <div class="row form-group"  id="add_tuesday_time_div">
-            
-          </div> 
-          <div class="row form-group">
-            <div class="col col-md-1"><label for="text-input" class="form-control-label">Wednesday</label></div>
-              <div class="col-12 col-md-3"><input type="checkbox" name="wednesday" id="wednesday" class="wednesday" onchange="valueChanged2()"></div>
-                <div class="col col-md-8 wednesday_show_time" style="display: none">
-                  <div class="col col-md-4">
-                    <select id="wed_st_time" class="form-control">
-		                  <option value="-">Choose Start Time</option>
-		            	    @foreach($all_slot_time as $each_slot_time)
-            		      <option value="{{$each_slot_time->id}}">{{date('h:i A', strtotime($each_slot_time->time))}}</option>
-            	       @endforeach
-			              </select>
-                  </div>
-                <div class="col col-md-4">
-                  <select id="wed_end_time" class="form-control">
-		                <option value="-">Choose End Time</option>
-		            	  @foreach($all_slot_time as $each_slot_time)
-            		    <option value="{{$each_slot_time->id}}">{{date('h:i A', strtotime($each_slot_time->time))}}</option>
-            	      @endforeach 
-			            </select>
-                </div>
-                <div class="col col-md-4">
-                  <button id="add_wednesday_time_button" class="btn btn-dark btn-theme-colored btn-flat">Add Wednesday Time</button>
-                </div>
-              </div>
-            </div>
-            <div class="row form-group"  id="add_wednesday_time_div">
-              
-            </div> 
-            <div class="row form-group">
-              <div class="col col-md-1"><label for="text-input" class="form-control-label">Thursday</label></div>
-                <div class="col-12 col-md-3"><input type="checkbox" name="thursday" id="thursday" class="thursday" onchange="valueChanged3()"></div>
-                  <div class="col col-md-8 thursday_show_time" style="display: none">
-                    <div class="col col-md-4">
-                      <select id="thu_st_time" class="form-control">
-		                    <option value="-">Choose Start Time</option>
-		            	      @foreach($all_slot_time as $each_slot_time)
-            		        <option value="{{$each_slot_time->id}}">{{date('h:i A', strtotime($each_slot_time->time))}}</option>
-            	          @endforeach 
-			                </select>
-                    </div>
-                  <div class="col col-md-4">
-                    <select id="thu_end_time" class="form-control">
-		                  <option value="-">Choose End Time</option>
-		            	    @foreach($all_slot_time as $each_slot_time)
-            		      <option value="{{$each_slot_time->id}}">{{date('h:i A', strtotime($each_slot_time->time))}}</option>
-            	        @endforeach
-			              </select>
-                  </div>
+</div>
 
-                  <div class="col col-md-4">
-                    <button id="add_thursday_time_button" class="btn btn-dark btn-theme-colored btn-flat">Add Thursday Time</button>
-                  </div>
-              </div>
-            </div>
-            <div class="row form-group"  id="add_thursday_time_div">
-              
-            </div> 
-            <div class="row form-group">
-              <div class="col col-md-1"><label for="text-input" class="form-control-label">Friday</label></div>
-                <div class="col-12 col-md-3"><input type="checkbox" name="friday" id="friday" class="friday" onchange="valueChanged4()"></div>
-                  <div class="col col-md-8 friday_show_time" style="display: none">
-                    <div class="col col-md-4">
-                      <select id="fri_st_time" class="form-control">
-		                    <option value="-">Choose Start Time</option>
-		            	      @foreach($all_slot_time as $each_slot_time)
-            		        <option value="{{$each_slot_time->id}}">{{date('h:i A', strtotime($each_slot_time->time))}}</option>
-            	          @endforeach
-			                </select>
-                    </div>
-                  <div class="col col-md-4">
-                    <select id="fri_end_time" class="form-control">
-		                  <option value="-">Choose End Time</option>
-		            	    @foreach($all_slot_time as $each_slot_time)
-            		      <option value="{{$each_slot_time->id}}">{{date('h:i A', strtotime($each_slot_time->time))}}</option>
-            	        @endforeach
-			              </select>
-                  </div>
-                  <div class="col col-md-4">
-                    <button id="add_friday_time_button" class="btn btn-dark btn-theme-colored btn-flat">Add Friday Time</button>
-                  </div>
-              </div>
-            </div>
-            <div class="row form-group"  id="add_friday_time_div">
-              
-            </div>
-            <div class="row form-group">
-              <div class="col col-md-1"><label for="text-input" class="form-control-label">Saturday</label></div>
-                <div class="col-12 col-md-3"><input type="checkbox" name="saturday" id="saturday" class="saturday" onchange="valueChanged5()"></div>
-                  <div class="col col-md-8 saturday_show_time" style="display: none">
-                    <div class="col col-md-4">
-                      <select id="sat_st_time" class="form-control">
-		                    <option value="-">Choose Start Time</option>
-		            	      @foreach($all_slot_time as $each_slot_time)
-            		        <option value="{{$each_slot_time->id}}">{{date('h:i A', strtotime($each_slot_time->time))}}</option>
-            	          @endforeach
-			                </select>
-                    </div>
-                    <div class="col col-md-4">
-                      <select id="sat_end_time" class="form-control">
-		                    <option value="-">Choose End Time</option>
-		            	      @foreach($all_slot_time as $each_slot_time)
-            		        <option value="{{$each_slot_time->id}}">{{date('h:i A', strtotime($each_slot_time->time))}}</option>
-            	          @endforeach
-			                </select>  
-                    </div>
-                    <div class="col col-md-4">
-                      <button id="add_saturday_time_button" class="btn btn-dark btn-theme-colored btn-flat">Add Saturday Time</button>
-                    </div>
-                  </div>
-                </div>
-                <div class="row form-group"  id="add_saturday_time_div">
-                  
-                </div>
-                <div class="row form-group">
-                  <div class="col col-md-1"><label for="text-input" class="form-control-label">Sunday</label></div>
-                    <div class="col col-md-3"><input type="checkbox" name="sunday" id="sunday" class="sunday" onchange="valueChanged6()"></div>
-                      <div class="col col-md-8 sunday_show_time" style="display: none">
-                        <div class="col col-md-4">
-                          <select id="sun_st_time" class="form-control">
-		                        <option value="-">Choose Start Time</option>
-		            	          @foreach($all_slot_time as $each_slot_time)
-            		            <option value="{{$each_slot_time->id}}">{{date('h:i A', strtotime($each_slot_time->time))}}</option>
-            	              @endforeach
-			                    </select>
-                        </div>
-                        <div class="col col-md-4">
-                          <select id="sun_end_time" class="form-control">
-		                        <option value="-">Choose End Time</option>
-		            	          @foreach($all_slot_time as $each_slot_time)
-            		            <option value="{{$each_slot_time->id}}">{{date('h:i A', strtotime($each_slot_time->time))}}</option>
-            	              @endforeach
-			                    </select> 
-                        </div>
-                        <div class="col col-md-4">
-                          <button id="add_sunday_time_button" class="btn btn-dark btn-theme-colored btn-flat">Add Sunday Time</button>
-                        </div>
-                    </div>
-                  </div>
-                  <div class="row form-group"  id="add_sunday_time_div">
-                    
-                  </div>
+				
+			
 				<div class="row">
 					<div class="col-lg-12">
 						<div class="row">
 						<div class="col-lg-10"></div>
 							<div class="col-lg-2">
-								<button name="product_submit_btn" id="product_submit_btn" class="btn btn-primary pull-right" style="width: 100px;">Submit</button>
+								<button name="submit" id="product_submit_btn" class="btn btn-primary pull-right" style="width: 100px;">Submit</button>
 							</div>
 						</div>
 					</div>
@@ -500,332 +350,35 @@ maxlength: 'Please enter number less than 50 numbers.'
 	</div>
 </div>
 
-
-<script>
-   $(document).ready(function() {
-    $('body').on('click','#add_monday_time_button',function(e) {
-      e.preventDefault();
-    var mon_st_time_text=$("#mon_st_time option:selected").text();
-    var mon_end_time_text=$("#mon_end_time option:selected").text();
-
-    var mon_st_time_id=$("#mon_st_time").val();
-    var mon_end_time_id=$("#mon_end_time").val();
-
-    if(mon_st_time_id=='-' || mon_end_time_id=='-')
-    {
-      alertify.alert('Please select monday start time and end time');
-    }
-    else
-    {
-      $("#add_monday_time_div").append('<div class="conMon col col-md-12"><div class="col col-md-4"></div><div class="col col-md-8"><div class="col col-md-4"><input readonly type="text" value="' + mon_st_time_text + '" /></div>' + '<div class="col col-md-4"><input readonly type="text" value="' + mon_end_time_text + '"/></div>' + '<input readonly type="hidden" name="monday_start_time[]" value="' + mon_st_time_id + '"/>'  + '<input readonly type="hidden" name="monday_end_time[]" value="' + mon_end_time_id + '"/>' + '<div class="col col-md-4"><input type="button" class="btnRemoveMon btn-dark btn-theme-colored btn-flat" value="Delete Monday Time"/></div></div></div><br>');
-      $("#add_monday_time_div").append('<br>');
-      $("#mon_st_time").val('-'); $("#mon_end_time").val('-');
-    }
-  });
-  $('body').on('click','.btnRemoveMon',function() { 
-    $(this).closest('div.conMon').remove();
-  });
-});
+<script type="text/javascript">
   
-</script>
+  $(document).ready(function(){
+   
+    $('#submit_product').bind('submit', function (e) {
+    var button = $('#product_submit_btn');
 
-<script>
-   $(document).ready(function() {
-    $('body').on('click','#add_tuesday_time_button',function(e) {
-      e.preventDefault();
+    // Disable the submit button while evaluating if the form should be submitted
+    button.prop('disabled', true);
 
-    var tue_st_time_text=$("#tue_st_time option:selected").text();
-    var tue_end_time_text=$("#tue_end_time option:selected").text();
+    var valid = true;    
 
-    var tue_st_time_id=$("#tue_st_time").val();
-    var tue_end_time_id=$("#tue_end_time").val();
+    // Do stuff (validations, etc) here and set
+    // "valid" to false if the validation fails
 
-    if(tue_st_time_id=='-' || tue_end_time_id=='-')
-    {
-      alertify.alert('Please select tuesday start time and end time');
+    if (!valid) { 
+        // Prevent form from submitting if validation failed
+        e.preventDefault();
+
+        // Reactivate the button if the form was not submitted
+        button.prop('disabled', false);
     }
-    else
-    {
-    $("#add_tuesday_time_div").append('<div class="conTue col col-md-12"><div class="col col-md-4"></div><div class="col col-md-8"><div class="col col-md-4"><input readonly type="text" value="' + tue_st_time_text + '" /></div>' + '<div class="col col-md-4"><input readonly type="text" value="' + tue_end_time_text + '"/></div>'  + '<input readonly type="hidden" name="tuesday_start_time[]" value="' + tue_st_time_id + '"/>'  + '<input readonly type="hidden" name="tuesday_end_time[]" value="' + tue_end_time_id + '"/>' + '<div class="col col-md-4"><input type="button" class="btnRemoveTue btn-dark btn-theme-colored btn-flat" value="Delete Tuesday Time"/></div></div></div><br>');
-    $("#add_tuesday_time_div").append('<br>');
-    $("#tue_st_time").val('-');$("#tue_end_time").val('-');
-    }
-  });
-  $('body').on('click','.btnRemoveTue',function() {
-    $(this).closest('div.conTue').remove()
 
-  });
+   
 });
-  
+
+      });
+
 </script>
-
-<script>
-   $(document).ready(function() {
-    $('body').on('click','#add_wednesday_time_button',function(e) {
-      e.preventDefault();
-
-    var wed_st_time_text=$("#wed_st_time option:selected").text();
-    var wed_end_time_text=$("#wed_end_time option:selected").text();
-
-    var wed_st_time_id=$("#wed_st_time").val();
-    var wed_end_time_id=$("#wed_end_time").val();
-
-    if(wed_st_time_id=='-' || wed_end_time_id=='-')
-    {
-      alertify.alert('Please select wednesday start time and end time');
-    }
-    else
-    {
-    $("#add_wednesday_time_div").append('<div class="conWed col col-md-12"><div class="col col-md-4"></div><div class="col col-md-8"><div class="col col-md-4"><input readonly type="text" value="' + wed_st_time_text + '" /></div>' + '<div class="col col-md-4"><input readonly type="text" value="' + wed_end_time_text + '"/></div>'  + '<input readonly type="hidden" name="wednesday_start_time[]" value="' + wed_st_time_id + '"/>'  + '<input readonly type="hidden" name="wednesday_end_time[]" value="' + wed_end_time_id + '"/>' + '<div class="col col-md-4"><input type="button" class="btnRemoveWed btn-dark btn-theme-colored btn-flat" value="Delete Wednesday Time"/></div></div></div><br>');
-    $("#add_wednesday_time_div").append('<br>');
-    $("#wed_st_time").val('-');$("#wed_end_time").val('-');
-  }
-  });
-  $('body').on('click','.btnRemoveWed',function() {
-    $(this).closest('div.conWed').remove()
-
-  });
-});
-  
-</script>
-
-<script>
-   $(document).ready(function() {
-    $('body').on('click','#add_thursday_time_button',function(e) {
-      e.preventDefault();
-
-    var thu_st_time_text=$("#thu_st_time option:selected").text();
-    var thu_end_time_text=$("#thu_end_time option:selected").text();
-
-    var thu_st_time_id=$("#thu_st_time").val();
-    var thu_end_time_id=$("#thu_end_time").val();
-
-    if(thu_st_time_id=='-' || thu_end_time_id=='-')
-    {
-      alertify.alert('Please select thursday start time and end time');
-    }
-    else
-    {
-    $("#add_thursday_time_div").append('<div class="conThu col col-md-12"><div class="col col-md-4"></div><div class="col col-md-8"><div class="col col-md-4"><input readonly type="text" value="' + thu_st_time_text + '" /></div>' + '<div class="col col-md-4"><input readonly type="text" value="' + thu_end_time_text + '"/></div>' + '<input readonly type="hidden" name="thursday_start_time[]" value="' + thu_st_time_id + '"/>'  + '<input readonly type="hidden" name="thursday_end_time[]" value="' + thu_end_time_id + '"/>' + '<div class="col col-md-4"><input type="button" class="btnRemoveThu btn-dark btn-theme-colored btn-flat" value="Delete Wednesday Time"/></div></div></div><br>');
-    $("#add_thursday_time_div").append('<br>');
-    $("#thu_st_time").val('-');$("#thu_end_time").val('-');
-  }
-  });
-  $('body').on('click','.btnRemoveThu',function() {
-    $(this).closest('div.conThu').remove()
-
-  });
-});
-  
-</script>
-
-<script>
-   $(document).ready(function() {
-    $('body').on('click','#add_friday_time_button',function(e) {
-      e.preventDefault();
-
-    var fri_st_time_text=$("#fri_st_time option:selected").text();
-    var fri_end_time_text=$("#fri_end_time option:selected").text();
-
-    var fri_st_time_id=$("#fri_st_time").val();
-    var fri_end_time_id=$("#fri_end_time").val();
-
-    if(fri_st_time_id=='-' || fri_end_time_id=='-')
-    {
-      alertify.alert('Please select friday start time and end time');
-    }
-    else
-    {
-    $("#add_friday_time_div").append('<div class="conFri col col-md-12"><div class="col col-md-4"></div><div class="col col-md-8"><div class="col col-md-4"><input readonly type="text" value="' + fri_st_time_text + '" /></div>' + '<div class="col col-md-4"><input readonly type="text" value="' + fri_end_time_text + '"/></div>' + '<input readonly type="hidden" name="friday_start_time[]" value="' + fri_st_time_id + '"/>'  + '<input readonly type="hidden" name="friday_end_time[]" value="' + fri_end_time_id + '"/>' + '<div class="col col-md-4"><input type="button" class="btnRemoveFri btn-dark btn-theme-colored btn-flat" value="Delete Friday Time"/></div></div></div><br>');
-    $("#add_friday_time_div").append('<br>');
-    $("#fri_st_time").val('-');$("#fri_end_time").val('-');
-  }
-  });
-  $('body').on('click','.btnRemoveFri',function() {
-    $(this).closest('div.conFri').remove()
-
-  });
-});
-  
-</script>
-
-<script>
-   $(document).ready(function() {
-    $('body').on('click','#add_saturday_time_button',function(e) {
-      e.preventDefault();
-
-    var sat_st_time_text=$("#sat_st_time option:selected").text();
-    var sat_end_time_text=$("#sat_end_time option:selected").text();
-
-    var sat_st_time_id=$("#sat_st_time").val();
-    var sat_end_time_id=$("#sat_end_time").val();
-
-     if(sat_st_time_id=='-' || sat_end_time_id=='-')
-    {
-      alertify.alert('Please select saturday start time and end time');
-    }
-    else
-    {
-    $("#add_saturday_time_div").append('<div class="conSat col col-md-12"><div class="col col-md-4"></div><div class="col col-md-8"><div class="col col-md-4"><input readonly type="text" value="' + sat_st_time_text + '" /></div>' + '<div class="col col-md-4"><input readonly type="text" value="' + sat_end_time_text + '"/></div>' + '<input readonly type="hidden" name="saturday_start_time[]" value="' + sat_st_time_id + '"/>'  + '<input readonly type="hidden" name="saturday_end_time[]" value="' + sat_end_time_id + '"/>' + '<div class="col col-md-4"><input type="button" class="btnRemoveSat btn-dark btn-theme-colored btn-flat" value="Delete Saturday Time"/></div></div></div><br>');
-    $("#add_saturday_time_div").append('<br>');
-    $("#sat_st_time").val('-');$("#sat_end_time").val('-');
-  }
-  });
-  $('body').on('click','.btnRemoveSat',function() {
-    $(this).closest('div.conSat').remove()
-
-  });
-});
-  
-</script>
-
-<script>
-   $(document).ready(function() {
-    $('body').on('click','#add_sunday_time_button',function(e) {
-      e.preventDefault();
-
-    var sun_st_time_text=$("#sun_st_time option:selected").text();
-    var sun_end_time_text=$("#sun_end_time option:selected").text();
-
-    var sun_st_time_id=$("#sun_st_time").val();
-    var sun_end_time_id=$("#sun_end_time").val();
-
-    if(sun_st_time_id=='-' || sun_end_time_id=='-')
-    {
-      alertify.alert('Please select sunday start time and end time');
-    }
-    else
-    {
-
-    $("#add_sunday_time_div").append('<div class="conSun col col-md-12"><div class="col col-md-4"></div><div class="col col-md-8"><div class="col col-md-4"><input readonly type="text" value="' + sun_st_time_text + '" /></div>' + '<div class="col col-md-4"><input readonly type="text" value="' + sun_end_time_text + '"/></div>' + '<input readonly type="hidden" name="sunday_start_time[]" value="' + sun_st_time_id + '"/>'  + '<input readonly type="hidden" name="sunday_end_time[]" value="' + sun_end_time_id + '"/>' + '<div class="col col-md-4"><input type="button" class="btnRemoveSun btn-dark btn-theme-colored btn-flat" value="Delete Saturday Time"/></div></div></div><br>');
-    $("#add_sunday_time_div").append('<br>');
-    $("#sun_st_time").val('-');$("#sun_end_time").val('-');
-  }
-  });
-  $('body').on('click','.btnRemoveSun',function() {
-    $(this).closest('div.conSun').remove()
-
-  });
-});
-  
-</script>
-
-<script>		                                                     
-function valueChanged()
-{
-	
-  if($('.monday').is(":checked"))
-  {
-    $(".monday_show_time").show();
-    $(".conMon").show();
-  }   
-  else
-  {
-    $(".monday_show_time").hide();
-    $(".conMon").hide();
-  }
-      
-}
-  function valueChanged1()
-{
-	if($('.tuesday').is(":checked"))
-  {
-    $(".tuesday_show_time").show();
-    $(".conTue").show();
-  }   
-  else
-  {
-    $(".tuesday_show_time").hide();
-    $(".conTue").hide();
-  }
-}
-function valueChanged2()
-{
-	if($('.wednesday').is(":checked"))
-  {
-    $(".wednesday_show_time").show();
-    $(".conWed").show();
-  }   
-  else
-  {
-    $(".wednesday_show_time").hide();
-    $(".conWed").hide();
-  }
-}
-function valueChanged3()
-{
-	if($('.thursday').is(":checked"))
-  {
-    $(".thursday_show_time").show();
-    $(".conThu").show();
-  }   
-  else
-  {
-    $(".thursday_show_time").hide();
-    $(".conThu").hide();
-  }
-}
-function valueChanged4()
-{
-	if($('.friday').is(":checked"))
-  {
-    $(".friday_show_time").show();
-    $(".conFri").show();
-  }   
-  else
-  {
-    $(".friday_show_time").hide();
-    $(".conFri").hide();
-  }
-}
-function valueChanged5()
-{
-	if($('.saturday').is(":checked"))
-  {
-    $(".saturday_show_time").show();
-    $(".conSat").show();
-  }   
-  else
-  {
-    $(".saturday_show_time").hide();
-    $(".conSat").hide();
-  }
-}
-function valueChanged6()
-{
-	if($('.sunday').is(":checked"))
-  {
-    $(".sunday_show_time").show();
-    $(".conSun").show();
-  }   
-  else
-  {
-    $(".sunday_show_time").hide();
-    $(".conSun").hide();
-  }
-}
-function valueUnlimited()
-{
-	   if($('.unlimited').is(":checked"))  {
-
-      $('#no_session').attr('disabled',true);
-      $('#no_session').val('');
-      $(".mon").show();
-    	$(".ses").hide();
-		}
-    else {
-      $('#no_session').removeAttr('disabled');
-    	 $(".mon").hide();
-    	 $(".ses").show();
-       $("#total_price_div").hide();
-       $("#price").val('');
-       $("#final_total_price").val('');
-
-   		 }
-        
-}
-</script>
-
 <script>
   function total_price_cal()
   {
@@ -836,13 +389,7 @@ function valueUnlimited()
       $('.total_price').html(total_price);
       $("#final_total_price").val(total_price);
     } 
-    else if($('.unlimited').is(":checked") && $('#price').val()!='')
-    {
-      var total_price=12*parseInt($('#price').val());
-      $('.total_price').html(total_price);
-      $("#total_price_div").show();
-      $("#final_total_price").val(total_price);
-    } 
+    
     else
     {
       $("#total_price_div").hide();
@@ -851,22 +398,76 @@ function valueUnlimited()
   }
 </script>
 
-
 <script>
-  function notice_period_duration()
+  function total_price_cal_2()
   {
-    if($('#notice_period').val()=='NA')
+    if($('#sub_price').val()!='')
     {
-      $('#notice_period_2').val('0');
-      $('#notice_period_2').attr('disabled',true);
-    }
+      var total_price_2=12*parseInt($('#sub_price').val());
+      $("#total_price_div_2").show();
+      $('.total_price_2').html(total_price_2);
+      $("#anual_total_price").val(total_price_2);
+    } 
+    
     else
     {
-      $('#notice_period_2').removeAttr('disabled');
+      $("#total_price_div_2").hide();
+      $("#anual_total_price").val('');
     }
   }
 </script>
 
+<script>		                                                     
+function paymentType()
+{
+	// $( "#myselect option:selected" ).text();
+  if($( "#payment_type" ).val()==1)
+  {
+    // alert('jhhj');
+    $("#pay_as_you_go").show();
+    $("#subscription").hide();
+     
+  }   
+  else if($( "#payment_type" ).val()==2)
+  {
+    // alert('jjj');
+    $("#pay_as_you_go").hide();
+    $("#subscription").show();
+    $("#no_session-error").val('');
+     
+  }
+  else{
+     $("#pay_as_you_go").hide();
+    $("#subscription").hide();
+  }
+      
+}
+
+
+function valueUnlimited()
+{
+     if($('.unlimited').is(":checked"))  {
+
+      $('#no_session_mon').attr('disabled',true);
+      $('#no_session_mon').val('');
+      // $(".mon").show();
+      // $(".ses").hide();
+    }
+    else {
+      $('#no_session_mon').removeAttr('disabled');
+       // $(".mon").hide();
+       // $(".ses").show();
+       $("#total_price_div").hide();
+       $("#price").val('');
+       $("#final_total_price").val('');
+
+       }
+        
+}
+
+
+
+</script>
 
 
 

@@ -111,23 +111,16 @@ $('#bootstrap-slot-data-table').DataTable({
                                     <td>{{$my_productdata->training_name}}</td>
                                      <td>{{$my_productdata->payment_type_name}}</td>
                                      <td>{{$my_productdata->total_sessions}}</td>
-                                     <!-- {{$my_productdata->total_sessions}} -->
-                                     @if($my_productdata->total_sessions=='Unlimited')
+                                   
+                                     @if($my_productdata->payment_type_id=='2')
                                     <td><i class="fa fa-gbp">{{$my_productdata->price_session_or_month}}/Month</td>
                                     @else
                                      <td><i class="fa fa-gbp">{{$my_productdata->price_session_or_month}}/Session</td>
                                      @endif
                                     <td><i class="fa fa-gbp">{{$my_productdata->total_price}}</td>
-                                     <td>{{$my_productdata->validity}} Days</td>
-
-                                    <td><a class="detail-products-modal-btn1" id="{{$my_productdata->product_id}}" href="#" data-personal-training-st-time=" @foreach($my_productdata->personal_training_st_time as $each_pt_st_time)
-                  
-                {{date('h:i A', strtotime($each_pt_st_time->product_st_time))}} To
-                {{date('h:i A', strtotime($each_pt_st_time->product_end_time))}},
-                @endforeach "  data-personal-contract="{{$my_productdata->contract}}" data-personal-notice-period="{{$my_productdata->notice_period}}" data-personal-training-name="{{$my_productdata->training_name}}" data-personal-price-session-or-month="{{(float)$my_productdata->price_session_or_month}}" data-personal-total-price="{{(float)$my_productdata->total_price}}" data-personal-total-sessions="{{$my_productdata->total_sessions}}" data-personal-notice-period-value="{{$my_productdata->notice_period_value}}" data-personal-payment-type-name="{{$my_productdata->payment_type_name}}" data-personal-training-day="@foreach($my_productdata->personal_training_day as $each_pt_day)
-
-                  {{$each_pt_day->product_days}},
-                @endforeach">Click here</a></td>
+                                     <td>{{$my_productdata->validity? $my_productdata->validity.' Days' :'N/A'}} </td>
+                                    
+                                    <td><a class="detail-products-modal-btn1" id="{{$my_productdata->product_id}}" href="#"   data-personal-contract="{{$my_productdata->contract? $my_productdata->contract : 'N/A'}}" data-personal-notice-period="{{$my_productdata->notice_period? $my_productdata->notice_period.' Days' : 'N/A'}}" data-personal-training-name="{{$my_productdata->training_name}}" data-personal-price-session-or-month="{{$my_productdata->price_session_or_month}}" data-personal-total-price="{{$my_productdata->total_price}}" data-personal-total-sessions="{{$my_productdata->total_sessions}}" data-personal-notice-period-value="{{$my_productdata->notice_period_value}}" data-personal-payment-type-name="{{$my_productdata->payment_type_name}}">Click here</a></td>
                                  
                                    
                                         
@@ -215,7 +208,7 @@ $('#bootstrap-slot-data-table').DataTable({
                                 </div>
                             </div> 
                             <div class="col-lg-4 col-xs-12">
-                                <label>Notice Period (Days)</label>
+                                <label>Notice Period</label>
                                 <div class="dispClass">
                                     <p class="detail-txt2"> <span id="notice_period"></span> 
 
@@ -232,21 +225,8 @@ $('#bootstrap-slot-data-table').DataTable({
                                 </div>
                             </div> 
 
-                            <div class="col-lg-4 col-xs-12">
-                                <label>Training Day</label>
-                                <div class="dispClass">
-                                    <p class="detail-txt2"> <span id="product_days"></span><br>        
-                                    </p>                                
-                                </div>
-                            </div> 
-                           
-                            <div class="col-lg-4 col-xs-12">
-                                <label>Timing</label>
-                                <div class="dispClass">
-                                    <p class="detail-txt2"> <span id="each_pt_st_time"></span>      
-                                    </p>                                
-                                </div>
-                            </div> 
+                            
+                          
                             
                             
       
@@ -293,7 +273,7 @@ $('#bootstrap-slot-data-table').DataTable({
 
   $("#bootstrap-slot-data-table").on("click",".detail-products-modal-btn1", function(){ 
     // alert('ddd');
-     var each_pt_st_time = $(this).data("personal-training-st-time");
+    
     var contract = $(this).data("personal-contract");
     var product_days = $(this).data("personal-training-day");
    var notice_period_value= $(this).data("personal-notice-period-value");
@@ -303,7 +283,7 @@ $('#bootstrap-slot-data-table').DataTable({
     var total_sessions = $(this).data("personal-total-sessions");
     var price_session_or_month = $(this).data("personal-price-session-or-month");
     var total_price = $(this).data("personal-total-price");
-    $('#each_pt_st_time').text(each_pt_st_time);
+    
     $('#contract').text(contract);
     $('#product_days').text(product_days);
     
@@ -326,7 +306,7 @@ else{
    
   }
 else{
-    $('#notice_period').text(notice_period+' Days');
+    $('#notice_period').text(notice_period);
     }
     
     $('#total_price').text(total_price);

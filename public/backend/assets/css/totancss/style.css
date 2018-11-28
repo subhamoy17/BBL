@@ -816,6 +816,22 @@ a.reset_time {
     font-size: 13px;
 }
 
+#no_session_mon-error {
+    color: #dc3545;
+    text-transform: uppercase;
+    font-weight: 700;
+    text-transform: none;
+    font-size: 13px;
+}
+
+#sub_price-error {
+    color: #dc3545;
+    text-transform: uppercase;
+    font-weight: 700;
+    text-transform: none;
+    font-size: 13px;
+}
+
 #duplicate_dietPlanName {
     color: #dc3545;
     font-weight: 700;

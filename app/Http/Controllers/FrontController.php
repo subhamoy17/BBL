@@ -190,35 +190,7 @@ public function frontprice(Request $request)
   ->orderby('products.id','DESC')->get();
 
 
-  foreach($personal_training_product_details as $pt)
-  {
-    
-    $pt->personal_training_day=DB::table('products_day_time')
-    ->join('product_days','product_days.id','products_day_time.day_id')
-    ->select('product_days.product_days as product_days')
-    ->where('products_day_time.product_id',$pt->product_id)
-    ->distinct('products_day_time.day_id')->get();
-
-    $pt->personal_training_st_time=DB::table('products_day_time')
-    ->join('slot_times','slot_times.id','products_day_time.product_st_time')
-    ->select('slot_times.time as product_st_time')
-    ->where('products_day_time.product_id',$pt->product_id)
-    ->get();
-
-    $pt->personal_training_end_time=DB::table('products_day_time')
-    ->join('slot_times','slot_times.id','products_day_time.product_end_time')
-    ->select('slot_times.time as product_end_time')
-    ->where('products_day_time.product_id',$pt->product_id)
-    ->get();
-
-foreach($pt->personal_training_st_time as $key=>$st_time)
-  {
-$st_time->product_end_time=$pt->personal_training_end_time[$key]->product_end_time;
-
-  }
-
-     //Log::debug(":: personal_training_st_time :: ".print_r($pt->personal_training_st_time,true));
-  }
+ 
 
 
   
@@ -232,34 +204,7 @@ $st_time->product_end_time=$pt->personal_training_end_time[$key]->product_end_ti
   ->orderby('products.id','DESC')->get();
 
   // Log::debug(":: personal_training_product_details :: ".print_r($personal_training_product_details,true));
-  foreach($bootcamp_product_details as $bc)
-  {
-    
-    $bc->bootcamp_day=DB::table('products_day_time')
-    ->join('product_days','product_days.id','products_day_time.day_id')
-    ->select('product_days.product_days as product_days')
-    ->where('products_day_time.product_id',$pt->product_id)
-    ->distinct('products_day_time.day_id')->get();
 
-    $bc->bootcamp_st_time=DB::table('products_day_time')
-    ->join('slot_times','slot_times.id','products_day_time.product_st_time')
-    ->select('slot_times.time as product_st_time')
-    ->where('products_day_time.product_id',$pt->product_id)
-    ->get();
-
-    $bc->bootcamp_end_time=DB::table('products_day_time')
-    ->join('slot_times','slot_times.id','products_day_time.product_end_time')
-    ->select('slot_times.time as product_end_time')
-    ->where('products_day_time.product_id',$pt->product_id)
-    ->get();
-
-    foreach($bc->bootcamp_st_time as $key=>$st_time)
-  {
-$st_time->product_end_time=$bc->bootcamp_end_time[$key]->product_end_time;
-
-  }
-
-  }
 
   $gym_product_details=DB::table('products')
   ->join('training_type','products.training_type_id','training_type.id')
@@ -269,35 +214,7 @@ $st_time->product_end_time=$bc->bootcamp_end_time[$key]->product_end_time;
   ->where('training_type.id',3)
   ->orderby('products.id','DESC')->get();
 
-  foreach($gym_product_details as $gym)
-  {
-    
-    $gym->gym_day=DB::table('products_day_time')
-    ->join('product_days','product_days.id','products_day_time.day_id')
-    ->select('product_days.product_days as product_days')
-    ->where('products_day_time.product_id',$pt->product_id)
-    ->distinct('products_day_time.day_id')->get();
-
-    $gym->gym_st_time=DB::table('products_day_time')
-    ->join('slot_times','slot_times.id','products_day_time.product_st_time')
-    ->select('slot_times.time as product_st_time')
-    ->where('products_day_time.product_id',$pt->product_id)
-    ->get();
-
-    $gym->gym_end_time=DB::table('products_day_time')
-    ->join('slot_times','slot_times.id','products_day_time.product_end_time')
-    ->select('slot_times.time as product_end_time')
-    ->where('products_day_time.product_id',$pt->product_id)
-    ->get();
-
-      foreach($gym->gym_st_time as $key=>$st_time)
-  {
-$st_time->product_end_time=$gym->gym_end_time[$key]->product_end_time;
-
-  }
-
-  }
-  
+ 
   
   return view('customerpanel.frontpricing')->with(compact('data','personal_training_product_details','bootcamp_product_details','gym_product_details'));
 
