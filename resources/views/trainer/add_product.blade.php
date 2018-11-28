@@ -196,6 +196,7 @@ maxlength: 'Please enter number less than 50 numbers.'
                 <div id="err1" class="err1"></div>
               </div>
           </div>
+         
 <div id=pay_as_you_go style="display: none">
           <div class="row form-group">
             <div class="col col-md-4"><label for="text-input" class=" form-control-label"> No. of Available Session<span class="required_field_color">*</span></label></div>
@@ -279,8 +280,8 @@ maxlength: 'Please enter number less than 50 numbers.'
 
           <div class="row form-group" id="total_price_div_2" style="display: none;">
             <div class="col col-md-4"><label for="text-input" class=" form-control-label">Annual Subscription Price (<i class="fa fa-gbp"></i>)</label></div>
-            <div class="col-12 col-md-8"><label for="text-input" class="total_price_2"></label>
-            <input type="hidden" name="anual_total_price" id="anual_total_price">
+            <div class="col-12 col-md-8"></label>
+            <input type="text" class="total_price_2 form-control" name="anual_total_price" id="anual_total_price">
             </div>
           </div>
 
@@ -424,7 +425,9 @@ maxlength: 'Please enter number less than 50 numbers.'
       var total_price_2=12*parseInt($('#sub_price').val());
       $("#total_price_div_2").show();
       $('.total_price_2').html(total_price_2);
+      $('.total_price_2').val(total_price_2);
       $("#anual_total_price").val(total_price_2);
+
     } 
     
     else
@@ -460,6 +463,7 @@ function paymentType()
   }
       
 }
+
 
 
 function valueUnlimited()
