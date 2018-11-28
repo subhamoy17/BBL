@@ -155,12 +155,7 @@ $(document).ready(function(){
           img.onload = function () {
               var height = this.height;
               var width = this.width;
-              if( height >200 && width >300){
-                alertify.alert("Height and Width must not exceed 200px and 300px");
-                $("#author_image").val('');
-                // $("#profile2_thumbnail").hide();
-                return false;
-              }
+              
           };
            img.src = _URL.createObjectURL(file);
       }

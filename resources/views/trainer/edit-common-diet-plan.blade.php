@@ -122,7 +122,7 @@ $(document).ready(function(){
 });
 </script>
 
-<script>
+<!-- <script>
 $(document).ready(function(){
 
   //// Author image validation ////
@@ -177,6 +177,59 @@ $(document).ready(function(){
   });
 
 });
+</script> -->
+
+<script>
+
+  //// Author image validation ////
+  $(document).ready(function(){
+  $("#author_image").change(function(){ 
+
+    // check the extension of author image
+    var ext = $('#author_image').val().split('.').pop().toLowerCase();
+    if($.inArray(ext, ['gif','png','jpg','jpeg']) == -1) {
+    alertify.alert('Only accept gif/png/jpg/jpeg extension formate of image');
+    $("#author_image").val('');
+    // $("#profile2_thumbnail").hide();
+    return false;
+    }
+
+    // check the size of author image
+    var fileSize = (this.files[0].size / 1024); //size in KB
+    if (fileSize >200) /// not more than 200 kb
+    {
+        alertify.alert("Please Upload maximum 200KB file size of image");// if Maxsize from Model > real file size
+        $("#author_image").val('');
+       
+        return false;
+    }
+
+    // check height and width of author image
+    var _URL = window.URL || window.webkitURL;  
+      var file, img;
+      if ((file = this.files[0])){
+          img = new Image();
+          img.onload = function () {
+              var height = this.height;
+              var width = this.width;
+             
+          };
+           img.src = _URL.createObjectURL(file);
+      }
+
+    // show author image after upload
+    if (this.files && this.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        $('#profile2_thumbnail').attr('src', e.target.result);
+        $('#recently_uploaded2_image').val(true);
+        }
+        $("#profile2_thumbnail").show();
+        reader.readAsDataURL(this.files[0]);
+      }
+  }); 
+
+});
 </script>
 
 <script>
@@ -202,7 +255,7 @@ $(document).ready(function(){
       var fileSize = (this.files[0].size / 1024); //size in KB
       if (fileSize >7024) /// not more than 1 mb
       {
-          alertify.alert("Please Upload maximum 6 MB file size of image");// if Maxsize from Model > real file size
+          alertify.alert("Please Upload maximum 200KB file size of image");// if Maxsize from Model > real file size
           $("#Pdf_button").show();
           $("#diet_plan_pdf").val('');
           $("#new_Pdf_button").hide();
