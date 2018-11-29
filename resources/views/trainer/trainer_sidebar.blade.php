@@ -68,7 +68,15 @@
                   <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('gymType')}}">Exercise List</a></li>
                   @endif
 
-
+                  @if(Request::segment(2) == "order-history")
+                       <ul class="nav navbar-nav">
+                 <li class="active">
+                  <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('order_history')}}" style="color: #fff !important;">Coustomer Order History </a></li>
+                  @else
+                  <ul class="nav navbar-nav">
+                  <li class="active">
+                  <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('order_history')}}">Coustomer Order History</a></li>
+                  @endif
 
                <!--    @if(Request::segment(2) == "common-diet-plan")
                   <ul class="nav navbar-nav">

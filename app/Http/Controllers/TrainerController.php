@@ -3823,4 +3823,26 @@ public function view_product(Request $request)
   }
 }
 
+
+public function order_history(Request $request)
+{
+   try{
+  $this->cart_delete_trainer();
+  
+
+  $all_order_history=DB::table('order_details')->join('products','products.id','order_details.product_id')->join('training_type','training_type.id','products.training_type_id')->join('payment_type','payment_type.id','products.payment_type_id')->join('customers','customers.id','order_details.customer_id')->select('order_details.id as order_details_id','order_details.customer_id as customer_id','order_details.order_purchase_date as order_purchase_date','order_details.order_validity_date as order_validity_date','order_details.payment_option as payment_option','order_details.status as status','products.training_type_id as training_type_id', 'products.total_sessions as total_sessions', 'products.price_session_or_month as price_session_or_month','products.id as product_id','products.total_price as total_price','products.validity_value as validity_value','products.validity_duration as validity_duration','training_type.training_name as training_name','customers.name as customer_name','payment_type.payment_type_name as payment_type_name')->whereNull('order_details.deleted_at')
+  ->orderby('order_details.id','DESC')->get();
+
+  Log::debug(":: personal_training_product_details :: ".print_r($all_order_history,true));
+  
+
+  
+
+  return view('trainer.customer_order_history')->with(compact('all_order_history'));
+}catch(\Exception $e) { 
+    return abort(200);
+  }
+}
+
+
 }

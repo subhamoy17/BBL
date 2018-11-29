@@ -398,18 +398,18 @@ $(document).ready(function(){
 
   function valid_cal()
   {
-    // alert('ss');
+   
     if($("#submit_product").valid()){
-      // alert('11ss');
+      
        $('.btn-primary').removeAttr('disabled');
     }
   }
 
   function valid_cal2()
   {
-    // alert('ss');
+    
     if($("#submit_product").valid()){
-      // alert('11ss');
+      
        $('.btn-primary').removeAttr('disabled');
     }
   }
@@ -457,7 +457,12 @@ function paymentType()
     $('#no_session_mon').removeAttr('disabled');
     $("#total_price_div_2").hide();
       $("#anual_total_price").val('');
-     // $('.btn-primary').attr('disabled','disabled');
+      // $('#no_session_mon').rules('remove');
+      // $('#sub_price').rules('remove');
+      // $('#contract').rules('remove');
+      // $('#notice_period').rules('remove');
+      // $('#notice_period_2').rules('remove');
+     $('.btn-primary').removeAttr('disabled');
   }   
   else if($( "#payment_type" ).val()==2)
   {
@@ -473,7 +478,7 @@ function paymentType()
     $("#no_session-error").val('');
     $("#total_price_div").hide();
       $("#final_total_price").val('');
-     // $('.btn-primary').attr('disabled','disabled');
+      $('.btn-primary').removeAttr('disabled');
   }
   else{
      $("#pay_as_you_go").hide();

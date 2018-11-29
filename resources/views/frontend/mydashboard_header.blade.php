@@ -9,4 +9,5 @@
 
 <li class="{{ Request::segment(2) === 'my_mot' ? 'active' : null }}" rel="tab3"><a href="{{url('customer/my_mot')}}"><i class="fa fa-check"></i>My MOT</a></li>
 <li class="{{ Request::segment(2) === 'my-diet-plan' ? 'active' : null }}" rel="tab4"><a href="{{url('customer/my-diet-plan')}}"><i class="fa fa-check"></i>Purchase Diet Plan</a></li>
+<li class="{{ Request::segment(2) === 'my-order-history' ? 'active' : null }}" rel="tab4"><a href="{{url('customer/my-order-history')}}"><i class="fa fa-check"></i>My Order History</a></li>
                          </ul>
