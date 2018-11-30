@@ -1481,7 +1481,7 @@ catch(\Exception $e) {
  
   public function my_order_history(Request $request)
 {
-  // try{
+  try{
  $this->cart_delete_customer();
  
  $my_order_history=DB::table('order_details')->join('products','products.id','order_details.product_id')->join('training_type','training_type.id','products.training_type_id')->join('payment_type','payment_type.id','products.payment_type_id')->select('order_details.id as order_details_id','order_details.customer_id as customer_id','order_details.order_purchase_date as order_purchase_date','order_details.remaining_sessions as remaining_sessions','order_details.payment_type as payment_type','order_details.training_type as training_type','order_details.order_validity_date as order_validity_date','order_details.payment_option as payment_option','order_details.status as status','products.training_type_id as training_type_id', 'products.total_sessions as total_sessions', 'order_details.price_session_or_month as price_session_or_month','products.id as product_id','order_details.total_price as total_price','products.validity_value as validity_value','products.validity_duration as validity_duration','training_type.training_name as training_name','payment_type.payment_type_name as payment_type_name')->where('order_details.customer_id',Auth::guard('customer')->user()->id)->whereNull('order_details.deleted_at');
@@ -1498,12 +1498,12 @@ catch(\Exception $e) {
 
      Log::debug(" data my_order_history ".print_r($my_order_history,true));
   return view('customerpanel.order_history')->with(compact('my_order_history'));
-// }
+}
 
-// catch(\Exception $e) {
+catch(\Exception $e) {
 
-//       return abort(400);
-//   }
+      return abort(400);
+  }
 
   }
 
