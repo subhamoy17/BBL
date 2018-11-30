@@ -369,8 +369,6 @@ Route::get('profile','FrontController@customer_profile')->name('profile');
 Route::get('editprofile', 'FrontController@customer_showupdateform')->name('customer.editprofile');
 Route::POST('updateprofile','FrontController@updateprofile')->name('customer.profileupdate');
 
-
-
 Route::get('purchase_history','FrontController@purchases_history')->name('customer_purchases_history');
 
 Route::get('my-diet-plan','FrontController@common_diet_plan_history')->name('customer_diet_plan');
