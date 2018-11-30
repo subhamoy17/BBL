@@ -17,6 +17,7 @@
 			<div class="blog-txt">
 				<h3><a href="#" data-toggle="modal" data-target="#myModal1">BOOTCAMP TRAINING</a></h3>
 				<!-- <h4>December 15,2017</h4> -->
+				<p><strong>BBL Bootcamp was created to provide you with two important things:</strong></p>
 				<p>“Maximum Possible Weight Loss In The Shortest Space Of Time and
 A Place For You To Unplug From The World & Completely Reset”.
 Weight loss and body image are tied into just about every other facet of our lives. It affects our confidence, our choices, our relationships and ultimately our happiness.
