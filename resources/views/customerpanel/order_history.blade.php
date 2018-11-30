@@ -8,7 +8,7 @@
 
     <div class="table-responsive table-bordered">
         <!-- <a href="{{url('customer/booking_slot')}}" class="btn btn-success bk-slt-btn">Book PT Session</a> -->
-     <h3 align="center">My Order History</h3>
+     <h3 align="center">Purchased History</h3>
     <div class="tbl-srch tbl-srch2">
        <form id="frm_purchase_search">
         
@@ -25,15 +25,15 @@
       <table class="table">
         <thead>
           <tr>
-            <th>Product Name</th>
-            <th>Product Price</th>
+            <th>Plan Type</th>
+            <th>Plan Price</th>
             
-            <th>Purchased On</th>
+            <!-- <th>Purchased On</th> -->
             <th>Validity Date</th>
             <th>No of Session</th>
             <th>Remaining Session</th>
             <th>Payment Mode</th>
-            <th>Payment Type</th>
+            <th>Plan Scheme</th>
             <th>Status</th>
             <!-- <th>Payment Mode</th> -->
            
@@ -46,16 +46,24 @@
           @foreach($my_order_history as $key=>$myorder)
           <tr>
             <!--  -->
-            <td>{{$myorder->training_name}}</td>
+            <td>{{$myorder->training_type}}</td>
             <td> <i class="fa fa-gbp"></i> {{$myorder->total_price}}</td>
            
-          <td>{{date('d F Y', strtotime($myorder->order_purchase_date))}}</td>
+          <!-- <td>{{date('d F Y', strtotime($myorder->order_purchase_date))}}</td> -->
           <td>{{date('d F Y', strtotime($myorder->order_validity_date))}}</td>
           <td>{{$myorder->total_sessions}}</td>
-          <td>0</td>
+          @if($myorder->total_sessions=="Unlimited")
+          <td>--</td>
+          @else
+          <td>{{$myorder->remaining_sessions}}</td>
+          @endif
           <td>{{$myorder->payment_option}}</td>
-          <td>{{$myorder->payment_type_name}}</td>
-          <td>{{$myorder->status? 'Active' : 'Inactive'}}</td>
+          <td>{{$myorder->payment_type}}</td>
+          @if(\Carbon\Carbon::now()->toDateString() < $myorder->order_validity_date)
+          <td>Active</td>
+          @else
+          <td>Inactive</td>
+          @endif
            
            
            
@@ -65,7 +73,7 @@
             @endforeach
           @else
            <tr><td colspan='9' align='center'>
-                No order history available
+                No purchased history available
               </td>
               </tr>
 

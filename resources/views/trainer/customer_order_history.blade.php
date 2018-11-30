@@ -66,8 +66,8 @@ $('#bootstrap-slot-data-table').DataTable({
                                 <tr>
                                     <th id="slno">Sl. No.</th>
                                     <th>Customer Name</th>
-                                    <th>Product Name</th>
-                                    <th>Product Price</th>
+                                     <th>Plan Type</th>
+                                      <th>Plan Price</th>
                                     
                                     <th>No of Session</th>
                                     <th>Remaining Session</th>
@@ -83,16 +83,23 @@ $('#bootstrap-slot-data-table').DataTable({
                                 <tr>
                                     <td>{{++$key}}</td>
                                    <td>{{$order_history->customer_name}}</td>
-                                   <td>{{$order_history->training_name}}</td>
+                                   <td>{{$order_history->training_type}}</td>
                                    
                                   <td> <i class="fa fa-gbp"></i> {{$order_history->total_price}}</td>
                                   
                                    <td>{{$order_history->total_sessions}}</td>
-                                   <td>0</td>
+                                   @if($order_history->total_sessions=="Unlimited")
+                                    <td>--</td>
+                                    @else
+                                    <td>{{$order_history->remaining_sessions}}</td>
+                                    @endif
                                    
-                                   <td><a class="detail-orders-modal-btn1" id="{{$order_history->order_details_id}}" href="#"   data-payment-option="{{$order_history->payment_option}}" data-payment-type-name="{{$order_history->payment_type_name}}" data-purchased-on="{{date('d F Y', strtotime($order_history->order_purchase_date))}}" data-validity-date="{{date('d F Y', strtotime($order_history->order_validity_date))}}">Click here</a></td>
-                                   <td>{{$order_history->status? 'Active' : 'Inactive'}}</td>
-
+                                   <td><a class="detail-orders-modal-btn1" id="{{$order_history->order_details_id}}" href="#"   data-payment-option="{{$order_history->payment_option}}" data-payment-type-name="{{$order_history->payment_type}}" data-purchased-on="{{date('d F Y', strtotime($order_history->order_purchase_date))}}" data-validity-date="{{date('d F Y', strtotime($order_history->order_validity_date))}}">Click here</a></td>
+                                   @if(\Carbon\Carbon::now()->toDateString() < $order_history->order_validity_date)
+                                    <td>Active</td>
+                                    @else
+                                    <td>Inactive</td>
+                                    @endif
 
                                 </tr>
                             @endforeach
@@ -125,7 +132,7 @@ $('#bootstrap-slot-data-table').DataTable({
         
            
                           <div class="col-lg-4 col-xs-12">
-                                <label>Payment Option</label>
+                                <label>Payment Mode</label>
                                 <div class="dispClass">
                                     <p class="detail-txt2"> <span id="payment_option"></span>      
                                     </p>                                
@@ -134,7 +141,7 @@ $('#bootstrap-slot-data-table').DataTable({
                             
                              
                             <div class="col-lg-4 col-xs-12">
-                                <label>Payment Type Name</label>
+                                <label>Plan Scheme</label>
                                 <div class="dispClass">
                                     <p class="detail-txt2"> <span id="payment_type_name"></span>      
                                     </p>                                
