@@ -71,7 +71,7 @@
 @if(Request::segment(1) == 'gym-training')
 <title>Best Fitness Gym Clubs at Basingstoke | Body By Lekan</title>
 
-  <meta name="description" content="Body By Lekan provide the best fitness training techniques which includes personal training, Strength training, group exercises, boot camp training & much more.">
+  <meta name="description" content="Body By Lekan provide the best fitness training techniques includes personal training, Strength training, group exercises, bootcamp training & much more.">
 
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://www.bodybylekan.com/gym-training">

@@ -47,9 +47,9 @@
 
 					<ul class="social_agileinfo">
 						<li><a href="https://www.facebook.com/bodybylekan" target="_blank" class="gy_facebook"><i class="fa fa-facebook-f"></i></a></li>
-						<!-- <li><a href="https://www.twitter.com" target="_blank" class="gy_twitter"><i class="fa fa-twitter"></i></a></li> -->
+						<li><a href="https://twitter.com/bodybylekan" target="_blank" class="gy_twitter"><i class="fa fa-twitter"></i></a></li>
 						<li><a href="https://www.instagram.com/lekanfitness" target="_blank" class="gy_instagram"><i class="fa fa-instagram"></i></a></li>
-						<!-- <li><a href="https://plus.google.com" target="_blank" class="gy_google"><i class="fa fa-google-plus"></i></a></li> -->
+						<li><a href="https://www.youtube.com/channel/UCvFStHTPHjHY-_7BXA17Fug" target="_blank" class="gy_google"><i class="fa fa-youtube"></i></a></li>
 					</ul>
 				</div>
 

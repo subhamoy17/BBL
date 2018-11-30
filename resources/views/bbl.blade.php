@@ -65,7 +65,7 @@
 							</div>
 							<div class="col-md-8 in-block">
 								<h5>GYM TRAINING </h5>
-								<p>Train your body at our state of art gym under the guidance of experienced instructors.</p>
+								<p>Get the best fitness training techniques which includes personal training, Strength training, group exercises & much more.</p>
 							</div>
 							<div class="clearfix"> </div>
 						</li>
@@ -84,8 +84,8 @@
 								<img src="{{asset('frontend/images/2.jpg')}}" alt="" class="img-responsive" />
 							</div>
 							<div class="col-md-8 in-block">
-								<h5>HEALTH PACKAGES</h5>
-								<p>We offer customized health packages to help keep your body fit within your budget.</p>
+								<h5>BOOTCAMP TRAINING</h5>
+								<p>Get a complete high intensity bootcamp training sessions with us & burn excess calories by full-body workout.</p>
 							</div>
 							<div class="clearfix"> </div>
 						</li>

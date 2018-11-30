@@ -2,12 +2,15 @@
 <html lang="zxx">
 
 <head>
-    <title>Gym Trainer a Sports Category Bootstrap Responsive Website Template | Home :: gylayouts</title>
+    <title>Reset your password | Body By Lekan</title>
+  <meta name="description" content="Reset Your Password. Please enter email address to get started with Body By Lekan. Password reset instructions will be sent to the registered email address.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.bodybylekan.com/customer-password/reset">
     <!-- custom-theme -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <!-- //custom-theme -->
-            <title>{{ config('app.customerpaneltitle') }}</title>
+           
             
             <meta name="csrf-token" content="{{ csrf_token() }}">
 
