@@ -3,7 +3,7 @@
 
 <head>
     <title>Reset your password | Body By Lekan</title>
-  <meta name="description" content="Reset Your Password. Please enter the email address to get started with Body By Lekan. Password reset instructions will be sent to the registered email address.">
+  <meta name="description" content="Reset Your Password. Please enter email address to get started with Body By Lekan. Password reset instructions will be sent to the registered email address.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://www.bodybylekan.com/customer-password/reset">
     <!-- custom-theme -->
