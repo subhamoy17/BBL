@@ -11,8 +11,6 @@
 |
 */
 
-
-
 Route::get('/', 'FrontSimpleController@index')->name('bbldb');
 
 Route::get('/alertifydemo', function () {
@@ -166,7 +164,6 @@ Route::post('checkdiscount_price_edit','TrainerController@checkdiscount_price_ed
 
 Route::get('diet-plan-purchases-history','TrainerController@diet_plan_purchases')->name('diet_plan_purchases');
 
-Route::get('order-history','TrainerController@order_history')->name('order_history');
 
 //show our client//
 Route::get('our_trainer_list','TrainerController@our_client_show')->name('our_trainer_list');
@@ -222,7 +219,7 @@ Route::get('bootcamp-plan', 'TrainerController@bootcamp_plan_list')->name('bootc
 Route::get('edit-bootcamp-plan/{id}', 'TrainerController@bootcamp_plan_edit_view')->name('bootcamp_plan_edit');
 Route::post('bootcamp_plan_edit_insert', 'TrainerController@bootcamp_plan_edit_insert')->name('bootcamp_plan_edit_insert');
 
-Route::get('bootcamp_plan_delete/{id}', 'TrainerController@bootcamp_plan_delete')->name('bootcamp_plan_delete');
+Route::get('bootcamp_plan_delete/{id}', 'TrainerController@bootcamp_plan_delete');
 ////// For common diet plan list//////
 
 Route::get('common-diet-plan', 'TrainerController@common_diet_plan')->name('common_diet_plan');
@@ -372,7 +369,6 @@ Route::POST('updateprofile','FrontController@updateprofile')->name('customer.pro
 Route::get('purchase_history','FrontController@purchases_history')->name('customer_purchases_history');
 
 Route::get('my-diet-plan','FrontController@common_diet_plan_history')->name('customer_diet_plan');
-Route::get('my-order-history','FrontController@my_order_history')->name('my_order_history');
 
 Route::get('booking_slot','FrontController@booking_slot')->name('booking_slot');
 Route::get('get_slot_time','FrontController@get_slot_time')->name('get_slot_time');
@@ -406,6 +402,9 @@ Route::get('cart_data_delete','FrontController@cart_data_delete')->name('cart_da
 
 
 Route::get('booking-bootcamp','FrontController@booking_bootcamp');
+Route::get('get_bootcamp_date_time','FrontController@get_bootcamp_date_time')->name('get_bootcamp_date_time');
+
+
 
 
 Route::post('diet-plan-purchase','FrontController@common_diet_plan_purchase');
