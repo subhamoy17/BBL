@@ -370,6 +370,8 @@ Route::get('purchase_history','FrontController@purchases_history')->name('custom
 
 Route::get('my-diet-plan','FrontController@common_diet_plan_history')->name('customer_diet_plan');
 
+Route::get('my-order-history','FrontController@my_order_history')->name('my_order_history');
+
 Route::get('booking_slot','FrontController@booking_slot')->name('booking_slot');
 Route::get('get_slot_time','FrontController@get_slot_time')->name('get_slot_time');
 Route::get('get_current_slot_time','FrontController@get_current_slot_time')->name('get_current_slot_time');
