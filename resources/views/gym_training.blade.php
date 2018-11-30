@@ -26,7 +26,7 @@
 			</div>
 			<div class="col-lg-6 col-sm-6 col-xs-12">
 				<div class="blog-txt">
-					<h3><a href="#" data-toggle="modal" data-target="#myModal1">Boot Camp</a></h3>
+					<h3><a href="#" data-toggle="modal" data-target="#myModal1">Bootcamp</a></h3>
 					<!--<h4>December 25,2017</h4>-->
 					<p>Stand with your legs slightly bent, your arms bent, and your hands out to your sides. Begin jumping, leaving only a few inches between your feet and the floor as you hop. At the same time, rotate your shoulders and arms as if you are jumping rope without the rope. Continue for 1 minute and 30 seconds, then move directly to Squats. </p>
 					
