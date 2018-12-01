@@ -10,8 +10,8 @@
             <div class="table-responsive table-bordered">
            <a href="{{url('customer/booking-bootcamp')}}" class="btn btn-success bk-slt-btn" style="position: absolute;
     top: -34px;
-    right: 138px;">Book Boot Camp Session</a>   
-        <a href="{{url('customer/booking_slot')}}" class="btn btn-success bk-slt-btn">Book PT Session</a>
+    right: 4px;">Book Bootcamp Session</a>   
+        <!-- <a href="{{url('customer/booking_slot')}}" class="btn btn-success bk-slt-btn">Book PT Session</a> -->
 
         
         
