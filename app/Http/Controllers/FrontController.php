@@ -216,7 +216,6 @@ public function frontprice(Request $request)
   }
 
     catch(\Exception $e) {
-
       return abort(400);
   }
 }
