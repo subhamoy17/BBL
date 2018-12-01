@@ -94,7 +94,7 @@ $('#bootstrap-slot-data-table').DataTable({
                                     <td>{{$order_history->remaining_sessions}}</td>
                                     @endif
                                    
-                                   <td><a class="detail-orders-modal-btn1" id="{{$order_history->order_details_id}}" href="#"   data-payment-option="{{$order_history->payment_option}}" data-payment-type-name="{{$order_history->payment_type}}" data-purchased-on="{{date('d F Y', strtotime($order_history->order_purchase_date))}}" data-validity-date="{{date('d F Y', strtotime($order_history->order_validity_date))}}">Click here</a></td>
+                                   <td><a class="detail-orders-modal-btn1" id="{{$order_history->order_details_id}}" href="#"   data-payment-option="{{$order_history->payment_option}}" data-payment-type-name="{{$order_history->payment_type}}" data-purchased-on="{{date('d F Y', strtotime($order_history->order_purchase_date))}}" data-validity-date="{{$order_history->order_validity_date? date('d F Y', strtotime($order_history->order_validity_date)) : 'N/A'}}">Click here</a></td>
                                    @if(\Carbon\Carbon::now()->toDateString() < $order_history->order_validity_date)
                                     <td>Active</td>
                                     @else

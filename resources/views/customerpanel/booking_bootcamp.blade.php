@@ -95,8 +95,8 @@
               <li class="{{ Request::is('/') ? 'active' : null }}">
                 <a href="{{route('bbldb')}}">Home</a>
               </li>
-              <li class="{{ Request::segment(2) === 'about-us' ? 'active' : null }}">
-                <a href="{{url('customer/about-us')}}">About Us</a>
+              <li class="{{ Request::segment(1) === 'about-us' ? 'active' : null }}">
+                <a href="{{url('about-us')}}">About Us</a>
               </li>
               <li class="{{ Request::segment(2) === 'pricing' ? 'active' : null }}">
                 <a href="{{url('customer/pricing')}}">Pricing</a>
