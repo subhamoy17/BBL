@@ -61,6 +61,8 @@
           <td>{{$myorder->payment_type}}</td>
           @if(\Carbon\Carbon::now()->toDateString() < $myorder->order_validity_date)
           <td>Active</td>
+          @elseif($myorder->payment_type=='Subscription')
+           <td>Active</td>
           @else
           <td>Inactive</td>
           @endif

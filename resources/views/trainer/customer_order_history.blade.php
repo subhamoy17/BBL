@@ -94,8 +94,10 @@ $('#bootstrap-slot-data-table').DataTable({
                                     <td>{{$order_history->remaining_sessions}}</td>
                                     @endif
                                    
-                                   <td><a class="detail-orders-modal-btn1" id="{{$order_history->order_details_id}}" href="#"   data-payment-option="{{$order_history->payment_option}}" data-payment-type-name="{{$order_history->payment_type}}" data-purchased-on="{{date('d F Y', strtotime($order_history->order_purchase_date))}}" data-validity-date="{{$order_history->order_validity_date? date('d F Y', strtotime($order_history->order_validity_date)) : 'N/A'}}">Click here</a></td>
+                                   <td><a class="detail-orders-modal-btn1" id="{{$order_history->order_details_id}}" href="#"   data-payment-option="{{$order_history->payment_option}}"  data-plan-price="{{$order_history->total_price}}" data-payment-type-name="{{$order_history->payment_type}}" data-purchased-on="{{date('d F Y', strtotime($order_history->order_purchase_date))}}" data-validity-date="{{$order_history->order_validity_date? date('d F Y', strtotime($order_history->order_validity_date)) : 'N/A'}}" data-payment-id="{{$order_history->payment_id}}" data-payment-description="{{$order_history->description? $order_history->description : 'N/A'}}" data-payment-image="{{asset('backend/bankpay_images')}}/{{$order_history->image}}">Click here</a></td>
                                    @if(\Carbon\Carbon::now()->toDateString() < $order_history->order_validity_date)
+                                    <td>Active</td>
+                                    @elseif($order_history->payment_type=='Subscription')
                                     <td>Active</td>
                                     @else
                                     <td>Inactive</td>
@@ -167,9 +169,51 @@ $('#bootstrap-slot-data-table').DataTable({
                                     </p>                             
                                 </div>
                             </div> 
-                        
+                        <div class="col-lg-4 col-xs-12">
+                                <label>Payment Id</label>
+                                <div class="dispClass">
+                                    <p class="detail-txt2"> 
+                                         <span id="payment_id"></span>
+                                                                            
+                                         
+                                    </p>                             
+                                </div>
+                            </div> 
+                            <div class="col-lg-4 col-xs-12">
+                                <label>Plan Price</label>
+                                <div class="dispClass">
+                                    <p class="detail-txt2"> 
+                                     <i class="fa fa-gbp"></i>     <span id="plan_price"></span>
+                                                                            
+                                         
+                                    </p>                             
+                                </div>
+                            </div> 
+                            <div></div>
+                            <div id="payment" style="display: none;">
+                            <div id= "pay_des" class="col-lg-4 col-xs-12" style="display: none;">
+                                <label>Payment Description</label>
+                                <div class="dispClass">
+                                    <p class="detail-txt2"> 
+                                         <span id="description"></span>
+                                                                            
+                                         
+                                    </p>                             
+                                </div>
+                            </div> 
                            
 
+                           <div class="col-lg-4 col-xs-12" id="pay_img" style="display: none;">
+                                <label>Payment Image</label>
+                                <div class="dispClass">
+                                    <p class="detail-txt2"> 
+                                         <!-- <span id="description"></span> -->
+                                          <img class="col-lg-8 modal_image" width="100">                                  
+                                         
+                                    </p>                             
+                                </div>
+                            </div> 
+                          </div>
                             
                           
                             
@@ -217,15 +261,47 @@ $('#bootstrap-slot-data-table').DataTable({
     var payment_type_name = $(this).data("payment-type-name");
    var purchased_on= $(this).data("purchased-on");
     var validity_date= $(this).data("validity-date");
-    
-    
+    var payment_id= $(this).data("payment-id");
+     var plan_price= $(this).data("plan-price");
+    var description= $(this).data("payment-description");
+    var payment_image= $(this).data("payment-image");
     $('#payment_option').text(payment_option);
     $('#payment_type_name').text(payment_type_name);
     
      
     $('#purchased_on').text(purchased_on);
     $('#validity_date').text(validity_date);
-    // 
+    $('#payment_id').text(payment_id);
+    $('#plan_price').text(plan_price);
+    
+    if($(this).data('payment-image')!=''){
+            $('#pay_img').show();
+            $('img.modal_image').attr('src',payment_image); 
+          }
+
+          else{
+            $('#pay_img').hide();
+          }
+
+          if($(this).data('payment-description')!=''){
+            $('#pay_des').show();
+            $('#description').text(description);
+          }
+
+          else{
+            $('#pay_des').hide();
+          }
+
+          if($(this).data('payment-option')=='Bank Transfer'){
+            $('#payment').show();
+            
+          }
+
+          else{
+            $('#payment').hide();
+          }
+
+
     $('#reason_modal').modal('show');
     });
   
