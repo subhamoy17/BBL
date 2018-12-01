@@ -28,7 +28,7 @@
             <th>Plan Type</th>
             <th>Plan Price</th>
             
-            <!-- <th>Purchased On</th> -->
+            <th>Purchased On</th>
             <th>Validity Date</th>
             <th>No of Session</th>
             <th>Remaining Session</th>
@@ -49,7 +49,7 @@
             <td>{{$myorder->training_type}}</td>
             <td> <i class="fa fa-gbp"></i> {{$myorder->total_price}}</td>
            
-          <!-- <td>{{date('d F Y', strtotime($myorder->order_purchase_date))}}</td> -->
+          <td>{{date('d F Y', strtotime($myorder->order_purchase_date))}}</td>
           <td>{{date('d F Y', strtotime($myorder->order_validity_date))}}</td>
           <td>{{$myorder->total_sessions}}</td>
           @if($myorder->total_sessions=="Unlimited")

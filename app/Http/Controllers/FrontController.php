@@ -1492,7 +1492,7 @@ catch(\Exception $e) {
     $now = Carbon::now()->toDateString();
     $start_date=$request->start_date;
     $end_date=$request->end_date;   
-    $my_order_history->whereBetween('order_details.order_validity_date', [$start_date, $end_date]);
+    $my_order_history->whereBetween('order_details.order_purchase_date', [$start_date, $end_date]);
    }
   $my_order_history=$my_order_history->paginate(10);
 

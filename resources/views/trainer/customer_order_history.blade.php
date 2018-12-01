@@ -46,7 +46,7 @@ $('#bootstrap-slot-data-table').DataTable({
     <div class="col-sm-8">
         <div class="page-header float-left">
             <div class="page-title">
-                <h1>Customer Order History</h1>
+                <h1>Customer Purchased History</h1>
             </div>
         </div>
     </div>
@@ -71,7 +71,7 @@ $('#bootstrap-slot-data-table').DataTable({
                                     
                                     <th>No of Session</th>
                                     <th>Remaining Session</th>
-                                    <th>Order Details</th>
+                                    <th>Purchased Details</th>
                                     <th>Status</th>
                                     
                                       
@@ -121,7 +121,7 @@ $('#bootstrap-slot-data-table').DataTable({
       <div class="modal-body" id="hall_details_edit">
         <div class="row clearfix">
           <div class="col-sm-12 col-xs-12">
-            <h3 class="pull-left customer-mot">Order Details</h3>
+            <h3 class="pull-left customer-mot">Purchased Details</h3>
             <br class="clear" />
         </div>
         

@@ -246,7 +246,7 @@ Route::get('edit-product/{slug}', 'TrainerController@edit_product')->name('edit_
 Route::post('update-product', 'TrainerController@update_product')->name('update_product');
 Route::get('all-products', 'TrainerController@view_product')->name('view_product');
 Route::get('product-delete/{id}', 'TrainerController@product_delete');
-Route::get('order-history', 'TrainerController@order_history')->name('order_history');
+Route::get('purchased-history', 'TrainerController@order_history')->name('order_history');
 
 
 
