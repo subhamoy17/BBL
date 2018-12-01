@@ -123,13 +123,10 @@ else
 */
 public function showprofile()
 {
-  // Log::debug(":: Show Profile :: ".print_r($id,true));
   try{
   $this->cart_delete_trainer();
   $data=DB::table('users')->where('id',Auth::user()->id)->first();
-  Log::debug(":: Trainer data :: ".print_r($data,true));
   return view('trainer.trainerprofile')->with(compact('data'));
-
   }
   catch(\Exception $e) {
       return abort(200);
@@ -142,11 +139,7 @@ public function showupdateform()
   try{
   $this->cart_delete_trainer();
   $data= DB::table('users')->where('id',Auth::user()->id)->first();
-  //Log::debug(" data ".print_r($data,true));
-
   return view ("trainer.editform")->with(compact('data'));
-
-
   }
   catch(\Exception $e) {
       return abort(200);
@@ -2969,68 +2962,52 @@ $final_slot_time=DB::table('slot_times')->whereNotIn('id',$get_slot_times)
 
 
 public function bootcamp_plan()
-{
-
-  $address=DB::table('bootcamp_plan_address')->get();  
-  $all_bootcamp_plan=DB::table('bootcamp_plans')->get();
-
-  $form_location=DB::table('bootcamp_plan_address')->select('address_id','address_line1')->whereNotNull('address_line1')->whereNull('address_line2')->get(); 
-
-  $form_address=DB::table('bootcamp_plan_address')->select('address_id','address_line2')->whereNotNull('address_line2')->whereNull('address_line1')->get();
-
-  return view('trainer.add_bootcamp_plan')->with(compact('address','all_bootcamp_plan','form_location','form_address'));
+{ 
+  $form_address=DB::table('bootcamp_plan_address')->select('id','address_line1')->get();
+  return view('trainer.add_bootcamp_plan')->with(compact('form_address'));
 }
 
 
 
 public function insert_bootcamp_plan(Request $request)
 {
+ //Log::debug(" insert_bootcamp_plan data ".print_r($request->all(),true));
   DB::beginTransaction();
-  try{
-  
-  //Log::debug(" insert_bootcamp_plan data ".print_r($request->all(),true));
+   try{
+  $mon_flg=$tue_flg=$wed_flg=$thu_flg=$fri_flg=$sat_flg=$sun_flg=7;
 
-  if($request->location!='')
+  // set flg for check day of week
+  if($request->has('mon_session_flg')){ $bootcamp_data['mon_session_flg']=1; $mon_flg=1;}
+  if($request->has('tue_session_flg')){ $bootcamp_data['tue_session_flg']=1; $tue_flg=2;}
+  if($request->has('wed_session_flg')){ $bootcamp_data['wed_session_flg']=1; $wed_flg=3;}
+  if($request->has('thu_session_flg')){ $bootcamp_data['thu_session_flg']=1; $thu_flg=4;}
+  if($request->has('fri_session_flg')){ $bootcamp_data['fri_session_flg']=1; $fri_flg=5;}
+  if($request->has('sat_session_flg')){ $bootcamp_data['sat_session_flg']=1; $sat_flg=6;}
+  if($request->has('sun_session_flg')){ $bootcamp_data['sun_session_flg']=1; $sun_flg=0;}
+
+  if($request->address!='')
   {
-  $location_address_data['address_line1']=$request->location;
-  $bootcamp_address=DB::table('bootcamp_plan_address')->insert($location_address_data);
-  $address_id=DB::getPdo()->lastInsertId();
-  }
-  elseif($request->address!='')
-  {
-    $location_address_data['address_line2']=$request->address;
+    $location_address_data['address_line1']=$request->address;
+    $location_address_data['street_number']=$request->street_number;
+    $location_address_data['route']=$request->route;
+    $location_address_data['city']=$request->city;
+    $location_address_data['state']=$request->state;
+    $location_address_data['postal_code']=$request->postal_code;
+    $location_address_data['country']=$request->country;
+    $location_address_data['lat']=$request->lat;
+    $location_address_data['lng']=$request->lng;
     $bootcamp_address=DB::table('bootcamp_plan_address')->insert($location_address_data);
     $address_id=DB::getPdo()->lastInsertId();
-  }
-  elseif($request->location_select!='')
-  {
-    $address_id=$request->location_select;
   }
   elseif($request->address_select!='')
   {
     $address_id=$request->address_select;
   }
 
-  
-  if($request->mon_session_flg!='')
-  $bootcamp_data['mon_session_flg']=1;
-  if($request->tue_session_flg!='')
-  $bootcamp_data['tue_session_flg']=1;
-  if($request->wed_session_flg!='')
-  $bootcamp_data['wed_session_flg']=1;
-  if($request->thu_session_flg!='')
-  $bootcamp_data['thu_session_flg']=1;
-  if($request->fri_session_flg!='')
-  $bootcamp_data['fri_session_flg']=1;
-  if($request->sat_session_flg!='')
-  $bootcamp_data['sat_session_flg']=1;
-  if($request->sun_session_flg!='') 
-  $bootcamp_data['sun_session_flg']=1;
-
   $bootcamp_data['session_st_time']=date("H:i:s", strtotime($request->session_st_time));
   $bootcamp_data['session_end_time']=date("H:i:s", strtotime($request->session_end_time));
   $bootcamp_data['plan_st_date']=$request->plan_st_date;
-  if($request->never_expire!='')
+  if($request->has('never_expire'))
   {
     $bootcamp_data['plan_end_date']='2099-12-30';
     $bootcamp_data['never_expire']=1;
@@ -3045,14 +3022,91 @@ public function insert_bootcamp_plan(Request $request)
   $bootcamp_data['status']=1;
 
   $bootcamp_details=DB::table('bootcamp_plans')->insert($bootcamp_data);
-  DB::commit();
+  $bootcamp_id=DB::getPdo()->lastInsertId();
 
-  return redirect('trainer/bootcamp-plan')->with("success","You have successfully added one boot camp plan!");
-}
-  catch(\Exception $e) {
-    DB::rollback();
-    return abort(200);
+  //calculate difference between start date and end date
+  $datetime = new \DateTime($bootcamp_data['plan_end_date']);
+  $datetimest = new \DateTime($bootcamp_data['plan_st_date']);
+  $enddate=$datetime->modify('+1 day')->format('Y-m-d');
+
+  $period = new \DatePeriod(
+     new \DateTime($request->plan_st_date),
+     new \DateInterval('P1D'),
+     new \DateTime($enddate)
+    );
+ 
+  // all day and date calculating
+  $all_session_date=$all_session_day=[];
+  foreach ($period as $key=>$value) 
+  {
+    if($key<=60)
+    {
+      $dateofweek = $value->format('Y-m-d');
+      $dayofweek = date('w', strtotime($value->format('Y-m-d')));
+
+      if($mon_flg==$dayofweek)
+      {
+        $all_session_date[]=$dateofweek;
+        $all_session_day[]='Monday';        
+      }
+      elseif($tue_flg==$dayofweek)
+      {
+        $all_session_date[]=$dateofweek;
+        $all_session_day[]='Tuesday'; 
+      }
+      elseif($wed_flg==$dayofweek)
+      {
+        $all_session_date[]=$dateofweek;
+        $all_session_day[]='Wednesday';
+      }
+      elseif($thu_flg==$dayofweek)
+      {
+        $all_session_date[]=$dateofweek;
+        $all_session_day[]='Thursday';
+      }
+      elseif($fri_flg==$dayofweek)
+      {
+        $all_session_date[]=$dateofweek;
+        $all_session_day[]='Friday';
+      }
+      elseif($sat_flg==$dayofweek)
+      {
+        $all_session_date[]=$dateofweek;
+        $all_session_day[]='Saturday';
+      }
+      elseif($sun_flg==$dayofweek)
+      {
+        $all_session_date[]=$dateofweek;
+        $all_session_day[]='Sunday';
+      }
+      
+    }
   }
+
+  //Log::debug(" insert_bootcamp_plan day ".print_r($all_session_day,true));
+  //Log::debug(" insert_bootcamp_plan date ".print_r($all_session_date,true));
+
+  for($i=0;$i<count($all_session_date);$i++)
+  {
+    $schedule_data['bootcamp_plan_id']=$bootcamp_id;
+    $schedule_data['plan_date']=$all_session_date[$i];
+    $schedule_data['plan_day']=$all_session_day[$i];
+    $schedule_data['plan_st_time']=date("H:i:s", strtotime($request->session_st_time));
+    $schedule_data['plan_end_time']=date("H:i:s", strtotime($request->session_end_time));
+    $schedule_data['address_id']=$address_id;
+    $schedule_data['max_allowed']=$request->max_allowed;
+    $schedule_data['no_of_uses']=0;
+    $schedule_data['status']=1;
+    $schedule_inser=DB::table('bootcamp_plan_shedules')->insert($schedule_data);
+  }
+
+  DB::commit();
+  return redirect('trainer/bootcamp-plan')->with("success","You have successfully added a bootcamp plan.");
+   }
+   catch(\Exception $e) {
+     DB::rollback();
+       return abort(200);
+   }
   
 }
 
@@ -3061,19 +3115,326 @@ public function bootcamp_plan_list()
   try{
   $this->cart_delete_trainer();
   $bootcamp_details=DB::table('bootcamp_plans')
-  ->join('bootcamp_plan_address','bootcamp_plan_address.address_id','bootcamp_plans.address_id')
-  ->select('bootcamp_plans.bootcamp_plan_id as bootcamp_id','bootcamp_plans.mon_session_flg as monday','bootcamp_plans.tue_session_flg as tuesday','bootcamp_plans.wed_session_flg as wednesday','bootcamp_plans.thu_session_flg as thursday','bootcamp_plans.fri_session_flg as friday','bootcamp_plans.sat_session_flg as saturday','bootcamp_plans.sun_session_flg as sunday','bootcamp_plans.session_st_time as session_st_time','bootcamp_plans.session_end_time as session_end_time','bootcamp_plans.plan_st_date as plan_st_date','bootcamp_plans.plan_end_date as plan_end_date','bootcamp_plans.never_expire as never_expire','bootcamp_plans.max_allowed as max_allowed','bootcamp_plans.status as status','bootcamp_plan_address.address_line1 as location','bootcamp_plan_address.address_line2 as address')->orderby('bootcamp_plans.bootcamp_plan_id','DESC')->whereNull('bootcamp_plans.deleted_at')->get();
+  ->join('bootcamp_plan_address','bootcamp_plan_address.id','bootcamp_plans.address_id')
+  ->select('bootcamp_plans.id as bootcamp_id','bootcamp_plans.mon_session_flg as monday','bootcamp_plans.tue_session_flg as tuesday','bootcamp_plans.wed_session_flg as wednesday','bootcamp_plans.thu_session_flg as thursday','bootcamp_plans.fri_session_flg as friday','bootcamp_plans.sat_session_flg as saturday','bootcamp_plans.sun_session_flg as sunday','bootcamp_plans.session_st_time as session_st_time','bootcamp_plans.session_end_time as session_end_time','bootcamp_plans.plan_st_date as plan_st_date','bootcamp_plans.plan_end_date as plan_end_date','bootcamp_plans.never_expire as never_expire','bootcamp_plans.max_allowed as max_allowed','bootcamp_plans.status as status','bootcamp_plan_address.address_line1 as address')
+  ->orderby('bootcamp_plans.id','DESC')->whereNull('bootcamp_plans.deleted_at')->get();
 
     return view('trainer.bootcamp_plan_list')->with(compact('bootcamp_details'));
   }
   catch(\Exception $e) {
     return abort(200);
   }
-  
 }
 
 
+public function bootcamp_plan_edit_view($id)
+{
+  try{
+    $this->cart_delete_trainer();
+    $plan_id=\Crypt::decrypt($id);
+    $form_address=DB::table('bootcamp_plan_address')->select('id','address_line1')->get(); 
 
+    $edit_bootcamp= DB::table('bootcamp_plans')->join('bootcamp_plan_address','bootcamp_plan_address.id','bootcamp_plans.address_id')->select('bootcamp_plans.id as bootcamp_plan_id','bootcamp_plans.mon_session_flg as mon_session_flg','bootcamp_plans.tue_session_flg as tue_session_flg','bootcamp_plans.wed_session_flg as wed_session_flg','bootcamp_plans.thu_session_flg as thu_session_flg','bootcamp_plans.fri_session_flg as fri_session_flg','bootcamp_plans.sat_session_flg as sat_session_flg','bootcamp_plans.sun_session_flg as sun_session_flg','bootcamp_plans.session_st_time as session_st_time','bootcamp_plans.session_end_time as session_end_time','bootcamp_plans.address_id as address_id','bootcamp_plans.plan_st_date as plan_st_date','bootcamp_plans.plan_end_date as plan_end_date','bootcamp_plans.never_expire as never_expire','bootcamp_plans.max_allowed as max_allowed','bootcamp_plan_address.address_line1 as address_line1')->where('bootcamp_plans.id',$plan_id)->first();
+      //Log::debug(" edit_bootcamp ".print_r($edit_bootcamp,true));
+
+      return view("trainer.editbootcamp")->with(compact('edit_bootcamp','form_address'));
+  }
+  catch(\Exception $e) {
+    return abort(200);
+  }
+}
+  public function bootcamp_plan_edit_insert(Request $request)
+{
+  //Log::debug(" data bootcamp_plan_edit_insert ".print_r($request->all(),true));
+
+  DB::beginTransaction();
+   try{
+
+ if($request->has('never_expire'))
+  {
+    $edit_data['plan_end_date']='2099-12-30';
+    $edit_data['never_expire']=1;
+  }
+  else
+  {
+    $edit_data['plan_end_date']=$request->plan_end_date;
+  }
+      
+  if($request->address!='')
+  {
+    $location_address_data['address_line1']=$request->address;
+    $location_address_data['street_number']=$request->street_number;
+    $location_address_data['route']=$request->route;
+    $location_address_data['city']=$request->city;
+    $location_address_data['state']=$request->state;
+    $location_address_data['postal_code']=$request->postal_code;
+    $location_address_data['country']=$request->country;
+    $location_address_data['lat']=$request->lat;
+    $location_address_data['lng']=$request->lng;
+    $address_change_id=0;
+  }
+  elseif($request->address_select!='')
+  {
+    $edit_data['address_id']=$request->address_select;
+    $address_change_id=$request->address_select;
+  }
+
+  //start address change
+  $old_address_id=DB::table('bootcamp_plans')->where('id',$request->id)
+  ->pluck('address_id')
+  ->first();
+
+  if($address_change_id!=$old_address_id)
+  {
+    $today=date('Y-m-d');
+    $curenddate = new \DateTime($edit_data['plan_end_date']);
+    $curenddate=$curenddate->modify('+1 day')->format('Y-m-d');
+
+    $period = new \DatePeriod(
+       new \DateTime($today),
+       new \DateInterval('P1D'),
+       new \DateTime($curenddate)
+      );
+    $all_session_date=[];
+    foreach ($period as $key=>$value) 
+    {
+      $all_session_date[]=$value->format('Y-m-d');              
+    }
+
+    //Log::debug(" data adddress change ".print_r($all_session_date,true));
+
+    $all_booking_schedule=DB::table('bootcamp_plan_shedules')->whereIn('plan_date',$all_session_date)->where('no_of_uses','>',0)->get()->all();
+
+    if(count($all_booking_schedule)>0)
+    {
+      DB::commit();
+      return redirect()->back()->with('address_change','Some bookings are available of this address');
+    }
+    else
+    {
+    
+    $bootcamp_address=DB::table('bootcamp_plan_address')->insert($location_address_data);
+    $edit_data['address_id']=DB::getPdo()->lastInsertId();
+
+    $update_bootcamp_plan=DB::table('bootcamp_plans')->where('id',$request->id)->update($edit_data);
+
+    $update_plan_schedule=DB::table('bootcamp_plan_shedules')->where('bootcamp_plan_id',$request->id)->update(['address_id'=>$edit_data['address_id']]);
+
+    DB::commit();
+    return redirect('trainer/bootcamp-plan')->with("success","This plan address is update successfully");
+    }
+  }
+
+  //end address change
+
+
+  // start if date is decrease from the previous end date of this plan
+  
+  $previous_plan_end_date=DB::table('bootcamp_plans')->where('id',$request->id)->pluck('plan_end_date')->first();
+
+  if($previous_plan_end_date>$edit_data['plan_end_date'])
+  {
+    $prevenddate = new \DateTime($previous_plan_end_date);
+    $prevenddate=$prevenddate->modify('+1 day')->format('Y-m-d');
+
+    $curenddate = new \DateTime($request->plan_end_date);
+    $curenddate=$curenddate->modify('+1 day')->format('Y-m-d');
+
+    $period = new \DatePeriod(
+       new \DateTime($curenddate),
+       new \DateInterval('P1D'),
+       new \DateTime($prevenddate)
+      );
+
+    $all_session_date=[];
+    foreach ($period as $key=>$value) 
+    {
+      $all_session_date[]=$value->format('Y-m-d');              
+    }
+
+    $all_booking_schedule=DB::table('bootcamp_plan_shedules')->whereIn('plan_date',$all_session_date)->where('no_of_uses','>',0)->get()->all();
+
+    //Log::debug(" all_booking_schedule ".print_r($all_booking_schedule,true));
+
+    if(count($all_booking_schedule)>0)
+    {
+      DB::commit();
+      return redirect()->back()->with('enddate_decrement','Some bookings are available upto previous end date');
+    }
+    else
+    {
+      DB::table('bootcamp_plan_shedules')->whereIn('plan_date',$all_session_date)
+      ->where('bootcamp_plan_id',$request->id)->delete();
+
+      $update_bootcamp_plan=DB::table('bootcamp_plans')->where('id',$request->id)->update($edit_data);
+
+      DB::commit();
+      return redirect('trainer/bootcamp-plan')->with("success","This plan end date is update successfully");
+    }
+  }
+
+    // end
+
+    // start if date is increase from the previous end date of this plan
+
+    $mon_flg=$tue_flg=$wed_flg=$thu_flg=$fri_flg=$sat_flg=$sun_flg=7;
+
+    // set flg for check day of week
+    if($request->has('mon_session_flg')){ $mon_flg=1;}
+    if($request->has('tue_session_flg')){ $tue_flg=2;}
+    if($request->has('wed_session_flg')){ $wed_flg=3;}
+    if($request->has('thu_session_flg')){ $thu_flg=4;}
+    if($request->has('fri_session_flg')){ $fri_flg=5;}
+    if($request->has('sat_session_flg')){ $sat_flg=6;}
+    if($request->has('sun_session_flg')){ $sun_flg=0;}
+
+    if($previous_plan_end_date<$edit_data['plan_end_date'])
+  {
+    
+    //calculate difference between start date and end date
+    $datetimest = new \DateTime($request->plan_end_date);
+    $currenddate=$datetimest->modify('+1 day')->format('Y-m-d');
+
+    $period = new \DatePeriod(
+       new \DateTime($request->plan_st_date),
+       new \DateInterval('P1D'),
+       new \DateTime($currenddate)
+      );
+    $all_session_date=$all_session_day=[];
+
+    $prev_last_date=DB::table('bootcamp_plan_shedules')->where('bootcamp_plan_id',$request->id)->orderby('id','DESC')->pluck('plan_date')->first();
+
+    foreach ($period as $key=>$value) 
+    {
+      if($key<=60 && $prev_last_date<$value->format('Y-m-d'))
+      {
+        $dateofweek = $value->format('Y-m-d');
+        $dayofweek = date('w', strtotime($value->format('Y-m-d')));
+
+        if($mon_flg==$dayofweek)
+        {
+          $all_session_date[]=$dateofweek;
+          $all_session_day[]='Monday';        
+        }
+        elseif($tue_flg==$dayofweek)
+        {
+          $all_session_date[]=$dateofweek;
+          $all_session_day[]='Tuesday'; 
+        }
+        elseif($wed_flg==$dayofweek)
+        {
+          $all_session_date[]=$dateofweek;
+          $all_session_day[]='Wednesday';
+        }
+        elseif($thu_flg==$dayofweek)
+        {
+          $all_session_date[]=$dateofweek;
+          $all_session_day[]='Thursday';
+        }
+        elseif($fri_flg==$dayofweek)
+        {
+          $all_session_date[]=$dateofweek;
+          $all_session_day[]='Friday';
+        }
+        elseif($sat_flg==$dayofweek)
+        {
+          $all_session_date[]=$dateofweek;
+          $all_session_day[]='Saturday';
+        }
+        elseif($sun_flg==$dayofweek)
+        {
+          $all_session_date[]=$dateofweek;
+          $all_session_day[]='Sunday';
+        } 
+      }
+    }
+
+      //Log::debug(" insert_bootcamp_plan day ".print_r($all_session_day,true));
+    //Log::debug(" insert_bootcamp_plan date ".print_r($all_session_date,true));
+      
+      for($i=0;$i<count($all_session_date);$i++)
+      {
+        
+        $schedule_data['bootcamp_plan_id']=$request->id;
+        $schedule_data['plan_date']=$all_session_date[$i];
+        $schedule_data['plan_day']=$all_session_day[$i];
+        $schedule_data['plan_st_time']=date("H:i:s", strtotime($request->session_st_time));
+        $schedule_data['plan_end_time']=date("H:i:s", strtotime($request->session_end_time));
+        $schedule_data['address_id']=$edit_data['address_id'];
+        $schedule_data['max_allowed']=$request->max_allowed;
+        $schedule_data['no_of_uses']=0;
+        $schedule_data['status']=1;
+
+        $schedule_insert=DB::table('bootcamp_plan_shedules')->insert($schedule_data);
+      } 
+      $update_bootcamp_plan=DB::table('bootcamp_plans')->where('id',$request->id)->update($edit_data);   
+      DB::commit();
+      return redirect('trainer/bootcamp-plan')->with("success","This plan end date is update successfully");
+    }
+
+    DB::commit();
+    return redirect('trainer/bootcamp-plan')->with("success","You dont change any data of this plan");
+  }catch(\Exception $e) {
+     DB::rollback();
+       return abort(200);
+   }
+
+}
+
+public function bootcamp_plan_delete($id)
+{
+  DB::beginTransaction();
+  try{
+  $this->cart_delete_trainer();
+
+  $plan_details=DB::table('bootcamp_plans')->where('id',$id)->first();
+
+  $today=date('Y-m-d');
+  $plan_end_date=$plan_details->plan_end_date;
+  $plan_end_date = new \DateTime($plan_end_date);
+  $plan_end_date=$plan_end_date->modify('+1 day')->format('Y-m-d');
+
+  $period = new \DatePeriod(
+       new \DateTime($today),
+       new \DateInterval('P1D'),
+       new \DateTime($plan_end_date)
+      );
+
+  $all_session_date=[];
+  foreach ($period as $key=>$value) 
+  {
+    $all_session_date[]=$value->format('Y-m-d');              
+  }
+
+  $all_booking_schedule=DB::table('bootcamp_plan_shedules')->whereIn('plan_date',$all_session_date)->where('no_of_uses','>',0)->get()->all();
+
+  //Log::debug(" all_booking_schedule ".print_r($all_booking_schedule,true));
+
+  if(count($all_booking_schedule)>0)
+  {
+    DB::commit();
+    return redirect()->back()->with('cancele_delete','Some bookings are available upto end date');
+  }
+  else
+  {
+    $bootcamp_plan_delete['deleted_at']=Carbon::now();
+
+    DB::table('bootcamp_plans')->where('id',$id)->update($bootcamp_plan_delete);
+
+    DB::table('bootcamp_plan_shedules')->whereIn('plan_date',$all_session_date)
+      ->where('bootcamp_plan_id',$id)->delete();
+   DB::commit();
+    return redirect('trainer/bootcamp-plan')->with("success","You have successfully deleted one bootcamp plan");
+  }
+
+
+  
+}
+  catch(\Exception $e) {
+      DB::rollback();
+      return abort(200);
+  }
+}
 
   public function cart_delete_trainer()
 {
@@ -3552,101 +3913,6 @@ catch(\Exception $e) {
   }
 }
 
-public function bootcamp_plan_edit_view($id)
-{
-  
-   try{
-  $this->cart_delete_trainer();
-
-  $plan_id=\Crypt::decrypt($id);
-
-  $form_location=DB::table('bootcamp_plan_address')->select('address_id','address_line1')->whereNotNull('address_line1')->whereNull('address_line2')->get(); 
-
-  $form_address=DB::table('bootcamp_plan_address')->select('address_id','address_line2')->whereNotNull('address_line2')->whereNull('address_line1')->get();
-
-  $edit_bootcamp= DB::table('bootcamp_plans')->join('bootcamp_plan_address','bootcamp_plan_address.address_id','bootcamp_plans.address_id')->select('bootcamp_plans.bootcamp_plan_id as bootcamp_plan_id','bootcamp_plans.mon_session_flg as mon_session_flg','bootcamp_plans.tue_session_flg as tue_session_flg','bootcamp_plans.wed_session_flg as wed_session_flg','bootcamp_plans.thu_session_flg as thu_session_flg','bootcamp_plans.fri_session_flg as fri_session_flg','bootcamp_plans.sat_session_flg as sat_session_flg','bootcamp_plans.sun_session_flg as sun_session_flg','bootcamp_plans.session_st_time as session_st_time','bootcamp_plans.session_end_time as session_end_time','bootcamp_plans.address_id as address_id','bootcamp_plans.plan_st_date as plan_st_date','bootcamp_plans.plan_end_date as plan_end_date','bootcamp_plans.never_expire as never_expire','bootcamp_plans.max_allowed as max_allowed','bootcamp_plan_address.address_line1 as address_line1','bootcamp_plan_address.address_line2 as address_line2')->where('bootcamp_plans.bootcamp_plan_id',$plan_id)->first();
-    //Log::debug(" edit_bootcamp ".print_r($edit_bootcamp,true));
-    return view ("trainer.editbootcamp")->with(compact('edit_bootcamp','form_location','form_address'));
-  }
-catch(\Exception $e) {
-      
-      return abort(200);
-  }
-
-}
-  public function bootcamp_plan_edit_insert(Request $request)
-{
-//Log::debug(" data bootcamp_plan_edit_insert ".print_r($request->all(),true)); 
-$this->cart_delete_trainer();
- 
-
-if($request->mon_session_flg!='')
-  $edit_bootcamp_data['mon_session_flg']=1;
-  if($request->tue_session_flg!='')
-  $edit_bootcamp_data['tue_session_flg']=1;
-  if($request->wed_session_flg!='')
-  $edit_bootcamp_data['wed_session_flg']=1;
-  if($request->thu_session_flg!='')
-  $edit_bootcamp_data['thu_session_flg']=1;
-  if($request->fri_session_flg!='')
-  $edit_bootcamp_data['fri_session_flg']=1;
-  if($request->sat_session_flg!='')
-  $edit_bootcamp_data['sat_session_flg']=1;
-
-  if($request->sun_session_flg!='') 
-  $edit_bootcamp_data['sun_session_flg']=1;
-
-$edit_bootcamp_data['session_st_time']=date("H:i:s", strtotime($request->session_st_time));
-  $edit_bootcamp_data['session_end_time']=date("H:i:s", strtotime($request->session_end_time));
-
- if($request->never_expire!='')
-  {
-    $edit_bootcamp_data['plan_end_date']='2099-12-30';
-    $edit_bootcamp_data['never_expire']=1;
-  }
-  else
-  {
-    $edit_bootcamp_data['plan_end_date']=$request->plan_end_date;
-  }
-   
-   $edit_bootcamp_data['plan_st_date']=$request->plan_st_date;
-   $edit_bootcamp_data['plan_end_date']=$request->plan_end_date;
-  
-   $edit_bootcamp_data['max_allowed']=$request->max_allowed;
-   if($request->location_select){
-    $edit_bootcamp_data['address_id']=$request->location_select;
-   }
-   else
-   {
-    $edit_bootcamp_data['address_id']=$request->address_select;
-   }
-  
-  
-  $edit_bootcamp_data['updated_at']=Carbon::now();
-  //Log::debug(" edit_bootcamp_data ".print_r($edit_bootcamp_data,true));
-  DB::table('bootcamp_plans')->where('bootcamp_plan_id',$request->id)->update($edit_bootcamp_data);
-
-  return redirect('trainer/bootcamp-plan')->with("success","You have successfully updated one bootcamp plan");
-}
-
-public function bootcamp_plan_delete($id)
-{
-  DB::beginTransaction();
-  try{
-  $this->cart_delete_trainer();
-  $bootcamp_plan_delete['deleted_at']=Carbon::now();
-
-  DB::table('bootcamp_plans')->where('bootcamp_plan_id',$id)->update($bootcamp_plan_delete);
-  DB::commit();
-  return redirect('trainer/bootcamp-plan')->with("success","You have successfully deleted one bootcamp plan");
-}
-  catch(\Exception $e) {
-      DB::rollback();
-      return abort(200);
-  }
-}
-
-
 public function add_product()
 {
   $all_traning_type=DB::table('training_type')->get();
@@ -3697,7 +3963,7 @@ public function insert_product(Request $request)
 
   $insert_products=DB::table('products')->insert($products_data);
 DB::commit();
-  return redirect('trainer/all-products')->with("success","You have successfully inserted one product");
+  return redirect('trainer/all-products')->with("success","You have successfully added one product");
   }
    catch(\Exception $e) {
      DB::rollback();

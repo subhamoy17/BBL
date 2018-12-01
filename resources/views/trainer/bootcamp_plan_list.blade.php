@@ -9,6 +9,9 @@
   setTimeout(function(){ 
     $('.alert-success').hide();
     }, 3000);
+  setTimeout(function(){ 
+    $('.alert-danger').hide();
+    }, 3000);
   });
 </script>
 
@@ -49,20 +52,27 @@ $(document).ready(function() {
       <div class="col-md-12">
         <div class="card">
           <div class="card-header" style="padding-left: 0px;padding-right: 0px;padding-bottom: 0px;padding-top: 10px;">
-            @if (session('success'))
+            @if (session()->has('success'))
               <div class="alert alert-success">
-                {{ session('success') }}
+                {{ session()->get('success') }}
               </div>
             @endif
+
             @if (session('delete'))
               <div class="alert alert-success">
                 {{ session('delete') }}
               </div>
             @endif
+
+            @if (session('cancele_delete'))
+              <div class="alert alert-danger">
+                {{ session('cancele_delete') }}
+              </div>
+            @endif
           </div>
           <div class="card-body">
             <script type="text/javascript">
-              function delete_client(id){ 
+              function delete_bootcamp(id){ 
                 alertify.confirm("Are you sure you want to delete this bootcamp plan?", function (e) {
                 if (e) {
                   // alertify.success("You've clicked OK");
@@ -105,11 +115,7 @@ $(document).ready(function() {
                       <td>{{date("h:i A", strtotime($each_bootcamp->session_st_time))}}</td>
                       <td>{{date("h:i A", strtotime($each_bootcamp->session_end_time))}}</td>
                       <td>
-                        @if($each_bootcamp->location!='')
-                        {{$each_bootcamp->location}}
-                        @else
                         {{$each_bootcamp->address}}
-                        @endif
                       </td>
                       <td>
                         {{$each_bootcamp->plan_st_date}} To {{$each_bootcamp->plan_end_date}}
@@ -127,7 +133,7 @@ $(document).ready(function() {
                         
 
                          <a href="{{route('bootcamp_plan_edit',['plan_id' => Crypt::encrypt($each_bootcamp->bootcamp_id) ])}}" title="Edit Exercise"><button class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button></a>
-                          <button type="button" onclick="delete_client({!!$each_bootcamp->bootcamp_id!!})" class="btn btn-danger btn-sm" style="width: 32px;" title="Delete Exercise"><i class="fa fa-trash-o"></i></button>
+                          <button type="button" onclick="delete_bootcamp({!!$each_bootcamp->bootcamp_id!!})" class="btn btn-danger btn-sm" style="width: 32px;" title="Delete Exercise"><i class="fa fa-trash-o"></i></button>
                           <!-- <a href="#" class="payment btn btn-info btn-sm" style="padding: 4px 7px;position: relative; right: -1.5px; top: 0px;"><i class="fa fa-eye" title="view details"  aria-hidden="true"></i></a> -->
                       </td>
                     </tr>

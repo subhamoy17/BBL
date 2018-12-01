@@ -135,29 +135,27 @@
           <h3 class="d_active tab_drawer_heading" rel="tab5">Tab 5</h3>
           <div id="tab5" class="tab_content">
             <div class="form-box">
+              @if(count($order_details)>0)
                 <div class="row">
                   <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="col-md-6 col-sm-12 col-xs-12">
                       <div class="form-group">
-                        <input type="hidden" id="total_slots" class="form-control" value="{{Session::get('sum_slots')}}"  >
-                        <label>Location/ Address <small>*</small></label>
-                          <select class="form-control">
-                            <option value="">Please select location/address</option>
+                        <input type="hidden" id="total_session" class="form-control" value="{{Session::get('sum_slots')}}"  >
+                        <label>Address <small>*</small></label>
+                          <select class="form-control" name="address" id="address" onchange="get_date_time(this.value);">
+                            <option value="">Please select address</option>
                             @if(!empty($bootcampaddress))
                             @foreach($bootcampaddress as $each_bootcampaddress)
-                              <option value="{{$each_bootcampaddress->address_id}}">{{$each_bootcampaddress->address_line1}}</option>
+                              <option value="{{$each_bootcampaddress->id}}">{{$each_bootcampaddress->address_line1}}</option>
                             @endforeach
                             @endif    
                           </select>
                       </div>
                     </div>
                     <div class="col-md-6 col-sm-12 col-xs-12">
-                      <div class="form-group">
+                      <div class="form-group available_date">
                         <label>Available Date <small>*</small></label>
                         <input type="text" id="bootcamp_date" name="bootcamp_date" class="form-control" onchange="jsfunction()" readonly="true">
-                        @foreach($bootcampdate as $bootcampdate1)
-                        <input type="hidden" id="all_date[]" name="all_date[]" value="{{$bootcampdate1}}" readonly="true">
-                        @endforeach
                       </div>
                     </div>
                     <div class="col-md-6 col-sm-12 col-xs-12">
@@ -193,6 +191,11 @@
                     </form>
                   </div>
                 </div>
+              @else
+                <h3>You don't have any bootcamp purchased session & to book a new bootcamp session you have to purchase a new package, So do you want to purchase?</h3><br>
+                  <a href="{{url('customer/pricing')}}"class="btn btn-dark btn-theme-colored btn-flat">Yes</a>
+                  <a href="{{url('customer/mybooking')}}"class="btn btn-dark btn-theme-colored btn-flat">No</a>
+              @endif
               </div>
           </div>         
         </div>
@@ -425,6 +428,51 @@ $(document).ready(function() {
     $(window).ready(function() {
     $(".loader").fadeOut("fast");
   });
+</script>
+
+<script>
+  function get_date_time(value)
+  {
+    if(value>0)
+    {
+
+      $.ajax({
+          type: "GET",
+          url: "{{route('get_bootcamp_date_time')}}",
+          data: {'address_id': value},
+          success: function (data){
+            //$('#loadingimg').hide();
+            //console.log(data);
+            var obj = $.parseJSON(data);
+
+            
+            var convert_time=0;
+
+            if(obj.length > 0){ 
+
+              var plan_date='';
+                //slot_time.append($('<option>', {value: ''}).text('Please select time'));
+              for(var i = 0; i < obj.length; i++)
+              {
+                plan_date=obj[i]['plan_date'];
+
+                alert(plan_date);
+
+                $('.available_date').append('<input type="text" name="all_date[]" value="plan_date">');
+                //convert_time=obj[i]['time'];
+                //slot_time.append($('<option>', {value: obj[i]['id']}).text(convert_time));
+              }
+            }
+            // else
+            // {
+            //   slot_time.append($('<option>', {value: ''}).text('All slots are booked'));
+            //   $('#slot_time').attr('disabled','disabled');
+            //   $("#slot_time").css("background","#3d3648");
+            // }
+          }
+      });
+    }
+  }
 </script>
 
 </body>

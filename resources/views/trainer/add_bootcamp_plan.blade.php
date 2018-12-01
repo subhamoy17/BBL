@@ -5,6 +5,7 @@
 @section('content')
 
 @if(Auth::user()->master_trainer==1)
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
 
   <div class="breadcrumbs">
@@ -19,123 +20,6 @@
 <div class="col-lg-12">
 	<div class="card">
 		<div class="card-body card-block">
-			<!-- <form class="slct-margin" id="search_bootcamp">
-					{{ csrf_field() }}
-				<div class="row">
-					<div class="col-lg-2">
-						<label>Location/ Address:</label>
-					</div>
-					<div class="col-lg-4">
-						<select class="ui search selection dropdown form-control" id="search-address">
-							<option value="-">Location/ Address</option>
-							@if(!empty($address))
-									@foreach($address as $each_address)
- 						 				<option value="{{$each_address->address_id}}">
- 						 					@if($each_address->address_line1!='')
- 						 						{{$each_address->address_line1}}
- 						 					@else
- 						 						{{$each_address->address_line2}}
- 						 					@endif
- 						 				</option>
- 						 			@endforeach
- 						 	@endif
-						</select>
-					</div>
-					<div class="col-lg-2">
-						<label>Day:</label>
-					</div>
-					<div class="col-lg-4">
-						<select class="ui search selection dropdown form-control" id="search-day">
- 						 <option value="-">Day</option>
- 						 <option value="mon">Monaday</option>
- 						 <option value="tue">Tuesday</option>
- 						 <option value="wed">Wednesday</option>
- 						 <option value="thu">Thursday</option>
- 						 <option value="fri">Friday</option>
- 						 
- 						 <option value="sat">Saturday</option>
- 						 <option value="sun">Sunday</option>
-					</select>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-lg-2">
-						<label>Session Start Time:</label>
-					</div>
-					<div class="col-lg-4">
-						<select class="ui search selection dropdown form-control" id="search-start-time">
-	 						<option value="-">Session Start Time</option>
-	 						@if(!empty($all_bootcamp_plan))
-	 							@foreach($all_bootcamp_plan as $each_bootcamp_start_time)
-	 						 		<option value="{{$each_bootcamp_start_time->session_st_time}}">{{date("h:i A", strtotime($each_bootcamp_start_time->session_st_time))}}
-	 						 		</option>
-	 						 	@endforeach
-	 						@endif
-						</select>
-					</div>
-					<div class="col-lg-2">
-						<label>Session End Time:</label>
-					</div>
-					<div class="col-lg-4">
-						<select class="ui search selection dropdown form-control" id="search-end-time">
- 						 <option value="-">Session End Time</option>
- 						 	@if(!empty($all_bootcamp_plan))
-	 							@foreach($all_bootcamp_plan as $each_bootcamp_end_time)
-	 						 		<option value="{{$each_bootcamp_end_time->session_end_time}}">{{date("h:i A", strtotime($each_bootcamp_end_time->session_end_time))}}
-	 						 		</option>
-	 						 	@endforeach
-	 						@endif
-						</select>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-lg-2">
-						<label>Planned Start Date:</label>
-					</div>
-					<div class="col-lg-4">
-						<select class="ui search selection dropdown form-control" id="search-start-date">
- 						 	<option value="-">Planned Start Date</option>
- 						 	@if(!empty($all_bootcamp_plan))
-	 							@foreach($all_bootcamp_plan as $each_bootcamp_start_date)
-	 						 		<option value="{{$each_bootcamp_start_date->plan_st_date}}">{{$each_bootcamp_start_date->plan_st_date}}
-	 						 		</option>
-	 						 	@endforeach
-	 						@endif
-						</select>
-					</div>
-					<div class="col-lg-2">
-						<label>Planned End Date:</label>
-					</div>
-					<div class="col-lg-4">
-						<select class="ui search selection dropdown form-control" id="search-end-date">
- 						 <option value="-">Planned End Date</option>
- 						 	@if(!empty($all_bootcamp_plan))
-	 							@foreach($all_bootcamp_plan as $each_bootcamp_end_date)
-	 						 		<option value="{{$each_bootcamp_end_date->plan_end_date}}">
-	 						 			@if($each_bootcamp_end_date->plan_end_date=='2099-12-30')
-	 						 				{{$each_bootcamp_end_date->plan_end_date}} (Never Expired)
-	 						 			@else
-	 						 				{{$each_bootcamp_end_date->plan_end_date}}
-	 						 			@endif
-	 						 		</option>
-	 						 	@endforeach
-	 						@endif
-					</select>
-					</div>
-					<div class="col-lg-12">
-						<div class="row">
-							<div class="col-lg-8 col-xs-12"></div>
-							<div class="col-lg-4 col-xs-12">
-								<div class="gbtn-wrp pull-right">
-									<button  name="search" class="btn btn-primary gbtn1" style="width: 100px; margin-right:10px;">Search</button>
-									<button  name="add_new_session" id="add_new_session" class="btn btn-primary gbtn2" style="width: 130px;">Add New Session</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</form> -->
-
 			<div class="add_bootcamp_div col-lg-12">
 				<form  action="{{route('insert_bootcamp_plan')}}" class="slct-margin" id="submit_bootcamp_session" method="post" autocomplete="off">
 					{{ csrf_field() }}
@@ -167,13 +51,13 @@
 						<label>Session Start<br> Time <span class="required_field_color">*</span></label>
 					</div>
 					<div class="col-lg-4">
-						<input type="text" id="session_st_time" name="session_st_time" class="form-control">
+						<input type="text" id="session_st_time" name="session_st_time" class="form-control" readonly>
 					</div>
 					<div class="col-lg-2">
 						<label>Session End Time <span class="required_field_color">*</span></label>
 					</div>
 					<div class="col-lg-4">
-						<input type="text" id="session_end_time" name="session_end_time" class="form-control">
+						<input type="text" id="session_end_time" name="session_end_time" class="form-control" readonly>
 					</div>
 				</div>
 				<div class="row">
@@ -209,35 +93,7 @@
 						<label>Maximum Allowed Booking <span class="required_field_color">*</span></label>
 					</div>
 					<div class="col-lg-4">
-						<input type="text" id="max_allowed" name="max_allowed" class="form-control"  onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')">
-					</div>
-					<div class="col-lg-2">
-						<label>Location </label>
-					</div>
-					<div class="col-lg-4">
-						<select name="location_select" id="location_select" class="form-control"
-          onchange="if(this.options[this.selectedIndex].value=='customOption'){
-              toggleField(this,this.nextSibling);
-              this.selectedIndex='0';
-          }">
-          	<option></option>
-            <option value="customOption">Click to type a custom location</option>
-            @if(!empty($form_location))
-            	@foreach($form_location as $each_form_location)
-            		<option value="{{$each_form_location->address_id}}">{{$each_form_location->address_line1}}</option>
-            	@endforeach
-            @endif
-        </select><input name="location" style="display:none;" disabled="disabled" 
-            onblur="if(this.value==''){toggleField(this,this.previousSibling);}" class="form-control" placeholder="Location" id="location">
-						
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-lg-2">
-						
-					</div>
-					<div class="col-lg-4">
-					
+						<input type="text" id="max_allowed" name="max_allowed" class="form-control"  onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" value="15">
 					</div>
 					<div class="col-lg-2">
 						<label>Address </label>
@@ -252,12 +108,20 @@
             <option value="customOption">Click to type a custom address</option>
             @if(!empty($form_address))
             	@foreach($form_address as $each_form_address)
-            		<option value="{{$each_form_address->address_id}}">{{$each_form_address->address_line2}}</option>
+            		<option value="{{$each_form_address->id}}">{{$each_form_address->address_line1}}</option>
             	@endforeach
             @endif
         </select><input name="address" style="display:none;" disabled="disabled" 
             onblur="if(this.value==''){toggleField1(this,this.previousSibling);}" class="ui search form-control" placeholder="Address" id="address">						
 					</div>
+					<input type="hidden" id="street_number" name="street_number" placeholder="Street number">
+					<input type="hidden" id="route" name="route" placeholder="Route">
+					<input type="hidden" id="locality" name="city" placeholder="City">
+					<input type="hidden" id="administrative_area_level_1" name="state" placeholder="State">
+					<input type="hidden" id="postal_code" name="postal_code" placeholder="Postal code">
+					<input type="hidden" id="country" name="country" placeholder="Country">
+					<input type="hidden" id="lat" name="lat" placeholder="Latitude">
+					<input type="hidden" id="lng" name="lng" placeholder="Longitude">
 				</div>
 				<div class="row">
 					<div class="col-lg-12">
@@ -274,24 +138,45 @@
 		</div>
 	</div>
 </div>
-<script src="{{asset('backend/assets/js/semantic.js')}}"></script>
-<script src="{{asset('backend/assets/js/timepicki.js')}}"></script>
-<script src="{{asset('backend/assets/js/moment.min.js')}}"></script>
-<script>
-	$('#search-address,#search-day,#search-start-time,#search-end-time,#search-start-date,#search-end-date').dropdown();
-</script>
  
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDK5MydVx-HkNyQcPTBdDyIyrqbwVPST0&&libraries=places"></script>
+  
+ 
+<script src="{{asset('backend/assets/js/semantic.js')}}"></script>
+<script src="{{asset('backend/assets/js/moment.min.js')}}"></script>
+<script src="{{asset('backend/assets/js/daterangepicker.min.js')}}"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDK5MydVx-HkNyQcPTBdDyIyrqbwVPST0&&libraries=places&callback=initAutocomplete" async defer></script>
+
 
 <script>
-function toggleField(hideObj,showObj){
-  hideObj.disabled=true;        
-  hideObj.style.display='none';
-  showObj.disabled=false;   
-  showObj.style.display='block';
-  showObj.focus();
-}
+$(function () { 
+	$("#session_st_time").daterangepicker({
+		"singleDatePicker": true, 
+		"showDropdowns": true, 
+		"timePicker": true,  
+		"autoApply": true,
+		locale: { format: "hh:mm A" } }).on('show.daterangepicker', function (ev, picker) {
+            picker.container.find(".calendar-table").hide();
+            
+        });
 
+	$("#session_st_time").on('change',function()
+	{
+		var session_end_time=moment($('#session_st_time').val(), ["hh:mm A"]).add(1, 'hour').format("hh:mm A");
+		$("#session_end_time").val(session_end_time);
+	});
+
+	$("#session_end_time").daterangepicker({  
+	"singleDatePicker": true, 
+	"showDropdowns": true, 
+	"timePicker": true,  
+	"autoApply": true, 
+	locale: { format: "hh:mm A" } }).on('show.daterangepicker', function (ev, picker) {
+          picker.container.find(".calendar-table").hide();
+          $("#session_st_time").val($("#session_end_time").val());
+      });
+ });
+</script>
+<script>
 function toggleField1(hideObj,showObj){
   hideObj.disabled=true;        
   hideObj.style.display='none';
@@ -329,9 +214,9 @@ function toggleField1(hideObj,showObj){
               return false;
             }
 
-            var startTime = moment($('#session_st_time').val(), ["h:mm A"]).format("HH:mm");
+            var startTime = moment($('#session_st_time').val(), ["hh:mm A"]).format("HH:mm");
 
-    				var endTime = moment($('#session_end_time').val(), ["h:mm A"]).format("HH:mm");
+    				var endTime = moment($('#session_end_time').val(), ["hh:mm A"]).format("HH:mm");
 
             if(startTime>=endTime)
             {
@@ -375,17 +260,10 @@ function toggleField1(hideObj,showObj){
               return false;
             }
 
-            if($('#location').val()=='' && $('#address').val()=='' && $('#location_select').val()=='' && $('#address_select').val()=='')
+            if($('#address').val()==''  && $('#address_select').val()=='')
             {
-            	alertify.alert('Location or address is required');
-            	$('#location').focus();
-              return false;
-            }
-
-            if(($('#location').val()!='' || $('#location_select').val()!='') && ($('#address').val()!=''  || $('#address_select').val()!=''))
-            {
-            	alertify.alert('Either location or address is required');
-            	$('#location').focus();
+            	alertify.alert('Address is required');
+            	$('#address').focus();
               return false;
             }
 
@@ -397,34 +275,21 @@ function toggleField1(hideObj,showObj){
   });
 </script>
 
-<!-- <script>
-	$(document).ready(function(){ 
-		$('#add_new_session').on('click', function (e) {
-			e.preventDefault();
-			$('.add_bootcamp_div').show();
-		});
-	});
-</script>
- -->
 <script>
-
   $(function () {
     $( "#plan_st_date" ).datepicker({
   		dateFormat: "yy-mm-dd",
   		beforeShowDay: NotBeforeToday,
-  		onSelect: function(dateText, inst){
-     $("#plan_end_date").datepicker("option","minDate",
-     $("#plan_st_date").datepicker("getDate"));
-  }
+  		onSelect: function(selectedDate){
+  			var nextDay = new Date(selectedDate);
+				nextDay.setDate(nextDay.getDate() + 7);
+				$("#plan_end_date").datepicker("option","minDate", nextDay);
+  		}
 		});
 
 		$( "#plan_end_date" ).datepicker({
   		dateFormat: "yy-mm-dd",
-  		beforeShowDay: NotBeforeToday,
-  		onSelect: function(dateText, inst){
-     $("#plan_st_date").datepicker("option","maxDate",
-     $("#plan_end_date").datepicker("getDate"));
-  }
+  		beforeShowDay: NotBeforeToday
 		});
   } );
 
@@ -439,48 +304,84 @@ function toggleField1(hideObj,showObj){
        return [true];
     return [false];
 	}
+
+
 </script>
 
 <script>
-  $(document).ready(function(){
-  	$('#session_st_time').timepicki();
-    $("#session_end_time").timepicki();
-  });
-</script>
-<script>
+      
 $(document).ready(function() {
-  var autocomplete;
-    initAutocomplete();
-  function initAutocomplete() {
-    // Create the autocomplete object, restricting the search to geographical location types.
-    autocomplete = new google.maps.places.Autocomplete( (document.getElementById('address')),
-    {types: ['geocode'], componentRestrictions: {country: 'uk'}});
-    autocomplete.addListener('place_changed', function() {
-      var place = autocomplete.getPlace();
+      var placeSearch, autocomplete;
+      var componentForm = {
+        street_number: 'short_name',
+        route: 'long_name',
+        locality: 'long_name',
+        administrative_area_level_1: 'short_name',
+        country: 'long_name',
+        postal_code: 'short_name'
+      };
 
+      initAutocomplete();
 
-      if(place.geometry.location)
-      {
-      	console.log(place.geometry.location);
-        // $("#lat").val(place.geometry.location.lat());
-        // $("#lng").val(place.geometry.location.lng());
+      function initAutocomplete() {
+        // Create the autocomplete object, restricting the search to geographical
+        // location types.
+        autocomplete = new google.maps.places.Autocomplete(
+            /** @type {!HTMLInputElement} */(document.getElementById('address')),
+            {types: ['geocode'], componentRestrictions: {country: 'uk'}});
+
+        // When the user selects an address from the dropdown, populate the address
+        // fields in the form.
+        autocomplete.addListener('place_changed', fillInAddress);
       }
-    });
-  }
-  // $("#address").on('submit',function(e){
-  //   if($('#autolocation').val() && !$('#lat').val() && !$('#lng').val())
-  //   {
-  //     alert("Please enter a valid location");
-  //     return false;
-  //   }
-  // });
 
-  // $('#search_form input').on('keypress', function(e)
-  // {
-  //   return e.which !== 13;
-   });
+      function fillInAddress() {
+        // Get the place details from the autocomplete object.
+        var place = autocomplete.getPlace();
 
-</script>
+        if(place.geometry.location)
+      {
+      	
+        $("#lat").val(place.geometry.location.lat());
+        $("#lng").val(place.geometry.location.lng());
+      }
+
+        for (var component in componentForm) {
+          document.getElementById(component).value = '';
+          document.getElementById(component).disabled = false;
+        }
+
+        // Get each component of the address from the place details
+        // and fill the corresponding field on the form.
+        for (var i = 0; i < place.address_components.length; i++) {
+          var addressType = place.address_components[i].types[0];
+          if (componentForm[addressType]) {
+            var val = place.address_components[i][componentForm[addressType]];
+            document.getElementById(addressType).value = val;
+          }
+        }
+      }
+
+      // Bias the autocomplete object to the user's geographical location,
+      // as supplied by the browser's 'navigator.geolocation' object.
+      function geolocate() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            var geolocation = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+            var circle = new google.maps.Circle({
+              center: geolocation,
+              radius: position.coords.accuracy
+            });
+            autocomplete.setBounds(circle.getBounds());
+          });
+        }
+      }
+
+      });
+    </script>
 
 
 

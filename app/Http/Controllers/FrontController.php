@@ -190,11 +190,6 @@ public function frontprice(Request $request)
   ->orderby('products.id','DESC')->get();
 
 
- 
-
-
-  
-
   $bootcamp_product_details=DB::table('products')
   ->join('training_type','products.training_type_id','training_type.id')
   ->join('payment_type','products.payment_type_id','payment_type.id')
@@ -1317,20 +1312,150 @@ public function exercise()
   } 
 }
 
+public function bootcamp_plan_purchase($id)
+{
+
+  try{
+  $this->cart_delete_customer();
+
+  $plan_id=\Crypt::decrypt($id);
+
+  //Log::debug(":: slot_id :: ".print_r($slot_id,true));
+
+  $package_details=DB::table('products')
+  ->join('training_type','training_type.id','products.training_type_id')
+  ->join('payment_type','payment_type.id','products.payment_type_id')
+  ->select('training_type.training_name as product_name','payment_type.payment_type_name as payment_type_name','products.total_sessions as total_sessions','products.id as product_id','products.id as product_id',(DB::raw('products.validity_value * products.validity_duration  as validity')),'products.total_price as total_price')
+  ->where('products.id',$plan_id)->first();
+  
+    return view('customerpanel.bootcamp_product_purchase')->with(compact('package_details'));
+  }
+
+    catch(\Exception $e) {
+      return abort(400);
+  }
+
+}
+
+
+public function bootcamp_purchase_payment_mode(Request $request)
+{
+  
+
+  try{
+  $this->cart_delete_customer();
+
+  $package_details=DB::table('products')
+  ->join('training_type','training_type.id','products.training_type_id')
+  ->join('payment_type','payment_type.id','products.payment_type_id')
+  ->select('training_type.training_name as product_name','payment_type.payment_type_name as payment_type_name','products.total_sessions as total_sessions','products.id as product_id','products.id as product_id',(DB::raw('products.validity_value * products.validity_duration  as validity')),'products.total_price as total_price')
+  ->where('products.id',$request->product_id)->first();
+
+
+  Log::debug(":: package_details :: ".print_r($package_details,true));
+
+  if($request->selector1=='Online')
+  {
+    return view('customerpanel.bootcamp_online_payment')->with(compact('package_details'));
+  }
+  if($request->selector1=='Bank Transfer')
+  {
+    return view('customerpanel.bootcamp_bank_payment')->with(compact('package_details'));
+  }
+
+  }
+
+    catch(\Exception $e) {
+
+      return abort(400);
+  }
+}
+
+public function bootcamp_onlinepayment(Request $request)
+{
+ // Log::debug(":: bootcamp_onlinepayment :: ".print_r($request->all(),true));
+  
+DB::beginTransaction();
+   try{
+  $package_details=DB::table('products')
+  ->join('training_type','training_type.id','products.training_type_id')
+  ->join('payment_type','payment_type.id','products.payment_type_id')
+  ->select('training_type.training_name as product_name','payment_type.payment_type_name as payment_type_name','products.total_sessions as total_sessions','products.id as product_id','products.id as product_id',(DB::raw('products.validity_value * products.validity_duration  as validity')),'products.total_price as total_price','products.price_session_or_month as price_session_or_month','products.validity_value as validity_value','products.validity_duration as validity_duration','products.contract as contract','products.notice_period_value as notice_period_value','products.notice_period_duration as notice_period_duration')
+  ->where('products.id',$request->product_id)->first();
+
+  $payment_history_data['payment_id']='BCPAY'.time();
+  $payment_history_data['currency']='GBP';
+  $payment_history_data['amount']=$package_details->total_price;
+  $payment_history_data['payment_mode']='Online Payment';
+  $payment_history_data['status']='Success';
+
+  $payment_history=DB::table('payment_history')->insert($payment_history_data);
+
+  $order_data['payment_id']=DB::getPdo()->lastInsertId();
+  $order_data['customer_id']=Auth::guard('customer')->user()->id;
+  $order_data['product_id']=$request->product_id;
+  $order_data['training_type']=$package_details->product_name;
+  $order_data['payment_type']=$package_details->payment_type_name;
+  $order_data['order_purchase_date']=Carbon::now()->toDateString();
+  $order_data['order_validity_date']=Carbon::now()->addDay($package_details->validity);
+  $order_data['payment_option']='Online Payment';
+  $order_data['status']=1;
+  $order_data['no_of_sessions']=$package_details->total_sessions;
+  $order_data['remaining_sessions']=$package_details->total_sessions;
+  $order_data['price_session_or_month']=$package_details->price_session_or_month;
+  $order_data['total_price']=$package_details->total_price;
+  $order_data['validity_value']=$package_details->validity_value;
+  $order_data['validity_duration']=$package_details->validity_duration;
+  $order_data['contract']=$package_details->contract;
+  $order_data['notice_period_value']=$package_details->notice_period_value;
+  $order_data['notice_period_duration']=$package_details->notice_period_duration;
+
+  $order_history=DB::table('order_details')->insert($order_data);
+
+  \Session::put('success_bootcamp_online', 'Payment success');
+  \Session::put('payment_id', $payment_history_data['payment_id']);
+
+  DB::commit();
+    return redirect('customer/bootcamponlinepaymentsuccess');
+   }
+   catch(\Exception $e) {
+     DB::rollback();
+       return abort(400);
+   }
+
+}
+
+public function bootcamponlinepaymentsuccess()
+{
+  $this->cart_delete_customer();
+  return view('customerpanel.payment-success');
+}
+
+
+
 
 public function booking_bootcamp()
 {
   try{
   $this->cart_delete_customer();
-  $remaining_session_request_now=Carbon::now()->toDateString();
+  $current_date=Carbon::now()->toDateString();
+
+  $order_details=DB::table('order_details')
+  ->join('products','products.id','order_details.product_id')
+  ->join('training_type','training_type.id','products.training_type_id')
+  ->where('order_details.customer_id',Auth::guard('customer')->user()->id)
+  ->where('order_details.order_validity_date','>',$current_date)
+  ->where('order_details.status',1)
+  ->where('training_type.id',2)
+  ->get()->all();
+
+  //Log::debug(" data couponcode ".print_r(count($order_details),true));
   
   $bootcampaddress=DB::table('bootcamp_plan_address')->get();
 
   $bootcampdate=DB::table('bootcamp_plan_shedules')->pluck('plan_date');
 
-
-
-  return view('customerpanel.booking_bootcamp')->with(compact('bootcampaddress','bootcampdate'));
+  return view('customerpanel.booking_bootcamp')->with(compact('bootcampaddress','bootcampdate','order_details'));
 
   }
 
@@ -1339,6 +1464,17 @@ public function booking_bootcamp()
       return abort(400);
   }
  
+}
+
+public function get_bootcamp_date_time(Request $request)
+{
+
+  $date_time_details=DB::table('bootcamp_plan_shedules')
+  ->where('address_id',$request->address_id)
+  ->get()->all();
+  //Log::debug(" get_bootcamp_date_time ".print_r($date_time_details,true));
+
+  return json_encode($date_time_details);
 }
 
 
@@ -1355,19 +1491,19 @@ function couponchecking(Request $request)
     $package_id=$request->package_id;
     $package_price=$request->package_price;
     $couponcode=preg_replace('/\s+/', ' ', $couponcode);
-     Log::debug(" data couponcode ".print_r($couponcode,true));
+     //Log::debug(" data couponcode ".print_r($couponcode,true));
 
     $newprice=DB::table('slots_discount_coupon')->where('coupon_code',$couponcode)->where('slots_id',$package_id)->where('is_active',1)->whereNull('slots_discount_coupon.deleted_at')->where('slots_discount_coupon.valid_to','>=',$now)->value('discount_price');
     $coupon_id=DB::table('slots_discount_coupon')->where('coupon_code',$couponcode)->where('slots_id',$package_id)->where('is_active',1)->whereNull('slots_discount_coupon.deleted_at')->value('slots_discount_coupon.id');
      $ex_coupon_code=DB::table('slots_discount_coupon')->where('coupon_code',$couponcode)->where('slots_id',$package_id)->where('is_active',0)->whereNull('slots_discount_coupon.deleted_at')->value('slots_discount_coupon.coupon_code');
-Log::debug(" data startDate ".print_r($newprice,true));
-Log::debug(" data ex_coupon_code ".print_r($ex_coupon_code,true));
+//Log::debug(" data startDate ".print_r($newprice,true));
+//Log::debug(" data ex_coupon_code ".print_r($ex_coupon_code,true));
   $new_package_price= $package_price-$newprice;
 $coupon_expair=DB::table('slots_discount_coupon')->where('coupon_code',$couponcode)->where('slots_id',$package_id)->where('is_active',1)->whereNull('slots_discount_coupon.deleted_at')->where('slots_discount_coupon.valid_to','<=',$now)->value('slots_discount_coupon.coupon_code');
 
 $wrong_details=DB::table('slots_discount_coupon')->where('coupon_code',$couponcode)->where('slots_id',$package_id)->whereNull('slots_discount_coupon.deleted_at')->count();
 // $wrong=$wrong_details==0
-Log::debug(" data wrong_details ".print_r($wrong_details,true));
+//Log::debug(" data wrong_details ".print_r($wrong_details,true));
     if($newprice)
     {
       

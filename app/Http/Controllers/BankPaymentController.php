@@ -240,4 +240,67 @@ public function bank_payment_complete()
   return view('customerpanel.payment-success');
 }
 
+
+public function bootcamp_bank_payment_success(Request $request)
+{
+  Log::debug(":: bootcamp_onlinepayment :: ".print_r($request->all(),true));
+  
+
+  $package_details=DB::table('products')
+  ->join('training_type','training_type.id','products.training_type_id')
+  ->join('payment_type','payment_type.id','products.payment_type_id')
+  ->select('training_type.training_name as product_name','payment_type.payment_type_name as payment_type_name','products.total_sessions as total_sessions','products.id as product_id','products.id as product_id',(DB::raw('products.validity_value * products.validity_duration  as validity')),'products.total_price as total_price','products.price_session_or_month as price_session_or_month','products.validity_value as validity_value','products.validity_duration as validity_duration','products.contract as contract','products.notice_period_value as notice_period_value','products.notice_period_duration as notice_period_duration')
+  ->where('products.id',$request->product_id)->first();
+
+  $payment_history_data['payment_id']='BBL'.time();
+  $payment_history_data['amount']=$package_details->total_price;
+  $payment_history_data['payment_mode']='Bank Transfer';
+  $payment_history_data['status']='Inprogress';
+
+  if($request->package_image!='')
+  {
+    $myimage=$request->package_image;
+    $folder="backend/bankpay_images/"; 
+    $extension=$myimage->getClientOriginalExtension(); 
+    $image_name=time()."_bankdocimg.".$extension; 
+    $upload=$myimage->move($folder,$image_name); 
+    $payment_history_data['image']=$image_name;
+  } 
+  $payment_history_data['description']=$request->package_description;
+
+
+  $payment_history=DB::table('payment_history')->insert($payment_history_data);
+  $order_data['payment_id']=DB::getPdo()->lastInsertId();
+  $order_data['customer_id']=Auth::guard('customer')->user()->id;
+  $order_data['product_id']=$request->product_id;
+  $order_data['training_type']=$package_details->product_name;
+  $order_data['payment_type']=$package_details->payment_type_name;
+  $order_data['order_purchase_date']=Carbon::now()->toDateString();
+  $order_data['order_validity_date']=Carbon::now()->addDay($package_details->validity);
+  $order_data['payment_option']='Online Payment';
+  $order_data['status']=1;
+  $order_data['no_of_sessions']=$package_details->total_sessions;
+  $order_data['remaining_sessions']=$package_details->total_sessions;
+  $order_data['price_session_or_month']=$package_details->price_session_or_month;
+  $order_data['total_price']=$package_details->total_price;
+  $order_data['validity_value']=$package_details->validity_value;
+  $order_data['validity_duration']=$package_details->validity_duration;
+  $order_data['contract']=$package_details->contract;
+  $order_data['notice_period_value']=$package_details->notice_period_value;
+  $order_data['notice_period_duration']=$package_details->notice_period_duration;
+
+  $order_history=DB::table('order_details')->insert($order_data);
+
+  \Session::put('success_bootcamp_bank', 'Payment success');
+  \Session::put('payment_id', $payment_history_data['payment_id']);
+    return redirect('customer/bootcampbankpaymentcomplete');
+
+}
+
+public function bootcamp_bank_payment_complete()
+{
+  return view('customerpanel.payment-success');
+}
+
+
 }

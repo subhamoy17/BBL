@@ -243,7 +243,7 @@ $(document).ready(function(){
 
           <div class="row form-group" id="total_price_div" style="display: none;">
             <div class="col col-md-4"><label for="text-input" class=" form-control-label">Total Package Price (<i class="fa fa-gbp"></i>)</label></div>
-            <div class="col-12 col-md-8"><label for="text-input" class="total_price"></label>
+            <div class="col-12 col-md-8"><label for="text-input" class="total_price" style="padding-left: 12px;"></label>
             <input type="hidden" name="final_total_price" id="final_total_price">
             </div>
           </div>

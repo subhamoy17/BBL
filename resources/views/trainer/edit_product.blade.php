@@ -226,7 +226,7 @@ maxlength: 'Please enter number less than 50 numbers.'
             @else
             <div class="col col-md-4"><label for="text-input" class=" form-control-label">Anual Subscription Price (<i class="fa fa-gbp"></i>)</label></div>
             @endif
-            <div class="col-12 col-md-8"><label for="text-input" class="total_price">{{$product_details->total_price}}</label>
+            <div class="col-12 col-md-8"><label for="text-input" class="total_price" style="padding-left: 12px;">{{$product_details->total_price}}</label>
             <input type="hidden" name="final_total_price" id="final_total_price" value="{{$product_details->total_price}}">
             </div>
           </div>

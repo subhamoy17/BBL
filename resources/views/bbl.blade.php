@@ -200,39 +200,44 @@
 		</div>
 	</section>
 	
-<section class="pricing">
-  <div class="container">
-        <h3 class="gyl_header">Choose <span>Your Plan</span></h3>
+<section class="pricing df-pricing">
+    <div class="container">
+        <h3 class="gyl_header">Choose <span>Your Bootcamp Plan</span></h3>
           <div class="row">
-               <div class="owl-carousel" id="price-slider">
-                 @foreach($data as $mydata)
-            <div class="price-wrp">
-              <div class="price-box">
-                <div class="p-box-head cmn-3">
-                  <h3><span>{{$mydata->slots_name}}</span></h3>
-                <h1><i class="fa fa-gbp"></i> {{$mydata->slots_price}} <span></span></h1>
-                  <span class="small-msg">No. of slots</span>
-                  <span class="small-msg">{{$mydata->slots_number}}</span>
-                  <span class="small-msg">/ Validity {{$mydata->slots_validity}} Days</span>
-                  <div class="btm-arow"><i class="fa fa-arrow-circle-down"></i></div>
-                  <div class="plan-batch bch-3">Premium</div>
-                </div>
-                <div class="p-box-bdy">
-                  <h2>{{$mydata->slots_number}}<span>Slots</span></h2>
-                  
-                   @if(Auth::guard('customer')->check())
-                  <a href="{{url('customer/purchase_form')}}/{{$mydata->id}}" class="sign-btn2">Subscribe</a>
-
+        <div id="bootcamp-slider2" class="owl-carousel">
+            @foreach($bootcamp_product_details as $bc_key=>$each_bootcamp_product)
+            <div class="price-box">
+              <div class="p-box-head cmn-3">
+              <h3><span>{{$each_bootcamp_product->validity? $each_bootcamp_product->validity.' Days' : 'Validity N/A'}}</span></h3>
+              <h1><i class="fa fa-gbp"></i> {{$each_bootcamp_product->total_price}} 
+                <br><span> {{$each_bootcamp_product->payment_type_name}}</span></h1>
+              <div class="btm-arow"><i class="fa fa-arrow-circle-down"></i></div>
+              <div class="plan-batch bch-3">Bootcamp</div>
+              <div class="cntrct"><h5>Contract <span> - {{$each_bootcamp_product->contract? $each_bootcamp_product->contract : 'N/A'}}</span></h5></div>
+              </div>
+              <div class="p-box-bdy">
+              <h2>
+                @if($each_bootcamp_product->total_sessions!='Unlimited')
+                  {{$each_bootcamp_product->total_sessions}}<span>Sessions</span>
+                @else
+                  {{substr($each_bootcamp_product->total_sessions,0,1)}}<span>{{substr($each_bootcamp_product->total_sessions,1,8)}} Sessions</span>
+                @endif
+              </h2>
+              
+              <div class="clearfix"></div>
+              @if(Auth::guard('customer')->check())
+                  <a href="{{route('bootcamp_plan_purchase',['bootcamp_plan_id' => Crypt::encrypt($each_bootcamp_product->product_id) ])}}" class="sign-btn2">Subscribe</a>
                    @else
                 <a href="{{url('customer-login')}}" class="sign-btn2">Sign Up</a>
                 @endif
-
-                </div>
               </div>
             </div>
-     @endforeach
+          
+            @endforeach
+          </div>
+          </div>
         </div>
-     
+      </div>
             </div>
         </div>
   </section>
