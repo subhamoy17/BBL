@@ -45,13 +45,13 @@
 
         <div class="all-links">
           <ul>
-            <li><a href="https://www.instagram.com" target="_blank"><i class="fa fa-instagram"></i></a></li>
-            <li><a href="mailto:info@example.com"><i class="fa fa-envelope"></i></a></li>
-            <li><a href="https://www.facebook.com" target="_blank"><i class="fa fa-facebook-f"></i></a></li>
-            <li><a href="https://www.twitter.com" target="_blank"><i class="fa fa-twitter"></i></a></li>
-            <!-- <li><a href="#"><i class="fa fa-google-plus"></i></a></li> -->
-            <li><a href="https://www.youtube.com" target="_blank"><i class="fa fa-youtube"></i></a></li>
-          </ul>
+                   <li><a href="https://www.instagram.com/lekanfitness" target="_blank"><i class="fa fa-instagram"></i></a></li>
+                                 <li><a href="mailto:info@bodybylekan.com"><i class="fa fa-envelope"></i></a></li>
+                                <li><a href="https://www.facebook.com/bodybylekan" target="_blank"><i class="fa fa-facebook-f"></i></a></li>
+                                <li><a href="https://twitter.com/bodybylekan" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                                <!-- <li><a href="#"><i class="fa fa-google-plus"></i></a></li> -->
+                                <li><a href="https://www.youtube.com/channel/UCvFStHTPHjHY-_7BXA17Fug" target="_blank"><i class="fa fa-youtube"></i></a></li>
+                </ul>
           <div class="dropdown user-box">
                            
             <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Welcome {{Auth::user()->name}}
@@ -107,6 +107,9 @@
               <li class="{{ Request::segment(2) === 'exercise' ? 'active' : null }}">
                 <a href="{{url('customer/exercise')}}">Exercise</a>
               </li>
+               <li class="{{ Request::segment(1) === 'diet-plan' ? 'active' : null }}">
+                        <a href="{{route('diet_plans')}}">Diet Plans</a>
+                      </li>  
               <li class="{{ Request::segment(2) === 'contact-us' ? 'active' : null }}">
                 <a href="{{url('customer/contact-us')}}">Contact Us</a>
               </li>
