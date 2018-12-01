@@ -8,6 +8,8 @@
 
     <div class="table-responsive table-bordered">
         <!-- <a href="{{url('customer/booking_slot')}}" class="btn btn-success bk-slt-btn">Book PT Session</a> -->
+
+        <a href="{{url('customer/booking-bootcamp')}}" class="btn btn-success bk-slt-btn">Book Bootcamp Session</a> 
      <h3 align="center">Purchased History</h3>
     <div class="tbl-srch tbl-srch2">
        <form id="frm_purchase_search">
@@ -50,7 +52,13 @@
             <td> <i class="fa fa-gbp"></i> {{$myorder->total_price}}</td>
            
           <td>{{date('d F Y', strtotime($myorder->order_purchase_date))}}</td>
-          <td>{{date('d F Y', strtotime($myorder->order_validity_date))}}</td>
+          <td>
+            @if($myorder->order_validity_date!='')
+            {{date('d F Y', strtotime($myorder->order_validity_date))}}
+            @else
+            N/A
+            @endif
+          </td>
           <td>{{$myorder->total_sessions}}</td>
           @if($myorder->total_sessions=="Unlimited")
           <td>--</td>
