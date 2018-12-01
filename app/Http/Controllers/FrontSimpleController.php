@@ -19,7 +19,8 @@ class FrontSimpleController extends Controller
 
 public function index(Request $request)
   {
-   
+   try
+      {
    $bootcamp_product_details=DB::table('products')
   ->join('training_type','products.training_type_id','training_type.id')
   ->join('payment_type','products.payment_type_id','payment_type.id')
@@ -29,6 +30,11 @@ public function index(Request $request)
   ->orderby('products.id','DESC')->get();
 
      return view('bbl')->with(compact('bootcamp_product_details'));
+  }
+      catch(\Exception $e) 
+      {
+        return abort(400);
+      }
   }
 
 

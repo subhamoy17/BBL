@@ -654,8 +654,8 @@ public function purchases_history(Request $request)
     $start_date=$request->start_date;
     $end_date=$request->end_date;
     // echo $start_date."-".$end_date;die();
-    Log::debug(" Check ".print_r($start_date,true)); 
-    Log::debug(" Check id ".print_r($end_date,true)); 
+    //Log::debug(" Check ".print_r($start_date,true)); 
+    //Log::debug(" Check id ".print_r($end_date,true)); 
   
     $purchases_data=DB::table('purchases_history')
     ->join('slots','slots.id','purchases_history.slot_id')
@@ -1352,7 +1352,7 @@ public function bootcamp_purchase_payment_mode(Request $request)
   ->where('products.id',$request->product_id)->first();
 
 
-  Log::debug(":: package_details :: ".print_r($package_details,true));
+  //Log::debug(":: package_details :: ".print_r($package_details,true));
 
   if($request->selector1=='Online')
   {
@@ -1397,7 +1397,12 @@ DB::beginTransaction();
   $order_data['training_type']=$package_details->product_name;
   $order_data['payment_type']=$package_details->payment_type_name;
   $order_data['order_purchase_date']=Carbon::now()->toDateString();
-  $order_data['order_validity_date']=Carbon::now()->addDay($package_details->validity);
+
+  if($package_details->validity!='')
+  {
+    $order_data['order_validity_date']=Carbon::now()->addDay($package_details->validity);
+  }
+  
   $order_data['payment_option']='Online Payment';
   $order_data['status']=1;
   $order_data['no_of_sessions']=$package_details->total_sessions;
@@ -1436,7 +1441,7 @@ public function bootcamponlinepaymentsuccess()
 
 public function booking_bootcamp()
 {
-  try{
+  //try{
   $this->cart_delete_customer();
   $current_date=Carbon::now()->toDateString();
 
@@ -1444,7 +1449,10 @@ public function booking_bootcamp()
   ->join('products','products.id','order_details.product_id')
   ->join('training_type','training_type.id','products.training_type_id')
   ->where('order_details.customer_id',Auth::guard('customer')->user()->id)
-  ->where('order_details.order_validity_date','>',$current_date)
+  ->where(function($q) {
+         $q->where('order_details.order_validity_date','>=',$current_date)
+           ->orWhere('order_details.order_validity_date',NULL);
+     })
   ->where('order_details.status',1)
   ->where('training_type.id',2)
   ->get()->all();
@@ -1457,12 +1465,12 @@ public function booking_bootcamp()
 
   return view('customerpanel.booking_bootcamp')->with(compact('bootcampaddress','bootcampdate','order_details'));
 
-  }
+  //}
 
-    catch(\Exception $e) {
+  //   catch(\Exception $e) {
 
-      return abort(400);
-  }
+  //     return abort(400);
+  // }
  
 }
 
