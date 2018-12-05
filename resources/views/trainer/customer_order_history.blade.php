@@ -176,7 +176,7 @@ $('#bootstrap-slot-data-table').DataTable({
         <div class="col-sm-12 col-xs-12">
             
             <div class="form-group">
-            <div class="row">
+            <div class="row" style="text-align: center;">
         
            
                           <div class="col-lg-4 col-xs-12">
@@ -271,7 +271,7 @@ $('#bootstrap-slot-data-table').DataTable({
   </div>
 </div>
 
-
+<button type="button" class="btn btn-default success-close" data-dismiss="modal" >Close</button>
 </div>
 </div>
 </div>
