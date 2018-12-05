@@ -281,9 +281,13 @@ public function bootcamp_bank_payment_success(Request $request)
   {
     $order_data['order_validity_date']=Carbon::now()->addDay($package_details->validity);
   }
+  else{
+    $order_data['order_validity_date']='2099-12-30';
+  }
+
   
   $order_data['payment_option']='Bank Transfer';
-  $order_data['status']=1;
+  $order_data['status']=0;
   $order_data['no_of_sessions']=$package_details->total_sessions;
   $order_data['remaining_sessions']=$package_details->total_sessions;
   $order_data['price_session_or_month']=$package_details->price_session_or_month;

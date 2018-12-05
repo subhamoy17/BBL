@@ -314,10 +314,15 @@ maxlength: 'Please enter number less than 50 numbers.'
 				<div class="row">
 					<div class="col-lg-12">
 						<div class="row">
-						<div class="col-lg-10"></div>
-							<div class="col-lg-2">
-								<button name="submit" id="edit_submit" class="btn btn-primary pull-right" style="width: 100px;">Submit</button>
-							</div>
+						<div class="col-lg-8"></div>
+							
+              <div class="col-lg-2">
+                <input type="submit" name="save" id="save_btn" class="btn btn-primary pull-right"  value="Save">
+                
+              </div>
+              <div class="col-lg-2">
+                <input type="submit" name="submit" id="product_submit_btn" class="btn btn-primary pull-right" style="width: 100px;" value="Submit">
+              </div>
 						</div>
 					</div>
 				</div>
@@ -330,15 +335,16 @@ maxlength: 'Please enter number less than 50 numbers.'
 
 
 
-<!-- <script type="text/javascript">
-  
-  $(document).ready(function(){
-    $('#submit_product').bind('submit', function (e) {
-    var button = $('#edit_submit');
+<!-- <script>
 
+//// Add button disable ////
+$(document).ready(function(){
+  $('#submit_product').bind('submit', function (e) {
+    var button = $('#product_submit_btn');
+    var button1 = $('#save_btn');
     // Disable the submit button while evaluating if the form should be submitted
     button.prop('disabled', true);
-
+     button1.prop('disabled', true);
     var valid = true;    
 
     // Do stuff (validations, etc) here and set
@@ -350,13 +356,10 @@ maxlength: 'Please enter number less than 50 numbers.'
 
         // Reactivate the button if the form was not submitted
         button.prop('disabled', false);
+        button1.prop('disabled', false);
     }
-
-   
 });
-
-      });
-
+});
 </script> -->
 
 <script>
@@ -364,14 +367,16 @@ maxlength: 'Please enter number less than 50 numbers.'
   {
     if($('#payment_type').val()==1)
     {
-      var total_price=parseInt($('#no_session').val())*parseInt($('#price').val());
+      var total_price_cal=parseInt($('#no_session').val())*parseInt($('#price').val());
+      var total_price =parseFloat(total_price_cal).toFixed(2);
       $("#total_price_div").show();
       $('.total_price').html(total_price);
       $("#final_total_price").val(total_price);
     } 
     else if($('#payment_type').val()==2)
     {
-      var total_price=12*parseInt($('#price').val());
+      var total_price_cal=12*parseInt($('#price').val());
+       var total_price =parseFloat(total_price_cal).toFixed(2);
       $('.total_price').html(total_price);
       $("#total_price_div").show();
       $("#final_total_price").val(total_price);

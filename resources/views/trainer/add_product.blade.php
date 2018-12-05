@@ -151,10 +151,10 @@ maxlength: 'Please enter number less than 50 numbers.'
 $(document).ready(function(){
   $('#submit_product').bind('submit', function (e) {
     var button = $('#product_submit_btn');
-
+    // var button1 = $('#save_btn');
     // Disable the submit button while evaluating if the form should be submitted
     button.prop('disabled', true);
-
+     // button1.prop('disabled', true);
     var valid = true;    
 
     // Do stuff (validations, etc) here and set
@@ -166,9 +166,78 @@ $(document).ready(function(){
 
         // Reactivate the button if the form was not submitted
         button.prop('disabled', false);
+        // button1.prop('disabled', false);
     }
 });
 });
+</script>
+
+<!-- <script>
+
+//// Add button disable ////
+$(document).ready(function(){
+  $('#submit_product').bind('submit', function (e) {
+    
+     var button1 = $('#save_btn');
+    // Disable the submit button while evaluating if the form should be submitted
+   
+      button1.prop('disabled', true);
+    var valid = true;    
+
+    // Do stuff (validations, etc) here and set
+    // "valid" to false if the validation fails
+
+    if (!valid) { 
+        // Prevent form from submitting if validation failed
+        e.preventDefault();
+
+        // Reactivate the button if the form was not submitted
+       
+         button1.prop('disabled', false);
+    }
+});
+});
+</script> -->
+
+<script type="text/javascript">
+
+  
+$(document).ready(function(){ 
+
+$('#product_submit_btn').on('click',function(e){ 
+    
+    $('#save_btn').attr('disabled','disabled');
+    
+
+  });
+
+$('#save_btn').on('click',function(e){ 
+    
+    $('#product_submit_btn').attr('disabled','disabled');
+    if($("#submit_product").valid()){
+     $('#save_btn').hide();
+     $('#dub_sub').show();
+}
+  });
+});
+
+
+
+// $(document).ready(function(){
+
+
+// $('#save_btn2').on('click',function(e){
+  
+//     $('#add_sess2').hide();
+//    $('.save_button').attr('disabled','disabled');
+//     $('.save_button').text('Please wait...');
+//     $('ul.tabs li').removeAttr('rel');
+//     $("ul.tabs").hide();
+//     $('#add_session_form2').submit();
+
+//   });
+
+//  });
 </script>
 
 
@@ -226,7 +295,7 @@ $(document).ready(function(){
 <div id=pay_as_you_go style="display: none">
           <div class="row form-group">
             <div class="col col-md-4"><label for="text-input" class=" form-control-label"> No. of Available Session<span class="required_field_color">*</span></label></div>
-            <div class="col-12 col-md-8"><input type="text" id="no_session" name="no_session" placeholder="No. of Available Session" class="form-control" >
+            <div class="col-12 col-md-8"><input type="text" id="no_session" name="no_session" placeholder="No. of Available Session" class="form-control" onkeyup="total_price_cal();">
               
             </div>
           
@@ -272,8 +341,8 @@ $(document).ready(function(){
 					<div class="col-lg-4">
 							<select name="validity_2" id="validity_2" class="form-control" onchange="valid_cal2()">
 		            <option value="0">Select Any One</option>
-            		<option value="7">Week</option>
-            	  <option value="30">Month</option>   
+            		<option value="7">Week(s)</option>
+            	  <option value="30">Month(s)</option>   
 			        </select>
 					</div>
 				</div>
@@ -351,8 +420,8 @@ $(document).ready(function(){
           <div class="col-lg-4">
             <select name="notice_period_2" id="notice_period_2" class="form-control" onchange="valid_cal();">
                 <option value="0">Select Any One</option>
-                <option value="7">Week</option>
-                <option value="30">Month</option>  
+                <option value="7">Week(s)</option>
+                <option value="30">Month(s)</option>  
               </select>
           </div>
         </div>
@@ -364,10 +433,13 @@ $(document).ready(function(){
 				<div class="row">
 					<div class="col-lg-12">
 						<div class="row">
-						<div class="col-lg-10"></div>
-							<div class="col-lg-2">
-								<button type="submit" name="submit" id="product_submit_btn" class="btn btn-primary pull-right" style="width: 100px;">Submit</button>
-							</div>
+						<div class="col-lg-8"></div>
+							<div class="col-lg-4">
+                <input type="submit" name="submit" id="save_btn" class="btn btn-primary add-pro-save" value="Save">
+
+								<input  class="btn btn-primary add-pro-save" id="dub_sub" readonly value="Save" style="display: none; width: 100px;">
+                <input type="submit" name="submit" id="product_submit_btn" class="btn btn-primary add-pro-sub" style="width: 100px;" value="Submit">
+              </div>
 						</div>
 					</div>
 				</div>
@@ -383,10 +455,14 @@ $(document).ready(function(){
   {
     if($('#no_session').val()!='' && $('#price').val()!='')
     {
-      var total_price=parseInt($('#no_session').val())*parseInt($('#price').val());
+      var total_price_cal=parseFloat($('#no_session').val())*parseFloat($('#price').val());
+      var total_price =parseFloat(total_price_cal).toFixed(2);
+     
+    
       $("#total_price_div").show();
       $('.total_price').html(total_price);
       $("#final_total_price").val(total_price);
+     
     } 
     
     else
@@ -402,6 +478,8 @@ $(document).ready(function(){
     if($("#submit_product").valid()){
       
        $('.btn-primary').removeAttr('disabled');
+       $('#save_btn').show();
+    $('#dub_sub').hide();
     }
   }
 
@@ -411,6 +489,8 @@ $(document).ready(function(){
     if($("#submit_product").valid()){
       
        $('.btn-primary').removeAttr('disabled');
+         $('#save_btn').show();
+        $('#dub_sub').hide();
     }
   }
 </script>
@@ -420,7 +500,8 @@ $(document).ready(function(){
   {
     if($('#sub_price').val()!='')
     {
-      var total_price_2=12*parseInt($('#sub_price').val());
+      var total_price_2_cal=12*parseFloat($('#sub_price').val());
+      var total_price_2 =parseFloat(total_price_2_cal).toFixed(2);
       $("#total_price_div_2").show();
       $('.total_price_2').html(total_price_2);
       $('.total_price_2').val(total_price_2);

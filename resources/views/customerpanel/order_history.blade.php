@@ -8,6 +8,8 @@
 
     <div class="table-responsive table-bordered">
         <!-- <a href="{{url('customer/booking_slot')}}" class="btn btn-success bk-slt-btn">Book PT Session</a> -->
+
+        <a href="{{url('customer/booking-bootcamp')}}" class="btn btn-success bk-slt-btn">Book Bootcamp Session</a> 
      <h3 align="center">Purchased History</h3>
     <div class="tbl-srch tbl-srch2">
        <form id="frm_purchase_search">
@@ -50,7 +52,15 @@
             <td> <i class="fa fa-gbp"></i> {{$myorder->total_price}}</td>
            
           <td>{{date('d F Y', strtotime($myorder->order_purchase_date))}}</td>
-          <td>{{date('d F Y', strtotime($myorder->order_validity_date))}}</td>
+          @if($myorder->order_validity_date < "2050-12-30")
+          <td>
+            
+            {{date('d F Y', strtotime($myorder->order_validity_date))}}
+          </td>
+           @else
+           <td> Unlimited</td>
+          @endif
+          
           <td>{{$myorder->total_sessions}}</td>
           @if($myorder->total_sessions=="Unlimited")
           <td>--</td>
@@ -59,12 +69,14 @@
           @endif
           <td>{{$myorder->payment_option}}</td>
           <td>{{$myorder->payment_type}}</td>
-          @if(\Carbon\Carbon::now()->toDateString() < $myorder->order_validity_date)
-          <td>Active</td>
-          @else
-          <td>Inactive</td>
-          @endif
-           
+        
+           @if($myorder->status=='1')
+                <td>Payment Success</td>
+                @elseif($myorder->status=='0' && $myorder->payment_status == 'Inprogress')
+                <td>Payment Inprogress</td>
+                @elseif($myorder->status=='0' && $myorder->payment_status == 'Decline')
+                <td>Payment Decline</td>
+                @endif
            
            
            

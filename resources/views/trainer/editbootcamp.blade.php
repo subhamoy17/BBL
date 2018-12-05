@@ -138,14 +138,14 @@
 				</div>
 				<div class="row">
 					<div class="col-lg-2">
-						<label>Planned Start<br> Date <span class="required_field_color">*</span></label>
+						<label>Plan Start<br> Date <span class="required_field_color">*</span></label>
 					</div>
 					<div class="col-lg-4">
             <input type="text" class="form-control" readonly="true" value="{{$edit_bootcamp->plan_st_date}}"  disabled="disabled">
 						<input type="hidden" id="plan_st_date" name="plan_st_date" class="form-control" readonly="true" value="{{$edit_bootcamp->plan_st_date}}">
 					</div>
 					<div class="col-lg-2">
-						<label>Planned End Date </label>
+						<label>Plan End Date </label>
 					</div>
 					<div class="col-lg-4">
 						@if($edit_bootcamp->never_expire==0)
@@ -164,7 +164,7 @@
 						
 					</div>
 					<div class="col-lg-2">
-						<label>Planned Never Ending</label>
+						<label>Plan Never End</label>
 					</div>
 					<div class="col-lg-4">
 						@if($edit_bootcamp->never_expire==1)

@@ -62,13 +62,13 @@
 				</div>
 				<div class="row">
 					<div class="col-lg-2">
-						<label>Planned Start<br> Date <span class="required_field_color">*</span></label>
+						<label>Plan Start<br> Date <span class="required_field_color">*</span></label>
 					</div>
 					<div class="col-lg-4">
 						<input type="text" id="plan_st_date" name="plan_st_date" class="form-control" readonly="true">
 					</div>
 					<div class="col-lg-2">
-						<label>Planned End Date </label>
+						<label>Plan End Date </label>
 					</div>
 					<div class="col-lg-4">
 						<input type="text" id="plan_end_date" name="plan_end_date" class="form-control" readonly="true">
@@ -82,7 +82,7 @@
 						
 					</div>
 					<div class="col-lg-2">
-						<label>Planned Never Ending</label>
+						<label>Plan Never End</label>
 					</div>
 					<div class="col-lg-4">
 						<input type="checkbox" name="never_expire" id="never_expire" >

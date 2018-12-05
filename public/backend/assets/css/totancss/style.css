@@ -697,7 +697,7 @@ Author: totan sau
 Description: timepicker css;
 */
 
-.ti_tx,
+/*.ti_tx,
 .mi_tx,
 .mer_tx {
     width: 100%;
@@ -767,7 +767,7 @@ Description: timepicker css;
     width: 18px;
     height: 10px;
     z-index: 999;
-}
+}*/
 input.timepicki-input {
     background: none repeat scroll 0 0 #FFFFFF;
         border: 1px solid #CCCCCC;
@@ -973,4 +973,40 @@ margin-left: 28px;
     font-weight: 700;
     text-transform: none;
     font-size: 13px;
+}
+
+#save_btn{
+    margin-right: -45px;
+    width: 100px;
+    margin-top: 1px !important;
+}
+
+
+.btn-del {
+    color: #fff;
+    background-color: #d20b0b;
+    border-color: #17a2b8;
+    padding: 5px 8px;
+}
+
+.btn-act {
+    color: #fff;
+    background-color: #096f0b;
+    border-color: #17a2b8;
+    padding: 5px 8px;
+}
+
+.btn-ina {
+    color: #fff;
+    background-color: #d8a70d;
+    border-color: #17a2b8;
+    padding: 5px 8px;
+}
+.add-pro-save {
+    position: relative;
+    float: left;
+    right: -90px;
+}
+.add-pro-sub {
+    float: right;
 }

@@ -186,6 +186,8 @@ Route::get('payment_history_backend','TrainerController@payment_history_backend'
 
 Route::get('payment_history_backend_request', 'TrainerController@payment_history_backend_request')->name('payment_history_backend_request');
 
+Route::get('order_history_backend_request', 'TrainerController@order_history_backend_request')->name('order_history_backend_request');
+
 Route::get('trainer_active_deactive', 'TrainerController@trainer_active_deactive')->name('trainer_active_deactive');
 
 
@@ -407,7 +409,9 @@ Route::get('cart_data_delete','FrontController@cart_data_delete')->name('cart_da
 
 
 Route::get('booking-bootcamp','FrontController@booking_bootcamp');
-Route::get('get_bootcamp_date_time','FrontController@get_bootcamp_date_time')->name('get_bootcamp_date_time');
+Route::get('get_bootcamp_date','FrontController@get_bootcamp_date')->name('get_bootcamp_date');
+Route::get('get_bootcamp_time','FrontController@get_bootcamp_time')->name('get_bootcamp_time');
+Route::post('bootcamp-booking','FrontController@bootcamp_booking_customer')->name('bootcamp_booking_customer');
 
 
 

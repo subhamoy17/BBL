@@ -145,7 +145,7 @@
                       <div class="form-group">
                         <input type="hidden" id="total_session" class="form-control" value="{{Session::get('sum_slots')}}"  >
                         <label>Address <small>*</small></label>
-                          <select class="form-control" name="address" id="address" onchange="get_date_time(this.value);">
+                          <select class="form-control" name="address" id="address" onchange="get_date(this.value);">
                             <option value="">Please select address</option>
                             @if(!empty($bootcampaddress))
                             @foreach($bootcampaddress as $each_bootcampaddress)
@@ -158,12 +158,12 @@
                     <div class="col-md-6 col-sm-12 col-xs-12">
                       <div class="form-group available_date">
                         <label>Available Date <small>*</small></label>
-                        <input type="text" id="bootcamp_date" name="bootcamp_date" class="form-control" onchange="jsfunction()" readonly="true">
+                        <input type="text" id="bootcamp_date" name="bootcamp_date" class="form-control" readonly="true">
                       </div>
                     </div>
                     <div class="col-md-6 col-sm-12 col-xs-12">
                       <label>Available Time <small>*</small></label>
-                        <select class="form-control" name="time" id="slot_time">
+                        <select class="form-control" name="session_time" id="session_time">
                                 
                         </select>
                     </div>
@@ -178,15 +178,15 @@
                       <div class="form-group">
                         <input name="form_botcheck" class="form-control" value="" type="hidden">
                         <input type="hidden" id="session_no" name="session_no" value="1">
-                        <button id="add_sess" class="btn btn-dark btn-theme-colored btn-flat">Add Session</button>
+                        <button id="add_sess" class="btn btn-dark btn-theme-colored btn-flat" style="margin-top: 10px;">Add Session</button>
                       </div>
                     </div>
                   </div>
                   <div id="sesssion_table">
-                    <form action="{{route('customer.slotinsert')}}" method="post" enctype="multipart/form-data" class="form-horizontal" id="add_session_form1">
+                    <form action="{{route('bootcamp_booking_customer')}}" method="post" enctype="multipart/form-data" class="form-horizontal" id="add_session_form1">
 
                       <input type="hidden" name="_token" value="{{csrf_token()}}">
-                      <input type="hidden" name="idd" id="id" value="{{Auth::guard('customer')->user()->id}}">
+                      <input type="hidden" name="customer_id" id="customer_id" value="{{Auth::guard('customer')->user()->id}}">
                       <input type="hidden" name="nd_btn" id="nd_btn" value="1">
                       <div id="add_session_req" >  </div>
             
@@ -233,6 +233,159 @@
 <script src="{{url('frontend/js/stellarnav.min.js')}}"></script>
 <script src="{{url('frontend/js/accotab.js')}}"></script>
 
+
+  <!-- get all date after choose address of bootcamp and set enabled date into calender -->
+<script>
+  function get_date(value)
+  {
+    if(value>0)
+    {
+
+
+      $.ajax({
+          type: "GET",
+          url: "{{route('get_bootcamp_date')}}",
+          data: {'address_id': value},
+          success: function (data){
+            //$('#loadingimg').hide();
+            //console.log(data);
+            var obj = $.parseJSON(data);
+
+            var plan_date='';
+            var disabledDays ='';
+
+            if(obj.length > 0)
+            { 
+              
+              $('#bootcamp_date').removeAttr('disabled');
+              $('#bootcamp_date').val('');
+
+              for(var i = 0; i < obj.length; i++)
+              {
+                plan_date=obj[i]['plan_date'];
+
+                $('.available_date').append($('<input type="hidden" name="all_date[]" id="all_date" value="' + plan_date + '">'));
+              }
+
+              var disabledDays =$("input[name='all_date[]']")
+              .map(function(){return $(this).val();}).get();
+
+              //console.log(disabledDays);
+               
+              function nationalDays(date) {
+
+                var m = date.getMonth(), d = date.getDate(), y = date.getFullYear(); 
+                 m=m+1;
+
+                if(m<10){ m="0" + m;}
+                if(d<10){ d="0" + d;}
+
+                for (i = 0; i < disabledDays.length; i++) {
+
+                  if($.inArray(y + '-' + m + '-' + d,disabledDays) != -1 ) {
+                    //console.log('bad:  ' + (m+1) + '-' + d + '-' + y + ' / ' + disabledDays[i]);
+                    return [true];
+                  }
+                }
+                  return [false];
+              }
+                /* create datepicker */
+                $('#bootcamp_date').datepicker({
+                  dateFormat: "yy-mm-dd",
+                  beforeShowDay: nationalDays,
+                  onSelect: getalltime
+                });
+            }
+            else
+            {
+              $('#bootcamp_date').val('No dates are available for this address');
+              $('#bootcamp_date').attr('disabled',true); 
+              return false;             
+            }
+          } //end of ajax success
+        }); // end of ajax call
+    }  // end of address select
+  } // end of date function
+
+// get all time depend on choosing date
+  function getalltime(choose_date)
+  {
+    var session_time = $('#session_time');
+                    session_time.prop("disabled",false);
+                    session_time.empty();
+    $.ajax({
+          type: "GET",
+          url: "{{route('get_bootcamp_time')}}",
+          data: {'bootcamp_date': choose_date},
+          success: function (data){
+            //$('#loadingimg').hide();
+            //console.log(data);
+            var obj = $.parseJSON(data);
+
+            if(obj.length > 0){ 
+              session_time.append(
+                $('<option>', {value: ''}).text('Please select time'));
+
+              var plan_time='';
+                //slot_time.append($('<option>', {value: ''}).text('Please select time'));
+              for(var i = 0; i < obj.length; i++)
+              {
+                plan_time=obj[i]['all_time'];
+
+                session_time.append($('<option>', {value: obj[i]['id']}).text(plan_time));
+              }
+            }
+          } // end of ajax success
+        }); //end of ajax call
+  } //end of function call
+</script>
+<script>
+   $(document).ready(function() {
+    $('body').on('click','#add_sess',function(e) {
+      e.preventDefault();
+    var address_text=$("#address option:selected").text();
+    var session_time_text=$("#session_time option:selected").text();
+
+    var address=$("#address").val();
+    var bootcamp_date=$("#bootcamp_date").val();
+    var session_time=$("#session_time").val();
+
+    var duplicate_date=0;
+
+    var all_previous_date = $(".all_previous_date");
+
+    for(var k = 0; k < all_previous_date.length; k++)
+    {
+      if($(all_previous_date[k]).val()==bootcamp_date)
+      {
+        duplicate_date=1;
+      }
+    }
+
+    if(address=='' || bootcamp_date=='' || session_time=='')
+    {
+      alert('Please select address, date and time');
+    }
+    else if(duplicate_date==1)
+    {
+      alert("You can't choose same date");
+    }
+    else
+    {
+      $("#add_session_req").append('<div class="conMon"><input readonly  class="form-control" type="text" name="bootcamp_address[]" value="' + address_text + '" />&nbsp;&nbsp;<input readonly  class="form-control" name="bootcamp_date[]" type="text" value="' + bootcamp_date + '" />&nbsp;&nbsp;<input readonly  class="form-control" type="text" name="bootcamp_time[]" value="' + session_time_text + '" /><input type=hidden class="all_previous_date"  readonly name="all_previous_date[]"' + 'id="all_previous_date[]"' + 'value="' + bootcamp_date + '" /><input type="text" name="schedule_id[]"' + 'value="' + session_time + '" /></div><br>');
+      $("#address").val(''); $("#bootcamp_date").val('');$("#session_time").val('');
+
+      $('#save_btn').show();
+    }
+  });
+  $('body').on('click','.btnRemoveMon',function() { 
+    $(this).closest('div.conMon').remove();
+  });
+});
+  
+</script>
+
+
   <script>
     // You can also use "$(window).load(function() {"
     $(function () {
@@ -243,65 +396,6 @@
       });
     });
   </script>
-
-  <script>
-
-    var disabledDays =$("input[name='all_date[]']")
-              .map(function(){return $(this).val();}).get();
-
-    /* utility functions */
-function nationalDays(date) {
-  var m = date.getMonth(), d = date.getDate(), y = date.getFullYear();
-  //console.log('Checking (raw): ' + y + '-' + m + '-' + d);
-  for (i = 0; i < disabledDays.length; i++) {
-
-    if($.inArray(y + '-' + (m+1) + '-' + d,disabledDays) != -1) {
-      //console.log('bad:  ' + (m+1) + '-' + d + '-' + y + ' / ' + disabledDays[i]);
-      return [true];
-    }
-  }
-  //console.log('good:  ' + (m+1) + '-' + d + '-' + y);
-  return [false];
-}
-// function noWeekendsOrHolidays(date) {
-//   var noWeekend = jQuery.datepicker.noWeekends(date);
-//   return noWeekend[0] ? nationalDays(date) : noWeekend;
-// }
-
-/* create datepicker */
-$(document).ready(function() {
-  $('#bootcamp_date').datepicker({
-    dateFormat: "yy-mm-dd",
-    beforeShowDay: nationalDays
-  });
-});
-
-    
-
-//   $(function () {
-//     $( "#slots_datepicker").datepicker({
-//   dateFormat: "yy-mm-dd",
-//   beforeShowDay: NotBeforeToday
-// });
-//   } );
-
-//   function NotBeforeToday(date)
-// {
-//     var now = new Date();//this gets the current date and time
-//     if (date.getFullYear() == now.getFullYear() && date.getMonth() == now.getMonth() && date.getDate() > now.getDate())
-//         return [true];
-//     if (date.getFullYear() >= now.getFullYear() && date.getMonth() > now.getMonth())
-//        return [true];
-//      if (date.getFullYear() > now.getFullYear())
-//        return [true];
-//     return [false];
-// }
-
-  
-
-
-  </script>
-
 
   <script>
     $(document).ready(function() { 
@@ -433,50 +527,6 @@ $(document).ready(function() {
   });
 </script>
 
-<script>
-  function get_date_time(value)
-  {
-    if(value>0)
-    {
-
-      $.ajax({
-          type: "GET",
-          url: "{{route('get_bootcamp_date_time')}}",
-          data: {'address_id': value},
-          success: function (data){
-            //$('#loadingimg').hide();
-            //console.log(data);
-            var obj = $.parseJSON(data);
-
-            
-            var convert_time=0;
-
-            if(obj.length > 0){ 
-
-              var plan_date='';
-                //slot_time.append($('<option>', {value: ''}).text('Please select time'));
-              for(var i = 0; i < obj.length; i++)
-              {
-                plan_date=obj[i]['plan_date'];
-
-                alert(plan_date);
-
-                $('.available_date').append('<input type="text" name="all_date[]" value="plan_date">');
-                //convert_time=obj[i]['time'];
-                //slot_time.append($('<option>', {value: obj[i]['id']}).text(convert_time));
-              }
-            }
-            // else
-            // {
-            //   slot_time.append($('<option>', {value: ''}).text('All slots are booked'));
-            //   $('#slot_time').attr('disabled','disabled');
-            //   $("#slot_time").css("background","#3d3648");
-            // }
-          }
-      });
-    }
-  }
-</script>
 
 </body>
 
