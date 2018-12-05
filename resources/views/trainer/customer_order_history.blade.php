@@ -40,6 +40,43 @@ $('#bootstrap-slot-data-table').DataTable({
 }
 </style>
 
+<style>
+
+.button-primary {
+  background: #d16879;
+  color: #FFF;
+  padding: 10px 20px;
+  font-weight: bold;
+  border:1px solid #FFC0CB; 
+}
+
+.div {
+    height:200px;
+    background-color:red;
+}
+#loading-img {
+  background: url(../backend/images/loader-gif-transparent-background-4.gif) center no-repeat / cover;
+    display: none;
+    height: 100px;
+    width: 100px;
+    position: absolute;
+    top: 50%;
+    left: 1%;
+    right: 1%;
+    margin: 0 auto;
+    z-index: 99999;
+}
+
+.group {
+    position: relative;
+    width: 100%;
+}
+.card-body{
+  
+}
+
+</style>
+
 @if(Auth::user()->master_trainer==1)
 
 <div class="breadcrumbs">
@@ -57,7 +94,7 @@ $('#bootstrap-slot-data-table').DataTable({
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                   
+                   <div id="loading-img"></div>
                     <div class="card-body">
                        
                         
@@ -71,9 +108,9 @@ $('#bootstrap-slot-data-table').DataTable({
                                     
                                     <th>No of Session</th>
                                     <th>Remaining Session</th>
-                                    <th>Purchased Details</th>
-                                    <th>Status</th>
                                     
+                                    <th>Status</th>
+                                    <th>Action</th>
                                       
                                    </tr> 
                             </thead>
@@ -93,15 +130,24 @@ $('#bootstrap-slot-data-table').DataTable({
                                     @else
                                     <td>{{$order_history->remaining_sessions}}</td>
                                     @endif
-                                   
-                                   <td><a class="detail-orders-modal-btn1" id="{{$order_history->order_details_id}}" href="#"   data-payment-option="{{$order_history->payment_option}}"  data-plan-price="{{$order_history->total_price}}" data-payment-type-name="{{$order_history->payment_type}}" data-purchased-on="{{date('d F Y', strtotime($order_history->order_purchase_date))}}" data-validity-date="{{$order_history->order_validity_date? date('d F Y', strtotime($order_history->order_validity_date)) : 'N/A'}}" data-payment-id="{{$order_history->payment_id}}" data-payment-description="{{$order_history->description? $order_history->description : 'N/A'}}" data-payment-image="{{asset('backend/bankpay_images')}}/{{$order_history->image}}">Click here</a></td>
-                                   @if(\Carbon\Carbon::now()->toDateString() < $order_history->order_validity_date)
-                                    <td>Active</td>
-                                    @elseif($order_history->payment_type=='Subscription')
-                                    <td>Active</td>
+                                     @if($order_history->status=='1')
+                                    <td>Payment Success</td>
+                                    @elseif($order_history->status=='0')
+                                    <td>Payment Inprogress</td>
                                     @else
                                     <td>Inactive</td>
                                     @endif
+                                   <td align="center" class="td-btn5">
+
+                @if($order_history->payment_option == 'Bank Transfer' && $order_history->status =='0' && $order_history->payment_status != 'Decline')
+
+               <button type="button" class="btn btn-success status-all" title="Approve" data-msg="Approve" id="{{$order_history->order_details_id}}"><i class="fa fa-thumbs-up"></i></button>
+
+                 <button type="button"  title="Decline" class="btn btn-danger status-all" data-msg="Decline" id="{{$order_history->order_details_id}}"><i class="fa fa-thumbs-down"></i></button>
+                
+                @endif
+                                    <a class="detail-orders-modal-btn1 btn btn-info" id="{{$order_history->order_details_id}}" href="#"   data-payment-option="{{$order_history->payment_option}}"  data-plan-price="{{$order_history->total_price}}" data-payment-type-name="{{$order_history->payment_type}}" data-purchased-on="{{date('d F Y', strtotime($order_history->order_purchase_date))}}" data-validity-date="{{$order_history->order_validity_date? date('d F Y', strtotime($order_history->order_validity_date)) : 'N/A'}}" data-payment-id="{{$order_history->payment_id}}" data-payment-description="{{$order_history->description? $order_history->description : 'N/A'}}" data-payment-image="{{asset('backend/bankpay_images')}}/{{$order_history->image}}"><i class="fa fa-eye" title="view details"  aria-hidden="true"></i></a></td>
+                                 
 
                                 </tr>
                             @endforeach
@@ -307,6 +353,146 @@ $('#bootstrap-slot-data-table').DataTable({
   
 });
 </script>
+
+<script type="text/javascript">
+      $(document).ready(function(){
+        
+       $("#bootstrap-slot-data-table").on("click", ".status-all", function(e) {
+          var action = $(this).data("msg");
+          console.log(action);
+          var row = this.closest('tr');
+          console.log(row);
+      console.log(action);
+if (action == "Decline"){
+  var Data =
+  {
+    'id': this.id,
+   
+    'action': action
+  }
+
+  alertify.confirm("Are you sure you want to decline this payment?", function (e) {
+     if (e) { 
+ $(".card-body").css("opacity", .2);
+  $("#loading-img").css({"display": "block"});
+
+  $.ajax({
+    url: "{{route('order_history_backend_request')}}",
+
+    json_enc: Data,
+    type: "GET",
+    dataType: "json",
+    data:
+    {
+      'data': Data,
+    },
+    success: function (data)
+    {
+      if(data==1){
+        console.log("Approve response");
+      console.log(data);
+      $(".card-body").css("opacity", .2);
+         $("#loading-img").css({"display": "block"});
+
+      $('#success-msg').show();
+      setTimeout(function(){
+        $('#success-msg').hide();
+ window.location.reload();
+      }, 5000);
+      }
+      else
+      {
+        console.log("Decline decline");
+      console.log(data);
+   $(".card-body").css("opacity", .2);
+   $("#loading-img").css({"display": "block"});
+      $('#decline-msg').show();
+      setTimeout(function(){
+        $('#decline-msg').hide();
+         window.location.reload();
+      }, 5000);
+
+
+      }
+      
+    }
+  });
+       }
+        else
+        {
+
+        }
+
+        });
+}
+else if (action == "Approve"){
+  var Data =
+  {
+    'id': this.id,
+   
+    'action': action
+  }
+
+
+alertify.confirm("Are you sure you will be approve this payment?", function (e) {
+ if (e) {
+  $(".card-body").css("opacity", .2);
+  $("#loading-img").css({"display": "block"});
+   
+  $.ajax({
+    url: "{{route('order_history_backend_request')}}",
+
+    json_enc: Data,
+    type: "GET",
+    dataType: "json",
+    data:
+    {
+      'data': Data,
+    },
+    success: function (data)
+    {
+      if(data==1){
+        console.log("Approve response");
+      console.log(data);
+      $(".card-body").css("opacity", .2);
+         $("#loading-img").css({"display": "block"});
+
+      $('#success-msg').show();
+      setTimeout(function(){
+        $('#success-msg').hide();
+ window.location.reload();
+      }, 5000);
+      }
+      else{
+        console.log("Decline decline");
+      console.log(data);
+   $(".card-body").css("opacity", .2);
+      $("#loading-img").css({"display": "block"});
+      $('#decline-msg').show();
+      setTimeout(function(){
+        $('#decline-msg').hide();
+         window.location.reload();
+      }, 5000);
+
+
+      }
+      
+    }
+  });
+}
+  else 
+ 
+  {           
+
+
+   }   
+ });
+}
+});
+
+
+      });
+    </script>
     
 
 @endsection

@@ -98,7 +98,7 @@ $('#bootstrap-slot-data-table').DataTable({
                                     <th>Price</th>
                                     <th>Total Price</th>
                                     <th>Product Validity</th>
-                                    <th>Product Details</th>
+                                    <th>Status</th>
                                     
                                     <th id="action">Action</th>
                                 </tr>
@@ -119,14 +119,21 @@ $('#bootstrap-slot-data-table').DataTable({
                                      @endif
                                     <td><i class="fa fa-gbp">{{$my_productdata->total_price}}</td>
                                      <td>{{$my_productdata->validity? $my_productdata->validity.' Days' :'N/A'}} </td>
-                                    
-                                    <td><a class="detail-products-modal-btn1" id="{{$my_productdata->product_id}}" href="#"   data-personal-contract="{{$my_productdata->contract? $my_productdata->contract : 'N/A'}}" data-personal-notice-period="{{$my_productdata->notice_period? $my_productdata->notice_period.' Days' : 'N/A'}}" data-personal-training-name="{{$my_productdata->training_name}}" data-personal-price-session-or-month="{{$my_productdata->price_session_or_month}}" data-personal-total-price="{{$my_productdata->total_price}}" data-personal-total-sessions="{{$my_productdata->total_sessions}}" data-personal-notice-period-value="{{$my_productdata->notice_period_value}}" data-personal-payment-type-name="{{$my_productdata->payment_type_name}}">Click here</a></td>
-                                 
+                                     @if($my_productdata->deleted_at != '')
+                                     <td align="center"><i class="fa fa-ban btn-del" title="Deleted product"></i></td>
+                                     @elseif($my_productdata->status =='0')
+                                    <td align="center"><i class="fa fa-times-circle btn-ina" title="Inactive product"></i></td>
+                                        @elseif($my_productdata->status =='1')
+                                         <td align="center"><i class="fa fa-check-circle btn-act"  title="Active product"> </i></td>
+                                    @endif
                                    
                                         
-                                        <td style="width: 70px">
-                                        <a href="{{route('edit_product',['product_id' => Crypt::encrypt($my_productdata->product_id)])}}"><button class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button></a>
-                                        <button type="button" class="btn btn-danger btn-sm" onclick="delete_client({!!$my_productdata->product_id!!})" style="width: 32px;" title="Delete Exercise"><i class="fa fa-trash-o"></i></button>
+                                        <td align="center" class="td-btn5">
+                                             @if($my_productdata->deleted_at == '')
+                                        <a href="{{route('edit_product',['product_id' => Crypt::encrypt($my_productdata->product_id)])}}"><button class="btn btn-primary btn-sm"><i class="fa fa-edit" title="Edit product"></i></button></a>
+                                        <button type="button" class="btn btn-danger btn-sm" onclick="delete_client({!!$my_productdata->product_id!!})" style="width: 32px;" title="Delete product"><i class="fa fa-trash-o"></i></button>
+                                        @endif
+                                        <a class="detail-products-modal-btn1 btn btn-info btn-sm" id="{{$my_productdata->product_id}}" href="#"   data-personal-contract="{{$my_productdata->contract? $my_productdata->contract : 'N/A'}}" data-personal-notice-period="{{$my_productdata->notice_period? $my_productdata->notice_period.' Days' : 'N/A'}}" data-personal-training-name="{{$my_productdata->training_name}}" data-personal-price-session-or-month="{{$my_productdata->price_session_or_month}}" data-personal-total-price="{{$my_productdata->total_price}}" data-personal-total-sessions="{{$my_productdata->total_sessions}}" data-personal-notice-period-value="{{$my_productdata->notice_period_value}}" data-personal-payment-type-name="{{$my_productdata->payment_type_name}}"><i class="fa fa-eye" title="view details"  aria-hidden="true"></i></a>
                                     </td>
 
 

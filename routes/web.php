@@ -186,6 +186,8 @@ Route::get('payment_history_backend','TrainerController@payment_history_backend'
 
 Route::get('payment_history_backend_request', 'TrainerController@payment_history_backend_request')->name('payment_history_backend_request');
 
+Route::get('order_history_backend_request', 'TrainerController@order_history_backend_request')->name('order_history_backend_request');
+
 Route::get('trainer_active_deactive', 'TrainerController@trainer_active_deactive')->name('trainer_active_deactive');
 
 

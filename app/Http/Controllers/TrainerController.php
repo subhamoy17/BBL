@@ -3923,12 +3923,18 @@ public function add_product()
 
 public function insert_product(Request $request)
 {
-  //Log::debug(" insert_product ".print_r($request->all(),true));
+  Log::debug(" insert_product ".print_r($request->all(),true));
   DB::beginTransaction();
    try{
   $products_data['training_type_id']=$request->training_type;
   $products_data['payment_type_id']=$request->payment_type;
-
+if($request->submit == 'Save')
+  {
+$products_data['status']=0;
+  }
+  else{
+    $products_data['status']=1;
+  }
   
   if($request->payment_type == 1)
   {
@@ -4001,12 +4007,13 @@ public function edit_product($id)
 
 public function update_product(Request $request)
 {
-  //Log::debug(":: product_details :: ".print_r($request->all(),true));
+  Log::debug(":: product_details :: ".print_r($request->all(),true));
 
   DB::beginTransaction();
     try{
   $products_data['training_type_id']=$request->training_type;
   $products_data['payment_type_id']=$request->payment_type;
+
 
 
 if($request->payment_type == 1)
@@ -4016,9 +4023,24 @@ if($request->payment_type == 1)
      $products_data['total_price']=$request->final_total_price;
      $products_data['validity_value']=$request->validity;
      $products_data['validity_duration']=$request->validity_2;
+     if($request->save == 'Save')
+  {
+$products_data['status']=0;
+  }
+  else{
+    $products_data['status']=1;
+  }
   }
   else if($request->payment_type == 2)
   {
+
+    if($request->save == 'Save')
+  {
+$products_data['status']=0;
+  }
+  else{
+    $products_data['status']=1;
+  }
     if($request->has('session_unlimited'))
   {
     $products_data['total_sessions']='Unlimited';
@@ -4074,8 +4096,8 @@ public function view_product(Request $request)
   $all_products_data=DB::table('products')
   ->join('training_type','products.training_type_id','training_type.id')
   ->join('payment_type','products.payment_type_id','payment_type.id')
-  ->select('products.id as product_id','products.payment_type_id as payment_type_id','training_type.training_name as training_name','payment_type.payment_type_name as payment_type_name','products.total_sessions as total_sessions','products.price_session_or_month as price_session_or_month','products.total_price as total_price','products.validity_value as validity_value','products.validity_duration as validity_duration','products.contract as contract','products.notice_period_value as notice_period_value','products.notice_period_duration as notice_period_duration',(DB::raw('products.validity_value * products.validity_duration  as validity')),(DB::raw('products.notice_period_value * products.notice_period_duration  as notice_period')))
-  ->whereNull('products.deleted_at')
+  ->select('products.id as product_id','products.payment_type_id as payment_type_id','products.deleted_at as deleted_at','training_type.training_name as training_name','payment_type.payment_type_name as payment_type_name','products.total_sessions as total_sessions','products.price_session_or_month as price_session_or_month','products.total_price as total_price','products.validity_value as validity_value','products.validity_duration as validity_duration','products.contract as contract','products.notice_period_value as notice_period_value','products.status as status','products.notice_period_duration as notice_period_duration',(DB::raw('products.validity_value * products.validity_duration  as validity')),(DB::raw('products.notice_period_value * products.notice_period_duration  as notice_period')))
+  
   ->orderby('products.id','DESC')->get();
 
   // Log::debug(":: personal_training_product_details :: ".print_r($personal_training_product_details,true));
@@ -4096,7 +4118,7 @@ public function order_history(Request $request)
   $this->cart_delete_trainer();
   
 
-  $all_order_history=DB::table('order_details')->join('products','products.id','order_details.product_id')->join('payment_history','payment_history.id','order_details.payment_id')->join('training_type','training_type.id','products.training_type_id')->join('payment_type','payment_type.id','products.payment_type_id')->join('customers','customers.id','order_details.customer_id')->select('order_details.id as order_details_id','order_details.customer_id as customer_id','order_details.order_purchase_date as order_purchase_date','order_details.remaining_sessions as remaining_sessions','order_details.payment_type as payment_type','order_details.training_type as training_type','order_details.order_validity_date as order_validity_date','order_details.payment_option as payment_option','order_details.status as status','products.training_type_id as training_type_id', 'products.total_sessions as total_sessions', 'order_details.price_session_or_month as price_session_or_month','products.id as product_id','order_details.total_price as total_price','products.validity_value as validity_value','products.validity_duration as validity_duration','training_type.training_name as training_name','payment_type.payment_type_name as payment_type_name','customers.name as customer_name','payment_type.payment_type_name as payment_type_name','payment_history.payment_id as payment_id','payment_history.description as description','payment_history.image as image')->whereNull('order_details.deleted_at')
+  $all_order_history=DB::table('order_details')->join('products','products.id','order_details.product_id')->join('payment_history','payment_history.id','order_details.payment_id')->join('training_type','training_type.id','products.training_type_id')->join('payment_type','payment_type.id','products.payment_type_id')->join('customers','customers.id','order_details.customer_id')->select('order_details.id as order_details_id','order_details.customer_id as customer_id','order_details.order_purchase_date as order_purchase_date','order_details.remaining_sessions as remaining_sessions','order_details.payment_type as payment_type','order_details.training_type as training_type','order_details.order_validity_date as order_validity_date','order_details.payment_option as payment_option','order_details.status as status','products.training_type_id as training_type_id', 'products.total_sessions as total_sessions', 'order_details.price_session_or_month as price_session_or_month','products.id as product_id','order_details.total_price as total_price','products.validity_value as validity_value','products.validity_duration as validity_duration','training_type.training_name as training_name','payment_type.payment_type_name as payment_type_name','customers.name as customer_name','payment_type.payment_type_name as payment_type_name','payment_history.payment_id as payment_id','payment_history.description as description','payment_history.image as image','payment_history.status as payment_status')->whereNull('order_details.deleted_at')
   ->orderby('order_details.id','DESC')->get();
 
   Log::debug(":: personal_training_product_details :: ".print_r($all_order_history,true));
@@ -4109,6 +4131,44 @@ public function order_history(Request $request)
     return abort(200);
   }
 }
+
+
+
+public function order_history_backend_request(Request $request)
+{
+  $this->cart_delete_trainer();
+    $data=$request->get('data');
+    $purchased_history_id=$data['id'];
+    $action=$data['action'];
+
+    $order_details=DB::table('order_details')->where('id',$purchased_history_id)->first();
+    
+    if($action=="Approve"){
+
+    $update_purchases_history=DB::table('order_details')
+    ->where('id',$purchased_history_id)->update(['status' =>1,'remaining_sessions'=>$order_details->no_of_sessions]);
+
+    $update_payment_history=DB::table('payment_history')
+    ->where('id',$order_details->payment_id)->update(['status'=> 'Success']);
+
+    // send notification mail
+
+    return response()->json(1);
+    }
+    elseif($action=="Decline")
+    {
+
+    $update_payment_history=DB::table('payment_history')
+    ->where('id',$order_details->payment_id)->update(['status'=> 'Decline']);
+
+    // send notification mail
+
+   
+
+    return response()->json(2);
+    }
+}
+
 
 
 }
