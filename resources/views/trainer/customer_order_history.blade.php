@@ -132,10 +132,10 @@ $('#bootstrap-slot-data-table').DataTable({
                                     @endif
                                      @if($order_history->status=='1')
                                     <td>Payment Success</td>
-                                    @elseif($order_history->status=='0')
+                                    @elseif($order_history->status=='0' && $order_history->payment_status == 'Inprogress')
                                     <td>Payment Inprogress</td>
-                                    @else
-                                    <td>Inactive</td>
+                                    @elseif($order_history->status=='0' && $order_history->payment_status == 'Decline')
+                                    <td>Payment Decline</td>
                                     @endif
                                    <td align="center" class="td-btn5">
 

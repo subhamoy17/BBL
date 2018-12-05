@@ -1376,7 +1376,7 @@ public function bootcamp_onlinepayment(Request $request)
  // Log::debug(":: bootcamp_onlinepayment :: ".print_r($request->all(),true));
   
 DB::beginTransaction();
-   try{
+   // try{
   $package_details=DB::table('products')
   ->join('training_type','training_type.id','products.training_type_id')
   ->join('payment_type','payment_type.id','products.payment_type_id')
@@ -1425,11 +1425,11 @@ DB::beginTransaction();
 
   DB::commit();
     return redirect('customer/bootcamponlinepaymentsuccess');
-   }
-   catch(\Exception $e) {
-     DB::rollback();
-       return abort(400);
-   }
+   // }
+   // catch(\Exception $e) {
+   //   DB::rollback();
+   //     return abort(400);
+   // }
 
 }
 
