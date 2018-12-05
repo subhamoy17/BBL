@@ -1402,6 +1402,9 @@ DB::beginTransaction();
   {
     $order_data['order_validity_date']=Carbon::now()->addDay($package_details->validity);
   }
+  else{
+    $order_data['order_validity_date']='2099-12-30';
+  }
   
   $order_data['payment_option']='Online Payment';
   $order_data['status']=1;
