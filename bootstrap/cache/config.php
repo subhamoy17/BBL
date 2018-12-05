@@ -188,7 +188,7 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => 'D:\\xampp\\htdocs\\bbl\\storage\\framework/cache/data',
+        'path' => 'F:\\XAMPP\\htdocs\\BBL\\storage\\framework/cache/data',
       ),
       'memcached' => 
       array (
@@ -228,7 +228,7 @@
       'sqlite' => 
       array (
         'driver' => 'sqlite',
-        'database' => 'bbldb',
+        'database' => 'bbldb_vital',
         'prefix' => '',
       ),
       'mysql' => 
@@ -236,7 +236,7 @@
         'driver' => 'mysql',
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'bbldb',
+        'database' => 'bbldb_vital',
         'username' => 'root',
         'password' => '',
         'unix_socket' => '',
@@ -251,7 +251,7 @@
         'driver' => 'pgsql',
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'bbldb',
+        'database' => 'bbldb_vital',
         'username' => 'root',
         'password' => '',
         'charset' => 'utf8',
@@ -264,7 +264,7 @@
         'driver' => 'sqlsrv',
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'bbldb',
+        'database' => 'bbldb_vital',
         'username' => 'root',
         'password' => '',
         'charset' => 'utf8',
@@ -293,12 +293,12 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => 'D:\\xampp\\htdocs\\bbl\\storage\\app',
+        'root' => 'F:\\XAMPP\\htdocs\\BBL\\storage\\app',
       ),
       'public' => 
       array (
         'driver' => 'local',
-        'root' => 'D:\\xampp\\htdocs\\bbl\\storage\\app/public',
+        'root' => 'F:\\XAMPP\\htdocs\\BBL\\storage\\app/public',
         'url' => 'http://localhost:8000/storage',
         'visibility' => 'public',
       ),
@@ -343,13 +343,13 @@
       'single' => 
       array (
         'driver' => 'single',
-        'path' => 'D:\\xampp\\htdocs\\bbl\\storage\\logs/laravel.log',
+        'path' => 'F:\\XAMPP\\htdocs\\BBL\\storage\\logs/laravel.log',
         'level' => 'debug',
       ),
       'daily' => 
       array (
         'driver' => 'daily',
-        'path' => 'D:\\xampp\\htdocs\\bbl\\storage\\logs/laravel.log',
+        'path' => 'F:\\XAMPP\\htdocs\\BBL\\storage\\logs/laravel.log',
         'level' => 'debug',
         'days' => 7,
       ),
@@ -401,7 +401,7 @@
       'theme' => 'default',
       'paths' => 
       array (
-        0 => 'D:\\xampp\\htdocs\\bbl\\resources\\views/vendor/mail',
+        0 => 'F:\\XAMPP\\htdocs\\BBL\\resources\\views/vendor/mail',
       ),
     ),
   ),
@@ -414,13 +414,13 @@
       'paypal_mode' => 'sandbox',
       'http.ConnectionTimeOut' => 30,
       'log.LogEnabled' => true,
-      'log.FileName' => 'D:\\xampp\\htdocs\\bbl\\storage/logs/paypal.log',
+      'log.FileName' => 'F:\\XAMPP\\htdocs\\BBL\\storage/logs/paypal.log',
       'log.LogLevel' => 'ERROR',
     ),
   ),
   'queue' => 
   array (
-    'default' => 'sync',
+    'default' => 'database',
     'connections' => 
     array (
       'sync' => 
@@ -507,7 +507,7 @@
     'lifetime' => '120',
     'expire_on_close' => false,
     'encrypt' => false,
-    'files' => 'D:\\xampp\\htdocs\\bbl\\storage\\framework/sessions',
+    'files' => 'F:\\XAMPP\\htdocs\\BBL\\storage\\framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'store' => NULL,
@@ -527,9 +527,9 @@
   array (
     'paths' => 
     array (
-      0 => 'D:\\xampp\\htdocs\\bbl\\resources\\views',
+      0 => 'F:\\XAMPP\\htdocs\\BBL\\resources\\views',
     ),
-    'compiled' => 'D:\\xampp\\htdocs\\bbl\\storage\\framework\\views',
+    'compiled' => 'F:\\XAMPP\\htdocs\\BBL\\storage\\framework\\views',
   ),
   'trustedproxy' => 
   array (
