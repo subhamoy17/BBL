@@ -146,7 +146,7 @@ $('#bootstrap-slot-data-table').DataTable({
                  <button type="button"  title="Decline" class="btn btn-danger status-all" data-msg="Decline" id="{{$order_history->order_details_id}}"><i class="fa fa-thumbs-down"></i></button>
                 
                 @endif
-                                    <a class="detail-orders-modal-btn1 btn btn-info" id="{{$order_history->order_details_id}}" href="#"   data-payment-option="{{$order_history->payment_option}}"  data-plan-price="{{$order_history->total_price}}" data-payment-type-name="{{$order_history->payment_type}}" data-purchased-on="{{date('d F Y', strtotime($order_history->order_purchase_date))}}" data-validity-date="{{$order_history->order_validity_date? date('d F Y', strtotime($order_history->order_validity_date)) : 'N/A'}}" data-payment-id="{{$order_history->payment_id}}" data-payment-description="{{$order_history->description? $order_history->description : 'N/A'}}" data-payment-image="{{asset('backend/bankpay_images')}}/{{$order_history->image}}"><i class="fa fa-eye" title="view details"  aria-hidden="true"></i></a></td>
+                                    <a class="detail-orders-modal-btn1 btn btn-info btn-sm" id="{{$order_history->order_details_id}}" href="#"   data-payment-option="{{$order_history->payment_option}}"  data-plan-price="{{$order_history->total_price}}" data-payment-type-name="{{$order_history->payment_type}}" data-purchased-on="{{date('d F Y', strtotime($order_history->order_purchase_date))}}" data-validity-date="{{$order_history->order_validity_date? date('d F Y', strtotime($order_history->order_validity_date)) : 'N/A'}}" data-payment-id="{{$order_history->payment_id}}" data-payment-description="{{$order_history->description? $order_history->description : 'N/A'}}" data-payment-image="{{asset('backend/bankpay_images')}}/{{$order_history->image}}" data-noimage="{{$order_history->image}}"><i class="fa fa-eye" title="view details"  aria-hidden="true"></i></a></td>
                                  
 
                                 </tr>
@@ -253,7 +253,7 @@ $('#bootstrap-slot-data-table').DataTable({
                                 <label>Payment Image</label>
                                 <div class="dispClass">
                                     <p class="detail-txt2"> 
-                                         <!-- <span id="description"></span> -->
+                                         
                                           <img class="col-lg-8 modal_image" width="100">                                  
                                          
                                     </p>                             
@@ -311,6 +311,7 @@ $('#bootstrap-slot-data-table').DataTable({
      var plan_price= $(this).data("plan-price");
     var description= $(this).data("payment-description");
     var payment_image= $(this).data("payment-image");
+    var noimage= $(this).data("noimage");
     $('#payment_option').text(payment_option);
     $('#payment_type_name').text(payment_type_name);
     
@@ -320,22 +321,31 @@ $('#bootstrap-slot-data-table').DataTable({
     $('#payment_id').text(payment_id);
     $('#plan_price').text(plan_price);
     
-    if($(this).data('payment-image')!=''){
+    if($(this).data('noimage')!= ''){
+      
             $('#pay_img').show();
             $('img.modal_image').attr('src',payment_image); 
+
           }
 
-          else{
+          else 
+          {
+            
+            $("#pay_img").css({"display": "block"});
             $('#pay_img').hide();
+            $('img.modal_image').attr('src','');
+             
           }
 
-          if($(this).data('payment-description')!=''){
+          if($(this).data('payment-description')!= ''){
+            
             $('#pay_des').show();
             $('#description').text(description);
           }
 
           else{
             $('#pay_des').hide();
+
           }
 
           if($(this).data('payment-option')=='Bank Transfer'){

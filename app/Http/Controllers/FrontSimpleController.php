@@ -26,7 +26,7 @@ public function index(Request $request)
   ->join('payment_type','products.payment_type_id','payment_type.id')
   ->select('products.id as product_id','training_type.training_name as training_name','payment_type.payment_type_name as payment_type_name','products.total_sessions as total_sessions','products.price_session_or_month as price_session_or_month','products.total_price as total_price','products.validity_value as validity_value','products.validity_duration as validity_duration','products.contract as contract','products.notice_period_value as notice_period_value','products.notice_period_duration as notice_period_duration',(DB::raw('products.validity_value * products.validity_duration  as validity')),(DB::raw('products.notice_period_value * products.notice_period_duration  as notice_period')))
   ->whereNull('products.deleted_at')
-  ->where('training_type.id',2)
+  ->where('training_type.id',2)->where('products.status',1)
   ->orderby('products.id','DESC')->get();
 
      return view('bbl')->with(compact('bootcamp_product_details'));
