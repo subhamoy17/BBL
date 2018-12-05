@@ -397,240 +397,40 @@ public function booking_history(Request $request)
     {
       $start_date=$request->start_date;
       $end_date=$request->end_date;
-      //Log::debug(" Check ".print_r($start_date,true)); 
-      //Log::debug(" Check id ".print_r($end_date,true)); 
     }
+  else
+  {
+    
+    $start_date=Carbon::now()->toDateString();
+    $end_date=Carbon::now()->addDays(30)->toDateString();
+  }
 
     $now = Carbon::now()->toDateString();
     $now_month = Carbon::now()->addDays(30)->toDateString();
-  if($request->option=='future_pending')
-  {
-    
-    $data=DB::table('slot_request')
-    ->join('customers','customers.id','slot_request.customer_id')
-    ->join('slot_approval','slot_approval.id','slot_request.approval_id')
-    ->join('users','users.id','slot_request.trainer_id')
-    ->join('purchases_history','purchases_history.id','slot_request.purchases_id')
-    ->join('slots','slots.id','purchases_history.slot_id')
-    ->join('slot_times','slot_times.id','slot_request.slot_time_id')
-    ->select('customers.name','slots.slots_name','slots.slots_number','slots.slots_price','slots.slots_validity','users.name as users_name','purchases_history.purchases_date','purchases_history.package_validity_date','slot_request.purchases_id as slot_purchases_id','slot_request.id as slot_id','slot_approval.status','slot_request.slot_date','slot_times.time as slot_time','slot_approval.status', 'slot_request.created_at')->where('slot_request.slot_date','>=',$now )->where('slot_request.approval_id',1 )->whereBetween('slot_request.slot_date', [$start_date, $end_date])
-    ->where('slot_request.customer_id',Auth::guard('customer')->user()->id)->orderby('slot_request.id','DESC')->paginate(10);
-    //  foreach($data as $time_data)
-    // {
-    // $time_data= $time_data->created_at;
-    // $carbon_date = Carbon::parse($time_data);
-    // $carbon_date->addHours(1);
-    // }
-    
-  }
-  else if($request->option=='delete_request')
-  {
-    $data=DB::table('slot_request')
-    ->join('customers','customers.id','slot_request.customer_id')
-    ->join('slot_approval','slot_approval.id','slot_request.approval_id')
-    ->join('users','users.id','slot_request.trainer_id')
-    ->join('purchases_history','purchases_history.id','slot_request.purchases_id')
-    ->join('slots','slots.id','purchases_history.slot_id')
-    ->join('slot_times','slot_times.id','slot_request.slot_time_id')
-    ->select('customers.name','slots.slots_name','slots.slots_number','slots.slots_price','slots.slots_validity','users.name as users_name','purchases_history.purchases_date','purchases_history.package_validity_date','slot_request.purchases_id as slot_purchases_id','slot_approval.status','slot_request.slot_date','slot_times.time as slot_time','slot_approval.status', 'slot_request.created_at')->where('slot_request.approval_id',2 )->whereBetween('slot_request.slot_date', [$start_date, $end_date])
-    ->where('slot_request.customer_id',Auth::guard('customer')->user()->id)->orderby('slot_request.id','DESC')->paginate(10);
-  }
-  else if($request->option=='declined_request' )
-  {
-    $data=DB::table('slot_request')
-    ->join('customers','customers.id','slot_request.customer_id')
-    ->join('slot_approval','slot_approval.id','slot_request.approval_id')
-    ->join('users','users.id','slot_request.trainer_id')
-    ->join('purchases_history','purchases_history.id','slot_request.purchases_id')
-    ->join('slots','slots.id','purchases_history.slot_id')
-    ->join('slot_times','slot_times.id','slot_request.slot_time_id')
-    ->select('customers.name','slots.slots_name','slots.slots_number','slots.slots_price','slots.slots_validity','users.name as users_name','purchases_history.purchases_date','purchases_history.package_validity_date','slot_request.purchases_id as slot_purchases_id','slot_approval.status','slot_request.slot_date','slot_times.time as slot_time','slot_approval.status', 'slot_request.created_at')->where('slot_request.approval_id',4 )->whereBetween('slot_request.slot_date', [$start_date, $end_date])->where('slot_request.customer_id',Auth::guard('customer')->user()->id)->orderby('slot_request.id','DESC')->paginate(10);
-  }
-  else if($request->option=='past_request')
-  {
-    $data=DB::table('slot_request')
-    ->join('customers','customers.id','slot_request.customer_id')
-    ->join('slot_approval','slot_approval.id','slot_request.approval_id')
-    ->join('users','users.id','slot_request.trainer_id')
-    ->join('purchases_history','purchases_history.id','slot_request.purchases_id')
-    ->join('slots','slots.id','purchases_history.slot_id')
-    ->join('slot_times','slot_times.id','slot_request.slot_time_id')
-    ->select('customers.name','slots.slots_name','slots.slots_number','slots.slots_price','slots.slots_validity','users.name as users_name','purchases_history.purchases_date','purchases_history.package_validity_date','slot_request.purchases_id as slot_purchases_id','slot_approval.status','slot_request.slot_date','slot_times.time as slot_time','slot_approval.status', 'slot_request.created_at')->where('slot_request.slot_date','<',$now )->whereBetween('slot_request.slot_date', [$start_date, $end_date])->where('slot_request.customer_id',Auth::guard('customer')->user()->id)->orderby('slot_request.id','DESC')->paginate(10);
 
-    foreach($data as $past_data)
+    $all_booking=DB::table('bootcamp_booking')
+    ->join('bootcamp_plan_shedules','bootcamp_plan_shedules.id','bootcamp_booking.bootcamp_plan_shedules_id')
+    ->join('bootcamp_plan_address','bootcamp_plan_address.id','bootcamp_plan_shedules.address_id')
+    ->select('bootcamp_plan_shedules.plan_date','bootcamp_plan_shedules.plan_day','bootcamp_plan_shedules.plan_st_time','bootcamp_plan_shedules.plan_end_time','bootcamp_plan_address.address_line1','bootcamp_booking.created_at')
+    ->where('bootcamp_booking.customer_id',Auth::guard('customer')->user()->id);
+
+    if($request->option=='past_booking')
     {
-
-      $past_data->past_mot=DB::table('customer_mot')
-      ->join('customers','customers.id','customer_mot.customer_id')
-      ->join('users','users.id','customer_mot.trainer_id')
-      ->select('customer_mot.id as mot_id','customer_mot.customer_id as customer_id','customer_mot.trainer_id','customer_mot.date','customer_mot.left_arm','users.name as users_name','customer_mot.right_arm','customer_mot.chest','customer_mot.waist','customer_mot.hips','customer_mot.right_thigh','customer_mot.left_thigh','customer_mot.weight','customer_mot.right_calf','customer_mot.left_calf','customer_mot.starting_weight','customer_mot.ending_weight','customer_mot.heart_beat','customer_mot.blood_pressure','customer_mot.height','customer_mot.description')->where('customer_mot.date',$past_data->slot_date)->whereNull('customer_mot.deleted_at')->first();
+      $all_booking=$all_booking->where('bootcamp_plan_shedules.plan_date','<',$now )->whereBetween('bootcamp_plan_shedules.plan_date', [$start_date, $end_date])->whereNull('bootcamp_booking.deleted_at');
     }
-  }
-  elseif($request->option=='future_confirm')
-  {
-    // $time_now = $slot_request->slot_time->addHour(24);
-    $data=DB::table('slot_request')
-    ->join('customers','customers.id','slot_request.customer_id')
-    ->join('slot_approval','slot_approval.id','slot_request.approval_id')
-    ->join('users','users.id','slot_request.trainer_id')
-    ->join('purchases_history','purchases_history.id','slot_request.purchases_id')
-    ->join('slots','slots.id','purchases_history.slot_id')
-    ->join('slot_times','slot_times.id','slot_request.slot_time_id')
-    ->select('customers.name','slots.slots_name','slots.slots_number','slots.slots_price','slots.slots_validity','users.name as users_name','purchases_history.purchases_date','purchases_history.package_validity_date','slot_request.purchases_id as slot_purchases_id','slot_approval.status','slot_request.slot_date','slot_times.time as slot_time','slot_approval.status', 'slot_request.created_at as created_at','slot_request.id as slot_id')->where('slot_request.slot_date','>=',$now)->where('slot_request.approval_id',3 )->where('slot_request.customer_id',Auth::guard('customer')->user()->id);
-
-
-    if($request->start_date && $request->end_date)
+    elseif($request->option=='cancelled_booking')
     {
-      $data->whereBetween('slot_request.slot_date', [$start_date, $end_date]);
+      $all_booking=$all_booking->whereNotNull('bootcamp_booking.deleted_at')->whereBetween('bootcamp_plan_shedules.plan_date', [$start_date, $end_date]);
     }
     else
     {
-      $data->whereBetween('slot_request.slot_date', [$now, $now_month]);
+      $all_booking=$all_booking->whereNull('bootcamp_booking.deleted_at')->whereBetween('bootcamp_plan_shedules.plan_date', [$start_date, $end_date])->where('bootcamp_plan_shedules.plan_date','>=',$now);
     }
-    $data=$data->orderby('slot_request.id','DESC')->paginate(10);
-  }
-  else
-  {
-    // $time_now = $slot_request->slot_time->addHour(24);
-    $data=DB::table('slot_request')
-    ->join('customers','customers.id','slot_request.customer_id')
-    ->join('slot_approval','slot_approval.id','slot_request.approval_id')
-    ->join('users','users.id','slot_request.trainer_id')
-    ->join('purchases_history','purchases_history.id','slot_request.purchases_id')
-    ->join('slots','slots.id','purchases_history.slot_id')
-    ->join('slot_times','slot_times.id','slot_request.slot_time_id')
-    ->select('customers.name','slots.slots_name','slots.slots_number','slots.slots_price','slots.slots_validity','users.name as users_name','purchases_history.purchases_date','purchases_history.package_validity_date','slot_request.purchases_id as slot_purchases_id','slot_approval.status','slot_request.slot_date','slot_times.time as slot_time','slot_approval.status', 'slot_request.created_at as created_at','slot_request.id as slot_id')->where('slot_request.slot_date','>=',$now)
-    ->where(function($q) {
-         $q->where('slot_request.approval_id',1 )
-           ->orWhere('slot_request.approval_id', 3);
-     })
-    ->where('slot_request.customer_id',Auth::guard('customer')->user()->id);
 
-
-    if($request->start_date && $request->end_date)
-    {
-      $data->whereBetween('slot_request.slot_date', [$start_date, $end_date]);
-    }
-    else
-    {
-      $data->whereBetween('slot_request.slot_date', [$now, $now_month]);
-    }
-    $data=$data->orderby('slot_request.id','DESC')->paginate(10);
-  }
-
-
-    //Log::debug(" Check id ".print_r($data,true));  
     
- 
-     //@totan
-
-    //when a customer's past request (s) are not approved/ declined then for that session 
-    // all sessions are added of latest-end package and into the slot_request table update 
-    // all past request approval_id=5 of that customer after login. 
-
-    $remaining_session_request_now=Carbon::now()->toDateString();
-
-    $all_package=DB::table('purchases_history')
-    ->select('id','purchases_date','package_validity_date','package_remaining','slots_number')
-    ->where('customer_id',Auth::guard('customer')->user()->id)
-    ->where('active_package',1)
-    ->where('package_remaining','>=',0)
-    ->where('package_validity_date','>=',$remaining_session_request_now)
-    ->orderBy('package_validity_date', 'DESC')
-    ->first();
-
-    $extra_package=DB::table('purchases_history')
-    ->select('id','purchases_date','package_validity_date','package_remaining','extra_package_remaining','slots_number')
-    ->where('customer_id',Auth::guard('customer')->user()->id)
-    ->where('active_package',1)
-    ->where('extra_package_remaining','>=',0)
-    ->orderBy('package_validity_date', 'DESC')
-    ->first();
-
-    $count_past_slot_request=DB::table('slot_request')
-    ->where('customer_id',Auth::guard('customer')->user()->id)
-    ->where('slot_date','<',$remaining_session_request_now)
-    ->where('approval_id',1)
-    ->count();
-
-    if($all_package)
-    {      
-
-      $total_remaining_package=$all_package->package_remaining+$count_past_slot_request;
-
-      $package_update=DB::table('purchases_history')
-      ->where('id',$all_package->id)
-      ->update(['package_remaining'=>$total_remaining_package]);
-
-      $past_slot_request_update=DB::table('slot_request')
-      ->where('customer_id',Auth::guard('customer')->user()->id)
-      ->where('slot_date','<',$remaining_session_request_now)
-      ->where('approval_id',1)
-      ->update(['approval_id'=>5]);
-    }
-    else if($extra_package)
-    {
-      $total_remaining_package=$extra_package->extra_package_remaining+$count_past_slot_request;
-
-      $package_update=DB::table('purchases_history')
-      ->where('id',$extra_package->id)
-      ->update(['extra_package_remaining'=>$total_remaining_package]);
-
-      $past_slot_request_update=DB::table('slot_request')
-      ->where('customer_id',Auth::guard('customer')->user()->id)
-      ->where('slot_date','<',$remaining_session_request_now)
-      ->where('approval_id',1)
-      ->update(['approval_id'=>5]);
-    }
-
-    ////@end totan
-
-    $sum_slots = DB::table('purchases_history')
-    ->select('active_package','package_remaining','customer_id')
-    ->where('customer_id',Auth::guard('customer')->user()->id)
-    ->where('active_package',1 )
-    ->where('package_remaining','>=',0)
-    ->where('package_validity_date','>=',$remaining_session_request_now)
-    ->sum('package_remaining');
-
-    $sum_extra_slots = DB::table('purchases_history')
-    ->select('active_package','package_remaining','extra_package_remaining','customer_id')
-    ->where('customer_id',Auth::guard('customer')->user()->id)
-    ->where('active_package',1)
-    ->where('extra_package_remaining','>=',0)
-    ->sum('extra_package_remaining');
-
-    $total_remaining_session=$sum_slots+$sum_extra_slots;
-
-    session(['sum_slots' => $total_remaining_session]);
-
-   
-
-    $future_pending_count=DB::table('purchases_history')
-    ->join('slots','slots.id','purchases_history.slot_id')
-    ->join('slot_request','slot_request.purchases_id','purchases_history.id')
-    ->select('slot_request.purchases_id','slots.slots_number','slots.slot_date')
-    ->where('slot_request.customer_id',Auth::guard('customer')->user()->id)
-    ->where('slot_request.slot_date','>=',$remaining_session_request_now )
-    ->where('slot_request.approval_id',1 )->count();
-    
-
-    $accepted_count= DB::table('purchases_history')
-    ->join('slots','slots.id','purchases_history.slot_id')
-    ->join('slot_request','slot_request.purchases_id','purchases_history.id')
-    ->select('slot_request.purchases_id','slots.slots_number','slots.slot_date')
-    ->where('slot_request.customer_id',Auth::guard('customer')->user()->id)
-    ->where('slot_request.slot_date','>=',$remaining_session_request_now )
-    ->where('slot_request.approval_id')->count();
-
-
-
-    if($request->ajax())
-    {
-      return response()->json($data);
-    }
-
-    return view('customerpanel.booking_history',['data' => $data])->with(compact('data','dt','sum_slots','accepted_count','future_pending_count','total_remaining_session'));
+    $all_booking=$all_booking->orderby('bootcamp_booking.id','DESC')->paginate(5);
+  
+    return view('customerpanel.booking_history')->with(compact('all_booking'));
 
      }
 
@@ -1461,9 +1261,7 @@ public function booking_bootcamp()
   
   $bootcampaddress=DB::table('bootcamp_plan_address')->get();
 
-  $bootcampdate=DB::table('bootcamp_plan_shedules')->pluck('plan_date');
-
-  return view('customerpanel.booking_bootcamp')->with(compact('bootcampaddress','bootcampdate','order_details'));
+  return view('customerpanel.booking_bootcamp')->with(compact('bootcampaddress','order_details'));
 
   //}
 
@@ -1489,12 +1287,21 @@ public function get_bootcamp_date(Request $request)
 
 // Log::debug(" get_bootcamp_date_time ".print_r($customer_product_validity,true));
 
+  $alredy_booked_shedule_id=DB::table('bootcamp_booking')
+  ->where('customer_id',Auth::guard('customer')->user()->id)
+  ->pluck('bootcamp_plan_shedules_id');
+
+  $alredy_booked_date=DB::table('bootcamp_plan_shedules')
+  ->whereIn('id',$alredy_booked_shedule_id)
+  ->pluck('plan_date');
+
   $date_details=DB::table('bootcamp_plan_shedules')
   ->where('address_id',$request->address_id)
   ->where('plan_date','<=',$customer_product_validity)
+  ->whereNotIn('plan_date',$alredy_booked_date)
   ->get()->all();
 
- Log::debug(" get_bootcamp_date ".print_r($date_details,true));
+ //Log::debug(" get_bootcamp_date ".print_r($date_details,true));
 
   return json_encode($date_details);
 }
@@ -1520,28 +1327,54 @@ public function bootcamp_booking_customer(Request $request)
 
   Log::debug(" bootcamp_booking_customer ".print_r($request->all(),true));
 
-    for($i=0;$i<count($request->bootcamp_date);$i++)
+  $current_date=Carbon::now()->toDateString();
+
+  $all_bootcamp_product=DB::table('order_details')
+      ->where('customer_id',Auth::guard('customer')->user()->id)
+      ->where('status',1)
+      ->where('remaining_sessions','>=',0)
+      ->where('remaining_sessions','!=','Unlimited')
+      ->where('order_validity_date','>=',$current_date)
+      ->orderBy('order_validity_date', 'ASC')->first();
+
+  for($i=0;$i<count($request->bootcamp_date);$i++)
+  {    
+    $shedule_id[$i]=$request->schedule_id[$i];
+  }
+
+  $schedule_details=DB::table('bootcamp_plan_shedules')->wherein('id',$shedule_id)->whereColumn('max_allowed','no_of_uses')->get()->all();
+
+  if(count($schedule_details))
+  {
+    return redirect()->back()->with(["seat_not_available"=>"seat not available",'schedule_details'=>$schedule_details]);
+  }
+  else
+  {
+    for($j=0;$j<count($request->bootcamp_date);$j++)
     {
-      $bootcamp_booking_data['bootcamp_plan_shedules_id']=$request->schedule_id[$i];
+      $bootcamp_booking_data['bootcamp_plan_shedules_id']=$request->schedule_id[$j];
       $bootcamp_booking_data['customer_id']=Auth::guard('customer')->user()->id;
-      //$bootcamp_booking_insert=DB::table('bootcamp_booking')->insert($bootcamp_booking_data);
-      $shedule_id[$i]=$request->schedule_id[$i];
+      $bootcamp_booking_insert=DB::table('bootcamp_booking')->insert($bootcamp_booking_data);
+
+      $decrease_remaining_session=DB::table('order_details')->where('id',$all_bootcamp_product->id)->decrement('remaining_sessions',1);
     }
 
-    // $no_of_uses = DB::table('bootcamp_plan_shedules')->wherein('id', $shedule_id)->pluck('no_of_uses');
-
-    // foreach ($no_of_uses as $key => $value) {
-    //   $value = $value+1;
-
-    //   $data['no_of_uses']=$value;
-
-      $bootcamp_plan_shedules_update=DB::table('bootcamp_plan_shedules')
+    $bootcamp_plan_shedules_update=DB::table('bootcamp_plan_shedules')
     ->wherein('id',$shedule_id)->increment('no_of_uses', 1);
-    //}
 
-    
+    $a=new \stdClass;
 
-    
+    $a->bootcamp_address=Input::get('bootcamp_address');
+    $a->bootcamp_date=Input::get('bootcamp_date');
+    $a->bootcamp_time=Input::get('bootcamp_time');
+    $a->total_sessions=$j;
+    $all_data=array($a);
+
+    //DB::commit();
+
+    return redirect()->back()->with(["success"=>"You have successfully sent the bellow Bootcamp session request(s)!",'all_data'=>$all_data]);
+  }
+
 }
 
 public function cart_delete_customer()

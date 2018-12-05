@@ -153,7 +153,7 @@ $(function () {
 		"singleDatePicker": true, 
 		"showDropdowns": true, 
 		"timePicker": true,  
-		"autoApply": true,
+		"autoApply": false,
 		locale: { format: "hh:mm A" } }).on('show.daterangepicker', function (ev, picker) {
             picker.container.find(".calendar-table").hide();
             
@@ -169,7 +169,7 @@ $(function () {
 	"singleDatePicker": true, 
 	"showDropdowns": true, 
 	"timePicker": true,  
-	"autoApply": true, 
+	"autoApply": false,
 	locale: { format: "hh:mm A" } }).on('show.daterangepicker', function (ev, picker) {
           picker.container.find(".calendar-table").hide();
           $("#session_st_time").val($("#session_end_time").val());
@@ -221,7 +221,6 @@ function toggleField1(hideObj,showObj){
             if(startTime>=endTime)
             {
             	alertify.alert('Session end time is always upper than session start time');
-            	$('#session_end_time').focus();
               return false;
             }
 

@@ -134,7 +134,27 @@
     <div class="hstry-box">
       <div class="tab_container">
           <!-- #tab1 -->
-          <h3 class="ed-p">Bootcamp Session Booking Form</h3>
+          <h3 class="ed-p">Bootcamp Session Booking Form 
+            <?php $remaining_sessions=0; $session_flg=0; ?>
+            @if(count($order_details)>0) 
+              @foreach($order_details as $all_details)
+                @if($all_details->remaining_sessions!='Unlimited')
+                  <?php 
+                    $remaining_sessions=$remaining_sessions+$all_details->remaining_sessions;
+                    $session_flg=1;
+                  ?>
+                @else 
+                  <?php $session_flg=2;?>
+                @endif
+              @endforeach
+              {{$session_flg}}
+              @if($session_flg==1)
+                {{$remaining_sessions}}
+              @elseif($session_flg==2)
+                Unlimited Sessions
+              @endif
+            @endif
+          </h3>
           <h3 class="d_active tab_drawer_heading" rel="tab5">Tab 5</h3>
           <div id="tab5" class="tab_content">
             <div class="form-box">
@@ -209,6 +229,81 @@
 
 <!-- end -->
 
+<div id="bootcamp_session_modal" class="modal fade  mot-mod session-modal" role="dialog" >
+  <div class="modal-dialog">
+    
+    <div class="modal-content">
+    <div class="modal-header">
+      @if(session('seat_not_available'))
+      <h2>Session booking report</h2>
+    </div>
+      <div class="modal-body" id="hall_details_edit">
+      <table class="table table-border" width="100%">
+        <tbody>
+        <tr><td>Booking Date</td><td>Plan Start Time</td><td>Plan End Time</td></tr>
+        
+      @foreach(session('schedule_details') as $key => $eachdata)
+      <tr>
+      <td>
+        {{date('d F Y', strtotime($eachdata->plan_date))}}
+      </td>
+      <td>
+        {{date('h:i A', strtotime($eachdata->plan_st_time))}}
+      </td>
+      <td>
+        {{date('h:i A', strtotime($eachdata->plan_end_time))}}
+    </td>
+    </tr>
+     @endforeach    
+     </tbody>
+   </table>
+
+      @endif
+
+      @if(session('success'))
+      <h2>You have successfully sent the bellow Bootcamp session request(s).</h2>
+    </div>
+      <div class="modal-body" id="hall_details_edit">
+      <table class="table table-border" width="100%">
+        <tbody>
+        <tr><td>Address</td><td>Date</td><td>Time</td></tr>
+        
+      @foreach(session('all_data') as $key => $eachdata)
+    
+      @for($i=0;$i<$eachdata->total_sessions;$i++)
+      <tr>
+      <td>
+        {{$eachdata->bootcamp_address[$i]}}
+      </td>
+      <td>
+        {{$eachdata->bootcamp_date[$i]}}
+      </td>
+      <td>
+        {{$eachdata->bootcamp_time[$i]}}
+    </td>
+    </tr>
+    @endfor
+     @endforeach    
+     </tbody>
+   </table>
+
+      @endif
+        <div class="row clearfix">
+          <div class="col-sm-12 col-xs-12">
+            <br class="clear" />
+        </div>
+        <div class="col-sm-12 col-xs-12">
+      <div class="row">
+          
+    </div>
+      </div>
+  </div>
+</div>
+<button type="button" class="btn btn-default success-close" data-dismiss="modal">Close</button>
+</div>
+</div>
+</div>
+
 <!-- js -->
 <script type="text/javascript" src="{{url('frontend/js/jquery-2.1.4.min.js')}}"></script>
   <!-- //js -->
@@ -217,6 +312,26 @@
 <script src="{{url('frontend/js/responsiveslides.min.js')}}"></script>
 
 <script src="{{url('frontend/js/jquery-ui.js')}}"></script>
+
+@if (session('seat_not_available'))
+    <script>
+      $(document).ready(function(){ 
+       $('#bootcamp_session_modal').modal('show');
+      });
+    </script>
+<?php Session::forget('seat_not_available'); ?>
+
+  @endif
+
+  @if (session('success'))
+    <script>
+      $(document).ready(function(){ 
+       $('#bootcamp_session_modal').modal('show');
+      });
+    </script>
+<?php Session::forget('success'); ?>
+
+  @endif
 <script type="text/javascript" src="{{url('frontend/js/bootstrap-3.1.1.min.js')}}"></script>
 
 <!-- for testimonials slider-js-file-->
@@ -234,45 +349,53 @@
 <script src="{{url('frontend/js/accotab.js')}}"></script>
 
 
+
+
   <!-- get all date after choose address of bootcamp and set enabled date into calender -->
 <script>
+$(document).ready(function() {
+  
+});
   function get_date(value)
-  {
+  { 
     if(value>0)
     {
 
-
+      $('#loadingimg').show();
       $.ajax({
           type: "GET",
           url: "{{route('get_bootcamp_date')}}",
           data: {'address_id': value},
           success: function (data){
-            //$('#loadingimg').hide();
+            $('#loadingimg').hide();
             //console.log(data);
             var obj = $.parseJSON(data);
 
             var plan_date='';
-            var disabledDays ='';
+            
 
             if(obj.length > 0)
             { 
               
+
               $('#bootcamp_date').removeAttr('disabled');
               $('#bootcamp_date').val('');
+              $(".all_date_class").remove();
+              var disabledDays ='';
 
               for(var i = 0; i < obj.length; i++)
               {
                 plan_date=obj[i]['plan_date'];
 
-                $('.available_date').append($('<input type="hidden" name="all_date[]" id="all_date" value="' + plan_date + '">'));
+                $('.available_date').append($('<input type="hidden" name="all_date[]" id="all_date" class="all_date_class" value="' + plan_date + '">'));
               }
 
-              var disabledDays =$("input[name='all_date[]']")
-              .map(function(){return $(this).val();}).get();
-
-              //console.log(disabledDays);
+              // console.log(disabledDays);
                
               function nationalDays(date) {
+
+                var disabledDays =$("input[name='all_date[]']")
+              .map(function(){return $(this).val();}).get();
 
                 var m = date.getMonth(), d = date.getDate(), y = date.getFullYear(); 
                  m=m+1;

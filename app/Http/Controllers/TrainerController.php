@@ -3039,7 +3039,7 @@ public function insert_bootcamp_plan(Request $request)
   $all_session_date=$all_session_day=[];
   foreach ($period as $key=>$value) 
   {
-    if($key<=60)
+    if($key<=180)
     {
       $dateofweek = $value->format('Y-m-d');
       $dayofweek = date('w', strtotime($value->format('Y-m-d')));
@@ -3306,7 +3306,7 @@ public function bootcamp_plan_edit_view($id)
 
     foreach ($period as $key=>$value) 
     {
-      if($key<=60 && $prev_last_date<$value->format('Y-m-d'))
+      if($key<=180 && $prev_last_date<$value->format('Y-m-d'))
       {
         $dateofweek = $value->format('Y-m-d');
         $dayofweek = date('w', strtotime($value->format('Y-m-d')));
