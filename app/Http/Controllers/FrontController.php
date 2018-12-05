@@ -1441,7 +1441,7 @@ public function bootcamponlinepaymentsuccess()
 
 public function booking_bootcamp()
 {
-  //try{
+  try{
   $this->cart_delete_customer();
   $current_date=Carbon::now()->toDateString();
 
@@ -1449,12 +1449,9 @@ public function booking_bootcamp()
   ->join('products','products.id','order_details.product_id')
   ->join('training_type','training_type.id','products.training_type_id')
   ->where('order_details.customer_id',Auth::guard('customer')->user()->id)
-  ->where(function($q) {
-         $q->where('order_details.order_validity_date','>=',$current_date)
-           ->orWhere('order_details.order_validity_date',NULL);
-     })
   ->where('order_details.status',1)
   ->where('training_type.id',2)
+  ->where('order_details.order_validity_date','>=',$current_date)
   ->get()->all();
 
   //Log::debug(" data couponcode ".print_r(count($order_details),true));
@@ -1465,26 +1462,84 @@ public function booking_bootcamp()
 
   return view('customerpanel.booking_bootcamp')->with(compact('bootcampaddress','bootcampdate','order_details'));
 
-  //}
+  }
 
-  //   catch(\Exception $e) {
+    catch(\Exception $e) {
 
-  //     return abort(400);
-  // }
+      return abort(400);
+  }
  
 }
 
-public function get_bootcamp_date_time(Request $request)
+public function get_bootcamp_date(Request $request)
 {
 
-  $date_time_details=DB::table('bootcamp_plan_shedules')
-  ->where('address_id',$request->address_id)
-  ->get()->all();
-  //Log::debug(" get_bootcamp_date_time ".print_r($date_time_details,true));
+  $current_date=Carbon::now()->toDateString();
 
-  return json_encode($date_time_details);
+  $customer_product_validity=DB::table('order_details')
+  ->join('payment_history','payment_history.id','order_details.payment_id')
+  ->where('payment_history.status','Success')
+  ->where('order_details.order_validity_date','>=',$current_date)
+  ->where('order_details.status',1)
+  ->where('order_details.customer_id',Auth::guard('customer')->user()->id)
+  ->max('order_details.order_validity_date');
+
+// Log::debug(" get_bootcamp_date_time ".print_r($customer_product_validity,true));
+
+  $date_details=DB::table('bootcamp_plan_shedules')
+  ->where('address_id',$request->address_id)
+  ->where('plan_date','<=',$customer_product_validity)
+  ->get()->all();
+
+ Log::debug(" get_bootcamp_date ".print_r($date_details,true));
+
+  return json_encode($date_details);
 }
 
+public function get_bootcamp_time(Request $request)
+{
+
+  $time_details=DB::table('bootcamp_plan_shedules')
+  ->where('plan_date',$request->bootcamp_date)
+  ->get()->all();
+
+  foreach($time_details as $key=>$each_time)
+  {
+    $each_time->all_time=date('h:i A', strtotime($each_time->plan_st_time))." to ".date('h:i A', strtotime($each_time->plan_end_time));
+  }
+
+  return json_encode($time_details);
+}
+
+
+public function bootcamp_booking_customer(Request $request)
+{
+
+  Log::debug(" bootcamp_booking_customer ".print_r($request->all(),true));
+
+    for($i=0;$i<count($request->bootcamp_date);$i++)
+    {
+      $bootcamp_booking_data['bootcamp_plan_shedules_id']=$request->schedule_id[$i];
+      $bootcamp_booking_data['customer_id']=Auth::guard('customer')->user()->id;
+      //$bootcamp_booking_insert=DB::table('bootcamp_booking')->insert($bootcamp_booking_data);
+      $shedule_id[$i]=$request->schedule_id[$i];
+    }
+
+    // $no_of_uses = DB::table('bootcamp_plan_shedules')->wherein('id', $shedule_id)->pluck('no_of_uses');
+
+    // foreach ($no_of_uses as $key => $value) {
+    //   $value = $value+1;
+
+    //   $data['no_of_uses']=$value;
+
+      $bootcamp_plan_shedules_update=DB::table('bootcamp_plan_shedules')
+    ->wherein('id',$shedule_id)->increment('no_of_uses', 1);
+    //}
+
+    
+
+    
+}
 
 public function cart_delete_customer()
 {

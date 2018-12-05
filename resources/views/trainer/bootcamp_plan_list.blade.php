@@ -22,7 +22,7 @@ $(document).ready(function() {
         lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
 
 // disable shorting from slno,image and action columns
-"columnDefs": [ { "orderable": false, "targets": [0,1,6] } ],
+"columnDefs": [ { "orderable": false, "targets": [0,1,7] } ],
 
 });
 });
@@ -92,7 +92,7 @@ $(document).ready(function() {
                   <th>Day</th>
                   <th>Session Start Time</th>
                   <th>Session End Time</th>
-                  <th style="width: 116px;">Location/ Address</th>
+                  <th style="width: 116px;">Address</th>
                   <th>Validity</th>
                   <th>Status</th>
                   <th>Action</th>
