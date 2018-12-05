@@ -243,9 +243,10 @@ public function bank_payment_complete()
 
 public function bootcamp_bank_payment_success(Request $request)
 {
-  Log::debug(":: bootcamp_onlinepayment :: ".print_r($request->all(),true));
+  //Log::debug(":: bootcamp_onlinepayment :: ".print_r($request->all(),true));
   
-
+  DB::beginTransaction();
+   try{
   $package_details=DB::table('products')
   ->join('training_type','training_type.id','products.training_type_id')
   ->join('payment_type','payment_type.id','products.payment_type_id')
@@ -276,8 +277,12 @@ public function bootcamp_bank_payment_success(Request $request)
   $order_data['training_type']=$package_details->product_name;
   $order_data['payment_type']=$package_details->payment_type_name;
   $order_data['order_purchase_date']=Carbon::now()->toDateString();
-  $order_data['order_validity_date']=Carbon::now()->addDay($package_details->validity);
-  $order_data['payment_option']='Online Payment';
+  if($package_details->validity!='')
+  {
+    $order_data['order_validity_date']=Carbon::now()->addDay($package_details->validity);
+  }
+  
+  $order_data['payment_option']='Bank Transfer';
   $order_data['status']=1;
   $order_data['no_of_sessions']=$package_details->total_sessions;
   $order_data['remaining_sessions']=$package_details->total_sessions;
@@ -293,7 +298,13 @@ public function bootcamp_bank_payment_success(Request $request)
 
   \Session::put('success_bootcamp_bank', 'Payment success');
   \Session::put('payment_id', $payment_history_data['payment_id']);
+  DB::commit();
     return redirect('customer/bootcampbankpaymentcomplete');
+   }
+   catch(\Exception $e) {
+     DB::rollback();
+       return abort(400);
+   }
 
 }
 
