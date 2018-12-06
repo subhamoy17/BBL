@@ -1261,6 +1261,15 @@ public function booking_bootcamp()
   ->where('order_details.order_validity_date','>=',$current_date)
   ->get()->all();
 
+  if(count($order_details)>0)
+  {
+    $order_details=count($order_details);
+  }
+  else
+  {
+    $order_details=0;
+  }
+
   $no_of_session_unlimited=DB::table('order_details')
   ->join('products','products.id','order_details.product_id')
   ->join('training_type','training_type.id','products.training_type_id')

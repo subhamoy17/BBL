@@ -138,14 +138,14 @@
           <h3 class="d_active tab_drawer_heading" rel="tab5">Tab 5</h3>
           <div id="tab5" class="tab_content">
             <div class="form-box">
-              @if(count($order_details)>0)
+              @if($order_details>0)
               <h3>{{$no_of_sessions}}</h3>
                 <div class="row">
                   <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="col-md-6 col-sm-12 col-xs-12">
                       <div class="form-group">
 
-                         <input type="hidden" id="total_sessions" class="form-control" value="{{$no_of_sessions}}">
+                         <input type="hidden" id="total_session" class="form-control" value="{{$no_of_sessions}}">
 
                          <input type="hidden" id="total_applicable_sessions" class="form-control" value="1">
                        
@@ -417,7 +417,6 @@ $(document).ready(function() {
 
     var total_session=$("#total_session").val();
 
-    alert(total_session);
     var total_applicable_sessions=$("#total_applicable_sessions").val();
 
     var address_text=$("#address option:selected").text();
@@ -463,8 +462,6 @@ $(document).ready(function() {
       $('#save_btn').show();
 
         total_session=parseInt(total_session)-1;
-
-        alert(total_session);
       $('#total_session').val(total_session);
       
         total_applicable_sessions=parseInt(total_applicable_sessions)+1;

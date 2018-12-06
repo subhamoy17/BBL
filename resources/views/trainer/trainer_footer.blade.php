@@ -62,6 +62,8 @@
 
 <!-- <script src="{{asset('backend/assets/js/jquery.js')}}"></script>
 <script src="{{asset('backend/assets/js/jquery-ui.min.js')}}"></script> -->
+
+ @if(Request::segment(1) == 'trainer' && Request::segment(2) == 'motinsertshow')
     <script>
 
  
@@ -187,7 +189,7 @@ else{
     });
 });
 </script>
-
+@endif
    @if(Request::segment(1) == 'trainer' && Request::segment(2) == 'add_session') 
 <script>
   

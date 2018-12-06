@@ -223,7 +223,7 @@ Route::post('bootcamp_plan_edit_insert', 'TrainerController@bootcamp_plan_edit_i
 Route::get('bootcamp_plan_delete/{id}', 'TrainerController@bootcamp_plan_delete');
 
 Route::get('bootcamp-plan-schedule', 'TrainerController@bootcamp_plan_schedule')->name('bootcamp_plan_schedule');
-Route::post('bootcamp-schedule-cancelled', 'TrainerController@bootcamp_schedule_cancelled_admin');
+Route::get('bootcamp-schedule-cancelled', 'TrainerController@bootcamp_schedule_cancelled_admin');
 
 
 ////// For common diet plan list//////

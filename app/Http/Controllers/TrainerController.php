@@ -3452,7 +3452,9 @@ public function bootcamp_plan_delete($id)
 
   public function bootcamp_schedule_cancelled_admin(Request $request)
   {
-    //Log::debug(" bootcamp_schedule_cancelled_admin ".print_r($request->all(),true));
+    Log::debug(" bootcamp_schedule_cancelled_admin ".print_r($request->all(),true));
+
+    
     return redirect()->back();
   }
 
