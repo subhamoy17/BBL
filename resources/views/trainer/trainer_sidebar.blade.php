@@ -191,7 +191,7 @@
                   @endif
 
 
-                  @if(Request::segment(2) == "add-bootcamp-plan" || Request::segment(2) == "bootcamp-plan" || Request::segment(2) =='edit-bootcamp-plan')
+                  @if(Request::segment(2) == "add-bootcamp-plan" || Request::segment(2) == "bootcamp-plan" || Request::segment(2) =='edit-bootcamp-plan' || Request::segment(2) =='bootcamp-plan-schedule'  || Request::segment(2) =='show-customer-session-schedule')
           <li class="menu-item-has-children dropdown show">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i>Bootcamp Plan</a>
             <ul class="sub-menu children dropdown-menu show"> 
@@ -211,7 +211,15 @@
                   @else
                   <li><i class="fa fa-id-card-o"></i><a href="{{route('bootcamp_plan_list')}}">All Bootcamp Plan</a></li>
                   @endif
+
+                  @if(Request::segment(2) =='bootcamp-plan-schedule'  || Request::segment(2) =='show-customer-session-schedule')
+                  <li><i class="fa fa-id-card-o"></i><a href="{{route('bootcamp_plan_schedule')}}" style="color: #fff !important;">Bootcamp Schedule</a></li>
+                  @else
+                  <li><i class="fa fa-id-card-o"></i><a href="{{route('bootcamp_plan_schedule')}}"> Bootcamp Schedule</a></li>
+                  @endif
                 </ul></li>
+
+                 
 
 
 

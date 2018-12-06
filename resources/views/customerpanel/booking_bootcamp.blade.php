@@ -134,36 +134,21 @@
     <div class="hstry-box">
       <div class="tab_container">
           <!-- #tab1 -->
-          <h3 class="ed-p">Bootcamp Session Booking Form 
-            <?php $remaining_sessions=0; $session_flg=0; ?>
-            @if(count($order_details)>0) 
-              @foreach($order_details as $all_details)
-                @if($all_details->remaining_sessions!='Unlimited')
-                  <?php 
-                    $remaining_sessions=$remaining_sessions+$all_details->remaining_sessions;
-                    $session_flg=1;
-                  ?>
-                @else 
-                  <?php $session_flg=2;?>
-                @endif
-              @endforeach
-              {{$session_flg}}
-              @if($session_flg==1)
-                {{$remaining_sessions}}
-              @elseif($session_flg==2)
-                Unlimited Sessions
-              @endif
-            @endif
-          </h3>
+          <h3 class="ed-p">Bootcamp Session Booking Form</h3>
           <h3 class="d_active tab_drawer_heading" rel="tab5">Tab 5</h3>
           <div id="tab5" class="tab_content">
             <div class="form-box">
               @if(count($order_details)>0)
+              <h3>{{$no_of_sessions}}</h3>
                 <div class="row">
                   <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="col-md-6 col-sm-12 col-xs-12">
                       <div class="form-group">
-                        <input type="hidden" id="total_session" class="form-control" value="{{Session::get('sum_slots')}}"  >
+
+                         <input type="hidden" id="total_sessions" class="form-control" value="{{$no_of_sessions}}">
+
+                         <input type="hidden" id="total_applicable_sessions" class="form-control" value="1">
+                       
                         <label>Address <small>*</small></label>
                           <select class="form-control" name="address" id="address" onchange="get_date(this.value);">
                             <option value="">Please select address</option>
@@ -206,7 +191,6 @@
                     <form action="{{route('bootcamp_booking_customer')}}" method="post" enctype="multipart/form-data" class="form-horizontal" id="add_session_form1">
 
                       <input type="hidden" name="_token" value="{{csrf_token()}}">
-                      <input type="hidden" name="customer_id" id="customer_id" value="{{Auth::guard('customer')->user()->id}}">
                       <input type="hidden" name="nd_btn" id="nd_btn" value="1">
                       <div id="add_session_req" >  </div>
             
@@ -234,32 +218,6 @@
     
     <div class="modal-content">
     <div class="modal-header">
-      @if(session('seat_not_available'))
-      <h2>Session booking report</h2>
-    </div>
-      <div class="modal-body" id="hall_details_edit">
-      <table class="table table-border" width="100%">
-        <tbody>
-        <tr><td>Booking Date</td><td>Plan Start Time</td><td>Plan End Time</td></tr>
-        
-      @foreach(session('schedule_details') as $key => $eachdata)
-      <tr>
-      <td>
-        {{date('d F Y', strtotime($eachdata->plan_date))}}
-      </td>
-      <td>
-        {{date('h:i A', strtotime($eachdata->plan_st_time))}}
-      </td>
-      <td>
-        {{date('h:i A', strtotime($eachdata->plan_end_time))}}
-    </td>
-    </tr>
-     @endforeach    
-     </tbody>
-   </table>
-
-      @endif
-
       @if(session('success'))
       <h2>You have successfully sent the bellow Bootcamp session request(s).</h2>
     </div>
@@ -312,16 +270,6 @@
 <script src="{{url('frontend/js/responsiveslides.min.js')}}"></script>
 
 <script src="{{url('frontend/js/jquery-ui.js')}}"></script>
-
-@if (session('seat_not_available'))
-    <script>
-      $(document).ready(function(){ 
-       $('#bootcamp_session_modal').modal('show');
-      });
-    </script>
-<?php Session::forget('seat_not_available'); ?>
-
-  @endif
 
   @if (session('success'))
     <script>
@@ -466,6 +414,12 @@ $(document).ready(function() {
    $(document).ready(function() {
     $('body').on('click','#add_sess',function(e) {
       e.preventDefault();
+
+    var total_session=$("#total_session").val();
+
+    alert(total_session);
+    var total_applicable_sessions=$("#total_applicable_sessions").val();
+
     var address_text=$("#address option:selected").text();
     var session_time_text=$("#session_time option:selected").text();
 
@@ -489,16 +443,36 @@ $(document).ready(function() {
     {
       alert('Please select address, date and time');
     }
+    else if(total_session==0)
+    {
+      alert("You don't have any bootcamp session");
+    }
+    else if(total_applicable_sessions>5)
+    {
+      alert("You sent maximum 5 session at a time");
+    }
     else if(duplicate_date==1)
     {
       alert("You can't choose same date");
     }
     else
     {
-      $("#add_session_req").append('<div class="conMon"><input readonly  class="form-control" type="text" name="bootcamp_address[]" value="' + address_text + '" />&nbsp;&nbsp;<input readonly  class="form-control" name="bootcamp_date[]" type="text" value="' + bootcamp_date + '" />&nbsp;&nbsp;<input readonly  class="form-control" type="text" name="bootcamp_time[]" value="' + session_time_text + '" /><input type=hidden class="all_previous_date"  readonly name="all_previous_date[]"' + 'id="all_previous_date[]"' + 'value="' + bootcamp_date + '" /><input type="text" name="schedule_id[]"' + 'value="' + session_time + '" /></div><br>');
+      $("#add_session_req").append('<div class="conMon"><input readonly  class="form-control" type="text" name="bootcamp_address[]" value="' + address_text + '" />&nbsp;&nbsp;<input readonly  class="form-control" name="bootcamp_date[]" type="text" value="' + bootcamp_date + '" />&nbsp;&nbsp;<input readonly  class="form-control" type="text" name="bootcamp_time[]" value="' + session_time_text + '" /><input type=hidden class="all_previous_date"  readonly name="all_previous_date[]"' + 'id="all_previous_date[]"' + 'value="' + bootcamp_date + '" /><input type="hidden" name="schedule_id[]"' + 'value="' + session_time + '" /></div><br>');
       $("#address").val(''); $("#bootcamp_date").val('');$("#session_time").val('');
 
       $('#save_btn').show();
+
+        total_session=parseInt(total_session)-1;
+
+        alert(total_session);
+      $('#total_session').val(total_session);
+      
+        total_applicable_sessions=parseInt(total_applicable_sessions)+1;
+      $('#total_applicable_sessions').val(total_applicable_sessions);
+      
+
+      
+      
     }
   });
   $('body').on('click','.btnRemoveMon',function() { 

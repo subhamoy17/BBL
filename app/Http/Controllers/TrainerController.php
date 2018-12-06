@@ -3426,9 +3426,6 @@ public function bootcamp_plan_delete($id)
    DB::commit();
     return redirect('trainer/bootcamp-plan')->with("success","You have successfully deleted one bootcamp plan");
   }
-
-
-  
 }
   catch(\Exception $e) {
       DB::rollback();
@@ -3441,8 +3438,25 @@ public function bootcamp_plan_delete($id)
   $cart_delete=DB::table('cart_slot_request')->where('request_trainer_id',Auth::user()->id)->delete();
 }
 
+  public function bootcamp_plan_schedule()
+  {
+    
+    $all_schedules=DB::table('bootcamp_plan_shedules')
+    ->join('bootcamp_plan_address','bootcamp_plan_address.id','bootcamp_plan_shedules.address_id')
+    ->select('bootcamp_plan_shedules.id as schedule_id','bootcamp_plan_shedules.plan_date','bootcamp_plan_shedules.plan_day','bootcamp_plan_shedules.plan_st_time','bootcamp_plan_shedules.plan_end_time','bootcamp_plan_address.address_line1','bootcamp_plan_shedules.max_allowed','bootcamp_plan_shedules.no_of_uses','bootcamp_plan_shedules.bootcamp_plan_id')
+    ->whereNull('bootcamp_plan_shedules.deleted_at')
+    ->get();
+  
+    return view('trainer.bootcamp_plan_schedule_list')->with(compact('all_schedules'));
+  }
 
+  public function bootcamp_schedule_cancelled_admin(Request $request)
+  {
+    //Log::debug(" bootcamp_schedule_cancelled_admin ".print_r($request->all(),true));
+    return redirect()->back();
+  }
 
+  
 
 ////Common diet plan controller////
 
