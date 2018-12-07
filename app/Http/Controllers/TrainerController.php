@@ -20,6 +20,8 @@ use App\Notifications\SessionRequestNotification;
 use App\Notifications\TrainerActiveDeactiveNotification;
 
 use App\Notifications\SessionRequestNotificationToTrainer;
+use App\Notifications\BootcampSessionNotification;
+
 
 
 class TrainerController extends Controller
@@ -3443,8 +3445,7 @@ public function bootcamp_plan_delete($id)
     
     $all_schedules=DB::table('bootcamp_plan_shedules')
     ->join('bootcamp_plan_address','bootcamp_plan_address.id','bootcamp_plan_shedules.address_id')
-    ->select('bootcamp_plan_shedules.id as schedule_id','bootcamp_plan_shedules.plan_date','bootcamp_plan_shedules.plan_day','bootcamp_plan_shedules.plan_st_time','bootcamp_plan_shedules.plan_end_time','bootcamp_plan_address.address_line1','bootcamp_plan_shedules.max_allowed','bootcamp_plan_shedules.no_of_uses','bootcamp_plan_shedules.bootcamp_plan_id')
-    ->whereNull('bootcamp_plan_shedules.deleted_at')
+    ->select('bootcamp_plan_shedules.id as schedule_id','bootcamp_plan_shedules.plan_date','bootcamp_plan_shedules.plan_day','bootcamp_plan_shedules.plan_st_time','bootcamp_plan_shedules.plan_end_time','bootcamp_plan_address.address_line1','bootcamp_plan_shedules.max_allowed','bootcamp_plan_shedules.no_of_uses','bootcamp_plan_shedules.bootcamp_plan_id','bootcamp_plan_shedules.deleted_at')
     ->get();
   
     return view('trainer.bootcamp_plan_schedule_list')->with(compact('all_schedules'));
@@ -3452,9 +3453,42 @@ public function bootcamp_plan_delete($id)
 
   public function bootcamp_schedule_cancelled_admin(Request $request)
   {
-    Log::debug(" bootcamp_schedule_cancelled_admin ".print_r($request->all(),true));
-
+    //Log::debug(" bootcamp_schedule_cancelled_admin ".print_r($request->all(),true));
     
+    $all_customers=DB::table('customers')
+    ->join('bootcamp_booking','bootcamp_booking.customer_id','customers.id')
+    ->join('bootcamp_plan_shedules','bootcamp_plan_shedules.id','bootcamp_booking.bootcamp_plan_shedules_id')
+    ->select('customers.id as customer_id','customers.name as customer_name','customers.ph_no as customer_ph_no','customers.email as customer_email','customers.created_at as booked_on','bootcamp_plan_shedules.plan_date as shedule_date','bootcamp_plan_shedules.plan_st_time as plan_st_time','bootcamp_plan_shedules.plan_end_time as plan_end_time','bootcamp_plan_shedules.plan_day as plan_day')
+    ->whereIn('bootcamp_booking.bootcamp_plan_shedules_id',$request->cancele_schedule)
+    ->get()->all();
+
+    $cancelled_schedule=DB::table('bootcamp_plan_shedules')
+    ->whereIn('id',$request->cancele_schedule)->update(['deleted_at'=>Carbon::now()]);
+
+    $cancelled_booking=DB::table('bootcamp_booking')
+    ->whereIn('bootcamp_booking.bootcamp_plan_shedules_id',$request->cancele_schedule)->update(['deleted_at'=>Carbon::now()]);
+
+    foreach($all_customers as $each_customer)
+    {
+
+      $notifydata['url'] = '/customer/mybooking';
+      $notifydata['customer_name']=$each_customer->customer_name;
+      $notifydata['customer_email']=$each_customer->customer_email;
+      $notifydata['customer_phone']=$each_customer->customer_ph_no;
+      $notifydata['status']='Cancelled Bootcamp Session By Admin';
+      $notifydata['session_booked_on']=$each_customer->booked_on;
+      $notifydata['session_booking_date']=$each_customer->shedule_date;
+      $notifydata['session_booking_day']=$each_customer->plan_day;
+      $notifydata['session_booking_time']=date('h:i A', strtotime($each_customer->plan_st_time)).' to '.date('h:i A', strtotime($each_customer->plan_end_time));
+      $notifydata['cancelled_reason']=$request->cancelled_reason;
+
+      $client_details=Customer::find($each_customer->customer_id);
+
+      $client_details->notify(new BootcampSessionNotification($notifydata));
+    }
+
+    //Log::debug(" bootcamp_schedule_cancelled_admin 2 ".print_r($all_customers,true));
+
     return redirect()->back();
   }
 

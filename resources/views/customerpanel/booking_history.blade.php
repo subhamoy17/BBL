@@ -10,13 +10,13 @@
             <div class="table-responsive table-bordered">
            <a href="{{url('customer/booking-bootcamp')}}" class="btn btn-success bk-slt-btn">Book Bootcamp Session</a>   
         <!-- <a href="{{url('customer/booking_slot')}}" class="btn btn-success bk-slt-btn">Book PT Session</a> -->
-              <!-- <h3 align="center">Booking history</h3>
+              <h3 align="center">Booking history</h3>
               <table class="table">
                 <thead>
                   <tr>
                     <th>Total number of session reamaining</th>
                      <th>Future pending booking</th>
-                     <th>Future accepted booking</th>
+                     <th>Cancelled booking</th>
                      
                   </tr>
                 </thead>
@@ -24,14 +24,14 @@
                   
                  
                   <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>{{$no_of_sessions}}</td>
+                    <td>{{$total_future_booking}}</td>
+                    <td>{{$total_cancelled_booking}}</td>
                       
                   </tr>
               
                 </tbody>
-              </table> -->
+              </table>
               <div class="tbl-srch">
               	 <form id="frm_search" method="get">
 					<select align ="right" id="feature" name="option" >

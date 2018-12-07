@@ -425,11 +425,58 @@ public function booking_history(Request $request)
     {
       $all_booking=$all_booking->whereNull('bootcamp_booking.deleted_at')->whereBetween('bootcamp_plan_shedules.plan_date', [$start_date, $end_date])->where('bootcamp_plan_shedules.plan_date','>=',$now);
     }
-
     
     $all_booking=$all_booking->orderby('bootcamp_booking.id','DESC')->paginate(5);
+
+
   
-    return view('customerpanel.booking_history')->with(compact('all_booking'));
+  $no_of_session_unlimited=DB::table('order_details')
+  ->join('products','products.id','order_details.product_id')
+  ->join('training_type','training_type.id','products.training_type_id')
+  ->where('order_details.customer_id',Auth::guard('customer')->user()->id)
+  ->where('order_details.status',1)
+  ->where('training_type.id',2)
+  ->where('order_details.order_validity_date','>=',$now)
+  ->where('order_details.remaining_sessions','Unlimited')
+  ->get()->all();
+
+  if(count($no_of_session_unlimited)>0)
+  {
+    $no_of_sessions='Unlimited';
+  }
+  else
+  {
+    $no_of_sessions=0;
+  $no_of_session_notunlimited=DB::table('order_details')
+  ->join('products','products.id','order_details.product_id')
+  ->join('training_type','training_type.id','products.training_type_id')
+  ->where('order_details.customer_id',Auth::guard('customer')->user()->id)
+  ->where('order_details.status',1)
+  ->where('training_type.id',2)
+  ->where('order_details.order_validity_date','>=',$now)
+  ->where('order_details.remaining_sessions','!=','Unlimited')
+  ->get()->all();
+
+    foreach($no_of_session_notunlimited as $total)
+    {
+      $no_of_sessions=$no_of_sessions+$total->remaining_sessions;
+    }
+  }
+
+  $total_future_booking=DB::table('bootcamp_booking')
+    ->join('bootcamp_plan_shedules','bootcamp_plan_shedules.id','bootcamp_booking.bootcamp_plan_shedules_id')
+    ->join('bootcamp_plan_address','bootcamp_plan_address.id','bootcamp_plan_shedules.address_id')
+    ->select('bootcamp_plan_shedules.plan_date','bootcamp_plan_shedules.plan_day','bootcamp_plan_shedules.plan_st_time','bootcamp_plan_shedules.plan_end_time','bootcamp_plan_address.address_line1','bootcamp_booking.created_at')
+    ->where('bootcamp_booking.customer_id',Auth::guard('customer')->user()->id)
+    ->whereNull('bootcamp_booking.deleted_at')->where('bootcamp_plan_shedules.plan_date','>=',$now)->count();
+    $total_cancelled_booking=DB::table('bootcamp_booking')
+    ->join('bootcamp_plan_shedules','bootcamp_plan_shedules.id','bootcamp_booking.bootcamp_plan_shedules_id')
+    ->join('bootcamp_plan_address','bootcamp_plan_address.id','bootcamp_plan_shedules.address_id')
+    ->select('bootcamp_plan_shedules.plan_date','bootcamp_plan_shedules.plan_day','bootcamp_plan_shedules.plan_st_time','bootcamp_plan_shedules.plan_end_time','bootcamp_plan_address.address_line1','bootcamp_booking.created_at')
+    ->where('bootcamp_booking.customer_id',Auth::guard('customer')->user()->id)
+    ->whereNotNull('bootcamp_booking.deleted_at')->count();
+  
+    return view('customerpanel.booking_history')->with(compact('all_booking','no_of_sessions','total_future_booking','total_cancelled_booking'));
 
      }
 
@@ -1345,6 +1392,7 @@ public function get_bootcamp_date(Request $request)
   $date_details=DB::table('bootcamp_plan_shedules')
   ->where('address_id',$request->address_id)
   ->where('plan_date','<=',$customer_product_validity)
+  ->whereNull('deleted_at')
   ->whereNotIn('plan_date',$alredy_booked_date)
   ->get()->all();
 

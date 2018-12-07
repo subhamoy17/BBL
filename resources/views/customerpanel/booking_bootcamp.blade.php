@@ -134,12 +134,18 @@
     <div class="hstry-box">
       <div class="tab_container">
           <!-- #tab1 -->
-          <h3 class="ed-p">Bootcamp Session Booking Form</h3>
+          <h3 class="ed-p">Bootcamp Session Booking Form &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          @if($no_of_sessions='Unlimited') 
+              Unlimited Sessions Remaining
+          @else
+          Total Remaining Session {{$no_of_sessions}}
+          @endif
+          </span></h3>
           <h3 class="d_active tab_drawer_heading" rel="tab5">Tab 5</h3>
           <div id="tab5" class="tab_content">
             <div class="form-box">
               @if($order_details>0)
-              <h3>{{$no_of_sessions}}</h3>
+             
                 <div class="row">
                   <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="col-md-6 col-sm-12 col-xs-12">
