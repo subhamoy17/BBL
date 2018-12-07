@@ -11,11 +11,11 @@
   { 
   setTimeout(function(){ 
     $('.alert-success').hide();
-    }, 3000);
+    }, 5000);
 
   setTimeout(function(){ 
     $('.alert-danger').hide();
-    }, 3000);
+    }, 5000);
   });
 </script>
 
@@ -324,7 +324,7 @@ function toggleField1(hideObj,showObj){
 
 	var plan_st_date= $('#plan_st_date').val();
 	var nextDay = new Date(plan_st_date);
-	nextDay.setDate(nextDay.getDate() + 7);
+	nextDay.setDate(nextDay.getDate() + 6);
 	$("#plan_end_date").datepicker("option","minDate", nextDay);
   } );
 

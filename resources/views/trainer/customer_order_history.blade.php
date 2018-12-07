@@ -12,33 +12,12 @@ $('#bootstrap-slot-data-table').DataTable({
         lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
         
         // disable shorting from slno,image and action columns
-        "columnDefs": [ { "orderable": false, "targets": [0] } ],
+        "columnDefs": [ { "orderable": false, "targets": [0,7] } ],
         
     });
  } );
 
 </script>
-
-<style>
-    /* disable shorting arrow from slno,image and action columns*/
-     table.dataTable thead>tr>th[id='slno'].sorting_asc::before{display: none}
-     table.dataTable thead>tr>th[id='slno'].sorting_asc::after{display: none}
-
-      table.dataTable thead>tr>th[id='image'].sorting_asc::before{display: none}
-     table.dataTable thead>tr>th[id='image'].sorting_asc::after{display: none}
-
-     table.dataTable thead>tr>th[id='action'].sorting_asc::before{display: none}
-     table.dataTable thead>tr>th[id='action'].sorting_asc::after{display: none}
-
-     /*for delete buton*/
-     .button-primary {
-    background: #d16879;
-    color: #FFF;
-    padding: 10px 20px;
-    font-weight: bold;
-    border:1px solid #FFC0CB;
-}
-</style>
 
 <style>
 
@@ -73,6 +52,14 @@ $('#bootstrap-slot-data-table').DataTable({
 }
 .card-body{
   
+}
+
+.order-show-icon
+{
+  display: inline-block;
+    float: left;
+    margin-left: 2px;
+    margin-top: 2px;
 }
 
 </style>
@@ -146,7 +133,9 @@ $('#bootstrap-slot-data-table').DataTable({
                  <button type="button"  title="Decline" class="btn btn-danger status-all" data-msg="Decline" id="{{$order_history->order_details_id}}"><i class="fa fa-thumbs-down"></i></button>
                 
                 @endif
-                                    <a class="detail-orders-modal-btn1 btn btn-info btn-sm" id="{{$order_history->order_details_id}}" href="#"   data-payment-option="{{$order_history->payment_option}}"  data-plan-price="{{$order_history->total_price}}" data-payment-type-name="{{$order_history->payment_type}}" data-purchased-on="{{date('d F Y', strtotime($order_history->order_purchase_date))}}" data-validity-date="{{$order_history->order_validity_date? date('d F Y', strtotime($order_history->order_validity_date)) : 'N/A'}}" data-payment-id="{{$order_history->payment_id}}" data-payment-description="{{$order_history->description? $order_history->description : 'N/A'}}" data-payment-image="{{asset('backend/bankpay_images')}}/{{$order_history->image}}" data-noimage="{{$order_history->image}}"><i class="fa fa-eye" title="view details"  aria-hidden="true"></i></a></td>
+                                    <a class="detail-orders-modal-btn1 btn btn-info btn-sm order-show-icon" id="{{$order_history->order_details_id}}" href="#"   data-payment-option="{{$order_history->payment_option}}"  data-plan-price="{{$order_history->total_price}}" data-payment-type-name="{{$order_history->payment_type}}" data-purchased-on="{{date('d F Y', strtotime($order_history->order_purchase_date))}}" data-validity-date="{{$order_history->order_validity_date? date('d F Y', strtotime($order_history->order_validity_date)) : 'N/A'}}" data-payment-id="{{$order_history->payment_id}}" data-payment-description="{{$order_history->description? $order_history->description : 'N/A'}}" data-payment-image="{{asset('backend/bankpay_images')}}/{{$order_history->image}}" data-noimage="{{$order_history->image}}">
+                                      <i class="fa fa-eye" title="view details" aria-hidden="true" style="width: 13px; height: 18px;"></i></a>
+                          </td>
                                  
 
                                 </tr>

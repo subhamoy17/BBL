@@ -1368,6 +1368,7 @@ public function booking_bootcamp()
 public function get_bootcamp_date(Request $request)
 {
 
+
   $current_date=Carbon::now()->toDateString();
 
   $customer_product_validity=DB::table('order_details')
@@ -1382,6 +1383,7 @@ public function get_bootcamp_date(Request $request)
 
   $alredy_booked_shedule_id=DB::table('bootcamp_booking')
   ->where('customer_id',Auth::guard('customer')->user()->id)
+  ->whereNull('deleted_at')
   ->pluck('bootcamp_plan_shedules_id');
 
   $alredy_booked_date=DB::table('bootcamp_plan_shedules')
@@ -1424,13 +1426,30 @@ public function bootcamp_booking_customer(Request $request)
 
   $current_date=Carbon::now()->toDateString();
 
-  $all_bootcamp_product=DB::table('order_details')
-      ->where('customer_id',Auth::guard('customer')->user()->id)
-      ->where('status',1)
-      ->where('remaining_sessions','>=',0)
-      ->where('remaining_sessions','!=','Unlimited')
-      ->where('order_validity_date','>=',$current_date)
-      ->orderBy('order_validity_date', 'ASC')->first();
+   $no_of_session_unlimited=DB::table('order_details')
+  ->join('products','products.id','order_details.product_id')
+  ->join('training_type','training_type.id','products.training_type_id')
+  ->select('order_details.id as order_id','order_details.remaining_sessions as remaining_sessions')
+  ->where('order_details.customer_id',Auth::guard('customer')->user()->id)
+  ->where('order_details.status',1)
+  ->where('training_type.id',2)
+  ->where('order_details.order_validity_date','>=',$current_date)
+  ->where('order_details.remaining_sessions','Unlimited')
+  ->orderBy('order_details.order_validity_date', 'ASC')->first();
+
+  $no_of_session_notunlimited=DB::table('order_details')
+  ->join('products','products.id','order_details.product_id')
+  ->join('training_type','training_type.id','products.training_type_id')
+  ->select('order_details.id as order_id','order_details.remaining_sessions as remaining_sessions')
+  ->where('order_details.customer_id',Auth::guard('customer')->user()->id)
+  ->where('order_details.status',1)
+  ->where('training_type.id',2)
+  ->where('order_details.order_validity_date','>=',$current_date)
+  ->where('order_details.remaining_sessions','>',0)
+  ->orderBy('order_details.order_validity_date', 'ASC')->first();
+
+
+
 
     for($j=0;$j<count($request->bootcamp_date);$j++)
     {
@@ -1439,7 +1458,10 @@ public function bootcamp_booking_customer(Request $request)
       $bootcamp_booking_insert=DB::table('bootcamp_booking')->insert($bootcamp_booking_data);
       $shedule_id[$j]=$request->schedule_id[$j];
 
-      $decrease_remaining_session=DB::table('order_details')->where('id',$all_bootcamp_product->id)->decrement('remaining_sessions',1);
+      if($no_of_session_unlimited->remaining_sessions!='Unlimited')
+      { 
+        $decrease_remaining_session=DB::table('order_details')->where('id',$no_of_session_notunlimited->order_id)->decrement('remaining_sessions',1);
+      }
     }
 
     $bootcamp_plan_shedules_update=DB::table('bootcamp_plan_shedules')

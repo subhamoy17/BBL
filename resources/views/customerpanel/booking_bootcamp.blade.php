@@ -135,7 +135,8 @@
       <div class="tab_container">
           <!-- #tab1 -->
           <h3 class="ed-p">Bootcamp Session Booking Form &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          @if($no_of_sessions='Unlimited') 
+            
+          @if($no_of_sessions=='Unlimited') 
               Unlimited Sessions Remaining
           @else
           Total Remaining Session {{$no_of_sessions}}
@@ -157,7 +158,7 @@
                        
                         <label>Address <small>*</small></label>
                           <select class="form-control" name="address" id="address" onchange="get_date(this.value);">
-                            <option value="">Please select address</option>
+                            <option value=" ">Please select address</option>
                             @if(!empty($bootcampaddress))
                             @foreach($bootcampaddress as $each_bootcampaddress)
                               <option value="{{$each_bootcampaddress->id}}">{{$each_bootcampaddress->address_line1}}</option>
@@ -169,18 +170,18 @@
                     <div class="col-md-6 col-sm-12 col-xs-12">
                       <div class="form-group available_date">
                         <label>Available Date <small>*</small></label>
-                        <input type="text" id="bootcamp_date" name="bootcamp_date" class="form-control" readonly="true">
+                        <input type="text" id="bootcamp_date" name="bootcamp_date" class="form-control" readonly="true" disabled="disabled">
                       </div>
                     </div>
                     <div class="col-md-6 col-sm-12 col-xs-12">
                       <label>Available Time <small>*</small></label>
-                        <select class="form-control" name="session_time" id="session_time">
+                        <select class="form-control" name="session_time" id="session_time" disabled="disabled" style="background:#3d3648;">
                                 
                         </select>
                     </div>
-                    <div class="col-md-6 col-sm-12 col-xs-12" id='loadingimg' style="display: none;">
+                    <div class="col-md-6 col-sm-12 col-xs-12" id='loadingimg' style="display: none">
                       <div class="form-group" >
-                        <img src="{{asset('backend/images/loader_session_time.gif')}}" style="width: 85px;margin-top: -30px;margin-left: -21px;"/>
+                        <img src="{{asset('backend/images/loader_session_time.gif')}}" style="width: 85px;margin-top: 2px;margin-left: -14px;"/>
                       </div>   
                     </div>
                          
@@ -302,7 +303,19 @@
 <script src="{{url('frontend/js/stellarnav.min.js')}}"></script>
 <script src="{{url('frontend/js/accotab.js')}}"></script>
 
+<script>
+  $(document).ready(function(){ 
 
+$('#save_btn').on('click',function(e){ 
+    $('#add_sess').hide();
+   $('.save_button').attr('disabled','disabled');
+    $('.save_button').text('Please wait...');
+    $('#add_session_form1').submit();
+
+  });
+
+ });
+</script>
 
 
   <!-- get all date after choose address of bootcamp and set enabled date into calender -->
@@ -314,7 +327,6 @@ $(document).ready(function() {
   { 
     if(value>0)
     {
-
       $('#loadingimg').show();
       $.ajax({
           type: "GET",
@@ -330,8 +342,7 @@ $(document).ready(function() {
 
             if(obj.length > 0)
             { 
-              
-
+            
               $('#bootcamp_date').removeAttr('disabled');
               $('#bootcamp_date').val('');
               $(".all_date_class").remove();
@@ -372,6 +383,7 @@ $(document).ready(function() {
                   beforeShowDay: nationalDays,
                   onSelect: getalltime
                 });
+            $('#bootcamp_date').removeAttr('disabled',true); 
             }
             else
             {
@@ -381,12 +393,16 @@ $(document).ready(function() {
             }
           } //end of ajax success
         }); // end of ajax call
+    }
+    else{
+      $('#bootcamp_date').attr('disabled',true); 
     }  // end of address select
   } // end of date function
 
 // get all time depend on choosing date
   function getalltime(choose_date)
   {
+    $('#loadingimg').show();
     var session_time = $('#session_time');
                     session_time.prop("disabled",false);
                     session_time.empty();
@@ -395,7 +411,7 @@ $(document).ready(function() {
           url: "{{route('get_bootcamp_time')}}",
           data: {'bootcamp_date': choose_date},
           success: function (data){
-            //$('#loadingimg').hide();
+            $('#loadingimg').hide();
             //console.log(data);
             var obj = $.parseJSON(data);
 
@@ -463,7 +479,9 @@ $(document).ready(function() {
     else
     {
       $("#add_session_req").append('<div class="conMon"><input readonly  class="form-control" type="text" name="bootcamp_address[]" value="' + address_text + '" />&nbsp;&nbsp;<input readonly  class="form-control" name="bootcamp_date[]" type="text" value="' + bootcamp_date + '" />&nbsp;&nbsp;<input readonly  class="form-control" type="text" name="bootcamp_time[]" value="' + session_time_text + '" /><input type=hidden class="all_previous_date"  readonly name="all_previous_date[]"' + 'id="all_previous_date[]"' + 'value="' + bootcamp_date + '" /><input type="hidden" name="schedule_id[]"' + 'value="' + session_time + '" /></div><br>');
-      $("#address").val(''); $("#bootcamp_date").val('');$("#session_time").val('');
+      $("#address").val(' '); $("#bootcamp_date").val('');$("#session_time").val('');
+
+      $('#bootcamp_date').attr('disabled',true); $('#session_time').attr('disabled',true);
 
       $('#save_btn').show();
 

@@ -281,7 +281,7 @@ function toggleField1(hideObj,showObj){
   		beforeShowDay: NotBeforeToday,
   		onSelect: function(selectedDate){
   			var nextDay = new Date(selectedDate);
-				nextDay.setDate(nextDay.getDate() + 7);
+				nextDay.setDate(nextDay.getDate() + 6);
 				$("#plan_end_date").datepicker("option","minDate", nextDay);
   		}
 		});

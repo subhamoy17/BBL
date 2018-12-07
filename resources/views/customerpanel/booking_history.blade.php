@@ -15,7 +15,7 @@
                 <thead>
                   <tr>
                     <th>Total number of session reamaining</th>
-                     <th>Future pending booking</th>
+                     <th>Future booking</th>
                      <th>Cancelled booking</th>
                      
                   </tr>

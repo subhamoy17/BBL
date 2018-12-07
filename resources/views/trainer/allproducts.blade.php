@@ -92,8 +92,8 @@ $('#bootstrap-slot-data-table').DataTable({
                             <thead>
                                 <tr>
                                     <th id="slno" >Sl. No.</th>
-                                    <th>Training Type Name</th>
-                                    <th>Payment Type Name</th>
+                                    <th>Training Type</th>
+                                    <th>Payment Type</th>
                                     <th>Total Session</th>
                                     <th>Price</th>
                                     <th>Total Price</th>

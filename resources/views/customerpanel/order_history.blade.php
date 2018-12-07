@@ -77,9 +77,6 @@
                 @elseif($myorder->status=='0' && $myorder->payment_status == 'Decline')
                 <td>Payment Decline</td>
                 @endif
-           
-           
-           
           </tr>
          
             @endforeach

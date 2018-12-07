@@ -97,7 +97,12 @@
               <div class="p-box-head cmn-3">
               <h3><span>{{$each_bootcamp_product->validity? $each_bootcamp_product->validity.' Days' : 'Validity N/A'}}</span></h3>
               <h1><i class="fa fa-gbp"></i> {{$each_bootcamp_product->total_price}} 
-                <br><span> {{$each_bootcamp_product->payment_type_name}}</span></h1>
+                <br><span> {{$each_bootcamp_product->payment_type_name}}
+                  @if($each_bootcamp_product->payment_type_name=='Subscription')
+                (Notice Period 
+                {{$each_bootcamp_product->notice_period_value*$each_bootcamp_product->notice_period_duration}} Days)
+                @endif
+                </span></h1>
               <div class="btm-arow"><i class="fa fa-arrow-circle-down"></i></div>
               <div class="plan-batch bch-3">Bootcamp</div>
               <div class="cntrct"><h5>Contract <span> - {{$each_bootcamp_product->contract? $each_bootcamp_product->contract : 'N/A'}}</span></h5></div>

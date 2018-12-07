@@ -6495,3 +6495,19 @@ span.line_t2 {
     display: inline-block;
 }
 /*// 211118*/
+
+
+
+/*for bootcamp banktransfer payment error message 
+@totan 071218*/
+
+#package_description-error
+{
+    color: #dc3545;
+}
+
+#package_image-error{
+    color: #dc3545;
+}
+
+/*071218*/

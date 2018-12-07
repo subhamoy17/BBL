@@ -2965,8 +2965,13 @@ $final_slot_time=DB::table('slot_times')->whereNotIn('id',$get_slot_times)
 
 public function bootcamp_plan()
 { 
+  try{
   $form_address=DB::table('bootcamp_plan_address')->select('id','address_line1')->get();
   return view('trainer.add_bootcamp_plan')->with(compact('form_address'));
+  }
+   catch(\Exception $e) {
+       return abort(200);
+   }
 }
 
 
@@ -3183,6 +3188,7 @@ public function bootcamp_plan_edit_view($id)
 
   //start address change
   $old_address_id=DB::table('bootcamp_plans')->where('id',$request->id)
+  ->whereNull('deleted_at')
   ->pluck('address_id')
   ->first();
 
@@ -3205,7 +3211,7 @@ public function bootcamp_plan_edit_view($id)
 
     //Log::debug(" data adddress change ".print_r($all_session_date,true));
 
-    $all_booking_schedule=DB::table('bootcamp_plan_shedules')->whereIn('plan_date',$all_session_date)->where('no_of_uses','>',0)->get()->all();
+    $all_booking_schedule=DB::table('bootcamp_plan_shedules')->whereIn('plan_date',$all_session_date)->where('no_of_uses','>',0)->whereNull('deleted_at')->get()->all();
 
     if(count($all_booking_schedule)>0)
     {
@@ -3220,7 +3226,7 @@ public function bootcamp_plan_edit_view($id)
 
     $update_bootcamp_plan=DB::table('bootcamp_plans')->where('id',$request->id)->update($edit_data);
 
-    $update_plan_schedule=DB::table('bootcamp_plan_shedules')->where('bootcamp_plan_id',$request->id)->update(['address_id'=>$edit_data['address_id']]);
+    $update_plan_schedule=DB::table('bootcamp_plan_shedules')->where('bootcamp_plan_id',$request->id)->whereNull('deleted_at')->update(['address_id'=>$edit_data['address_id']]);
 
     DB::commit();
     return redirect('trainer/bootcamp-plan')->with("success","This plan address is update successfully");
@@ -3232,7 +3238,7 @@ public function bootcamp_plan_edit_view($id)
 
   // start if date is decrease from the previous end date of this plan
   
-  $previous_plan_end_date=DB::table('bootcamp_plans')->where('id',$request->id)->pluck('plan_end_date')->first();
+  $previous_plan_end_date=DB::table('bootcamp_plans')->where('id',$request->id)->whereNull('deleted_at')->pluck('plan_end_date')->first();
 
   if($previous_plan_end_date>$edit_data['plan_end_date'])
   {
@@ -3254,7 +3260,7 @@ public function bootcamp_plan_edit_view($id)
       $all_session_date[]=$value->format('Y-m-d');              
     }
 
-    $all_booking_schedule=DB::table('bootcamp_plan_shedules')->whereIn('plan_date',$all_session_date)->where('no_of_uses','>',0)->get()->all();
+    $all_booking_schedule=DB::table('bootcamp_plan_shedules')->whereIn('plan_date',$all_session_date)->where('no_of_uses','>',0)->whereNull('deleted_at')->get()->all();
 
     //Log::debug(" all_booking_schedule ".print_r($all_booking_schedule,true));
 
@@ -3304,7 +3310,7 @@ public function bootcamp_plan_edit_view($id)
       );
     $all_session_date=$all_session_day=[];
 
-    $prev_last_date=DB::table('bootcamp_plan_shedules')->where('bootcamp_plan_id',$request->id)->orderby('id','DESC')->pluck('plan_date')->first();
+    $prev_last_date=DB::table('bootcamp_plan_shedules')->where('bootcamp_plan_id',$request->id)->orderby('id','DESC')->whereNull('deleted_at')->pluck('plan_date')->first();
 
     foreach ($period as $key=>$value) 
     {
@@ -3959,21 +3965,27 @@ function checkdiscount_price_edit(Request $request)
 }
 catch(\Exception $e) {
 
-      return abort(400);
+      return abort(200);
   }
 }
 
 public function add_product()
 {
-  $all_traning_type=DB::table('training_type')->get();
-  $all_payment_type=DB::table('payment_type')->get();
-  $all_slot_time=DB::table('slot_times')->get();
-  return view('trainer/add_product')->with(compact('all_traning_type','all_payment_type','all_slot_time'));
+  try{
+    $all_traning_type=DB::table('training_type')->get();
+    $all_payment_type=DB::table('payment_type')->get();
+    $all_slot_time=DB::table('slot_times')->get();
+    return view('trainer/add_product')->with(compact('all_traning_type','all_payment_type','all_slot_time'));
+  }
+catch(\Exception $e) {
+
+      return abort(200);
+  }
 }
 
 public function insert_product(Request $request)
 {
-  Log::debug(" insert_product ".print_r($request->all(),true));
+  
   DB::beginTransaction();
    try{
   $products_data['training_type_id']=$request->training_type;
@@ -4057,7 +4069,7 @@ public function edit_product($id)
 
 public function update_product(Request $request)
 {
-  Log::debug(":: product_details :: ".print_r($request->all(),true));
+  //Log::debug(":: product_details :: ".print_r($request->all(),true));
 
   DB::beginTransaction();
     try{
@@ -4099,7 +4111,7 @@ $products_data['status']=0;
   {
     $products_data['total_sessions']=$request->no_session;
   }
-    // $products_data['total_sessions']=$request->no_session;
+    
      $products_data['price_session_or_month']=$request->price;
      $products_data['total_price']=$request->final_total_price;
      $products_data['contract']=$request->contract;
@@ -4209,8 +4221,6 @@ public function order_history_backend_request(Request $request)
     ->where('id',$order_details->payment_id)->update(['status'=> 'Decline']);
 
     // send notification mail
-
-   
 
     return response()->json(2);
     }
