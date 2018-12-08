@@ -3470,7 +3470,12 @@ public function bootcamp_plan_delete($id)
   public function bootcamp_schedule_cancelled_admin(Request $request)
   {
     //Log::debug(" bootcamp_schedule_cancelled_admin ".print_r($request->all(),true));
-    
+    DB::beginTransaction();
+  try{
+
+    $today = Carbon::now();
+
+
     $all_customers=DB::table('customers')
     ->join('bootcamp_booking','bootcamp_booking.customer_id','customers.id')
     ->join('bootcamp_plan_shedules','bootcamp_plan_shedules.id','bootcamp_booking.bootcamp_plan_shedules_id')
@@ -3484,8 +3489,31 @@ public function bootcamp_plan_delete($id)
     $cancelled_booking=DB::table('bootcamp_booking')
     ->whereIn('bootcamp_booking.bootcamp_plan_shedules_id',$request->cancele_schedule)->update(['deleted_at'=>Carbon::now()]);
 
+
+   
+
+
+
+
     foreach($all_customers as $each_customer)
     {
+      $return_sessions=DB::table('order_details')
+      ->where('customer_id',$each_customer->customer_id)
+      ->where('order_validity_date','>=',$today)
+      ->where('status',1)
+      ->orderby('order_validity_date','DESC')
+      ->first();
+
+      if($return_sessions->remaining_sessions!='Unlimited')
+      {
+        $return_sessions=DB::table('order_details')
+        ->where('customer_id',$each_customer->customer_id)
+        ->where('order_validity_date','>=',$today)
+        ->where('status',1)
+        ->where('remaining_sessions','!=','Unlimited')
+        ->where('id',$return_sessions->id)
+        ->increment('remaining_sessions',1);
+      }
 
       $notifydata['url'] = '/customer/mybooking';
       $notifydata['customer_name']=$each_customer->customer_name;
@@ -3504,8 +3532,14 @@ public function bootcamp_plan_delete($id)
     }
 
     //Log::debug(" bootcamp_schedule_cancelled_admin 2 ".print_r($all_customers,true));
-
+    DB::commit();
     return redirect()->back();
+
+    }
+  catch(\Exception $e) {
+      DB::rollback();
+      return abort(200);
+  }
   }
 
   

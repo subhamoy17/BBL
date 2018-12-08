@@ -1468,7 +1468,7 @@ DB::beginTransaction();
       $bootcamp_booking_insert=DB::table('bootcamp_booking')->insert($bootcamp_booking_data);
       $shedule_id[$j]=$request->schedule_id[$j];
 
-      if($no_of_session_unlimited->remaining_sessions!='Unlimited')
+      if(empty($no_of_session_unlimited))
       { 
         $decrease_remaining_session=DB::table('order_details')->where('id',$no_of_session_notunlimited->order_id)->decrement('remaining_sessions',1);
       }

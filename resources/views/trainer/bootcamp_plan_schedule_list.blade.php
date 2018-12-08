@@ -93,7 +93,7 @@ $(document).ready(function() {
                   <th>Time</th>
                   <th style="width: 116px;">Address</th>
                   <th>Maximum Allowed</th>
-                  <th>No. of Uses</th>
+                  <th>Booking Seats</th>
                   <th>Status</th>
                   <th style="width: 181px;">Select to cancelled 
                     <input type="checkbox" id="all_schedule_cancel" class="selectall">
@@ -223,15 +223,20 @@ $(document).ready(function (){
    $('#canncele_form').on('submit', function(event){ 
       // Prevent actual form submission
       event.preventDefault();
-
       var cancele_check = $('.cancele_check:checkbox');
-            if(cancele_check.length > 0) {
+            if(cancele_check.length > 0) { ;
                 if( $('.cancele_check:checkbox:checked').length < 1) {
                     alertify.alert('Please select at least one schedule to canceled');
                     cancele_check[0].focus();
                     return false;
                 }
             }
+            else if($('.cancele_check:checkbox:checked').length==0 && $('.selectall:checkbox:checked').length==1)
+                {
+                   alertify.alert('Please select at least one schedule to canceled');
+                    cancele_check[0].focus();
+                    return false;
+                }
 
       alertify.confirm("Are you sure you want to cancelled all selected shedule?", function (e) {
           if (e) {
@@ -262,10 +267,8 @@ $(document).ready(function (){
          url: '{{url("trainer/bootcamp-schedule-cancelled")}}',
          data: $('#canncele_form').serialize(),
          success: function(data){
-          $(".card-body").css("opacity","");
-            $("#loading-img").hide();
             alertify.alert("Your selecting schedule cancellation is done");
-            $("#canncele_form")[0].reset();
+            location.reload();
          }
       });
     }

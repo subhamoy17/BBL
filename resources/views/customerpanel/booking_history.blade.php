@@ -77,7 +77,7 @@
                     <td>{{date('h:i A', strtotime($eachbooking->plan_st_time))}} To {{date('h:i A', strtotime($eachbooking->plan_end_time))}}</td>
                     <td>
                       @if(Request::get('option')=='cancelled_booking')
-                        Cancelled by trainer
+                        Declined by trainer
                       @elseif(Request::get('option')=='past_booking')
                         Past booking
                       @elseif(Request::get('option')=='future_booking' || Request::segment(2)=='mybooking')
