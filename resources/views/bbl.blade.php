@@ -135,7 +135,7 @@
     			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
     				<div class="box-hover-effect thumb-cross-effect forservice">
     					<div class="effect-wrapper">
-    						<div class="thumb"><img src="{{asset('frontend/images/hp1.jpg')}}"></div>
+    						<div class="thumb"><img src="{{asset('frontend/images/bootcamp_home_img.jpg')}}"  width="360px"></div>
     						<a class="hover-link">View more</a>
     					</div>
     					<div class="sr-text">
@@ -145,6 +145,7 @@
     					</div>
     				</div>
     			</div>
+                <div class="clearfix"></div>
     			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
     				<div class="box-hover-effect thumb-cross-effect forservice">
     					<div class="effect-wrapper">
