@@ -426,7 +426,7 @@ public function booking_history(Request $request)
       $all_booking=$all_booking->whereNull('bootcamp_booking.deleted_at')->whereBetween('bootcamp_plan_shedules.plan_date', [$start_date, $end_date])->where('bootcamp_plan_shedules.plan_date','>=',$now);
     }
     
-    $all_booking=$all_booking->orderby('bootcamp_booking.id','DESC')->paginate(5);
+    $all_booking=$all_booking->orderby('bootcamp_booking.id','DESC')->paginate(10);
 
 
   
@@ -475,8 +475,15 @@ public function booking_history(Request $request)
     ->select('bootcamp_plan_shedules.plan_date','bootcamp_plan_shedules.plan_day','bootcamp_plan_shedules.plan_st_time','bootcamp_plan_shedules.plan_end_time','bootcamp_plan_address.address_line1','bootcamp_booking.created_at')
     ->where('bootcamp_booking.customer_id',Auth::guard('customer')->user()->id)
     ->whereNotNull('bootcamp_booking.deleted_at')->count();
+
+    $total_past_booking=DB::table('bootcamp_booking')
+    ->join('bootcamp_plan_shedules','bootcamp_plan_shedules.id','bootcamp_booking.bootcamp_plan_shedules_id')
+    ->join('bootcamp_plan_address','bootcamp_plan_address.id','bootcamp_plan_shedules.address_id')
+    ->select('bootcamp_plan_shedules.plan_date','bootcamp_plan_shedules.plan_day','bootcamp_plan_shedules.plan_st_time','bootcamp_plan_shedules.plan_end_time','bootcamp_plan_address.address_line1','bootcamp_booking.created_at')
+    ->where('bootcamp_booking.customer_id',Auth::guard('customer')->user()->id)
+    ->whereNull('bootcamp_booking.deleted_at')->where('bootcamp_plan_shedules.plan_date','<',$now)->count();
   
-    return view('customerpanel.booking_history')->with(compact('all_booking','no_of_sessions','total_future_booking','total_cancelled_booking'));
+    return view('customerpanel.booking_history')->with(compact('all_booking','no_of_sessions','total_future_booking','total_cancelled_booking','total_past_booking'));
 
      }
 
@@ -1423,6 +1430,9 @@ public function bootcamp_booking_customer(Request $request)
 {
 
   //Log::debug(" bootcamp_booking_customer ".print_r($request->all(),true));
+DB::beginTransaction();
+  try
+  {
 
   $current_date=Carbon::now()->toDateString();
 
@@ -1475,9 +1485,14 @@ public function bootcamp_booking_customer(Request $request)
     $a->total_sessions=$j;
     $all_data=array($a);
 
-    //DB::commit();
+    DB::commit();
 
     return redirect()->back()->with(["success"=>"You have successfully sent the bellow Bootcamp session request(s)!",'all_data'=>$all_data]);
+  }
+   catch(\Exception $e) {
+     DB::rollback();
+       return abort(400);
+   }
 
 }
 

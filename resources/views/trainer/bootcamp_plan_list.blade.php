@@ -104,12 +104,12 @@ $(document).ready(function() {
                     <tr>
                       <td>{{++$key}}</td>
                       <td>
-                        @if($each_bootcamp->monday==1) Monday, @endif
-                        @if($each_bootcamp->tuesday==1) Tuesday, @endif
-                        @if($each_bootcamp->wednesday==1) Wednesday, @endif
-                        @if($each_bootcamp->thursday==1) Thursday, @endif
-                        @if($each_bootcamp->friday==1) Friday, @endif
-                        @if($each_bootcamp->saturday==1) Saturday, @endif
+                        @if($each_bootcamp->monday==1) Monday  @endif
+                        @if($each_bootcamp->tuesday==1) Tuesday  @endif
+                        @if($each_bootcamp->wednesday==1) Wednesday  @endif
+                        @if($each_bootcamp->thursday==1) Thursday  @endif
+                        @if($each_bootcamp->friday==1) Friday  @endif
+                        @if($each_bootcamp->saturday==1) Saturday @endif
                         @if($each_bootcamp->sunday==1) Sunday @endif
                       </td>
                       <td>{{date("h:i A", strtotime($each_bootcamp->session_st_time))}}</td>

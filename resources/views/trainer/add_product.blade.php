@@ -37,14 +37,18 @@ rules: {
 required: true,
 number: true,
 
-range: [1, 99999]
+range: [1, 99999.99]
 },
-
+"anual_total_price": {
+required: true,
+number: true,
+range: [1, 99999.99]
+},
 "sub_price": {
 required: true,
 number: true,
 
-range: [1, 99999]
+range: [1, 99999.99]
 },
 "no_session": {
 required: true,
@@ -94,6 +98,11 @@ messages: {
 
   "price":{
  required: 'Please enter price',
+number: 'Please enter decimal only',
+range: "Please enter value betwwen 1 to 99999.99"
+},
+"anual_total_price":{
+ required: 'Please enter total price',
 number: 'Please enter decimal only',
 range: "Please enter value betwwen 1 to 99999.99"
 },

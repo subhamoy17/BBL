@@ -77,7 +77,7 @@
 
                                  </form>
                                 </ul>
-                                <span class="noification-d"><a href="{{url('customer/mybooking')}}"><i class="fa fa-bell"></i><small>{{Session::get('sum_slots')?Session::get('sum_slots'):0}}</small></a></span>
+                                <!-- <span class="noification-d"><a href="{{url('customer/mybooking')}}"><i class="fa fa-bell"></i><small>{{Session::get('sum_slots')?Session::get('sum_slots'):0}}</small></a></span> -->
                             </div>
                             <div class="clearfix"></div>
                             @else

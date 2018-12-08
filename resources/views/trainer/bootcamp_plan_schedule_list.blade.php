@@ -17,6 +17,51 @@ $(document).ready(function() {
 
 </script>
 
+<style>
+
+.button-primary {
+  background: #d16879;
+  color: #FFF;
+  padding: 10px 20px;
+  font-weight: bold;
+  border:1px solid #FFC0CB; 
+}
+
+.div {
+    height:200px;
+    background-color:red;
+}
+#loading-img {
+  background: url(../backend/images/loader-gif-transparent-background-4.gif) center no-repeat / cover;
+    display: none;
+    height: 100px;
+    width: 100px;
+    position: absolute;
+    top: 50%;
+    left: 1%;
+    right: 1%;
+    margin: 0 auto;
+    z-index: 99999;
+}
+
+.group {
+    position: relative;
+    width: 100%;
+}
+.card-body{
+  
+}
+
+.order-show-icon
+{
+  display: inline-block;
+    float: left;
+    margin-left: 2px;
+    margin-top: 2px;
+}
+
+</style>
+
 @if(Auth::user()->master_trainer==1)
 <div class="breadcrumbs">
     <div class="col-sm-9">
@@ -31,10 +76,11 @@ $(document).ready(function() {
   <div class="animated fadeIn">
     <div class="row">
       <div class="col-md-12">
+        <div id="loading-img"></div>
         <div class="card">
           <div class="card-header" style="padding-left: 0px;padding-right: 0px;padding-bottom: 0px;padding-top: 10px;">
             
-          </div>
+          <!-- </div>  onsubmit="return checkTheBox();" -->
           <div class="card-body">
              <form id="canncele_form" method="post">
               <input type="hidden" name="cancelled_reason" id="cancelled_reason">
@@ -76,7 +122,7 @@ $(document).ready(function() {
                       
                       <td align="center">
                         @if($each_schedule->deleted_at=='')
-                        <input type="checkbox" name="cancele_schedule[]" id="cancele_schedule" value="{{$each_schedule->schedule_id}}">
+                        <input type="checkbox" name="cancele_schedule[]" id="cancele_schedule" value="{{$each_schedule->schedule_id}}" class="cancele_check">
                          @else
                           ---
                         @endif
@@ -101,7 +147,7 @@ $(document).ready(function() {
     
     <div class="modal-content">
     <div class="modal-header">
-      <h2 style="font-size: 20px;text-align: center;">Comment your reason</h2>
+      <h2 style="font-size: 20px;text-align: center;">Comment your cancellation reason</h2>
       
     </div>
       <div class="modal-body" id="hall_details_edit">
@@ -141,6 +187,21 @@ $(document).ready(function() {
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
 
+<!-- <script type="text/javascript">
+  function checkTheBox() {
+    var flag = 0;
+    for (var i = 0; i< 5; i++) {
+      if(document.myform["cancele_schedule[]"][i].checked){
+        flag ++;
+      }
+    }
+    if (flag != 1) {
+      alert ("You must check one and only one checkbox!");
+      return false;
+    }
+    return true;
+  }
+</script> -->
 <script type="text/javascript">
     $(document).ready(function() {
         $('#bootstrap-data-table-export').DataTable();
@@ -155,12 +216,22 @@ $(document).ready(function() {
 <script>
 $(document).ready(function (){
    var table = $('#bootstrap-data-table-export').DataTable({
+
    });
 
    // Handle form submission event
    $('#canncele_form').on('submit', function(event){ 
       // Prevent actual form submission
       event.preventDefault();
+
+      var cancele_check = $('.cancele_check:checkbox');
+            if(cancele_check.length > 0) {
+                if( $('.cancele_check:checkbox:checked').length < 1) {
+                    alertify.alert('Please select at least one schedule to canceled');
+                    cancele_check[0].focus();
+                    return false;
+                }
+            }
 
       alertify.confirm("Are you sure you want to cancelled all selected shedule?", function (e) {
           if (e) {
@@ -182,7 +253,8 @@ $(document).ready(function (){
       }
       else
       {
-        
+        $(".card-body").css("opacity", .2);
+        $("#loading-img").css({"display": "block"});
         var cancelled_reason=$('#cancelled_reason').val($('#comment').val());
       // Submit form data via Ajax
 
@@ -190,6 +262,8 @@ $(document).ready(function (){
          url: '{{url("trainer/bootcamp-schedule-cancelled")}}',
          data: $('#canncele_form').serialize(),
          success: function(data){
+          $(".card-body").css("opacity","");
+            $("#loading-img").hide();
             alertify.alert("Your selecting schedule cancellation is done");
             $("#canncele_form")[0].reset();
          }

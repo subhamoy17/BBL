@@ -3211,12 +3211,22 @@ public function bootcamp_plan_edit_view($id)
 
     //Log::debug(" data adddress change ".print_r($all_session_date,true));
 
-    $all_booking_schedule=DB::table('bootcamp_plan_shedules')->whereIn('plan_date',$all_session_date)->where('no_of_uses','>',0)->whereNull('deleted_at')->get()->all();
+    $all_booking_schedule=DB::table('bootcamp_plan_shedules')->whereIn('plan_date',$all_session_date)->where('no_of_uses','>',0)->where('bootcamp_plan_id',$request->id)->whereNull('deleted_at')->get()->all();
 
     if(count($all_booking_schedule)>0)
     {
       DB::commit();
-      return redirect()->back()->with('address_change','Some bookings are available of this address');
+      return redirect()->back()->with('address_change','There are some bookings for this bootcamp plan to save the changes you have to decline those booking(s) manually');
+    }
+
+    elseif($request->address_select!='')
+    {
+      $update_bootcamp_plan=DB::table('bootcamp_plans')->where('id',$request->id)->update($edit_data);
+
+    $update_plan_schedule=DB::table('bootcamp_plan_shedules')->where('bootcamp_plan_id',$request->id)->whereNull('deleted_at')->update(['address_id'=>$edit_data['address_id']]);
+
+    DB::commit();
+    return redirect('trainer/bootcamp-plan')->with("success","This plan address is update successfully");
     }
     else
     {
@@ -3260,14 +3270,14 @@ public function bootcamp_plan_edit_view($id)
       $all_session_date[]=$value->format('Y-m-d');              
     }
 
-    $all_booking_schedule=DB::table('bootcamp_plan_shedules')->whereIn('plan_date',$all_session_date)->where('no_of_uses','>',0)->whereNull('deleted_at')->get()->all();
+    $all_booking_schedule=DB::table('bootcamp_plan_shedules')->whereIn('plan_date',$all_session_date)->where('no_of_uses','>',0)->whereNull('deleted_at')->where('bootcamp_plan_id',$request->id)->get()->all();
 
     //Log::debug(" all_booking_schedule ".print_r($all_booking_schedule,true));
 
     if(count($all_booking_schedule)>0)
     {
       DB::commit();
-      return redirect()->back()->with('enddate_decrement','Some bookings are available upto previous end date');
+      return redirect()->back()->with('enddate_decrement','There are some bookings for this bootcamp plan to save the changes you have to decline those booking(s) manually');
     }
     else
     {
@@ -3421,7 +3431,7 @@ public function bootcamp_plan_delete($id)
   if(count($all_booking_schedule)>0)
   {
     DB::commit();
-    return redirect()->back()->with('cancele_delete','Some bookings are available upto end date');
+    return redirect()->back()->with('cancele_delete','There are some bookings for this bootcamp plan to save the changes you have to decline those booking(s) manually');
   }
   else
   {
@@ -3972,7 +3982,7 @@ catch(\Exception $e) {
 public function add_product()
 {
   try{
-    $all_traning_type=DB::table('training_type')->get();
+    $all_traning_type=DB::table('training_type')->where('id',2)->get();
     $all_payment_type=DB::table('payment_type')->get();
     $all_slot_time=DB::table('slot_times')->get();
     return view('trainer/add_product')->with(compact('all_traning_type','all_payment_type','all_slot_time'));

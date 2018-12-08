@@ -81,7 +81,7 @@
 						</li>
 						<li>
 							<div class="col-md-4 we-gyl">
-								<img src="{{asset('frontend/images/2.jpg')}}" alt="" class="img-responsive" />
+								<img src="{{asset('frontend/images/hp1.jpg')}}" alt="" class="img-responsive" />
 							</div>
 							<div class="col-md-8 in-block">
 								<h5>BOOTCAMP TRAINING</h5>

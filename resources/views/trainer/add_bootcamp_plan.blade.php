@@ -24,81 +24,84 @@
 				<form  action="{{route('insert_bootcamp_plan')}}" class="slct-margin" id="submit_bootcamp_session" method="post" autocomplete="off">
 					{{ csrf_field() }}
 				<div class="row cxz">
-					<div class="col-lg-2">
-						<label>Monday <input type="checkbox" id="mon_session_flg" class="day_flg" name="mon_session_flg"></label>
-					</div>
-					<div class="col-lg-2">
-						<label>Tuesday <input type="checkbox" id="tue_session_flg" class="day_flg" name="tue_session_flg"></label>
-					</div>
-					<div class="col-lg-2">
-						<label>Wednesday <input type="checkbox" id="wed_session_flg" class="day_flg" name="wed_session_flg"></label>
-					</div>
-					<div class="col-lg-2">
-						<label>Thursday <input type="checkbox" id="thu_session_flg" class="day_flg" name="thu_session_flg"></label>
-					</div>
-					<div class="col-lg-2">
-						<label>Friday <input type="checkbox" id="fri_session_flg" class="day_flg" name="fri_session_flg"></label>
+          <div class="col-lg-3">
+            <label>Choose Day of a week <span class="required_field_color">*</span></label>
+          </div>
+					<div class="col-lg-1">
+						<label>Mon <input type="checkbox" id="mon_session_flg" class="day_flg" name="mon_session_flg"></label>
 					</div>
 					<div class="col-lg-1">
-						<label>Saturday <input type="checkbox" id="sat_session_flg" class="day_flg" name="sat_session_flg"></label>
+						<label>Tue <input type="checkbox" id="tue_session_flg" class="day_flg" name="tue_session_flg"></label>
 					</div>
 					<div class="col-lg-1">
-						<label>Sunday <input type="checkbox" id="sun_session_flg" class="day_flg" name="sun_session_flg"></label>
+						<label>Wed <input type="checkbox" id="wed_session_flg" class="day_flg" name="wed_session_flg"></label>
+					</div>
+					<div class="col-lg-1">
+						<label>Thu <input type="checkbox" id="thu_session_flg" class="day_flg" name="thu_session_flg"></label>
+					</div>
+					<div class="col-lg-1">
+						<label>Fri <input type="checkbox" id="fri_session_flg" class="day_flg" name="fri_session_flg"></label>
+					</div>
+					<div class="col-lg-1">
+						<label>Sat <input type="checkbox" id="sat_session_flg" class="day_flg" name="sat_session_flg"></label>
+					</div>
+					<div class="col-lg-1">
+						<label>Sun <input type="checkbox" id="sun_session_flg" class="day_flg" name="sun_session_flg"></label>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-lg-2">
-						<label>Session Start<br> Time <span class="required_field_color">*</span></label>
+				<div class="row form-group">
+					<div class="col-lg-3">
+						<label>Session Start Time <span class="required_field_color">*</span></label>
 					</div>
-					<div class="col-lg-4">
+					<div class="col-lg-3">
 						<input type="text" id="session_st_time" name="session_st_time" class="form-control" readonly>
 					</div>
-					<div class="col-lg-2">
+					<div class="col-lg-3">
 						<label>Session End Time <span class="required_field_color">*</span></label>
 					</div>
-					<div class="col-lg-4">
+					<div class="col-lg-3">
 						<input type="text" id="session_end_time" name="session_end_time" class="form-control" readonly>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-lg-2">
-						<label>Plan Start<br> Date <span class="required_field_color">*</span></label>
+				<div class="row form-group">
+					<div class="col-lg-3">
+						<label>Plan Start Date <span class="required_field_color">*</span></label>
 					</div>
-					<div class="col-lg-4">
+					<div class="col-lg-3">
 						<input type="text" id="plan_st_date" name="plan_st_date" class="form-control" readonly="true">
 					</div>
-					<div class="col-lg-2">
+					<div class="col-lg-3">
 						<label>Plan End Date </label>
 					</div>
-					<div class="col-lg-4">
+					<div class="col-lg-3">
 						<input type="text" id="plan_end_date" name="plan_end_date" class="form-control" readonly="true">
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-lg-2">
+					<div class="col-lg-3">
 						
 					</div>
-					<div class="col-lg-4">
+					<div class="col-lg-3">
 						
 					</div>
-					<div class="col-lg-2">
+					<div class="col-lg-3">
 						<label>Plan Never End</label>
 					</div>
-					<div class="col-lg-4">
+					<div class="col-lg-3">
 						<input type="checkbox" name="never_expire" id="never_expire" >
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-lg-2">
+					<div class="col-lg-3">
 						<label>Maximum Allowed Booking <span class="required_field_color">*</span></label>
 					</div>
-					<div class="col-lg-4">
+					<div class="col-lg-3">
 						<input type="text" id="max_allowed" name="max_allowed" class="form-control"  onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" value="15">
 					</div>
-					<div class="col-lg-2">
+					<div class="col-lg-3">
 						<label>Address </label>
 					</div>
-					<div class="col-lg-4">
+					<div class="col-lg-3">
 						<select name="address_select" id="address_select" class="ui search form-control"
           onchange="if(this.options[this.selectedIndex].value=='customOption'){
               toggleField1(this,this.nextSibling);

@@ -33,7 +33,7 @@ rules: {
 "price": {
  required: true,
 number: true,
-range: [1, 99999]
+range: [1, 99999.99]
 },
 "no_session": {
 required: true,

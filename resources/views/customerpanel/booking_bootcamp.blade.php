@@ -64,7 +64,7 @@
                       @csrf
                       </form>
                 </ul>
-                <span class="noification-d"><a href="{{url('customer/mybooking')}}"><i class="fa fa-bell"></i><small>{{Session::get('sum_slots')?Session::get('sum_slots'):0}}</small></a></span>
+                <!-- <span class="noification-d"><a href="{{url('customer/mybooking')}}"><i class="fa fa-bell"></i><small>{{Session::get('sum_slots')?Session::get('sum_slots'):0}}</small></a></span> -->
           </div>
           <div class="clearfix"></div>
                 
@@ -226,7 +226,7 @@
     <div class="modal-content">
     <div class="modal-header">
       @if(session('success'))
-      <h2>You have successfully sent the bellow Bootcamp session request(s).</h2>
+      <h2>You have successfully booked the bellow Bootcamp session(s).</h2>
     </div>
       <div class="modal-body" id="hall_details_edit">
       <table class="table table-border" width="100%">

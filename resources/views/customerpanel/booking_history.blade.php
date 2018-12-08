@@ -16,8 +16,8 @@
                   <tr>
                     <th>Total number of session reamaining</th>
                      <th>Future booking</th>
-                     <th>Cancelled booking</th>
-                     
+                     <th>Declined booking</th>
+                     <th>Past booking</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -27,7 +27,7 @@
                     <td>{{$no_of_sessions}}</td>
                     <td>{{$total_future_booking}}</td>
                     <td>{{$total_cancelled_booking}}</td>
-                      
+                    <td>{{$total_past_booking}}</td>
                   </tr>
               
                 </tbody>
@@ -36,7 +36,7 @@
               	 <form id="frm_search" method="get">
 					<select align ="right" id="feature" name="option" >
             <option value="future_booking" {{Request::get('option')=='future_booking' || Request::get('option')==''?'selected':''}} >Future booking</option>
-  					<option value="cancelled_booking" {{Request::get('option')=='cancelled_booking'?'selected':''}} >Cancelled Booking</option>
+  					<option value="cancelled_booking" {{Request::get('option')=='cancelled_booking'?'selected':''}} >Declined Booking</option>
   					<option value="past_booking" {{Request::get('option')=='past_booking'?'selected':''}} >Past Booking</option>
  					
   					</select>

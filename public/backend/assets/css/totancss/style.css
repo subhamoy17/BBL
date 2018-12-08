@@ -1010,3 +1010,15 @@ margin-left: 28px;
 .add-pro-sub {
     float: right;
 }
+
+
+/*071218 @totan*/
+#anual_total_price-error{
+    color: #dc3545;
+    text-transform: uppercase;
+    font-weight: 700;
+    text-transform: none;
+    font-size: 13px;
+}
+
+/*071218 @totan*/

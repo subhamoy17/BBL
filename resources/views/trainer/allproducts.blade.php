@@ -120,11 +120,11 @@ $('#bootstrap-slot-data-table').DataTable({
                                     <td><i class="fa fa-gbp">{{$my_productdata->total_price}}</td>
                                      <td>{{$my_productdata->validity? $my_productdata->validity.' Days' :'N/A'}} </td>
                                      @if($my_productdata->deleted_at != '')
-                                     <td align="center"><i class="fa fa-ban btn-del" title="Deleted product"></i></td>
+                                     <td align="center"><i class="fa fa-ban btn-del" title="Deleted"></i></td>
                                      @elseif($my_productdata->status =='0')
-                                    <td align="center"><i class="fa fa-times-circle btn-ina" title="Inactive product"></i></td>
+                                    <td align="center"><i class="fa fa-times-circle btn-ina" title="Inactive"></i></td>
                                         @elseif($my_productdata->status =='1')
-                                         <td align="center"><i class="fa fa-check-circle btn-act"  title="Active product"> </i></td>
+                                         <td align="center"><i class="fa fa-check-circle btn-act"  title="Active"> </i></td>
                                     @endif
                                    
                                         

@@ -48,7 +48,10 @@
 					{{ csrf_field() }}
 					 <input type="hidden" name="id" id="id" value="{{$edit_bootcamp->bootcamp_plan_id}}">
 				<div class="row cxz">
-					<div class="col-lg-2">
+          <div class="col-lg-3">
+            <label>Choose Day of a week <span class="required_field_color">*</span></label>
+          </div>
+					<div class="col-lg-1">
 						<label>Monday 
 							@if($edit_bootcamp->mon_session_flg==1)
               <input type="checkbox" id="mon_session_flg" class="day_flg" name="mon_session_flg" checked="checked" disabled="disabled">
@@ -58,7 +61,7 @@
 							@endif
 						</label>
 					</div>
-					<div class="col-lg-2">
+					<div class="col-lg-1">
 						<label>Tuesday 
 							@if($edit_bootcamp->tue_session_flg==1)
               <input type="checkbox" id="tue_session_flg" class="day_flg" name="tue_session_flg" checked="checked"  disabled="disabled">
@@ -68,7 +71,7 @@
 							@endif
 						</label>
 					</div>
-					<div class="col-lg-2">
+					<div class="col-lg-1">
 						<label>Wednesday 
 							@if($edit_bootcamp->wed_session_flg==1)
               <input type="checkbox" id="wed_session_flg" class="day_flg" name="wed_session_flg" checked="checked"  disabled="disabled">
@@ -78,7 +81,7 @@
 							@endif
 						</label>
 					</div>
-					<div class="col-lg-2">
+					<div class="col-lg-1">
 						<label>Thursday 
 							@if($edit_bootcamp->thu_session_flg==1)
               <input type="checkbox" id="thu_session_flg" class="day_flg" name="thu_session_flg" checked="checked" disabled="disabled" >
@@ -88,7 +91,7 @@
 							@endif
 						</label>
 					</div>
-					<div class="col-lg-2">
+					<div class="col-lg-1">
 						<label>Friday 
 							@if($edit_bootcamp->fri_session_flg==1)
               <input type="checkbox" id="fri_session_flg" class="day_flg" name="fri_session_flg" checked="checked" disabled="disabled" >
@@ -119,35 +122,35 @@
 						</label>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-lg-2">
-						<label>Session Start<br> Time <span class="required_field_color">*</span></label>
+				<div class="row form-group">
+					<div class="col-lg-3">
+						<label>Session Start Time <span class="required_field_color">*</span></label>
 					</div>
-					<div class="col-lg-4">
+					<div class="col-lg-3">
 						<input type="text" id="session_st_time" name="session_st_time" class="form-control" value="{{date('h:i A', strtotime($edit_bootcamp->session_st_time))}}" disabled="disabled">
 
             <input type="hidden" id="session_st_time" name="session_st_time" class="form-control" value="{{date('h:i A', strtotime($edit_bootcamp->session_st_time))}}">
 					</div>
-					<div class="col-lg-2">
+					<div class="col-lg-3">
 						<label>Session End Time <span class="required_field_color">*</span></label>
 					</div>
-					<div class="col-lg-4">
+					<div class="col-lg-3">
             <input type="text" id="session_end_time" name="session_end_time" class="form-control" value="{{date('h:i A', strtotime($edit_bootcamp->session_end_time))}}" disabled="disabled">
 						<input type="hidden" id="session_end_time" name="session_end_time" class="form-control" value="{{date('h:i A', strtotime($edit_bootcamp->session_end_time))}}">
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-lg-2">
-						<label>Plan Start<br> Date <span class="required_field_color">*</span></label>
+				<div class="row form-group">
+					<div class="col-lg-3">
+						<label>Plan Start Date <span class="required_field_color">*</span></label>
 					</div>
-					<div class="col-lg-4">
+					<div class="col-lg-3">
             <input type="text" class="form-control" readonly="true" value="{{$edit_bootcamp->plan_st_date}}"  disabled="disabled">
 						<input type="hidden" id="plan_st_date" name="plan_st_date" class="form-control" readonly="true" value="{{$edit_bootcamp->plan_st_date}}">
 					</div>
-					<div class="col-lg-2">
+					<div class="col-lg-3">
 						<label>Plan End Date </label>
 					</div>
-					<div class="col-lg-4">
+					<div class="col-lg-3">
 						@if($edit_bootcamp->never_expire==0)
 							<?php $plan_end_date=$edit_bootcamp->plan_end_date;?>
 						@else
@@ -157,16 +160,16 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-lg-2">
+					<div class="col-lg-3">
 						
 					</div>
-					<div class="col-lg-4">
+					<div class="col-lg-3">
 						
 					</div>
-					<div class="col-lg-2">
+					<div class="col-lg-3">
 						<label>Plan Never End</label>
 					</div>
-					<div class="col-lg-4">
+					<div class="col-lg-3">
 						@if($edit_bootcamp->never_expire==1)
 						<input type="checkbox" name="never_expire" id="never_expire" checked="checked" >
 						@else
@@ -175,17 +178,17 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-lg-2">
+					<div class="col-lg-3">
 						<label>Maximum Allowed Booking <span class="required_field_color">*</span></label>
 					</div>
-					<div class="col-lg-4">
+					<div class="col-lg-3">
             <input type="text" id="max_allowed" name="max_allowed" class="form-control"  onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" value="{{$edit_bootcamp->max_allowed}}"  disabled="disabled">
 						<input type="hidden" id="max_allowed" name="max_allowed" class="form-control"  onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" value="{{$edit_bootcamp->max_allowed}}">
 					</div>
-					<div class="col-lg-2">
+					<div class="col-lg-3">
 						<label>Address </label>
 					</div>
-					<div class="col-lg-4">
+					<div class="col-lg-3">
 						<select name="address_select" id="address_select" class="ui search form-control"
           onchange="if(this.options[this.selectedIndex].value=='customOption'){
               toggleField1(this,this.nextSibling);
@@ -220,7 +223,7 @@
 						<div class="row">
 						<div class="col-lg-10"></div>
 							<div class="col-lg-2">
-								<button name="bootcamp_session_submit" id="bootcamp_session_submit" class="btn btn-primary pull-right" style="width: 100px;">Edit</button>
+								<button name="bootcamp_session_submit" id="bootcamp_session_submit" class="btn btn-primary pull-right" style="width: 100px;">Update</button>
 							</div>
 						</div>
 					</div>
