@@ -409,7 +409,7 @@ $('#save_btn').on('click',function(e){
             <label>Notice Period<span class="required_field_color">*</span></label>
           </div>
           <div class="col-lg-4">
-            <select name="notice_period" id="notice_period" class="form-control" >
+            <select name="notice_period" id="notice_period" class="form-control"  onchange="notice_period_duration();">
               <option value="0">Select Any One</option>
               <option value="1">1</option>
               <option value="2">2</option>
@@ -457,6 +457,21 @@ $('#save_btn').on('click',function(e){
 		</div>
 	</div>
 </div>
+
+<script>
+  function notice_period_duration()
+  {
+    if($('#notice_period').val()=='NA')
+    {
+      $('#notice_period_2').val('0');
+      $('#notice_period_2').attr('disabled',true);
+    }
+    else
+    {
+      $('#notice_period_2').removeAttr('disabled');
+    }
+  }
+  </script>
 
 
 <script>

@@ -301,8 +301,8 @@ maxlength: 'Please enter number less than 50 numbers.'
 					<div class="col-lg-4">
 						<select name="notice_period_2" id="notice_period_2" class="form-control">
 		            <option value="0">Select Any One</option>
-                  <option value="7" @if($product_details->notice_period_duration==7) selected @endif>Week</option>
-                  <option value="30" @if($product_details->notice_period_duration==30) selected @endif>Month</option>
+                  <option value="7" @if($product_details->notice_period_duration==7) selected @endif>Week(s)</option>
+                  <option value="30" @if($product_details->notice_period_duration==30) selected @endif>Month(s)</option>
 			        </select>
 					</div>
 				</div>
