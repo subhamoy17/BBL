@@ -3479,7 +3479,7 @@ public function bootcamp_plan_delete($id)
     $all_customers=DB::table('customers')
     ->join('bootcamp_booking','bootcamp_booking.customer_id','customers.id')
     ->join('bootcamp_plan_shedules','bootcamp_plan_shedules.id','bootcamp_booking.bootcamp_plan_shedules_id')
-    ->select('customers.id as customer_id','customers.name as customer_name','customers.ph_no as customer_ph_no','customers.email as customer_email','customers.created_at as booked_on','bootcamp_plan_shedules.plan_date as shedule_date','bootcamp_plan_shedules.plan_st_time as plan_st_time','bootcamp_plan_shedules.plan_end_time as plan_end_time','bootcamp_plan_shedules.plan_day as plan_day')
+    ->select('customers.id as customer_id','customers.name as customer_name','customers.ph_no as customer_ph_no','customers.email as customer_email','bootcamp_booking.created_at as booked_on','bootcamp_plan_shedules.plan_date as shedule_date','bootcamp_plan_shedules.plan_st_time as plan_st_time','bootcamp_plan_shedules.plan_end_time as plan_end_time','bootcamp_plan_shedules.plan_day as plan_day')
     ->whereIn('bootcamp_booking.bootcamp_plan_shedules_id',$request->cancele_schedule)
     ->get()->all();
 
@@ -3489,12 +3489,6 @@ public function bootcamp_plan_delete($id)
     $cancelled_booking=DB::table('bootcamp_booking')
     ->whereIn('bootcamp_booking.bootcamp_plan_shedules_id',$request->cancele_schedule)->update(['deleted_at'=>Carbon::now()]);
 
-
-   
-
-
-
-
     foreach($all_customers as $each_customer)
     {
       $return_sessions=DB::table('order_details')
@@ -3503,6 +3497,8 @@ public function bootcamp_plan_delete($id)
       ->where('status',1)
       ->orderby('order_validity_date','DESC')
       ->first();
+
+      //Log::debug(" bootcamp_schedule_cancelled_admin 2 ".print_r($return_sessions,true));
 
       if($return_sessions->remaining_sessions!='Unlimited')
       {

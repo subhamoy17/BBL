@@ -416,6 +416,7 @@ Route::get('booking-bootcamp','FrontController@booking_bootcamp');
 Route::get('get_bootcamp_date','FrontController@get_bootcamp_date')->name('get_bootcamp_date');
 Route::get('get_bootcamp_time','FrontController@get_bootcamp_time')->name('get_bootcamp_time');
 Route::post('bootcamp-booking','FrontController@bootcamp_booking_customer')->name('bootcamp_booking_customer');
+Route::get('bootcamp-booking-cancele-customer/{slug}','FrontController@bootcamp_booking_cancele_customer')->name('bootcamp_booking_cancele_customer');
 
 
 

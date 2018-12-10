@@ -135,8 +135,8 @@
       <div class="tab_container">
           <!-- #tab1 -->
           <h3 class="ed-p">Bootcamp Session Booking Form &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            
-          @if($no_of_sessions=='Unlimited') 
+  
+          @if($no_of_sessions==='Unlimited') 
               Unlimited Sessions Remaining
           @else
           Total Remaining Session {{$no_of_sessions}}
@@ -157,20 +157,22 @@
                          <input type="hidden" id="total_applicable_sessions" class="form-control" value="1">
                        
                         <label>Address <small>*</small></label>
-                          <select class="form-control" name="address" id="address" onchange="get_date(this.value);">
-                            <option value=" ">Please select address</option>
-                            @if(!empty($bootcampaddress))
-                            @foreach($bootcampaddress as $each_bootcampaddress)
-                              <option value="{{$each_bootcampaddress->id}}">{{$each_bootcampaddress->address_line1}}</option>
-                            @endforeach
-                            @endif    
-                          </select>
+                          <input type="text" name="address" id="address" value="{{$bootcampaddress->address_line1}}" class="form-control" readonly>
                       </div>
                     </div>
                     <div class="col-md-6 col-sm-12 col-xs-12">
                       <div class="form-group available_date">
                         <label>Available Date <small>*</small></label>
-                        <input type="text" id="bootcamp_date" name="bootcamp_date" class="form-control" readonly="true" disabled="disabled">
+
+                        @if(count($date_details)>0)
+                        <input type="text" id="bootcamp_date" name="bootcamp_date" class="form-control" readonly="true">
+                        @foreach($date_details as $each_date)
+                        <input type="hidden" name="all_date[]" id="all_date" class="all_date_class" value="{{$each_date->plan_date}}">
+                        @endforeach
+                        @else
+                        <input type="text" id="bootcamp_date" name="bootcamp_date" class="form-control" readonly="true" value="No dates are available to apply">
+                        @endif
+
                       </div>
                     </div>
                     <div class="col-md-6 col-sm-12 col-xs-12">
@@ -226,7 +228,7 @@
     <div class="modal-content">
     <div class="modal-header">
       @if(session('success'))
-      <h2>You have successfully booked the bellow Bootcamp session(s).</h2>
+      <h2>You have successfully booked the below bootcamp session(s).</h2>
     </div>
       <div class="modal-body" id="hall_details_edit">
       <table class="table table-border" width="100%">
@@ -317,47 +319,9 @@ $('#save_btn').on('click',function(e){
  });
 </script>
 
-
-  <!-- get all date after choose address of bootcamp and set enabled date into calender -->
 <script>
-$(document).ready(function() {
-  
-});
-  function get_date(value)
-  { 
-    if(value>0)
-    {
-      $('#loadingimg').show();
-      $.ajax({
-          type: "GET",
-          url: "{{route('get_bootcamp_date')}}",
-          data: {'address_id': value},
-          success: function (data){
-            $('#loadingimg').hide();
-            //console.log(data);
-            var obj = $.parseJSON(data);
-
-            var plan_date='';
-            
-
-            if(obj.length > 0)
-            { 
-            
-              $('#bootcamp_date').removeAttr('disabled');
-              $('#bootcamp_date').val('');
-              $(".all_date_class").remove();
-              var disabledDays ='';
-
-              for(var i = 0; i < obj.length; i++)
-              {
-                plan_date=obj[i]['plan_date'];
-
-                $('.available_date').append($('<input type="hidden" name="all_date[]" id="all_date" class="all_date_class" value="' + plan_date + '">'));
-              }
-
-              // console.log(disabledDays);
-               
-              function nationalDays(date) {
+  $(document).ready(function(){ 
+function nationalDays(date) {
 
                 var disabledDays =$("input[name='all_date[]']")
               .map(function(){return $(this).val();}).get();
@@ -377,27 +341,20 @@ $(document).ready(function() {
                 }
                   return [false];
               }
-                /* create datepicker */
-                $('#bootcamp_date').datepicker({
+  // get all date after choose address of bootcamp and set enabled date into calender
+$('#bootcamp_date').datepicker({
                   dateFormat: "yy-mm-dd",
                   beforeShowDay: nationalDays,
                   onSelect: getalltime
                 });
-            $('#bootcamp_date').removeAttr('disabled',true); 
-            }
-            else
-            {
-              $('#bootcamp_date').val('No dates are available for this address');
-              $('#bootcamp_date').attr('disabled',true); 
-              return false;             
-            }
-          } //end of ajax success
-        }); // end of ajax call
-    }
-    else{
-      $('#bootcamp_date').attr('disabled',true); 
-    }  // end of address select
-  } // end of date function
+
+
+ });
+</script>
+
+
+
+<script>
 
 // get all time depend on choosing date
   function getalltime(choose_date)
@@ -441,7 +398,6 @@ $(document).ready(function() {
 
     var total_applicable_sessions=$("#total_applicable_sessions").val();
 
-    var address_text=$("#address option:selected").text();
     var session_time_text=$("#session_time option:selected").text();
 
     var address=$("#address").val();
@@ -460,9 +416,9 @@ $(document).ready(function() {
       }
     }
 
-    if(address=='' || bootcamp_date=='' || session_time=='')
+    if(bootcamp_date=='' || session_time=='')
     {
-      alert('Please select address, date and time');
+      alert('Please select date and time');
     }
     else if(total_session==0)
     {
@@ -478,10 +434,10 @@ $(document).ready(function() {
     }
     else
     {
-      $("#add_session_req").append('<div class="conMon"><input readonly  class="form-control" type="text" name="bootcamp_address[]" value="' + address_text + '" />&nbsp;&nbsp;<input readonly  class="form-control" name="bootcamp_date[]" type="text" value="' + bootcamp_date + '" />&nbsp;&nbsp;<input readonly  class="form-control" type="text" name="bootcamp_time[]" value="' + session_time_text + '" /><input type=hidden class="all_previous_date"  readonly name="all_previous_date[]"' + 'id="all_previous_date[]"' + 'value="' + bootcamp_date + '" /><input type="hidden" name="schedule_id[]"' + 'value="' + session_time + '" /></div><br>');
-      $("#address").val(' '); $("#bootcamp_date").val('');$("#session_time").val('');
+      $("#add_session_req").append('<div class="conMon"><input readonly  class="form-control" type="text" name="bootcamp_address[]" value="' + address + '" />&nbsp;&nbsp;<input readonly  class="form-control" name="bootcamp_date[]" type="text" value="' + bootcamp_date + '" />&nbsp;&nbsp;<input readonly  class="form-control" type="text" name="bootcamp_time[]" value="' + session_time_text + '" /><input type=hidden class="all_previous_date"  readonly name="all_previous_date[]"' + 'id="all_previous_date[]"' + 'value="' + bootcamp_date + '" /><input type="hidden" name="schedule_id[]"' + 'value="' + session_time + '" /></div><br>');
+       $("#bootcamp_date").val('');$("#session_time").val('');
 
-      $('#bootcamp_date').attr('disabled',true); $('#session_time').attr('disabled',true);
+       $('#session_time').attr('disabled',true);
 
       $('#save_btn').show();
 
@@ -491,14 +447,11 @@ $(document).ready(function() {
         total_applicable_sessions=parseInt(total_applicable_sessions)+1;
       $('#total_applicable_sessions').val(total_applicable_sessions);
       
-
-      
-      
     }
   });
-  $('body').on('click','.btnRemoveMon',function() { 
-    $(this).closest('div.conMon').remove();
-  });
+  // $('body').on('click','.btnRemoveMon',function() { 
+  //   $(this).closest('div.conMon').remove();
+  // });
 });
   
 </script>

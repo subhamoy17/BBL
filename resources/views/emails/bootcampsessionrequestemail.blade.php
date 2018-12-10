@@ -39,15 +39,18 @@
 
               <p align="left"> </p>
     <p align="left">Hello {{$customer_name}},<br><br>
-      
+
+      @if($status=='Cancelled Bootcamp Session By Admin')
         Your bootcamp session cancelled by BBL admin due to {{$cancelled_reason}}.<br>
-      
+      @elseif($status=='Cancelled Bootcamp Session By Customer')
+        You have successfully cancelled the below bootcamp session.<br>
+      @endif
       
   <table style="width:100%" class="table-bordered">
   <tr>
     <th class="table-bordered">Booked On</th>
-    <th class="table-bordered">Booking Date</th>
-    <th class="table-bordered">Booking Day</th>
+    <th class="table-bordered">Booked Date</th>
+    <th class="table-bordered">Booked Day</th>
     <th class="table-bordered">Time</th>
   </tr>
   <tr>
