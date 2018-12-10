@@ -6,18 +6,6 @@
 
 @if(Auth::user()->master_trainer==1)
 
-<script type="text/javascript">
-  $(document).ready(function()
-  { 
-  setTimeout(function(){ 
-    $('.alert-success').hide();
-    }, 5000);
-
-  setTimeout(function(){ 
-    $('.alert-danger').hide();
-    }, 5000);
-  });
-</script>
 
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
   <div class="breadcrumbs">
