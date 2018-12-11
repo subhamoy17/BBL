@@ -3166,85 +3166,6 @@ public function bootcamp_plan_edit_view($id)
   {
     $edit_data['plan_end_date']=$request->plan_end_date;
   }
-      
-  if($request->address!='')
-  {
-    $location_address_data['address_line1']=$request->address;
-    $location_address_data['street_number']=$request->street_number;
-    $location_address_data['route']=$request->route;
-    $location_address_data['city']=$request->city;
-    $location_address_data['state']=$request->state;
-    $location_address_data['postal_code']=$request->postal_code;
-    $location_address_data['country']=$request->country;
-    $location_address_data['lat']=$request->lat;
-    $location_address_data['lng']=$request->lng;
-    $address_change_id=0;
-  }
-  elseif($request->address_select!='')
-  {
-    $edit_data['address_id']=$request->address_select;
-    $address_change_id=$request->address_select;
-  }
-
-  //start address change
-  $old_address_id=DB::table('bootcamp_plans')->where('id',$request->id)
-  ->whereNull('deleted_at')
-  ->pluck('address_id')
-  ->first();
-
-  if($address_change_id!=$old_address_id)
-  {
-    $today=date('Y-m-d');
-    $curenddate = new \DateTime($edit_data['plan_end_date']);
-    $curenddate=$curenddate->modify('+1 day')->format('Y-m-d');
-
-    $period = new \DatePeriod(
-       new \DateTime($today),
-       new \DateInterval('P1D'),
-       new \DateTime($curenddate)
-      );
-    $all_session_date=[];
-    foreach ($period as $key=>$value) 
-    {
-      $all_session_date[]=$value->format('Y-m-d');              
-    }
-
-    //Log::debug(" data adddress change ".print_r($all_session_date,true));
-
-    $all_booking_schedule=DB::table('bootcamp_plan_shedules')->whereIn('plan_date',$all_session_date)->where('no_of_uses','>',0)->where('bootcamp_plan_id',$request->id)->whereNull('deleted_at')->get()->all();
-
-    if(count($all_booking_schedule)>0)
-    {
-      DB::commit();
-      return redirect()->back()->with('address_change','There are some bookings for this bootcamp plan to save the changes you have to decline those booking(s) manually');
-    }
-
-    elseif($request->address_select!='')
-    {
-      $update_bootcamp_plan=DB::table('bootcamp_plans')->where('id',$request->id)->update($edit_data);
-
-    $update_plan_schedule=DB::table('bootcamp_plan_shedules')->where('bootcamp_plan_id',$request->id)->whereNull('deleted_at')->update(['address_id'=>$edit_data['address_id']]);
-
-    DB::commit();
-    return redirect('trainer/bootcamp-plan')->with("success","This plan address is update successfully");
-    }
-    else
-    {
-    
-    $bootcamp_address=DB::table('bootcamp_plan_address')->insert($location_address_data);
-    $edit_data['address_id']=DB::getPdo()->lastInsertId();
-
-    $update_bootcamp_plan=DB::table('bootcamp_plans')->where('id',$request->id)->update($edit_data);
-
-    $update_plan_schedule=DB::table('bootcamp_plan_shedules')->where('bootcamp_plan_id',$request->id)->whereNull('deleted_at')->update(['address_id'=>$edit_data['address_id']]);
-
-    DB::commit();
-    return redirect('trainer/bootcamp-plan')->with("success","This plan address is update successfully");
-    }
-  }
-
-  //end address change
-
 
   // start if date is decrease from the previous end date of this plan
   
@@ -3378,7 +3299,7 @@ public function bootcamp_plan_edit_view($id)
         $schedule_data['plan_day']=$all_session_day[$i];
         $schedule_data['plan_st_time']=date("H:i:s", strtotime($request->session_st_time));
         $schedule_data['plan_end_time']=date("H:i:s", strtotime($request->session_end_time));
-        $schedule_data['address_id']=$edit_data['address_id'];
+        $schedule_data['address_id']=$request->address_select;
         $schedule_data['max_allowed']=$request->max_allowed;
         $schedule_data['no_of_uses']=0;
         $schedule_data['status']=1;
