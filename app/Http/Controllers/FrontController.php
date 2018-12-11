@@ -1440,7 +1440,7 @@ public function get_bootcamp_time(Request $request)
 public function bootcamp_booking_customer(Request $request)
 {
 
-  //Log::debug(" bootcamp_booking_customer ".print_r($request->all(),true));
+  Log::debug(" bootcamp_booking_customer ".print_r($request->all(),true));
 DB::beginTransaction();
   try
   {
@@ -1481,6 +1481,10 @@ DB::beginTransaction();
       { 
         $decrease_remaining_session=DB::table('order_details')->where('id',$no_of_session_notunlimited->order_id)->decrement('remaining_sessions',1);
       }
+
+      
+   
+
     }
 
     $bootcamp_plan_shedules_update=DB::table('bootcamp_plan_shedules')
@@ -1494,7 +1498,22 @@ DB::beginTransaction();
     $a->total_sessions=$j;
     $all_data=array($a);
 
-    DB::commit();
+   $bootcamp_booking_data=DB::table('bootcamp_booking') ->join('bootcamp_plan_shedules','bootcamp_plan_shedules.id','bootcamp_booking.bootcamp_plan_shedules_id')->where('bootcamp_booking.customer_id',Auth::guard('customer')->user()->id)->first();
+      $customer_details=Customer::find($bootcamp_booking_data->customer_id);
+
+      $notifydata['url'] = '/customer/mybooking';
+      $notifydata['customer_name']=Auth::guard('customer')->user()->name;
+       $notifydata['customer_email']=$customer_details->customer_email;
+      $notifydata['customer_phone']=$customer_details->customer_ph_no;
+      $notifydata['status']='Boocked BootcampSession by Customer';
+      $notifydata['session_booked_on']=$bootcamp_booking_data->created_at;
+      
+     $notifydata['all_data']=$all_data;
+       $customer_details->notify(new BootcampSessionNotification($notifydata));
+
+  // Log::debug(" bootcamp_booking_data ".print_r($bootcamp_booking_data,true));
+  // Log::debug(" customer_details ".print_r($customer_details,true));
+    // DB::commit();
 
     return redirect()->back()->with(["success"=>"You have successfully sent the bellow Bootcamp session request(s)!",'all_data'=>$all_data]);
   }
