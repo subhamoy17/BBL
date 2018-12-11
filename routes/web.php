@@ -224,6 +224,10 @@ Route::get('bootcamp_plan_delete/{id}', 'TrainerController@bootcamp_plan_delete'
 
 Route::get('bootcamp-plan-schedule', 'TrainerController@bootcamp_plan_schedule')->name('bootcamp_plan_schedule');
 Route::get('bootcamp-schedule-cancelled', 'TrainerController@bootcamp_schedule_cancelled_admin');
+Route::get('bootcamp-schedule-booking-cancelled/{slug}', 'TrainerController@bootcamp_booking_individual_cancelled')->name('bootcamp_booking_individual_cancelled');
+Route::get('individual_bootcamp_cancele/{slug}', 'TrainerController@individual_bootcamp_cancele');
+
+
 
 
 ////// For common diet plan list//////
@@ -413,7 +417,6 @@ Route::get('cart_data_delete','FrontController@cart_data_delete')->name('cart_da
 
 
 Route::get('booking-bootcamp','FrontController@booking_bootcamp');
-Route::get('get_bootcamp_date','FrontController@get_bootcamp_date')->name('get_bootcamp_date');
 Route::get('get_bootcamp_time','FrontController@get_bootcamp_time')->name('get_bootcamp_time');
 Route::post('bootcamp-booking','FrontController@bootcamp_booking_customer')->name('bootcamp_booking_customer');
 Route::get('bootcamp-booking-cancele-customer/{slug}','FrontController@bootcamp_booking_cancele_customer')->name('bootcamp_booking_cancele_customer');

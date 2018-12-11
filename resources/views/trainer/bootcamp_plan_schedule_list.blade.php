@@ -111,7 +111,14 @@ $(document).ready(function() {
                       <td>{{date("h:i A", strtotime($each_schedule->plan_st_time))}} to {{date("h:i A", strtotime($each_schedule->plan_end_time))}}</td>
                       <td>{{$each_schedule->address_line1}}</td>
                       <td>{{$each_schedule->max_allowed}}</td>
-                      <td>{{$each_schedule->no_of_uses}}</td>
+                      <td>
+                        @if($each_schedule->deleted_at=='' && $each_schedule->no_of_uses>0)
+                          <a href="{{route('bootcamp_booking_individual_cancelled',['plan_id' => Crypt::encrypt($each_schedule->schedule_id) ])}}" title="Cancele">{{$each_schedule->no_of_uses}}</a>
+                          hellow
+                        @else
+                        {{$each_schedule->no_of_uses}}
+                        @endif
+                      </td>
                       <td align="center">
                         @if($each_schedule->deleted_at!='')
                         <i class="fa fa-ban btn-del" title="Cancelled Schedule"></i>

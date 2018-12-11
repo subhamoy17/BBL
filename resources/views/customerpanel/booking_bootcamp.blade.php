@@ -243,7 +243,7 @@
         {{$eachdata->bootcamp_address[$i]}}
       </td>
       <td>
-        {{$eachdata->bootcamp_date[$i]}}
+        {{date('d F Y', strtotime($eachdata->bootcamp_date[$i]))}}
       </td>
       <td>
         {{$eachdata->bootcamp_time[$i]}}

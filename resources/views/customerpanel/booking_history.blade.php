@@ -21,10 +21,10 @@
                 <thead>
                   <tr>
                     <th>Total number of session remaining</th>
+                      <th>Past booking</th>
                      <th>Future booking</th>
                      <th>Declined booking</th>
                      <th>Cancelled booking</th>
-                     <th>Past booking</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -32,10 +32,10 @@
                  
                   <tr>
                     <td>{{$no_of_sessions}}</td>
+                    <td>{{$total_past_booking}}</td>
                     <td>{{$total_future_booking}}</td>
                     <td>{{$total_declined_booking}}</td>
                     <td>{{$total_cancelled_booking}}</td>
-                    <td>{{$total_past_booking}}</td>
                   </tr>
               
                 </tbody>

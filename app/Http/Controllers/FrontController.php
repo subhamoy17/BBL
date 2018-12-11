@@ -1421,44 +1421,6 @@ public function booking_bootcamp()
  
 }
 
-public function get_bootcamp_date(Request $request)
-{
-
-
-  $current_date=Carbon::now()->toDateString();
-
-  $customer_product_validity=DB::table('order_details')
-  ->join('payment_history','payment_history.id','order_details.payment_id')
-  ->where('payment_history.status','Success')
-  ->where('order_details.order_validity_date','>=',$current_date)
-  ->where('order_details.status',1)
-  ->where('order_details.customer_id',Auth::guard('customer')->user()->id)
-  ->max('order_details.order_validity_date');
-
-// Log::debug(" get_bootcamp_date_time ".print_r($customer_product_validity,true));
-
-  $alredy_booked_shedule_id=DB::table('bootcamp_booking')
-  ->where('customer_id',Auth::guard('customer')->user()->id)
-  ->whereNull('deleted_at')
-  ->pluck('bootcamp_plan_shedules_id');
-
-  $alredy_booked_date=DB::table('bootcamp_plan_shedules')
-  ->whereIn('id',$alredy_booked_shedule_id)
-  ->orwhereColumn('max_allowed','no_of_uses')
-  ->pluck('plan_date');
-
-  $date_details=DB::table('bootcamp_plan_shedules')
-  ->where('address_id',$request->address_id)
-  ->where('plan_date','<=',$customer_product_validity)
-  ->whereNull('deleted_at')
-  ->whereNotIn('plan_date',$alredy_booked_date)
-  ->get()->all();
-
- //Log::debug(" get_bootcamp_date ".print_r($date_details,true));
-
-  return json_encode($date_details);
-}
-
 public function get_bootcamp_time(Request $request)
 {
 
@@ -1589,7 +1551,8 @@ DB::beginTransaction();
 
   $booking_details=DB::table('bootcamp_booking')
     ->join('bootcamp_plan_shedules','bootcamp_plan_shedules.id','bootcamp_booking.bootcamp_plan_shedules_id')
-    ->select('bootcamp_booking.created_at as booked_on','bootcamp_plan_shedules.plan_date as shedule_date','bootcamp_plan_shedules.plan_st_time as plan_st_time','bootcamp_plan_shedules.plan_end_time as plan_end_time','bootcamp_plan_shedules.plan_day as plan_day')
+    ->join('bootcamp_plan_address','bootcamp_plan_address.id','bootcamp_plan_shedules.address_id')
+    ->select('bootcamp_booking.created_at as booked_on','bootcamp_plan_shedules.plan_date as shedule_date','bootcamp_plan_shedules.plan_st_time as plan_st_time','bootcamp_plan_shedules.plan_end_time as plan_end_time','bootcamp_plan_shedules.plan_day as plan_day','bootcamp_plan_address.address_line1')
     ->where('bootcamp_booking.id',$id)->first();
 
   $client_details=Customer::find(Auth::guard('customer')->user()->id);
@@ -1604,6 +1567,7 @@ DB::beginTransaction();
   $notifydata['session_booking_day']=$booking_details->plan_day;
   $notifydata['session_booking_time']=date('h:i A', strtotime($booking_details->plan_st_time)).' to '.date('h:i A', strtotime($booking_details->plan_end_time));
   $notifydata['cancelled_reason']='';
+  $notifydata['schedule_address']=$booking_details->address_line1;
 
   $client_details->notify(new BootcampSessionNotification($notifydata));
    

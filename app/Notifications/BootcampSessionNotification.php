@@ -11,7 +11,7 @@ use Carbon\Carbon;
 
 
 
-class BootcampSessionNotification extends Notification implements ShouldQueue
+class BootcampSessionNotification extends Notification
 {
     use Queueable;
 
@@ -48,6 +48,23 @@ class BootcampSessionNotification extends Notification implements ShouldQueue
     {
         //Log::debug(" Mail ".print_r($this,true));
 
+        if($this->notifydata['status']=='Boocked BootcampSession by Customer')
+        {
+         return (new MailMessage)->view(
+                  'emails.bootcampsessionrequestemail',
+                  [
+                'enquiredTime' => Carbon::now(),
+                'customer_name'=>$this->notifydata['customer_name'],
+                'customer_email'=>$this->notifydata['customer_email'],
+                'customer_phone'=>$this->notifydata['customer_phone'],
+                'status'=>$this->notifydata['status'],
+                'url'=>$this->notifydata['url'],
+                'all_data'=>$this->notifydata['all_data'],
+                
+                 ]);
+        }
+        else
+        {
             return (new MailMessage)->view(
               'emails.bootcampsessionrequestemail',
               [
@@ -61,7 +78,9 @@ class BootcampSessionNotification extends Notification implements ShouldQueue
             'session_booking_date'=>$this->notifydata['session_booking_date'],
             'session_booking_time'=>$this->notifydata['session_booking_time'],
             'session_booking_day'=>$this->notifydata['session_booking_day'],
-            'cancelled_reason'=>$this->notifydata['cancelled_reason']                   
+            'cancelled_reason'=>$this->notifydata['cancelled_reason'],                   
+            'schedule_address'=>$this->notifydata['schedule_address']                   
           ]);
+        }
     }
 }

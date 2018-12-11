@@ -3,12 +3,14 @@
         <div class="contact-box">
             <div class="container">
                 <div class="row">
+                  <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3"></div>
+
          
-                    <div class="col-lg-12 col-md-12 col-sm-12 colxs-12">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                         
                         <div class="form-box form-pur">
                             <div class="row">
-                                <div class="col-md-4 col-sm-12 col-xs-12">
+                                <!-- <div class="col-md-4 col-sm-12 col-xs-12">
                                     <div class="form-group">
 										<h5>Customer Details</h5>
                                       <label>Name - <h6>{{Auth::guard('customer')->user()->name}}</h6></label>
@@ -18,8 +20,8 @@
                                       <label>Phone - <h6>{{Auth::guard('customer')->user()->ph_no}}</h6></label>
                                        
                                     </div>
-                                </div>
-              <div class="col-md-4 col-sm-12 col-xs-12">
+                                </div> -->
+              <div class="col-md-6 col-sm-12 col-xs-12">
                    <div class="packg-dt">
                    		<h5>Product Details</h5>
                    		 <div class="form-group">
@@ -33,7 +35,7 @@
                                     </div>
                    </div>     
                 </div>
-                <div class="col-md-4 col-sm-12 col-xs-12">
+                <div class="col-md-6 col-sm-12 col-xs-12">
                <div class="inputs-w3ls">
                             <form enctype="multipart/form-data" id="frm1" method="post" action="{{route('bootcamp_product_purchase_request')}}" autocomplete="off">
                                <input type="hidden" name="_token" value="{{csrf_token()}}" >
@@ -69,6 +71,7 @@
                             </div>
                         </div>
                     </div>
+                  <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3"></div>
                 </div>
             </div>
         </div>
