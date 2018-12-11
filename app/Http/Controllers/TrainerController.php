@@ -3463,6 +3463,7 @@ public function bootcamp_plan_delete($id)
 
   public function bootcamp_booking_individual_cancelled($id)
   {
+    try{
     $schedule_id=\Crypt::decrypt($id);
 
     $allcustomer=DB::table('bootcamp_booking')
@@ -3470,15 +3471,31 @@ public function bootcamp_plan_delete($id)
     ->select('customers.id as customer_id','customers.name as customer_name','customers.email as customer_email','customers.ph_no as customer_phone','bootcamp_booking.bootcamp_plan_shedules_id as schedule_id','bootcamp_booking.deleted_at')
     ->where('bootcamp_booking.bootcamp_plan_shedules_id',$schedule_id)->get();
 
+    $shedule_details=DB::table('bootcamp_plan_shedules')
+    ->join('bootcamp_plan_address','bootcamp_plan_address.id','bootcamp_plan_shedules.address_id')
+    ->select('bootcamp_plan_shedules.plan_date as shedule_date','bootcamp_plan_shedules.plan_st_time as plan_st_time','bootcamp_plan_shedules.plan_end_time as plan_end_time','bootcamp_plan_shedules.plan_day as plan_day','bootcamp_plan_address.address_line1')
+    ->where('bootcamp_plan_shedules.id',$schedule_id)->first();
+
     //Log::debug(":: allcustomer :: ".print_r($allcustomer,true));
 
-    return view('trainer.schedule_list_for_cancele')->with(compact('allcustomer'));
+    return view('trainer.schedule_list_for_cancele')->with(compact('allcustomer','shedule_details'));
+    }
+  catch(\Exception $e) {
+      return abort(200);
+  }
   }
 
   public function individual_bootcamp_cancele($id)
   {
+    //Log::debug(":: allcustomer :: ".$id);
+    
 
-   // Log::debug(":: allcustomer :: ".$id);
+    DB::beginTransaction();
+  try{
+
+    $all=explode('_',$id);
+    $schedule_id=$all[0];
+    $customer_id=$all[1];
 
     $current_date=Carbon::now()->toDateString();
 
@@ -3487,19 +3504,19 @@ public function bootcamp_plan_delete($id)
     ->join('bootcamp_plan_shedules','bootcamp_plan_shedules.id','bootcamp_booking.bootcamp_plan_shedules_id')
     ->join('bootcamp_plan_address','bootcamp_plan_address.id','bootcamp_plan_shedules.address_id')
     ->select('customers.id as customer_id','customers.name as customer_name','customers.email as customer_email','customers.ph_no as customer_phone','bootcamp_booking.bootcamp_plan_shedules_id as shedule_id','bootcamp_booking.deleted_at','bootcamp_booking.created_at as booked_on','bootcamp_plan_shedules.plan_date as shedule_date','bootcamp_plan_shedules.plan_st_time as plan_st_time','bootcamp_plan_shedules.plan_end_time as plan_end_time','bootcamp_plan_shedules.plan_day as plan_day','bootcamp_plan_address.address_line1')
-    ->where('bootcamp_booking.bootcamp_plan_shedules_id',$id)->first();
+    ->where('bootcamp_booking.bootcamp_plan_shedules_id',$schedule_id)
+    ->where('customers.id',$customer_id)
+    ->first();
 
-    Log::debug(":: customer_booking_details :: ".print_r($customer_booking_details,true));
 
-    $booking_details=DB::table('bootcamp_booking')
-    ->join('bootcamp_plan_shedules','bootcamp_plan_shedules.id','bootcamp_booking.bootcamp_plan_shedules_id')
-    ->select('bootcamp_booking.created_at as booked_on','bootcamp_plan_shedules.plan_date as shedule_date','bootcamp_plan_shedules.plan_st_time as plan_st_time','bootcamp_plan_shedules.plan_end_time as plan_end_time','bootcamp_plan_shedules.plan_day as plan_day')
-    ->where('bootcamp_booking.id',$id)->first();
+    $client_details=Customer::find($customer_booking_details->customer_id);
 
-    $cancelled_booking=DB::table('bootcamp_booking')->where('customer_id',$customer_booking_details->customer_id)->where('bootcamp_plan_shedules_id',$id)->update(['deleted_at'=>Carbon::now(),'cancelled_by'=>2]);
+    // Log::debug(":: customer_booking_details :: ".print_r($customer_booking_details,true));
+
+    $cancelled_booking=DB::table('bootcamp_booking')->where('customer_id',$customer_booking_details->customer_id)->where('bootcamp_plan_shedules_id',$schedule_id)->update(['deleted_at'=>Carbon::now(),'cancelled_by'=>2]);
 
     $cancelled_booking_schedule=DB::table('bootcamp_plan_shedules')
-    ->where('id',$id)->decrement('no_of_uses',1);
+    ->where('id',$schedule_id)->decrement('no_of_uses',1);
 
     $no_of_session_unlimited=DB::table('order_details')
     ->join('products','products.id','order_details.product_id')
@@ -3529,8 +3546,6 @@ public function bootcamp_plan_delete($id)
   }
 
 
-  $client_details=Customer::find($customer_booking_details->customer_id);
-
   $notifydata['url'] = '/customer/mybooking';
   $notifydata['customer_name']=$client_details->name;
   $notifydata['customer_email']=$client_details->email;
@@ -3545,12 +3560,16 @@ public function bootcamp_plan_delete($id)
 
   $client_details->notify(new BootcampSessionNotification($notifydata));
    
-    //DB::commit();
-   
 
     //Log::debug(":: allcustomer :: ".print_r($allcustomer,true));
-
+    DB::commit();
     return redirect()->back()->with("bootcamp_session_cancelled","You have successfully cancelled one session!");
+
+    }
+  catch(\Exception $e) {
+      DB::rollback();
+      return abort(200);
+  }
   }
 
   

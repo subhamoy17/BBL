@@ -41,21 +41,20 @@
     <p align="left">Hello {{$customer_name}},<br><br>
 
       @if($status=='Boocked BootcampSession by Customer' )
-        Your bootcamp session booking is Succesfully booked.Please see the bellow details.<br>
+        Your bootcamp session booking is Successfully booked.Please see the below details.<br>
         <table style="width:100%" class="table-bordered">
   <tr>
     <th class="table-bordered">Address</th>
-    <th class="table-bordered">Booking Date</th>
+    <th class="table-bordered">Booked Date</th>
     <!-- <th class="table-bordered">Booking Day</th> -->
-    <th class="table-bordered">Time</th>
+    <th class="table-bordered">Booked Time</th>
   </tr>
    @foreach($all_data as $key => $eachdata)
    @for($i=0;$i<$eachdata->total_sessions;$i++)
   <tr>
 
     <th class="table-bordered">{{$eachdata->bootcamp_address[$i]}}</th>
-    <th class="table-bordered">{{$eachdata->bootcamp_date[$i]}}</th>
-    
+    <th class="table-bordered">{{date('d F Y', strtotime($eachdata->bootcamp_date[$i]))}}</th>
     <th class="table-bordered">{{$eachdata->bootcamp_time[$i]}}</th>
   </tr>
  @endfor
@@ -110,7 +109,7 @@
 <a href="{{URL::to($url)}}" style="text-decoration: none;font-size: 13px;font-family: 'Open Sans', sans-serif;background: #fb5b21;padding: 18px;display: inline-block;color: #fff;border-radius: 5px;font-weight: 600; text-transform: capitalize;"><i class="fas fa-check" style="margin-right:3px;"></i> Click to check cancelled session</a>
 
       @elseif($status=='Cancelled Bootcamp Session By Admin')
-        Your bootcamp session cancelled by BBL admin.<br>
+        Your bootcamp session cancelled by BBL admin. Please see the below details of cancelled session.<br>
         <table style="width:100%" class="table-bordered">
   <tr>
     <th class="table-bordered">Address</th>

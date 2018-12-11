@@ -426,7 +426,7 @@ $('#bootcamp_date').datepicker({
     }
     else if(total_applicable_sessions>5)
     {
-      alert("You sent maximum 5 session at a time");
+      alert("You booked maximum 5 session at a time");
     }
     else if(duplicate_date==1)
     {

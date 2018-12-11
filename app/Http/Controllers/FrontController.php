@@ -426,9 +426,13 @@ public function booking_history(Request $request)
     {
       $all_booking=$all_booking->whereNotNull('bootcamp_booking.deleted_at')->where('bootcamp_booking.cancelled_by','>',0)->whereBetween('bootcamp_plan_shedules.plan_date', [$start_date, $end_date]);
     }
-    else
+    elseif($request->option=='future_booking')
     {
       $all_booking=$all_booking->whereNull('bootcamp_booking.deleted_at')->whereBetween('bootcamp_plan_shedules.plan_date', [$start_date, $end_date])->where('bootcamp_plan_shedules.plan_date','>=',$now);
+    }
+    else
+    {
+      $all_booking=$all_booking->whereNull('bootcamp_booking.deleted_at')->where('bootcamp_plan_shedules.plan_date','>=',$now);
     }
     
     $all_booking=$all_booking->orderby('bootcamp_booking.id','DESC')->paginate(10);
@@ -1369,6 +1373,7 @@ public function booking_bootcamp()
   ->where('plan_date','<=',$customer_product_validity)
   ->whereNull('deleted_at')
   ->whereNotIn('plan_date',$alredy_booked_date)
+  ->where('plan_date','>',$current_date)
   ->get()->all();
 
 
@@ -1440,7 +1445,7 @@ public function get_bootcamp_time(Request $request)
 public function bootcamp_booking_customer(Request $request)
 {
 
-  Log::debug(" bootcamp_booking_customer ".print_r($request->all(),true));
+  //Log::debug(" bootcamp_booking_customer ".print_r($request->all(),true));
 DB::beginTransaction();
   try
   {
@@ -1481,10 +1486,6 @@ DB::beginTransaction();
       { 
         $decrease_remaining_session=DB::table('order_details')->where('id',$no_of_session_notunlimited->order_id)->decrement('remaining_sessions',1);
       }
-
-      
-   
-
     }
 
     $bootcamp_plan_shedules_update=DB::table('bootcamp_plan_shedules')
@@ -1511,9 +1512,7 @@ DB::beginTransaction();
      $notifydata['all_data']=$all_data;
        $customer_details->notify(new BootcampSessionNotification($notifydata));
 
-  // Log::debug(" bootcamp_booking_data ".print_r($bootcamp_booking_data,true));
-  // Log::debug(" customer_details ".print_r($customer_details,true));
-    // DB::commit();
+   DB::commit();
 
     return redirect()->back()->with(["success"=>"You have successfully sent the bellow Bootcamp session request(s)!",'all_data'=>$all_data]);
   }
