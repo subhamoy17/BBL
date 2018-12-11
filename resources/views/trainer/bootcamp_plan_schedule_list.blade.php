@@ -95,9 +95,9 @@ $(document).ready(function() {
                   <th>Maximum Allowed</th>
                   <th>Booking Seats</th>
                   <th>Status</th>
-                  <th style="width: 181px;">Select to cancelled 
+                  <th style="width: 181px;">Select to Declined 
                     <input type="checkbox" id="all_schedule_cancel" class="selectall">
-                    <button class="btn btn-success" id="cancelled_button">Cancelled</button>
+                    <button class="btn btn-danger" id="cancelled_button">Decline</button>
                   </th>
                 </tr>
               </thead>
@@ -113,8 +113,8 @@ $(document).ready(function() {
                       <td>{{$each_schedule->max_allowed}}</td>
                       <td>
                         @if($each_schedule->deleted_at=='' && $each_schedule->no_of_uses>0)
-                          <a href="{{route('bootcamp_booking_individual_cancelled',['plan_id' => Crypt::encrypt($each_schedule->schedule_id) ])}}" title="Cancele">{{$each_schedule->no_of_uses}}</a>
-                          hellow
+                        {{$each_schedule->no_of_uses}}
+                          <a href="{{route('bootcamp_booking_individual_cancelled',['plan_id' => Crypt::encrypt($each_schedule->schedule_id) ])}}" title="Cancele" class="btn btn-danger">Cancel</a>
                         @else
                         {{$each_schedule->no_of_uses}}
                         @endif
@@ -154,7 +154,7 @@ $(document).ready(function() {
     
     <div class="modal-content">
     <div class="modal-header">
-      <h2 style="font-size: 20px;text-align: center;">Comment your cancellation reason</h2>
+      <h2 style="font-size: 20px;text-align: center;">Comment your decline reason</h2>
       
     </div>
       <div class="modal-body" id="hall_details_edit">
@@ -233,19 +233,19 @@ $(document).ready(function (){
       var cancele_check = $('.cancele_check:checkbox');
             if(cancele_check.length > 0) { ;
                 if( $('.cancele_check:checkbox:checked').length < 1) {
-                    alertify.alert('Please select at least one schedule to canceled');
+                    alertify.alert('Please select at least one schedule to declined');
                     cancele_check[0].focus();
                     return false;
                 }
             }
             else if($('.cancele_check:checkbox:checked').length==0 && $('.selectall:checkbox:checked').length==1)
                 {
-                   alertify.alert('Please select at least one schedule to canceled');
+                   alertify.alert('Please select at least one schedule to declined');
                     cancele_check[0].focus();
                     return false;
                 }
 
-      alertify.confirm("Are you sure you want to cancelled all selected shedule?", function (e) {
+      alertify.confirm("Are you sure you want to declined all selected shedule?", function (e) {
           if (e) {
             $('#reason_modal').modal('show');
           }
@@ -259,7 +259,7 @@ $(document).ready(function (){
       var comment=$('#comment').val();
       if(comment.trim()=="")
       {
-        alertify.alert("Reason is required for cancellation schedule");
+        alertify.alert("Reason is required for decline schedule");
         $('#reason_modal').modal('show');
         return false; 
       }
