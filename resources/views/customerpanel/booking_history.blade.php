@@ -85,7 +85,7 @@
 
                   <tr >
                     <td>{{$eachbooking->address_line1}}</td>
-                    <td>{{date('d F Y', strtotime($eachbooking->created_at))}}</td>
+                    <td>{{date('d F Y h:i A', strtotime($eachbooking->created_at))}}</td>
                      <td>               
                       {{date('d F Y', strtotime($eachbooking->plan_date))}}
                       </td>
