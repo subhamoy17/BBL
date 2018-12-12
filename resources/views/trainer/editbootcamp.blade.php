@@ -177,7 +177,7 @@
 						<label>Address </label>
 					</div>
 					<div class="col-lg-3">
-						<select name="address_select" id="address_select" class="ui search form-control"
+						<!-- <select name="address_select" id="address_select" class="ui search form-control"
           onchange="if(this.options[this.selectedIndex].value=='customOption'){
               toggleField1(this,this.nextSibling);
               this.selectedIndex='0';
@@ -194,7 +194,12 @@
               @endforeach
             @endif
         </select><input name="address" style="display:none;" disabled="disabled" 
-            onblur="if(this.value==''){toggleField1(this,this.previousSibling);}" class="ui search form-control" placeholder="Address" id="address">  
+            onblur="if(this.value==''){toggleField1(this,this.previousSibling);}" class="ui search form-control" placeholder="Address" id="address">  -->
+            
+                
+                 <input type="text" id="address" name="address" class="form-control" readonly="true" value="{{$edit_bootcamp->address_line1}}">
+                  <input type="hidden" id="address_select" name="address_select" class="form-control"  value="{{$edit_bootcamp->address_id}}">
+             
 						
 					</div>
 					<input type="hidden" id="street_number" name="street_number" placeholder="Street number">
@@ -205,7 +210,7 @@
 					<input type="hidden" id="country" name="country" placeholder="Country">
 					<input type="hidden" id="lat" name="lat" placeholder="Latitude">
 					<input type="hidden" id="lng" name="lng" placeholder="Longitude">
-				</div>
+				</div><br>
 				<div class="row">
 					<div class="col-lg-12">
 						<div class="row">
@@ -410,7 +415,42 @@ $(document).ready(function() {
 
       });
     </script>
+<script>
 
+ $(document).ready(function() {
+ $("#bootcamp_session_submit").on('click',function(event){
+  event.preventDefault();
+
+      $.post("{{route('checked_bootcampdate')}}",$('#edit_bootcamp_session').serialize(), function(data){
+            if(data==1)
+            { 
+              alertify.confirm("Are you sure you want to cancel all bootcamp plan during this date?", function (e) {
+          if (e) {
+            $('#edit_bootcamp_session').submit();
+          }
+          else
+          {
+            return false;
+          }
+        });
+                                  
+            }   
+
+            else{
+              $('#edit_bootcamp_session').submit();
+            }   
+
+  });
+      
+
+        
+    }); 
+  
+  });
+
+
+
+</script>
 
 
 @endif

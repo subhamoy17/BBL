@@ -224,9 +224,9 @@ Route::get('bootcamp_plan_delete/{id}', 'TrainerController@bootcamp_plan_delete'
 
 Route::get('bootcamp-plan-schedule', 'TrainerController@bootcamp_plan_schedule')->name('bootcamp_plan_schedule');
 Route::get('bootcamp-schedule-cancelled', 'TrainerController@bootcamp_schedule_cancelled_admin');
+Route::post('checked_bootcampdate','TrainerController@checked_bootcampdate')->name('checked_bootcampdate');
 Route::get('bootcamp-schedule-booking-cancelled/{slug}', 'TrainerController@bootcamp_booking_individual_cancelled')->name('bootcamp_booking_individual_cancelled');
 Route::get('individual_bootcamp_cancele/{slug}', 'TrainerController@individual_bootcamp_cancele');
-
 
 
 

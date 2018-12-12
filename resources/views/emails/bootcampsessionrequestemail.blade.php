@@ -85,6 +85,29 @@
 <br>
 <a href="{{URL::to($url)}}" style="text-decoration: none;font-size: 13px;font-family: 'Open Sans', sans-serif;background: #fb5b21;padding: 18px;display: inline-block;color: #fff;border-radius: 5px;font-weight: 600; text-transform: capitalize;"><i class="fas fa-check" style="margin-right:3px;"></i> Click to check declined session</a>
 
+@elseif($status=='Changed End Date Bootcamp Session By Admin')
+        Your bootcamp session declined by BBL admin.<br>
+
+         <table style="width:100%" class="table-bordered">
+  <tr>
+    <th class="table-bordered">Address</th>
+    <th class="table-bordered">Booked On</th>
+    <th class="table-bordered">Booked Date</th>
+    <th class="table-bordered">Booked Day</th>
+    <th class="table-bordered">Time</th>
+  </tr>
+  <tr>
+    <th class="table-bordered">{{$schedule_address}}</th>
+    <th class="table-bordered">{{date('d F Y', strtotime($session_booked_on))}}</th>
+    <th class="table-bordered">{{date('d F Y', strtotime($session_booking_date))}}</th>
+    <th class="table-bordered">{{$session_booking_day}}</th>
+    <th class="table-bordered">{{$session_booking_time}}</th>
+  </tr>
+</table>
+<br>
+<a href="{{URL::to($url)}}" style="text-decoration: none;font-size: 13px;font-family: 'Open Sans', sans-serif;background: #fb5b21;padding: 18px;display: inline-block;color: #fff;border-radius: 5px;font-weight: 600; text-transform: capitalize;"><i class="fas fa-check" style="margin-right:3px;"></i> Click to check your session</a>
+
+
       @elseif($status=='Cancelled Bootcamp Session By Customer')
         You have successfully cancelled the below bootcamp session.<br>
 
