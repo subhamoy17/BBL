@@ -114,7 +114,7 @@ $(document).ready(function() {
                       <td>
                         @if($each_schedule->deleted_at=='' && $each_schedule->no_of_uses>0)
                         {{$each_schedule->no_of_uses}}
-                          <a href="{{route('bootcamp_booking_individual_cancelled',['plan_id' => Crypt::encrypt($each_schedule->schedule_id) ])}}" title="Cancele" class="btn btn-danger">Cancel</a>
+                          <a href="{{route('bootcamp_booking_individual_cancelled',['plan_id' => Crypt::encrypt($each_schedule->schedule_id) ])}}" title="Veiw all booking" class="btn" style="color: #fff; background-color: #FF6347;   border-color: #FF6347;">View</a>
                         @else
                         {{$each_schedule->no_of_uses}}
                         @endif

@@ -110,7 +110,8 @@
                     <?php
                   date_default_timezone_set('Asia/Kolkata');
                   $current_time = date("Y-m-d H:i:s");
-                  $bootcamp_cancel_time = date("Y-m-d H:i:s", strtotime('+24 hours', strtotime($eachbooking->created_at)));
+                  $bootcamp_cancel_time=$eachbooking->plan_date.' '.$eachbooking->plan_st_time;
+                  $bootcamp_cancel_time = date("Y-m-d H:i:s", strtotime('-24 hours', strtotime($bootcamp_cancel_time)));
                   ?>
                     <td> @if($current_time<$bootcamp_cancel_time)
                       <a href="{{route('bootcamp_booking_cancele_customer',['id'=>$eachbooking->booking_id])}}"  
