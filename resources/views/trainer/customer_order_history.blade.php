@@ -77,75 +77,78 @@ $('#bootstrap-slot-data-table').DataTable({
     
 </div>
 <div class="content mt-3" style="margin-top: 0px !important;">
-    <div class="animated fadeIn">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                   <div id="loading-img"></div>
-                    <div class="card-body">
-                       
+  <div class="animated fadeIn">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div id="loading-img"></div>
+            <div class="card-body">
+                              
+              <table id="bootstrap-slot-data-table" class="display responsive table-striped table-bordered">
+                <thead>
+                  <tr>
+                      <th id="slno">Sl. No.</th>
+                      <th>Customer Name</th>
+                       <th>Plan Type</th>
+                        <th>Plan Price</th>
+                      
+                      <th>No of Session</th>
+                      <th>Remaining Session</th>
+                      
+                      <th>Status</th>
+                      <th>Action</th>
                         
-                        <table id="bootstrap-slot-data-table" class="display responsive table-striped table-bordered">
-                            <thead>
-                                <tr>
-                                    <th id="slno">Sl. No.</th>
-                                    <th>Customer Name</th>
-                                     <th>Plan Type</th>
-                                      <th>Plan Price</th>
-                                    
-                                    <th>No of Session</th>
-                                    <th>Remaining Session</th>
-                                    
-                                    <th>Status</th>
-                                    <th>Action</th>
-                                      
-                                   </tr> 
-                            </thead>
-                        <tbody>
+                     </tr> 
+                </thead>
+                <tbody>
                                 
-                            @foreach($all_order_history as $key=>$order_history)
-                                <tr>
-                                    <td>{{++$key}}</td>
-                                   <td>{{$order_history->customer_name}}</td>
-                                   <td>{{$order_history->training_type}}</td>
-                                   
-                                  <td> <i class="fa fa-gbp"></i> {{$order_history->total_price}}</td>
-                                  
-                                   <td>{{$order_history->total_sessions}}</td>
-                                   @if($order_history->total_sessions=="Unlimited")
-                                    <td>--</td>
-                                    @else
-                                    <td>{{$order_history->remaining_sessions}}</td>
-                                    @endif
-                                     @if($order_history->status=='1')
-                                    <td>Payment Success</td>
-                                    @elseif($order_history->status=='0' && $order_history->payment_status == 'Inprogress')
-                                    <td>Payment Inprogress</td>
-                                    @elseif($order_history->status=='0' && $order_history->payment_status == 'Decline')
-                                    <td>Payment Decline</td>
-                                    @endif
-                                   <td align="center" class="td-btn5">
+                  @foreach($all_order_history as $key=>$order_history)
+                    <tr>
+                      <td>{{++$key}}</td>
+                      <td>{{$order_history->customer_name}}</td>
+                      <td>{{$order_history->training_type}}</td>
+                      <td> <i class="fa fa-gbp"></i> {{$order_history->total_price}}</td>
+                      <td>{{$order_history->total_sessions}}</td>
+                      <td>
+                         @if($order_history->total_sessions=="Unlimited")
+                          --
+                          @else
+                          {{$order_history->remaining_sessions}}
+                          @endif
+                      </td>
+                      <td>
+                          @if($order_history->status=='1')
+                            Payment Success
+                          @elseif($order_history->status=='0' && $order_history->payment_status == 'Inprogress')
+                            Payment Inprogress
+                          @elseif($order_history->status=='0' && $order_history->payment_status == 'Decline')
+                            Payment Decline
+                          @elseif($order_history->status=='0' && $order_history->payment_status == 'Failed' && $order_history->payment_option == 'Stripe')
+                          Payment Failed
+                          @endif
+                        </td>
+                        <td align="center" class="td-btn5">
 
-                @if($order_history->payment_option == 'Bank Transfer' && $order_history->status =='0' && $order_history->payment_status != 'Decline')
+        @if($order_history->payment_option == 'Bank Transfer' && $order_history->status =='0' && $order_history->payment_status != 'Decline')
 
-               <button type="button" class="btn btn-success status-all" title="Approve" data-msg="Approve" id="{{$order_history->order_details_id}}"><i class="fa fa-thumbs-up"></i></button>
+        <button type="button" class="btn btn-success status-all" title="Approve" data-msg="Approve" id="{{$order_history->order_details_id}}"><i class="fa fa-thumbs-up"></i></button>
 
-                 <button type="button"  title="Decline" class="btn btn-danger status-all" data-msg="Decline" id="{{$order_history->order_details_id}}"><i class="fa fa-thumbs-down"></i></button>
+         <button type="button"  title="Decline" class="btn btn-danger status-all" data-msg="Decline" id="{{$order_history->order_details_id}}"><i class="fa fa-thumbs-down"></i></button>
 
-                 <a class="detail-orders-modal-btn1 btn btn-info btn-sm order-show-icon" id="{{$order_history->order_details_id}}" href="#"   data-payment-option="{{$order_history->payment_option}}"  data-plan-price="{{$order_history->total_price}}" data-payment-type-name="{{$order_history->payment_type}}" data-purchased-on="{{date('d F Y', strtotime($order_history->order_purchase_date))}}" data-validity-date="{{$order_history->order_validity_date? date('d F Y', strtotime($order_history->order_validity_date)) : 'N/A'}}" data-payment-id="{{$order_history->payment_id}}" data-payment-description="{{$order_history->description? $order_history->description : 'N/A'}}" data-payment-image="{{asset('backend/bankpay_images')}}/{{$order_history->image}}" data-noimage="{{$order_history->image}}">
-                                      <i class="fa fa-eye" title="view details" aria-hidden="true" style="width: 13px; height: 18px;"></i></a>
+         <a class="detail-orders-modal-btn1 btn btn-info btn-sm order-show-icon" id="{{$order_history->order_details_id}}" href="#"   data-payment-option="{{$order_history->payment_option}}"  data-plan-price="{{$order_history->total_price}}" data-payment-type-name="{{$order_history->payment_type}}" data-purchased-on="{{date('d F Y', strtotime($order_history->order_purchase_date))}}" data-validity-date="{{$order_history->order_validity_date? date('d F Y', strtotime($order_history->order_validity_date)) : 'N/A'}}" data-payment-id="{{$order_history->payment_id}}" data-payment-description="{{$order_history->description? $order_history->description : 'N/A'}}" data-payment-image="{{asset('backend/bankpay_images')}}/{{$order_history->image}}" data-noimage="{{$order_history->image}}">
+                              <i class="fa fa-eye" title="view details" aria-hidden="true" style="width: 13px; height: 18px;"></i></a>
 
-                  @else
-                  <a class="detail-orders-modal-btn1 btn btn-info btn-sm" id="{{$order_history->order_details_id}}" href="#"   data-payment-option="{{$order_history->payment_option}}"  data-plan-price="{{$order_history->total_price}}" data-payment-type-name="{{$order_history->payment_type}}" data-purchased-on="{{date('d F Y', strtotime($order_history->order_purchase_date))}}" data-validity-date="{{$order_history->order_validity_date? date('d F Y', strtotime($order_history->order_validity_date)) : 'N/A'}}" data-payment-id="{{$order_history->payment_id}}" data-payment-description="{{$order_history->description? $order_history->description : 'N/A'}}" data-payment-image="{{asset('backend/bankpay_images')}}/{{$order_history->image}}" data-noimage="{{$order_history->image}}">
-                                      <i class="fa fa-eye" title="view details" aria-hidden="true" style="width: 13px; height: 18px;"></i></a>
-                
-                @endif
-                                    
-                          </td>
-                                 
+          @else
+          <a class="detail-orders-modal-btn1 btn btn-info btn-sm" id="{{$order_history->order_details_id}}" href="#"   data-payment-option="{{$order_history->payment_option}}"  data-plan-price="{{$order_history->total_price}}" data-payment-type-name="{{$order_history->payment_type}}" data-purchased-on="{{date('d F Y', strtotime($order_history->order_purchase_date))}}" data-validity-date="{{$order_history->order_validity_date? date('d F Y', strtotime($order_history->order_validity_date)) : 'N/A'}}" data-payment-id="{{$order_history->payment_id}}" data-payment-description="{{$order_history->description? $order_history->description : 'N/A'}}" data-payment-image="{{asset('backend/bankpay_images')}}/{{$order_history->image}}" data-noimage="{{$order_history->image}}">
+                              <i class="fa fa-eye" title="view details" aria-hidden="true" style="width: 13px; height: 18px;"></i></a>
 
-                                </tr>
-                            @endforeach
+        @endif
+                            
+                  </td>
+                         
+
+                        </tr>
+                    @endforeach
                         </tbody>
                         </table>
                     </div>
@@ -211,7 +214,7 @@ $('#bootstrap-slot-data-table').DataTable({
                                 </div>
                             </div> 
                         <div class="col-lg-4 col-xs-12">
-                                <label>Payment Id</label>
+                                <label>Order Ref Id</label>
                                 <div class="dispClass">
                                     <p class="detail-txt2"> 
                                          <span id="payment_id"></span>

@@ -69,14 +69,17 @@
           @endif
           <td>{{$myorder->payment_option}}</td>
           <td>{{$myorder->payment_type}}</td>
-        
-           @if($myorder->status=='1')
-                <td>Payment Success</td>
-                @elseif($myorder->status=='0' && $myorder->payment_status == 'Inprogress')
-                <td>Payment Inprogress</td>
-                @elseif($myorder->status=='0' && $myorder->payment_status == 'Decline')
-                <td>Payment Decline</td>
-                @endif
+          <td>
+            @if($myorder->status=='1')
+              Payment Success
+            @elseif($myorder->status=='0' && $myorder->payment_status == 'Inprogress')
+              Payment Inprogress
+            @elseif($myorder->status=='0' && $myorder->payment_status == 'Decline')
+              Payment Decline
+            @elseif($myorder->status=='0' && $myorder->payment_status == 'Failed' && $myorder->payment_option == 'Stripe')
+              Payment Failed
+            @endif
+          </td>
           </tr>
          
             @endforeach

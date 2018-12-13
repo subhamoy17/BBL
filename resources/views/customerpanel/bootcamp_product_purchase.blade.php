@@ -1,4 +1,4 @@
-@extends('frontend.main') 
+                                                                 @extends('frontend.main') 
 @section('content')
         <div class="contact-box">
             <div class="container">
@@ -44,8 +44,8 @@
                             <h5>Payment Option</h5>
                               <ul>
                                 <li>
-                                  <input type="radio" id="a-option" name="selector1" value="Online">
-                                  <label for="a-option" >Online Payment</label>
+                                  <input type="radio" id="a-option" name="selector1" value="Stripe">
+                                  <label for="a-option" >Stripe</label>
                                   <div class="check"></div>
                                 </li>
                                 <li>
