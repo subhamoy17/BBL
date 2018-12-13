@@ -143,22 +143,22 @@
             <table border="0" cellpadding="0" cellspacing="0">
               <tr>
                 <td>
-                  <a href="http://www.youtube.com/" style="margin-left:15px; font-size: 30px; color: #fff;">
+                  <a href="https://www.youtube.com/channel/UCvFStHTPHjHY-_7BXA17Fug" style="margin-left:15px; font-size: 30px; color: #fff;">
                     <i class="fab fa-youtube"></i>
                   </a>
                 </td>
                 <td>
-                  <a href="http://www.google.com/" style="margin-left:15px; font-size: 30px; color: #fff;">
-                    <i class="fab fa-google-plus-g"></i>
+                  <a href="https://www.instagram.com/lekanfitness/" style="margin-left:15px; font-size: 30px; color: #fff;">
+                    <i class="fab fa-instagram"></i>
                   </a>
                 </td>
                 <td>
-                  <a href="http://www.twitter.com/" style="margin-left:15px; font-size: 30px; color: #fff;">
+                  <a href="https://twitter.com/bodybylekan" style="margin-left:15px; font-size: 30px; color: #fff;">
                     <i class="fab fa-twitter"></i>
                   </a>
                 </td>
                 <td>
-                  <a href="http://www.facebook.com/" style="margin-left:15px; font-size: 30px; color: #fff;">
+                  <a href="https://www.facebook.com/bodybylekan" style="margin-left:15px; font-size: 30px; color: #fff;">
                     <i class="fab fa-facebook-f"></i>
                   </a>
                 </td>

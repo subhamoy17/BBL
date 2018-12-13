@@ -70,7 +70,8 @@
           <td>{{$myorder->payment_option}}</td>
           <td>{{$myorder->payment_type}}</td>
           <td>
-            @if($myorder->status=='1')
+
+            @if($myorder->status=='1' && $myorder->payment_option == 'Stripe')
               Payment Success
             @elseif($myorder->status=='0' && $myorder->payment_status == 'Inprogress')
               Payment Inprogress
@@ -78,6 +79,8 @@
               Payment Decline
             @elseif($myorder->status=='0' && $myorder->payment_status == 'Failed' && $myorder->payment_option == 'Stripe')
               Payment Failed
+            @elseif($myorder->status=='1' && $myorder->payment_option == 'Bank Transfer')
+              Payment Approved
             @endif
           </td>
           </tr>
