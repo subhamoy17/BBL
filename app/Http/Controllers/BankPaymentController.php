@@ -14,6 +14,7 @@ use Auth;
 use Session;
 use App\Customer;
 use App\Notifications\PackagePurchaseNotification;
+use App\Notifications\PlanPurchasedNotification;
 
 class BankPaymentController extends Controller
 {
@@ -289,7 +290,7 @@ public function bootcamp_bank_payment_success(Request $request)
   $order_data['payment_option']='Bank Transfer';
   $order_data['status']=0;
   $order_data['no_of_sessions']=$package_details->total_sessions;
-  $order_data['remaining_sessions']=$package_details->total_sessions;
+  $order_data['remaining_sessions']=0;
   $order_data['price_session_or_month']=$package_details->price_session_or_month;
   $order_data['total_price']=$package_details->total_price;
   $order_data['validity_value']=$package_details->validity_value;
@@ -302,6 +303,24 @@ public function bootcamp_bank_payment_success(Request $request)
 
   \Session::put('success_bootcamp_bank', 'Payment success');
   \Session::put('payment_id', $payment_history_data['payment_id']);
+
+  $customer_details=Customer::find(Auth::guard('customer')->user()->id);
+
+    $notifydata['product_name'] =$package_details->product_name;
+    $notifydata['no_of_sessions'] =$package_details->total_sessions;
+    $notifydata['product_validity'] =$order_data['order_validity_date'];
+    $notifydata['product_purchase_date'] =$order_data['order_purchase_date'];
+    $notifydata['product_amount'] =$package_details->total_price;
+    $notifydata['order_id'] =$payment_history_data['payment_id'];
+    $notifydata['payment_mode'] ='Bank Transfer';
+    $notifydata['url'] = '/customer/purchased-history';
+    $notifydata['customer_name']=$customer_details->name;
+    $notifydata['customer_email']=$customer_details->email;
+    $notifydata['customer_phone']=$customer_details->ph_no;
+    $notifydata['status']='Payment Success';
+
+    $customer_details->notify(new PlanPurchasedNotification($notifydata));
+
   DB::commit();
     return redirect('customer/bootcampbankpaymentcomplete');
    }

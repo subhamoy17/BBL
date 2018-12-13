@@ -21,6 +21,7 @@ use App\Notifications\TrainerActiveDeactiveNotification;
 
 use App\Notifications\SessionRequestNotificationToTrainer;
 use App\Notifications\BootcampSessionNotification;
+use App\Notifications\PlanPurchasedNotification;
 
 
 
@@ -4351,6 +4352,14 @@ public function order_history_backend_request(Request $request)
     $action=$data['action'];
 
     $order_details=DB::table('order_details')->where('id',$purchased_history_id)->first();
+
+    $package_details=DB::table('products')
+    ->join('training_type','training_type.id','products.training_type_id')
+    ->join('payment_type','payment_type.id','products.payment_type_id')
+    ->select('training_type.training_name as product_name','payment_type.payment_type_name as payment_type_name','products.total_sessions as total_sessions','products.id as product_id','products.id as product_id',(DB::raw('products.validity_value * products.validity_duration  as validity')),'products.total_price as total_price','products.price_session_or_month as price_session_or_month','products.validity_value as validity_value','products.validity_duration as validity_duration','products.contract as contract','products.notice_period_value as notice_period_value','products.notice_period_duration as notice_period_duration')
+    ->where('products.id',$order_details->product_id)->first();
+
+    $customer_details=Customer::find($order_details->customer_id);
     
     if($action=="Approve"){
 
@@ -4361,6 +4370,21 @@ public function order_history_backend_request(Request $request)
     ->where('id',$order_details->payment_id)->update(['status'=> 'Success']);
 
     // send notification mail
+      
+      $notifydata['product_name'] =$package_details->product_name;
+      $notifydata['no_of_sessions'] =$package_details->total_sessions;
+      $notifydata['product_validity'] =$order_details->order_validity_date;
+      $notifydata['product_purchase_date'] =$order_details->order_purchase_date;
+      $notifydata['product_amount'] =$package_details->total_price;
+      $notifydata['order_id'] =' ';
+      $notifydata['payment_mode'] ='Bank Transfer';
+      $notifydata['url'] = '/customer/purchased-history';
+      $notifydata['customer_name']=$customer_details->name;
+      $notifydata['customer_email']=$customer_details->email;
+      $notifydata['customer_phone']=$customer_details->ph_no;
+      $notifydata['status']='Bootcamp Bank Payment Approved';
+
+      $customer_details->notify(new PlanPurchasedNotification($notifydata));
 
     return response()->json(1);
     }
@@ -4371,6 +4395,21 @@ public function order_history_backend_request(Request $request)
     ->where('id',$order_details->payment_id)->update(['status'=> 'Decline']);
 
     // send notification mail
+
+    $notifydata['product_name'] =$package_details->product_name;
+      $notifydata['no_of_sessions'] =$package_details->total_sessions;
+      $notifydata['product_validity'] =$order_details->order_validity_date;
+      $notifydata['product_purchase_date'] =$order_details->order_purchase_date;
+      $notifydata['product_amount'] =$package_details->total_price;
+      $notifydata['order_id'] =' ';
+      $notifydata['payment_mode'] ='Bank Transfer';
+      $notifydata['url'] = '/customer/purchased-history';
+      $notifydata['customer_name']=$customer_details->name;
+      $notifydata['customer_email']=$customer_details->email;
+      $notifydata['customer_phone']=$customer_details->ph_no;
+      $notifydata['status']='Bootcamp Bank Payment Declined';
+
+      $customer_details->notify(new PlanPurchasedNotification($notifydata));
 
     return response()->json(2);
     }
