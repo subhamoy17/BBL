@@ -1244,8 +1244,6 @@ public function bootcamp_purchase_payment_mode(Request $request)
 public function bootcamp_strip_payment(Request $request)
 {
   //Log::debug(":: bootcamp_onlinepayment :: ".print_r($request->all(),true));    
-  
-    
 
    try{
     
@@ -1256,6 +1254,7 @@ public function bootcamp_strip_payment(Request $request)
     ->where('products.id',$request->product_id)->first();
 
     $customer_details=Customer::find(Auth::guard('customer')->user()->id);
+    
     \Stripe\Stripe::setApiKey ( 'sk_test_oBDW3aKMIoUchBs9TKSQ8TwF' );
 
           $customer =  \Stripe\Customer::create([

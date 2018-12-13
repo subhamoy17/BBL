@@ -76,6 +76,14 @@ $('#bootstrap-slot-data-table').DataTable({
     </div>
     
 </div>
+<div id="success-msg" class="alert alert-success alert-dismissible" style="display: none;">
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+  <i class="icon fa fa-check"></i>Hi! One bank payment has been approved successfully.
+</div>
+<div id="decline-msg" class="alert alert-success alert-dismissible" style="display: none;">
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+  <i class="icon fa fa-info-circle"></i>Hi! One bank payment has been declined successfully.
+</div>
 <div class="content mt-3" style="margin-top: 0px !important;">
   <div class="animated fadeIn">
     <div class="row">
@@ -232,11 +240,15 @@ $('#bootstrap-slot-data-table').DataTable({
                                          
                                     </p>                             
                                 </div>
-                            </div> 
-                            <div></div>
-                            <div id="payment" style="display: none;">
-                            <div id= "pay_des" class="col-lg-4 col-xs-12" style="display: none;">
-                                <label>Payment Description</label>
+                            </div>              
+              </div>
+            </div>
+          </div>
+                <div id="payment" style="display: none;" class="col-sm-12 col-xs-12" >
+                  <div class="form-group">
+                    <div class="row" style="text-align: center;">
+                            <div id="pay_des" class="col-lg-4 col-xs-12" style="display: none;">
+                                <label>Bank Payment Description</label>
                                 <div class="dispClass">
                                     <p class="detail-txt2"> 
                                          <span id="description"></span>
@@ -245,30 +257,20 @@ $('#bootstrap-slot-data-table').DataTable({
                                     </p>                             
                                 </div>
                             </div> 
-                           
 
                            <div class="col-lg-4 col-xs-12" id="pay_img" style="display: none;">
-                                <label>Payment Image</label>
+                                <label>Bank Payment Image</label>
                                 <div class="dispClass">
                                     <p class="detail-txt2"> 
-                                         
-                                          <img class="col-lg-8 modal_image" width="100">                                  
-                                         
+                                         <a class="payment_image btn" target="_blank" style="color: #fff; background-color: #FF6347;   border-color: #FF6347;">Click to show</a>                                  
                                     </p>                             
                                 </div>
                             </div> 
                           </div>
-                            
-                          
-                            
-                            
-      
-        </div>
-            </div>
-      </div>
+                      </div>
+                    </div>
   </div>
 </div>
-
 <button type="button" class="btn btn-default success-close" data-dismiss="modal" >Close</button>
 </div>
 </div>
@@ -318,11 +320,11 @@ $('#bootstrap-slot-data-table').DataTable({
     $('#validity_date').text(validity_date);
     $('#payment_id').text(payment_id);
     $('#plan_price').text(plan_price);
-    
+
     if($(this).data('noimage')!= ''){
       
             $('#pay_img').show();
-            $('img.modal_image').attr('src',payment_image); 
+            $('a.payment_image').attr('href',payment_image); 
 
           }
 
@@ -331,7 +333,7 @@ $('#bootstrap-slot-data-table').DataTable({
             
             $("#pay_img").css({"display": "block"});
             $('#pay_img').hide();
-            $('img.modal_image').attr('src','');
+            $('a.payment_image').attr('src','');
              
           }
 
@@ -397,8 +399,8 @@ if (action == "Decline"){
     success: function (data)
     {
       if(data==1){
-        console.log("Approve response");
-      console.log(data);
+        //console.log("Approve response");
+      //console.log(data);
       $(".card-body").css("opacity", .2);
          $("#loading-img").css({"display": "block"});
 
@@ -410,8 +412,8 @@ if (action == "Decline"){
       }
       else
       {
-        console.log("Decline decline");
-      console.log(data);
+        //console.log("Decline decline");
+      //console.log(data);
    $(".card-body").css("opacity", .2);
    $("#loading-img").css({"display": "block"});
       $('#decline-msg').show();

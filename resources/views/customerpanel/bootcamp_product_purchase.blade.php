@@ -25,6 +25,7 @@
                    <div class="packg-dt">
                    		<h5>Product Details</h5>
                    		 <div class="form-group">
+
                                       <label>Plan Type - <h6>{{$package_details->product_name}}</h6></label>
                                       <span class="rev-line">
                                       <label class="line-t">Price - <h6 class="line-t"><i class="fa fa-gbp"></i> {{$package_details->total_price}}</h6></label>
@@ -43,11 +44,13 @@
 
                             <h5>Payment Option</h5>
                               <ul>
+                                @if($package_details->payment_type_name=='Pay as you go')
                                 <li>
                                   <input type="radio" id="a-option" name="selector1" value="Stripe">
                                   <label for="a-option" >Stripe</label>
                                   <div class="check"></div>
                                 </li>
+                                @endif
                                 <li>
                                   <input type="radio" id="b-option" name="selector1" value="Bank Transfer">
                                   <label for="b-option" >Bank Transfer</label>
