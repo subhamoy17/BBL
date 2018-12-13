@@ -432,8 +432,8 @@ Route::get('common-diet-plan-paymentsuccess','FrontController@common_diet_plan_p
 Route::get('bootcamp-plan-purchase/{slug}','FrontController@bootcamp_plan_purchase')->name('bootcamp_plan_purchase');
 Route::post('bootcamp-plan-purchase','FrontController@bootcamp_purchase_payment_mode')->name('bootcamp_product_purchase_request');
 
-Route::post('bootcamp-onlinepayment','FrontController@bootcamp_onlinepayment');
-Route::get('bootcamponlinepaymentsuccess','FrontController@bootcamponlinepaymentsuccess');
+Route::post('bootcamp-stripe-payment','FrontController@bootcamp_strip_payment')->name('bootcamp_strip_payment');
+Route::get('bootcampstripepaymentsuccess','FrontController@bootcampstripepaymentsuccess');
 Route::post('bootcamp_bankpaymentsuccess','BankPaymentController@bootcamp_bank_payment_success');
 Route::get('bootcampbankpaymentcomplete','BankPaymentController@bootcamp_bank_payment_complete');
 
