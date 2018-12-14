@@ -1244,7 +1244,6 @@ public function bootcamp_purchase_payment_mode(Request $request)
 public function bootcamp_strip_payment(Request $request)
 {
   //Log::debug(":: bootcamp_onlinepayment :: ".print_r($request->all(),true));    
-
    try{
     
     $package_details=DB::table('products')

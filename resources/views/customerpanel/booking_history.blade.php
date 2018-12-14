@@ -101,7 +101,7 @@
                         @if($eachbooking->cancelled_by==1)
                           Cancelled
                         @elseif($eachbooking->cancelled_by==2)
-                          Cancelled by trainer
+                          Cancelled by admin
                         @endif
                       @endif
                     </td>
