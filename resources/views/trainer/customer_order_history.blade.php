@@ -103,7 +103,7 @@ $('#bootstrap-slot-data-table').DataTable({
                       <th>No of Session</th>
                       <th>Remaining Session</th>
                       
-                      <th>Status</th>
+                      <th>Payment Status</th>
                       <th>Action</th>
                         
                      </tr> 
@@ -125,15 +125,19 @@ $('#bootstrap-slot-data-table').DataTable({
                           @endif
                       </td>
                       <td>
+                        @if($order_history->total_price>0)
                           @if($order_history->status=='1')
-                            Payment Success
+                            Success
                           @elseif($order_history->status=='0' && $order_history->payment_status == 'Inprogress')
-                            Payment Inprogress
+                            Inprogress
                           @elseif($order_history->status=='0' && $order_history->payment_status == 'Decline')
-                            Payment Decline
+                            Decline
                           @elseif($order_history->status=='0' && $order_history->payment_status == 'Failed' && $order_history->payment_option == 'Stripe')
-                          Payment Failed
+                          Failed
                           @endif
+                        @else
+                        --
+                        @endif
                         </td>
                         <td align="center" class="td-btn5">
 

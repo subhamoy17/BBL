@@ -36,7 +36,7 @@
             <th>Remaining Session</th>
             <th>Payment Mode</th>
             <th>Plan Scheme</th>
-            <th>Status</th>
+            <th>Payment Status</th>
             <!-- <th>Payment Mode</th> -->
            
             
@@ -67,20 +67,35 @@
           @else
           <td>{{$myorder->remaining_sessions}}</td>
           @endif
-          <td>{{$myorder->payment_option}}</td>
-          <td>{{$myorder->payment_type}}</td>
           <td>
-
-            @if($myorder->status=='1' && $myorder->payment_option == 'Stripe')
-              Payment Success
-            @elseif($myorder->status=='0' && $myorder->payment_status == 'Inprogress')
-              Payment Inprogress
-            @elseif($myorder->status=='0' && $myorder->payment_status == 'Decline')
-              Payment Decline
-            @elseif($myorder->status=='0' && $myorder->payment_status == 'Failed' && $myorder->payment_option == 'Stripe')
-              Payment Failed
-            @elseif($myorder->status=='1' && $myorder->payment_option == 'Bank Transfer')
-              Payment Approved
+            @if($myorder->total_price>0)
+            {{$myorder->payment_option}}
+            @else
+            --
+            @endif
+          </td>
+          <td>
+            @if($myorder->total_price>0)
+            {{$myorder->payment_type}}
+            @else
+            --
+            @endif
+          </td>
+          <td>
+            @if($myorder->total_price>0)
+              @if($myorder->status=='1' && $myorder->payment_option == 'Stripe')
+                Payment Success
+              @elseif($myorder->status=='0' && $myorder->payment_status == 'Inprogress')
+                Payment Inprogress
+              @elseif($myorder->status=='0' && $myorder->payment_status == 'Decline')
+                Payment Decline
+              @elseif($myorder->status=='0' && $myorder->payment_status == 'Failed' && $myorder->payment_option == 'Stripe')
+                Payment Failed
+              @elseif($myorder->status=='1' && $myorder->payment_option == 'Bank Transfer')
+                Payment Approved
+              @endif
+            @else
+              --
             @endif
           </td>
           </tr>

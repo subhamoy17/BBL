@@ -197,6 +197,7 @@ public function frontprice(Request $request)
   ->join('payment_type','products.payment_type_id','payment_type.id')
   ->select('products.id as product_id','training_type.training_name as training_name','payment_type.payment_type_name as payment_type_name','products.total_sessions as total_sessions','products.price_session_or_month as price_session_or_month','products.total_price as total_price','products.validity_value as validity_value','products.validity_duration as validity_duration','products.contract as contract','products.notice_period_value as notice_period_value','products.notice_period_duration as notice_period_duration',(DB::raw('products.validity_value * products.validity_duration  as validity')),(DB::raw('products.notice_period_value * products.notice_period_duration  as notice_period')))
   ->whereNull('products.deleted_at')
+  ->where('products.total_price','>',0)
   ->where('training_type.id',2)->where('products.status',1)
   ->orderby('products.id','DESC')->get();
 
@@ -1218,7 +1219,7 @@ public function bootcamp_purchase_payment_mode(Request $request)
   $package_details=DB::table('products')
   ->join('training_type','training_type.id','products.training_type_id')
   ->join('payment_type','payment_type.id','products.payment_type_id')
-  ->select('training_type.training_name as product_name','payment_type.payment_type_name as payment_type_name','products.total_sessions as total_sessions','products.id as product_id','products.id as product_id',(DB::raw('products.validity_value * products.validity_duration  as validity')),'products.total_price as total_price')
+  ->select('training_type.training_name as product_name','payment_type.payment_type_name as payment_type_name','products.total_sessions as total_sessions','products.id as product_id',(DB::raw('products.validity_value * products.validity_duration  as validity')),'products.total_price as total_price')
   ->where('products.id',$request->product_id)->first();
 
 
@@ -1249,7 +1250,7 @@ public function bootcamp_strip_payment(Request $request)
     $package_details=DB::table('products')
     ->join('training_type','training_type.id','products.training_type_id')
     ->join('payment_type','payment_type.id','products.payment_type_id')
-    ->select('training_type.training_name as product_name','payment_type.payment_type_name as payment_type_name','products.total_sessions as total_sessions','products.id as product_id','products.id as product_id',(DB::raw('products.validity_value * products.validity_duration  as validity')),'products.total_price as total_price','products.price_session_or_month as price_session_or_month','products.validity_value as validity_value','products.validity_duration as validity_duration','products.contract as contract','products.notice_period_value as notice_period_value','products.notice_period_duration as notice_period_duration')
+    ->select('training_type.training_name as product_name','payment_type.payment_type_name as payment_type_name','products.total_sessions as total_sessions','products.id as product_id',(DB::raw('products.validity_value * products.validity_duration  as validity')),'products.total_price as total_price','products.price_session_or_month as price_session_or_month','products.validity_value as validity_value','products.validity_duration as validity_duration','products.contract as contract','products.notice_period_value as notice_period_value','products.notice_period_duration as notice_period_duration')
     ->where('products.id',$request->product_id)->first();
 
     $customer_details=Customer::find(Auth::guard('customer')->user()->id);

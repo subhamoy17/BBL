@@ -33,7 +33,7 @@ rules: {
 "price": {
  required: true,
 number: true,
-range: [1, 99999.99]
+range: [0, 99999.99]
 },
 "no_session": {
 required: true,
@@ -255,8 +255,8 @@ maxlength: 'Please enter number less than 50 numbers.'
 					<div class="col-lg-4">
 							<select name="validity_2" id="validity_2" class="form-control">
 		            <option value="0">Select Any One</option>
-              		<option value="7" @if($product_details->validity_duration==7) selected @endif>Week</option>
-                  <option value="30" @if($product_details->validity_duration==30) selected @endif>Month</option> 
+              		<option value="7" @if($product_details->validity_duration==7) selected @endif>Week(s)</option>
+                  <option value="30" @if($product_details->validity_duration==30) selected @endif>Month(s)</option> 
 			        </select>
 					</div>
 				</div>

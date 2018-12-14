@@ -36,8 +36,7 @@ rules: {
 "price": {
 required: true,
 number: true,
-
-range: [1, 99999.99]
+range: [0, 99999.99]
 },
 "anual_total_price": {
 required: true,
@@ -47,7 +46,6 @@ range: [1, 99999.99]
 "sub_price": {
 required: true,
 number: true,
-
 range: [1, 99999.99]
 },
 "no_session": {

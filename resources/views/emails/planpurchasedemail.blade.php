@@ -124,7 +124,25 @@
         </table>
         <br>
         <a href="{{URL::to($url)}}" style="text-decoration: none;font-size: 13px;font-family: 'Open Sans', sans-serif;background: #fb5b21;padding: 18px;display: inline-block;color: #fff;border-radius: 5px;font-weight: 600; text-transform: capitalize;"><i class="fas fa-check" style="margin-right:3px;"></i> Click to check your declined purchased product</a>
+
+    @elseif($status=='Get free bootcamp trial')
+    You get free bootcamp. Please see the below details.<br>
+    <table style="width:100%" class="table-bordered">
+          <tr>
+            <th class="table-bordered">Product Name</th>
+            <th class="table-bordered">Product Validity</th>
+            <th class="table-bordered">No. of Session(S)</th>
+          </tr>
+           
+          <tr>
+            <th class="table-bordered">{{$product_name}}</th>
+            <th class="table-bordered">{{date('d F Y', strtotime($product_validity))}}</th>
+            <th class="table-bordered">{{$no_of_sessions}}</th>
+          </tr>  
+        </table>
+        
     @endif
+
 <p align="left">Regards,</p>
   <p align="left">Team BBL</p> 
   
