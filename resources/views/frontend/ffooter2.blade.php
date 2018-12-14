@@ -1276,7 +1276,10 @@ $(function() {
         exp_month: $('.card-expiry-month').val(),
         exp_year: $('.card-expiry-year').val()
       }, stripeResponseHandler);
+
+      $('.stripe-pay-btn').attr('disabled','disabled');
     }
+    
   });
 
   function stripeResponseHandler(status, response) {
@@ -1285,14 +1288,15 @@ $(function() {
         .removeClass('hide')
         .find('.alert')
         .text(response.error.message);
+
+        $('.stripe-pay-btn').removeAttr('disabled');
     } else {
       // token contains id, last4, and card type
       var token = response['id'];
       // insert the token into the form so it gets submitted to the server
       $form.find('input[type=text]').empty();
       $form.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
-      $('.stripe-pay-btn').attr('disabled','disabled');
-      $('.stripe-pay-btn').text('Please wait...');
+       $('.stripe-pay-btn').text('Please wait...');
       $form.get(0).submit();
     }
   }
