@@ -139,7 +139,7 @@
           @if($no_of_sessions==='Unlimited') 
               Unlimited Sessions Remaining
           @else
-          Total Remaining Session {{$no_of_sessions}}
+            Remaining Session {{$no_of_sessions}}
           @endif
           </span></h3>
           <h3 class="d_active tab_drawer_heading" rel="tab5">Tab 5</h3>

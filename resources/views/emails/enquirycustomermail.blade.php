@@ -28,31 +28,12 @@
             <td colspan="2" bgcolor="#ffffff" style="padding: 20px 20px 30px 20px;">
     <p align="left"> </p>
     <p align="left"> We have to add as a customer in our organisation.
-         Please see your details of login.<br>
-          
-
-
-<table class="table table-bordered">
-           <thead >
-  <tr style="font-size: 13px;">
-    <th>Url:</th>
-  
-    <td> <a href="{{URL::to('register/verify/'.$confirmation_code)}}">Click Here </a>to verify and login your account or to verify your account you can using social login by same email id. </td> 
-     </tr>
-</thead>
- <thead >
-     <tr style="font-size: 13px;">
-    <th>User Id:</th>
-    <td>{{$email}}</td>
-  </tr>
-  </thead>
-<thead >
-    <tr style="font-size: 13px;">
-    <th>Password:</th>
-    <td>{{$password}}</td>
-  </tr>
-</thead>
-</table>
+         Please follow the link below to verify your email address and login your account or to verify your account you can using social login by same email id.
+    </p>
+    <p align="center">
+      <a href="{{URL::to('register/verify/'.$confirmation_code)}}" style="text-decoration: none;font-size: 13px;font-family: 'Open Sans', sans-serif;background: #fb5b21;padding: 12px;display: inline-block;color: #fff;border-radius: 5px;font-weight: 600; text-transform: capitalize;"><i class="fas fa-check" style="margin-right:3px;"></i> Click Here to verify your account</a>
+    </p>
+    
 <p align="left">Regards,</p>
   <p align="left">Team BBL</p> 
 </td>

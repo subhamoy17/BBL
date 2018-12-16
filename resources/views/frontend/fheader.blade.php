@@ -77,12 +77,12 @@
                        <li class="{{ Request::segment(2) === 'about-us' ? 'active' : null }}">
                         <a href="{{url('customer/about-us')}}">About Us</a>
                       </li>
-                <li class="{{ Request::segment(2) === 'pricing' ? 'active' : null }}">
-                        <a href="{{url('customer/pricing')}}">Pricing</a>
-                      </li>
-                     
+
                     <li class="{{ Request::segment(2) === 'services' ? 'active' : null }}">
                         <a href="{{url('customer/services')}}">Services</a>
+                      </li>
+                    <li class="{{ Request::segment(2) === 'pricing' ? 'active' : null }}">
+                        <a href="{{url('customer/pricing')}}">Pricing</a>
                       </li>
                       <li class="{{ Request::segment(2) === 'exercise' ? 'active' : null }}">
                         <a href="{{url('customer/exercise')}}">Exercise</a>

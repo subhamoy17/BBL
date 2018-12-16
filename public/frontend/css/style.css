@@ -6511,3 +6511,60 @@ span.line_t2 {
 }
 
 /*071218*/
+
+/*141218 @totan for free sessions*/
+
+  .ofr-bnr{
+    background: url('/frontend/images/ofr1.jpg') no-repeat center top / cover;
+    width: 100%;
+    min-height: 344px;
+    font-family: 'Russo One', sans-serif;
+    position: relative;
+    top: 80px;
+  }
+  
+  .ofr1-caption {
+    position: absolute;
+    right: 30px;
+    top: 20%;
+    text-align: center;
+    width: 560px;
+    z-index: 9;
+  }
+  .ofr1-caption h2 {
+    color: #fff;
+    font-family: 'Russo One', sans-serif;
+    margin-bottom: 15px;
+    font-size: 36px;
+  }
+  .ofr1-caption h2 span {
+    display: block;
+  }
+  .ofr1-caption::before {
+    content: "";
+    position: absolute;
+    border: 1px solid rgba(255,255,255,0.7);
+    width: 560px;
+    height: 309px;
+    top: -22%;
+    right: 0;
+    z-index: -9;
+  }
+  .ofr1-caption p {
+    font-size: 28px;
+    color: #4b4545;
+    margin-bottom: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+  }
+  
+  .ofr1-btn a {
+    color: #878590;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    padding: 10px 15px;
+    margin: 16px 15px;
+    display: inline-block;
+    background: #fff;
+  }
+  /*141218*/

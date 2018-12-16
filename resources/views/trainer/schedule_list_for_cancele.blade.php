@@ -86,7 +86,7 @@ $(document).ready(function() {
 
 @if(Auth::user()->master_trainer==1)
 <div class="breadcrumbs">
-    <div class="col-sm-9">
+    <div class="col-sm-12">
         <div class="page-header float-left">
             <div class="page-title">
                 <h1>All Clients of Choosen Bootcamp Schedule</h1>

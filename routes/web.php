@@ -401,6 +401,10 @@ Route::get('customer_session_delete/{id}', 'FrontController@session_delete')->na
 Route::get('mybooking','FrontController@booking_history')->name('booking_history');
 
 
+Route::get('free-sessions','FrontController@free_sessions');
+
+
+
 Route::get('show_purchase_history','FrontController@show_purchase_history')->name('show_purchase_history');
 
 

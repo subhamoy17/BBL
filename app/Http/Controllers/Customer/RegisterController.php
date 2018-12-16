@@ -75,8 +75,8 @@ class RegisterController extends Controller
 
     {
 
-      DB::beginTransaction();
-      try{
+      // DB::beginTransaction();
+      // try{
       
       $validator=Validator::make($request->all(), [
               
@@ -124,67 +124,96 @@ class RegisterController extends Controller
         ->join('training_type','training_type.id','products.training_type_id')
         ->join('payment_type','payment_type.id','products.payment_type_id')
         ->select('training_type.training_name as product_name','payment_type.payment_type_name as payment_type_name','products.total_sessions as total_sessions','products.id as product_id',(DB::raw('products.validity_value * products.validity_duration  as validity')),'products.total_price as total_price','products.price_session_or_month as price_session_or_month','products.validity_value as validity_value','products.validity_duration as validity_duration','products.contract as contract','products.notice_period_value as notice_period_value','products.notice_period_duration as notice_period_duration')
-        ->where('products.id',30)->first();
+        ->whereNull('products.deleted_at')
+        ->where('products.id',9)->first();
 
-        
-        $payment_history_data['amount']=$package_details->total_price;
-        $payment_history_data['status']='Success';
+        if($package_details)
 
-        $order_data['customer_id']=Auth::guard('customer')->user()->id;
-        $order_data['product_id']=$package_details->product_id;
-        $order_data['training_type']=$package_details->product_name;
-        $order_data['payment_type']=$package_details->payment_type_name;
-        $order_data['order_purchase_date']=Carbon::now()->toDateString();
+        {
 
         if($package_details->validity!='')
         {
-          $order_data['order_validity_date']=Carbon::now()->addDay($package_details->validity);
+          $product_validity=Carbon::now()->addDay($package_details->validity);
         }
         else{
-          $order_data['order_validity_date']='2099-12-30';
+          $product_validity='2099-12-30';
         }
-          
-        $order_data['payment_option']='';
-        $order_data['status']=1;
-        $order_data['no_of_sessions']=$package_details->total_sessions;
-        $order_data['remaining_sessions']=$package_details->total_sessions;
-        $order_data['price_session_or_month']=$package_details->price_session_or_month;
-        $order_data['total_price']=$package_details->total_price;
-        $order_data['validity_value']=$package_details->validity_value;
-        $order_data['validity_duration']=$package_details->validity_duration;
-        $order_data['contract']=$package_details->contract;
-        $order_data['notice_period_value']=$package_details->notice_period_value;
-        $order_data['notice_period_duration']=$package_details->notice_period_duration;
 
-        $payment_history=DB::table('payment_history')->insert($payment_history_data);
+        if($product_validity>Carbon::now()->toDateString())
+        {
+        
+          $payment_history_data['amount']=$package_details->total_price;
+          $payment_history_data['status']='Success';
 
-        $order_data['payment_id']=DB::getPdo()->lastInsertId();
+          $order_data['customer_id']=Auth::guard('customer')->user()->id;
+          $order_data['product_id']=$package_details->product_id;
+          $order_data['training_type']=$package_details->product_name;
+          $order_data['payment_type']=$package_details->payment_type_name;
+          $order_data['order_purchase_date']=Carbon::now()->toDateString();
 
-        $order_history=DB::table('order_details')->insert($order_data);
+          if($package_details->validity!='')
+          {
+            $order_data['order_validity_date']=Carbon::now()->addDay($package_details->validity);
+          }
+          else{
+            $order_data['order_validity_date']='2099-12-30';
+          }
+            
+          $order_data['payment_option']='';
+          $order_data['status']=1;
+          $order_data['no_of_sessions']=$package_details->total_sessions;
+          $order_data['remaining_sessions']=$package_details->total_sessions;
+          $order_data['price_session_or_month']=$package_details->price_session_or_month;
+          $order_data['total_price']=$package_details->total_price;
+          $order_data['validity_value']=$package_details->validity_value;
+          $order_data['validity_duration']=$package_details->validity_duration;
+          $order_data['contract']=$package_details->contract;
+          $order_data['notice_period_value']=$package_details->notice_period_value;
+          $order_data['notice_period_duration']=$package_details->notice_period_duration;
 
-        $customer_details=Customer::find(Auth::guard('customer')->user()->id);
+          $payment_history=DB::table('payment_history')->insert($payment_history_data);
 
-        $notifydata['product_name'] =$package_details->product_name;
-        $notifydata['no_of_sessions'] =$package_details->total_sessions;
-        $notifydata['product_validity'] =$order_data['order_validity_date'];
-        $notifydata['product_purchase_date'] =$order_data['order_purchase_date'];
-        $notifydata['product_amount'] =$package_details->total_price;
-        $notifydata['order_id'] ='';
-        $notifydata['payment_mode'] ='';
-        $notifydata['url'] = '/customer/mybooking';
-        $notifydata['customer_name']=$customer_details->name;
-        $notifydata['customer_email']=$customer_details->email;
-        $notifydata['customer_phone']=$customer_details->ph_no;
-        $notifydata['status']='Get free bootcamp trial';
+          $order_data['payment_id']=DB::getPdo()->lastInsertId();
 
-        $customer_details->notify(new PlanPurchasedNotification($notifydata));
+          $order_history=DB::table('order_details')->insert($order_data);
 
-        Mail::send('emails.socialenquirycustomermail',['email' =>$request->email,'name' =>$request->name],function($message) {
+          $customer_details=Customer::find(Auth::guard('customer')->user()->id);
+
+          $notifydata['product_name'] =$package_details->product_name;
+          $notifydata['no_of_sessions'] =$package_details->total_sessions;
+          $notifydata['product_validity'] =$order_data['order_validity_date'];
+          $notifydata['product_purchase_date'] =$order_data['order_purchase_date'];
+          $notifydata['product_amount'] =$package_details->total_price;
+          $notifydata['order_id'] ='';
+          $notifydata['payment_mode'] ='';
+          $notifydata['url'] = '/customer/freebootcamp';
+          $notifydata['customer_name']=$customer_details->name;
+          $notifydata['customer_email']=$customer_details->email;
+          $notifydata['customer_phone']=$customer_details->ph_no;
+          $notifydata['status']='Get free bootcamp trial';
+
+          $customer_details->notify(new PlanPurchasedNotification($notifydata));
+
+          Mail::send('emails.socialenquirycustomermail',['email' =>$request->email,'name' =>$request->name],function($message) {
         $message->to(Input::get('email'))->subject('Successfully Register');   
         });
 
         DB::commit();
-        return redirect('customer/mybooking'); 
+
+        return redirect('customer/free-sessions'); 
+        }
+
+        }
+        else
+        {
+
+          Mail::send('emails.socialenquirycustomermail',['email' =>$request->email,'name' =>$request->name],function($message) {
+          $message->to(Input::get('email'))->subject('Successfully Register');   
+          });
+
+          DB::commit();
+          return redirect('customer/free-sessions'); 
+        }
         }
 
 
@@ -195,75 +224,102 @@ class RegisterController extends Controller
         ->join('training_type','training_type.id','products.training_type_id')
         ->join('payment_type','payment_type.id','products.payment_type_id')
         ->select('training_type.training_name as product_name','payment_type.payment_type_name as payment_type_name','products.total_sessions as total_sessions','products.id as product_id',(DB::raw('products.validity_value * products.validity_duration  as validity')),'products.total_price as total_price','products.price_session_or_month as price_session_or_month','products.validity_value as validity_value','products.validity_duration as validity_duration','products.contract as contract','products.notice_period_value as notice_period_value','products.notice_period_duration as notice_period_duration')
-        ->where('products.id',30)->first();
+        ->whereNull('products.deleted_at')
+        ->where('products.id',9)->first();
 
         Log::debug("package_details ".print_r($package_details,true));
+        if($package_details)
 
-
-        $payment_history_data['amount']=$package_details->total_price;
-        $payment_history_data['status']='Success';
-
-        $order_data['customer_id']=$customers_id;
-        $order_data['product_id']=$package_details->product_id;
-        $order_data['training_type']=$package_details->product_name;
-        $order_data['payment_type']=$package_details->payment_type_name;
-        $order_data['order_purchase_date']=Carbon::now()->toDateString();
-
+        {
         if($package_details->validity!='')
         {
-          $order_data['order_validity_date']=Carbon::now()->addDay($package_details->validity);
+          $product_validity=Carbon::now()->addDay($package_details->validity);
         }
         else{
-          $order_data['order_validity_date']='2099-12-30';
+          $product_validity='2099-12-30';
         }
-          
-        $order_data['payment_option']='';
-        $order_data['status']=1;
-        $order_data['no_of_sessions']=$package_details->total_sessions;
-        $order_data['remaining_sessions']=$package_details->total_sessions;
-        $order_data['price_session_or_month']=$package_details->price_session_or_month;
-        $order_data['total_price']=$package_details->total_price;
-        $order_data['validity_value']=$package_details->validity_value;
-        $order_data['validity_duration']=$package_details->validity_duration;
-        $order_data['contract']=$package_details->contract;
-        $order_data['notice_period_value']=$package_details->notice_period_value;
-        $order_data['notice_period_duration']=$package_details->notice_period_duration;
 
-        $payment_history=DB::table('payment_history')->insert($payment_history_data);
+        if($product_validity>Carbon::now()->toDateString())        {
 
-        $order_data['payment_id']=DB::getPdo()->lastInsertId();
+          $payment_history_data['amount']=$package_details->total_price;
+          $payment_history_data['status']='Success';
 
-        $order_history=DB::table('order_details')->insert($order_data);
+          $order_data['customer_id']=$customers_id;
+          $order_data['product_id']=$package_details->product_id;
+          $order_data['training_type']=$package_details->product_name;
+          $order_data['payment_type']=$package_details->payment_type_name;
+          $order_data['order_purchase_date']=Carbon::now()->toDateString();
 
-        $customer_details=Customer::find($customers_id);
+          if($package_details->validity!='')
+          {
+            $order_data['order_validity_date']=Carbon::now()->addDay($package_details->validity);
+          }
+          else{
+            $order_data['order_validity_date']='2099-12-30';
+          }
+            
+          $order_data['payment_option']='';
+          $order_data['status']=1;
+          $order_data['no_of_sessions']=$package_details->total_sessions;
+          $order_data['remaining_sessions']=$package_details->total_sessions;
+          $order_data['price_session_or_month']=$package_details->price_session_or_month;
+          $order_data['total_price']=$package_details->total_price;
+          $order_data['validity_value']=$package_details->validity_value;
+          $order_data['validity_duration']=$package_details->validity_duration;
+          $order_data['contract']=$package_details->contract;
+          $order_data['notice_period_value']=$package_details->notice_period_value;
+          $order_data['notice_period_duration']=$package_details->notice_period_duration;
 
-        $notifydata['product_name'] =$package_details->product_name;
-        $notifydata['no_of_sessions'] =$package_details->total_sessions;
-        $notifydata['product_validity'] =$order_data['order_validity_date'];
-        $notifydata['product_purchase_date'] =$order_data['order_purchase_date'];
-        $notifydata['product_amount'] =$package_details->total_price;
-        $notifydata['order_id'] ='';
-        $notifydata['payment_mode'] ='';
-        $notifydata['url'] = '/customer/mybooking';
-        $notifydata['customer_name']=$customer_details->name;
-        $notifydata['customer_email']=$customer_details->email;
-        $notifydata['customer_phone']=$customer_details->ph_no;
-        $notifydata['status']='Get free bootcamp trial';
+          $payment_history=DB::table('payment_history')->insert($payment_history_data);
 
-        $customer_details->notify(new PlanPurchasedNotification($notifydata));
+          $order_data['payment_id']=DB::getPdo()->lastInsertId();
 
-        Mail::send('emails.enquirycustomermail',['email' =>$request->email,'password' =>$request->password,'confirmation_code' => $confirmation_code],function($message) {
+          $order_history=DB::table('order_details')->insert($order_data);
+
+          $customer_details=Customer::find($customers_id);
+
+          $notifydata['product_name'] =$package_details->product_name;
+          $notifydata['no_of_sessions'] =$package_details->total_sessions;
+          $notifydata['product_validity'] =$order_data['order_validity_date'];
+          $notifydata['product_purchase_date'] =$order_data['order_purchase_date'];
+          $notifydata['product_amount'] =$package_details->total_price;
+          $notifydata['order_id'] ='';
+          $notifydata['payment_mode'] ='';
+          $notifydata['url'] = '/customer/freebootcamp';
+          $notifydata['customer_name']=$customer_details->name;
+          $notifydata['customer_email']=$customer_details->email;
+          $notifydata['customer_phone']=$customer_details->ph_no;
+          $notifydata['status']='Get free bootcamp trial';
+
+          $customer_details->notify(new PlanPurchasedNotification($notifydata));
+
+
+          Mail::send('emails.enquirycustomermail',['email' =>$request->email,'password' =>$request->password,'confirmation_code' => $confirmation_code],function($message) {
             $message->to(Input::get('email'))->subject('Successfully Register');
             }); 
 
         DB::commit();
         return redirect('customer-registration')->with('confirm_message', 'A verification code has been sent to your email. Please confirm to complete the registration process!');
+
+        }
+
+      }
+        else
+        {
+  
+          Mail::send('emails.enquirycustomermail',['email' =>$request->email,'password' =>$request->password,'confirmation_code' => $confirmation_code],function($message) {
+              $message->to(Input::get('email'))->subject('Successfully Register');
+              }); 
+
+          DB::commit();
+          return redirect('customer-registration')->with('confirm_message', 'A verification code has been sent to your email. Please confirm to complete the registration process!');
         }
       }
-       catch(\Exception $e) {
-        DB::rollback();
-       return abort(400);
-      }
+      // }
+      //  catch(\Exception $e) {
+      //   DB::rollback();
+      //  return abort(400);
+      // }
 }
 
 

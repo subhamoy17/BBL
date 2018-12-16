@@ -1,8 +1,5 @@
 @extends('frontend.dashboard_submain') 
-@section('content')
-
-
-                                      
+@section('content')                              
 
       <div class="tab_container">
           <h3 class="d_active tab_drawer_heading" rel="tab1">Tab 1</h3>

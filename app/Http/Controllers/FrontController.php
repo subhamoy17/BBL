@@ -115,6 +115,7 @@ public function bbl()
   try{
   $this->cart_delete_customer();
 
+
   $data=DB::table('slot_request')
   ->join('customers','customers.id','slot_request.customer_id')
   ->join('slot_approval','slot_approval.id','slot_request.approval_id')
@@ -147,6 +148,7 @@ public function about()
 try{   
   $this->cart_delete_customer();
 
+
   $data=DB::table('our_client')->where('deleted_at',null)->get();
   return view('customerpanel/frontabout')->with(compact('data'));
 
@@ -161,18 +163,21 @@ try{
 public function details()
 {  
   $this->cart_delete_customer();
+
   return view('customerpanel/frontdetails');
 }
 
 public function history()
 {  
   $this->cart_delete_customer();
+
   return view('customerpanel/fronthistory');
 }
 
 public function frontlogin()
 { 
   $this->cart_delete_customer();
+
   return view('customerpanel/frontlogin_registration');
 }
 
@@ -181,6 +186,7 @@ public function frontprice(Request $request)
 {
   try{
   $this->cart_delete_customer();
+
   $data=DB::table('slots')->where('deleted_at',null)->get();
 
   $personal_training_product_details=DB::table('products')
@@ -396,6 +402,8 @@ public function booking_history(Request $request)
 
     try{   
   $this->cart_delete_customer();
+  $this->free_sessions();
+
   if(isset($request->start_date) && isset($request->end_date) && !empty($request->start_date) && !empty($request->end_date))
   {
     $start_date=$request->start_date;
@@ -500,12 +508,50 @@ public function booking_history(Request $request)
     ->select('bootcamp_plan_shedules.plan_date','bootcamp_plan_shedules.plan_day','bootcamp_plan_shedules.plan_st_time','bootcamp_plan_shedules.plan_end_time','bootcamp_plan_address.address_line1','bootcamp_booking.created_at')
     ->where('bootcamp_booking.customer_id',Auth::guard('customer')->user()->id)
     ->whereNull('bootcamp_booking.deleted_at')->where('bootcamp_plan_shedules.plan_date','<',$now)->count();
+
   
-    return view('customerpanel.booking_history')->with(compact('all_booking','no_of_sessions','total_future_booking','total_declined_booking','total_cancelled_booking','total_past_booking'));
+
+  return view('customerpanel.booking_history')->with(compact('all_booking','no_of_sessions','total_future_booking','total_declined_booking','total_cancelled_booking','total_past_booking'));
 
      }
 
     catch(\Exception $e) {
+// Log::debug(" Check id ".print_r($e->getMessage(),true));  
+      return abort(400);
+  }
+}
+
+public function free_sessions()
+{  
+
+
+    try{   
+  $this->cart_delete_customer();
+
+  $now = Carbon::now()->toDateString();
+    $free_bootcamp_details=DB::table('order_details')
+    ->join('products','products.id','order_details.product_id')
+    ->join('training_type','training_type.id','products.training_type_id')
+    ->where('order_details.customer_id',Auth::guard('customer')->user()->id)
+    ->where('order_details.status',1)
+    ->where('training_type.id',2)
+    ->where('order_details.order_validity_date','>=',$now)
+    ->where('order_details.remaining_sessions','>',0)
+    ->where('order_details.total_price',0)
+    ->get()->all();
+
+    if(count($free_bootcamp_details)>0)
+    {
+      session(['free_sessions_booking' => true]);
+      return view('customerpanel.free_bootcamp_session');
+    }
+    else
+    {
+      Session::forget('free_sessions_booking');
+      return redirect('customer/mybooking');
+    }
+  }
+  catch(\Exception $e) {
 // Log::debug(" Check id ".print_r($e->getMessage(),true));  
       return abort(400);
   }
@@ -1244,7 +1290,8 @@ public function bootcamp_purchase_payment_mode(Request $request)
 
 public function bootcamp_strip_payment(Request $request)
 {
-  //Log::debug(":: bootcamp_onlinepayment :: ".print_r($request->all(),true));    
+  //Log::debug(":: bootcamp_onlinepayment :: ".print_r($request->all(),true));
+
    try{
     
     $package_details=DB::table('products')
@@ -1445,6 +1492,11 @@ public function booking_bootcamp()
   ->where('order_details.customer_id',Auth::guard('customer')->user()->id)
   ->max('order_details.order_validity_date');
 
+  if(empty($customer_product_validity))
+  {
+    $customer_product_validity='';
+  }
+
   // check already booked shedules
   $alredy_booked_shedule_id=DB::table('bootcamp_booking')
   ->where('customer_id',Auth::guard('customer')->user()->id)
@@ -1463,6 +1515,7 @@ public function booking_bootcamp()
   ->whereNull('deleted_at')
   ->whereNotIn('plan_date',$alredy_booked_date)
   ->where('plan_date','>',$current_date)
+  ->distinct('plan_date')
   ->get()->all();
 
 

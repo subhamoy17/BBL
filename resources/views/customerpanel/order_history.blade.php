@@ -71,31 +71,31 @@
             @if($myorder->total_price>0)
             {{$myorder->payment_option}}
             @else
-            --
+            Free
             @endif
           </td>
           <td>
             @if($myorder->total_price>0)
             {{$myorder->payment_type}}
             @else
-            --
+            Promotional
             @endif
           </td>
           <td>
             @if($myorder->total_price>0)
               @if($myorder->status=='1' && $myorder->payment_option == 'Stripe')
-                Payment Success
+                Success
               @elseif($myorder->status=='0' && $myorder->payment_status == 'Inprogress')
-                Payment Inprogress
+                Inprogress
               @elseif($myorder->status=='0' && $myorder->payment_status == 'Decline')
-                Payment Decline
+                Decline
               @elseif($myorder->status=='0' && $myorder->payment_status == 'Failed' && $myorder->payment_option == 'Stripe')
-                Payment Failed
+                Failed
               @elseif($myorder->status=='1' && $myorder->payment_option == 'Bank Transfer')
-                Payment Approved
+                Approved
               @endif
             @else
-              --
+              Promotion & Offers
             @endif
           </td>
           </tr>

@@ -32,7 +32,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = 'customer/mybooking';
+    protected $redirectTo = 'customer/free-sessions';
 
     /**
      * Create a new controller instance.
@@ -104,8 +104,7 @@ public function login(Request $request)
         $this->guard()->logout();
         $request->session()->invalidate();
          return redirect()->route('customerpanel.frontlogin_registration');
-         // return redirect('customer/bbl');
-        
+    
     }
 
     /**
