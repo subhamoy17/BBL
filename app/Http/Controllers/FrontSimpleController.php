@@ -137,7 +137,7 @@ public function frontprice(Request $request)
 
 
   
-  return view('customerpanel.frontpricing')->with(compact('data','personal_training_product_details','bootcamp_product_details','gym_product_details'));
+  return view('frontpricing')->with(compact('data','personal_training_product_details','bootcamp_product_details','gym_product_details'));
 
   }
 
