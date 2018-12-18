@@ -1492,8 +1492,6 @@ public function booking_bootcamp()
   ->where('order_details.customer_id',Auth::guard('customer')->user()->id)
   ->max('order_details.order_validity_date');
 
-  Log::debug(" customer_product_validity ".print_r($customer_product_validity,true));
-
   if(empty($customer_product_validity))
   {
     $customer_product_validity='';
@@ -1505,11 +1503,13 @@ public function booking_bootcamp()
   ->whereNull('deleted_at')
   ->pluck('bootcamp_plan_shedules_id');
 
+
   //check already booked date
   $alredy_booked_date=DB::table('bootcamp_plan_shedules')
   ->whereIn('id',$alredy_booked_shedule_id)
   ->orwhereColumn('max_allowed','no_of_uses')
   ->pluck('plan_date');
+
 
   // get all available date to apply
   $date_details=DB::table('bootcamp_plan_shedules')
@@ -1520,7 +1520,7 @@ public function booking_bootcamp()
   ->distinct('plan_date')
   ->get()->all();
 
-  // Log::debug(" date_details ".print_r($date_details,true));
+ // Log::debug(" date_details ".print_r($date_details,true));
 
   $no_of_session_unlimited=DB::table('order_details')
   ->join('products','products.id','order_details.product_id')
@@ -1713,7 +1713,7 @@ public function bootcamp_booking_cancele_customer($id)
 
     //no_of_uses is decrease in bootcamp_plan_shedules table
     $cancelled_booking_schedule=DB::table('bootcamp_plan_shedules')
-    ->where('id',$booking_details->bootcamp_plan_shedules_id)->decrement('no_of_uses',1);
+    ->where('id',$booking_details->bootcamp_plan_shedules_id)->where('no_of_uses','>',0)->decrement('no_of_uses',1);
 
     //fetching all booking details for sent notification mail
     $booking_details=DB::table('bootcamp_booking')

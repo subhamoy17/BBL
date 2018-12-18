@@ -3651,7 +3651,7 @@ public function update_bootcamp_plan_schedules(Request $request)
       //Log::debug(" bootcamp_schedule_cancelled_admin 2 ".print_r($return_sessions,true));
 
         $decrease_schedule_uses=DB::table('bootcamp_plan_shedules')
-        ->whereIn('id',$request->cancele_schedule)->decrement('no_of_uses',1);
+        ->whereIn('id',$request->cancele_schedule)->where('no_of_uses','>',0)->decrement('no_of_uses',1);
 
 
         $notifydata['url'] = '/customer/mybooking';
@@ -3739,7 +3739,7 @@ public function update_bootcamp_plan_schedules(Request $request)
         $cancelled_booking=DB::table('bootcamp_booking')->where('customer_id',$all_customers->customer_id)->where('bootcamp_plan_shedules_id',$all_customers->shedule_id)->update(['deleted_at'=>Carbon::now(),'cancelled_by'=>2]);
 
         $cancelled_booking_schedule=DB::table('bootcamp_plan_shedules')
-        ->where('id',$all_customers->shedule_id)->decrement('no_of_uses',1);
+        ->where('id',$all_customers->shedule_id)->where('no_of_uses','>',0)->decrement('no_of_uses',1);
 
         $increase_remaining_session=DB::table('order_details')->where('id',$all_customers->order_details_id)->where('remaining_sessions','!=','Unlimited')->increment('remaining_sessions',1);
 
