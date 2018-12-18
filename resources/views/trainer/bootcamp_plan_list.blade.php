@@ -105,7 +105,7 @@ console.log(bootcamp_id);
     <div class="col-sm-9">
         <div class="page-header float-left">
             <div class="page-title">
-                <h1>All Bootcamp Plan</h1>
+                <h1>Bootcamp Plans</h1>
             </div>
         </div>
     </div>

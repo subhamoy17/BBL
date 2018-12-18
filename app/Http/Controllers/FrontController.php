@@ -1588,46 +1588,72 @@ public function bootcamp_booking_customer(Request $request)
 {
 
   //Log::debug(" bootcamp_booking_customer ".print_r($request->all(),true));
-DB::beginTransaction();
+  DB::beginTransaction();
   try
   {
 
-  $current_date=Carbon::now()->toDateString();
-
-   $no_of_session_unlimited=DB::table('order_details')
-  ->join('products','products.id','order_details.product_id')
-  ->join('training_type','training_type.id','products.training_type_id')
-  ->select('order_details.id as order_id','order_details.remaining_sessions as remaining_sessions')
-  ->where('order_details.customer_id',Auth::guard('customer')->user()->id)
-  ->where('order_details.status',1)
-  ->where('training_type.id',2)
-  ->where('order_details.order_validity_date','>=',$current_date)
-  ->where('order_details.remaining_sessions','Unlimited')
-  ->orderBy('order_details.order_validity_date', 'ASC')->first();
-
-  $no_of_session_notunlimited=DB::table('order_details')
-  ->join('products','products.id','order_details.product_id')
-  ->join('training_type','training_type.id','products.training_type_id')
-  ->select('order_details.id as order_id','order_details.remaining_sessions as remaining_sessions')
-  ->where('order_details.customer_id',Auth::guard('customer')->user()->id)
-  ->where('order_details.status',1)
-  ->where('training_type.id',2)
-  ->where('order_details.order_validity_date','>=',$current_date)
-  ->where('order_details.remaining_sessions','>',0)
-  ->orderBy('order_details.order_validity_date', 'ASC')->first();
-
+    $current_date=Carbon::now()->toDateString();
 
     for($j=0;$j<count($request->bootcamp_date);$j++)
     {
+      $no_of_session_unlimited=DB::table('order_details')
+      ->join('products','products.id','order_details.product_id')
+      ->join('training_type','training_type.id','products.training_type_id')
+      ->select('order_details.id as order_id','order_details.remaining_sessions as remaining_sessions')
+      ->where('order_details.customer_id',Auth::guard('customer')->user()->id)
+      ->where('order_details.status',1)
+      ->where('training_type.id',2)
+      ->where('order_details.order_validity_date','>=',$current_date)
+      ->where('order_details.remaining_sessions','Unlimited')
+      ->orderBy('order_details.order_validity_date', 'ASC')->first();
+
+      $no_of_session_notunlimited=DB::table('order_details')
+      ->join('products','products.id','order_details.product_id')
+      ->join('training_type','training_type.id','products.training_type_id')
+      ->select('order_details.id as order_id','order_details.remaining_sessions as remaining_sessions')
+      ->where('order_details.customer_id',Auth::guard('customer')->user()->id)
+      ->where('order_details.status',1)
+      ->where('training_type.id',2)
+      ->where('order_details.order_validity_date','>=',$current_date)
+      ->where('order_details.remaining_sessions','>',0)
+      ->orderBy('order_details.order_validity_date', 'ASC')->first();
+
+      $no_of_session_free=DB::table('order_details')
+      ->join('products','products.id','order_details.product_id')
+      ->join('training_type','training_type.id','products.training_type_id')
+      ->select('order_details.id as order_id','order_details.remaining_sessions as remaining_sessions','order_details.free_product as free_product')
+      ->where('order_details.customer_id',Auth::guard('customer')->user()->id)
+      ->where('order_details.status',1)
+      ->where('training_type.id',2)
+      ->where('order_details.order_validity_date','>=',$current_date)
+      ->where('order_details.remaining_sessions','>',0)
+      ->where('order_details.free_product',1)
+      ->orderBy('order_details.order_validity_date', 'ASC')->first();
+
+
       $bootcamp_booking_data['bootcamp_plan_shedules_id']=$request->schedule_id[$j];
       $bootcamp_booking_data['customer_id']=Auth::guard('customer')->user()->id;
+
+      if(!empty($no_of_session_free))
+      {
+        Log::debug(" no_of_session_free ".print_r($no_of_session_free,true));
+
+        $bootcamp_booking_data['free_product']=1;
+        $bootcamp_booking_data['order_details_id']=$no_of_session_free->order_id;
+        $decrease_remaining_session=DB::table('order_details')->where('id',$no_of_session_free->order_id)->where('remaining_sessions','>',0)->decrement('remaining_sessions',1);
+      }
+      elseif(!empty($no_of_session_notunlimited))
+      { 
+        $bootcamp_booking_data['order_details_id']=$no_of_session_notunlimited->order_id;
+        $decrease_remaining_session=DB::table('order_details')->where('id',$no_of_session_notunlimited->order_id)->where('remaining_sessions','>',0)->decrement('remaining_sessions',1);
+      }
+      else
+      {
+        $bootcamp_booking_data['order_details_id']=$no_of_session_unlimited->order_id;
+      }
+
       $bootcamp_booking_insert=DB::table('bootcamp_booking')->insert($bootcamp_booking_data);
       $shedule_id[$j]=$request->schedule_id[$j];
-
-      if(empty($no_of_session_unlimited))
-      { 
-        $decrease_remaining_session=DB::table('order_details')->where('id',$no_of_session_notunlimited->order_id)->decrement('remaining_sessions',1);
-      }
     }
 
     $bootcamp_plan_shedules_update=DB::table('bootcamp_plan_shedules')
@@ -1641,103 +1667,83 @@ DB::beginTransaction();
     $a->total_sessions=$j;
     $all_data=array($a);
 
-   $bootcamp_booking_data=DB::table('bootcamp_booking') ->join('bootcamp_plan_shedules','bootcamp_plan_shedules.id','bootcamp_booking.bootcamp_plan_shedules_id')->where('bootcamp_booking.customer_id',Auth::guard('customer')->user()->id)->first();
-      $customer_details=Customer::find($bootcamp_booking_data->customer_id);
+    $bootcamp_booking_data=DB::table('bootcamp_booking') ->join('bootcamp_plan_shedules','bootcamp_plan_shedules.id','bootcamp_booking.bootcamp_plan_shedules_id')->where('bootcamp_booking.customer_id',Auth::guard('customer')->user()->id)->first();
 
-      $notifydata['url'] = '/customer/mybooking';
-      $notifydata['customer_name']=Auth::guard('customer')->user()->name;
-       $notifydata['customer_email']=$customer_details->customer_email;
-      $notifydata['customer_phone']=$customer_details->customer_ph_no;
-      $notifydata['status']='Boocked BootcampSession by Customer';
-      $notifydata['session_booked_on']=$bootcamp_booking_data->created_at;
-      
-     $notifydata['all_data']=$all_data;
-       $customer_details->notify(new BootcampSessionNotification($notifydata));
+    $customer_details=Customer::find($bootcamp_booking_data->customer_id);
 
-   DB::commit();
+    $notifydata['url'] = '/customer/mybooking';
+    $notifydata['customer_name']=Auth::guard('customer')->user()->name;
+    $notifydata['customer_email']=Auth::guard('customer')->user()->email;
+    $notifydata['customer_phone']=Auth::guard('customer')->user()->ph_no;
+    $notifydata['status']='Boocked BootcampSession by Customer';
+    $notifydata['session_booked_on']=$bootcamp_booking_data->created_at;
+    $notifydata['all_data']=$all_data;
 
-    return redirect()->back()->with(["success"=>"You have successfully sent the bellow Bootcamp session request(s)!",'all_data'=>$all_data]);
+    $customer_details->notify(new BootcampSessionNotification($notifydata));
+
+    DB::commit();
+    return redirect()->back()->with(["success"=>"You have successfully sent the below Bootcamp session request(s)!",'all_data'=>$all_data]);
   }
    catch(\Exception $e) {
-     DB::rollback();
-       return abort(400);
-   }
-
+    DB::rollback();
+    return abort(400);
+  }
 }
 
 public function bootcamp_booking_cancele_customer($id)
 {
-  //Log::debug(" bootcamp_cancele_customer ".print_r($id,true));
-DB::beginTransaction();
+  //Log::debug(" bootcamp_cancele_customer ".print_r($id,true)); die();
+  DB::beginTransaction();
   try
   {
 
-  $current_date=Carbon::now()->toDateString();
+    $current_date=Carbon::now()->toDateString();
 
-  $cancelled_booking=DB::table('bootcamp_booking')->where('id',$id)->update(['deleted_at'=>Carbon::now(),'cancelled_by'=>1]);
+    //fetching booking details
+    $booking_details=DB::table('bootcamp_booking')->where('id',$id)->first();
 
-  $bootcamp_schedule_id=DB::table('bootcamp_booking')->where('id',$id)->pluck('bootcamp_plan_shedules_id');
+    //cancelled booking
+    $cancelled_booking=DB::table('bootcamp_booking')->where('id',$id)->update(['deleted_at'=>Carbon::now(),'cancelled_by'=>1]);
 
-  $cancelled_booking_schedule=DB::table('bootcamp_plan_shedules')
-  ->where('id',$bootcamp_schedule_id)->decrement('no_of_uses',1);
+    //remaining session is increased in order_details table
+    $increase_remaining_session=DB::table('order_details')->where('id',$booking_details->order_details_id)->where('remaining_sessions','!=','Unlimited')->increment('remaining_sessions',1);
 
-  $no_of_session_unlimited=DB::table('order_details')
-  ->join('products','products.id','order_details.product_id')
-  ->join('training_type','training_type.id','products.training_type_id')
-  ->select('order_details.id as order_id','order_details.remaining_sessions as remaining_sessions')
-  ->where('order_details.customer_id',Auth::guard('customer')->user()->id)
-  ->where('order_details.status',1)
-  ->where('training_type.id',2)
-  ->where('order_details.order_validity_date','>=',$current_date)
-  ->where('order_details.remaining_sessions','Unlimited')
-  ->orderBy('order_details.order_validity_date', 'ASC')->first();
+    //no_of_uses is decrease in bootcamp_plan_shedules table
+    $cancelled_booking_schedule=DB::table('bootcamp_plan_shedules')
+    ->where('id',$booking_details->bootcamp_plan_shedules_id)->decrement('no_of_uses',1);
 
-  $no_of_session_notunlimited=DB::table('order_details')
-  ->join('products','products.id','order_details.product_id')
-  ->join('training_type','training_type.id','products.training_type_id')
-  ->select('order_details.id as order_id','order_details.remaining_sessions as remaining_sessions')
-  ->where('order_details.customer_id',Auth::guard('customer')->user()->id)
-  ->where('order_details.status',1)
-  ->where('training_type.id',2)
-  ->where('order_details.order_validity_date','>=',$current_date)
-  ->orderBy('order_details.order_validity_date', 'ASC')->first();
-
-
-  if(empty($no_of_session_unlimited))
-  { 
-    $increase_remaining_session=DB::table('order_details')->where('id',$no_of_session_notunlimited->order_id)->increment('remaining_sessions',1);
-  }
-
-
-  $booking_details=DB::table('bootcamp_booking')
+    //fetching all booking details for sent notification mail
+    $booking_details=DB::table('bootcamp_booking')
     ->join('bootcamp_plan_shedules','bootcamp_plan_shedules.id','bootcamp_booking.bootcamp_plan_shedules_id')
     ->join('bootcamp_plan_address','bootcamp_plan_address.id','bootcamp_plan_shedules.address_id')
     ->select('bootcamp_booking.created_at as booked_on','bootcamp_plan_shedules.plan_date as shedule_date','bootcamp_plan_shedules.plan_st_time as plan_st_time','bootcamp_plan_shedules.plan_end_time as plan_end_time','bootcamp_plan_shedules.plan_day as plan_day','bootcamp_plan_address.address_line1')
     ->where('bootcamp_booking.id',$id)->first();
 
-  $client_details=Customer::find(Auth::guard('customer')->user()->id);
+    //fetching customer details for sent notification mail
+    $client_details=Customer::find(Auth::guard('customer')->user()->id);
 
-  $notifydata['url'] = '/customer/mybooking';
-  $notifydata['customer_name']=Auth::guard('customer')->user()->name;
-  $notifydata['customer_email']=Auth::guard('customer')->user()->email;
-  $notifydata['customer_phone']=Auth::guard('customer')->user()->ph_no;
-  $notifydata['status']='Cancelled Bootcamp Session By Customer';
-  $notifydata['session_booked_on']=$booking_details->booked_on;
-  $notifydata['session_booking_date']=$booking_details->shedule_date;
-  $notifydata['session_booking_day']=$booking_details->plan_day;
-  $notifydata['session_booking_time']=date('h:i A', strtotime($booking_details->plan_st_time)).' to '.date('h:i A', strtotime($booking_details->plan_end_time));
-  $notifydata['cancelled_reason']='';
-  $notifydata['schedule_address']=$booking_details->address_line1;
+    $notifydata['url'] = '/customer/mybooking';
+    $notifydata['customer_name']=Auth::guard('customer')->user()->name;
+    $notifydata['customer_email']=Auth::guard('customer')->user()->email;
+    $notifydata['customer_phone']=Auth::guard('customer')->user()->ph_no;
+    $notifydata['status']='Cancelled Bootcamp Session By Customer';
+    $notifydata['session_booked_on']=$booking_details->booked_on;
+    $notifydata['session_booking_date']=$booking_details->shedule_date;
+    $notifydata['session_booking_day']=$booking_details->plan_day;
+    $notifydata['session_booking_time']=date('h:i A', strtotime($booking_details->plan_st_time)).' to '.date('h:i A', strtotime($booking_details->plan_end_time));
+    $notifydata['cancelled_reason']='';
+    $notifydata['schedule_address']=$booking_details->address_line1;
 
-  $client_details->notify(new BootcampSessionNotification($notifydata));
+    //sent notification mail
+    $client_details->notify(new BootcampSessionNotification($notifydata));
    
     DB::commit();
     return redirect()->back()->with("bootcamp_session_cancelled","You have successfully cancelled one session!");
   }
-   catch(\Exception $e) {
-     DB::rollback();
-       return abort(400);
-   }
+  catch(\Exception $e) {
+    DB::rollback();
+    return abort(400);
+  }
 
 
 }

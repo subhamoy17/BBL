@@ -24,7 +24,7 @@ class SocialLoginController extends Controller
      */
     public function redirectToProvider($provider)
     {
-        Log::debug("socialite calling" . print_r($provider,true));
+        //Log::debug("socialite calling" . print_r($provider,true));
         return Socialite::driver($provider)->redirect();
     }
 
@@ -37,7 +37,7 @@ class SocialLoginController extends Controller
         {
         $user_social_signin = Socialite::driver($provider)->user();
 
-        Log::debug("socialite sign in" . print_r($user_social_signin,true));
+        //Log::debug("socialite sign in" . print_r($user_social_signin,true));
 
         
         $user_social_account=DB::table('social_accounts')
@@ -52,7 +52,7 @@ class SocialLoginController extends Controller
 
         Auth::guard('customer')->login($old_customer_data,true);
             
-        Log::debug("old_customer_data" . print_r($old_customer_data,true));
+        //Log::debug("old_customer_data" . print_r($old_customer_data,true));
         DB::commit();
         return redirect('customer/free-sessions');    
         }
@@ -100,7 +100,7 @@ class SocialLoginController extends Controller
             $customer_social_data['provider_id']=$user_social_signin->id;
             $customer_social_data['provider_name']=$provider;
 
-            Log::debug("new_customer_data" . print_r($customer_social_data,true));
+            //Log::debug("new_customer_data" . print_r($customer_social_data,true));
 
             return redirect()->route('customer-register')
             ->with('email',$customer_social_data['email'])
@@ -114,7 +114,7 @@ class SocialLoginController extends Controller
         }
          catch(\Exception $e) {
 
-        Log::debug("anything wrong");
+        //Log::debug("anything wrong");
 
          DB::rollback();
          return redirect()->route('bbldb');

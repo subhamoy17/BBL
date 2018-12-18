@@ -35,27 +35,16 @@
                   @endif        
 
                 @if(Request::segment(2) == "all-products" || Request::segment(2) == "add-product" || Request::segment(2) == "insert-product" || Request::segment(2) == "edit-product")
-
-<li class="menu-item-has-children dropdown show" >
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: #fff !important;"> <i class="menu-icon fa fa-dashboard"></i> Products</a>
-            <ul class="sub-menu children dropdown-menu show"> 
-              @else
-              <li class="menu-item-has-children dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"> <i class="menu-icon fa fa-dashboard"></i> Products</a>
-                <ul class="sub-menu children dropdown-menu">
-                  @endif 
-                  @if(Request::segment(2) == "add-product" || Request::segment(2) == "insert-product" || Request::segment(2) == "edit-product")
-                  <li><i class="fa fa-id-card-o"></i><a href="{{route('add_product')}}" style="color: #fff !important;">Add Products</a></li>
+                <ul class="nav navbar-nav">
+                 <li class="active">
+                  <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('view_product')}}" style="color: #fff !important;">Products</a></li>
                   @else
-                  <li><i class="fa fa-id-card-o"></i><a href="{{route('add_product')}}">Add Products </a></li>
+                  <ul class="nav navbar-nav">
+                  <li class="active">
+                  <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('view_product')}}">Products</a></li>
                   @endif
 
-                  @if(Request::segment(2) == "all-products")
-                  <li><i class="fa fa-id-card-o"></i><a href="{{route('view_product')}}" style="color: #fff !important;">All Products</a></li>
-                  @else 
-                  <li><i class="fa fa-id-card-o"></i><a href="{{route('view_product')}}">All Products</a></li>
-                  @endif
-                </ul></li>
+
 
                 @if(Request::segment(2) == "add-bootcamp-plan" || Request::segment(2) == "bootcamp-plan" || Request::segment(2) =='edit-bootcamp-plan' || Request::segment(2) =='bootcamp-plan-schedule'  || Request::segment(2) =='show-customer-session-schedule'  || Request::segment(2) =='bootcamp-schedule-booking-cancelled')
           <li class="menu-item-has-children dropdown show">
@@ -66,16 +55,16 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i>Bootcamp Plan</a>
                 <ul class="sub-menu children dropdown-menu">
                   @endif 
-                  @if(Request::segment(2) == "add-bootcamp-plan")
+                 <!--  @if(Request::segment(2) == "add-bootcamp-plan")
                   <li><i class="fa fa-id-card-o"></i><a href="{{route('bootcamp_plan')}}" style="color: #fff !important;">Add Bootcamp Plan</a></li>
                   @else
                   <li><i class="fa fa-id-card-o"></i><a href="{{route('bootcamp_plan')}}">Add Bootcamp Plan</a></li>
                   @endif
-
-                  @if(Request::segment(2) == "bootcamp-plan" || Request::segment(2) =='edit-bootcamp-plan')
-                  <li><i class="fa fa-id-card-o"></i><a href="{{route('bootcamp_plan_list')}}" style="color: #fff !important;">All Bootcamp Plan</a></li>
+ -->
+                  @if(Request::segment(2) == "bootcamp-plan" || Request::segment(2) =='edit-bootcamp-plan' || Request::segment(2) =='add-bootcamp-plan')
+                  <li><i class="fa fa-id-card-o"></i><a href="{{route('bootcamp_plan_list')}}" style="color: #fff !important;">Bootcamp Plans</a></li>
                   @else
-                  <li><i class="fa fa-id-card-o"></i><a href="{{route('bootcamp_plan_list')}}">All Bootcamp Plan</a></li>
+                  <li><i class="fa fa-id-card-o"></i><a href="{{route('bootcamp_plan_list')}}">Bootcamp Plans</a></li>
                   @endif
 
                   @if(Request::segment(2) =='bootcamp-plan-schedule'  || Request::segment(2) =='show-customer-session-schedule'  || Request::segment(2) =='bootcamp-schedule-booking-cancelled')
@@ -95,7 +84,7 @@
                   <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('gymType')}}">Exercise List</a></li>
                   @endif
 
-                  @if(Request::segment(2) == "purchased-history")
+                  @if(Request::segment(2) == "purchased-history" || Request::segment(2) == "deactive-order" || Request::segment(2) == "active-order")
                        <ul class="nav navbar-nav">
                  <li class="active">
                   <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('order_history')}}" style="color: #fff !important;">Coustomer Purchased History </a></li>

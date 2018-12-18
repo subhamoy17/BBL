@@ -75,8 +75,8 @@ class RegisterController extends Controller
 
     {
 
-      // DB::beginTransaction();
-      // try{
+      DB::beginTransaction();
+      try{
       
       $validator=Validator::make($request->all(), [
               
@@ -119,7 +119,7 @@ class RegisterController extends Controller
                   //Log::debug("Request_allllllll ".print_r($request->all(),true));
 
         Auth::guard('customer')->login($customers,true);
-
+        
         $package_details=DB::table('products')
         ->join('training_type','training_type.id','products.training_type_id')
         ->join('payment_type','payment_type.id','products.payment_type_id')
@@ -170,6 +170,7 @@ class RegisterController extends Controller
           $order_data['contract']=$package_details->contract;
           $order_data['notice_period_value']=$package_details->notice_period_value;
           $order_data['notice_period_duration']=$package_details->notice_period_duration;
+          $order_data['free_product']=1;
 
           $payment_history=DB::table('payment_history')->insert($payment_history_data);
 
@@ -269,6 +270,7 @@ class RegisterController extends Controller
           $order_data['contract']=$package_details->contract;
           $order_data['notice_period_value']=$package_details->notice_period_value;
           $order_data['notice_period_duration']=$package_details->notice_period_duration;
+          $order_data['free_product']=1;
 
           $payment_history=DB::table('payment_history')->insert($payment_history_data);
 
@@ -315,11 +317,11 @@ class RegisterController extends Controller
           return redirect('customer-registration')->with('confirm_message', 'A verification code has been sent to your email. Please confirm to complete the registration process!');
         }
       }
-      // }
-      //  catch(\Exception $e) {
-      //   DB::rollback();
-      //  return abort(400);
-      // }
+      }
+       catch(\Exception $e) {
+        DB::rollback();
+       return abort(400);
+      }
 }
 
 

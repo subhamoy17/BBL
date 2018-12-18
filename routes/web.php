@@ -260,7 +260,15 @@ Route::get('all-products', 'TrainerController@view_product')->name('view_product
 Route::get('product-delete/{id}', 'TrainerController@product_delete');
 Route::get('purchased-history', 'TrainerController@order_history')->name('order_history');
 
+Route::get('purchased-history', 'TrainerController@order_history')->name('order_history');
 
+Route::get('active-order/{slug}', 'TrainerController@active_order_by_admin')->name('active_order_by_admin');
+
+Route::post('active-order-success', 'TrainerController@active_order_success')->name('active_order_success');
+
+Route::get('deactive-order/{slug}', 'TrainerController@deactive_order_by_admin')->name('deactive_order_by_admin');
+
+Route::post('deactive-order-success', 'TrainerController@deactive_order_success')->name('deactive_order_success');
 
 });
 
