@@ -111,12 +111,12 @@
                   $bootcamp_cancel_time=$eachbooking->plan_date.' '.$eachbooking->plan_st_time;
                   $bootcamp_cancel_time = date("Y-m-d H:i:s", strtotime('-24 hours', strtotime($bootcamp_cancel_time)));
                   ?>
-                    <td style="margin-right: 15px !important;"> @if($current_time<$bootcamp_cancel_time)
-                      <a href="{{route('bootcamp_booking_cancele_customer',['id'=>$eachbooking->booking_id])}}"  
+                    <td > @if($current_time<$bootcamp_cancel_time)
+                      <a style="margin-left: 9px;" href="{{route('bootcamp_booking_cancele_customer',['id'=>$eachbooking->booking_id])}}"  
                  class="btn btn-danger asd"  onclick="return confirm('Are you sure you want to cancel this bootcamp session?');">
                     <i class="fa fa-trash-o" ></i></a>
                     @else
-                    <a href="#"  
+                    <a style="margin-left: 9px;" href="#"  
                  class="btn btn-danger asd"  onclick="return confirm('Automatic cancelation is not allowed any more, please contact admin');">
                     <i class="fa fa-trash-o" ></i></a>
 
