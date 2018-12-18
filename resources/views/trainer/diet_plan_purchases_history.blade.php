@@ -67,7 +67,7 @@ $('#bootstrap-slot-data-table').DataTable({
                                     <th id="slno">Sl. No.</th>
                                     <th>Customer Name</th>
                                     <th>Diet Plan Name</th>
-                                    <th>Diet Plan Price</th>
+                                    <th>Diet Plan Price (<i class="fa fa-gbp"></i>)</th>
                                     <th>Payment Reference Id</th>
                                     <th>Purchases Date</th>
                                     <th>Status</th>
@@ -79,10 +79,10 @@ $('#bootstrap-slot-data-table').DataTable({
                                 
                             @foreach($diet_plan_purchases as $key=>$mydiet_plan_purchases)
                                 <tr>
-                                    <td>{{++$key}}</td>
+                                    <td align="center">{{++$key}}</td>
                                    <td>{{$mydiet_plan_purchases->customers_name}}</td>
                                    <td>{{$mydiet_plan_purchases->plan_name}}</td>
-                                   <td>{{$mydiet_plan_purchases->plan_price}}</td>
+                                   <td align="center">{{$mydiet_plan_purchases->plan_price}}</td>
                                    <td>{{$mydiet_plan_purchases->payment_reference_id}}</td>
                                    <td>{{date('d F Y', strtotime($mydiet_plan_purchases->purchase_date))}}</td>
                                    <td>{{$mydiet_plan_purchases->status}}</td>

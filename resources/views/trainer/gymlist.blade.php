@@ -56,7 +56,7 @@ table.dataTable thead>tr>th[id='action'].sorting_asc::after{display: none}
     <div class="col-sm-3">
         <div class="page-header float-left ex3" style="padding-top: 2%;">
             <a href="{{route('add_exercise_trainer')}}">
-                <button type="button" class="btn btn-success"><i class="fa fa-plus"></i>&nbsp;Add New Exercise</button>
+                <button type="button" class="btn btn-success"><i class="fa fa-plus-circle"></i>&nbsp;Add Exercise</button>
             </a>
         </div>
     </div>
@@ -105,7 +105,7 @@ table.dataTable thead>tr>th[id='action'].sorting_asc::after{display: none}
                              @if(count($data)>0)
                                 @foreach($data as $key=>$mydata)
                                 <tr>
-                                    <td>{{++$key}}</td>
+                                    <td align="center">{{++$key}}</td>
                                     <td>{{$mydata->title}}</td>
                                     <td>{{$mydata->description}}</td>
                                     <td>

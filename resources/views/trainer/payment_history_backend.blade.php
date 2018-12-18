@@ -84,7 +84,7 @@ $(document).ready(function() {
       </div>
   </div>
 </div>
-
+<button type="button" class="btn btn-default success-close" data-dismiss="modal" >Close</button>
 </div>
 </div>
 </div>

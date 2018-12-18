@@ -47,7 +47,7 @@ $('#bootstrap-slot-data-table').DataTable({
        
          <strong class="card-title add-n-cl cl-list">
                               <a href="{{route('add_product')}}">
-                                    <button class="btn btn-success"><i class="fa fa-plus"></i> Add Product</button>
+                                    <button class="btn btn-success"><i class="fa fa-plus-circle"></i> Add Product</button>
                                 </a>
                                 <br>
 
@@ -110,15 +110,15 @@ $('#bootstrap-slot-data-table').DataTable({
                                     <td>{{++$key}}</td>
                                     <td>{{$my_productdata->training_name}}</td>
                                      <td>{{$my_productdata->payment_type_name}}</td>
-                                     <td>{{$my_productdata->total_sessions}}</td>
+                                     <td align="center">{{$my_productdata->total_sessions}}</td>
                                    
                                      @if($my_productdata->payment_type_id=='2')
-                                    <td><i class="fa fa-gbp">{{$my_productdata->price_session_or_month}}/Month</td>
+                                    <td align="center"><i class="fa fa-gbp">{{$my_productdata->price_session_or_month}}/Month</td>
                                     @else
-                                     <td><i class="fa fa-gbp">{{$my_productdata->price_session_or_month}}/Session</td>
+                                     <td align="center"><i class="fa fa-gbp">{{$my_productdata->price_session_or_month}}/Session</td>
                                      @endif
-                                    <td><i class="fa fa-gbp">{{$my_productdata->total_price}}</td>
-                                     <td>{{$my_productdata->validity? $my_productdata->validity.' Days' :'N/A'}} </td>
+                                    <td align="center"><i class="fa fa-gbp">{{$my_productdata->total_price}}</td>
+                                     <td align="center">{{$my_productdata->validity? $my_productdata->validity.' Days' :'N/A'}} </td>
                                      @if($my_productdata->deleted_at != '')
                                      <td align="center"><i class="fa fa-ban btn-del" title="Deleted"></i></td>
                                      @elseif($my_productdata->status =='0')

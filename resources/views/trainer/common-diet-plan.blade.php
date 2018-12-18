@@ -65,7 +65,7 @@ th
     <div class="col-sm-3">
         <div class="page-header float-left ex3" style="padding-top: 2%;">
             <a href="{{route('add_common_diet_plan')}}">
-                <button type="button" class="btn btn-success"><i class="fa fa-plus"></i>&nbsp;Add New Diet Plan</button>
+                <button type="button" class="btn btn-success"><i class="fa fa-plus-circle"></i>&nbsp;Add Diet Plan</button>
             </a>
         </div>
     </div>
@@ -124,7 +124,7 @@ th
              @if(count($diet)>0)
                 @foreach($diet as $key=>$mydiet)
                 <tr>
-                    <td>{{++$key}}</td>
+                    <td align="center">{{++$key}}</td>
                     <td>{{$mydiet->diet_plan_name}}</td>
                     <td style="width: 30px;">
                         @if(isset($mydiet->video) && !empty($mydiet->video))
@@ -137,7 +137,7 @@ th
                     </td>
 
                     <td><button style="background: #F9E79F; font-size: 12px;"><a href="{{url('backend/common_diet_plan_images')}}/{{$mydiet->diet_plan_pdf}}" target="_blank"><b>View PDF</b></a></button></td>
-                    <td>{{$mydiet->price}}</td>
+                    <td align="center">{{$mydiet->price}}</td>
                     <td>{{$mydiet->author_name}}</td>
                    
                     <td>

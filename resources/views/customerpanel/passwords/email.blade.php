@@ -11,6 +11,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <!-- //custom-theme -->
             
+            
             <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link href="{{url('frontend/css/bootstrap.css')}}" rel="stylesheet" type="text/css" media="all" />

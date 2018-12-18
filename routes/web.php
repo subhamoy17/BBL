@@ -220,7 +220,7 @@ Route::post('insert-bootcamp-plan', 'TrainerController@insert_bootcamp_plan')->n
 Route::get('bootcamp-plan', 'TrainerController@bootcamp_plan_list')->name('bootcamp_plan_list');
 Route::get('edit-bootcamp-plan/{id}', 'TrainerController@bootcamp_plan_edit_view')->name('bootcamp_plan_edit');
 Route::post('bootcamp_plan_edit_insert', 'TrainerController@bootcamp_plan_edit_insert')->name('bootcamp_plan_edit_insert');
-Route::get('bootcamp_plan_delete/{id}', 'TrainerController@bootcamp_plan_delete');
+Route::get('bootcamp_plan_delete/{id}', 'TrainerController@bootcamp_plan_delete')->name('bootcamp_plan_delete');
 
 Route::get('bootcamp-plan-schedule', 'TrainerController@bootcamp_plan_schedule')->name('bootcamp_plan_schedule');
 Route::get('bootcamp-schedule-cancelled', 'TrainerController@bootcamp_schedule_cancelled_admin');
@@ -228,8 +228,10 @@ Route::post('checked_bootcampdate','TrainerController@checked_bootcampdate')->na
 Route::get('bootcamp-schedule-booking-cancelled/{slug}', 'TrainerController@bootcamp_booking_individual_cancelled')->name('bootcamp_booking_individual_cancelled');
 Route::get('individual_bootcamp_cancele/{slug}', 'TrainerController@individual_bootcamp_cancele');
 
+Route::get('edit-bootcamp-plan-schedule/{id}', 'TrainerController@bootcamp_schedule_edit_view')->name('bootcamp_schedule_edit_view');
 
-
+Route::post('update-bootcamp-plan-schedules','TrainerController@update_bootcamp_plan_schedules')->name('update_bootcamp_plan_schedules');
+Route::get('checked_bootcamp_plan_date','TrainerController@checked_bootcamp_plan_date')->name('checked_bootcamp_plan_date');
 ////// For common diet plan list//////
 
 Route::get('common-diet-plan', 'TrainerController@common_diet_plan')->name('common_diet_plan');

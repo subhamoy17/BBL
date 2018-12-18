@@ -102,7 +102,7 @@ $('#bootstrap-slot-data-table').DataTable({
     <div class="col-sm-3">
         <div class="page-header float-left trn-list" style="padding-top: 2%;">
             <a href="{{route('addtrainer')}}">
-                <button type="button" class="btn btn-success"><i class="fa fa-plus"></i>&nbsp;Add New Trainer</button>
+                <button type="button" class="btn btn-success"><i class="fa fa-plus-circle"></i>Add New Trainer</button>
             </a>
         </div>
     </div>

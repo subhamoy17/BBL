@@ -118,9 +118,9 @@ table.dataTable thead>tr>th[id='image'].sorting_asc::after{display: none}
                  @if(count($data)>0)
                 @foreach($data as $key=>$mydata)
                 <tr>
-                  <td>{{++$key}}</td>
+                  <td align="center">{{++$key}}</td>
                   <td>{{$mydata->name}}</td>
-                  <td>{{$mydata->ph_no}}</td>               
+                  <td align="center">{{$mydata->ph_no}}</td>               
                     @if(Auth::user()->master_trainer==1)
                    <td>{{$mydata->trainer_name}}</td>
                    @endif           

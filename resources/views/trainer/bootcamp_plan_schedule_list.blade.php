@@ -95,23 +95,25 @@ $(document).ready(function() {
                   <th>Maximum Allowed</th>
                   <th>Booking Seats</th>
                   <th>Status</th>
+                  
                   <th style="width: 181px;">Select to Declined 
                     <input type="checkbox" id="all_schedule_cancel" class="selectall">
-                    <button class="btn btn-danger" id="cancelled_button">Decline</button>
+                    <button class="btn btn-danger" id="cancelled_button"><i class="fa fa-trash-o"></i></button>
                   </th>
+                  <!-- <th>Action</th> -->
                 </tr>
               </thead>
               <tbody class="tbdy1"> 
                @if(count($all_schedules)>0)
                   @foreach($all_schedules as $key=>$each_schedule)
                     <tr>
-                      <td>{{++$key}}</td>
+                      <td align="center">{{++$key}}</td>
                       <td>{{$each_schedule->plan_date}}</td>
                       <td>{{$each_schedule->plan_day}}</td>
                       <td>{{date("h:i A", strtotime($each_schedule->plan_st_time))}} to {{date("h:i A", strtotime($each_schedule->plan_end_time))}}</td>
                       <td>{{$each_schedule->address_line1}}</td>
-                      <td>{{$each_schedule->max_allowed}}</td>
-                      <td>
+                      <td align="center">{{$each_schedule->max_allowed}}</td>
+                      <td align="center">
                         @if($each_schedule->deleted_at=='' && $each_schedule->no_of_uses>0)
                         {{$each_schedule->no_of_uses}}
                           <a href="{{route('bootcamp_booking_individual_cancelled',['plan_id' => Crypt::encrypt($each_schedule->schedule_id) ])}}" title="Veiw all booking" class="btn" style="color: #fff; background-color: #FF6347;   border-color: #FF6347;">View</a>
@@ -129,11 +131,15 @@ $(document).ready(function() {
                       
                       <td align="center">
                         @if($each_schedule->deleted_at=='')
-                        <input type="checkbox" name="cancele_schedule[]" id="cancele_schedule" value="{{$each_schedule->schedule_id}}" class="cancele_check">
+                        <input type="checkbox" name="cancele_schedule[]" id="cancele_schedule" value="{{$each_schedule->schedule_id}}" class="cancele_check">&nbsp;
+                         @if($now < $each_schedule->plan_date && $each_schedule->deleted_at=='')
+                        <a href="{{route('bootcamp_schedule_edit_view',['id' => Crypt::encrypt($each_schedule->schedule_id) ])}}"><i class="fa fa-edit" title="Edit Schedule Time"></i></a>
+                        @endif
                          @else
                           ---
                         @endif
                       </td> 
+                     <!--  <td><a href="{{route('bootcamp_schedule_edit_view',['id' => Crypt::encrypt($each_schedule->schedule_id) ])}}"><i class="fa fa-edit" title="Edit product"></i></a></td> -->
                     </tr>
                   @endforeach
                 @endif

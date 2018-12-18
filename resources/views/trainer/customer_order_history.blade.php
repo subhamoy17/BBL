@@ -64,6 +64,36 @@ $('#bootstrap-slot-data-table').DataTable({
 
 </style>
 
+<div id="date_change" class="modal fade" role="dialog" >
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-body" id="hall_details_edit">
+        <div class="row clearfix">
+          <div class="col-sm-12 col-xs-12">
+            <p class="pull-left">Decline Request</p>
+            <br class="clear" />
+          </div>
+          <div class="col-xs-12 divi-line">
+          </div><br/>
+          <div class="col-sm-9 col-xs-12">
+            <input type="hidden" id="reason_id"></input>
+            <input type="hidden" id="reason_action"></input>
+            <div class="form-group">
+              <label>Comment your reason:</label>
+              <textarea class="form-control" rows="3" id="comment"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-success" data-dismiss="modal" id="reason">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 @if(Auth::user()->master_trainer==1)
 
 <div class="breadcrumbs">
@@ -95,7 +125,7 @@ $('#bootstrap-slot-data-table').DataTable({
               <table id="bootstrap-slot-data-table" class="display responsive table-striped table-bordered">
                 <thead>
                   <tr>
-                      <th id="slno">Sl. No.</th>
+                      <th id="slno" style="font-size: 12px;">Sl.No.</th>
                       <th>Customer Name</th>
                        <th>Plan Type</th>
                         <th>Plan Price</th>
@@ -112,12 +142,12 @@ $('#bootstrap-slot-data-table').DataTable({
                                 
                   @foreach($all_order_history as $key=>$order_history)
                     <tr>
-                      <td>{{++$key}}</td>
+                      <td style="font-size: 12px;" align="center">{{++$key}}</td>
                       <td>{{$order_history->customer_name}}</td>
                       <td>{{$order_history->training_type}}</td>
-                      <td> <i class="fa fa-gbp"></i> {{$order_history->total_price}}</td>
-                      <td>{{$order_history->total_sessions}}</td>
-                      <td>
+                      <td align="center"> <i class="fa fa-gbp"></i> {{$order_history->total_price}}</td>
+                      <td align="center">{{$order_history->total_sessions}}</td>
+                      <td align="center">
                          @if($order_history->total_sessions=="Unlimited")
                           --
                           @else
@@ -143,9 +173,9 @@ $('#bootstrap-slot-data-table').DataTable({
 
         @if($order_history->payment_option == 'Bank Transfer' && $order_history->status =='0' && $order_history->payment_status != 'Decline')
 
-        <button type="button" class="btn btn-success status-all" title="Approve" data-msg="Approve" id="{{$order_history->order_details_id}}"><i class="fa fa-thumbs-up"></i></button>
+        <button type="button" class="btn btn-success status-all" title="Approve" data-msg="Approve" id="{{$order_history->order_details_id}}"><i class="fa fa-thumbs-up" title="Approve"></i></button>
 
-         <button type="button"  title="Decline" class="btn btn-danger status-all" data-msg="Decline" id="{{$order_history->order_details_id}}"><i class="fa fa-thumbs-down"></i></button>
+         <button type="button"  title="Decline" class="btn btn-danger status-all" data-msg="Decline" id="{{$order_history->order_details_id}}"><i class="fa fa-thumbs-down" title="Decline"></i></button>
 
          <a class="detail-orders-modal-btn1 btn btn-info btn-sm order-show-icon" id="{{$order_history->order_details_id}}" href="#"   data-payment-option="{{$order_history->payment_option}}"  data-plan-price="{{$order_history->total_price}}" data-payment-type-name="{{$order_history->payment_type}}" data-purchased-on="{{date('d F Y', strtotime($order_history->order_purchase_date))}}" data-validity-date="{{$order_history->order_validity_date? date('d F Y', strtotime($order_history->order_validity_date)) : 'N/A'}}" data-payment-id="{{$order_history->payment_id}}" data-payment-description="{{$order_history->description? $order_history->description : 'N/A'}}" data-payment-image="{{asset('backend/bankpay_images')}}/{{$order_history->image}}" data-noimage="{{$order_history->image}}">
                               <i class="fa fa-eye" title="view details" aria-hidden="true" style="width: 13px; height: 18px;"></i></a>
@@ -155,7 +185,7 @@ $('#bootstrap-slot-data-table').DataTable({
                               <i class="fa fa-eye" title="view details" aria-hidden="true" style="width: 13px; height: 18px;"></i></a>
 
         @endif
-                            
+                         
                   </td>
                          
 
@@ -371,142 +401,159 @@ $('#bootstrap-slot-data-table').DataTable({
 <script type="text/javascript">
       $(document).ready(function(){
         
-       $("#bootstrap-slot-data-table").on("click", ".status-all", function(e) {
+       $("#bootstrap-slot-data-table").on("click", ".edit", function(e) {
+        alert('sdf');
           var action = $(this).data("msg");
           console.log(action);
           var row = this.closest('tr');
           console.log(row);
       console.log(action);
-if (action == "Decline"){
-  var Data =
-  {
-    'id': this.id,
-   
-    'action': action
-  }
 
-  alertify.confirm("Are you sure you want to decline this payment?", function (e) {
-     if (e) { 
- $(".card-body").css("opacity", .2);
-  $("#loading-img").css({"display": "block"});
-
-  $.ajax({
-    url: "{{route('order_history_backend_request')}}",
-
-    json_enc: Data,
-    type: "GET",
-    dataType: "json",
-    data:
-    {
-      'data': Data,
-    },
-    success: function (data)
-    {
-      if(data==1){
-        //console.log("Approve response");
-      //console.log(data);
-      $(".card-body").css("opacity", .2);
-         $("#loading-img").css({"display": "block"});
-
-      $('#success-msg').show();
-      setTimeout(function(){
-        $('#success-msg').hide();
- window.location.reload();
-      }, 5000);
-      }
-      else
-      {
-        //console.log("Decline decline");
-      //console.log(data);
-   $(".card-body").css("opacity", .2);
-   $("#loading-img").css({"display": "block"});
-      $('#decline-msg').show();
-      setTimeout(function(){
-        $('#decline-msg').hide();
-         window.location.reload();
-      }, 5000);
-
-
-      }
-      
-    }
-  });
-       }
-        else
-        {
-
-        }
-
+       if (action == "Edit"){
+       
+        $('#reason_id').val('');
+        $('#reason_id').val(this.id);
+        $('#reason_action').val(action);
+        $('#comment').val('');
+        alertify.confirm("Are you sure you want to edit this request?", function (e) {
+          if (e) {
+            alert('sdfff');
+            $('#date_change').modal('show');
+          }
+          else
+          {
+          }
         });
-}
-else if (action == "Approve"){
-  var Data =
-  {
-    'id': this.id,
-   
-    'action': action
-  }
-
-
-alertify.confirm("Are you sure you will be approve this payment?", function (e) {
- if (e) {
-  $(".card-body").css("opacity", .2);
-  $("#loading-img").css({"display": "block"});
-   
-  $.ajax({
-    url: "{{route('order_history_backend_request')}}",
-
-    json_enc: Data,
-    type: "GET",
-    dataType: "json",
-    data:
-    {
-      'data': Data,
-    },
-    success: function (data)
-    {
-      if(data==1){
-        console.log("Approve response");
-      console.log(data);
-      $(".card-body").css("opacity", .2);
-         $("#loading-img").css({"display": "block"});
-
-      $('#success-msg').show();
-      setTimeout(function(){
-        $('#success-msg').hide();
- window.location.reload();
-      }, 5000);
       }
-      else{
-        console.log("Decline decline");
-      console.log(data);
-   $(".card-body").css("opacity", .2);
-      $("#loading-img").css({"display": "block"});
-      $('#decline-msg').show();
-      setTimeout(function(){
-        $('#decline-msg').hide();
-         window.location.reload();
-      }, 5000);
 
-
-      }
-      
-    }
-  });
-}
-  else 
- 
-  {           
-
-
-   }   
- });
-}
 });
 
 
       });
     </script>
+
+    <script type="text/javascript">
+  $(document).ready(function(){
+    $("#bootstrap-slot-data-table").on("click", ".status-all", function(e) {
+
+      var action =$(this).data("msg");
+      console.log(action);
+      var row = this.closest('tr');
+      if (action == "Decline"){
+       
+        $('#reason_id').val('');
+        $('#reason_id').val(this.id);
+        $('#reason_action').val(action);
+        $('#comment').val('');
+        alertify.confirm("Are you sure you want to decline this request?", function (e) {
+          if (e) {
+            $('#reason_modal').modal('show');
+          }
+          else
+          {
+          }
+        });
+      }
+      else if (action == "Approve"){
+        
+        var Data =
+        {
+          'id': this.id,
+          'action': action
+        }
+        alertify.confirm("Are you sure you will be avaliable on this slot?", function (e) {
+          if (e) {
+            $(".card-body").css("opacity", .2);
+                  $("#loading-img").css({"display": "block"});
+            $.ajax({
+              url: "{{route('approveCustomer')}}",
+              json_enc: Data,
+              type: "GET",
+              dataType: "json",
+              data:
+              {
+                'data': Data,
+              },
+              success: function (data)
+              {
+                if(data==1){
+                    $(".card-body").css("opacity", .2);
+                  $("#loading-img").css({"display": "block"});
+                  console.log("Approve response");
+                  console.log(data);
+                  $('#success-msg').show();
+                   $('.status-all').attr('disabled','disabled');
+                $('.status-all').text('Please wait...');
+                  setTimeout(function(){
+                    $('#success-msg').hide();
+                    location.reload();
+                  }, 5000);
+                }
+              }
+            });                                                                                             
+          }
+          else 
+          {           
+          }                                       
+        });
+      }
+    });
+    $("#reason").on('click',function(e)
+    {   
+      var id=$('#reason_id').val();
+      var comment=$('#comment').val();
+      var row=$('#'+id).closest('tr');
+      if(comment.trim()=="")
+      {
+        alertify.alert("Reason for decline for this request");
+        $('#reason_modal').modal('show');
+        return false; 
+      }
+      else
+      {
+        
+        var action=$('#reason_action').val();
+        var Data =
+        {
+          'id': id,
+          'action': action,
+          'comment':comment
+        }
+
+        $(".card-body").css("opacity", .2);
+        $("#loading-img").css({"display": "block"});
+        console.log(Data);
+        $.ajax({
+          url: "{{route('approveCustomer')}}",
+          json_enc: Data,
+          type: "GET",
+          dataType: "json",
+          data:
+          {
+            'data': Data,
+          },
+          success: function (data)
+          {
+            if(data==2){
+               $(".card-body").css("opacity", .2);
+                  $("#loading-img").css({"display": "block"});
+              console.log("Decline decline");
+              console.log(data);
+              $('#decline-msg').show();
+               $('.status-all').attr('disabled','disabled');
+                $('.status-all').text('Please wait...');
+              setTimeout(function(){
+                $('#decline-msg').hide();
+                location.reload();
+              }, 5000);
+            }
+          }
+        });
+      }
+    });
+  });
+
+</script>
     
 
 @endsection

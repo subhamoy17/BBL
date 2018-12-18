@@ -40,7 +40,7 @@
               <div class="tbl-srch">
               	 <form id="frm_search" method="get">
 					<select align ="right" id="feature" name="option" >
-            <option value="future_booking" {{Request::get('option')=='future_booking' || Request::get('option')==''?'selected':''}} >Future booking</option>
+            <option value="future_booking" {{Request::get('option')=='future_booking' || Request::get('option')==''?'selected':''}} >Future Booking</option>
   					<option value="declined_booking" {{Request::get('option')=='declined_booking'?'selected':''}} >Declined Booking</option>
             <option value="cancelled_booking" {{Request::get('option')=='cancelled_booking'?'selected':''}} >Cancelled Booking</option>
   					<option value="past_booking" {{Request::get('option')=='past_booking'?'selected':''}} >Past Booking</option>
@@ -48,7 +48,7 @@
   					</select>
   					<input id="datepicker" type="text" name="start_date" value="{{Request::get('start_date')? Request::get('start_date') : \Carbon\Carbon::now()->toDateString()}}" readonly="true" />
   					<input id="datepicker2" type="text" name="end_date" value="{{Request::get('end_date')? Request::get('end_date') : \Carbon\Carbon::now()->addDays(30)->toDateString()}}"  readonly="true"/>
-  					<button type="submit"   id="booking" class="btn btn-success" >Search</button>
+  					<button type="submit"   id="booking" class="btn btn-success" ><i class="fa fa-search" aria-hidden="true"></i></button>
 				</form>
               </div>
               
@@ -66,11 +66,11 @@
                    <h3 align="left" id="booking_title">Future booking</h3>
                     @endif
                   <tr>
-                    <th>Address</th>
-                    <th>Booked On</th>
                     <th>Booking date</th>
                     <th>Booking time</th>
-                    <th>Status</th>
+                    <th>Address</th>
+                    <th>Booked On</th>                                   
+                    <!-- <th>Status</th> -->
                     @if(Request::get('option')=='future_booking' || Request::get('option')=='')
                     <th>Action</th>
                     @endif
@@ -81,13 +81,14 @@
                    @foreach($all_booking as $key=>$eachbooking)
 
                   <tr >
+
+                       <td> {{date('d F Y', strtotime($eachbooking->plan_date))}}  </td>
+                    <td>{{date('h:i A', strtotime($eachbooking->plan_st_time))}} To {{date('h:i A', strtotime($eachbooking->plan_end_time))}}</td>
                     <td>{{$eachbooking->address_line1}}</td>
                     <td>{{date('d F Y h:i A', strtotime($eachbooking->created_at))}}</td>
-                     <td>               
-                      {{date('d F Y', strtotime($eachbooking->plan_date))}}
-                      </td>
-                    <td>{{date('h:i A', strtotime($eachbooking->plan_st_time))}} To {{date('h:i A', strtotime($eachbooking->plan_end_time))}}</td>
-                    <td>
+                     
+                    
+                    <!-- <td>
                       @if(Request::get('option')=='declined_booking')
                         Declined by trainer
                       @elseif(Request::get('option')=='past_booking')
@@ -101,7 +102,7 @@
                           Cancelled by admin
                         @endif
                       @endif
-                    </td>
+                    </td> -->
                     @if(Request::get('option')=='future_booking' ||  Request::get('option')=='')
 
                     <?php
@@ -110,14 +111,14 @@
                   $bootcamp_cancel_time=$eachbooking->plan_date.' '.$eachbooking->plan_st_time;
                   $bootcamp_cancel_time = date("Y-m-d H:i:s", strtotime('-24 hours', strtotime($bootcamp_cancel_time)));
                   ?>
-                    <td> @if($current_time<$bootcamp_cancel_time)
+                    <td style="margin-right: 15px !important;"> @if($current_time<$bootcamp_cancel_time)
                       <a href="{{route('bootcamp_booking_cancele_customer',['id'=>$eachbooking->booking_id])}}"  
                  class="btn btn-danger asd"  onclick="return confirm('Are you sure you want to cancel this bootcamp session?');">
-                    Cancel</a>
+                    <i class="fa fa-trash-o" ></i></a>
                     @else
                     <a href="#"  
                  class="btn btn-danger asd"  onclick="return confirm('Automatic cancelation is not allowed any more, please contact admin');">
-                    Cancel</a>
+                    <i class="fa fa-trash-o" ></i></a>
 
                     @endif
                   </td>
@@ -126,7 +127,7 @@
                   </tr>
                 @endforeach
                 @else
-                <tr><td colspan='6' align='center'>
+                <tr><td colspan='5' align='center'>
                 No record found
               </td>
               </tr>

@@ -106,7 +106,7 @@ $('#bootstrap-slot-data-table').DataTable({
                                 @php ($i = 1)
                             @foreach($data as $mydata)
                                 <tr>
-                                    <td>{{$i++}}</td>
+                                    <td align="center">{{$i++}}</td>
                                       <td>{{$mydata->slots_name}}</td>
                                     <td>{{$mydata->slots_number}}</td>
                                     <td> <i class="fa fa-gbp"></i> {{$mydata->slots_price}}</td>

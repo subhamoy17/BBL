@@ -28,6 +28,77 @@ $(document).ready(function() {
 });
 
 </script>
+@if (session('last_schedule_date'))
+    <script>
+      $(document).ready(function(){ 
+        // var last_schedule_date = $(this).data("personal-contract");
+       $('#reason_modal').modal('show');
+      });
+    </script>
+
+<?php Session::forget('last_schedule_date'); ?>
+
+  @endif
+
+<script type="text/javascript">
+              function delete_bootcamp(){ 
+                var bootcamp_id = $(this).data('bootcamp_id');
+console.log(bootcamp_id);
+        $.ajax({
+            
+            
+             url: "",
+            type: "GET",
+            data: {'bootcamp_id': bootcamp_id},
+            success: function (result) {
+                
+            }
+        });
+                
+              }
+            </script>
+
+           <div id="reason_modal" class="modal fade mot-mod" role="dialog" >
+  <div class="modal-dialog success_modal">
+    
+    <div class="modal-content">
+      <div class="modal-body" id="hall_details_edit">
+        <div class="row clearfix">
+          <div class="col-sm-12 col-xs-12">
+            <h3 class="pull-left customer-mot">Last Bootcamp Date</h3>
+            <br class="clear" />
+        </div>
+        
+        <div class="col-sm-12 col-xs-12">
+            
+            <div class="form-group">
+            <div class="row" >
+        
+           <div class="col-lg-4 col-xs-12">
+                                <!-- <label>Last Date</label> -->
+                                <div class="dispClass">
+                                    <p class="detail-txt2"> <span id="new_p"></span>      
+                                    </p>                                
+                                </div>
+                            </div> 
+                          
+                            <!--  <label id="new_p"></label>
+                           <input type="text" name="new_package_price" id="new_package_price"> -->
+                            
+                           <!--  <div id="new_price" >
+                                      <label id="new_p">Last Date</label>
+                                      </div> -->
+      
+        </div>
+            </div>
+      </div>
+  </div>
+</div>
+<button type="button" class="btn btn-default success-close" id="bootcamp_date"  onClick="delete_bootcamp()" >Submit</button>
+
+</div>
+</div>
+</div>
 
 @if(Auth::user()->master_trainer==1)
 <div class="breadcrumbs">
@@ -41,7 +112,7 @@ $(document).ready(function() {
     <div class="col-sm-3">
         <div class="page-header float-left ex3" style="padding-top: 2%;">
             <a href="{{route('bootcamp_plan')}}">
-                <button type="button" class="btn btn-success"><i class="fa fa-plus"></i>&nbsp;Add New Bootcamp Plan</button>
+                <button type="button" class="btn btn-success"><i class="fa fa-plus-circle"></i>&nbsp;Add New Bootcamp Plan</button>
             </a>
         </div>
     </div>
@@ -66,29 +137,28 @@ $(document).ready(function() {
 
             @if (session('cancele_delete'))
               <div class="alert alert-danger">
-                {{ session('cancele_delete') }}
+                {{ session('cancele_delete') }} 
               </div>
+            @endif
+            @if (session('last_schedule_date'))
+              <div class="alert alert-danger">
+                {{ session('last_schedule_date') }} 
+
+   
+
+              </div>
+
+ 
             @endif
           </div>
           <div class="card-body">
-            <script type="text/javascript">
-              function delete_bootcamp(id){ 
-                alertify.confirm("Are you sure you want to delete this bootcamp plan?", function (e) {
-                if (e) {
-                  // alertify.success("You've clicked OK");
-                  window.location.href="{{url('trainer/bootcamp_plan_delete')}}/"+id;
-                } else {
-                  // alertify.error("You've clicked Cancel");
-                  }                                       
-                });
-              }
-            </script>
+           
 
 
             <table id="bootstrap-slot-data-table" class="display responsive table-striped table-bordered" width="100%">
               <thead>
                 <tr>
-                  <th>Sl. No.</th>
+                  <th style="width: 3px;">Sl. No.</th>
                   <th>Day</th>
                   <th>Session Start Time</th>
                   <th>Session End Time</th>
@@ -102,7 +172,7 @@ $(document).ready(function() {
                @if(count($bootcamp_details)>0)
                   @foreach($bootcamp_details as $key=>$each_bootcamp)
                     <tr>
-                      <td>{{++$key}}</td>
+                      <td align="center">{{++$key}}</td>
                       <td>
                         @if($each_bootcamp->monday==1) Monday  @endif
                         @if($each_bootcamp->tuesday==1) Tuesday  @endif
@@ -127,13 +197,14 @@ $(document).ready(function() {
                         Inactive
                         @endif
                       </td>
-                      
+                      <!-- <input type="hidden" name="bootcamp_id" id="bootcamp_id" value="{{$each_bootcamp->bootcamp_id}}">  -->
                       <td style="width: 73px">
 
                         
 
                          <a href="{{route('bootcamp_plan_edit',['plan_id' => Crypt::encrypt($each_bootcamp->bootcamp_id) ])}}" title="Edit Exercise"><button class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button></a>
-                          <button type="button" onclick="delete_bootcamp({!!$each_bootcamp->bootcamp_id!!})" class="btn btn-danger btn-sm" style="width: 32px;" title="Delete Exercise"><i class="fa fa-trash-o"></i></button>
+
+                          <button type="button"  class="btn btn-danger btn-sm" style="width: 32px;" title="Delete Exercise" id="delete_bootcamp" data-bootcamp_id="{{$each_bootcamp->bootcamp_id}}"><i class="fa fa-trash-o"  ></i></button>
                           <!-- <a href="#" class="payment btn btn-info btn-sm" style="padding: 4px 7px;position: relative; right: -1.5px; top: 0px;"><i class="fa fa-eye" title="view details"  aria-hidden="true"></i></a> -->
                       </td>
                     </tr>
@@ -170,4 +241,55 @@ $(document).ready(function() {
         $('#bootstrap-data-table-export').DataTable();
     } );
 </script>
+
+<script>
+
+ $(document).ready(function() {
+ $("#delete_bootcamp").on('click',function(event){
+
+  // alert('assretd');
+  // event.preventDefault();
+  var bootcamp_id = $(this).data('bootcamp_id');
+console.log(bootcamp_id);
+$.ajax({
+          type: "GET",
+          url: "{{route('checked_bootcamp_plan_date')}}",
+          data: {'bootcamp_id': bootcamp_id},
+           dataType: "json",
+
+           success: function(data){
+    if(data.last_schedule_date)
+            { 
+              $('#reason_modal').modal('show');
+$('#new_price').show();
+$('#new_p').html("Are you sure you went to delete after this <h6>"+data.last_schedule_date+" ? </h6>");
+ $('#new_package_price').val(data.last_schedule_date);
+ $('#bootcamp_id').val(data.bootcamp_id);
+console.log(data.bootcamp_id);
+
+ 
+
+            }
+
+            else{
+alert('asyjhgd');
+            }
+
+           }
+            });
+
+
+      
+
+        
+    }); 
+  
+  });
+
+
+
+</script>
+
+
+
 @endsection
