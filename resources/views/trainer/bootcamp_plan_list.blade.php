@@ -2,9 +2,6 @@
 
 @extends('trainerlayouts.trainer_template')
 @section('content')
-
-
-
 <script type="text/javascript">
   $(document).ready(function()
   { 
