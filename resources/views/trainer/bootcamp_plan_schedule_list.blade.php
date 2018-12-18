@@ -87,10 +87,7 @@ $(document).ready(function() {
            <table id="bootstrap-slot-data-table" class="display responsive table-striped table-bordered" width="100%">
               <thead>
                 <tr>
-                  <th style="width: 100px;">Select to Declined 
-                    <input type="checkbox" id="all_schedule_cancel" class="selectall" style="margin-left: 21px">
-                    <button class="btn btn-danger" id="cancelled_button" title="Delete Schedule"><i class="fa fa-trash-o" ></i></button>
-                  </th>
+                 
                   <th style="width: 6%;">Sl. No.</th>
                   <th>Date</th>
                   <th>Day</th>
@@ -102,19 +99,17 @@ $(document).ready(function() {
                   
                   
                    <th>Action</th> 
+                    <th style="width: 100px;">Select to Declined 
+                    <input type="checkbox" id="all_schedule_cancel" class="selectall" style="margin-left: 21px">
+                    <button class="btn btn-danger btn-sm" id="cancelled_button" title="Delete Schedule"><i class="fa fa-trash-o" ></i></button>
+                  </th>
                 </tr>
               </thead>
               <tbody class="tbdy1"> 
                @if(count($all_schedules)>0)
                   @foreach($all_schedules as $key=>$each_schedule)
                     <tr>
-                      <td>
-                        @if($now < $each_schedule->plan_date && $each_schedule->deleted_at=='')
-                        <input type="checkbox" name="cancele_schedule[]" id="cancele_schedule" value="{{$each_schedule->schedule_id}}" class="cancele_check abc" style="margin-left: 27px">                    
-                         @else
-                          &nbsp;&nbsp;&nbsp;&nbsp;---
-                        @endif
-                      </td> 
+                   
                       <td align="center">{{++$key}}</td>
                       <td>{{$each_schedule->plan_date}}</td>
                       <td>{{$each_schedule->plan_day}}</td>
@@ -144,6 +139,13 @@ $(document).ready(function() {
                        
                          @else
                           ---
+                        @endif
+                      </td> 
+                         <td>
+                        @if($now < $each_schedule->plan_date && $each_schedule->deleted_at=='')
+                        <input type="checkbox" name="cancele_schedule[]" id="cancele_schedule" value="{{$each_schedule->schedule_id}}" class="cancele_check abc" style="margin-left: 27px">                    
+                         @else
+                          &nbsp;&nbsp;&nbsp;&nbsp;---
                         @endif
                       </td> 
                      <!--  <td><a href="{{route('bootcamp_schedule_edit_view',['id' => Crypt::encrypt($each_schedule->schedule_id) ])}}"><i class="fa fa-edit" title="Edit product"></i></a></td> -->
@@ -232,13 +234,18 @@ $(document).ready(function() {
   $("#bootstrap-slot-data-table").on("click", ".selectall", function() {
     $(this.form.elements).filter(':checkbox').prop('checked', this.checked);
 });
-//  $('.abc:checked').length == $('.abc').length;
-//   // $(".abc").change(function(){
-//      $("#bootstrap-slot-data-table").on("change", ".abc", function() {
-//     if ($('.abc:checked').length == $('.abc').length) {
-//        //do something
-//     }
-// });
+ 
+ 
+      $("#bootstrap-slot-data-table").on("change", ".abc", function() {
+        $('.abc:checked').length == $('.abc').length;
+    if ($('.abc:checked').length == $('.abc').length) {
+       
+       $("#all_schedule_cancel"). prop("checked", true);
+    }
+    else{
+      $("#all_schedule_cancel"). prop("checked", false);
+    }
+});
 </script>
 <script>
 $(document).ready(function (){
