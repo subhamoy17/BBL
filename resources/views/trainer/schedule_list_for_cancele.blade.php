@@ -109,7 +109,7 @@ $(document).ready(function() {
                   <th>Status</th>
                   <th style="width: 100px;">Select to Cancelled
                     <input type="checkbox" id="all_cutomers_schedule_cancel" class="selectall" style="margin-left: 21px">
-                    <button class="btn btn-danger" id="cancelled_button" title="Cancele"><i class="fa fa-trash-o" ></i></button>
+                    <button class="btn btn-danger btn-sm" id="cancelled_button" title="Cancele"><i class="fa fa-trash-o" ></i></button>
                   </th>
                 </tr>
               </thead>
@@ -132,7 +132,7 @@ $(document).ready(function() {
                       <td align="center">
                         @if($each_customer->deleted_at=='')
                         <?php $cancelled_details=$each_customer->schedule_id."_".$each_customer->customer_id;?>
-                      <input type="checkbox" name="cancele_schedule[]" id="cancele_schedule" value="{{$cancelled_details}}" class="cancele_check abc" style="margin-left: 27px"> 
+                      <input type="checkbox" name="cancele_schedule[]" id="cancele_schedule" value="{{$cancelled_details}}" class="cancele_check abc" style="margin-left: -42px"> 
                         @else
                         --
                         @endif
@@ -177,6 +177,17 @@ $(document).ready(function() {
 <script type="text/javascript">
   $("#bootstrap-slot-data-table").on("click", ".selectall", function() {
     $(this.form.elements).filter(':checkbox').prop('checked', this.checked);
+});
+
+       $("#bootstrap-slot-data-table").on("change", ".abc", function() {
+        $('.abc:checked').length == $('.abc').length;
+    if ($('.abc:checked').length == $('.abc').length) {
+       
+       $("#all_cutomers_schedule_cancel"). prop("checked", true);
+    }
+    else{
+      $("#all_cutomers_schedule_cancel"). prop("checked", false);
+    }
 });
 
 </script>
