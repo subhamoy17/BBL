@@ -3176,9 +3176,8 @@ public function bootcamp_plan_list()
   $this->cart_delete_trainer();
   $bootcamp_details=DB::table('bootcamp_plans')
   ->join('bootcamp_plan_address','bootcamp_plan_address.id','bootcamp_plans.address_id')
-  ->select('bootcamp_plans.id as bootcamp_id','bootcamp_plans.mon_session_flg as monday','bootcamp_plans.tue_session_flg as tuesday','bootcamp_plans.wed_session_flg as wednesday','bootcamp_plans.thu_session_flg as thursday','bootcamp_plans.fri_session_flg as friday','bootcamp_plans.sat_session_flg as saturday','bootcamp_plans.sun_session_flg as sunday','bootcamp_plans.session_st_time as session_st_time','bootcamp_plans.session_end_time as session_end_time','bootcamp_plans.plan_st_date as plan_st_date','bootcamp_plans.plan_end_date as plan_end_date','bootcamp_plans.never_expire as never_expire','bootcamp_plans.max_allowed as max_allowed','bootcamp_plans.status as status','bootcamp_plan_address.address_line1 as address')
-  ->orderby('bootcamp_plans.id','DESC')->whereNull('bootcamp_plans.deleted_at')->get();
-Log::debug(" data bootcamp_plan_edit_insert ".print_r($bootcamp_details,true));
+  ->select('bootcamp_plans.id as bootcamp_id','bootcamp_plans.mon_session_flg as monday','bootcamp_plans.tue_session_flg as tuesday','bootcamp_plans.wed_session_flg as wednesday','bootcamp_plans.thu_session_flg as thursday','bootcamp_plans.fri_session_flg as friday','bootcamp_plans.sat_session_flg as saturday','bootcamp_plans.sun_session_flg as sunday','bootcamp_plans.session_st_time as session_st_time','bootcamp_plans.session_end_time as session_end_time','bootcamp_plans.plan_st_date as plan_st_date','bootcamp_plans.plan_end_date as plan_end_date','bootcamp_plans.never_expire as never_expire','bootcamp_plans.max_allowed as max_allowed','bootcamp_plans.status as status','bootcamp_plan_address.address_line1 as address','bootcamp_plans.deleted_at')
+  ->orderby('bootcamp_plans.id','DESC')->get();
     return view('trainer.bootcamp_plan_list')->with(compact('bootcamp_details'));
   }
   catch(\Exception $e) {
@@ -3436,11 +3435,9 @@ public function bootcamp_plan_edit_view($id)
 
 public function bootcamp_plan_delete($id)
 {
-  DB::beginTransaction();
+  // DB::beginTransaction();
   // try{
     $this->cart_delete_trainer();
-  $id=$data['id'];
-$now = Carbon::now()->toDateString();
     $plan_details=DB::table('bootcamp_plans')->where('id',$id)->first();
 
     $today=date('Y-m-d');
@@ -3455,50 +3452,110 @@ $now = Carbon::now()->toDateString();
         );
 
     $all_session_date=[];
-  foreach ($period as $key=>$value) 
-  {
-    $all_session_date[]=$value->format('Y-m-d');              
-  }
+    foreach ($period as $key=>$value) 
+    {
+      $all_session_date[]=$value->format('Y-m-d');              
+    }
 
-  $all_booking_schedule=DB::table('bootcamp_plan_shedules')->whereIn('plan_date',$all_session_date)->where('no_of_uses','>',0)->where('bootcamp_plan_shedules.plan_date','>=',$now)->get()->all();
-  
-  // $all_booking=DB::table('bootcamp_plan_shedules')->whereIn('plan_date',$all_session_date)->where('no_of_uses','==',0)->where('bootcamp_plan_shedules.plan_date','>=',$now)->get()->all();
+    $all_booking_schedule_date=DB::table('bootcamp_plan_shedules')->whereIn('plan_date',$all_session_date)->where('no_of_uses','>',0)->where('bootcamp_plan_id',$id)->pluck('plan_date');
 
-  $numItems = count($all_booking_schedule);
-$i = 0;
-foreach($all_booking_schedule as $key=>$value) {
-  if(++$i === $numItems) {
-    $last_schedule_date=$value->plan_date;
-     Log::debug(" last_schedule_date ".print_r($last_schedule_date,true));
-  }
-}    
+    if(count($all_booking_schedule_date)>0)
+    {
 
-  // Log::debug(" all_booking_schedule ".print_r($all_booking_schedule,true));
+      $last_booking_date=$all_booking_schedule_date[count($all_booking_schedule_date)-1];
 
-  if(count($all_booking_schedule)>0)
-  {
+      $no_booking_schedule_date=DB::table('bootcamp_plan_shedules')->where('plan_date','>=',$last_booking_date)->where('bootcamp_plan_id',$id)->pluck('plan_date');
 
 
-    DB::commit();
-    return redirect()->back()->with(["cancele_delete"=>"There are some bookings for this bootcamp plan to save the changes you have to decline those booking(s) manually",'last_schedule_date'=>$last_schedule_date]);
-  }
-  else
-  {
-    $bootcamp_plan_delete['deleted_at']=Carbon::now();
+      $first_no_booking_schedule_date=$no_booking_schedule_date[0];
+      $last_no_booking_schedule_date=$no_booking_schedule_date[count($no_booking_schedule_date)-1];
 
-    DB::table('bootcamp_plans')->where('id',$id)->update($bootcamp_plan_delete);
+      DB::commit();
+      return view('trainer.bootcamp_plan_booking_delete')->with(compact('last_booking_date','first_no_booking_schedule_date','last_no_booking_schedule_date','plan_details'));
+    }
+    else
+    {
+      $bootcamp_plan_delete['deleted_at']=Carbon::now();
 
-    DB::table('bootcamp_plan_shedules')->whereIn('plan_date',$all_session_date)
-      ->where('bootcamp_plan_id',$id)->delete();
-   DB::commit();
-    return redirect('trainer/bootcamp-plan')->with("success","You have successfully deleted one bootcamp plan");
-  }
+      DB::table('bootcamp_plans')->where('id',$id)->update($bootcamp_plan_delete);
+
+      DB::table('bootcamp_plan_shedules')->whereIn('plan_date',$all_session_date)
+        ->where('bootcamp_plan_id',$id)->where('no_of_uses',0)->delete();
+
+      DB::table('bootcamp_plan_shedules')->whereIn('plan_date',$all_session_date)
+        ->where('bootcamp_plan_id',$id)->where('no_of_uses','>',0)->update($bootcamp_plan_delete);
+
+     DB::commit();
+      return redirect('trainer/bootcamp-plan')->with("success","You have successfully deleted one bootcamp plan");
+    }
 // }
 //   catch(\Exception $e) {
 //       DB::rollback();
 //       return abort(200);
 //   }
 }
+public function bootcamp_plan_final_delete(Request $request)
+{
+  Log::debug(" bootcamp_plan_final_delete ".print_r($request->all(),true));
+  DB::beginTransaction();
+  try{
+
+  $all_booking_schedule_cancele=DB::table('bootcamp_plan_shedules')->where('plan_date','>=',$request->delete_date)->where('no_of_uses','>',0)->where('bootcamp_plan_id',$request->plan_id)->update(['deleted_at'=>Carbon::now()]);
+
+  $all_booking_schedule_delete=DB::table('bootcamp_plan_shedules')->where('plan_date','>=',$request->delete_date)->where('no_of_uses',0)->where('bootcamp_plan_id',$request->plan_id)->delete();
+
+  $all_booking_schedule_id=DB::table('bootcamp_plan_shedules')->where('plan_date','>=',$request->delete_date)->where('no_of_uses','>',0)->where('bootcamp_plan_id',$request->plan_id)->pluck('id');
+
+  $plan_delete=DB::table('bootcamp_plans')->where('id',$request->plan_id)->update(['deleted_at'=>Carbon::now()]);
+
+  $all_customers=DB::table('customers')
+  ->join('bootcamp_booking','bootcamp_booking.customer_id','customers.id')
+  ->join('bootcamp_plan_shedules','bootcamp_plan_shedules.id','bootcamp_booking.bootcamp_plan_shedules_id')
+  ->join('bootcamp_plan_address','bootcamp_plan_address.id','bootcamp_plan_shedules.address_id')
+  ->select('customers.id as customer_id','customers.name as customer_name','customers.ph_no as customer_ph_no','customers.email as customer_email','bootcamp_booking.created_at as booked_on','bootcamp_plan_shedules.plan_date as shedule_date','bootcamp_plan_shedules.plan_st_time as plan_st_time','bootcamp_plan_shedules.plan_end_time as plan_end_time','bootcamp_plan_shedules.plan_day as plan_day','bootcamp_plan_address.address_line1')
+  ->whereIn('bootcamp_booking.bootcamp_plan_shedules_id',$all_booking_schedule_id)
+  ->get()->all();
+
+
+  foreach($all_customers as $each_customer)
+  {
+
+    $bookings=DB::table('bootcamp_booking')
+    ->whereIn('bootcamp_plan_shedules_id',$all_booking_schedule_id)
+    ->where('customer_id',$each_customer->customer_id)
+    ->pluck('order_details_id');
+
+    $return_sessions=DB::table('order_details')
+    ->where('customer_id',$each_customer->customer_id)
+    ->where('id',$bookings)
+    ->increment('remaining_sessions',1);
+
+    $notifydata['url'] = '/customer/mybooking';
+    $notifydata['customer_name']=$each_customer->customer_name;
+    $notifydata['customer_email']=$each_customer->customer_email;
+    $notifydata['customer_phone']=$each_customer->customer_ph_no;
+    $notifydata['status']='Changed End Date Bootcamp Session By Admin';
+    $notifydata['session_booked_on']=$each_customer->booked_on;
+    $notifydata['session_booking_date']=$each_customer->shedule_date;
+    $notifydata['session_booking_day']=$each_customer->plan_day;
+    $notifydata['session_booking_time']=date('h:i A', strtotime($each_customer->plan_st_time)).' to '.date('h:i A', strtotime($each_customer->plan_end_time));
+    $notifydata['cancelled_reason']='';
+    $notifydata['schedule_address']=$each_customer->address_line1;
+
+    $client_details=Customer::find($each_customer->customer_id);
+
+    $client_details->notify(new BootcampSessionNotification($notifydata));
+  }
+
+  DB::commit();
+      return redirect()->back()->with("success","You have successfully deleted this bootcamp plan");
+  }
+  catch(\Exception $e) {
+      DB::rollback();
+      return abort(200);
+  }
+}
+  
 
   public function cart_delete_trainer()
 {
@@ -3532,7 +3589,7 @@ foreach($all_booking_schedule as $key=>$value) {
   catch(\Exception $e) {
     return abort(200);
   }
-  }
+}
 
 public function update_bootcamp_plan_schedules(Request $request)
 {
@@ -4541,7 +4598,7 @@ public function checked_bootcampdate(Request $request)
    // Log::debug(":: bootcamp_plan_id :: ".print_r($bootcamp_plan_id,true));
     
     $checked_bootcampdate=DB::table('bootcamp_plans')->join('bootcamp_plan_shedules','bootcamp_plan_shedules.bootcamp_plan_id','bootcamp_plans.id')->where('bootcamp_plan_shedules.plan_date','>',$bootcamp_plan_date)->where('bootcamp_plans.id',$bootcamp_plan_id)->where('bootcamp_plan_shedules.no_of_uses','>',0)->whereNull('bootcamp_plan_shedules.deleted_at')->count();
-Log::debug(":: checked_bootcampdate :: ".print_r($checked_bootcampdate,true));
+    //Log::debug(":: checked_bootcampdate :: ".print_r($checked_bootcampdate,true));
     if($checked_bootcampdate > 0)
     {
       return 1;
@@ -4551,55 +4608,5 @@ Log::debug(":: checked_bootcampdate :: ".print_r($checked_bootcampdate,true));
       return 0;
     }
   }
-
-
-  public function checked_bootcamp_plan_date(Request $request)
-  {
-    $bootcamp_id=$request->bootcamp_id;
-    Log::debug(" data bootcamp_id ".print_r($bootcamp_id,true));
-    $this->cart_delete_trainer();
-    $now = Carbon::now()->toDateString();
-  $plan_details=DB::table('bootcamp_plans')->where('id',$bootcamp_id)->first();
-
-  $today=date('Y-m-d');
-  $plan_end_date=$plan_details->plan_end_date;
-  $plan_end_date = new \DateTime($plan_end_date);
-  $plan_end_date=$plan_end_date->modify('+1 day')->format('Y-m-d');
-
-  $period = new \DatePeriod(
-       new \DateTime($today),
-       new \DateInterval('P1D'),
-       new \DateTime($plan_end_date)
-      );
-
-  $all_session_date=[];
-  foreach ($period as $key=>$value) 
-  {
-    $all_session_date[]=$value->format('Y-m-d');              
-  }
-
-  $all_booking_schedule=DB::table('bootcamp_plan_shedules')->whereIn('plan_date',$all_session_date)->where('no_of_uses','>',0)->where('bootcamp_plan_shedules.plan_date','>=',$now)->get()->all();
-Log::debug(":: all_booking_schedule :: ".print_r($all_booking_schedule,true));
-
-$numItems = count($all_booking_schedule);
-$i = 0;
-foreach($all_booking_schedule as $key=>$value) {
-  if(++$i === $numItems) {
-    $last_schedule_data=$value;
-    $last_schedule_date=$value->plan_date;
-     Log::debug(" last_schedule_date ".print_r($last_schedule_date,true));
-  }
-}    
-   if(count($all_booking_schedule)>0)
-    {
-      
-      return response()->json(['last_schedule_data'=>$last_schedule_data, 'last_schedule_date'=>$last_schedule_date,'bootcamp_id'=>$bootcamp_id]);
-    }
-    else
-    {
-      return response()->json(0);
-    }
-  }
-
 
 }

@@ -145,6 +145,7 @@
 							<?php $plan_end_date='';?>
 						@endif
 						<input type="text" id="plan_end_date" name="plan_end_date" class="form-control" readonly="true" value="{{$plan_end_date}}">
+						<input type="hidden" id="end_date" value="{{$plan_end_date}}">
 					</div>
 				</div>
 				<div class="row">
@@ -161,7 +162,7 @@
 						@if($edit_bootcamp->never_expire==1)
 						<input type="checkbox" name="never_expire" id="never_expire" checked="checked" >
 						@else
-						<input type="checkbox" name="never_expire" id="never_expire" >
+						<input type="checkbox" name="never_expire" id="never_expire" onclick="never_expire_check();">
 						@endif
 					</div>
 				</div>
@@ -307,6 +308,20 @@ function toggleField1(hideObj,showObj){
 
    
   });
+</script>
+
+<script>
+	function never_expire_check()
+	{
+		if($('#never_expire').is(':checked'))
+		{
+			$('#plan_end_date').val('');
+		}
+		else
+		{
+			$('#plan_end_date').val($('#end_date').val());
+		}
+	}
 </script>
 
 <script>

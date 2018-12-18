@@ -231,7 +231,10 @@ Route::get('individual_bootcamp_cancele/{slug}', 'TrainerController@individual_b
 Route::get('edit-bootcamp-plan-schedule/{id}', 'TrainerController@bootcamp_schedule_edit_view')->name('bootcamp_schedule_edit_view');
 
 Route::post('update-bootcamp-plan-schedules','TrainerController@update_bootcamp_plan_schedules')->name('update_bootcamp_plan_schedules');
-Route::get('checked_bootcamp_plan_date','TrainerController@checked_bootcamp_plan_date')->name('checked_bootcamp_plan_date');
+Route::post('bootcamp-plan-final-delete','TrainerController@bootcamp_plan_final_delete')->name('bootcamp_plan_final_delete');
+
+
+
 ////// For common diet plan list//////
 
 Route::get('common-diet-plan', 'TrainerController@common_diet_plan')->name('common_diet_plan');

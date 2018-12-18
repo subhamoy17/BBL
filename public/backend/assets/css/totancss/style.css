@@ -1022,3 +1022,22 @@ margin-left: 28px;
 }
 
 /*071218 @totan*/
+
+/*181218 @totan*/
+#delete_date-error{
+    color: #dc3545;
+    text-transform: uppercase;
+    font-weight: 700;
+    text-transform: none;
+    font-size: 13px;
+}
+
+#order_validity_date-error{
+    color: #dc3545;
+    text-transform: uppercase;
+    font-weight: 700;
+    text-transform: none;
+    font-size: 13px;
+}
+
+/*181218 @totan*/

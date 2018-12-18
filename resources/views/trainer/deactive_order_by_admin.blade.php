@@ -11,6 +11,25 @@
     }, 30000);
   });
 </script>
+<script>
+  $(document).ready(function(){
+  $('#submit_bootcamp_session').validate({  
+      /// rules of error 
+      rules: {
+        "order_validity_date": {
+          required: true
+        }
+      },
+      ////for show error message
+      messages: {
+        "order_validity_date":{
+          required: 'Please choose date'
+        }
+      }
+    });
+
+    });
+</script>
 @if(Auth::user()->master_trainer==1)
 
   <div class="breadcrumbs">
