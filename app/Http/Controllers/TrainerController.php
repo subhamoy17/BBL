@@ -3439,6 +3439,7 @@ public function bootcamp_plan_delete($id)
   DB::beginTransaction();
   // try{
     $this->cart_delete_trainer();
+  $id=$data['id'];
 $now = Carbon::now()->toDateString();
     $plan_details=DB::table('bootcamp_plans')->where('id',$id)->first();
 

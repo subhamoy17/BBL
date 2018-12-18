@@ -12,7 +12,7 @@
     <div class="col-sm-4">
       <div class="page-header float-left">
         <div class="page-title">
-          <h1>Bootcamp Plan Schedule Edit</h1>
+          <h1>Bootcamp Plan Time Schedule Edit</h1>
         </div>
       </div>
     </div>    

@@ -91,7 +91,7 @@ $('#bootstrap-slot-data-table').DataTable({
               <table id="bootstrap-slot-data-table" class="display responsive table-striped table-bordered">
                 <thead>
                   <tr>
-                      <th id="slno" style="font-size: 12px;">Sl.No.</th>
+                      <th id="slno" style="width: 6%;">Sl.No.</th>
                       <th>Customer Name</th>
                        <th>Plan Type</th>
                         <th>Plan Price</th>
@@ -108,7 +108,7 @@ $('#bootstrap-slot-data-table').DataTable({
                                 
                   @foreach($all_order_history as $key=>$order_history)
                     <tr>
-                      <td style="font-size: 12px;" align="center">{{++$key}}</td>
+                      <td  align="center">{{++$key}}</td>
                       <td>{{$order_history->customer_name}}</td>
                       <td>{{$order_history->training_type}}</td>
                       <td align="center"> <i class="fa fa-gbp"></i> {{$order_history->total_price}}</td>

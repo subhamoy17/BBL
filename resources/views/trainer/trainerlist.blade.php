@@ -135,7 +135,7 @@ $('#bootstrap-slot-data-table').DataTable({
                         <table id="bootstrap-slot-data-table" class="display responsive table-striped table-bordered" width="100%">
                             <thead>
                                 <tr>
-                                    <th id="slno">Sl. No.</th>
+                                    <th id="slno" style="width: 6%;">Sl. No.</th>
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Contact No</th>
@@ -149,7 +149,7 @@ $('#bootstrap-slot-data-table').DataTable({
                                 @if(count($data)>0)
                             @foreach($data as $key=>$mydata)
                                 <tr>
-                                    <td>{{++$key}}</td>
+                                    <td align="center">{{++$key}}</td>
                                     <td>{{$mydata->name}}</td>
                                     <td>{{$mydata->email}}</td>
                                     <td>{{$mydata->contact_no}}</td>
@@ -157,7 +157,7 @@ $('#bootstrap-slot-data-table').DataTable({
                                     @if($mydata->image)
                                     <td><img src="{{asset('backend/images')}}/{{$mydata->image}}" height="50" width="50"></td>
                                      @else
-                                  <td>N/A</td>
+                                  <td><img src="{{asset('backend/images/no-profile-image.jpg')}}" height="50" width="50"></td>
                                   @endif
 
                                             <td style="width: 70px">

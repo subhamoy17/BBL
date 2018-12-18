@@ -91,7 +91,7 @@ $('#bootstrap-slot-data-table').DataTable({
                         <table id="bootstrap-slot-data-table" class="display responsive table-striped table-bordered" width="100%">
                             <thead>
                                 <tr>
-                                    <th id="slno" >Sl. No.</th>
+                                    <th id="slno" style="width: 6%;">Sl. No.</th>
                                     <th>Training Type</th>
                                     <th>Payment Type</th>
                                     <th>Total Session</th>

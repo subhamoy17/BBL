@@ -42,14 +42,14 @@ $(document).ready(function() {
 
 <script type="text/javascript">
               function delete_bootcamp(){ 
-                var bootcamp_id = $(this).data('bootcamp_id');
-console.log(bootcamp_id);
+                var id = $(this).data('bootcamp_id');
+console.log(id);
         $.ajax({
             
             
-             url: "",
+             url: "{{url('trainer/bootcamp_plan_delete')}}/"+id,
             type: "GET",
-            data: {'bootcamp_id': bootcamp_id},
+            data: {'id': id},
             success: function (result) {
                 
             }
@@ -158,7 +158,7 @@ console.log(bootcamp_id);
             <table id="bootstrap-slot-data-table" class="display responsive table-striped table-bordered" width="100%">
               <thead>
                 <tr>
-                  <th style="width: 3px;">Sl. No.</th>
+                  <th style="width: 6%;">Sl. No.</th>
                   <th>Day</th>
                   <th>Session Start Time</th>
                   <th>Session End Time</th>

@@ -53,7 +53,7 @@ $('#bootstrap-slot-data-table').DataTable({
                         <table id="bootstrap-slot-data-table" class="display responsive table-striped table-bordered" width="100%">
                             <thead>
                                 <tr>
-                                    <th id="slno">Sl. No.</th>
+                                    <th id="slno" style="width: 5%;">Sl. No.</th>
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Contact No</th>
@@ -65,10 +65,10 @@ $('#bootstrap-slot-data-table').DataTable({
                              @if(count($data)>0)  
                                 @foreach($data as $key=>$mydata)
                                     <tr>
-                                       <td>{{++$key}}</td>
+                                       <td align="center">{{++$key}}</td>
                                         <td>{{$mydata->name}}</td>
                                         <td>{{$mydata->email}}</td>
-                                        <td>{{$mydata->ph_no}}</td>
+                                        <td align="center">{{$mydata->ph_no}}</td>
                                         <td>
                                             @if(isset($mydata->address) && !empty($mydata->address))
                                                 {{$mydata->address}}
@@ -76,11 +76,11 @@ $('#bootstrap-slot-data-table').DataTable({
                                                 N/A
                                             @endif
                                         </td>
-                                        <td>
+                                        <td align="center">
                                             @if(isset($mydata->image) && !empty($mydata->image))
                                             <img src="{{asset('backend/images')}}/{{$mydata->image}}" height="50" width="50">
                                             @else
-                                            N/A
+                                            <img src="{{asset('backend/images/no-profile-image.jpg')}}" height="50" width="50">
                                             @endif
                                         </td>
                                     </tr>

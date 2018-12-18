@@ -10,7 +10,7 @@ $(document).ready(function() {
         lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
 
 // disable shorting from slno,image and action columns
-"columnDefs": [ { "orderable": false, "targets": [0,8] } ],
+"columnDefs": [ { "orderable": false, "targets": [0,1,8,9] } ],
 
 });
 });
@@ -87,7 +87,11 @@ $(document).ready(function() {
            <table id="bootstrap-slot-data-table" class="display responsive table-striped table-bordered" width="100%">
               <thead>
                 <tr>
-                  <th>Sl. No.</th>
+                  <th style="width: 100px;">Select to Declined 
+                    <input type="checkbox" id="all_schedule_cancel" class="selectall" style="margin-left: 21px">
+                    <button class="btn btn-danger" id="cancelled_button" title="Delete Schedule"><i class="fa fa-trash-o" ></i></button>
+                  </th>
+                  <th style="width: 6%;">Sl. No.</th>
                   <th>Date</th>
                   <th>Day</th>
                   <th>Time</th>
@@ -96,27 +100,31 @@ $(document).ready(function() {
                   <th>Booking Seats</th>
                   <th>Status</th>
                   
-                  <th style="width: 181px;">Select to Declined 
-                    <input type="checkbox" id="all_schedule_cancel" class="selectall">
-                    <button class="btn btn-danger" id="cancelled_button"><i class="fa fa-trash-o"></i></button>
-                  </th>
-                  <!-- <th>Action</th> -->
+                  
+                   <th>Action</th> 
                 </tr>
               </thead>
               <tbody class="tbdy1"> 
                @if(count($all_schedules)>0)
                   @foreach($all_schedules as $key=>$each_schedule)
                     <tr>
+                      <td>
+                        @if($now < $each_schedule->plan_date && $each_schedule->deleted_at=='')
+                        <input type="checkbox" name="cancele_schedule[]" id="cancele_schedule" value="{{$each_schedule->schedule_id}}" class="cancele_check abc" style="margin-left: 27px">                    
+                         @else
+                          &nbsp;&nbsp;&nbsp;&nbsp;---
+                        @endif
+                      </td> 
                       <td align="center">{{++$key}}</td>
                       <td>{{$each_schedule->plan_date}}</td>
                       <td>{{$each_schedule->plan_day}}</td>
-                      <td>{{date("h:i A", strtotime($each_schedule->plan_st_time))}} to {{date("h:i A", strtotime($each_schedule->plan_end_time))}}</td>
+                      <td>{{date("H:i", strtotime($each_schedule->plan_st_time))}} to {{date("H:i", strtotime($each_schedule->plan_end_time))}}</td>
                       <td>{{$each_schedule->address_line1}}</td>
                       <td align="center">{{$each_schedule->max_allowed}}</td>
                       <td align="center">
                         @if($each_schedule->deleted_at=='' && $each_schedule->no_of_uses>0)
-                        {{$each_schedule->no_of_uses}}
-                          <a href="{{route('bootcamp_booking_individual_cancelled',['plan_id' => Crypt::encrypt($each_schedule->schedule_id) ])}}" title="Veiw all booking" class="btn" style="color: #fff; background-color: #FF6347;   border-color: #FF6347;">View</a>
+                        
+                          <a href="{{route('bootcamp_booking_individual_cancelled',['plan_id' => Crypt::encrypt($each_schedule->schedule_id) ])}}" title="Veiw all booking" class="btn-del" style="color: #fff; background-color: #FF6347;   border-color: #FF6347;">{{$each_schedule->no_of_uses}}</a>
                         @else
                         {{$each_schedule->no_of_uses}}
                         @endif
@@ -130,11 +138,10 @@ $(document).ready(function() {
                       </td>
                       
                       <td align="center">
-                        @if($each_schedule->deleted_at=='')
-                        <input type="checkbox" name="cancele_schedule[]" id="cancele_schedule" value="{{$each_schedule->schedule_id}}" class="cancele_check">&nbsp;
+                       
                          @if($now < $each_schedule->plan_date && $each_schedule->deleted_at=='')
-                        <a href="{{route('bootcamp_schedule_edit_view',['id' => Crypt::encrypt($each_schedule->schedule_id) ])}}"><i class="fa fa-edit" title="Edit Schedule Time"></i></a>
-                        @endif
+                        <a href="{{route('bootcamp_schedule_edit_view',['id' => Crypt::encrypt($each_schedule->schedule_id) ])}}" class="btn btn-primary btn-sm" title="Edit Schedule"><i class="fa fa-edit" title="Edit Schedule"></i></a>
+                       
                          @else
                           ---
                         @endif
@@ -225,6 +232,13 @@ $(document).ready(function() {
   $("#bootstrap-slot-data-table").on("click", ".selectall", function() {
     $(this.form.elements).filter(':checkbox').prop('checked', this.checked);
 });
+//  $('.abc:checked').length == $('.abc').length;
+//   // $(".abc").change(function(){
+//      $("#bootstrap-slot-data-table").on("change", ".abc", function() {
+//     if ($('.abc:checked').length == $('.abc').length) {
+//        //do something
+//     }
+// });
 </script>
 <script>
 $(document).ready(function (){

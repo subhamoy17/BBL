@@ -135,7 +135,9 @@
 
 
         </div> <!-- .content -->
-
+<div class="page-title">
+                        <h5 style="margin-left: 30px">Bootcamp Booking Details</h5>
+                    </div>
         <div class="content mt-3">
 
 
@@ -258,7 +260,9 @@
 
 
         </div> <!-- .content -->
-
+<div class="page-title">
+                        <h5 style="margin-left: 30px">PT Session Booking Details</h5>
+                    </div>
         <div class="content mt-3">
 
 

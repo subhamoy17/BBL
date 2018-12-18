@@ -48,7 +48,7 @@
   					</select>
   					<input id="datepicker" type="text" name="start_date" value="{{Request::get('start_date')? Request::get('start_date') : \Carbon\Carbon::now()->toDateString()}}" readonly="true" />
   					<input id="datepicker2" type="text" name="end_date" value="{{Request::get('end_date')? Request::get('end_date') : \Carbon\Carbon::now()->addDays(30)->toDateString()}}"  readonly="true"/>
-  					<button type="submit"   id="booking" class="btn btn-success" ><i class="fa fa-search" aria-hidden="true"></i></button>
+  					<button type="submit"   id="booking" class="btn btn-success" ><i class="fa fa-search" ></i></button>
 				</form>
               </div>
               
