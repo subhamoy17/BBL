@@ -124,7 +124,9 @@
                             <input class="cnfm-pswrd" placeholder="Confirm Password" type="password"  id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
 
                             <button class="lg-in" type="submit" name="submit" id="submit">Register</button>
-                            
+                            <span class="nw-user">Existing User ? <a class="cm-cls">
+                                <a href="{{ route('customerpanel.frontlogin_registration') }}" class="signup">Sign In</a>
+                            </a></span>
 
                             <span class="nw-user"><a class="cm-cls">
                                 <a href="{{route('social-auth-login',['provider' => 'facebook'])}}" class="signup"><i class="fa fa-facebook-square" style="color: #5277f8;margin-right: 4px;"></i> Register With Facebook</a> |
