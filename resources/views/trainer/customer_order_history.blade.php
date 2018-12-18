@@ -100,7 +100,7 @@ $('#bootstrap-slot-data-table').DataTable({
                       <th>Remaining Session</th>
                       
                       <th>Payment Status</th>
-                      <th style="width: 125px;">Action</th>
+                      <th style="width: 85px;">Action</th>
                         
                      </tr> 
                 </thead>
@@ -135,32 +135,33 @@ $('#bootstrap-slot-data-table').DataTable({
                         --
                         @endif
                         </td>
-                        <td align="center" class="td-btn5">
+                        
 
         @if($order_history->payment_option == 'Bank Transfer' && $order_history->status ==0 && $order_history->payment_status != 'Decline')
-
+        <td align="center">
         <button type="button" class="btn btn-success status-all" title="Approve" data-msg="Approve" id="{{$order_history->order_details_id}}"><i class="fa fa-thumbs-up" title="Approve"></i></button>
 
          <button type="button"  title="Decline" class="btn btn-danger status-all" data-msg="Decline" id="{{$order_history->order_details_id}}"><i class="fa fa-thumbs-down" title="Decline"></i></button>
 
          <a class="detail-orders-modal-btn1 btn btn-info btn-sm order-show-icon" id="{{$order_history->order_details_id}}" href="#"   data-payment-option="{{$order_history->payment_option}}"  data-plan-price="{{$order_history->total_price}}" data-payment-type-name="{{$order_history->payment_type}}" data-purchased-on="{{date('d F Y', strtotime($order_history->order_purchase_date))}}" data-validity-date="{{$order_history->order_validity_date? date('d F Y', strtotime($order_history->order_validity_date)) : 'N/A'}}" data-payment-id="{{$order_history->payment_id}}" data-payment-description="{{$order_history->description? $order_history->description : 'N/A'}}" data-payment-image="{{asset('backend/bankpay_images')}}/{{$order_history->image}}" data-noimage="{{$order_history->image}}">
                               <i class="fa fa-eye" title="view details" aria-hidden="true" style="width: 13px; height: 18px;"></i></a>
+          </td>
 
           @else
+          <td align="center">
           <a class="detail-orders-modal-btn1 btn btn-info btn-sm" id="{{$order_history->order_details_id}}" href="#"   data-payment-option="{{$order_history->payment_option}}"  data-plan-price="{{$order_history->total_price}}" data-payment-type-name="{{$order_history->payment_type}}" data-purchased-on="{{date('d F Y', strtotime($order_history->order_purchase_date))}}" data-validity-date="{{$order_history->order_validity_date? date('d F Y', strtotime($order_history->order_validity_date)) : 'N/A'}}" data-payment-id="{{$order_history->payment_id}}" data-payment-description="{{$order_history->description? $order_history->description : 'N/A'}}" data-payment-image="{{asset('backend/bankpay_images')}}/{{$order_history->image}}" data-noimage="{{$order_history->image}}">
           <i class="fa fa-eye" title="view details" aria-hidden="true" style="width: 13px; height: 18px;"></i></a>
-
-        @endif
-        <?php $current_date=date("Y-m-d"); ?>
+          <?php $current_date=date("Y-m-d"); ?>
         @if($order_history->status ==1)
           @if($order_history->order_validity_date<$current_date)
           <a href="{{route('active_order_by_admin',['order_id' => Crypt::encrypt($order_history->order_details_id) ])}}" class="order-inactive">  <i class="fa fa-times-circle btn-ina" aria-hidden="true" title="Inactive" ></i></a>
           @else
           <a href="{{route('deactive_order_by_admin',['order_id' => Crypt::encrypt($order_history->order_details_id) ])}}" class="order-active"> <i class="fa fa-check-circle btn-act"  title="Active"> </i></a> 
           @endif 
-        @endif         
+        @endif    
+        </td>
+        @endif
 
-                  </td>
                          
 
                         </tr>
