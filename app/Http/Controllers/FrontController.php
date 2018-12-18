@@ -1492,6 +1492,8 @@ public function booking_bootcamp()
   ->where('order_details.customer_id',Auth::guard('customer')->user()->id)
   ->max('order_details.order_validity_date');
 
+  Log::debug(" customer_product_validity ".print_r($customer_product_validity,true));
+
   if(empty($customer_product_validity))
   {
     $customer_product_validity='';
@@ -1518,7 +1520,7 @@ public function booking_bootcamp()
   ->distinct('plan_date')
   ->get()->all();
 
-
+  // Log::debug(" date_details ".print_r($date_details,true));
 
   $no_of_session_unlimited=DB::table('order_details')
   ->join('products','products.id','order_details.product_id')
@@ -1573,6 +1575,7 @@ public function get_bootcamp_time(Request $request)
 
   $time_details=DB::table('bootcamp_plan_shedules')
   ->where('plan_date',$request->bootcamp_date)
+  ->whereNull('deleted_at')
   ->get()->all();
 
   foreach($time_details as $key=>$each_time)
@@ -1636,7 +1639,7 @@ public function bootcamp_booking_customer(Request $request)
 
       if(!empty($no_of_session_free))
       {
-        Log::debug(" no_of_session_free ".print_r($no_of_session_free,true));
+        // Log::debug(" no_of_session_free ".print_r($no_of_session_free,true));
 
         $bootcamp_booking_data['free_product']=1;
         $bootcamp_booking_data['order_details_id']=$no_of_session_free->order_id;
@@ -1657,7 +1660,7 @@ public function bootcamp_booking_customer(Request $request)
     }
 
     $bootcamp_plan_shedules_update=DB::table('bootcamp_plan_shedules')
-    ->wherein('id',$shedule_id)->increment('no_of_uses', 1);
+    ->wherein('id',$shedule_id)->whereNull('deleted_at')->increment('no_of_uses', 1);
 
     $a=new \stdClass;
 

@@ -71,18 +71,6 @@ $(document).ready(function() {
 
 </style>
 
-<script type="text/javascript">
-              function cancel_bootcamp(scheduleid,customerid){ 
-                alertify.confirm("Are you sure you want to cancelled this customer's schedule?", function (e) {
-                if (e) {
-                  // alertify.success("You've clicked OK");
-                  window.location.href="{{url('trainer/individual_bootcamp_cancele')}}/"+scheduleid+'_'+customerid;
-                } else {
-                  // alertify.error("You've clicked Cancel");
-                  }                                       
-                });
-              }
-            </script>
 
 @if(Auth::user()->master_trainer==1)
 <div class="breadcrumbs">
@@ -119,7 +107,9 @@ $(document).ready(function() {
                   <th>Customer Email</th>
                   <th>Customer Phone</th>
                   <th>Status</th>
-                  <th>Action 
+                  <th style="width: 100px;">Select to Cancelled
+                    <input type="checkbox" id="all_cutomers_schedule_cancel" class="selectall" style="margin-left: 21px">
+                    <button class="btn btn-danger" id="cancelled_button" title="Cancele"><i class="fa fa-trash-o" ></i></button>
                   </th>
                 </tr>
               </thead>
@@ -141,8 +131,8 @@ $(document).ready(function() {
                       </td>
                       <td align="center">
                         @if($each_customer->deleted_at=='')
-                    
-                    <button type="button" onclick="cancel_bootcamp({!!$each_customer->schedule_id!!},{!!$each_customer->customer_id!!})" class="btn btn-danger btn-sm" style="width: 32px;" title="Cancel"><i class="fa fa-trash-o"></i></button>
+                        <?php $cancelled_details=$each_customer->schedule_id."_".$each_customer->customer_id;?>
+                      <input type="checkbox" name="cancele_schedule[]" id="cancele_schedule" value="{{$cancelled_details}}" class="cancele_check abc" style="margin-left: 27px"> 
                         @else
                         --
                         @endif
@@ -182,6 +172,60 @@ $(document).ready(function() {
     $(document).ready(function() {
         $('#bootstrap-data-table-export').DataTable();
     } );
+</script>
+
+<script type="text/javascript">
+  $("#bootstrap-slot-data-table").on("click", ".selectall", function() {
+    $(this.form.elements).filter(':checkbox').prop('checked', this.checked);
+});
+
+</script>
+
+<script>
+$(document).ready(function (){
+   var table = $('#bootstrap-data-table-export').DataTable({
+
+   });
+
+   // Handle form submission event
+   $('#canncele_form').on('submit', function(event){ 
+      // Prevent actual form submission
+      event.preventDefault();
+      var cancele_check = $('.cancele_check:checkbox');
+            if(cancele_check.length > 0) { ;
+                if( $('.cancele_check:checkbox:checked').length < 1) {
+                    alertify.alert('Please select at least one to cancelled');
+                    cancele_check[0].focus();
+                    return false;
+                }
+            }
+            else if($('.cancele_check:checkbox:checked').length==0 && $('.selectall:checkbox:checked').length==1)
+                {
+                   alertify.alert('Please select at least one to cancelled');
+                    cancele_check[0].focus();
+                    return false;
+                }
+
+      alertify.confirm("Are you sure you want to cancelled all selected booking?", function (e) {
+          if (e) {
+                  
+                  $.ajax({
+            url: '{{url("trainer/individual_bootcamp_cancele")}}',
+            data: $('#canncele_form').serialize(),
+            success: function(data){
+            alertify.alert("Your selected booking cancellation is done");
+            location.reload();
+         }
+      });
+          }
+          else
+          {
+            return false;
+          }
+        });
+   });
+});
+
 </script>
 
 @endsection

@@ -170,7 +170,7 @@
                         <input type="hidden" name="all_date[]" id="all_date" class="all_date_class" value="{{$each_date->plan_date}}">
                         @endforeach
                         @else
-                        <input type="text" id="bootcamp_date" name="bootcamp_date" class="form-control" readonly="true" value="No dates are available to apply">
+                        <input type="text" id="bootcamp_date" name="bootcamp_date" class="form-control" readonly="true" value="No dates are available to apply" disabled="disabled">
                         @endif
 
                       </div>
