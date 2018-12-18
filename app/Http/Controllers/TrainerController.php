@@ -3464,7 +3464,7 @@ public function bootcamp_plan_delete($id)
 
       $last_booking_date=$all_booking_schedule_date[count($all_booking_schedule_date)-1];
 
-      $no_booking_schedule_date=DB::table('bootcamp_plan_shedules')->where('plan_date','>=',$last_booking_date)->where('bootcamp_plan_id',$id)->pluck('plan_date');
+      $no_booking_schedule_date=DB::table('bootcamp_plan_shedules')->where('plan_date','>',$last_booking_date)->where('bootcamp_plan_id',$id)->pluck('plan_date');
 
 
       $first_no_booking_schedule_date=$no_booking_schedule_date[0];
