@@ -85,13 +85,13 @@
                     <td>{{date('d F Y', strtotime($mydata->date))}}</td>
                      <td>
                          
-                    <a href="#" id="asd" class="common_mot btn btn-info btn-sm" data-right_arm="{{$mydata->right_arm}}"  data-left_arm="{{$mydata->left_arm}}" data-chest="{{$mydata->chest}}"
+                    <a  style="margin-left: 25px;" href="#" id="asd" class="common_mot btn btn-info btn-sm" data-right_arm="{{$mydata->right_arm}}"  data-left_arm="{{$mydata->left_arm}}" data-chest="{{$mydata->chest}}"
                       data-waist="{{$mydata->waist}}" data-hips="{{$mydata->hips}}"
                       data-right_thigh="{{$mydata->right_thigh}}" data-right_calf="{{$mydata->right_calf}}" 
                       data-left_calf="{{$mydata->left_calf}}" data-weight="{{$mydata->weight}}"
                       data-left_thigh="{{$mydata->left_thigh}}" data-starting_weight="{{$mydata->starting_weight}}"  data-ending_weight="{{$mydata->ending_weight}}"  data-heart_beat="{{$mydata->heart_beat}}"  data-blood_pressure="{{$mydata->blood_pressure}}"
                       data-height="{{$mydata->height}}" data-description="{{$mydata->description}}" class="btn btn-success">
-                    Click Here</a>
+                    <i class="fa fa-eye" title="View MOT" aria-hidden="true"></i></a>
                    </td>
 
                  </tr>

@@ -17,7 +17,7 @@
   if(isset($_GET['start_date']) && !empty($_GET['start_date'])){ 
     echo $_GET['start_date']; }?>"/>
   <input id="datepicker4" type="text" readonly="true" name="end_date" placeholder="Please select a date" value="<?php if(isset($_GET['end_date']) && !empty($_GET['end_date'])){ echo $_GET['end_date']; }?>" />
-          <button type="submit" id="booking" class="btn btn-success" ><i class="fa fa-search" aria-hidden="true" ></i></button>
+          <button type="submit" id="booking" class="btn btn-success" ><i class="fa fa-search" aria-hidden="false" ></i></button>
         </form>
         
     </div>
