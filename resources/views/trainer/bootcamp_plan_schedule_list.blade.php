@@ -134,7 +134,7 @@ $(document).ready(function() {
                       
                       <td align="center">
                        
-                         @if($now < $each_schedule->plan_date && $each_schedule->deleted_at=='')
+                         @if($now <= $each_schedule->plan_date && $each_schedule->deleted_at=='')
                         <a href="{{route('bootcamp_schedule_edit_view',['id' => Crypt::encrypt($each_schedule->schedule_id) ])}}" class="btn btn-primary btn-sm" title="Edit Schedule"><i class="fa fa-edit" title="Edit Schedule"></i></a>
                        
                          @else
@@ -142,7 +142,7 @@ $(document).ready(function() {
                         @endif
                       </td> 
                          <td>
-                        @if($now < $each_schedule->plan_date && $each_schedule->deleted_at=='')
+                        @if($now <= $each_schedule->plan_date && $each_schedule->deleted_at=='')
                         <input type="checkbox" name="cancele_schedule[]" id="cancele_schedule" value="{{$each_schedule->schedule_id}}" class="cancele_check abc" style="margin-left: 27px">                    
                          @else
                           &nbsp;&nbsp;&nbsp;&nbsp;---
