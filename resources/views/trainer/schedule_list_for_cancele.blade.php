@@ -107,9 +107,9 @@ $(document).ready(function() {
                   <th>Customer Email</th>
                   <th>Customer Phone</th>
                   <th>Status</th>
-                  <th style="width: 100px;">Select to Cancelled
+                  <th style="width: 100px;">Select to Cancel
                     <input type="checkbox" id="all_cutomers_schedule_cancel" class="selectall" style="margin-left: 21px">
-                    <button class="btn btn-danger btn-sm" id="cancelled_button" title="Cancele"><i class="fa fa-trash-o" ></i></button>
+                    <button class="btn btn-danger btn-sm" id="cancelled_button" title="Cancel"><i class="fa fa-trash-o" ></i></button>
                   </th>
                 </tr>
               </thead>

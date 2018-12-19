@@ -21,12 +21,18 @@ $('#bootstrap-slot-data-table').DataTable({
 
 <style>
 .order-inactive{
-  display: inline-block; margin-top: 2px;height: 31px;background: #d8a70d;
-    line-height: 31px;
+      display: inline-block;
+    margin-top: 2px;
+    height: 31px;
+    background: #d8a70d;
+    line-height: 26px;
 }
 .order-active{
-  display: inline-block; margin-top: 2px;height: 31px;background: #229422;
-    line-height: 31px;
+        display: inline-block;
+    margin-top: 5px;
+    height: 31px;
+    background: #1d711d;
+    line-height: 28px;
 }
 </style>
 

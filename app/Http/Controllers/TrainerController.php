@@ -3435,8 +3435,8 @@ public function bootcamp_plan_edit_view($id)
 
 public function bootcamp_plan_delete($id)
 {
-  // DB::beginTransaction();
-  // try{
+  DB::beginTransaction();
+  try{
     $this->cart_delete_trainer();
     $plan_details=DB::table('bootcamp_plans')->where('id',$id)->first();
 
@@ -3488,15 +3488,15 @@ public function bootcamp_plan_delete($id)
      DB::commit();
       return redirect('trainer/bootcamp-plan')->with("success","You have successfully deleted one bootcamp plan");
     }
-// }
-//   catch(\Exception $e) {
-//       DB::rollback();
-//       return abort(200);
-//   }
+}
+  catch(\Exception $e) {
+      DB::rollback();
+      return abort(200);
+  }
 }
 public function bootcamp_plan_final_delete(Request $request)
 {
-  Log::debug(" bootcamp_plan_final_delete ".print_r($request->all(),true));
+  //Log::debug(" bootcamp_plan_final_delete ".print_r($request->all(),true));
   DB::beginTransaction();
   try{
 
@@ -3548,7 +3548,7 @@ public function bootcamp_plan_final_delete(Request $request)
   }
 
   DB::commit();
-      return redirect()->back()->with("success","You have successfully deleted this bootcamp plan");
+  return redirect('trainer/bootcamp-plan')->with("success","You have successfully deleted one bootcamp plan");
   }
   catch(\Exception $e) {
       DB::rollback();

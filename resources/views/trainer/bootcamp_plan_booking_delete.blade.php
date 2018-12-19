@@ -25,11 +25,11 @@
 @if(Auth::user()->master_trainer==1)
 
   <div class="breadcrumbs">
-    <div class="col-sm-8">
+    <div class="col-sm-12">
         <div class="page-header float-left">
             <div class="page-title">
                 <h1>Delete Plan Details</h1>
-                <h1>{{$plan_details->plan_st_date}} to {{$plan_details->plan_end_date}}</h1>
+                <h1>Plan Schedule Date: {{$plan_details->plan_st_date}} to {{$plan_details->plan_end_date}}</h1>
             </div>
         </div>
     </div>   
@@ -39,7 +39,7 @@
     <div class="col-sm-12">
         <div class="page-header float-left">
             <div class="page-title alert-danger">
-                <h1>There are some bookings for this bootcamp plan upto {{$last_booking_date}} and from {{$first_no_booking_schedule_date}} to {{$last_no_booking_schedule_date}} are no bookings. You choose the date from below and delete schedule as well as cancele bookings.</h1>
+                <h1>There are some bookings for this bootcamp plan upto {{$last_booking_date}}. If you choose after this date then there will not any cancel booking.</h1>
             </div>
         </div>
     </div>   
