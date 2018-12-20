@@ -41,7 +41,7 @@ $(document).ready(function() {
     <div class="col-sm-3">
         <div class="page-header float-left ex3" style="padding-top: 2%;">
             <a href="{{route('bootcamp_plan')}}">
-                <button type="button" class="btn btn-success"><i class="fa fa-plus-circle"></i>&nbsp;Add New Bootcamp Plan</button>
+                <button type="button" class="btn btn-success"><i class="fa fa-plus-circle"></i>&nbsp;Add Bootcamp Plan</button>
             </a>
         </div>
     </div>

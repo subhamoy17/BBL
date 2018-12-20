@@ -62,6 +62,7 @@ $(document).ready(function() {
 
 </style>
 
+
 @if(Auth::user()->master_trainer==1)
 <div class="breadcrumbs">
     <div class="col-sm-9">
@@ -72,6 +73,7 @@ $(document).ready(function() {
         </div>
     </div>
 </div>
+
 <div class="content mt-3" style="margin-top: 0px !important;">
   <div class="animated fadeIn">
     <div class="row">
@@ -83,9 +85,23 @@ $(document).ready(function() {
           <!-- </div>  onsubmit="return checkTheBox();" -->
           <div class="card-body">
              <form id="canncele_form" method="post">
+
               <input type="hidden" name="cancelled_reason" id="cancelled_reason">
            <table id="bootstrap-slot-data-table" class="display responsive table-striped table-bordered" width="100%">
+
+
+
               <thead>
+                  <tr>
+                    <div style="float: right;">
+                    <th style="float: right;">
+                       
+  
+  <button class="btn btn-danger btn-sm" id="cancelled_button" title="Delete Schedule"><i class="fa fa-trash-o" ></i></button>
+
+                    </th>
+                  </div>
+                  </tr>
                 <tr>
                  
                   <th style="width: 6%;">Sl. No.</th>
@@ -135,7 +151,11 @@ $(document).ready(function() {
                       <td align="center">
                        
                          @if($now <= $each_schedule->plan_date && $each_schedule->deleted_at=='')
-                        <a href="{{route('bootcamp_schedule_edit_view',['id' => Crypt::encrypt($each_schedule->schedule_id) ])}}" class="btn btn-primary btn-sm" title="Edit Schedule"><i class="fa fa-edit" title="Edit Schedule"></i></a>
+                        
+                       <a href="{{route('bootcamp_schedule_edit_view',['id' => Crypt::encrypt($each_schedule->schedule_id) ])}}" class="btn btn-primary btn-sm" title="Edit Schedule"><i class="fa fa-edit" title="Edit Schedule"></i></a>
+
+                    <button type="button" title="Delete Schedule" class="btn btn-danger status-all btn-sm"  id="{{$each_schedule->schedule_id}}" data-msg="Decline"><i class="fa fa-trash-o"></i></button>
+                    
                        
                          @else
                           ---
@@ -148,7 +168,7 @@ $(document).ready(function() {
                           &nbsp;&nbsp;&nbsp;&nbsp;---
                         @endif
                       </td> 
-                     <!--  <td><a href="{{route('bootcamp_schedule_edit_view',['id' => Crypt::encrypt($each_schedule->schedule_id) ])}}"><i class="fa fa-edit" title="Edit product"></i></a></td> -->
+                    
                     </tr>
                   @endforeach
                 @endif
@@ -166,7 +186,7 @@ $(document).ready(function() {
 
 <div id="reason_modal" class="modal fade mot-mod" role="dialog" >
   <div class="modal-dialog success_modal">
-    
+    <input type="hidden"  id="reason_id"></input>
     <div class="modal-content">
     <div class="modal-header">
       <h2 style="font-size: 20px;text-align: center;">Comment your decline reason</h2>
@@ -178,7 +198,7 @@ $(document).ready(function() {
           </div><br/>
           <div class="col-sm-9 col-xs-12">
             <div class="form-group" align="center">
-              <textarea class="form-control" rows="3" id="comment"></textarea>
+              <textarea class="form-control" rows="3"   id="comment"></textarea>
             </div>
           </div>
         </div>
@@ -309,6 +329,75 @@ $(document).ready(function (){
 });
    });
 });
+
+</script>
+
+
+
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#bootstrap-slot-data-table").on("click", ".status-all", function(e) {
+      var action = $(this).data("msg");
+      console.log(action);
+      var row = this.closest('tr');
+      if (action == "Decline"){
+        $('#reason_id').val('');
+        $('#reason_id').val(this.id);
+        $('#reason_action').val(action);
+        $('#comment').val('');
+        alertify.confirm("Are you sure you want to delete this shedule?", function (e) {
+          if (e) {
+            $('#reason_modal').modal('show');
+          }
+          else
+          {
+          }
+        });
+      }
+      
+    });
+  $("#reason").on('click',function()
+    {   
+      var id=$('#reason_id').val();
+       console.log(id);
+      var comment=$('#comment').val();
+      if(comment.trim()=="")
+      {
+        alertify.alert("Reason is required for decline schedule");
+        $('#reason_modal').modal('show');
+        return false; 
+      }
+      else
+      {
+        $(".card-body").css("opacity", .2);
+        $("#loading-img").css({"display": "block"});
+        var cancelled_reason=$('#cancelled_reason').val($('#comment').val());
+      // Submit form data via Ajax
+
+     var Data =
+        {
+          'id': id,
+          
+          'comment':comment
+        }
+        console.log(Data);
+
+      $.ajax({
+         url: '{{url("trainer/bootcamp-schedule-cancelled2")}}',
+        
+          data:
+          {
+            'data': Data,
+          },
+         success: function(data){
+            alertify.alert("Your selecting schedule cancellation is done");
+            location.reload();
+         }
+      });
+    }
+});
+  });
 
 </script>
 @endsection

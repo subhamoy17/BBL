@@ -134,7 +134,7 @@ $(document).ready(function() {
                         <?php $cancelled_details=$each_customer->schedule_id."_".$each_customer->customer_id;?>
                       <input type="checkbox" name="cancele_schedule[]" id="cancele_schedule" value="{{$cancelled_details}}" class="cancele_check abc" style="margin-left: -42px"> 
                         @else
-                        --
+                         --
                         @endif
                       </td>
                     </tr>

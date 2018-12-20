@@ -23,7 +23,7 @@
 			<div class="add_bootcamp_div col-lg-12">
 				<form  action="{{route('update_bootcamp_plan_schedules')}}" class="slct-margin" id="submit_bootcamp_session" method="post" autocomplete="off">
 					{{ csrf_field() }}
-				 <input type="hidden" name="schedule_id" value="{{$all_schedules->schedule_id}}">
+				 <input type="hidden" name="schedule_id[]" value="{{$all_schedules->schedule_id}}">
 				<div class="row form-group">
 					<div class="col-lg-3">
 						<label>Session Start Time <span class="required_field_color">*</span></label>

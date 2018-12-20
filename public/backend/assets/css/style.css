@@ -702,6 +702,8 @@ textarea.parsley-error {
 
 .tbdy1 a.btn-sm {
  margin-right: 1px;
+ margin-bottom: -2px;
+ margin-left: -2px;
 }
 
 /*81118*/
@@ -756,12 +758,13 @@ textarea.parsley-error {
 	margin-right: 1px;
 }
 #bootstrap-slot-data-table .status-all {
-    float: left;
+   
     width: 30px;
     margin: 2px;
     padding: 0;
-    height: 31px;
+    height: 27px;
     font-size: 14px;
+    margin-bottom: 0px;
 }
 /*81118*/
 
@@ -1203,6 +1206,16 @@ table.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] > td:first-child::
     max-width: 660px;
     margin: 15px;
 }
+
+/*#bootstrap-slot-data-table .status-all {
+    float: left;
+    width: 30px;
+    margin: 2px;
+    padding: 0;
+    height: 27px;
+    font-size: 14px;
+}*/
+
 #add_session_req2 input{
     font-size: 11px;
     width: 29.6%;
