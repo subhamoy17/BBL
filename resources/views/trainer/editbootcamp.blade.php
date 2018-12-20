@@ -144,7 +144,7 @@
 						@else
 							<?php $plan_end_date='';?>
 						@endif
-						<input type="text" id="plan_end_date" name="plan_end_date" class="form-control" readonly="true" value="{{$plan_end_date}}">
+						<input type="text" id="plan_end_date" name="plan_end_date" class="form-control" readonly="true" value="{{$plan_end_date}}" style="background-color: white;">
 						<input type="hidden" id="end_date" value="{{$plan_end_date}}">
 					</div>
 				</div>
