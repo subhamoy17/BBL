@@ -126,8 +126,8 @@ $(document).ready(function() {
 
                         @if($each_bootcamp->deleted_at=='')
 
-                         <a href="{{route('bootcamp_plan_edit',['plan_id' => Crypt::encrypt($each_bootcamp->bootcamp_id) ])}}" title="Edit Exercise"><button class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button></a>
-                          <button type="button" onclick="delete_bootcamp({!!$each_bootcamp->bootcamp_id!!})" class="btn btn-danger btn-sm" style="width: 32px;" title="Delete Exercise"><i class="fa fa-trash-o"></i></button>
+                         <a href="{{route('bootcamp_plan_edit',['plan_id' => Crypt::encrypt($each_bootcamp->bootcamp_id) ])}}" title="Edit Bootcamp"><button class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button></a>
+                          <button type="button" onclick="delete_bootcamp({!!$each_bootcamp->bootcamp_id!!})" class="btn btn-danger btn-sm" style="width: 32px;" title="Delete Bootcamp"><i class="fa fa-trash-o"></i></button>
                           <!-- <a href="#" class="payment btn btn-info btn-sm" style="padding: 4px 7px;position: relative; right: -1.5px; top: 0px;"><i class="fa fa-eye" title="view details"  aria-hidden="true"></i></a> -->
                         @else
                         --
