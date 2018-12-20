@@ -360,6 +360,11 @@ $("#coupon_sub").find("checkbox").each(function(){
 		}
 	});
 </script>
+ <script>
+  $( function() {
+    $( "#plantabs" ).tabs();
+  } );
+  </script>
 	</body>
 
 </html>
