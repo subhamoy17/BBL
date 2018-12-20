@@ -93,14 +93,14 @@ $(document).ready(function() {
 
               <thead>
                   <tr>
-                    <div style="float: right;">
-                    <th style="float: right;">
+                   <th  colspan="9"></th>
+                    <th style="float: center;">
                        
   
-  <button class="btn btn-danger btn-sm" id="cancelled_button" title="Delete Schedule"><i class="fa fa-trash-o" ></i></button>
+  <button class="btn btn-danger" id="cancelled_button" title="Delete Schedule"><i class="fa fa-trash-o" ></i></button>
 
                     </th>
-                  </div>
+                  
                   </tr>
                 <tr>
                  
@@ -117,7 +117,7 @@ $(document).ready(function() {
                    <th>Action</th> 
                     <th style="width: 100px;">Select to Declined 
                     <input type="checkbox" id="all_schedule_cancel" class="selectall" style="margin-left: 21px">
-                    <button class="btn btn-danger btn-sm" id="cancelled_button" title="Delete Schedule"><i class="fa fa-trash-o" ></i></button>
+                   <!--  <button class="btn btn-danger btn-sm" id="cancelled_button" title="Delete Schedule"><i class="fa fa-trash-o" ></i></button> -->
                   </th>
                 </tr>
               </thead>

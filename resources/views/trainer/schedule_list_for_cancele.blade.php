@@ -101,6 +101,16 @@ $(document).ready(function() {
               <input type="hidden" name="cancelled_reason" id="cancelled_reason">
            <table id="bootstrap-slot-data-table" class="display responsive table-striped table-bordered" width="100%">
               <thead>
+                          <tr>
+                   <th  colspan="5"></th>
+                    <th style="float: center;">
+                       
+  
+ <button class="btn btn-danger" id="cancelled_button" title="Cancel"><i class="fa fa-trash-o" ></i></button>
+
+                    </th>
+                  
+                  </tr>
                 <tr>
                   <th>Sl. No.</th>
                   <th>Customer Name</th>
@@ -109,7 +119,7 @@ $(document).ready(function() {
                   <th>Status</th>
                   <th style="width: 100px;">Select to Cancel
                     <input type="checkbox" id="all_cutomers_schedule_cancel" class="selectall" style="margin-left: 21px">
-                    <button class="btn btn-danger btn-sm" id="cancelled_button" title="Cancel"><i class="fa fa-trash-o" ></i></button>
+                    <!-- <button class="btn btn-danger btn-sm" id="cancelled_button" title="Cancel"><i class="fa fa-trash-o" ></i></button> -->
                   </th>
                 </tr>
               </thead>
