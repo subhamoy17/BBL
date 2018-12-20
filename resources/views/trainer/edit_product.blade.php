@@ -229,6 +229,7 @@ maxlength: 'Please enter number less than 50 numbers.'
             <div class="col-12 col-md-8">
               @if($product_details->payment_type_id==1)
              <label for="text-input" class="total_price" style="padding-left: 12px;">{{$product_details->total_price}}</label>
+             <input type="hidden" class="form-control" name="final_total_price" id="final_total_price" value="{{$product_details->total_price}}">
              @else
             <input type="text" class="form-control" name="final_total_price" id="final_total_price" value="{{$product_details->total_price}}">
             @endif
