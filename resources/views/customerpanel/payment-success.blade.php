@@ -44,7 +44,7 @@
                             <div class="status-ico">
                                 <img src="{{asset('frontend/images/tick-flat.png')}}">
                             </div>
-                            <p>{!! $message !!}</p>
+                            <p>Thank You for the payment!</p>
                             <p>Your Order Ref ID is {!! $payment_id !!}. Please note down that Order Ref ID for future reference.</p>
                             
                         </div>

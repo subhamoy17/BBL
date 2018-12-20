@@ -39,7 +39,7 @@
         </div>
   </section> -->
 
-  <!-- <section class="pricing df-pricing">
+  <section class="pricing df-pricing">
     <div class="container">
         <h3 class="gyl_header">Choose <span>Your Personal Training Plan</span></h3>
           <div class="row">
@@ -86,7 +86,7 @@
       </div>
             </div>
         </div>
-  </section> -->
+  </section>
   <section class="pricing df-pricing">
     <div class="container">
         <h3 class="gyl_header">Choose <span>Your Bootcamp Plan</span></h3>

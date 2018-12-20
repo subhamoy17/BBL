@@ -17,11 +17,11 @@
     <div class="form-group">
 	<form class="w3-container w3-display-middle w3-card-4" enctype="multipart/form-data" method="POST" id="bank_payment-form"  action="{{url('customer/bankpaymentsuccess')}}">
   {{ csrf_field() }}
-  <h6>Pay from here</h6>
+  <h6>Pay Via Bank Transfer</h6>
   <div class="acnt-det">
-    <!-- <p><h5>Name: </h5> <span>Body By Lekan</span></p> -->
+    <p><h5>Account Name: </h5> <span>Body By Lekan FItness Limited</span></p>
     <p><h5>Sort Code: </h5> <span> 23-69-72</span></p>
-    <p><h5>Account No: </h5> <span> 04449181</span></p>
+    <p><h5>Account No: </h5> <span> 12843805</span></p>
   </div>
   <label class="w3-text-blue"><b>Payable amount is </b>&nbsp;  <span class="pay-pal-price"><i class="fa fa-gbp"></i> {{$data['slots_price']}}</span></label>
    @if($coupon_id)
@@ -53,7 +53,7 @@
       <strong>Alternatively you can provide the screenshot of the bank transfer</strong>
     </label><input type="file" name="package_image" id="package_image">
        
-  <button class="btn btn-dark btn-theme-colored btn-flat" name="submit" id="aba">Pay with Bank</button>
+  <button class="btn btn-dark btn-theme-colored btn-flat" name="submit" id="aba">Confirm you have paid via Bank transfer</button>
 </form>
 </div>
 </div>
