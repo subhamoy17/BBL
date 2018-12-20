@@ -399,7 +399,7 @@ a.navbar-brand {
     -moz-background-size: cover;
     -o-background-size: cover;
     -ms-background-size: cover;
-    min-height: 550px;
+    min-height: 350px;
 }
 
 
@@ -410,7 +410,7 @@ a.navbar-brand {
     -moz-background-size: cover;
     -o-background-size: cover;
     -ms-background-size: cover;
-    min-height: 550px;
+    min-height: 350px;
 }
 
 .main_section_agile.inner.contact_us  {
@@ -420,7 +420,7 @@ a.navbar-brand {
     -moz-background-size: cover;
     -o-background-size: cover;
     -ms-background-size: cover;
-    min-height: 550px;
+    min-height: 350px;
 }
 
 .main_section_agile.inner.register  {
@@ -430,7 +430,7 @@ a.navbar-brand {
     -moz-background-size: cover;
     -o-background-size: cover;
     -ms-background-size: cover;
-    min-height: 550px;
+    min-height: 350px;
 }
 
 .main_section_agile.inner.service  {
@@ -440,7 +440,7 @@ a.navbar-brand {
     -moz-background-size: cover;
     -o-background-size: cover;
     -ms-background-size: cover;
-    min-height: 550px;
+    min-height: 350px;
 }
 /*--- slider-css --*/
 
@@ -532,6 +532,9 @@ a.navbar-brand {
     display: inline-block;
     margin: 0 2px;
     list-style: none;
+    width: 50px;
+    height: 50px;
+    /* display: inline-block; */
 }
 
 .rslides_tabs li:first-child {
@@ -549,8 +552,8 @@ a.navbar-brand {
 
 #slider3-pager img {
     float: left;
-    display: block;
-
+    display: inline-block;
+    width: 100%;
 }
 
 .rslides_tabs a {
@@ -601,7 +604,7 @@ ul#slider li:nth-child(1) {
     -moz-background-size: cover;
     -o-background-size: cover;
     -ms-background-size: cover;
-    min-height: 650px;
+    min-height: 420px;
 }
 
 ul#slider li:nth-child(2) {
@@ -611,7 +614,7 @@ ul#slider li:nth-child(2) {
     -moz-background-size: cover;
     -o-background-size: cover;
     -ms-background-size: cover;
-    min-height: 650px;
+    min-height: 420px;
 }
 
 ul#slider li:nth-child(3) {
@@ -621,7 +624,7 @@ ul#slider li:nth-child(3) {
     -moz-background-size: cover;
     -o-background-size: cover;
     -ms-background-size: cover;
-    min-height: 650px;
+    min-height: 420px;
 }
 
 ul#slider li:nth-child(4) {
@@ -631,7 +634,7 @@ ul#slider li:nth-child(4) {
     -moz-background-size: cover;
     -o-background-size: cover;
     -ms-background-size: cover;
-    min-height: 650px;
+    min-height: 420px;
 }
 
 
@@ -5179,7 +5182,7 @@ a.sign-btn2 {
     background: #daa50a;
     padding: 7px 30px;
     font-size: 16px;
-    color: #fff;
+    color: #fff !important;
     display: inline-block;
     margin-top: 15px;
 }
@@ -6568,3 +6571,62 @@ span.line_t2 {
     background: #fff;
   }
   /*141218*/
+
+
+  /*201218*/
+  #plantabs {
+    border: none;
+    width: 100%;
+  }
+  #plantabs ul {
+    background: none;
+    border: none;
+    text-align: center;
+    top: 25px;
+    position: relative;
+    margin-bottom: 10px;
+}
+#plantabs ul li {
+    background: none;
+    border: none;
+    text-align: center;
+    float: none;
+    display: inline-block;
+    position: relative;
+}
+#plantabs ul li a{
+    font-size: 16px;
+}
+.ui-tabs .ui-tabs-nav li.ui-tabs-active a {
+    color: #82788c;
+}
+.ui-tabs .ui-tabs-nav li.ui-tabs-active a:hover{
+    color: #454545 !important;
+}
+.ui-tabs .ui-tabs-nav li.ui-tabs-active {
+    border: 1px solid #f69606 !important;
+    border-radius: 0;
+}
+#plantabs ul li a:hover {
+    color: #f69606;
+}
+/*#plantabs ul li:first-child {
+    visibility: hidden;
+    font-size: 0;
+}
+#plantabs ul li:first-child a{
+    font-size: 0;
+}
+#plantabs ul li:first-child a:before{
+    content: "";
+    position: absolute;;
+    width: 120px;
+    height: 120px;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: #000;
+}*/
+  /*201218*/}
+}
