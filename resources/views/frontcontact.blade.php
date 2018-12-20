@@ -23,7 +23,7 @@
               <div class="contact-info text-center">
                 <i class="fa fa-map-marker font-36 mb-10 text-theme-colored"></i>
                 <h4>Address</h4>
-                <h6 class="text-gray">Houndmills Rd, Basingstoke RG21 6YU</h6>
+                <h6 class="text-gray">Telford Road, Basingstoke RG21 6YU, UK</h6>
               </div>
             </div>
             <div class="col-sm-12 col-md-4">
@@ -103,7 +103,8 @@
    					</div>
    					<div class="col-lg-5 col-md-5 col-sm-12 colxs-12">
    						<div class="map">
-   							<iframe src="https://maps.google.com/maps?q=Oakridge%20Hall%2C%20Cherry%20Tree%20Walk%2C%20RG21%205RL%20Basingstoke&t=&z=13&ie=UTF8&iwloc=&output=embed" width="100%" height="467" frameborder="0" style="border:0" allowfullscreen></iframe>
+   						
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2496.067545674338!2d-1.1115204847012834!3d51.27307573563051!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487421ec91e3f793%3A0x9c2b75e2ce724ff4!2sTelford+Rd%2C+Basingstoke+RG21+6YU%2C+UK!5e0!3m2!1sen!2sin!4v1545309418632" width="100%" height="467" frameborder="0" style="border:0" allowfullscreen></iframe>
    						</div>
    					</div>
    				</div>

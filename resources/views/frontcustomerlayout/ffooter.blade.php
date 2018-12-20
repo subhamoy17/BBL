@@ -40,7 +40,7 @@
 				<div class="col-md-3 gylayouts_footer_grid">
 					<h2>Contact <span>Us</span></h2>
 					    <ul class="con_inner_text">
-							<li><span class="fa fa-map-marker" aria-hidden="true"></span>Oakridge Hall, Cherry Tree Walk, RG21 5RL Basingstoke</li>
+							<li><span class="fa fa-map-marker" aria-hidden="true"></span>Telford Road, Basingstoke RG21 6YU, UK</li>
 							<li><span class="fa fa-envelope-o" aria-hidden="true"></span> <a href="mailto:info@bodybylekan.com">info@bodybylekan.com</a></li>
 							<li><span class="fa fa-phone" aria-hidden="true"></span>+44 7706 975795</li>
 						</ul>
@@ -57,7 +57,7 @@
 				<div class="clearfix"> </div>
 					
 			</div>
-			<p class="copyright">© 2018 Body By Lekan. All Rights Reserved |Powered by <a href="https://www.softcliquesoftware.in/" target="_blank">Softclique Software Services LLP</a></p>
+			<p class="copyright">© <?php echo date("Y"); ?> Body By Lekan. All Rights Reserved |Powered by <a href="https://www.softcliquesoftware.in/" target="_blank">Softclique Software Services LLP</a></p>
 			<!--scroll to top button-->
     		<a id="back2Top" title="Back to top" href="#"><i class="fa fa-hand-o-up"></i></a>
 
