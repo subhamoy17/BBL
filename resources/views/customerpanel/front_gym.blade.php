@@ -3,11 +3,11 @@
 @section('content')
 <div class="exercise-sec">
   <div class="container">
-    <div class="wthree_head_section">
+    <div class="wthree_head_section" style="margin-top: 48px;">
       <h3 class="gyl_header">Top <span>Exercise</span></h3>
     </div>
     <div class="exercise-wrp">
-      <div class="row">
+      <div class="row" style="margin-bottom: 48px;">
         @foreach($data as $mydata)
         <div class="exr-box">
           <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 exr-txt">

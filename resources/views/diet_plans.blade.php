@@ -28,7 +28,8 @@
 									@if($each_common_diet_plan->author_image!='')
 										<img src="{{asset('backend/common_diet_plan_images')}}/{{$each_common_diet_plan->author_image}}" height="76px" width="60px">
 									@else
-										<img src="{{asset('backend/images/no-profile-image.jpg')}}" height="76px" width="60px">
+										<img src="{{asset('backend/images/1539433106_trainerimg.jpg')}}" height="76px" width="60px">
+										
 									@endif
 								</div>
 								<div class="pt-name">
@@ -40,18 +41,18 @@
 							<div class="pt-text">
 								<p>{{$each_common_diet_plan->description}}</p>
 							</div>
-							<h5 class="prc-amnt"><span>Price</span> <i class="fa fa-gbp"></i> {{$each_common_diet_plan->price}}</h5>
+							<!-- <h5 class="prc-amnt"><span>Price</span> <i class="fa fa-gbp"></i> {{$each_common_diet_plan->price}}</h5> -->
 							<!-- <button type="button" id="purchase_button">Purchase</button> -->
-							@if(Auth::guard('customer')->check())
+			<!-- 				@if(Auth::guard('customer')->check())
 								<form action="{{url('customer/diet-plan-purchase')}}" method="post">
 									{{ csrf_field() }}
 									<input type="hidden" name="common_diet_plan_id" value="{{$each_common_diet_plan->id}}">
 									<button type="submit">Purchase</button>
 								</form>
-                <!-- <a href="{{url('diet-plan-purchase')}}" class="dietplan-purchase-btn2">Purchase</a> -->
+               
               @else
                 <a href="{{url('customer-login')}}" class="dietplan-purchase-btn2">Purchase</a>
-              @endif
+              @endif -->
 							<div class="clearfix"></div>
 						</div>
 						<div class="clearfix"></div>
