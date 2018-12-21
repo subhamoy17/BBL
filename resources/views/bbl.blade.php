@@ -22,24 +22,28 @@
 						<div class="agile_banner_text_info">
 							<h3>Become Strong And Healthy </h3>
 							<p>Train hard is the right place to start new life as an athletic, strong and healthy person with a strong will.</p>
+                            <a href="#" class="bnr-btn">Lorem Ipsum Doler Sit View Plans</a>
 						</div>
 					</li>
 					<li>
 						<div class="agile_banner_text_info">
 							<h3>Exceptional Life Fitness </h3>
 							<p>Train hard is the right place to start new life as an athletic, strong and healthy person with a strong will.</p>
+                            <a href="#" class="bnr-btn">Lorem Ipsum Doler Sit View Plans</a>
 						</div>
 					</li>
 					<li>
 						<div class="agile_banner_text_info">
 							<h3>Build Your Body With Us </h3>
 							<p>Train hard is the right place to start new life as an athletic, strong and healthy person with a strong will.</p>
+                            <a href="#" class="bnr-btn">Lorem Ipsum Doler Sit View Plans</a>
 						</div>
 					</li>
 					<li>
 						<div class="agile_banner_text_info">
 							<h3>Exceptional Life Fitness </h3>
 							<p>Train hard is the right place to start new life as an athletic, strong and healthy person with a strong will.</p>
+                            <a href="#" class="bnr-btn">Lorem Ipsum Doler Sit View Plans</a>
 						</div>
 					</li>
 				</ul>
@@ -70,6 +74,48 @@
                 </ul>
                 
                 <div id="tabs-1">
+                    <div id="bootcamp-slider2" class="owl-carousel">
+          @if(count($bootcamp_product_details)>0)
+            @foreach($bootcamp_product_details as $bc_key=>$each_bootcamp_product)
+            <div class="price-box" style="background: url(/frontend/images/banner1.jpg)no-repeat center top / cover; min-height:300px;">
+              <div class="p-box-head cmn-3">
+              <h3><span>{{$each_bootcamp_product->validity? $each_bootcamp_product->validity.' Days' : 'Validity N/A'}}</span></h3>
+              <h1><i class="fa fa-gbp"></i> {{$each_bootcamp_product->total_price}} 
+                <br><span> {{$each_bootcamp_product->payment_type_name}}
+                    @if($each_bootcamp_product->payment_type_name=='Subscription')
+                (Notice Period 
+                {{$each_bootcamp_product->notice_period_value*$each_bootcamp_product->notice_period_duration}} Days)
+                @endif
+                </span></h1>
+              <div class="btm-arow"><i class="fa fa-arrow-circle-down"></i></div>
+              <div class="plan-batch bch-3">Bootcamp</div>
+              <div class="cntrct"><h5>Contract <span> - {{$each_bootcamp_product->contract? $each_bootcamp_product->contract : 'N/A'}}</span></h5></div>
+              </div>
+              <div class="p-box-bdy">
+              <h2>
+                @if($each_bootcamp_product->total_sessions!='Unlimited')
+                  {{$each_bootcamp_product->total_sessions}}<span>Sessions</span>
+                @else
+                  {{substr($each_bootcamp_product->total_sessions,0,1)}}<span>{{substr($each_bootcamp_product->total_sessions,1,8)}} Sessions</span>
+                @endif
+              </h2>
+              
+              <div class="clearfix"></div>
+              @if(Auth::guard('customer')->check())
+                  <a href="{{route('bootcamp_plan_purchase',['bootcamp_plan_id' => Crypt::encrypt($each_bootcamp_product->product_id) ])}}" class="sign-btn2">Subscribe</a>
+                   @else
+                <a href="{{url('customer-login')}}" class="sign-btn2">Sign Up</a>
+                @endif
+              </div>
+            </div>
+          
+            @endforeach
+          @else
+            No bootcamp plan available
+          @endif
+          </div>
+                </div>
+                <div id="tabs-2">
         <div id="bootcamp-slider2" class="owl-carousel">
           @if(count($bootcamp_product_details)>0)
             @foreach($bootcamp_product_details as $bc_key=>$each_bootcamp_product)
@@ -110,7 +156,7 @@
          
           </div>
       </div>
-      <div id="tabs-2">
+      <!-- <div id="tabs-2">
         <div id="bootcamp-slider2" class="owl-carousel">
           @if(count($personal_training_product_details)>0)
              @foreach($personal_training_product_details as $pt_key=>$each_personal_training_product)
@@ -154,7 +200,7 @@
             @endforeach
          @endif
           </div>
-      </div>
+      </div> -->
       <!-- <div id="tabs-4">
         <div id="bootcamp-slider2" class="owl-carousel">
           @if(count($bootcamp_product_details)>0)
@@ -258,96 +304,7 @@
 	</div>
 	<!-- //About us -->
 	<!--Featured Slider-->
-	<!--Services Section-->
-    <section class="service-section">
-    	<div class="container">
-    		<h3 class="gyl_header">Featured <span>Services</span></h3>
-    		<p>Our features services are designed to give you the dream body you always wanted.</p>
-    		<div class="row">
-    			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-    				<div class="box-hover-effect thumb-cross-effect forservice">
-    					<div class="effect-wrapper">
-    						<div class="thumb"><img src="{{asset('frontend/images/sr1.jpg')}}"></div>
-    						<a class="hover-link">View more</a>
-    					</div>
-    					<div class="sr-text">
-    						<h4>GYM TRAINING</h4>
-    						<p>Fitness training in a state of art modern gym</p>
-    						<a href="{{route('gym_training')}}" class="rd-btn2">read more <i class="fa fa-long-arrow-right"></i></a>
-    					</div>
-    				</div>
-    			</div>
-    			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-    				<div class="box-hover-effect thumb-cross-effect forservice">
-    					<div class="effect-wrapper">
-    						<div class="thumb"><img src="{{asset('frontend/images/sr2.jpg')}}"></div>
-    						<a class="hover-link">View more</a>
-    					</div>
-    					<div class="sr-text">
-    						<h4>DIET PLANS</h4>
-    						<p>Customized diet plans to fit all body types</p>
-    						<a href="{{route('diet_plans')}}" class="rd-btn2">read more <i class="fa fa-long-arrow-right"></i></a>
-    					</div>
-    				</div>
-    			</div>
-    			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-    				<div class="box-hover-effect thumb-cross-effect forservice">
-    					<div class="effect-wrapper">
-    						<div class="thumb"><img src="{{asset('frontend/images/bootcamp_home_img.jpg')}}"  width="360px"></div>
-    						<a class="hover-link">View more</a>
-    					</div>
-    					<div class="sr-text">
-    						<h4>BOOTCAMP TRAINING</h4>
-    						<p>Bootcamp training sessions</p>
-    						<a href="{{route('bootcamp_training')}}" class="rd-btn2">read more <i class="fa fa-long-arrow-right"></i></a>
-    					</div>
-    				</div>
-    			</div>
-                <div class="clearfix"></div>
-    			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-    				<div class="box-hover-effect thumb-cross-effect forservice">
-    					<div class="effect-wrapper">
-    						<div class="thumb"><img src="{{asset('frontend/images/instructin _videos.jpg')}}"></div>
-    						<a class="hover-link">View more</a>
-    					</div>
-    					<div class="sr-text">
-    						<h4>INSTRUCTIONAL VIDEOS</h4>
-    						<p>Access to online gym videos for constant guidance</p>
-    						<a href="{{url('/exercise')}}" class="rd-btn2">read more <i class="fa fa-long-arrow-right"></i></a>
-    					</div>
-    				</div>
-    			</div>
-    			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-    				<div class="box-hover-effect thumb-cross-effect forservice">
-    					<div class="effect-wrapper">
-    						<div class="thumb"><img src="{{asset('frontend/images/gym instruction.jpg')}}"></div>
-    						<a class="hover-link">View more</a>
-    					</div>
-    					<div class="sr-text">
-    						<h4>PERSONAL INSTRUCTORS</h4>
-    						<p>Personal fitness trainers, available at your convenience</p>
-    						<a href="{{route('personal_instructor')}}" class="rd-btn2">read more <i class="fa fa-long-arrow-right"></i></a>
-    					</div>
-    				</div>
-    			</div>
-    			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-    				<div class="box-hover-effect thumb-cross-effect forservice">
-    					<div class="effect-wrapper">
-    						<div class="thumb"><img src="{{asset('frontend/images/online booking.jpg')}}"></div>
-    						<a class="hover-link">View more</a>
-    					</div>
-    					<div class="sr-text">
-    						<h4>ONLINE BOOKING</h4>
-    						<p>Easy online booking of packages and tracking your health plan</p>
-    						<a href="{{url('/pricing')}}" class="rd-btn2">read more <i class="fa fa-long-arrow-right"></i></a>
-    					</div>
-    				</div>
-    			</div>
-    			<div class="clearfix"></div>
-    		</div>
-    	</div>
-    </section>
-	<!--//Featured Slider-->
+	
 	<!--Get started-->
 	<section class="gt-strt">
 		<div class="container">
@@ -358,5 +315,95 @@
 			</div>
 		</div>
 	</section>
+    <!--Services Section-->
+    <section class="service-section">
+        <div class="container">
+            <h3 class="gyl_header">Featured <span>Services</span></h3>
+            <p>Our features services are designed to give you the dream body you always wanted.</p>
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                    <div class="box-hover-effect thumb-cross-effect forservice">
+                        <div class="effect-wrapper">
+                            <div class="thumb"><img src="{{asset('frontend/images/sr1.jpg')}}"></div>
+                            <a class="hover-link">View more</a>
+                        </div>
+                        <div class="sr-text">
+                            <h4>GYM TRAINING</h4>
+                            <p>Fitness training in a state of art modern gym</p>
+                            <a href="{{route('gym_training')}}" class="rd-btn2">read more <i class="fa fa-long-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                    <div class="box-hover-effect thumb-cross-effect forservice">
+                        <div class="effect-wrapper">
+                            <div class="thumb"><img src="{{asset('frontend/images/sr2.jpg')}}"></div>
+                            <a class="hover-link">View more</a>
+                        </div>
+                        <div class="sr-text">
+                            <h4>DIET PLANS</h4>
+                            <p>Customized diet plans to fit all body types</p>
+                            <a href="{{route('diet_plans')}}" class="rd-btn2">read more <i class="fa fa-long-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                    <div class="box-hover-effect thumb-cross-effect forservice">
+                        <div class="effect-wrapper">
+                            <div class="thumb"><img src="{{asset('frontend/images/bootcamp_home_img.jpg')}}"  width="360px"></div>
+                            <a class="hover-link">View more</a>
+                        </div>
+                        <div class="sr-text">
+                            <h4>BOOTCAMP TRAINING</h4>
+                            <p>Bootcamp training sessions</p>
+                            <a href="{{route('bootcamp_training')}}" class="rd-btn2">read more <i class="fa fa-long-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                    <div class="box-hover-effect thumb-cross-effect forservice">
+                        <div class="effect-wrapper">
+                            <div class="thumb"><img src="{{asset('frontend/images/instructin _videos.jpg')}}"></div>
+                            <a class="hover-link">View more</a>
+                        </div>
+                        <div class="sr-text">
+                            <h4>INSTRUCTIONAL VIDEOS</h4>
+                            <p>Access to online gym videos for constant guidance</p>
+                            <a href="{{url('/exercise')}}" class="rd-btn2">read more <i class="fa fa-long-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                    <div class="box-hover-effect thumb-cross-effect forservice">
+                        <div class="effect-wrapper">
+                            <div class="thumb"><img src="{{asset('frontend/images/gym instruction.jpg')}}"></div>
+                            <a class="hover-link">View more</a>
+                        </div>
+                        <div class="sr-text">
+                            <h4>PERSONAL INSTRUCTORS</h4>
+                            <p>Personal fitness trainers, available at your convenience</p>
+                            <a href="{{route('personal_instructor')}}" class="rd-btn2">read more <i class="fa fa-long-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                    <div class="box-hover-effect thumb-cross-effect forservice">
+                        <div class="effect-wrapper">
+                            <div class="thumb"><img src="{{asset('frontend/images/online booking.jpg')}}"></div>
+                            <a class="hover-link">View more</a>
+                        </div>
+                        <div class="sr-text">
+                            <h4>ONLINE BOOKING</h4>
+                            <p>Easy online booking of packages and tracking your health plan</p>
+                            <a href="{{url('/pricing')}}" class="rd-btn2">read more <i class="fa fa-long-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </section>
+    <!--//Featured Slider-->
 
 @endsection
