@@ -23,14 +23,6 @@ public function index(Request $request)
    try
       {
 
-        $all_product_details=DB::table('products')
-  ->join('training_type','products.training_type_id','training_type.id')
-  ->join('payment_type','products.payment_type_id','payment_type.id')
-  ->select('products.id as product_id','training_type.id as training_id','training_type.training_name as training_name','payment_type.payment_type_name as payment_type_name','products.total_sessions as total_sessions','products.price_session_or_month as price_session_or_month','products.total_price as total_price','products.validity_value as validity_value','products.validity_duration as validity_duration','products.contract as contract','products.notice_period_value as notice_period_value','products.notice_period_duration as notice_period_duration',(DB::raw('products.validity_value * products.validity_duration  as validity')),(DB::raw('products.notice_period_value * products.notice_period_duration  as notice_period')))
-  ->whereNull('products.deleted_at')
-  ->where('products.total_price','>',0)
-  ->where('products.status',1)
-  ->orderby('products.id','DESC')->get()->all();
 
    $bootcamp_product_details=DB::table('products')
   ->join('training_type','products.training_type_id','training_type.id')
@@ -51,7 +43,7 @@ public function index(Request $request)
   ->where('training_type.id',1)->where('products.status',1)
   ->orderby('products.id','DESC')->get();
 
-  return view('bbl')->with(compact('bootcamp_product_details','personal_training_product_details','all_product_details'));
+  return view('bbl')->with(compact('bootcamp_product_details','personal_training_product_details'));
   }
       catch(\Exception $e) 
       {
@@ -125,17 +117,6 @@ public function frontprice(Request $request)
   
   $data=DB::table('slots')->where('deleted_at',null)->get();
 
- 
-
-        $all_product_details=DB::table('products')
-  ->join('training_type','products.training_type_id','training_type.id')
-  ->join('payment_type','products.payment_type_id','payment_type.id')
-  ->select('products.id as product_id','training_type.id as training_id','training_type.training_name as training_name','payment_type.payment_type_name as payment_type_name','products.total_sessions as total_sessions','products.price_session_or_month as price_session_or_month','products.total_price as total_price','products.validity_value as validity_value','products.validity_duration as validity_duration','products.contract as contract','products.notice_period_value as notice_period_value','products.notice_period_duration as notice_period_duration',(DB::raw('products.validity_value * products.validity_duration  as validity')),(DB::raw('products.notice_period_value * products.notice_period_duration  as notice_period')))
-  ->whereNull('products.deleted_at')
-  ->where('products.total_price','>',0)
-  ->where('products.status',1)
-  ->orderby('products.id','DESC')->get()->all();
-
    $bootcamp_product_details=DB::table('products')
   ->join('training_type','products.training_type_id','training_type.id')
   ->join('payment_type','products.payment_type_id','payment_type.id')
@@ -156,7 +137,7 @@ public function frontprice(Request $request)
   ->orderby('products.id','DESC')->get();
 
   
-  return view('frontpricing')->with(compact('data','personal_training_product_details','bootcamp_product_details','gym_product_details','all_product_details'));
+  return view('frontpricing')->with(compact('data','personal_training_product_details','bootcamp_product_details','gym_product_details'));
 
   }
 
