@@ -1919,4 +1919,219 @@ catch(\Exception $e) {
   }
 
 
+  public function pt_plan_purchase($id)
+{
+
+  try{
+  $this->cart_delete_customer();
+
+  $plan_id=\Crypt::decrypt($id);
+
+  //Log::debug(":: slot_id :: ".print_r($slot_id,true));
+
+  $package_details=DB::table('products')
+  ->join('training_type','training_type.id','products.training_type_id')
+  ->join('payment_type','payment_type.id','products.payment_type_id')
+  ->select('training_type.training_name as product_name','payment_type.payment_type_name as payment_type_name','products.total_sessions as total_sessions','products.id as product_id','products.id as product_id',(DB::raw('products.validity_value * products.validity_duration  as validity')),'products.total_price as total_price')
+  ->where('products.id',$plan_id)->first();
+  
+    return view('customerpanel.pt_product_purchase')->with(compact('package_details'));
+  }
+
+    catch(\Exception $e) {
+      return abort(400);
+  }
+
+}
+
+public function pt_purchase_payment_mode(Request $request)
+{
+  
+
+  try{
+  $this->cart_delete_customer();
+
+  $package_details=DB::table('products')
+  ->join('training_type','training_type.id','products.training_type_id')
+  ->join('payment_type','payment_type.id','products.payment_type_id')
+  ->select('training_type.training_name as product_name','payment_type.payment_type_name as payment_type_name','products.total_sessions as total_sessions','products.id as product_id',(DB::raw('products.validity_value * products.validity_duration  as validity')),'products.total_price as total_price')
+  ->where('products.id',$request->product_id)->first();
+
+
+  //Log::debug(":: package_details :: ".print_r($package_details,true));
+
+  if($request->selector1=='Stripe')
+  {
+    return view('customerpanel.pt_online_payment')->with(compact('package_details'));
+  }
+  if($request->selector1=='Bank Transfer')
+  {
+    return view('customerpanel.pt_bank_payment')->with(compact('package_details'));
+  }
+
+  }
+
+    catch(\Exception $e) {
+
+      return abort(400);
+  }
+}
+
+public function pt_strip_payment(Request $request)
+{
+  //Log::debug(":: bootcamp_onlinepayment :: ".print_r($request->all(),true));
+
+   try{
+    
+    $package_details=DB::table('products')
+    ->join('training_type','training_type.id','products.training_type_id')
+    ->join('payment_type','payment_type.id','products.payment_type_id')
+    ->select('training_type.training_name as product_name','payment_type.payment_type_name as payment_type_name','products.total_sessions as total_sessions','products.id as product_id',(DB::raw('products.validity_value * products.validity_duration  as validity')),'products.total_price as total_price','products.price_session_or_month as price_session_or_month','products.validity_value as validity_value','products.validity_duration as validity_duration','products.contract as contract','products.notice_period_value as notice_period_value','products.notice_period_duration as notice_period_duration')
+    ->where('products.id',$request->product_id)->first();
+
+    $customer_details=Customer::find(Auth::guard('customer')->user()->id);
+    
+    \Stripe\Stripe::setApiKey ( 'sk_test_oBDW3aKMIoUchBs9TKSQ8TwF' );
+
+          $customer =  \Stripe\Customer::create([
+            'email' =>Auth::guard('customer')->user()->email,
+        ]);
+    
+         $payment_details = \Stripe\Charge::create ( array (
+                  "amount" => intval($package_details->total_price)*100,
+                  "currency" => "gbp",
+                  "source" => $request->input ( 'stripeToken' ), // obtained with Stripe.js
+                  "description" =>$package_details->product_name
+          ) );
+
+
+    $payment_history_data['payment_id']=$payment_details->id;
+    $payment_history_data['currency']='GBP';
+    $payment_history_data['amount']=$package_details->total_price;
+    $payment_history_data['payment_mode']='Stripe';
+    $payment_history_data['status']='Success';
+
+    $order_data['customer_id']=Auth::guard('customer')->user()->id;
+    $order_data['product_id']=$request->product_id;
+    $order_data['training_type']=$package_details->product_name;
+    $order_data['payment_type']=$package_details->payment_type_name;
+    $order_data['order_purchase_date']=Carbon::now()->toDateString();
+
+    if($package_details->validity!='')
+    {
+      $order_data['order_validity_date']=Carbon::now()->addDay($package_details->validity);
+    }
+    else{
+      $order_data['order_validity_date']='2099-12-30';
+    }
+    
+    $order_data['payment_option']='Stripe';
+    $order_data['status']=1;
+    $order_data['no_of_sessions']=$package_details->total_sessions;
+    $order_data['remaining_sessions']=$package_details->total_sessions;
+    $order_data['price_session_or_month']=$package_details->price_session_or_month;
+    $order_data['total_price']=$package_details->total_price;
+    $order_data['validity_value']=$package_details->validity_value;
+    $order_data['validity_duration']=$package_details->validity_duration;
+    $order_data['contract']=$package_details->contract;
+    $order_data['notice_period_value']=$package_details->notice_period_value;
+    $order_data['notice_period_duration']=$package_details->notice_period_duration;
+
+    $payment_history=DB::table('payment_history')->insert($payment_history_data);
+
+    $order_data['payment_id']=DB::getPdo()->lastInsertId();
+
+    $order_history=DB::table('order_details')->insert($order_data);
+
+    \Session::put('success_pt_stripe', 'Payment done successfully !');
+    \Session::put('order_id', $payment_history_data['payment_id']);
+
+
+    $notifydata['product_name'] =$package_details->product_name;
+    $notifydata['no_of_sessions'] =$package_details->total_sessions;
+    $notifydata['product_validity'] =$order_data['order_validity_date'];
+    $notifydata['product_purchase_date'] =$order_data['order_purchase_date'];
+    $notifydata['product_amount'] =$package_details->total_price;
+    $notifydata['order_id'] =$payment_details->id;
+    $notifydata['payment_mode'] ='Stripe';
+    $notifydata['url'] = '/customer/purchased-history';
+    $notifydata['customer_name']=$customer_details->name;
+    $notifydata['customer_email']=$customer_details->email;
+    $notifydata['customer_phone']=$customer_details->ph_no;
+    $notifydata['status']='Payment Success';
+
+    $customer_details->notify(new PlanPurchasedNotification($notifydata));
+
+    
+    return redirect('customer/ptstripepaymentsuccess');
+
+    } catch ( \Exception $e ) {
+
+      $payment_history_data['payment_id']='';
+      $payment_history_data['currency']='GBP';
+      $payment_history_data['amount']=$package_details->total_price;
+      $payment_history_data['payment_mode']='Stripe';
+      $payment_history_data['status']='Failed';
+
+      $order_data['customer_id']=Auth::guard('customer')->user()->id;
+      $order_data['product_id']=$request->product_id;
+      $order_data['training_type']=$package_details->product_name;
+      $order_data['payment_type']=$package_details->payment_type_name;
+      $order_data['order_purchase_date']=Carbon::now()->toDateString();
+
+      if($package_details->validity!='')
+      {
+        $order_data['order_validity_date']=Carbon::now()->addDay($package_details->validity);
+      }
+      else{
+        $order_data['order_validity_date']='2099-12-30';
+      }
+      
+      $order_data['payment_option']='Stripe';
+      $order_data['status']=0;
+      $order_data['no_of_sessions']=$package_details->total_sessions;
+      $order_data['remaining_sessions']=0;
+      $order_data['price_session_or_month']=$package_details->price_session_or_month;
+      $order_data['total_price']=$package_details->total_price;
+      $order_data['validity_value']=$package_details->validity_value;
+      $order_data['validity_duration']=$package_details->validity_duration;
+      $order_data['contract']=$package_details->contract;
+      $order_data['notice_period_value']=$package_details->notice_period_value;
+      $order_data['notice_period_duration']=$package_details->notice_period_duration;
+
+      $payment_history=DB::table('payment_history')->insert($payment_history_data);
+
+      $order_data['payment_id']=DB::getPdo()->lastInsertId();
+
+      $order_history=DB::table('order_details')->insert($order_data);
+
+      $notifydata['product_name'] =$package_details->product_name;
+      $notifydata['no_of_sessions'] =$package_details->total_sessions;
+      $notifydata['product_validity'] =$order_data['order_validity_date'];
+      $notifydata['product_purchase_date'] =$order_data['order_purchase_date'];
+      $notifydata['product_amount'] =$package_details->total_price;
+      $notifydata['order_id'] =' ';
+      $notifydata['payment_mode'] ='Stripe';
+      $notifydata['url'] = '/customer/purchased-history';
+      $notifydata['customer_name']=$customer_details->name;
+      $notifydata['customer_email']=$customer_details->email;
+      $notifydata['customer_phone']=$customer_details->ph_no;
+      $notifydata['status']='Payment Failed';
+
+      $customer_details->notify(new PlanPurchasedNotification($notifydata));
+
+      Session::flash ( 'failed_pt_stripe', "Error! Please Try again." );
+     
+      return redirect('customer/ptstripepaymentsuccess');
+    }
+
+}
+
+public function ptstripepaymentsuccess()
+{
+  $this->cart_delete_customer();
+  return view('customerpanel.payment-success');
+}
+
+
 }

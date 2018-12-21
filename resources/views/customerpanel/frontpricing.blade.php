@@ -70,10 +70,11 @@
 
 
               <div class="clearfix"></div>
-
-
-
-              <a href="" class="sign-btn2">Subscribe</a>
+                @if(Auth::guard('customer')->check())
+                  <a href="{{route('pt_plan_purchase',['pt_plan_id' => Crypt::encrypt($each_personal_training_product->product_id) ])}}" class="sign-btn2">Subscribe</a>
+                   @else
+                <a href="{{url('customer-login')}}" class="sign-btn2">Sign Up</a>
+                @endif
               </div>
             </div>
           

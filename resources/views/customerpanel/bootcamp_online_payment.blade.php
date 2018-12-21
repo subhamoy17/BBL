@@ -77,16 +77,7 @@
     </div>
 </form>
 
-@if((Session::has('success-message')))
-<div class="alert alert-success col-md-12">
-    {{Session::get('success-message')}}
-</div>
-    @endif
-    @if((Session::has('fail-message')))
-<div class="alert alert-danger col-md-12">
-    {{Session::get('fail-message')}}
-</div>
-    @endif
+
         </div>
         <div class='col-md-4'></div>
     </div>

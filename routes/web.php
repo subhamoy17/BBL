@@ -459,10 +459,13 @@ Route::get('bootcampstripepaymentsuccess','FrontController@bootcampstripepayment
 Route::post('bootcamp_bankpaymentsuccess','BankPaymentController@bootcamp_bank_payment_success');
 Route::get('bootcampbankpaymentcomplete','BankPaymentController@bootcamp_bank_payment_complete');
 
+Route::get('personal-training-plan-purchase/{slug}','FrontController@pt_plan_purchase')->name('pt_plan_purchase');
 
-
-
-
+Route::post('personal-training-plan-purchase','FrontController@pt_purchase_payment_mode')->name('pt_product_purchase_request');
+Route::post('pt-stripe-payment','FrontController@pt_strip_payment')->name('pt_strip_payment');
+Route::get('ptstripepaymentsuccess','FrontController@ptstripepaymentsuccess');
+Route::post('personal_training_bankpaymentsuccess','BankPaymentController@pt_bank_payment_success');
+Route::get('personaltrainingbankpaymentcomplete','BankPaymentController@pt_bank_payment_complete');
 });
 
 
