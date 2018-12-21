@@ -189,38 +189,38 @@ public function frontprice(Request $request)
 
   $data=DB::table('slots')->where('deleted_at',null)->get();
 
-  $personal_training_product_details=DB::table('products')
+ 
+        $all_product_details=DB::table('products')
   ->join('training_type','products.training_type_id','training_type.id')
   ->join('payment_type','products.payment_type_id','payment_type.id')
-  ->select('products.id as product_id','training_type.training_name as training_name','payment_type.payment_type_name as payment_type_name','products.total_sessions as total_sessions','products.price_session_or_month as price_session_or_month','products.total_price as total_price','products.validity_value as validity_value','products.validity_duration as validity_duration','products.contract as contract','products.notice_period_value as notice_period_value','products.notice_period_duration as notice_period_duration',(DB::raw('products.validity_value * products.validity_duration  as validity')),(DB::raw('products.notice_period_value * products.notice_period_duration  as notice_period')))
+  ->select('products.id as product_id','training_type.id as training_id','training_type.training_name as training_name','payment_type.payment_type_name as payment_type_name','products.total_sessions as total_sessions','products.price_session_or_month as price_session_or_month','products.total_price as total_price','products.validity_value as validity_value','products.validity_duration as validity_duration','products.contract as contract','products.notice_period_value as notice_period_value','products.notice_period_duration as notice_period_duration',(DB::raw('products.validity_value * products.validity_duration  as validity')),(DB::raw('products.notice_period_value * products.notice_period_duration  as notice_period')))
   ->whereNull('products.deleted_at')
-  ->where('training_type.id',1)->where('products.status',1)
-  ->orderby('products.id','DESC')->get();
+  ->where('products.total_price','>',0)
+  ->where('products.status',1)
+  ->orderby('products.id','DESC')->get()->all();
 
-
-  $bootcamp_product_details=DB::table('products')
+   $bootcamp_product_details=DB::table('products')
   ->join('training_type','products.training_type_id','training_type.id')
   ->join('payment_type','products.payment_type_id','payment_type.id')
   ->select('products.id as product_id','training_type.training_name as training_name','payment_type.payment_type_name as payment_type_name','products.total_sessions as total_sessions','products.price_session_or_month as price_session_or_month','products.total_price as total_price','products.validity_value as validity_value','products.validity_duration as validity_duration','products.contract as contract','products.notice_period_value as notice_period_value','products.notice_period_duration as notice_period_duration',(DB::raw('products.validity_value * products.validity_duration  as validity')),(DB::raw('products.notice_period_value * products.notice_period_duration  as notice_period')))
   ->whereNull('products.deleted_at')
   ->where('products.total_price','>',0)
   ->where('training_type.id',2)->where('products.status',1)
-  ->orderby('products.id','DESC')->get();
-
-  // Log::debug(":: personal_training_product_details :: ".print_r($personal_training_product_details,true));
+  ->orderby('products.id','DESC')->get()->all();
 
 
-  $gym_product_details=DB::table('products')
+  $personal_training_product_details=DB::table('products')
   ->join('training_type','products.training_type_id','training_type.id')
   ->join('payment_type','products.payment_type_id','payment_type.id')
-  ->select('products.id as product_id','training_type.training_name as training_name','payment_type.payment_type_name as payment_type_name','products.total_sessions as total_sessions','products.price_session_or_month as price_session_or_month','products.total_price as total_price','products.validity_value as validity_value','products.validity_duration as validity_duration','products.contract as contract','products.notice_period_value as notice_period_value','products.notice_period_duration as notice_period_duration',(DB::raw('products.validity_value * products.validity_duration  as validity')),(DB::raw('products.notice_period_value * products.notice_period_duration  as notice_period')))
+  ->select('products.id as product_id','training_type.training_name as training_name','payment_type.payment_type_name as payment_type_name','products.total_sessions as total_sessions','products.price_session_or_month as price_session_or_month','products.total_price as total_price','products.validity_value as validity_value','products.validity_duration as validity_duration','products.contract as contract','products.notice_period_value as notice_period_value','products.notice_period_duration as notice_period_duration', (DB::raw('products.validity_value * products.validity_duration  as validity')), (DB::raw('products.notice_period_value * products.notice_period_duration  as notice_period')))
   ->whereNull('products.deleted_at')
-  ->where('training_type.id',3)->where('products.status',1)
+  ->where('products.total_price','>',0)
+  ->where('training_type.id',1)->where('products.status',1)
   ->orderby('products.id','DESC')->get();
 
  
   
-  return view('customerpanel.frontpricing')->with(compact('data','personal_training_product_details','bootcamp_product_details','gym_product_details'));
+  return view('customerpanel.frontpricing')->with(compact('data','personal_training_product_details','bootcamp_product_details','gym_product_details','all_product_details'));
 
   }
 
@@ -617,12 +617,16 @@ public function purchases_history(Request $request)
 
 public function booking_slot()
 {
-  try{
+  // try{
   $this->cart_delete_customer();
   $remaining_session_request_now=Carbon::now()->toDateString();
   
   $data=DB::table('users')->whereNull('deleted_at')->where('is_active',1)->get();
   $all_times=DB::table('slot_times')->get()->all();
+$pt_session_address=DB::table('bootcamp_plan_address')
+  ->join('bootcamp_plans','bootcamp_plans.address_id','bootcamp_plan_address.id')
+  ->select('bootcamp_plan_address.address_line1','bootcamp_plan_address.id','bootcamp_plans.address_id')
+  ->whereNull('bootcamp_plans.deleted_at')->distinct('bootcamp_plans.address_id')->first();
 
   $sum_slots = DB::table('purchases_history')
   ->select('active_package','package_remaining','customer_id')
@@ -643,12 +647,12 @@ public function booking_slot()
 
   return view('customerpanel.booking_slot')->with(compact('data','total_remaining_slots','all_times'));
 
-  }
+  // }
 
-    catch(\Exception $e) {
+  //   catch(\Exception $e) {
 
-      return abort(400);
-  }
+  //     return abort(400);
+  // }
  
 }
 
@@ -1459,7 +1463,7 @@ public function booking_bootcamp()
   ->join('bootcamp_plans','bootcamp_plans.address_id','bootcamp_plan_address.id')
   ->select('bootcamp_plan_address.address_line1','bootcamp_plan_address.id','bootcamp_plans.address_id')
   ->whereNull('bootcamp_plans.deleted_at')->distinct('bootcamp_plans.address_id')->first();
-
+Log::debug(" bootcampaddress ".print_r($bootcampaddress,true));
   // check customer product validity as well as available session
   $order_details=DB::table('order_details')
   ->join('products','products.id','order_details.product_id')
@@ -1492,6 +1496,8 @@ public function booking_bootcamp()
   ->where('order_details.customer_id',Auth::guard('customer')->user()->id)
   ->max('order_details.order_validity_date');
 
+  Log::debug(" customer_product_validity ".print_r($customer_product_validity,true));
+
   if(empty($customer_product_validity))
   {
     $customer_product_validity='';
@@ -1503,13 +1509,11 @@ public function booking_bootcamp()
   ->whereNull('deleted_at')
   ->pluck('bootcamp_plan_shedules_id');
 
-
   //check already booked date
   $alredy_booked_date=DB::table('bootcamp_plan_shedules')
   ->whereIn('id',$alredy_booked_shedule_id)
   ->orwhereColumn('max_allowed','no_of_uses')
   ->pluck('plan_date');
-
 
   // get all available date to apply
   $date_details=DB::table('bootcamp_plan_shedules')
@@ -1520,7 +1524,7 @@ public function booking_bootcamp()
   ->distinct('plan_date')
   ->get()->all();
 
- // Log::debug(" date_details ".print_r($date_details,true));
+  // Log::debug(" date_details ".print_r($date_details,true));
 
   $no_of_session_unlimited=DB::table('order_details')
   ->join('products','products.id','order_details.product_id')
@@ -1713,7 +1717,7 @@ public function bootcamp_booking_cancele_customer($id)
 
     //no_of_uses is decrease in bootcamp_plan_shedules table
     $cancelled_booking_schedule=DB::table('bootcamp_plan_shedules')
-    ->where('id',$booking_details->bootcamp_plan_shedules_id)->where('no_of_uses','>',0)->decrement('no_of_uses',1);
+    ->where('id',$booking_details->bootcamp_plan_shedules_id)->decrement('no_of_uses',1);
 
     //fetching all booking details for sent notification mail
     $booking_details=DB::table('bootcamp_booking')

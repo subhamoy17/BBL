@@ -16,6 +16,7 @@
   <script src="{{url('frontend/js/stellarnav.min.js')}}"></script>
 	<!--tooltip js-->
 	<script src="{{url('frontend/js/tooltipster.bundle.min.js')}}"></script>
+  <script src="{{url('frontend/js/owl.carousel.js')}}"></script>
   <!-- @if(Request::segment(2) == 'mybooking')
 
   <link rel="stylesheet" href="{{ asset('backend/assets/css/totancss/style.css') }}">
@@ -29,6 +30,28 @@
                           $('.session-delete').hide();
                       }, 5000);
 });
+</script>
+  <script>
+    $(document).ready(function() { 
+    $('#price-slider').owlCarousel({
+      autoPlay: true,
+        loop:true,
+        margin:30,
+        nav:false,
+      items: 3,
+        responsive:{
+            0:{
+                items:1
+            },
+            600:{
+                items:3
+            },
+            1000:{
+                items:3
+            }
+        }
+    })
+  }); 
 </script>
 	<script>
 		// You can also use "$(window).load(function() {"
