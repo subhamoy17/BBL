@@ -7,7 +7,7 @@
   <div id="tab2" class="tab_content">
 
     <div class="table-responsive table-bordered">
-        <!-- <a href="{{url('customer/booking_slot')}}" class="btn btn-success bk-slt-btn">Book PT Session</a> -->
+        <!-- <a href="{{url('customer/booking-personal-training')}}" class="btn btn-success bk-slt-btn">Book PT Session</a> -->
      <h3 align="center">My Common Diet Plan History</h3>
     <div class="tbl-srch tbl-srch2">
        <form id="frm_purchase_search">

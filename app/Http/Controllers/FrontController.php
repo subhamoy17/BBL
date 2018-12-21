@@ -398,22 +398,21 @@ public function updateprofile(Request $request)
 
 public function booking_history(Request $request)
 {  
+  try
+  {   
+    $this->cart_delete_customer();
+    $this->free_sessions();
 
-
-    try{   
-  $this->cart_delete_customer();
-  $this->free_sessions();
-
-  if(isset($request->start_date) && isset($request->end_date) && !empty($request->start_date) && !empty($request->end_date))
-  {
-    $start_date=$request->start_date;
-    $end_date=$request->end_date;
-  }
-  else
-  {
-    $start_date=Carbon::now()->toDateString();
-    $end_date=Carbon::now()->addDays(30)->toDateString();
-  }
+    if(isset($request->start_date) && isset($request->end_date) && !empty($request->start_date) && !empty($request->end_date))
+    {
+      $start_date=$request->start_date;
+      $end_date=$request->end_date;
+    }
+    else
+    {
+      $start_date=Carbon::now()->toDateString();
+      $end_date=Carbon::now()->addDays(30)->toDateString();
+    }
 
     $now = Carbon::now()->toDateString();
     $now_month = Carbon::now()->addDays(30)->toDateString();
@@ -447,77 +446,97 @@ public function booking_history(Request $request)
     
     $all_booking=$all_booking->orderby('bootcamp_booking.id','DESC')->paginate(10);
 
+    $no_of_session_unlimited=DB::table('order_details')
+    ->join('products','products.id','order_details.product_id')
+    ->join('training_type','training_type.id','products.training_type_id')
+    ->where('order_details.customer_id',Auth::guard('customer')->user()->id)
+    ->where('order_details.status',1)
+    ->where('training_type.id',2)
+    ->where('order_details.order_validity_date','>=',$now)
+    ->where('order_details.remaining_sessions','Unlimited')
+    ->get()->all();
 
-  
-  $no_of_session_unlimited=DB::table('order_details')
-  ->join('products','products.id','order_details.product_id')
-  ->join('training_type','training_type.id','products.training_type_id')
-  ->where('order_details.customer_id',Auth::guard('customer')->user()->id)
-  ->where('order_details.status',1)
-  ->where('training_type.id',2)
-  ->where('order_details.order_validity_date','>=',$now)
-  ->where('order_details.remaining_sessions','Unlimited')
-  ->get()->all();
-
-  if(count($no_of_session_unlimited)>0)
-  {
-    $no_of_sessions='Unlimited';
-  }
-  else
-  {
-    $no_of_sessions=0;
-  $no_of_session_notunlimited=DB::table('order_details')
-  ->join('products','products.id','order_details.product_id')
-  ->join('training_type','training_type.id','products.training_type_id')
-  ->where('order_details.customer_id',Auth::guard('customer')->user()->id)
-  ->where('order_details.status',1)
-  ->where('training_type.id',2)
-  ->where('order_details.order_validity_date','>=',$now)
-  ->where('order_details.remaining_sessions','!=','Unlimited')
-  ->get()->all();
-
-    foreach($no_of_session_notunlimited as $total)
+    if(count($no_of_session_unlimited)>0)
     {
-      $no_of_sessions=$no_of_sessions+$total->remaining_sessions;
+      $no_of_sessions_bc='Unlimited';
     }
-  }
+    else
+    {
+      $no_of_sessions_bc=0;
+    $no_of_session_notunlimited=DB::table('order_details')
+    ->join('products','products.id','order_details.product_id')
+    ->join('training_type','training_type.id','products.training_type_id')
+    ->where('order_details.customer_id',Auth::guard('customer')->user()->id)
+    ->where('order_details.status',1)
+    ->where('training_type.id',2)
+    ->where('order_details.order_validity_date','>=',$now)
+    ->where('order_details.remaining_sessions','!=','Unlimited')
+    ->get()->all();
 
-  $total_future_booking=DB::table('bootcamp_booking')
+        foreach($no_of_session_notunlimited as $total)
+        {
+          $no_of_sessions_bc=$no_of_sessions_bc+$total->remaining_sessions;
+        }
+      }
+
+    $no_of_session_pt=DB::table('order_details')
+    ->join('products','products.id','order_details.product_id')
+    ->join('training_type','training_type.id','products.training_type_id')
+    ->where('order_details.customer_id',Auth::guard('customer')->user()->id)
+    ->where('order_details.status',1)
+    ->where('training_type.id',1)
+    ->where('order_details.order_validity_date','>=',$now)
+    ->where('order_details.remaining_sessions','>',0)
+    ->get()->all();
+
+    $total_sessions_pt=0;
+    if(count($no_of_session_pt)>0)
+    {
+      foreach($no_of_session_pt as $total)
+      {
+        $total_sessions_pt=$total_sessions_pt+$total->remaining_sessions;
+      }
+    }
+    else
+    {
+      $total_sessions_pt=0;
+    }
+      
+    $total_future_booking_bc=DB::table('bootcamp_booking')
     ->join('bootcamp_plan_shedules','bootcamp_plan_shedules.id','bootcamp_booking.bootcamp_plan_shedules_id')
     ->join('bootcamp_plan_address','bootcamp_plan_address.id','bootcamp_plan_shedules.address_id')
     ->select('bootcamp_plan_shedules.plan_date','bootcamp_plan_shedules.plan_day','bootcamp_plan_shedules.plan_st_time','bootcamp_plan_shedules.plan_end_time','bootcamp_plan_address.address_line1','bootcamp_booking.created_at')
     ->where('bootcamp_booking.customer_id',Auth::guard('customer')->user()->id)
     ->whereNull('bootcamp_booking.deleted_at')->where('bootcamp_plan_shedules.plan_date','>=',$now)->count();
-    $total_declined_booking=DB::table('bootcamp_booking')
+
+    $total_declined_booking_bc=DB::table('bootcamp_booking')
     ->join('bootcamp_plan_shedules','bootcamp_plan_shedules.id','bootcamp_booking.bootcamp_plan_shedules_id')
     ->join('bootcamp_plan_address','bootcamp_plan_address.id','bootcamp_plan_shedules.address_id')
     ->select('bootcamp_plan_shedules.plan_date','bootcamp_plan_shedules.plan_day','bootcamp_plan_shedules.plan_st_time','bootcamp_plan_shedules.plan_end_time','bootcamp_plan_address.address_line1','bootcamp_booking.created_at')
     ->where('bootcamp_booking.customer_id',Auth::guard('customer')->user()->id)
     ->whereNotNull('bootcamp_booking.deleted_at')->where('bootcamp_booking.cancelled_by',0)->count();
 
-    $total_cancelled_booking=DB::table('bootcamp_booking')
+    $total_cancelled_booking_bc=DB::table('bootcamp_booking')
     ->join('bootcamp_plan_shedules','bootcamp_plan_shedules.id','bootcamp_booking.bootcamp_plan_shedules_id')
     ->join('bootcamp_plan_address','bootcamp_plan_address.id','bootcamp_plan_shedules.address_id')
     ->select('bootcamp_plan_shedules.plan_date','bootcamp_plan_shedules.plan_day','bootcamp_plan_shedules.plan_st_time','bootcamp_plan_shedules.plan_end_time','bootcamp_plan_address.address_line1','bootcamp_booking.created_at')
     ->where('bootcamp_booking.customer_id',Auth::guard('customer')->user()->id)
-    ->whereNotNull('bootcamp_booking.deleted_at')->where('bootcamp_booking.cancelled_by','>',0)->count();
+    ->whereNotNull('bootcamp_booking.deleted_at')->where('bootcamp_booking.cancelled_by','>',0)
+    ->count();
 
-    $total_past_booking=DB::table('bootcamp_booking')
+    $total_past_booking_bc=DB::table('bootcamp_booking')
     ->join('bootcamp_plan_shedules','bootcamp_plan_shedules.id','bootcamp_booking.bootcamp_plan_shedules_id')
     ->join('bootcamp_plan_address','bootcamp_plan_address.id','bootcamp_plan_shedules.address_id')
     ->select('bootcamp_plan_shedules.plan_date','bootcamp_plan_shedules.plan_day','bootcamp_plan_shedules.plan_st_time','bootcamp_plan_shedules.plan_end_time','bootcamp_plan_address.address_line1','bootcamp_booking.created_at')
     ->where('bootcamp_booking.customer_id',Auth::guard('customer')->user()->id)
-    ->whereNull('bootcamp_booking.deleted_at')->where('bootcamp_plan_shedules.plan_date','<',$now)->count();
+    ->whereNull('bootcamp_booking.deleted_at')->where('bootcamp_plan_shedules.plan_date','<',$now)
+    ->count();
 
-  
-
-  return view('customerpanel.booking_history')->with(compact('all_booking','no_of_sessions','total_future_booking','total_declined_booking','total_cancelled_booking','total_past_booking'));
-
-     }
-
-    catch(\Exception $e) {
+    return view('customerpanel.booking_history')->with(compact('all_booking','no_of_sessions_bc','total_future_booking_bc','total_declined_booking_bc','total_cancelled_booking_bc','total_past_booking_bc','total_sessions_pt'));
+  }
+  catch(\Exception $e) {
 // Log::debug(" Check id ".print_r($e->getMessage(),true));  
-      return abort(400);
+    return abort(400);
   }
 }
 
@@ -615,45 +634,48 @@ public function purchases_history(Request $request)
 }
 
 
-public function booking_slot()
+public function booking_personal_training()
 {
-  // try{
-  $this->cart_delete_customer();
-  $remaining_session_request_now=Carbon::now()->toDateString();
-  
-  $data=DB::table('users')->whereNull('deleted_at')->where('is_active',1)->get();
-  $all_times=DB::table('slot_times')->get()->all();
 $pt_session_address=DB::table('bootcamp_plan_address')
   ->join('bootcamp_plans','bootcamp_plans.address_id','bootcamp_plan_address.id')
   ->select('bootcamp_plan_address.address_line1','bootcamp_plan_address.id','bootcamp_plans.address_id')
   ->whereNull('bootcamp_plans.deleted_at')->distinct('bootcamp_plans.address_id')->first();
 
-  $sum_slots = DB::table('purchases_history')
-  ->select('active_package','package_remaining','customer_id')
-  ->where('customer_id',Auth::guard('customer')->user()->id)
-  ->where('active_package',1 )
-  ->where('package_remaining','>=',0)
-  ->where('package_validity_date','>=',$remaining_session_request_now)
-  ->sum('package_remaining');
+  try
+  {
+    $this->cart_delete_customer();
+    $current_date=Carbon::now()->toDateString();
 
-  $sum_extra_slots = DB::table('purchases_history')
-  ->select('active_package','package_remaining','extra_package_remaining','customer_id')
-  ->where('customer_id',Auth::guard('customer')->user()->id)
-  ->where('active_package',1)
-  ->where('extra_package_remaining','>=',0)
-  ->sum('extra_package_remaining');
+    // check customer product validity as well as available session
+    $order_details=DB::table('order_details')
+    ->join('products','products.id','order_details.product_id')
+    ->join('training_type','training_type.id','products.training_type_id')
+    ->where('order_details.customer_id',Auth::guard('customer')->user()->id)
+    ->where('order_details.status',1)
+    ->where('training_type.id',1)
+    ->where('order_details.order_validity_date','>=',$current_date)
+    ->where('order_details.remaining_sessions','>',0)
+    ->get()->all();
 
-  $total_remaining_slots=$sum_slots+$sum_extra_slots;
-
-  return view('customerpanel.booking_slot')->with(compact('data','total_remaining_slots','all_times'));
-
-  // }
-
-  //   catch(\Exception $e) {
-
-  //     return abort(400);
-  // }
- 
+    $no_of_sessions=0;
+    if(count($order_details)>0)
+    {
+      foreach($order_details as $total)
+      {
+        $no_of_sessions=$no_of_sessions+$total->remaining_sessions; 
+      }
+      return view('customerpanel.booking_personal_training')->with(compact('order_details','no_of_sessions'));
+    }
+    else
+    {
+      $no_of_sessions=0;
+      return redirect('customer/pricing')->with(compact('order_details','no_of_sessions'));
+    }
+  }
+  catch(\Exception $e) {
+    return abort(400);
+  }
+  
 }
 
 
@@ -1124,11 +1146,11 @@ public function slotinsert(Request $request)
 
       if($nd_btn==1)
       {
-      return redirect()->route('booking_slot')->with(["success"=>"You have successfully sent the bellow PT session request(s)!",'all_data'=>$all_data]);
+      return redirect()->route('booking_personal_training')->with(["success"=>"You have successfully sent the bellow PT session request(s)!",'all_data'=>$all_data]);
     }
     else
     {
-      return redirect()->route('booking_slot')->with(["success1"=>"You have successfully sent the bellow PT session request(s)!",'all_data'=>$all_data]);
+      return redirect()->route('booking_personal_training')->with(["success1"=>"You have successfully sent the bellow PT session request(s)!",'all_data'=>$all_data]);
     }
     
   }
@@ -1136,7 +1158,7 @@ public function slotinsert(Request $request)
   else
   {
     DB::commit();
-    return redirect()->route('booking_slot')->with("success","You don't have any available session!");
+    return redirect()->route('booking_personal_training')->with("success","You don't have any available session!");
   }
 
 

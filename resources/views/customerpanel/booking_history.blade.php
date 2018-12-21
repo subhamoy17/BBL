@@ -6,7 +6,7 @@
           <div id="tab1" class="tab_content">
             <div class="table-responsive table-bordered">
            <a href="{{url('customer/booking-bootcamp')}}" class="btn btn-success bk-slt-btn">Book Bootcamp Session</a>   
-        <!-- <a href="{{url('customer/booking_slot')}}" class="btn btn-success bk-slt-btn">Book PT Session</a> -->
+        <a href="{{url('customer/booking-personal-training')}}" class="btn btn-success bk-slt-btn">Book PT Session</a>
 
         @if (session('bootcamp_session_cancelled'))
           <div class="alert alert-success">
@@ -17,6 +17,7 @@
               <table class="table">
                 <thead>
                   <tr>
+                    <th>Plan type</th>
                     <th>Total number of session remaining</th>
                       <th>Past booking</th>
                      <th>Future booking</th>
@@ -28,11 +29,21 @@
                   
                  
                   <tr>
-                    <td>{{$no_of_sessions}}</td>
-                    <td>{{$total_past_booking}}</td>
-                    <td>{{$total_future_booking}}</td>
-                    <td>{{$total_declined_booking}}</td>
-                    <td>{{$total_cancelled_booking}}</td>
+                    <td>Bootcamp</td>
+                    <td>{{$no_of_sessions_bc}}</td>
+                    <td>{{$total_past_booking_bc}}</td>
+                    <td>{{$total_future_booking_bc}}</td>
+                    <td>{{$total_declined_booking_bc}}</td>
+                    <td>{{$total_cancelled_booking_bc}}</td>
+                  </tr>
+
+                  <tr>
+                    <td>Personal Training</td>
+                    <td>{{$total_sessions_pt}}</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
                   </tr>
               
                 </tbody>

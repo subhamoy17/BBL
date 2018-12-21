@@ -428,7 +428,7 @@ $('#bootstrap-slot-data-table').DataTable({
         $('#reason_id').val(this.id);
         $('#reason_action').val(action);
         $('#comment').val('');
-        alertify.confirm("Are you sure you want to decline this request?", function (e) {
+        alertify.confirm("Are you sure you want to decline this payment?", function (e) {
           if (e) {
             $('#reason_modal').modal('show');
           }
@@ -444,7 +444,7 @@ $('#bootstrap-slot-data-table').DataTable({
           'id': this.id,
           'action': action
         }
-        alertify.confirm("Are you sure you will be avaliable on this slot?", function (e) {
+        alertify.confirm("Are you sure you want to approve this payment?", function (e) {
           if (e) {
             $(".card-body").css("opacity", .2);
                   $("#loading-img").css({"display": "block"});
@@ -488,7 +488,7 @@ $('#bootstrap-slot-data-table').DataTable({
       var row=$('#'+id).closest('tr');
       if(comment.trim()=="")
       {
-        alertify.alert("Reason for decline for this request");
+        alertify.alert("Reason for decline for this payment");
         $('#reason_modal').modal('show');
         return false; 
       }
