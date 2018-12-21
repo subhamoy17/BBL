@@ -7,11 +7,16 @@
 @media only screen and (max-width: 800px) {}
 @media only screen and (max-width:767px) {
 	.agile_banner_text_info h3 {
-		font-size: 24px;
+		font-size: 20px;
 		letter-spacing: 0px;
 	}
-	.agile_banner_text_info p{
-		letter-spacing: 1px;
+	.agile_banner_text_info p {
+		letter-spacing: 0;
+		font-size: 12px;
+		line-height: 18px;
+		margin-left: 0;
+		text-align: center;
+		width: 100%;
 	}
 	.stellarnav > ul > li a::before {
 		display: none;
@@ -23,7 +28,7 @@
 		padding: 0;
 	}
 	.gyl_header {
-		font-size: 24px;
+		font-size: 18px;
 	}
 	.effect-wrapper img {
 		width: 100%;
@@ -186,14 +191,15 @@
 		text-align: left !important;
 	}
 	.bk-slt-btn {
-		position: static;
-		top: 0;
-		right: 0px;
+		position: relative;
+		top: 0px;
+		right: 0px;	
 		margin-bottom: 15px;
+		font-size: 10px;
 	}
 	ul.tabs li a {
-		padding: 10px 5px;
-		font-size: 11px;
+		padding: 10px 2px;
+		font-size: 9px;
 		font-weight: 600;
 	}
 	.tbl-srch {
@@ -306,8 +312,8 @@
 	}
 
 	.stellarnav li.active a {
-    color: #ec7f0a;
-}
+    	color: #ec7f0a;
+	}
 .session-modal h2{
 	font-size: 18px;
 }
@@ -324,6 +330,80 @@
 .pt-vd-box iframe{
 	height: auto;
 }
+	ul.tabs{
+		z-index: 9;
+	}
+	.my-bkng-btn {
+		position: relative;
+		right: inherit;
+		top: 0;
+	}
+	.my-bkng-btn a {
+		font-size: 11px;
+	}
+	#frm_search button, #frm_purchase_search button {
+		height: 30px;
+		line-height: 16px;
+		vertical-align: sub;
+	}
+	#frm_purchase_search button {
+		line-height: 14px;
+		vertical-align: bottom;
+	}
+	.ofr1-caption {
+		position: absolute;
+		right: 17px;
+		top: 29%;
+		text-align: center;
+		width: auto;
+		z-index: 9;
+	}
+	.bnr-btn {
+		background: rgba(12, 2, 42, 0.6);
+		border: 1px dashed #fff;
+		padding: 5px 10px;
+		width: auto;
+		display: inline-block;
+		line-height: inherit;
+		color: #ffc107 !important;
+		font-weight: 600 !important;
+		text-transform: uppercase;
+		letter-spacing: 2px;
+		text-align: center;
+		border-radius: 3px;
+		font-size: 10px;
+		font-family: 'Russo One', sans-serif;
+		margin-top: 15px;
+	}
+	#plantabs ul li a {
+		font-size: 11px;
+		padding: 2px 1px;
+	}
+	.pricing {
+		padding: 30px 0 0;
+	}
+	.ofr1-caption h2 {
+		font-size: 22px;
+	}
+	.ofr1-caption p {
+		font-size: 16px;
+		line-height: 25px;
+	}
+	.ofr1-btn a {
+		padding: 10px 5px;
+		font-size: 12px;
+	}
+	.ofr1-caption::before {
+		content: "";
+		position: absolute;
+		border: 1px solid rgba(255,255,255,0.7);
+		width: auto;
+		height: 230px;
+		top: -23%;
+		right: -9px;
+		z-index: -9;
+		left: -10px;
+	}
 }
 @media only screen and (max-width: 640px) {}
 @media only screen and (max-width: 580px) {}
@@ -361,7 +441,8 @@ ul.tabs li {
     margin: 0 5px 10px 0;
 }
 .tbl-srch select, .tbl-srch input {
-	width: 100px;
+	width: 95px;
+	font-size: 10px;
 }
 #booking {
 	text-align: center;
@@ -376,9 +457,11 @@ ul.tabs li {
 	top: 50px;
 	left: 0;
 }
-#tab2 #booking {
-	display: inline-block;
-}
+#frm_search button {
+		height: 30px;
+		line-height: 16px;
+		vertical-align: sub;
+	}
 ul#slider li:nth-child(1), ul#slider li:nth-child(2), ul#slider li:nth-child(3), ul#slider li:nth-child(4) {
 	min-height: 210px;
 }
