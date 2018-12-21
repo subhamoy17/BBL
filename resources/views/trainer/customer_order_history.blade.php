@@ -34,6 +34,20 @@ $('#bootstrap-slot-data-table').DataTable({
     background: #1d711d;
     line-height: 28px;
 }
+
+#loading-img {
+  background: url(../backend/images/loader-gif-transparent-background-4.gif) center no-repeat / cover;
+    display: none;
+    height: 100px;
+    width: 100px;
+    position: absolute;
+    top: 50%;
+    left: 1%;
+    right: 1%;
+    margin: 0 auto;
+    z-index: 99999;
+}
+
 </style>
 
 <div id="date_change" class="modal fade" role="dialog" >
@@ -381,162 +395,149 @@ $('#bootstrap-slot-data-table').DataTable({
 });
 </script>
 
+
+
+
 <script type="text/javascript">
       $(document).ready(function(){
         
-       $("#bootstrap-slot-data-table").on("click", ".edit", function(e) {
-        alert('sdf');
+       $("#bootstrap-slot-data-table").on("click", ".status-all", function(e) {
           var action = $(this).data("msg");
           console.log(action);
           var row = this.closest('tr');
           console.log(row);
       console.log(action);
+if (action == "Decline"){
+  var Data =
+  {
+    'id': this.id,
+   
+    'action': action
+  }
 
-       if (action == "Edit"){
-       
-        $('#reason_id').val('');
-        $('#reason_id').val(this.id);
-        $('#reason_action').val(action);
-        $('#comment').val('');
-        alertify.confirm("Are you sure you want to edit this request?", function (e) {
-          if (e) {
-            alert('sdfff');
-            $('#date_change').modal('show');
-          }
-          else
-          {
-          }
-        });
+  alertify.confirm("Are you sure you want to decline this payment?", function (e) {
+     if (e) { 
+ $(".card-body").css("opacity", .2);
+  $("#loading-img").css({"display": "block"});
+
+  $.ajax({
+    url: "{{route('order_history_backend_request')}}",
+
+    json_enc: Data,
+    type: "GET",
+    dataType: "json",
+    data:
+    {
+      'data': Data,
+    },
+    success: function (data)
+    {
+      if(data==1){
+        console.log("Approve response");
+      console.log(data);
+      $(".card-body").css("opacity", .2);
+         $("#loading-img").css({"display": "block"});
+
+      $('#success-msg').show();
+      setTimeout(function(){
+        $('#success-msg').hide();
+ window.location.reload();
+      }, 5000);
       }
+      else
+      {
+        console.log("Decline decline");
+      console.log(data);
+   $(".card-body").css("opacity", .2);
+   $("#loading-img").css({"display": "block"});
+      $('#decline-msg').show();
+      setTimeout(function(){
+        $('#decline-msg').hide();
+         window.location.reload();
+      }, 5000);
 
+
+      }
+      
+    }
+  });
+       }
+        else
+        {
+
+        }
+
+        });
+}
+else if (action == "Approve"){
+  var Data =
+  {
+    'id': this.id,
+   
+    'action': action
+  }
+
+
+alertify.confirm("Are you sure you will be approve this payment?", function (e) {
+ if (e) {
+  $(".card-body").css("opacity", .2);
+  $("#loading-img").css({"display": "block"});
+   
+  $.ajax({
+    url: "{{route('order_history_backend_request')}}",
+
+    json_enc: Data,
+    type: "GET",
+    dataType: "json",
+    data:
+    {
+      'data': Data,
+    },
+    success: function (data)
+    {
+      if(data==1){
+        console.log("Approve response");
+      console.log(data);
+      $(".card-body").css("opacity", .2);
+         $("#loading-img").css({"display": "block"});
+
+      $('#success-msg').show();
+      setTimeout(function(){
+        $('#success-msg').hide();
+ window.location.reload();
+      }, 5000);
+      }
+      else{
+        console.log("Decline decline");
+      console.log(data);
+   $(".card-body").css("opacity", .2);
+      $("#loading-img").css({"display": "block"});
+      $('#decline-msg').show();
+      setTimeout(function(){
+        $('#decline-msg').hide();
+         window.location.reload();
+      }, 5000);
+
+
+      }
+      
+    }
+  });
+}
+  else 
+ 
+  {           
+
+
+   }   
+ });
+}
 });
 
 
       });
     </script>
 
-    <script type="text/javascript">
-  $(document).ready(function(){
-    $("#bootstrap-slot-data-table").on("click", ".status-all", function(e) {
-
-      var action =$(this).data("msg");
-      console.log(action);
-      var row = this.closest('tr');
-      if (action == "Decline"){
-       
-        $('#reason_id').val('');
-        $('#reason_id').val(this.id);
-        $('#reason_action').val(action);
-        $('#comment').val('');
-        alertify.confirm("Are you sure you want to decline this payment?", function (e) {
-          if (e) {
-            $('#reason_modal').modal('show');
-          }
-          else
-          {
-          }
-        });
-      }
-      else if (action == "Approve"){
-        
-        var Data =
-        {
-          'id': this.id,
-          'action': action
-        }
-        alertify.confirm("Are you sure you want to approve this payment?", function (e) {
-          if (e) {
-            $(".card-body").css("opacity", .2);
-                  $("#loading-img").css({"display": "block"});
-            $.ajax({
-              url: "{{route('approveCustomer')}}",
-              json_enc: Data,
-              type: "GET",
-              dataType: "json",
-              data:
-              {
-                'data': Data,
-              },
-              success: function (data)
-              {
-                if(data==1){
-                    $(".card-body").css("opacity", .2);
-                  $("#loading-img").css({"display": "block"});
-                  console.log("Approve response");
-                  console.log(data);
-                  $('#success-msg').show();
-                   $('.status-all').attr('disabled','disabled');
-                $('.status-all').text('Please wait...');
-                  setTimeout(function(){
-                    $('#success-msg').hide();
-                    location.reload();
-                  }, 5000);
-                }
-              }
-            });                                                                                             
-          }
-          else 
-          {           
-          }                                       
-        });
-      }
-    });
-    $("#reason").on('click',function(e)
-    {   
-      var id=$('#reason_id').val();
-      var comment=$('#comment').val();
-      var row=$('#'+id).closest('tr');
-      if(comment.trim()=="")
-      {
-        alertify.alert("Reason for decline for this payment");
-        $('#reason_modal').modal('show');
-        return false; 
-      }
-      else
-      {
-        
-        var action=$('#reason_action').val();
-        var Data =
-        {
-          'id': id,
-          'action': action,
-          'comment':comment
-        }
-
-        $(".card-body").css("opacity", .2);
-        $("#loading-img").css({"display": "block"});
-        console.log(Data);
-        $.ajax({
-          url: "{{route('approveCustomer')}}",
-          json_enc: Data,
-          type: "GET",
-          dataType: "json",
-          data:
-          {
-            'data': Data,
-          },
-          success: function (data)
-          {
-            if(data==2){
-               $(".card-body").css("opacity", .2);
-                  $("#loading-img").css({"display": "block"});
-              console.log("Decline decline");
-              console.log(data);
-              $('#decline-msg').show();
-               $('.status-all').attr('disabled','disabled');
-                $('.status-all').text('Please wait...');
-              setTimeout(function(){
-                $('#decline-msg').hide();
-                location.reload();
-              }, 5000);
-            }
-          }
-        });
-      }
-    });
-  });
-
-</script>
 
    
 @endsection
