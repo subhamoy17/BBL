@@ -25,9 +25,9 @@
 							<h3>Become Strong And Healthy </h3>
 							<p>Train hard is the right place to start new life as an athletic, strong and healthy person with a strong will.</p>
                              @if(Auth::guard('customer')->check())
-                             <a href="{{url('customer/booking-bootcamp')}}" class="bnr-btn">Click Here To Send Bootcamp Session</a>
+                             <a href="{{url('customer/booking-bootcamp')}}" class="bnr-btn">Book Bootcamp Session</a>
                              @else
-                            <a href="{{url('customer-registration')}}" class="bnr-btn">Click Here To Free Bootcamp Session</a>
+                            <a href="{{url('customer-registration')}}" class="bnr-btn">Register and get free bootcamp session</a>
                             @endif
 						</div>
 					</li>
@@ -36,9 +36,9 @@
 							<h3>Exceptional Life Fitness </h3>
 							<p>Train hard is the right place to start new life as an athletic, strong and healthy person with a strong will.</p>
                             @if(Auth::guard('customer')->check())
-                             <a href="{{url('customer/booking-bootcamp')}}" class="bnr-btn">Click Here To Send Bootcamp Session</a>
+                             <a href="{{url('customer/booking-bootcamp')}}" class="bnr-btn">Book Bootcamp Session</a>
                              @else
-                            <a href="{{url('customer-login')}}" class="bnr-btn">Click Here To Send Bootcamp Session</a>
+                            <a href="{{url('customer-login')}}" class="bnr-btn">Book Bootcamp Session</a>
                             @endif
 						</div>
 					</li>
@@ -46,14 +46,14 @@
 						<div class="agile_banner_text_info">
 							<h3>Build Your Body With Us </h3>
 							<p>Train hard is the right place to start new life as an athletic, strong and healthy person with a strong will.</p>
-                            <a href="{{url('pricing')}}" class="bnr-btn">Click Here To Purchase Bootcamp Session</a>
+                            <a href="{{url('pricing')}}" class="bnr-btn">Purchase Bootcamp Plan</a>
 						</div>
 					</li>
 					<li>
 						<div class="agile_banner_text_info">
 							<h3>Exceptional Life Fitness </h3>
 							<p>Train hard is the right place to start new life as an athletic, strong and healthy person with a strong will.</p>
-                            <a href="{{url('pricing')}}" class="bnr-btn">Click Here To Purchase Bootcamp Session</a>
+                            <a href="{{url('pricing')}}" class="bnr-btn">Purchase Personal Training Plan</a>
 						</div>
 					</li>
 				</ul>

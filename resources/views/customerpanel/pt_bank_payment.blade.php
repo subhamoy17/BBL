@@ -76,6 +76,12 @@ function bank_image()
     <label><h5 class="line-h5">Upload Payment Document</h5> </br>
       <strong>Alternatively you can provide the screenshot of the bank transfer</strong>
     </label><input type="file" name="package_image" id="package_image" onchange="bank_image();">
+
+    <div>
+      <label>Active Seccion Date</label>
+      <input type="text" id="session_datepicker" name="date" class="form-control date-control"  readonly="true">
+
+    </div>
        
   <button class="btn btn-dark btn-theme-colored btn-flat" id="bank_sub" name="submit">Confirm you have paid via Bank transfer</button>
 </form>
