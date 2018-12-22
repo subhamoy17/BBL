@@ -2,6 +2,40 @@
 @section('content')
 
 
+<script >
+
+  function bank_description()
+  {
+    // alert('fg');
+    if($('#package_description').val()!='')
+    {
+      
+      $('#bank_sub').attr('disabled',false);
+      $("#bank_sub").html('Confirm you have paid via Bank transfer');
+    }
+    else
+    {
+      $('#bank_sub').attr('disabled',true);
+    }
+  }
+
+
+function bank_image()
+  {
+    // alert('fg');
+    if($('#package_image').val()!='')
+    {
+      
+      $('#bank_sub').attr('disabled',false);
+      $("#bank_sub").html('Confirm you have paid via Bank transfer');
+    }
+    else
+    {
+      $('#bank_sub').attr('disabled',true);
+    }
+  }
+</script>
+
 <div class="contact-box">
             <div class="container">
                 <div class="row">
@@ -39,10 +73,10 @@
           </span>
       </div> -->
 
-    </label><textarea  name="package_description" id="package_description"></textarea><br>
+    </label><textarea  name="package_description" id="package_description" onkeypress="bank_description();"></textarea><br>
     <label><h5 class="line-h5">Upload Payment Document</h5> </br>
       <strong>Alternatively you can provide the screenshot of the bank transfer</strong>
-    </label><input type="file" name="package_image" id="package_image">
+    </label><input type="file" name="package_image" id="package_image" onchange="bank_image();">
        
   <button class="btn btn-dark btn-theme-colored btn-flat" id="bank_sub" name="submit">Confirm you have paid via Bank transfer</button>
 </form>

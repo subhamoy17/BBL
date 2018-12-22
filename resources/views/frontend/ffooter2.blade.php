@@ -1208,7 +1208,7 @@ $('#coupon_sub').show();
   
   </script>
 
- <script>
+ <!-- <script>
   $(document).ready(function(){
 
 
@@ -1233,7 +1233,7 @@ $('#bank_payment-form').bind('submit', function (e) {
     }
 });
 });
-</script>
+</script> -->
  
 
 <script>
@@ -1325,6 +1325,35 @@ $(function() {
   }
 })
 </script>
+ <script type="text/javascript">
+   $(document).ready(function(){
+  $('#bank_payment-form').bind('submit', function (e) {
+   
+    var button = $('#bank_sub');
+
+    // Disable the submit button while evaluating if the form should be submitted
+    button.prop('disabled', true);
+      // $("#bank_sub").html('Please wait...');
+
+    var valid = true;    
+
+    // Do stuff (validations, etc) here and set
+    // "valid" to false if the validation fails
+
+    if (!valid) { 
+        // Prevent form from submitting if validation failed
+        e.preventDefault();
+
+        // Reactivate the button if the form was not submitted
+        button.prop('disabled', false);
+    }
+});
+
+
+
+  });
+</script>
+
 </body>
 
 </html>
