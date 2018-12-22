@@ -1477,7 +1477,7 @@ public function booking_bootcamp()
   ->join('bootcamp_plans','bootcamp_plans.address_id','bootcamp_plan_address.id')
   ->select('bootcamp_plan_address.address_line1','bootcamp_plan_address.id','bootcamp_plans.address_id')
   ->whereNull('bootcamp_plans.deleted_at')->distinct('bootcamp_plans.address_id')->first();
-Log::debug(" bootcampaddress ".print_r($bootcampaddress,true));
+//Log::debug(" bootcampaddress ".print_r($bootcampaddress,true));
   // check customer product validity as well as available session
   $order_details=DB::table('order_details')
   ->join('products','products.id','order_details.product_id')
@@ -1510,7 +1510,7 @@ Log::debug(" bootcampaddress ".print_r($bootcampaddress,true));
   ->where('order_details.customer_id',Auth::guard('customer')->user()->id)
   ->max('order_details.order_validity_date');
 
-  Log::debug(" customer_product_validity ".print_r($customer_product_validity,true));
+  //Log::debug(" customer_product_validity ".print_r($customer_product_validity,true));
 
   if(empty($customer_product_validity))
   {
@@ -1615,6 +1615,22 @@ public function bootcamp_booking_customer(Request $request)
 
     $current_date=Carbon::now()->toDateString();
 
+    $order_details=DB::table('order_details')
+  ->join('products','products.id','order_details.product_id')
+  ->join('training_type','training_type.id','products.training_type_id')
+  ->where('order_details.customer_id',Auth::guard('customer')->user()->id)
+  ->where('order_details.status',1)
+  ->where('training_type.id',2)
+  ->where('order_details.order_validity_date','>=',$current_date)
+  ->where(function($q) {
+         $q->where('order_details.remaining_sessions','>',0)
+           ->orWhere('order_details.remaining_sessions','Unlimited');
+     })
+  ->get()->all();
+
+      if(count($order_details)>0)
+    {
+
     for($j=0;$j<count($request->bootcamp_date);$j++)
     {
       $no_of_session_unlimited=DB::table('order_details')
@@ -1704,6 +1720,13 @@ public function bootcamp_booking_customer(Request $request)
 
     DB::commit();
     return redirect()->back()->with(["success"=>"You have successfully sent the below Bootcamp session request(s)!",'all_data'=>$all_data]);
+
+  } // end of checking for avilable session
+    else
+    {
+      return redirect()->back();
+    }
+
   }
    catch(\Exception $e) {
     DB::rollback();
