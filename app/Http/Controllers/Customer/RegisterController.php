@@ -68,9 +68,6 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-   
-
-
     public function showForm(Request $request)
 
     {
@@ -323,7 +320,6 @@ class RegisterController extends Controller
        return abort(400);
       }
 }
-
 
 
     /**

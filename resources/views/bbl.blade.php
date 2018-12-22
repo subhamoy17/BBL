@@ -12,6 +12,8 @@
     }
 </script>
 
+
+
 <div class="banner_top">
 		<div class="slider">
 			<div class="wrapper">
@@ -110,9 +112,9 @@
               
               <div class="clearfix"></div>
               @if(Auth::guard('customer')->check())
-                  <a href="{{route('bootcamp_plan_purchase',['bootcamp_plan_id' => Crypt::encrypt($each_bootcamp_product->product_id) ])}}" class="sign-btn2">Subscribe</a>
+                  <a href="{{route('bootcamp_plan_purchase',['bootcamp_plan_id' => Crypt::encrypt($each_bootcamp_product->product_id) ])}}" class="sign-btn2">Purchase</a>
                    @else
-                <a href="{{url('customer-login')}}" class="sign-btn2">Sign Up</a>
+                <a href="{{route('customer_purchase_login',['bootcamp_plan_id' => Crypt::encrypt($each_bootcamp_product->product_id) ])}}" class="sign-btn2">Purchase</a>
                 @endif
               </div>
             </div>
@@ -204,57 +206,16 @@
 
 
               <div class="clearfix"></div>
-
-
-
-              <a href="" class="sign-btn2">Subscribe</a>
+                @if(Auth::guard('customer')->check())
+                  <a href="{{route('pt_plan_purchase',['bootcamp_plan_id' => Crypt::encrypt($each_personal_training_product->product_id) ])}}" class="sign-btn2">Purchase</a>
+                   @else
+                <a href="{{route('customer_purchase_login',['bootcamp_plan_id' => Crypt::encrypt($each_personal_training_product->product_id) ])}}" class="sign-btn2">Purchase</a>
+                @endif
               </div>
             </div>
           
             @endforeach
          @endif
-          </div>
-      </div> -->
-      <!-- <div id="tabs-4">
-        <div id="bootcamp-slider2" class="owl-carousel">
-          @if(count($bootcamp_product_details)>0)
-            @foreach($bootcamp_product_details as $bc_key=>$each_bootcamp_product)
-            <div class="price-box">
-              <div class="p-box-head cmn-3">
-              <h3><span>{{$each_bootcamp_product->validity? $each_bootcamp_product->validity.' Days' : 'Validity N/A'}}</span></h3>
-              <h1><i class="fa fa-gbp"></i> {{$each_bootcamp_product->total_price}} 
-                <br><span> {{$each_bootcamp_product->payment_type_name}}
-                    @if($each_bootcamp_product->payment_type_name=='Subscription')
-                (Notice Period 
-                {{$each_bootcamp_product->notice_period_value*$each_bootcamp_product->notice_period_duration}} Days)
-                @endif
-                </span></h1>
-              <div class="btm-arow"><i class="fa fa-arrow-circle-down"></i></div>
-              <div class="plan-batch bch-3">Bootcamp</div>
-              <div class="cntrct"><h5>Contract <span> - {{$each_bootcamp_product->contract? $each_bootcamp_product->contract : 'N/A'}}</span></h5></div>
-              </div>
-              <div class="p-box-bdy">
-              <h2>
-                @if($each_bootcamp_product->total_sessions!='Unlimited')
-                  {{$each_bootcamp_product->total_sessions}}<span>Sessions</span>
-                @else
-                  {{substr($each_bootcamp_product->total_sessions,0,1)}}<span>{{substr($each_bootcamp_product->total_sessions,1,8)}} Sessions</span>
-                @endif
-              </h2>
-              
-              <div class="clearfix"></div>
-              @if(Auth::guard('customer')->check())
-                  <a href="{{route('bootcamp_plan_purchase',['bootcamp_plan_id' => Crypt::encrypt($each_bootcamp_product->product_id) ])}}" class="sign-btn2">Subscribe</a>
-                   @else
-                <a href="{{url('customer-login')}}" class="sign-btn2">Sign Up</a>
-                @endif
-              </div>
-            </div>
-          
-            @endforeach
-          @else
-            No bootcamp plan available
-          @endif
           </div>
       </div> -->
           </div>
@@ -419,5 +380,7 @@
         </div>
     </section>
     <!--//Featured Slider-->
+
+
 
 @endsection

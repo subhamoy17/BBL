@@ -293,6 +293,14 @@ Route::get('auth/{provider}/login', 'Customer\SocialLoginController@redirectToPr
 Route::get('auth/{provider}/callback', 'Customer\SocialLoginController@handleProviderCallback');
 
 
+
+
+
+/// route for customer login                            
+Route::GET('purchase-login/{slug}','Customer\SocialLoginController@showPurchaseLoginForm')->name('customer_purchase_login');
+
+Route::post('customer-purchase-login-success', 'Customer\SocialLoginController@customer_purchase_login_success')->name('customer-purchase-login-success');
+
 /// route for goto admin panel after login
 
 
@@ -311,18 +319,15 @@ Route::POST('customer-password/email','Customer\ForgotPasswordController@sendRes
 Route::POST('customer-password/reset','Customer\ResetPasswordController@reset');
 Route::GET('customer-password/reset/{token}','Customer\ResetPasswordController@showResetForm')->name('customerpanel.password.reset');
 
-    Route::get('customer-registration', 'Customer\RegisterController@showRegistrationForm')->name('customer-register');
+Route::get('customer-registration', 'Customer\RegisterController@showRegistrationForm')->name('customer-register');
 
-    Route::post('register', 'Customer\RegisterController@showForm')->name('customer-register-success');
-    Route::get('register/verify/{confirmationCode}','Customer\RegisterController@confirm')->name('verify-user');
+Route::post('register', 'Customer\RegisterController@showForm')->name('customer-register-success');
+Route::get('register/verify/{confirmationCode}','Customer\RegisterController@confirm')->name('verify-user');
 
 //customer changes password//
 Route::GET('customerpanel/home/customer-changepassword','Customer\ChangePasswordController@showChagePasswordForm')->name('customer.changepassword');
 
 Route::POST('customerpanel/home/customer-changepassword','Customer\ChangePasswordController@updateAdminPassword')->name('customer.changepassword.update');
-
-
-
 
 
 
@@ -507,7 +512,6 @@ Route::get('contact-us','FrontSimpleController@front_contact')->name('contact-us
 Route::post('front_contact_insert','FrontSimpleController@front_contact_insert')->name('front_contact_insert');
 
 //
-
 
 
 //Live Server cache, route, view clear

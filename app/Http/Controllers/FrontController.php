@@ -1245,6 +1245,8 @@ public function exercise()
   } 
 }
 
+ 
+
 public function bootcamp_plan_purchase($id)
 {
 
