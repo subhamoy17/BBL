@@ -19,9 +19,9 @@
   {{ csrf_field() }}
   <h6>Pay via Bank Transfer</h6>
   <div class="acnt-det">
-    <p><h5>Account Name: </h5> <span>Body By Lekan FItness Limited</span></p>
-    <p><h5>Sort Code: </h5> <span> 23-69-72</span></p>
-    <p><h5>Account No: </h5> <span> 12843805</span></p>
+    <p><h5>Account Name: </h5> <span>BODYBYLEKAN FITNESS LIMITED</span></p>
+    <p><h5>Sort Code: </h5> <span> 09-01-29</span></p>
+    <p><h5>Account No: </h5> <span>33473491</span></p>
   </div>
   <label class="w3-text-blue"><b>Payable amount is </b>&nbsp;  <span class="pay-pal-price"><i class="fa fa-gbp"></i> {{$package_details->total_price
   }}</span></label>
@@ -44,7 +44,7 @@
       <strong>Alternatively you can provide the screenshot of the bank transfer</strong>
     </label><input type="file" name="package_image" id="package_image">
        
-  <button class="btn btn-dark btn-theme-colored btn-flat" name="submit">Confirm you have paid via Bank transfer</button>
+  <button class="btn btn-dark btn-theme-colored btn-flat" id="bank_sub" name="submit">Confirm you have paid via Bank transfer</button>
 </form>
 </div>
 </div>
