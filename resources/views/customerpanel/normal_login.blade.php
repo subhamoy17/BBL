@@ -78,6 +78,17 @@
                             <input class="yr-phn" placeholder="Phone"  id="ph_no" type="text" class="" name="ph_no" required>
 
                             @endif
+
+                            @if($errors->has('email') || $errors->has('ph_no'))
+                             <input class="yr-name" placeholder="Your Name" type="text" id="name" 
+                            name="name"  required autofocus value="{{old('name')}}" >
+                            <input class="yr-phn" placeholder="Phone"  id="ph_no" type="text" class="form-control{{ $errors->has('ph_no') ? ' is-invalid' : '' }}" name="ph_no" value="{{ old('ph_no') }}" required>
+                            @if ($errors->has('ph_no'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('ph_no') }}</strong>
+                                    </span>
+                                @endif
+                            @endif
                            @if ($errors->has('email'))
                            <span class="checkbox1">
                                 <label class="checkbox"></label>

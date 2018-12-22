@@ -195,7 +195,7 @@ class SocialLoginController extends Controller
           $validator=Validator::make($request->all(), [
               'email' => 'required|email|max:255|unique:customers',
               'password'=>'required|min:6',
-              'name'=>'required|min:4',
+              'name'=>'required|min:6',
               'ph_no'=>'required|min:10|numeric|unique:customers',
           ]);
 
