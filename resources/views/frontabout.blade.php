@@ -35,7 +35,7 @@ So get set to go for a healthier you. So, no matter if you are planning to work 
 		<p>To know more about the services we offer.</p>
 			<div class="more-button">
            
-				<a href="mailto:info@bodybylekan.com">Mail Us</a>
+				<a href="mailto:lekan@bodybylekan.com">Mail Us</a>
 			</div>
 	</div>
 </div>

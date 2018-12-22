@@ -56,7 +56,7 @@
               <div class="all-links">
                 <ul>
                    <li><a href="https://www.instagram.com/lekanfitness" target="_blank"><i class="fa fa-instagram"></i></a></li>
-                                 <li><a href="mailto:info@example.com"><i class="fa fa-envelope"></i></a></li>
+                                 <li><a href="mailto:lekan@bodybylekan.com"><i class="fa fa-envelope"></i></a></li>
                                 <li><a href="https://www.facebook.com/bodybylekan" target="_blank"><i class="fa fa-facebook-f"></i></a></li>
                                 <li><a href="https://www.twitter.com" target="_blank"><i class="fa fa-twitter"></i></a></li>
                                 <!-- <li><a href="#"><i class="fa fa-google-plus"></i></a></li> -->
@@ -215,8 +215,8 @@
         <div class="col-md-3 gylayouts_footer_grid">
           <h2>Contact <span>Us</span></h2>
               <ul class="con_inner_text">
-              <li><span class="fa fa-map-marker" aria-hidden="true"></span>6 Brighton Hill RG22 4EH,<label>Basingstoke</label></li>
-              <li><span class="fa fa-envelope-o" aria-hidden="true"></span> <a href="mailto:info@example.com">info@bodybylekan.com</a></li>
+              <li><span class="fa fa-map-marker" aria-hidden="true"></span>Telford Road, Basingstoke RG21 6YU, UK</li>
+              <li><span class="fa fa-envelope-o" aria-hidden="true"></span> <a href="mailto:lekan@bodybylekan.com">lekan@bodybylekan.com</a></li>
               <li><span class="fa fa-phone" aria-hidden="true"></span>+44 7706 975795</li>
             </ul>
 

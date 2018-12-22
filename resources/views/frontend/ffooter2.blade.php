@@ -1354,6 +1354,30 @@ $(function() {
   });
 </script>
 
+
+<script>
+  $(function () {
+    $( "#session_datepicker" ).datepicker({
+      dateFormat: "yy-mm-dd",
+      beforeShowDay: NotBeforeToday
+    });
+  } );
+
+  function NotBeforeToday(date)
+  {
+    var now = new Date();//this gets the current date and time
+    if (date.getFullYear() == now.getFullYear() && date.getMonth() == now.getMonth() && date.getDate() >= now.getDate())
+        return [true];
+    if (date.getFullYear() >= now.getFullYear() && date.getMonth() > now.getMonth())
+       return [true];
+     if (date.getFullYear() > now.getFullYear())
+       return [true];
+    return [false];
+  }
+
+
+</script>
+
 </body>
 
 </html>

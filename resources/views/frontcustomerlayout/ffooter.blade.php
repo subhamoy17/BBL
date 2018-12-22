@@ -41,7 +41,7 @@
 					<h2>Contact <span>Us</span></h2>
 					    <ul class="con_inner_text">
 							<li><span class="fa fa-map-marker" aria-hidden="true"></span>Telford Road, Basingstoke RG21 6YU, UK</li>
-							<li><span class="fa fa-envelope-o" aria-hidden="true"></span> <a href="mailto:info@bodybylekan.com">info@bodybylekan.com</a></li>
+							<li><span class="fa fa-envelope-o" aria-hidden="true"></span> <a href="mailto:lekan@bodybylekan.com">lekan@bodybylekan.com</a></li>
 							<li><span class="fa fa-phone" aria-hidden="true"></span>+44 7706 975795</li>
 						</ul>
 

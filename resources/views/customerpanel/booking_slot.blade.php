@@ -161,7 +161,7 @@
         
 
           <!-- #tab1 -->
-          <h3 class="ed-p">Session Booking Form</h3>
+          <h3 class="ed-p">Booking PT Session Form</h3>
           <h3 class="d_active tab_drawer_heading" rel="tab5">Tab 5</h3>
           <div id="tab5" class="tab_content">
             <div class="form-box">
