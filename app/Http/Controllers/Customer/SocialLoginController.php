@@ -177,7 +177,7 @@ class SocialLoginController extends Controller
 
       $check_customer=DB::table('customers')->where('email',$email)->first();
 
-      if(Auth::guard('customer')->attempt($data))
+      if(Auth::guard('customer')->attempt($data) && $request->name=='' && $request->ph_no=='')
         {
           
           if($product_details->training_id==1)
