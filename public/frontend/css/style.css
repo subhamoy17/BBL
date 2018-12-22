@@ -6640,7 +6640,7 @@ span.line_t2 {
 }
   .bnr-btn {
     background: rgba(12, 2, 42, 0.6);
-    border: 2px dashed #fff;
+    /*border: 2px dashed #fff;*/
     padding: 10px 30px;
     width: auto;
     display: inline-block;
@@ -6651,8 +6651,8 @@ span.line_t2 {
     letter-spacing: 2px;
     text-align: center;
     border-radius: 3px;
-    font-size: 28px;
-    font-family: 'Russo One', sans-serif;
+    font-size: 16px;
+    font-family: 'Montserrat', sans-serif;
 }
 .bnr-btn:hover{
     color: #fff !important;
