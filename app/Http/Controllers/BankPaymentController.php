@@ -277,7 +277,18 @@ public function bootcamp_bank_payment_success(Request $request)
   $order_data['product_id']=$request->product_id;
   $order_data['training_type']=$package_details->product_name;
   $order_data['payment_type']=$package_details->payment_type_name;
-  $order_data['order_purchase_date']=Carbon::now()->toDateString();
+  if($request->subscription_start_date=='')
+  {
+    $order_data['order_purchase_date']=Carbon::now()->toDateString();
+    $order_data['subscription_start_date']=Carbon::now()->toDateString();
+  }
+  else
+  {
+    $order_data['order_purchase_date']=$request->subscription_start_date;
+    $order_data['subscription_start_date']=$request->subscription_start_date;
+  }
+  
+
   if($package_details->validity!='')
   {
     $order_data['order_validity_date']=Carbon::now()->addDay($package_details->validity);
@@ -309,7 +320,7 @@ public function bootcamp_bank_payment_success(Request $request)
     $notifydata['product_name'] =$package_details->product_name;
     $notifydata['no_of_sessions'] =$package_details->total_sessions;
     $notifydata['product_validity'] =$order_data['order_validity_date'];
-    $notifydata['product_purchase_date'] =$order_data['order_purchase_date'];
+    $notifydata['product_purchase_date'] =Carbon::now()->toDateString();
     $notifydata['product_amount'] =$package_details->total_price;
     $notifydata['order_id'] =$payment_history_data['payment_id'];
     $notifydata['payment_mode'] ='Bank Transfer';

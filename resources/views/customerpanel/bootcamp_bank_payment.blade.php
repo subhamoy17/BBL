@@ -59,8 +59,11 @@ function bank_image()
     <p><h5>Sort Code: </h5> <span> 09-01-29</span></p>
     <p><h5>Account No: </h5> <span>33473491</span></p>
   </div>
-  <label class="w3-text-blue"><b>Payable amount is </b>&nbsp;  <span class="pay-pal-price"><i class="fa fa-gbp"></i> {{$package_details->total_price
-  }}</span></label>
+  <label class="w3-text-blue"><b>Payable amount is </b>&nbsp;  <span class="pay-pal-price"><i class="fa fa-gbp"></i> @if($package_details->payment_type_name=='Subscription')
+    {{$package_details->price_session_or_month}}
+                @else
+    {{$package_details->total_price}}
+  @endif</span></label>
   
   <input class="w3-input w3-border" name="product_id" type="hidden" value="{{$package_details->product_id}}" readonly >
   
@@ -79,13 +82,13 @@ function bank_image()
     <label><h5 class="line-h5">Upload Payment Document</h5> </br>
       <strong>Alternatively you can provide the screenshot of the bank transfer</strong>
     </label><input type="file" name="package_image" id="package_image" onchange="bank_image();">
-      <div >
-                          <label>Active Seccion Date</label>
-                          <input type="text" id="session_datepicker" name="date" class="form-control date-control"  readonly="true">
+      
 
-                        
+         @if($package_details->payment_type_name=='Subscription')
+          <label>Subscription Start Date</label>
+          <input type="text" id="subscription_start_date" name="subscription_start_date" class="form-control date-control"  readonly="true">
+          @endif
 
-                        </div>
        
   <button class="btn btn-dark btn-theme-colored btn-flat" id="bank_sub" name="submit">Confirm you have paid via Bank transfer</button>
 </form>

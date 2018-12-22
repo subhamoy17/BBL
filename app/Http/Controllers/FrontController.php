@@ -1260,7 +1260,7 @@ public function bootcamp_plan_purchase($id)
   $package_details=DB::table('products')
   ->join('training_type','training_type.id','products.training_type_id')
   ->join('payment_type','payment_type.id','products.payment_type_id')
-  ->select('training_type.training_name as product_name','payment_type.payment_type_name as payment_type_name','products.total_sessions as total_sessions','products.id as product_id','products.id as product_id',(DB::raw('products.validity_value * products.validity_duration  as validity')),'products.total_price as total_price')
+  ->select('training_type.training_name as product_name','payment_type.payment_type_name as payment_type_name','products.total_sessions as total_sessions','products.id as product_id','products.id as product_id',(DB::raw('products.validity_value * products.validity_duration  as validity')),'products.total_price as total_price','products.price_session_or_month as price_session_or_month')
   ->where('products.id',$plan_id)->first();
   
     return view('customerpanel.bootcamp_product_purchase')->with(compact('package_details'));
@@ -1283,7 +1283,7 @@ public function bootcamp_purchase_payment_mode(Request $request)
   $package_details=DB::table('products')
   ->join('training_type','training_type.id','products.training_type_id')
   ->join('payment_type','payment_type.id','products.payment_type_id')
-  ->select('training_type.training_name as product_name','payment_type.payment_type_name as payment_type_name','products.total_sessions as total_sessions','products.id as product_id',(DB::raw('products.validity_value * products.validity_duration  as validity')),'products.total_price as total_price')
+  ->select('training_type.training_name as product_name','payment_type.payment_type_name as payment_type_name','products.total_sessions as total_sessions','products.id as product_id',(DB::raw('products.validity_value * products.validity_duration  as validity')),'products.total_price as total_price','products.price_session_or_month as price_session_or_month')
   ->where('products.id',$request->product_id)->first();
 
 
@@ -1320,7 +1320,7 @@ public function bootcamp_strip_payment(Request $request)
 
     $customer_details=Customer::find(Auth::guard('customer')->user()->id);
     
-    \Stripe\Stripe::setApiKey ( 'sk_test_oBDW3aKMIoUchBs9TKSQ8TwF' );
+    \Stripe\Stripe::setApiKey ( 'sk_test_bvjrud7IPb2iDykEcEOtq1Kg' );
 
           $customer =  \Stripe\Customer::create([
             'email' =>Auth::guard('customer')->user()->email,
@@ -2032,7 +2032,7 @@ public function pt_strip_payment(Request $request)
 
     $customer_details=Customer::find(Auth::guard('customer')->user()->id);
     
-    \Stripe\Stripe::setApiKey ( 'sk_test_oBDW3aKMIoUchBs9TKSQ8TwF' );
+    \Stripe\Stripe::setApiKey ( 'sk_test_bvjrud7IPb2iDykEcEOtq1Kg' );
 
           $customer =  \Stripe\Customer::create([
             'email' =>Auth::guard('customer')->user()->email,

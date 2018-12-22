@@ -1357,7 +1357,7 @@ $(function() {
 
 <script>
   $(function () {
-    $( "#session_datepicker" ).datepicker({
+    $( "#subscription_start_date" ).datepicker({
       dateFormat: "yy-mm-dd",
       beforeShowDay: NotBeforeToday
     });

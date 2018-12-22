@@ -23,7 +23,7 @@
     @if($package_details)
      <form accept-charset="UTF-8" action="{{route('pt_strip_payment')}}" class="require-validation"
     data-cc-on-file="false"
-    data-stripe-publishable-key="pk_test_pHf7liH3Wi3IVy3pHliAEOdT"
+    data-stripe-publishable-key="pk_test_qxRI6HuJMLG3MxmiQH39UQpb"
     id="payment-form" method="post">
     {{ csrf_field() }}
     <input class="w3-input w3-border" name="product_id" type="hidden" value="{{$package_details->product_id}}" >

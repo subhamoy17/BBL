@@ -28,11 +28,15 @@
 
                                       <label>Plan Type - <h6>{{$package_details->product_name}}</h6></label>
                                       <span class="rev-line">
-                                      <label class="line-t">Price - <h6 class="line-t"><i class="fa fa-gbp"></i> {{$package_details->total_price}}</h6></label>
+                                      <label class="line-t">Price - <h6 class="line-t"><i class="fa fa-gbp"></i> @if($package_details->payment_type_name=='Subscription')
+    {{$package_details->price_session_or_month}}
+                @else
+    {{$package_details->total_price}}
+  @endif</h6></label>
                                       </span>
                                       <label>No. Of Sessions - <h6>{{$package_details->total_sessions}}</h6></label>
                                        
-                                       <label>Validity - <h6>{{$package_details->validity? $package_details->validity.' Days' : 'N/A'}}</h6></label>
+                                       <label>Validity - <h6>{{$package_details->validity? $package_details->validity.' Days' : 'Monthly'}}</h6></label>
                                     </div>
                    </div>     
                 </div>
