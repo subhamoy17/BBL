@@ -6,7 +6,7 @@
           <div id="tab1" class="tab_content">
             <div class="table-responsive table-bordered">
               <div class="my-bkng-btn">
-                <a href="{{url('customer/booking-bootcamp')}}" class="btn btn-success">Book Bootcamp Session</a><a href="{{url('customer/booking_slot')}}" class="btn btn-success">Book PT Session</a>
+                <a href="{{url('customer/booking-bootcamp')}}" class="btn btn-success">Book Bootcamp Session</a><a href="{{url('customer/booking-personal-training')}}" class="btn btn-success">Book PT Session</a>
               </div>
 
         @if (session('bootcamp_session_cancelled'))
