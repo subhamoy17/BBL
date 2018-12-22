@@ -12,6 +12,8 @@
     }
 </script>
 
+
+
 <section class="pricing df-pricing">
     <div class="container">
         <h3 class="gyl_header">Choose Your<span id="bt_plan"> Bootcamp </span><span id="pt_plan" style="display: none;"> Personal Training </span> Plan</h3>
