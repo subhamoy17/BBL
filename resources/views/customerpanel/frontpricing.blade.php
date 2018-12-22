@@ -30,7 +30,7 @@
             @foreach($bootcamp_product_details as $bc_key=>$each_bootcamp_product)
             <div class="price-box" style="background: url(/frontend/images/banner1.jpg)no-repeat center top / cover; min-height:300px;">
               <div class="p-box-head cmn-3">
-              <h3><span>Validity {{$each_bootcamp_product->validity? $each_bootcamp_product->validity.' Days' : 'N/A'}}</span></h3>
+              <h3><span>{{$each_bootcamp_product->validity? 'Validity '.$each_bootcamp_product->validity.' Days' : 'Monthly'}}</span></h3>
               <h1><i class="fa fa-gbp"></i> {{$each_bootcamp_product->total_price}} 
                 <br><span> {{$each_bootcamp_product->payment_type_name}}
                     @if($each_bootcamp_product->payment_type_name=='Subscription')
@@ -72,7 +72,7 @@
             <div class="price-box" style="background: url(/frontend/images/banner4.jpg)no-repeat center top / cover; min-height:300px;">
               <div class="p-box-head cmn-3">
            
-              <h3><span>Validity {{$each_personal_training_product->validity? $each_personal_training_product->validity.' Days' : 'N/A'}}</span></h3>
+              <h3><span>{{$each_personal_training_product->validity? 'Validity '.$each_personal_training_product->validity.' Days' : 'Monthly'}}</span></h3>
               <h1><i class="fa fa-gbp"></i> {{$each_personal_training_product->total_price}} <br> 
                 <span>{{$each_personal_training_product->payment_type_name}}
                      @if($each_personal_training_product->payment_type_name=='Subscription')
