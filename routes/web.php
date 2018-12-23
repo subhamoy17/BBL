@@ -159,23 +159,6 @@ Route::post('checkdiscount_price_edit','TrainerController@checkdiscount_price_ed
 
 Route::get('diet-plan-purchases-history','TrainerController@diet_plan_purchases')->name('diet_plan_purchases');
 
-
-//show our client//
-Route::get('our_trainer_list','TrainerController@our_client_show')->name('our_trainer_list');
-
-//insert our client//
-
-Route::get('our_trainer_insert_view','TrainerController@client_insert_view')->name('client_insert_view');
-Route::post('client_insert','TrainerController@client_insert')->name('client_insert');
-
-//update our_client
-Route::get('our_trainer_edit_view/{id}','TrainerController@client_edit_view')->name('client_edit_view');
-Route::post('client_update','TrainerController@client_update')->name('client_update');
-
-
-//delete//
-Route::get('client_delete/{id}', 'TrainerController@client_delete');
-
 Route::get('order_history_backend_request', 'TrainerController@order_history_backend_request')->name('order_history_backend_request');
 
 Route::get('trainer_active_deactive', 'TrainerController@trainer_active_deactive')->name('trainer_active_deactive');

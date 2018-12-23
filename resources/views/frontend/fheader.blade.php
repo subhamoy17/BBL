@@ -75,27 +75,27 @@
                         <a href="{{url('/')}}">Home</a>
                       </li>
                        <li class="{{ Request::segment(2) === 'about-us' ? 'active' : null }}">
-                        <a href="{{url('customer/about-us')}}">About Us</a>
+                        <a href="{{url('about-us')}}">About Us</a>
                       </li>
 
                     <li class="{{ Request::segment(2) === 'services' ? 'active' : null }}">
-                        <a href="{{url('customer/services')}}">Services</a>
+                        <a href="{{url('services')}}">Services</a>
                       </li>
                     <li class="{{ Request::segment(2) === 'pricing' ? 'active' : null }}">
-                        <a href="{{url('customer/pricing')}}">Pricing</a>
+                        <a href="{{url('pricing')}}">Pricing</a>
                       </li>
                       <li class="{{ Request::segment(2) === 'exercise' ? 'active' : null }}">
-                        <a href="{{url('customer/exercise')}}">Exercise</a>
+                        <a href="{{url('exercise')}}">Exercise</a>
                       </li>
                       <!-- <li class="{{ Request::segment(1) === 'diet-plan' ? 'active' : null }}">
                         <a href="{{route('diet_plans')}}">Diet Plans</a>
                       </li> -->
 
                   <li class="{{ Request::segment(2) === 'contact-us' ? 'active' : null }}">
-                        <a href="{{url('customer/contact-us')}}">Contact Us</a>
+                        <a href="{{url('contact-us')}}">Contact Us</a>
                       </li>
                       <li class="{{ Request::segment(2) === 'testimonial' ? 'active' : null }}">
-                        <a href="{{url('customer/testimonial')}}">Testimonial</a>
+                        <a href="{{url('testimonial')}}">Testimonial</a>
                       </li>
 
                       @if(Auth::guard('customer')->check())

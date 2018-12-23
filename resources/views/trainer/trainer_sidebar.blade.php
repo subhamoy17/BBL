@@ -162,17 +162,6 @@
                   @endif
 
             </ul></li>
-
-
-                  @if(Request::segment(2) == "our_trainer_list" || Request::segment(2) == "our_trainer_insert_view" || Request::segment(2) == "our_trainer_edit_view")
-                       <ul class="nav navbar-nav">
-                 <li class="active">
-                  <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('our_trainer_list')}}" style="color: #fff !important;">Our Trainer</a></li>
-                  @else
-                  <ul class="nav navbar-nav">
-                  <li class="active">
-                  <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('our_trainer_list')}}">Our Trainer</a></li>
-                  @endif
                   </ul></li>
 
                   <!-- @if(Request::segment(2) == "feedbacklist")
