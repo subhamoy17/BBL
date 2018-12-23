@@ -78,12 +78,12 @@
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://www.bodybylekan.com/gym-training">
 @endif
-@if(Request::segment(1) == 'diet-plan')
+<!-- @if(Request::segment(1) == 'diet-plan')
 <title>Diet Plan for Body Building & Weight Loss | Body By Lekan</title>
   <meta name="description" content="Scheduling nutritious diet plan is the key to get effective body along with regular fitness workout, follow these healthy tips to get perfect body shape.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://www.bodybylekan.com/diet-plan">
-@endif
+@endif -->
 @if(Request::segment(1) == 'bootcamp-training')
 <title>Fitness & Weight Loss Bootcamp Training | Body By Lekan</title>
   <meta name="description" content="Get a complete high intensity bootcamp training sessions with us & burn excess calories by full-body workout that targets the major muscles of your body parts.">

@@ -323,7 +323,7 @@
                         <div class="sr-text">
                             <h4>DIET PLANS</h4>
                             <p>Customized diet plans to fit all body types</p>
-                            <a href="{{route('diet_plans')}}" class="rd-btn2">read more <i class="fa fa-long-arrow-right"></i></a>
+                            <a href="javascript:void(0);" class="rd-btn2">read more <i class="fa fa-long-arrow-right"></i></a>
                         </div>
                     </div>
                 </div>
