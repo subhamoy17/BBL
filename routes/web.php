@@ -41,11 +41,6 @@ Route::POST('updateprofile','TrainerController@updateprofile')->name('trainer.pr
 Route::GET('changepassword','TrainerChangePasswordController@showChagePasswordForm')->name('trainer.changepassword');
 Route::POST('update-changepassword','TrainerChangePasswordController@updateTrainerPassword')->name('trainer.changepassword.update');
 
-
-// for add slot
-Route::get('add-slot', 'TrainerController@showslot')->name('addslot');
-Route::get('add-slot-record', 'TrainerController@addslot')->name('addslotrecord');
-Route::POST('store-slot-record', 'TrainerController@insertslot')->name('storeslots');
 //for showing trainer details
 Route::get('trainerlist','TrainerController@showlist')->name('trainerlist');
 
@@ -181,11 +176,6 @@ Route::post('client_update','TrainerController@client_update')->name('client_upd
 //delete//
 Route::get('client_delete/{id}', 'TrainerController@client_delete');
 
-Route::get('payment_history_backend','TrainerController@payment_history_backend')->name('payment_history');
-
-
-Route::get('payment_history_backend_request', 'TrainerController@payment_history_backend_request')->name('payment_history_backend_request');
-
 Route::get('order_history_backend_request', 'TrainerController@order_history_backend_request')->name('order_history_backend_request');
 
 Route::get('trainer_active_deactive', 'TrainerController@trainer_active_deactive')->name('trainer_active_deactive');
@@ -279,13 +269,6 @@ Route::get('deactive-order/{slug}', 'TrainerController@deactive_order_by_admin')
 Route::post('deactive-order-success', 'TrainerController@deactive_order_success')->name('deactive_order_success');
 
 });
-
-
-
-/*Route::get('add-slot', 'TrainerController@showslot')->name('addslot');
-Route::get('add-slot-record', 'TrainerController@addslot')->name('addslotrecord');
-Route::POST('store-slot-record', 'TrainerController@insertslot')->name('storeslots');*/
-
 
 
 //// For Social Login

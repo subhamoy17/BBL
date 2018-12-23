@@ -130,29 +130,29 @@ $now = Carbon::now()->toDateString();
     ->join('bootcamp_plan_shedules','bootcamp_plan_shedules.id','bootcamp_booking.bootcamp_plan_shedules_id')
     ->join('bootcamp_plan_address','bootcamp_plan_address.id','bootcamp_plan_shedules.address_id')
     ->select('bootcamp_plan_shedules.plan_date','bootcamp_plan_shedules.plan_day','bootcamp_plan_shedules.plan_st_time','bootcamp_plan_shedules.plan_end_time','bootcamp_plan_address.address_line1','bootcamp_booking.created_at')
-    ->whereNull('bootcamp_booking.deleted_at')->where('bootcamp_plan_shedules.plan_date','>=',$now)->where('trainer_id',Auth::user()->id)->count();
+    ->whereNull('bootcamp_booking.deleted_at')->where('bootcamp_plan_shedules.plan_date','>=',$now)->count();
     $total_bootcamop_declined_booking=DB::table('bootcamp_booking')
     ->join('bootcamp_plan_shedules','bootcamp_plan_shedules.id','bootcamp_booking.bootcamp_plan_shedules_id')
     ->join('bootcamp_plan_address','bootcamp_plan_address.id','bootcamp_plan_shedules.address_id')
     ->select('bootcamp_plan_shedules.plan_date','bootcamp_plan_shedules.plan_day','bootcamp_plan_shedules.plan_st_time','bootcamp_plan_shedules.plan_end_time','bootcamp_plan_address.address_line1','bootcamp_booking.created_at')
-    ->whereNotNull('bootcamp_booking.deleted_at')->where('bootcamp_booking.cancelled_by',0)->where('trainer_id',Auth::user()->id)->count();
+    ->whereNotNull('bootcamp_booking.deleted_at')->where('bootcamp_booking.cancelled_by',0)->count();
 
     $total_bootcamop_cancelled_booking=DB::table('bootcamp_booking')
     ->join('bootcamp_plan_shedules','bootcamp_plan_shedules.id','bootcamp_booking.bootcamp_plan_shedules_id')
     ->join('bootcamp_plan_address','bootcamp_plan_address.id','bootcamp_plan_shedules.address_id')
     ->select('bootcamp_plan_shedules.plan_date','bootcamp_plan_shedules.plan_day','bootcamp_plan_shedules.plan_st_time','bootcamp_plan_shedules.plan_end_time','bootcamp_plan_address.address_line1','bootcamp_booking.created_at')
-    ->whereNotNull('bootcamp_booking.deleted_at')->where('bootcamp_booking.cancelled_by','>',0)->where('trainer_id',Auth::user()->id)->count();
+    ->whereNotNull('bootcamp_booking.deleted_at')->where('bootcamp_booking.cancelled_by','>',0)->count();
 
     $total_bootcamop_past_booking=DB::table('bootcamp_booking')
     ->join('bootcamp_plan_shedules','bootcamp_plan_shedules.id','bootcamp_booking.bootcamp_plan_shedules_id')
     ->join('bootcamp_plan_address','bootcamp_plan_address.id','bootcamp_plan_shedules.address_id')
     ->select('bootcamp_plan_shedules.plan_date','bootcamp_plan_shedules.plan_day','bootcamp_plan_shedules.plan_st_time','bootcamp_plan_shedules.plan_end_time','bootcamp_plan_address.address_line1','bootcamp_booking.created_at')
-    ->whereNull('bootcamp_booking.deleted_at')->where('bootcamp_plan_shedules.plan_date','<',$now)->where('trainer_id',Auth::user()->id)->count();
+    ->whereNull('bootcamp_booking.deleted_at')->where('bootcamp_plan_shedules.plan_date','<',$now)->count();
 
   $currentMonth = date('m');
   
  $total_bootcamop_booking_count_month = DB::table("bootcamp_booking")->join('bootcamp_plan_shedules','bootcamp_plan_shedules.id','bootcamp_booking.bootcamp_plan_shedules_id')->where('bootcamp_booking.cancelled_by',0)->whereNull('bootcamp_booking.deleted_at')
-    ->whereRaw('MONTH(bootcamp_plan_shedules.plan_date) = ?',[$currentMonth])->where('trainer_id',Auth::user()->id)
+    ->whereRaw('MONTH(bootcamp_plan_shedules.plan_date) = ?',[$currentMonth])
     ->count();
 
 
@@ -233,127 +233,6 @@ public function updateprofile(Request $request)
   }
   catch(\Exception $e) {
     DB::rollback();
-      return abort(200);
-  }
-}
-
-/**
-* Show slot's record.
-*
-*/
-public function showslot()
-{
-  try{
-  $this->cart_delete_trainer();
-  $data=DB::table('slots')->where('deleted_at',null)->get();
-  return view('trainer.addslot')->with(compact('data'));
-  }
-  catch(\Exception $e) {
-      return abort(200);
-  }
-}
-
-
-/**
-* add slot's form record.
-*
-*/
-public function addslot()
-{
-  $this->cart_delete_trainer();
-  return view('trainer.addslotrecord');
-}
-
-/**
-* add slot's form record.
-*
-*/
-public function insertslot(Request $request)
-{
-  //DB::beginTransaction();
-   //try{
-  $this->cart_delete_trainer();
-  // create log for showing error and print result
-  //Log::debug(" data ".print_r($request->all(),true)); 
-  // validation of data
-  $request->validate
-  ([ 'slots_number'=>'required|integer|min:1', //accept only integer and must be minimum value of 1 is required
-    'slots_price'=>'required|numeric|between:1,999999.99',//accept only integer and must be minimum value of 1 is required
-    'slots_validity'=>'required|integer|min:1',
-    // same as slots_number
-   
-    // 'slots_name'=>'required|max:255|unique:slots'
-    'slots_name' => 'required|max:255|unique:slots,slots_name,NULL,id,deleted_at,NULL'
-  ]);
-
-  $data['slots_name']=$request->slots_name;
-  $data['slots_number']=$request->slots_number;
-  $data['slots_price']=$request->slots_price;
-  $data['slots_validity']=$request->slots_validity;
-  $data['created_at']=Carbon::now();
-
-  DB::table('slots')->insert($data);
-  //DB::commit();
-  return redirect('trainer/add-slot')->with("success","You have successfully added one package");
-
-   // }
-   // catch(\Exception $e) {
-   //   DB::rollback();
-   //     return abort(200);
-   // }
-}
-
-
-// open the edit form of slots
-public function showslotseditform($id)
-{
-  try{
-  $this->cart_delete_trainer();
-  $data= DB::table('slots')->where('id',$id)->first();
-  Log::debug(" data ".print_r($data,true));
-  return view ("trainer.slotseditform")->with(compact('data'));
-}
-  catch(\Exception $e) {
-      return abort(200);
-  }
-}
-
-// update the slots
-public function slotsedit(Request $request)
-{
-  DB::beginTransaction();
-  try{
-  $this->cart_delete_trainer();
-  $slotsdata['slots_name']=$request->slots_name;
-  $slotsdata['slots_number']=$request->slots_number;
-  $slotsdata['slots_price']=$request->slots_price;
-  $slotsdata['slots_validity']=$request->slots_validity;
-  $slotsdata['updated_at']=Carbon::now();
-  DB::table('slots')->where('id',$request->id)->update($slotsdata);
-  DB::commit();
-  return redirect('trainer/add-slot')->with("success","You have successfully updated one package");
-  }
-  catch(\Exception $e) {
-      DB::rollback();
-      return abort(200);
-  }
-}
-
-
-// delete the slots
-public function slotsdelete($id)
-{
-  DB::beginTransaction();
-  try{
-  $this->cart_delete_trainer();
-  $slotsdata['deleted_at']=Carbon::now();
-
-  DB::table('slots')->where('id',$id)->update($slotsdata);
-  DB::commit();
-  return redirect('trainer/add-slot')->with("delete","You have successfully deleted one package");
-}
-  catch(\Exception $e) {
-      DB::rollback();
       return abort(200);
   }
 }
@@ -2089,114 +1968,6 @@ public function client_delete($id)
       DB::rollback();
       return abort(200);
   }
-}
-
-
-
-
-
-public function payment_history_backend()
-{
-  try{
-  $this->cart_delete_trainer();
-
-    $data=DB::table('purchases_history')
-    ->join('customers','customers.id','purchases_history.customer_id')
-    ->join('payment_history','payment_history.purchase_history_id','purchases_history.id')
-    ->select('purchases_history.id','purchases_history.slots_name','purchases_history.slots_price','customers.name','customers.name','purchases_history.payment_options','purchases_history.active_package','payment_history.status','purchases_history.purchases_date','payment_history.payment_id','payment_history.description','payment_history.image','payment_history.payment_mode')
-    ->orderBy('payment_history.payment_mode','ASC')->orderBy('payment_history.id','DESC')->get()->all();
-
-    return view('trainer.payment_history_backend')->with(compact('data'));
-  }
-
-  catch(\Exception $e) {
-      return abort(200);
-  }
-
-
-}
-
-
-public function payment_history_backend_request(Request $request)
-{
-  $this->cart_delete_trainer();
-    $data=$request->get('data');
-    $purchase_history_id=$data['id'];
-    $action=$data['action'];
-
-    $slot_number=DB::table('purchases_history')->where('id',$purchase_history_id)->first();
-    
-    if($action=="Approve"){
-
-    $update_purchases_history=DB::table('purchases_history')
-    ->where('id',$purchase_history_id)->update(['active_package' =>1,'package_remaining'=>$slot_number->slots_number]);
-
-    $update_payment_history=DB::table('payment_history')
-    ->where('purchase_history_id',$purchase_history_id)->update(['status'=> 'Success']);
-
-    // send notification mail
-
-    $customer_details=Customer::find($slot_number->customer_id);
-
-    $payment_history_details=DB::table('payment_history')
-    ->where('purchase_history_id',$purchase_history_id)->first();
-
-
-    $notifydata['package_name'] =$slot_number->slots_name;
-    $notifydata['slots_number'] =$slot_number->slots_number;
-    $notifydata['package_validity'] =$slot_number->package_validity_date;
-    $notifydata['package_purchase_date'] =$slot_number->purchases_date;
-    $notifydata['package_amount'] =$slot_number->slots_price;
-    $notifydata['payment_id'] =$payment_history_details->payment_id;
-    $notifydata['payment_mode'] ='Bank Transfer';
-    $notifydata['url'] = '/customer/purchase_history';
-    $notifydata['customer_name']=$customer_details->name;
-    $notifydata['customer_email']=$customer_details->email;
-    $notifydata['customer_phone']=$customer_details->ph_no;
-    $notifydata['status']='Bank Payment Approved';
-
-    Log::debug(" bank transfer approve notification ".print_r($notifydata,true));
-
-    $customer_details->notify(new PackagePurchaseNotification($notifydata));
-
-    return response()->json(1);
-    }
-    elseif($action=="Decline")
-    {
-
-    $update_purchases_history=DB::table('purchases_history')
-    ->where('id',$purchase_history_id)->update(['active_package' =>0,'package_remaining'=>0]);
-
-    $update_payment_history=DB::table('payment_history')
-    ->where('purchase_history_id',$purchase_history_id)->update(['status'=> 'Decline']);
-
-    // send notification mail
-
-    $customer_details=Customer::find($slot_number->customer_id);
-
-    $payment_history_details=DB::table('payment_history')
-    ->where('purchase_history_id',$purchase_history_id)->first();
-
-
-    $notifydata['package_name'] =$slot_number->slots_name;
-    $notifydata['slots_number'] =$slot_number->slots_number;
-    $notifydata['package_validity'] =$slot_number->package_validity_date;
-    $notifydata['package_purchase_date'] =$slot_number->purchases_date;
-    $notifydata['package_amount'] =$slot_number->slots_price;
-    $notifydata['payment_id'] =$payment_history_details->payment_id;
-    $notifydata['payment_mode'] ='Bank Transfer';
-    $notifydata['url'] = '/customer/purchase_history';
-    $notifydata['customer_name']=$customer_details->name;
-    $notifydata['customer_email']=$customer_details->email;
-    $notifydata['customer_phone']=$customer_details->ph_no;
-    $notifydata['status']='Bank Payment Declined';
-
-    //Log::debug(" bank transfer decline notification ".print_r($notifydata,true));
-
-    $customer_details->notify(new PackagePurchaseNotification($notifydata));
-
-    return response()->json(2);
-    }
 }
 
 

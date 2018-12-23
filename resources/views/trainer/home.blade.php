@@ -6,7 +6,7 @@
             <div class="col-sm-4">
                 <div class="page-header float-left">
                     <div class="page-title">
-                        <h1>Dashboard</h1>
+                        <h1>@if(Auth::user()->master_trainer==2)Welcome {{Auth::user()->name}}@endif</h1>
                     </div>
                 </div>
             </div>
@@ -42,9 +42,7 @@
 
                 </div>
             </div>
-            @endif
-            <!--/.col-->
-            @if(Auth::user()->master_trainer==1)
+            
             <div class="col-sm-6 col-lg-3">
                 <div class="text-white bg-flat-color-2">
                     <div class="card-body pb-0">
@@ -72,7 +70,6 @@
                     </div>
                 </div>
             </div>
-            @endif
             <!--/.col-->
 
             <div class="col-sm-6 col-lg-3">
@@ -93,7 +90,7 @@
                         <h4 class="mb-0">
                             <span class="count">{{$total_bootcamop_booking_count_month}}</span>
                         </h4>
-                        <p class="text-light">Total Bootcamp Booking in This Months </p>
+                        <p class="text-light">Total Bootcamp Booking in Current Month</p>
 
                     </div>
 
@@ -122,7 +119,7 @@
                         <h4 class="mb-0">
                             <span class="count">0</span>
                         </h4>
-                        <p class="text-light"> Total PT Booking in This Months</p>
+                        <p class="text-light"> Total PT Booking in Current Month</p>
 
                         <div class="chart-wrapper px-3" style="height:70px;" height="70"/>
                             <!-- <canvas id="widgetChart4"></canvas> -->
@@ -135,9 +132,15 @@
 
 
         </div> <!-- .content -->
-<div class="page-title">
-                        <h5 style="margin-left: 30px">Bootcamp Booking Details</h5>
+<div class="breadcrumbs">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <div class="page-title">
+                        <h1>Bootcamp</h1>
                     </div>
+                </div>
+            </div>
+        </div>
         <div class="content mt-3">
 
 
@@ -260,12 +263,16 @@
 
 
         </div> <!-- .content -->
-<div class="page-title">
-                        <h5 style="margin-left: 30px">PT Session Booking Details</h5>
+<div class="breadcrumbs">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <div class="page-title">
+                        <h1>Personal Training</h1>
                     </div>
+                </div>
+            </div>
+        </div>
         <div class="content mt-3">
-
-
            <div class="col-sm-6 col-lg-3">
                 <div class="text-white bg-flat-color-1">
                     <div class="card-body pb-0">
@@ -390,5 +397,6 @@
     </div><!-- /#right-panel -->
 
     <!-- Right Panel -->
+    @endif
 
 @endsection
