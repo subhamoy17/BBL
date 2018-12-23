@@ -149,7 +149,7 @@ try{
   $this->cart_delete_customer();
 
 
-  $data=DB::table('our_client')->where('deleted_at',null)->get();
+  $data=DB::table('users')->where('deleted_at',null)->where('show_in_about_us',1)->get();
   return view('customerpanel/frontabout')->with(compact('data'));
 
   }

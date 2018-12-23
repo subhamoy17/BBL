@@ -35,7 +35,7 @@ $('#trainereditform').validate({
   rules: {
     "name": {
       alpha:true,
-      minlength:6,
+      minlength:5,
       required: true
     },
     "address": {
@@ -52,26 +52,44 @@ $('#trainereditform').validate({
        required: true,
          email: true
     },
+    "facebook": {
+      url: true
+    },
+    "twitter": {
+      url: true
+    },
+    "instagram": {
+      url: true
+    }
 
   },
    ////for show error message
   messages: {
     "name":{
-    required: 'Please enter your name',
-    minlength:'Minimum length 6 is required'
-  },
-  "address":{
-    required: 'Please enter your address'
-  },
-  "contact_no": {
-      required: 'Please enter your mobile number',
-      minlength: 'Minimum 10 digits mobile number is required',
-      maxlength: 'Maximum 12 digits mobile number is required'
-  },
- "email":{
-    required: "Please enter an email",
-        email: "Email is invalid"
-  },
+      required: 'Please enter your name',
+      minlength:'Minimum length 5 is required'
+    },
+    "address":{
+      required: 'Please enter your address'
+    },
+    "contact_no": {
+        required: 'Please enter your mobile number',
+        minlength: 'Minimum 10 digits mobile number is required',
+        maxlength: 'Maximum 12 digits mobile number is required'
+    },
+   "email":{
+      required: "Please enter an email",
+          email: "Email is invalid"
+    },
+    "facebook": {
+      url: 'Please enter a valid facebook link.'
+    },
+    "twitter": {
+      url: 'Please enter a valid Twitter link.'
+    },
+    "instagram": {
+      url: 'Please enter a valid instagram link.'
+    }
   }
   });
   
@@ -91,9 +109,9 @@ $('#trainereditform').validate({
     /// check the size of image
 
     var fileSize = (this.files[0].size / 1024); //size in KB
-    if (fileSize > 50) /// not more than 30 kb
+    if (fileSize > 200) /// not more than 30 kb
     {
-        alertify.alert("Please Upload maximum 50KB file size of image");// if Maxsize from Model > real file size
+        alertify.alert("Please Upload maximum 200KB file size of image");// if Maxsize from Model > real file size
         $("#image").val('');
         return false;
     }
@@ -152,7 +170,51 @@ $('#trainereditform').validate({
                             <div class="col col-md-3"><label for="text-input" class=" form-control-label">Email<span class="required_field_color">*</span></label></div>
                             <div class="col-12 col-md-9"><input type="text" id="email" name="email" placeholder="Email" class="form-control" value="{{$data->email}}" readonly></div>
                           </div>    
-                                        
+                           <div class="row form-group">
+                            <div class="col col-md-3"><label for="file-input" class=" form-control-label"><b>Additional Fields</b></label></div>
+                          </div>
+                          <div class="row form-group">
+                            <div class="col col-md-3">
+                              <label for="text-input" class=" form-control-label">Title</div>
+                            <div class="col-12 col-md-9">
+                              <input type="text" id="title" name="title" placeholder="Title" class="form-control" value="{{$data->title}}">
+                            </div>
+                          </div>
+                          <div class="row form-group">
+                            <div class="col col-md-3">
+                              <label for="text-input" class=" form-control-label">Designation</div>
+                            <div class="col-12 col-md-9">
+                              <input type="text" id="designation" name="designation" placeholder="Designation" class="form-control" value="{{$data->designation}}">
+                            </div>
+                          </div>
+                          <div class="row form-group">
+                            <div class="col col-md-3">
+                              <label for="text-input" class=" form-control-label">Description</div>
+                            <div class="col-12 col-md-9">
+                              <textarea id="description" name="description" placeholder="Description" class="form-control">{{$data->description}}</textarea>
+                            </div>
+                          </div>
+                          <div class="row form-group">
+                            <div class="col col-md-3">
+                              <label for="text-input" class=" form-control-label">Facebook Link</div>
+                            <div class="col-12 col-md-9">
+                              <input type="text" id="facebook" name="facebook" placeholder="Facebook Link" class="form-control" value="{{$data->facebook}}">
+                            </div>
+                          </div>
+                          <div class="row form-group">
+                            <div class="col col-md-3">
+                              <label for="text-input" class=" form-control-label">Twitter Link</div>
+                            <div class="col-12 col-md-9">
+                              <input type="text" id="twitter" name="twitter" placeholder="Twitter Link" class="form-control" value="{{$data->twitter}}">
+                            </div>
+                          </div>
+                          <div class="row form-group">
+                            <div class="col col-md-3">
+                              <label for="text-input" class=" form-control-label">Instagram Link</div>
+                            <div class="col-12 col-md-9">
+                              <input type="text" id="instagram" name="instagram" placeholder="Instagram Link" class="form-control" value="{{$data->instagram}}">
+                            </div>
+                          </div>             
                             <div class="row form-group">
                             <div class="col col-md-3"><label for="file-input" class=" form-control-label">Profile Image</label></div>
                             <div class="col-12 col-md-9">                         
@@ -164,8 +226,13 @@ $('#trainereditform').validate({
                               </div>
                               @endif
                             </div>
-                           
-
+                            </div>
+                            <div class="row form-group">
+                            <div class="col col-md-3">
+                              <label for="text-input" class="form-control-label">Show In About Us Page</div>
+                            <div class="col-12 col-md-1">
+                              <input type="checkbox" id="show_in_about_us" class="form-control" name="show_in_about_us" @if($data->show_in_about_us == 1) checked @endif>
+                            </div>
                           </div>
                             <div style="float: right">
                                 <button type="submit" name="submit" class="btn btn-primary btn-sm">

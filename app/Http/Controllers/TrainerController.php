@@ -244,7 +244,7 @@ public function showlist()
 
   try{
   $this->cart_delete_trainer();
-  $data=DB::table('users')->where('master_trainer',2)->whereNull('deleted_at')->get()->all();
+  $data=DB::table('users')->whereNull('deleted_at')->get()->all();
   return view('trainer.trainerlist')->with(compact('data'));
   }
   catch(\Exception $e) {
@@ -576,6 +576,14 @@ public function inserttrainer(Request $request)
     $data['created_at']=Carbon::now();
     $data['is_active']=1;
 
+    $data['title']=(isset($request->title) && !empty($request->title)) ? $request->title : NULL ;
+    $data['designation']=(isset($request->designation) && !empty($request->designation)) ? $request->designation : NULL ;
+    $data['description']=(isset($request->description) && !empty($request->description)) ? $request->description : NULL ;
+    $data['facebook']=(isset($request->facebook) && !empty($request->facebook)) ? $request->facebook : NULL ;
+    $data['twitter']=(isset($request->twitter) && !empty($request->twitter)) ? $request->twitter : NULL ;
+    $data['instagram']=(isset($request->instagram) && !empty($request->instagram)) ? $request->instagram : NULL ;
+    $data['show_in_about_us']=(isset($request->show_in_about_us) && !empty($request->show_in_about_us)) ? 1 : 0 ;
+
   DB::table('users')->insert($data);
 
   Mail::send('emails.enquirymail',['password' =>$password_code,'email' =>$data['email'],'name'=>$data['name']], function($message) {
@@ -611,9 +619,9 @@ catch(\Exception $e) {
 
 public function traineredit(Request $request)
 { 
-  DB::beginTransaction();
+
   try{
-  $this->cart_delete_trainer();
+    $this->cart_delete_trainer();
   if($request->image!="")
   {
     $myimage=$request->image;
@@ -622,22 +630,27 @@ public function traineredit(Request $request)
     $image_name=time()."_adminimg.".$extension; 
     $upload=$myimage->move($folder,$image_name); 
     $data['image']=$image_name; 
-  }
-  else {   $data['image']=$request->oldimage; }
+  }else {   $data['image']=$request->oldimage; }
 
     $data['name']=$request->name;
     $data['contact_no']=$request->contact_no;
     $data['address']=$request->address;
     $data['email']=$request->email;
     $data['updated_at']=Carbon::now();
-
+    $data['title']=(isset($request->title) && !empty($request->title)) ? $request->title : NULL ;
+    $data['designation']=(isset($request->designation) && !empty($request->designation)) ? $request->designation : NULL ;
+    $data['description']=(isset($request->description) && !empty($request->description)) ? $request->description : NULL ;
+    $data['facebook']=(isset($request->facebook) && !empty($request->facebook)) ? $request->facebook : NULL ;
+    $data['twitter']=(isset($request->twitter) && !empty($request->twitter)) ? $request->twitter : NULL ;
+    $data['instagram']=(isset($request->instagram) && !empty($request->instagram)) ? $request->instagram : NULL ;
+    $data['show_in_about_us']=(isset($request->show_in_about_us) && !empty($request->show_in_about_us)) ? 1 : 0 ;
     DB::table('users')->where('id',$request->id)->update($data);
-    DB::commit();
+
 
     return redirect('trainer/trainerlist')->with("success","You have successfully updated one trainer");
     }
     catch(\Exception $e) {
-      DB::rollback();
+
       return abort(200);
   }
 }
@@ -1838,137 +1851,115 @@ catch(\Exception $e) {
   }
 }
 
-public function our_client_show()
+<<<<<<< .mine
+public function payment_history_backend()
 {
   try{
   $this->cart_delete_trainer();
-  $data=DB::table('our_client')->where('deleted_at',null)->get();
-  return view('trainer.our_client_list')->with(compact('data'));
-}catch(\Exception $e) {
-      
+
+    $data=DB::table('purchases_history')
+    ->join('customers','customers.id','purchases_history.customer_id')
+    ->join('payment_history','payment_history.purchase_history_id','purchases_history.id')
+    ->select('purchases_history.id','purchases_history.slots_name','purchases_history.slots_price','customers.name','customers.name','purchases_history.payment_options','purchases_history.active_package','payment_history.status','purchases_history.purchases_date','payment_history.payment_id','payment_history.description','payment_history.image','payment_history.payment_mode')
+    ->orderBy('payment_history.payment_mode','ASC')->orderBy('payment_history.id','DESC')->get()->all();
+
+    return view('trainer.payment_history_backend')->with(compact('data'));
+  }
+
+  catch(\Exception $e) {
       return abort(200);
   }
+
+
 }
 
 
-public function client_insert_view()
+public function payment_history_backend_request(Request $request)
 {
   $this->cart_delete_trainer();
-  return view('trainer.client_insert_view');
-}
+    $data=$request->get('data');
+    $purchase_history_id=$data['id'];
+    $action=$data['action'];
+
+    $slot_number=DB::table('purchases_history')->where('id',$purchase_history_id)->first();
+    
+    if($action=="Approve"){
+
+    $update_purchases_history=DB::table('purchases_history')
+    ->where('id',$purchase_history_id)->update(['active_package' =>1,'package_remaining'=>$slot_number->slots_number]);
+
+    $update_payment_history=DB::table('payment_history')
+    ->where('purchase_history_id',$purchase_history_id)->update(['status'=> 'Success']);
+
+    // send notification mail
+
+    $customer_details=Customer::find($slot_number->customer_id);
+
+    $payment_history_details=DB::table('payment_history')
+    ->where('purchase_history_id',$purchase_history_id)->first();
 
 
-public function client_insert(Request $request)
-{
-  DB::beginTransaction();
-  try{
-  $this->cart_delete_trainer();
-    if($request->image!="")
-    {
-        $request->validate
-        (
-            [ 'image'=>'image|mimes:jpeg,jpg,png,gif|max:2048']
-        );
-        $myimage=$request->image;
-        $folder="backend/images/"; 
-        $extension=$myimage->getClientOriginalExtension(); 
-        $image_name=time()."_adminimg.".$extension; 
-        $upload=$myimage->move($folder,$image_name); 
-        $data['image']=$image_name; 
+    $notifydata['package_name'] =$slot_number->slots_name;
+    $notifydata['slots_number'] =$slot_number->slots_number;
+    $notifydata['package_validity'] =$slot_number->package_validity_date;
+    $notifydata['package_purchase_date'] =$slot_number->purchases_date;
+    $notifydata['package_amount'] =$slot_number->slots_price;
+    $notifydata['payment_id'] =$payment_history_details->payment_id;
+    $notifydata['payment_mode'] ='Bank Transfer';
+    $notifydata['url'] = '/customer/purchase_history';
+    $notifydata['customer_name']=$customer_details->name;
+    $notifydata['customer_email']=$customer_details->email;
+    $notifydata['customer_phone']=$customer_details->ph_no;
+    $notifydata['status']='Bank Payment Approved';
+
+    Log::debug(" bank transfer approve notification ".print_r($notifydata,true));
+
+    $customer_details->notify(new PackagePurchaseNotification($notifydata));
+
+    return response()->json(1);
     }
-    else
-        { $data['image']=$request->oldimage;  }
-
-
-    $data['title']=$request->title;
-    $data['name']=$request->name;
-    $data['designation']=$request->designation;
-    $data['description']=$request->description;
-    $data['facebook']=$request->facebook;
-    $data['twitter']=$request->twitter;
-    $data['instagram']=$request->instagram;
-
-    DB::table('our_client')->insert($data);
-    Log::debug(" Check id ".print_r($data,true));
-
-    DB::commit();
-    return redirect('trainer/our_trainer_list')->with("success","One trainer is insert successfully !");
-
-  }
-  catch(\Exception $e) {
-      DB::rollback();
-      return abort(200);
-  }
-}
-
-public function client_edit_view($id)
-{
-  try{
-  $this->cart_delete_trainer();
-    $data= DB::table('our_client')->where('id',$id)->first();
-    Log::debug(" data ".print_r($data,true));
-    return view ("trainer.client_edit_view")->with(compact('data'));
-  }
-  catch(\Exception $e) {
-      return abort(200);
-  }
-
-
-}
-
-public function client_update(Request $request)
-{ 
-  DB::beginTransaction();
-  try{
-  $this->cart_delete_trainer();
-    if($request->image!="")
+    elseif($action=="Decline")
     {
-        $myimage=$request->image;
-        $folder="backend/images/"; 
-        $extension=$myimage->getClientOriginalExtension(); 
-        $image_name=time()."_adminimg.".$extension; 
-        $upload=$myimage->move($folder,$image_name); 
-        $data['image']=$image_name; 
+
+    $update_purchases_history=DB::table('purchases_history')
+    ->where('id',$purchase_history_id)->update(['active_package' =>0,'package_remaining'=>0]);
+
+    $update_payment_history=DB::table('payment_history')
+    ->where('purchase_history_id',$purchase_history_id)->update(['status'=> 'Decline']);
+
+    // send notification mail
+
+    $customer_details=Customer::find($slot_number->customer_id);
+
+    $payment_history_details=DB::table('payment_history')
+    ->where('purchase_history_id',$purchase_history_id)->first();
+
+
+    $notifydata['package_name'] =$slot_number->slots_name;
+    $notifydata['slots_number'] =$slot_number->slots_number;
+    $notifydata['package_validity'] =$slot_number->package_validity_date;
+    $notifydata['package_purchase_date'] =$slot_number->purchases_date;
+    $notifydata['package_amount'] =$slot_number->slots_price;
+    $notifydata['payment_id'] =$payment_history_details->payment_id;
+    $notifydata['payment_mode'] ='Bank Transfer';
+    $notifydata['url'] = '/customer/purchase_history';
+    $notifydata['customer_name']=$customer_details->name;
+    $notifydata['customer_email']=$customer_details->email;
+    $notifydata['customer_phone']=$customer_details->ph_no;
+    $notifydata['status']='Bank Payment Declined';
+
+    //Log::debug(" bank transfer decline notification ".print_r($notifydata,true));
+
+    $customer_details->notify(new PackagePurchaseNotification($notifydata));
+
+    return response()->json(2);
     }
-    else {   $data['image']=$request->oldimage; }
-
-    $data['title']=$request->title;
-    $data['name']=$request->name;
-    $data['designation']=$request->designation;
-    $data['description']=$request->description;
-    $data['facebook']=$request->facebook;
-    $data['twitter']=$request->twitter;
-    $data['instagram']=$request->instagram;
-    $data['updated_at']=Carbon::now();
-
-    DB::table('our_client')->where('id',$request->id)->update($data);
-    DB::commit();
-    return redirect('trainer/our_trainer_list')->with("success","One trainer details updated successfully!");
-  }
-  catch(\Exception $e) {
-      DB::rollback();
-      return abort(200);
-  }
-
 }
 
-public function client_delete($id)
-{
-  DB::beginTransaction();
-  try{
-  $this->cart_delete_trainer();
-    $updatedata['deleted_at']=Carbon::now();
 
-    DB::table('our_client')->where('id',$id)->update($updatedata);
-    DB::commit();
-    return redirect('trainer/our_trainer_list')->with("delete","One trainer is deleted successfully !");
-  }
 
-    catch(\Exception $e) {
-      DB::rollback();
-      return abort(200);
-  }
-}
+
+
 
 
   function cheeck_exercise_category(Request $request)

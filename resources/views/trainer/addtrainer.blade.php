@@ -22,7 +22,7 @@ $('#traineraddform').validate({
   rules: {
     "name": {
       alpha:true,
-      minlength:6,
+      minlength:5,
       required: true
     },
     "address": {
@@ -37,37 +37,45 @@ $('#traineraddform').validate({
     "email": {
       required: true,
       email: true
-     
+    },
+    "facebook": {
+      url: true
+    },
+    "twitter": {
+      url: true
+    },
+    "instagram": {
+      url: true
     }
-
-
-
-
   },
-
   messages: {
     "name":{
-    required: 'Please enter your name',
-    minlength:'Minimum length 6 is required'
-  },
-  "address":{
-    required: 'Please enter your address' 
-  },
-  "contact_no": {
-      required: 'Please enter your mobile number',
-      minlength: 'Minimum 10 digits mobile number is required',
-      maxlength: 'Maximum 12 digits mobile number is required'
-  },
-  "email": {
-      required: 'Please enter your email',
-      email: "Email is invalid"
+      required: 'Please enter your name',
+      minlength:'Minimum length 5 is required'
+    },
+    "address":{
+      required: 'Please enter your address' 
+    },
+    "contact_no": {
+        required: 'Please enter your mobile number',
+        minlength: 'Minimum 10 digits mobile number is required',
+        maxlength: 'Maximum 12 digits mobile number is required'
+    },
+    "email": {
+        required: 'Please enter your email',
+        email: "Email is invalid"
+    },
+    "facebook": {
+      url: 'Please enter a valid facebook link.'
+    },
+    "twitter": {
+      url: 'Please enter a valid Twitter link.'
+    },
+    "instagram": {
+      url: 'Please enter a valid instagram link.'
+    }
   }
-  
-
-
-
-}
-  });
+});
   
   //show uploading image and check validation of image
 
@@ -85,9 +93,9 @@ $('#traineraddform').validate({
     /// check the size of image
 
     var fileSize = (this.files[0].size / 1024); //size in KB
-    if (fileSize >50) /// not more than 30 kb
+    if (fileSize >200) /// not more than 30 kb
     {
-        alertify.alert("Please Upload maximum 50KB file size of image");// if Maxsize from Model > real file size
+        alertify.alert("Please Upload maximum 200KB file size of image");// if Maxsize from Model > real file size
         $("#image").val('');
         return false;
     }
@@ -152,13 +160,63 @@ $('#traineraddform').validate({
                       @endif
                       </div>
                           </div>
-
-
+                          <div class="row form-group">
+                            <div class="col col-md-3"><label for="file-input" class=" form-control-label"><b>Additional Fields</b></label></div>
+                          </div>
+                          <div class="row form-group">
+                            <div class="col col-md-3">
+                              <label for="text-input" class=" form-control-label">Title</div>
+                            <div class="col-12 col-md-9">
+                              <input type="text" id="title" name="title" placeholder="Title" class="form-control" value="">
+                            </div>
+                          </div>
+                          <div class="row form-group">
+                            <div class="col col-md-3">
+                              <label for="text-input" class=" form-control-label">Designation</div>
+                            <div class="col-12 col-md-9">
+                              <input type="text" id="designation" name="designation" placeholder="Designation" class="form-control" value="">
+                            </div>
+                          </div>
+                          <div class="row form-group">
+                            <div class="col col-md-3">
+                              <label for="text-input" class=" form-control-label">Description</div>
+                            <div class="col-12 col-md-9">
+                              <textarea id="description" name="description" placeholder="Description" class="form-control"></textarea>
+                            </div>
+                          </div>
+                          <div class="row form-group">
+                            <div class="col col-md-3">
+                              <label for="text-input" class=" form-control-label">Facebook Link</div>
+                            <div class="col-12 col-md-9">
+                              <input type="text" id="facebook" name="facebook" placeholder="Facebook Link" class="form-control" value="">
+                            </div>
+                          </div>
+                          <div class="row form-group">
+                            <div class="col col-md-3">
+                              <label for="text-input" class=" form-control-label">Twitter Link</div>
+                            <div class="col-12 col-md-9">
+                              <input type="text" id="twitter" name="twitter" placeholder="Twitter Link" class="form-control" value="">
+                            </div>
+                          </div>
+                          <div class="row form-group">
+                            <div class="col col-md-3">
+                              <label for="text-input" class=" form-control-label">Instagram Link</div>
+                            <div class="col-12 col-md-9">
+                              <input type="text" id="instagram" name="instagram" placeholder="Instagram Link" class="form-control" value="">
+                            </div>
+                          </div>
                           <div class="row form-group">
                             <div class="col col-md-3"><label for="file-input" class=" form-control-label">Profile Image</label></div>
                             <div class="col-12 col-md-9">
                               <input type="file" id="image" name="image" class="form-control" >
                               <img id="profile_thumbnail" width="100">
+                            </div>
+                          </div>
+                          <div class="row form-group">
+                            <div class="col col-md-3">
+                              <label for="text-input" class="form-control-label">Show In About Us Page</div>
+                            <div class="col-12 col-md-1">
+                              <input type="checkbox" id="show_in_about_us" class="form-control" name="show_in_about_us">
                             </div>
                           </div>
                             <div style="float: right">

@@ -55,8 +55,8 @@ public function index(Request $request)
   public function about()
     {	   	
       
-      $data=DB::table('our_client')->where('deleted_at',null)->get();
-    return view('frontabout')->with(compact('data'));
+      $data=DB::table('users')->where('deleted_at',null)->where('show_in_about_us',1)->get();
+      return view('customerpanel/frontabout')->with(compact('data'));
     }
 
     public function gym_training()

@@ -41,6 +41,7 @@ So get set to go for a healthier you. So, no matter if you are planning to work 
 </div>
 <!-- //about inner -->
 <!-- Team -->
+@if(isset($data) && count($data))
 <div class="team">
 		<div class="container">
 
@@ -74,7 +75,7 @@ So get set to go for a healthier you. So, no matter if you are planning to work 
 	
 		</div>
 	</div>
-
+@endif
 
 
 
