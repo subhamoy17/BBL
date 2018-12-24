@@ -47,7 +47,7 @@
           <li><i class="fa fa-id-card-o"></i><a href="{{route('mot_show')}}">MOT</a></li>
           @endif
 
-          <!-- @if(Request::segment(2) == "add_session")
+         <!--  @if(Request::segment(2) == "add_session")
           <li><i class="fa fa-id-card-o"></i><a href="{{route('add_session')}}" style="color: #fff !important;">Add Session</a></li>
           @else 
           <li><i class="fa fa-id-card-o"></i><a href="{{route('add_session')}}">Add Session</a></li>
@@ -81,7 +81,7 @@
           <li><i class="fa fa-id-card-o"></i><a href="{{route('our_coupon_list')}}">Discount</a></li>
           @endif        
           </ul></li>    
-          @if(Request::segment(2) == "add-bootcamp-plan" || Request::segment(2) == "bootcamp-plan" || Request::segment(2) =='edit-bootcamp-plan' || Request::segment(2) =='bootcamp-plan-schedule'  || Request::segment(2) =='show-customer-session-schedule'  || Request::segment(2) =='bootcamp-schedule-booking-cancelled' || Request::segment(2) =='bootcamp_plan_delete' || Request::segment(2) =='edit-bootcamp-plan-schedule' )
+          @if(Request::segment(2) == "add-bootcamp-plan" || Request::segment(2) == "bootcamp-plan" || Request::segment(2) =='edit-bootcamp-plan' || Request::segment(2) =='bootcamp-plan-schedule'  || Request::segment(2) =='show-customer-session-schedule'  || Request::segment(2) =='bootcamp-schedule-booking-cancelled' || Request::segment(2) =='bootcamp_plan_delete' || Request::segment(2) =='edit-bootcamp-plan-schedule'  || Request::segment(2) == "add-bootcamp-session-from-schedule" )
           <li class="menu-item-has-children dropdown show">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-dashboard"></i>Bootcamp</a>
             <ul class="sub-menu children dropdown-menu show"> 
@@ -97,7 +97,7 @@
             <li><i class="fa fa-id-card-o"></i><a href="{{route('bootcamp_plan_list')}}">Plans</a></li>
             @endif
 
-            @if(Request::segment(2) =='bootcamp-plan-schedule'  || Request::segment(2) =='show-customer-session-schedule'  || Request::segment(2) =='bootcamp-schedule-booking-cancelled' || Request::segment(2) =='edit-bootcamp-plan-schedule' )
+            @if(Request::segment(2) =='bootcamp-plan-schedule'  || Request::segment(2) =='show-customer-session-schedule'  || Request::segment(2) =='bootcamp-schedule-booking-cancelled' || Request::segment(2) =='edit-bootcamp-plan-schedule'  || Request::segment(2) == "add-bootcamp-session-from-schedule" )
             <li><i class="fa fa-id-card-o"></i><a href="{{route('bootcamp_plan_schedule')}}" style="color: #fff !important;">Calender</a></li>
             @else
             <li><i class="fa fa-id-card-o"></i><a href="{{route('bootcamp_plan_schedule')}}">Calender</a></li>

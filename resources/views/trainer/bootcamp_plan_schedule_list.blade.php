@@ -159,8 +159,8 @@ $(document).ready(function() {
                         
                        <a href="{{route('bootcamp_schedule_edit_view',['id' => Crypt::encrypt($each_schedule->schedule_id) ])}}" class="btn btn-primary btn-sm" title="Edit Schedule"><i class="fa fa-edit" title="Edit Schedule"></i></a>
 
-                       <!-- <button type="button" title="Booking Schedule" class="btn btn-booking-seat booking-seat btn-sm"  id="{{$each_schedule->schedule_id}}" data-msg="Booking"><i class="fa fa-ticket"></i></button>
- -->
+                        <a href="{{route('add_bc_session_from_schedule',['id' => Crypt::encrypt($each_schedule->schedule_id) ])}}" class="btn btn-booking-seat btn-sm"><i class="fa fa-ticket" title="Booking Schedule"></i></a>
+
                       <button type="button" title="Delete Schedule" class="btn btn-danger status-all btn-sm"  id="{{$each_schedule->schedule_id}}" data-msg="Decline"><i class="fa fa-trash-o"></i></button>
 
                        
@@ -408,18 +408,4 @@ $(document).ready(function (){
 
 </script>
 
-<!-- <script type="text/javascript">
-  $(document).ready(function(){
-    $("#bootstrap-slot-data-table").on("click", ".booking-seat", function(e) {
-      var schedule_id=this.id;
-      $.ajax({
-         url: '{{url("trainer/add_session")}}',
-        
-          data:
-          {
-            'data': schedule_id,
-          }
-      });      
-    });
-</script> -->
 @endsection

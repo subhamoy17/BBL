@@ -117,7 +117,7 @@ Route::get('motinsertshow','TrainerController@motinsertshow')->name('motinsertsh
 
 Route::get('motinsertshowauto','TrainerController@motinsertshowauto')->name('searchajax');
 
-Route::get('customersearch','TrainerController@customersearch')->name('customersearch');
+Route::get('search_customer_bc','TrainerController@search_customer_bc')->name('search_customer_bc');
 
 Route::post('motinsert','TrainerController@motinsert')->name('motinsert');
 
@@ -136,6 +136,8 @@ Route::get('motdelete/{id}', 'TrainerController@motdelete');
 
 //Add session//
 Route::get('add_session','TrainerController@add_session')->name('add_session');
+
+Route::get('add-bootcamp-session-from-schedule/{slug}','TrainerController@add_bc_session')->name('add_bc_session_from_schedule');
 
 Route::get('slot_time','TrainerController@slot_times')->name('slot_time');
 
@@ -177,7 +179,9 @@ Route::get('admin_get_slot_time', 'TrainerController@booking_slot_times')->name(
 Route::get('admin_get_current_slot_time', 'TrainerController@admin_get_current_slot_time')->name('admin_get_current_slot_time');
 Route::get('admin_get_slot_trainer', 'TrainerController@admin_get_slot_trainer')->name('admin_get_slot_trainer');
 
-Route::get('check_customer_session', 'TrainerController@check_customer_session')->name('check_customer_session');
+Route::get('check_customer_bc_session', 'TrainerController@check_customer_bc_session')->name('check_customer_bc_session');
+
+Route::post('add-bc-by-mastertrainer', 'TrainerController@add_bc_by_mastertrainer')->name('add_bc_by_mastertrainer');
 
 Route::get('slot_insert_to_cart_trainer', 'TrainerController@slot_insert_to_cart_trainer')->name('slot_insert_to_cart_trainer');
 
