@@ -220,7 +220,7 @@ class SocialLoginController extends Controller
               ->join('payment_type','payment_type.id','products.payment_type_id')
               ->select('training_type.training_name as product_name','payment_type.payment_type_name as payment_type_name','products.total_sessions as total_sessions','products.id as product_id',(DB::raw('products.validity_value * products.validity_duration  as validity')),'products.total_price as total_price','products.price_session_or_month as price_session_or_month','products.validity_value as validity_value','products.validity_duration as validity_duration','products.contract as contract','products.notice_period_value as notice_period_value','products.notice_period_duration as notice_period_duration','training_type.id as training_id')
               ->whereNull('products.deleted_at')
-              ->where('products.id',9)->first();
+              ->where('products.id',7)->first();
 
               if($package_details)
 
