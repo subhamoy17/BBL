@@ -6,7 +6,11 @@
             <div class="col-sm-4">
                 <div class="page-header float-left">
                     <div class="page-title">
-                        <h1>@if(Auth::user()->master_trainer==2)Welcome {{Auth::user()->name}}@endif</h1>
+                        <h1>@if(Auth::user()->master_trainer==2)
+                                Welcome {{Auth::user()->name}} 
+                            @else 
+                                Dashboard
+                            @endif</h1>
                     </div>
                 </div>
             </div>

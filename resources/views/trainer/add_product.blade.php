@@ -256,7 +256,7 @@ $('#save_btn').on('click',function(e){
     <div class="col-sm-4">
       <div class="page-header float-left">
         <div class="page-title">
-          <h1>Add Product</h1>
+          <h1>Add Package</h1>
         </div>
       </div>
     </div>    

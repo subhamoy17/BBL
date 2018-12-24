@@ -60,6 +60,14 @@ $(document).ready(function() {
     margin-top: 2px;
 }
 
+.btn-booking-seat
+{
+    color: #fff;
+    background-color: #28a745;
+    border-color: #28a745;
+
+  }
+
 </style>
 
 
@@ -68,7 +76,7 @@ $(document).ready(function() {
     <div class="col-sm-9">
         <div class="page-header float-left">
             <div class="page-title">
-                <h1>All Bootcamp Plan Schedule</h1>
+                <h1>All Bootcamp Plan Calender Schedule</h1>
             </div>
         </div>
     </div>
@@ -104,7 +112,7 @@ $(document).ready(function() {
                   </tr>
                 <tr>
                  
-                  <th style="width: 6%;">Sl. No.</th>
+                  <th style="width: 3%;">Sl. No.</th>
                   <th>Date</th>
                   <th>Day</th>
                   <th>Time</th>
@@ -112,12 +120,9 @@ $(document).ready(function() {
                   <th>Maximum Allowed</th>
                   <th>Booking Seats</th>
                   <th>Status</th>
-                  
-                  
-                   <th>Action</th> 
+                   <th style="width: 114px;">Action</th> 
                     <th style="width: 100px;">Select to Declined 
                     <input type="checkbox" id="all_schedule_cancel" class="selectall" style="margin-left: 21px">
-                   <!--  <button class="btn btn-danger btn-sm" id="cancelled_button" title="Delete Schedule"><i class="fa fa-trash-o" ></i></button> -->
                   </th>
                 </tr>
               </thead>
@@ -128,7 +133,7 @@ $(document).ready(function() {
                    
                       <td align="center">{{++$key}}</td>
                       <td>{{$each_schedule->plan_date}}</td>
-                      <td>{{$each_schedule->plan_day}}</td>
+                      <td>{{substr($each_schedule->plan_day,0,3)}}</td>
                       <td>{{date("H:i", strtotime($each_schedule->plan_st_time))}} to {{date("H:i", strtotime($each_schedule->plan_end_time))}}</td>
                       <td>{{$each_schedule->address_line1}}</td>
                       <td align="center">{{$each_schedule->max_allowed}}</td>
@@ -148,14 +153,16 @@ $(document).ready(function() {
                         @endif
                       </td>
                       
-                      <td align="center">
+                      <td class="td-btn5" align="center">
                        
                          @if($now <= $each_schedule->plan_date && $each_schedule->deleted_at=='')
                         
                        <a href="{{route('bootcamp_schedule_edit_view',['id' => Crypt::encrypt($each_schedule->schedule_id) ])}}" class="btn btn-primary btn-sm" title="Edit Schedule"><i class="fa fa-edit" title="Edit Schedule"></i></a>
 
-                    <button type="button" title="Delete Schedule" class="btn btn-danger status-all btn-sm"  id="{{$each_schedule->schedule_id}}" data-msg="Decline"><i class="fa fa-trash-o"></i></button>
-                    
+                       <!-- <button type="button" title="Booking Schedule" class="btn btn-booking-seat booking-seat btn-sm"  id="{{$each_schedule->schedule_id}}" data-msg="Booking"><i class="fa fa-ticket"></i></button>
+ -->
+                      <button type="button" title="Delete Schedule" class="btn btn-danger status-all btn-sm"  id="{{$each_schedule->schedule_id}}" data-msg="Decline"><i class="fa fa-trash-o"></i></button>
+
                        
                          @else
                           ---
@@ -400,4 +407,19 @@ $(document).ready(function (){
   });
 
 </script>
+
+<!-- <script type="text/javascript">
+  $(document).ready(function(){
+    $("#bootstrap-slot-data-table").on("click", ".booking-seat", function(e) {
+      var schedule_id=this.id;
+      $.ajax({
+         url: '{{url("trainer/add_session")}}',
+        
+          data:
+          {
+            'data': schedule_id,
+          }
+      });      
+    });
+</script> -->
 @endsection

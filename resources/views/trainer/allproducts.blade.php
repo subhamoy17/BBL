@@ -37,7 +37,7 @@ $('#bootstrap-slot-data-table').DataTable({
     <div class="col-sm-9">
         <div class="page-header float-left">
             <div class="page-title">
-                <h1>All Products List</h1>
+                <h1>All Packages List</h1>
             </div>
        
                             
@@ -47,7 +47,7 @@ $('#bootstrap-slot-data-table').DataTable({
        
          <strong class="card-title add-n-cl cl-list">
                               <a href="{{route('add_product')}}">
-                                    <button class="btn btn-success"><i class="fa fa-plus-circle"></i> Add Product</button>
+                                    <button class="btn btn-success"><i class="fa fa-plus-circle"></i> Add Package</button>
                                 </a>
                                 <br>
 
@@ -97,7 +97,7 @@ $('#bootstrap-slot-data-table').DataTable({
                                     <th>Total Session</th>
                                     <th>Price</th>
                                     <th>Total Price</th>
-                                    <th>Product Validity</th>
+                                    <th>Package Validity</th>
                                     <th>Status</th>
                                     
                                     <th id="action">Action</th>
@@ -160,7 +160,7 @@ $('#bootstrap-slot-data-table').DataTable({
       <div class="modal-body" id="hall_details_edit">
         <div class="row clearfix">
           <div class="col-sm-12 col-xs-12">
-            <h3 class="pull-left customer-mot">Products Details</h3>
+            <h3 class="pull-left customer-mot">Package's Details</h3>
             <br class="clear" />
         </div>
         

@@ -4144,7 +4144,7 @@ $products_data['status']=0;
 
   $insert_products=DB::table('products')->insert($products_data);
 DB::commit();
-  return redirect('trainer/all-products')->with("success","You have successfully added one product");
+  return redirect('trainer/all-products')->with("success","You have successfully added one package");
   }
    catch(\Exception $e) {
      DB::rollback();
@@ -4236,7 +4236,7 @@ $products_data['status']=0;
 
   
     DB::commit();
-  return redirect('trainer/all-products')->with("success","You have successfully updated one product");
+  return redirect('trainer/all-products')->with("success","You have successfully updated one package");
   }
    catch(\Exception $e) {
      DB::rollback();
@@ -4252,7 +4252,7 @@ public function product_delete($id)
   $delete_data['deleted_at']=Carbon::now();
   $delete_product=DB::table('products')->where('id',$id)->update($delete_data);
   
-  return redirect('trainer/all-products')->with("success","You have successfully deleted one product");
+  return redirect('trainer/all-products')->with("success","You have successfully deleted one package");
   }
   catch(\Exception $e) {
      
