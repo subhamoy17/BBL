@@ -1320,7 +1320,7 @@ public function bootcamp_strip_payment(Request $request)
 
     $customer_details=Customer::find(Auth::guard('customer')->user()->id);
     
-    \Stripe\Stripe::setApiKey ( 'sk_live_4jkdhwUP4KPAvT6kD9kWltVZ' );
+    \Stripe\Stripe::setApiKey ( 'sk_test_oBDW3aKMIoUchBs9TKSQ8TwF' );
 
           $customer =  \Stripe\Customer::create([
             'email' =>Auth::guard('customer')->user()->email,
@@ -2032,7 +2032,7 @@ public function pt_strip_payment(Request $request)
 
     $customer_details=Customer::find(Auth::guard('customer')->user()->id);
     
-    \Stripe\Stripe::setApiKey ( 'sk_live_4jkdhwUP4KPAvT6kD9kWltVZ' );
+    \Stripe\Stripe::setApiKey ( 'sk_test_oBDW3aKMIoUchBs9TKSQ8TwF' );
 
           $customer =  \Stripe\Customer::create([
             'email' =>Auth::guard('customer')->user()->email,
