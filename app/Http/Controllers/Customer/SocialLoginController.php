@@ -229,9 +229,9 @@ class SocialLoginController extends Controller
 
     {
        //Log::debug("customer_purchase_login_success" . print_r($request->all(),true));
-      // DB::beginTransaction();
-      // try
-      // {
+      DB::beginTransaction();
+      try
+      {
 
       $email=$request->email;
       $password=$request->password;
@@ -399,11 +399,11 @@ class SocialLoginController extends Controller
         {
           return back()->withErrors(['email'=>'These email/ password do not match our records.'])->withInput();
         }
-  //   }
-  //   catch(\Exception $e) {
-  //     DB::rollback();
-  //     return abort(400);
-  // }
+    }
+    catch(\Exception $e) {
+      DB::rollback();
+      return abort(400);
+  }
       
 }
 
