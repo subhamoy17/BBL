@@ -13,15 +13,14 @@
 </script>
 
 
-
 <section class="pricing df-pricing">
     <div class="container">
         <h3 class="gyl_header">Choose Your<span id="bt_plan"> Bootcamp </span><span id="pt_plan" style="display: none;"> Personal Training </span> Package</h3>
           <div class="row">
             <div id="plantabs">
                 <ul>
-                    <li><a href="#tabs-1"  onclick="bt_plan();">Bootcamp Ppackages</a></li>
-                    <li><a href="#tabs-2"  onclick="pt_plan();">Personal Training Packages</a></li>
+                    <li><a href="#tabs-1"  onclick="bt_plan();">Bootcamp Packages</a></li>
+                    <li><a href="#tabs-2" id="pt_tab"  onclick="pt_plan();">Personal Training Packages</a></li>
                     <!-- <li><a href="#tabs-4">Aenean lacinia</a></li> -->
                 </ul>
                 

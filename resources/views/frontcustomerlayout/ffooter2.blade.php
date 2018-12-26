@@ -366,15 +366,6 @@ $("#coupon_sub").find("checkbox").each(function(){
   } );
   </script>
 
-  <script type="text/javascript">
-  $(document).ready(function(){
-    $("#purchase_before_login").on("click", function(e) {
-
-    alert();
-    
-    });
-  });
-
 </script>
 	</body>
 
