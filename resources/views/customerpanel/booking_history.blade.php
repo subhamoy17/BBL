@@ -18,7 +18,7 @@
               <table class="table">
                 <thead>
                   <tr>
-                    <th>Plan type</th>
+                    <th>Package type</th>
                     <th>Total number of session remaining</th>
                       <th>Past booking</th>
                      <th>Future booking</th>

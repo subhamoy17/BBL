@@ -27,8 +27,8 @@
       <table class="table">
         <thead>
           <tr>
-            <th>Plan Type</th>
-            <th>Plan Price</th>
+            <th>Package Type</th>
+            <th>Package Price</th>
             
             <th>Purchased On</th>
             <th>Validity Date</th>

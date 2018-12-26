@@ -46,14 +46,14 @@
 						<div class="agile_banner_text_info">
 							<h3>Build Your Body With Us </h3>
 							<p>Train hard is the right place to start new life as an athletic, strong and healthy person with a strong will.</p>
-                            <a href="{{url('pricing')}}" class="bnr-btn">Purchase Bootcamp Plan</a>
+                            <a href="{{url('pricing')}}" class="bnr-btn">Purchase Bootcamp Package</a>
 						</div>
 					</li>
 					<li>
 						<div class="agile_banner_text_info">
 							<h3>Exceptional Life Fitness </h3>
 							<p>Train hard is the right place to start new life as an athletic, strong and healthy person with a strong will.</p>
-                            <a href="{{url('pricing')}}" class="bnr-btn">Purchase Personal Training Plan</a>
+                            <a href="{{url('pricing')}}" class="bnr-btn">Purchase Personal Training Package</a>
 						</div>
 					</li>
 				</ul>
@@ -74,12 +74,12 @@
     
     <section class="pricing df-pricing">
     <div class="container">
-        <h3 class="gyl_header">Choose Your<span id="bt_plan"> Bootcamp </span><span id="pt_plan" style="display: none;"> Personal Training </span> Plan</h3>
+        <h3 class="gyl_header">Choose Your<span id="bt_plan"> Bootcamp </span><span id="pt_plan" style="display: none;"> Personal Training </span> Package</h3>
           <div class="row">
             <div id="plantabs">
                 <ul>
-                    <li><a href="#tabs-1"  onclick="bt_plan();">Bootcamp Plans</a></li>
-                    <li><a href="#tabs-2"  onclick="pt_plan();">Personal Training Plans</a></li>
+                    <li><a href="#tabs-1"  onclick="bt_plan();">Bootcamp Packages</a></li>
+                    <li><a href="#tabs-2"  onclick="pt_plan();">Personal Training Packages</a></li>
                     <!-- <li><a href="#tabs-4">Aenean lacinia</a></li> -->
                 </ul>
                 
@@ -125,8 +125,6 @@
             </div>
           
             @endforeach
-          @else
-            No bootcamp plan available
           @endif
           </div>
                 </div>
@@ -147,7 +145,7 @@
                 </span></h1>
               
               <div class="btm-arow"><i class="fa fa-arrow-circle-down"></i></div>
-              <div class="plan-batch bch-3">PT Plan</div>
+              <div class="plan-batch bch-3">PT Package</div>
               <div class="cntrct"><h5>Contract <span> - {{$each_personal_training_product->contract? $each_personal_training_product->contract : 'N/A'}}</span></h5></div>
               </div>
               <div class="p-box-bdy">
@@ -177,52 +175,7 @@
          @endif
           </div>
       </div>
-      <!-- <div id="tabs-2">
-        <div id="bootcamp-slider2" class="owl-carousel">
-          @if(count($personal_training_product_details)>0)
-             @foreach($personal_training_product_details as $pt_key=>$each_personal_training_product)
-            <div class="price-box">
-              <div class="p-box-head cmn-3">
-           
-              <h3><span>Validity {{$each_personal_training_product->validity? $each_personal_training_product->validity.' Days' : 'N/A'}}</span></h3>
-              <h1><i class="fa fa-gbp"></i> {{$each_personal_training_product->total_price}} <br> 
-                <span>{{$each_personal_training_product->payment_type_name}}
-                     @if($each_personal_training_product->payment_type_name=='Subscription')
-                (Notice Period 
-                {{$each_personal_training_product->notice_period_value*$each_bootcamp_product->notice_period_duration}} Days)
-                @endif
-                </span></h1>
-              
-              <div class="btm-arow"><i class="fa fa-arrow-circle-down"></i></div>
-              <div class="plan-batch bch-3">PT Plan</div>
-              <div class="cntrct"><h5>Contract <span> - {{$each_personal_training_product->contract? $each_personal_training_product->contract : 'N/A'}}</span></h5></div>
-              </div>
-              <div class="p-box-bdy">
-              
-
-              <h2>
-                @if($each_personal_training_product->total_sessions!='Unlimited')
-                  {{$each_personal_training_product->total_sessions}}<span>Slots</span>
-                @else
-                  {{substr($each_personal_training_product->total_sessions,0,1)}}<span>{{substr($each_personal_training_product->total_sessions,1,8)}}</span>
-                @endif
-              </h2>
-              
-
-
-              <div class="clearfix"></div>
-                @if(Auth::guard('customer')->check())
-                  <a href="{{route('pt_plan_purchase',['bootcamp_plan_id' => Crypt::encrypt($each_personal_training_product->product_id) ])}}" class="sign-btn2">Purchase</a>
-                   @else
-                <a href="{{route('customer_purchase_login',['bootcamp_plan_id' => Crypt::encrypt($each_personal_training_product->product_id) ])}}" class="sign-btn2">Purchase</a>
-                @endif
-              </div>
-            </div>
-          
-            @endforeach
-         @endif
-          </div>
-      </div> -->
+      
           </div>
         </div>
         </div>

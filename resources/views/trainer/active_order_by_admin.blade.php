@@ -60,8 +60,8 @@
                 <thead>
                   <tr>
                       <th>Customer Name</th>
-                       <th>Plan Type</th>
-                        <th>Plan Price</th>
+                       <th>Package Type</th>
+                        <th>Package Price</th>
                       
                       <th>No of Session</th>
                       <th>Remaining Session</th>
