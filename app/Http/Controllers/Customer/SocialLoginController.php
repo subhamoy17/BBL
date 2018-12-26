@@ -33,16 +33,16 @@ class SocialLoginController extends Controller
 
      public function handleProviderCallback($provider)
     {
-
-        
-        DB::beginTransaction();
-        try
+      try
+      {
+        $purchaseflg=0;
+        if(\Session::has('plan_id') && \Session::get('plan_id'))
         {
+          $purchaseflg=1;
+          $plan_id=\Crypt::encrypt(\Session::get('plan_id'));
+        }
         $user_social_signin = Socialite::driver($provider)->user();
-
-        //Log::debug("socialite sign in" . print_r($user_social_signin,true));
-
-        
+  
         $user_social_account=DB::table('social_accounts')
         ->where('provider_id',$user_social_signin->id)
         ->first(); 
@@ -53,30 +53,77 @@ class SocialLoginController extends Controller
         if($old_customer_data && $user_social_account)
         {
 
-        Auth::guard('customer')->login($old_customer_data,true);
+          Auth::guard('customer')->login($old_customer_data,true);
             
-        //Log::debug("old_customer_data" . print_r($old_customer_data,true));
-        DB::commit();
-        return redirect('customer/free-sessions');    
+          //Log::debug("old_customer_data" . print_r($old_customer_data,true));
+        
+          if($purchaseflg==1)
+          {
+            $product_details=DB::table('products')
+            ->join('training_type','products.training_type_id','training_type.id')
+            ->join('payment_type','products.payment_type_id','payment_type.id')
+            ->select('products.id as product_id','training_type.id as training_id')
+            ->whereNull('products.deleted_at')
+            ->where('products.total_price','>',0)
+            ->where('products.status',1)
+            ->where('products.id',\Session::get('plan_id'))
+            ->first();
+
+            if($product_details->training_id==1)
+            {
+              return redirect()->route('pt_plan_purchase',['plan_id'=>$plan_id]);
+            }
+            elseif($product_details->training_id==2)
+            {
+              return redirect()->route('bootcamp_plan_purchase',['plan_id'=>$plan_id]);
+            } 
+          }
+          else
+          {
+            return redirect('customer/free-sessions');
+          }   
         }
         elseif($old_customer_data && $old_customer_data->confirmed==1)
         {
 
-        $social_account_data['customers_id']=$old_customer_data->id;
-        $social_account_data['provider_id']=$user_social_signin->id;
-        $social_account_data['provider_name']=$provider;
+          $social_account_data['customers_id']=$old_customer_data->id;
+          $social_account_data['provider_id']=$user_social_signin->id;
+          $social_account_data['provider_name']=$provider;
 
-        $customer_social_account = DB::table('social_accounts')->insert($social_account_data);
+          $customer_social_account = DB::table('social_accounts')->insert($social_account_data);
 
+          if($customer_social_account)
+          {
+         
+            Auth::guard('customer')->login($old_customer_data,true);
 
-        if($customer_social_account)
-        {
-        DB::commit();
-        Auth::guard('customer')->login($old_customer_data,true);
-        return redirect('customer/free-sessions');
+            if($purchaseflg==1)
+            {
+              $product_details=DB::table('products')
+              ->join('training_type','products.training_type_id','training_type.id')
+              ->join('payment_type','products.payment_type_id','payment_type.id')
+              ->select('products.id as product_id','training_type.id as training_id')
+              ->whereNull('products.deleted_at')
+              ->where('products.total_price','>',0)
+              ->where('products.status',1)
+              ->where('products.id',\Session::get('plan_id'))
+              ->first();
+          
 
-        }
-
+              if($product_details->training_id==1)
+              {
+                return redirect()->route('pt_plan_purchase',['plan_id'=>$plan_id]);
+              }
+              elseif($product_details->training_id==2)
+              {
+                return redirect()->route('bootcamp_plan_purchase',['plan_id'=>$plan_id]);
+              } 
+            }
+            else
+            {
+              return redirect('customer/free-sessions');
+            }
+          }
         }
         elseif($old_customer_data && $old_customer_data->confirmed==0)
         {
@@ -91,11 +138,38 @@ class SocialLoginController extends Controller
 
             $savedata=Customer::where('id',$old_customer_data->id)->update($customer_data);
 
-            DB::commit();
+           
             Auth::guard('customer')->login($old_customer_data,true);
-            return redirect('customer/free-sessions');
 
-        }
+            if($purchaseflg==1)
+            {
+              $product_details=DB::table('products')
+              ->join('training_type','products.training_type_id','training_type.id')
+              ->join('payment_type','products.payment_type_id','payment_type.id')
+              ->select('products.id as product_id','training_type.id as training_id')
+              ->whereNull('products.deleted_at')
+              ->where('products.total_price','>',0)
+              ->where('products.status',1)
+              ->where('products.id',\Session::get('plan_id'))
+              ->first();
+
+             // Log::debug("product_details" . print_r($product_details,true));
+        
+
+              if($product_details->training_id==1)
+              {
+                return redirect()->route('pt_plan_purchase',['plan_id'=>$plan_id]);
+              }
+              elseif($product_details->training_id==2)
+              {
+                return redirect()->route('bootcamp_plan_purchase',['plan_id'=>$plan_id]);
+              } 
+            }
+            else
+            {
+              return redirect('customer/free-sessions');
+            }
+          }
         else
         {
             $customer_social_data['email']=$user_social_signin->email;
@@ -105,27 +179,29 @@ class SocialLoginController extends Controller
 
             //Log::debug("new_customer_data" . print_r($customer_social_data,true));
 
-            return redirect()->route('customer-register')
-            ->with('email',$customer_social_data['email'])
-            ->with('name',$customer_social_data['name'])
-            ->with('provider_id',$customer_social_data['provider_id'])
-            ->with('provider_name',$customer_social_data['provider_name']);
-
-            DB::commit();
+            if($purchaseflg==1)
+            {
+              return redirect()->route('customer_purchase_login',['plan_id'=>$plan_id])
+                ->with('email',$customer_social_data['email'])
+                ->with('name',$customer_social_data['name'])
+                ->with('provider_id',$customer_social_data['provider_id'])
+                ->with('provider_name',$customer_social_data['provider_name']);
+            }
+            else
+            {
+                return redirect()->route('customer-register')
+                ->with('email',$customer_social_data['email'])
+                ->with('name',$customer_social_data['name'])
+                ->with('provider_id',$customer_social_data['provider_id'])
+                ->with('provider_name',$customer_social_data['provider_name']);
+              }     
         }
         
-        }
-         catch(\Exception $e) {
-
-        //Log::debug("anything wrong");
-
-         DB::rollback();
-         return redirect()->route('bbldb');
-        
-       }
-
-
     }
+     catch(\Exception $e) {
+     return redirect()->route('bbldb');
+   }
+}
 
 
 
@@ -134,10 +210,14 @@ class SocialLoginController extends Controller
     {
       try{
         $plan_id=\Crypt::decrypt($id);
-        //Log::debug(":: login :: ".$plan_id);
+
+        $customer_social_data1['email']=\Session::get( 'email' );
+        $customer_social_data1['name']=\Session::get( 'name' );
+        $customer_social_data1['provider_id']=\Session::get( 'provider_id' );
+        $customer_social_data1['provider_name']=\Session::get( 'provider_name' );
 
         \Session::put('plan_id',$plan_id);
-        return view('customerpanel.normal_login');
+        return view('customerpanel.normal_login')->with(compact('customer_social_data1'));
       }
       catch(\Exception $e) {
         return abort(400);
@@ -149,9 +229,9 @@ class SocialLoginController extends Controller
 
     {
        //Log::debug("customer_purchase_login_success" . print_r($request->all(),true));
-      DB::beginTransaction();
-      try
-      {
+      // DB::beginTransaction();
+      // try
+      // {
 
       $email=$request->email;
       $password=$request->password;
@@ -167,7 +247,7 @@ class SocialLoginController extends Controller
       ->where('products.id',$plan_id)
       ->first();
 
-     Log::debug("customer_purchase_login_success" . print_r($product_details,true));
+     //Log::debug("customer_purchase_login_success" . print_r($product_details,true));
 
 
       $data['email']=$request->email;
@@ -177,7 +257,12 @@ class SocialLoginController extends Controller
 
       $check_customer=DB::table('customers')->where('email',$email)->first();
 
-      if(Auth::guard('customer')->attempt($data) && $request->name=='' && $request->ph_no=='')
+      if(!empty($check_customer) && $request->password=='')
+        {
+          return back()->withErrors(['email_here'=>'This email is registered.'])->withInput();
+        }
+
+      else if(Auth::guard('customer')->attempt($data) && $request->name=='' && $request->ph_no=='')
         {
           
           if($product_details->training_id==1)
@@ -201,7 +286,7 @@ class SocialLoginController extends Controller
 
           if($validator->fails())
           {
-            return back()->withErrors($validator)->withInput();
+            return back()->withErrors($validator,'duplicate_ph_email')->withInput();
           }
           else
           {
@@ -211,6 +296,15 @@ class SocialLoginController extends Controller
             'password' => \Hash::make($request->password),
             'confirmation_code' =>NULL,
             'confirmed' =>1,]);
+
+            if($request->has('provider_id') && $request->has('provider_name') && $request->provider_id!='')
+            {
+              $social_account_data['provider_id']=$request->provider_id;
+              $social_account_data['provider_name']=$request->provider_name;
+              $social_account_data['customers_id']=DB::getPdo()->lastInsertId();
+
+              $customer_social_account = DB::table('social_accounts')->insert($social_account_data);
+            }
 
             if(Auth::guard('customer')->attempt($data))
             {
@@ -303,15 +397,17 @@ class SocialLoginController extends Controller
         }
         else
         {
-          return back()->withErrors(['email'=>'These credentials do not match our records.'])->withInput();
+          return back()->withErrors(['email'=>'These email/ password do not match our records.'])->withInput();
         }
-    }
-    catch(\Exception $e) {
-      DB::rollback();
-      return abort(400);
-  }
+  //   }
+  //   catch(\Exception $e) {
+  //     DB::rollback();
+  //     return abort(400);
+  // }
       
 }
+
+
 
  
     

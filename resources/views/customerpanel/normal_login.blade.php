@@ -33,7 +33,44 @@
     <link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800" rel="stylesheet">
     <link href="//fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,400,400i,500,500i,600,600i,700,700i,800" rel="stylesheet">
 </head>
+            @if($customer_social_data1['name'])
+                <?php $social_name=$customer_social_data1['name']?>
+            @else
+            <?php $social_name=''?>
+            @endif
 
+            @if($customer_social_data1['email'])
+                <?php $social_email=$customer_social_data1['email']?>
+            @elseif($errors->has('email_not_here'))
+            <?php $social_email=old('email');?>
+            @elseif($errors->has('email_here'))
+            <?php $social_email=old('email');?>
+            @elseif($errors->has('email'))
+            <?php $social_email=old('email');?>
+            @else
+            <?php $social_email='';?>
+            @endif
+
+            @if($customer_social_data1['provider_id'] && $customer_social_data1['provider_name'])
+
+            <?php 
+            $social_provider_id=$customer_social_data1['provider_id'];
+            $social_provider_name=$customer_social_data1['provider_name'];
+            ?>
+            @else
+             <?php 
+            $social_provider_id='';
+            $social_provider_name='';
+            ?>
+            @endif
+
+             @if($errors->duplicate_ph_email->has('email') || $errors->duplicate_ph_email->has('ph_no'))
+            <?php $social_email=old('email');  $social_name=old('name'); 
+
+            $social_provider_id=old('provider_id');
+            $social_provider_name=old('provider_name');
+            ?>
+            @endif
 
 
 
@@ -42,69 +79,82 @@
     <div class="whole-wrp login"></div>
     <div class="logo-m"><a href="{{route('bbldb')}}"><img src="{{asset('frontend/images/logo.png')}}"></a></div>
 <section class="login-section">
-            <div class="container-fluid">
-                <div class="login-wrapper" style="display: block;">
-                   <form method="POST" action="{{ route('customer-purchase-login-success') }}" id="myeditform">
-                        @csrf
-                        <div class="input-box">
+      <div class="container-fluid">
+          <div class="login-wrapper" style="display: block;">
+             <form method="POST" action="{{ route('customer-purchase-login-success') }}" id="myeditform">
+                  @csrf
+                  <div class="input-box">
 
-                          <input type="hidden" name="plan_id" value="{{Session::get('plan_id')}}">
-                                    
-                            <input  class="e-mail" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="Email" name="email" value="{{ old('email') }}" autofocus>
-                            @if ($errors->has('email'))
-                                    <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            @if ($errors->has('email_not_here'))
-                                    <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('email_not_here') }}</strong>
-                                    </span>
-                                @endif
+                    <input type="hidden" name="plan_id" value="{{Session::get('plan_id')}}">
 
-                                   
-                             <input class="ps-wrd" id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="Password"  name="password">
-                              @if ($errors->has('password'))
-                                    <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                           
-                            @if ($errors->has('email_not_here'))
+                     <input  type="hidden" name="provider_id" value="{{$social_provider_id}}" >
+                        <input  type="hidden" name="provider_name" value="{{$social_provider_name}}" >
 
-                            <input class="yr-name" placeholder="Your Name" type="text" id="name" 
-                            name="name" class=""  required autofocus>
+                    <div class="log-box-header">
+                      <h3>Package Purchase</h3>
+                  </div>
+                              
+                    <input  class="yr-email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="Email" name="email" id="email" value="{{$social_email}}" autofocus>
 
-                            <input class="yr-phn" placeholder="Phone"  id="ph_no" type="text" class="" name="ph_no" required>
+                    <input  class="yr-email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="Re-type Email" name="re-email" value="{{$social_email}}" autofocus>
+                    @if ($errors->has('email'))
+                        <span class="invalid-feedback">
+                            <strong>{{ $errors->first('email') }}</strong>
+                        </span>
+                      @endif
+                      @if ($errors->has('email_not_here'))
+                              <span class="invalid-feedback">
+                                  <strong>{{ $errors->first('email_not_here') }}</strong>
+                              </span>
+                      @endif
+                      
+                      @if ($errors->duplicate_ph_email->has('email'))
+                              <span class="invalid-feedback">
+                                  <strong>{{ $errors->duplicate_ph_email->first('email') }}</strong>
+                              </span>
+                          @endif
+                      @if ($errors->has('email_here') || $errors->duplicate_ph_email->has('email') || $errors->duplicate_ph_email->has('ph_no') || $errors->has('email') || $customer_social_data1['provider_id'])
+                       <input id="password" type="password" class="yr-pswrd" placeholder="Password"  name="password">
 
-                            @endif
+                       @endif
+                     
+                      @if ($errors->has('email_not_here'))
 
-                            @if($errors->has('email') || $errors->has('ph_no'))
-                             <input class="yr-name" placeholder="Your Name" type="text" id="name" 
-                            name="name"  required autofocus value="{{old('name')}}" >
-                            <input class="yr-phn" placeholder="Phone"  id="ph_no" type="text" class="form-control{{ $errors->has('ph_no') ? ' is-invalid' : '' }}" name="ph_no" value="{{ old('ph_no') }}" required>
-                            @if ($errors->has('ph_no'))
-                                    <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('ph_no') }}</strong>
-                                    </span>
-                                @endif
-                            @endif
-                           @if ($errors->has('email'))
-                           <span class="checkbox1">
-                                <label class="checkbox"></label>
-                            </span>
-                             <a href="{{ route('customerpanel.password.request') }}" class="forgot-p"> Forgot Password</a>
-                            @endif
-                            <button class="lg-in" type="submit">Next</button>
+                       <input id="password" type="password" class="yr-pswrd" placeholder="Password"  name="password">
+                       
+                      <input class="yr-name" placeholder="Your Name" type="text" id="name" 
+                      name="name" class=""  required autofocus>
 
-                            <!-- <span class="nw-user"><a class="cm-cls">
-                                <a href="{{route('social-auth-login',['provider' => 'facebook'])}}" class="signup"><i class="fa fa-facebook-square" style="color: #5277f8;margin-right: 5px;"></i> Login With Facebook</a> |
-                                <a href="{{route('social-auth-login',['provider' => 'google'])}}" class="signup"><i class="fa fa-google-plus" style="color: #cf1508;margin-right: 5px;"></i> Login With Google</a>
-                            </a></span> -->
-                        </div>
-                    </form>
-                </div>
-            </div> 
+                      <input class="yr-phn" placeholder="Phone"  id="ph_no" type="text" class="" name="ph_no" required>
+
+                      @endif
+
+                      @if(($errors->duplicate_ph_email->has('email') || $errors->duplicate_ph_email->has('ph_no')) || $customer_social_data1['provider_id'])
+                       <input class="yr-name" placeholder="Your Name" type="text" id="name" 
+                      name="name"  required autofocus value="{{ $social_name }}" >
+                      <input class="yr-phn" placeholder="Phone"  id="ph_no" type="text" class="form-control{{ $errors->duplicate_ph_email->has('ph_no') ? ' is-invalid' : '' }}" name="ph_no" value="{{ old('ph_no') }}" required>
+                      @if ($errors->duplicate_ph_email->has('ph_no'))
+                              <span class="invalid-feedback">
+                                  <strong>{{ $errors->duplicate_ph_email->first('ph_no') }}</strong>
+                              </span>
+                          @endif
+                      @endif
+                     @if ($errors->has('email'))
+                     <span class="checkbox1">
+                          <label class="checkbox"></label>
+                      </span>
+                       <a href="{{ route('customerpanel.password.request') }}" class="forgot-p"> Forgot Password</a>
+                      @endif
+                      <button class="lg-in" type="submit">Next</button>
+
+                      <span class="nw-user"><a class="cm-cls">
+                          <a href="{{route('social-auth-login',['provider' => 'facebook'])}}" class="signup"><i class="fa fa-facebook-square" style="color: #5277f8;margin-right: 5px;"></i> Login With Facebook</a> |
+                          <a href="{{route('social-auth-login',['provider' => 'google'])}}" class="signup"><i class="fa fa-google-plus" style="color: #cf1508;margin-right: 5px;"></i> Login With Google</a>
+                      </a></span>
+                  </div>
+              </form>
+          </div>
+      </div> 
     </section>
 
 
@@ -224,6 +274,11 @@ $('#myeditform').validate({
       email: true
      
     },
+    "re-email": {
+      required: true,
+      equalTo :"#email"
+     
+    },
     "ph_no": {
       required: true,
       minlength: 10,
@@ -253,6 +308,10 @@ $('#myeditform').validate({
     required: "Please enter an email",
         email: "Email is invalid"
   },
+  "re-email": {
+      required: 'Please enter re-type email',
+      equalTo : 'Please enter your re-type email same as email'
+    },
   
   "ph_no": {
       required: 'Please enter your mobile number',
@@ -309,72 +368,6 @@ $('#myeditform').validate({
 
 
 
-  <script>
-    $(document).ready(function(){
-
-        $.validator.addMethod("alpha", function(value, element){
-    return this.optional(element) || value == value.match(/^[a-zA-Z, '']+$/);
-    }, "Alphabetic characters only please");
-
-  // mobile number can contant only numeric
-  $.validator.addMethod('numericOnly', function (value) {
-       return /^[0-9]+$/.test(value);
-    }, 'Please enter only numeric values');
-      
-$('#myregistration').validate({  
-  /// rules of error 
-  rules: {
-    "name": {
-    alpha:true,
-      minlength:6,
-      required: true
-    },
-    
- "email": {
-      required: true,
-      email: true
-     
-    },
-    "ph_no": {
-      required: true,
-      minlength: 10,
-      maxlength: 10,
-       numericOnly: true
-      
-    },
-
-"password": {
-      required: true,
-      minlength: 6,
-       maxlength:10
-
-    }
-
-  },
-   ////for show error message
-  messages: {
-    "name":{
-    required: 'Please enter your name',
-    minlength:'Minimum length 6 is required'
-  },
-"email":{
-    required: "Please enter an email",
-        email: "Email is invalid"
-  },
-  "ph_no": {
-      required: 'Please enter your mobile number',
-      minlength: 'Minimum 10 digits mobile number is required',
-      maxlength: 'Maximum 10 digits mobile number is required'
-  },
-"password": {
-      required: 'Please enter your password',
-      minlength: 'Minimum 6 length is required',
-      maxlength: 'Maximum 10 length is required'
-  }
-  }
-  });
-    });  
-  </script>
 
     <script>
         window.onscroll = function() {myFunction()};
