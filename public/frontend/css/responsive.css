@@ -360,7 +360,7 @@
 	}
 	.bnr-btn {
 		background: rgba(12, 2, 42, 0.6);
-		border: 1px dashed #fff;
+		/*border: 1px dashed #fff;*/
 		padding: 5px 10px;
 		width: auto;
 		display: inline-block;
@@ -372,7 +372,7 @@
 		text-align: center;
 		border-radius: 3px;
 		font-size: 10px;
-		font-family: 'Russo One', sans-serif;
+		font-family: 'Montserrat', sans-serif;
 		margin-top: 15px;
 	}
 	#plantabs ul li a {

@@ -14,7 +14,7 @@
          
                     <div class="col-lg-12 col-md-12 col-sm-12 colxs-12">
                         
-                        <div class="form-box form-box-pay" style="width: 500px;">
+                        <div  class="form-box form-box-pay2">
                             <div class="row">
   
   <div align="center" class="paymnt-paypal">
@@ -23,36 +23,36 @@
     @if($package_details)
      <form accept-charset="UTF-8" action="{{route('pt_strip_payment')}}" class="require-validation"
     data-cc-on-file="false"
-    data-stripe-publishable-key="pk_test_qxRI6HuJMLG3MxmiQH39UQpb"
+    data-stripe-publishable-key="pk_live_wedaSkQFYDAfrC8oOEroqgXj"
     id="payment-form" method="post">
     {{ csrf_field() }}
     <input class="w3-input w3-border" name="product_id" type="hidden" value="{{$package_details->product_id}}" >
     <div class='form-row'>
-        <div class='col-xs-12 form-group required'>
+        <div class='col-md-12 form-group required'>
             <label class='control-label'>Name on Card</label> <input
                 class='form-control' size='4' type='text'>
         </div>
     </div>
     <div class='form-row'>
-        <div class='col-xs-12 form-group card required'>
+        <div class='col-md-12 form-group card required'>
             <label class='control-label'>Card Number</label> <input
                 autocomplete='off' class='form-control card-number' size='20'
                 type='text'>
         </div>
     </div>
     <div class='form-row'>
-        <div class='col-xs-4 form-group cvc required'>
+        <div class='col-md-4 form-group cvc required'>
             <label class='control-label'>CVC</label> <input autocomplete='off'
                 class='form-control card-cvc' placeholder='ex. 311' size='4'
                 type='text'>
         </div>
-        <div class='col-xs-4 form-group expiration required'>
+        <div class='col-md-4 form-group expiration required'>
             <label class='control-label'>Expiration</label> <input
                 class='form-control card-expiry-month' placeholder='MM' size='2'
                 type='text'>
         </div>
-        <div class='col-xs-4 form-group expiration required'>
-            <label class='control-label'> </label> <input
+        <div class='col-md-4 form-group expiration required'>
+            <label class='control-label'>&nbsp;</label> <input
                 class='form-control card-expiry-year' placeholder='YYYY' size='4'
                 type='text'>
         </div>
