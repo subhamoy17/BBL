@@ -23,9 +23,9 @@
     @if($package_details)
      <form accept-charset="UTF-8" action="{{route('bootcamp_strip_payment')}}" class="require-validation"
     data-cc-on-file="false"
-    data-stripe-publishable-key="pk_test_pHf7liH3Wi3IVy3pHliAEOdT"
+    data-stripe-publishable-key="{{env('STRIPE_PUBLIC_KEY')}}"
     id="payment-form" method="post">
-    {{ csrf_field() }}
+    {{ csrf_field() }} 
     <input class="w3-input w3-border" name="product_id" type="hidden" value="{{$package_details->product_id}}" >
     <div class='form-row'>
         <div class='col-md-12 form-group required'>
