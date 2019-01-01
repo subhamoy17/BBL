@@ -6676,3 +6676,31 @@ span.line_t2 {
     min-height: 300px;
     width: 100%;
 }*/
+
+
+#tabs-inside{
+    border: none !important;
+}
+#tabs-inside ul {
+    position: absolute;
+    left: 23%;
+    top: 21px;
+    background: none;
+    border: none;
+}
+#tabs-inside li {
+    background: none;
+    border: 1px solid #ccc !important;
+    border-radius: 0;
+    margin-right: 15px;
+}
+#tabs-inside li a{
+    color:#000 !important;
+}
+#tabs-inside .ui-tabs-panel.ui-corner-bottom.ui-widget-content {
+    padding-left: 0;
+    padding-right: 0;
+}
+#tabs-inside ul .ui-state-active {
+    background: #f52a2e !important;
+}

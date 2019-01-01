@@ -533,6 +533,27 @@ return true;
  
 });
 
+ $('#pt_frm_search').on('submit', function(e) {
+
+  e.preventDefault();
+
+  url="{{url('customer/my-pt-booking?page=1')}}"+'&'+$('#pt_frm_search').serialize();
+
+// $(this).attr('href',url);
+window.location = url;
+
+});
+$('#pt_book_history .page-link').on('click', function(e) {
+e.preventDefault();
+console.log($(this).attr('href')+'&'+$('#pt_frm_search').serialize());
+ url=$(this).attr('href')+'&'+$('#pt_frm_search').serialize();
+// url="{{url('customer/booking_history?page=1')}}"+'&'+$('#frm_search').serialize();
+// $(this).attr('href',url);
+window.location = url;
+return true;
+ 
+});
+
       $.validator.addMethod("alpha", function(value, element){
     return this.optional(element) || value == value.match(/^[a-zA-Z, '']+$/);
     }, "Alphabetic characters only please");
@@ -913,7 +934,8 @@ $(document).ready(function() {
 		 });
 	</script>
 	<!--DatePicker js-->
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
+  <script src="{{asset('frontend/js/jquery-ui.js')}}"></script>
 	<script>
   		$( function() {
   		  $( "#datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' });
@@ -1377,6 +1399,12 @@ $(function() {
 
 
 </script>
+
+<script>
+  $( function() {
+    $( "#tabs-inside" ).tabs();
+  } );
+  </script>
 
 </body>
 

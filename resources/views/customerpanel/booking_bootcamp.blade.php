@@ -381,7 +381,7 @@ $('#bootcamp_date').datepicker({
               for(var i = 0; i < obj.length; i++)
               {
                 plan_time=obj[i]['all_time'];
-
+console.log(plan_time);
                 session_time.append($('<option>', {value: obj[i]['id']}).text(plan_time));
               }
             }

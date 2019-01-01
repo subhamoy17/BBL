@@ -4,6 +4,7 @@
 <script src="{{asset('backend/assets/js/jquery.validate.min.js')}}"></script>
 
 	<!-- Slider script -->
+
 	<script src="{{url('frontend/js/responsiveslides.min.js')}}"></script>
   <script src="{{asset('frontend/js/daterangepicker.js')}}"></script>
 <script src="{{asset('frontend/js/moment.min.js')}}"></script>
@@ -267,7 +268,8 @@ $('#contactusform').validate({
 });
 </script>
 <!--DatePicker js-->
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
+<script src="{{asset('frontend/js/jquery-ui.js')}}"></script>
 	<script>
   		$( function() {
   		  $( "#datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' });
@@ -366,7 +368,7 @@ $("#coupon_sub").find("checkbox").each(function(){
   } );
   </script>
 
-</script>
+
 	</body>
 
 </html>

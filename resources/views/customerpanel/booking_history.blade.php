@@ -4,18 +4,20 @@
       <div class="tab_container">
           <h3 class="d_active tab_drawer_heading" rel="tab1">Tab 1</h3>
           <div id="tab1" class="tab_content">
-            <div class="table-responsive table-bordered">
-              <div class="my-bkng-btn">
-                <a href="{{url('customer/booking-bootcamp')}}" class="btn btn-success">Book Bootcamp Session</a><a href="{{url('customer/booking-personal-training')}}" class="btn btn-success">Book PT Session</a>
-              </div>
 
-        @if (session('bootcamp_session_cancelled'))
-          <div class="alert alert-success">
-              {{ session('bootcamp_session_cancelled') }}
-          </div>
-        @endif
-              <h3 align="center">Booking history</h3>
-              <table class="table">
+
+            <div id="tabs-inside">
+  <ul>
+    <li><a href="#tabs-1">Bootcamp </a></li>
+    
+  
+    <a href="{{url('customer/my-pt-booking')}}" class="ui-tabs-anchor btn btn-success">Personal Training</a>
+ 
+  </ul>
+  <div id="tabs-1">
+   
+   <h3 align="center">Booking history</h3>
+    <table class="table">
                 <thead>
                   <tr>
                     <th>Package type</th>
@@ -41,30 +43,29 @@
                   <tr>
                     <td>Personal Training</td>
                     <td>{{$total_sessions_pt}}</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
+                    <td>{{$total_past_booking_pt}}</td>
+                    <td>{{$total_future_booking_pt}}</td>
+                    <td>{{$total_declined_booking_pt}}</td>
+                    <td>{{$total_cancelled_booking_pt}}</td>
                   </tr>
               
                 </tbody>
               </table>
-              <div class="tbl-srch">
-              	 <form id="frm_search" method="get">
-					<select align ="right" id="feature" name="option" >
+    <div class="tbl-srch">
+                 <form id="pt_frm_search" method="get">
+          <select align ="right" id="feature" name="option" >
             <option value="future_booking" {{Request::get('option')=='future_booking' || Request::get('option')==''?'selected':''}} >Future Booking</option>
-  					<option value="declined_booking" {{Request::get('option')=='declined_booking'?'selected':''}} >Declined Booking</option>
+            <option value="declined_booking" {{Request::get('option')=='declined_booking'?'selected':''}} >Declined Booking</option>
             <option value="cancelled_booking" {{Request::get('option')=='cancelled_booking'?'selected':''}} >Cancelled Booking</option>
-  					<option value="past_booking" {{Request::get('option')=='past_booking'?'selected':''}} >Past Booking</option>
- 					
-  					</select>
-  					<input id="datepicker" type="text" name="start_date" value="{{Request::get('start_date')? Request::get('start_date') : \Carbon\Carbon::now()->toDateString()}}" readonly="true" />
-  					<input id="datepicker2" type="text" name="end_date" value="{{Request::get('end_date')? Request::get('end_date') : \Carbon\Carbon::now()->addDays(30)->toDateString()}}"  readonly="true"/>
-  					<button type="submit" id="booking" class="btn btn-success"><i class="fa fa-search"></i></button>
-				</form>
+            <option value="past_booking" {{Request::get('option')=='past_booking'?'selected':''}} >Past Booking</option>
+          
+            </select>
+            <input id="datepicker" type="text" name="start_date" value="{{Request::get('start_date')? Request::get('start_date') : \Carbon\Carbon::now()->toDateString()}}" readonly="true" />
+            <input id="datepicker2" type="text" name="end_date" value="{{Request::get('end_date')? Request::get('end_date') : \Carbon\Carbon::now()->addDays(30)->toDateString()}}"  readonly="true"/>
+            <button type="submit" id="booking" class="btn btn-success"><i class="fa fa-search"></i></button>
+        </form>
               </div>
-              
-            	<table class="table">
+             <table class="table">
  
                 <thead>
                   
@@ -82,7 +83,7 @@
                     <th>Booking time</th>
                     <th>Address</th>
                     <th>Booked On</th>                                   
-                    <!-- <th>Status</th> -->
+                  
                     @if(Request::get('option')=='future_booking' || Request::get('option')=='')
                     <th>Action</th>
                     @endif
@@ -100,21 +101,7 @@
                     <td>{{date('d F Y h:i A', strtotime($eachbooking->created_at))}}</td>
                      
                     
-                    <!-- <td>
-                      @if(Request::get('option')=='declined_booking')
-                        Declined by trainer
-                      @elseif(Request::get('option')=='past_booking')
-                        Past booking
-                      @elseif(Request::get('option')=='future_booking' ||  Request::get('option')=='')
-                        Upcoming sessions
-                      @elseif(Request::get('option')=='cancelled_booking')
-                        @if($eachbooking->cancelled_by==1)
-                          Cancelled
-                        @elseif($eachbooking->cancelled_by==2)
-                          Cancelled by admin
-                        @endif
-                      @endif
-                    </td> -->
+                   
                     @if(Request::get('option')=='future_booking' ||  Request::get('option')=='')
 
                     <?php
@@ -146,6 +133,26 @@
                 </tbody>
               </table>
               @endif
+  </div>
+ 
+ 
+
+ 
+</div>
+
+            <div class="table-responsive table-bordered">
+              <div class="my-bkng-btn">
+                <a href="{{url('customer/booking-bootcamp')}}" class="btn btn-success">Book Bootcamp Session</a><a href="{{url('customer/booking-personal-training')}}" class="btn btn-success">Book PT Session</a>
+              </div>
+
+        @if (session('bootcamp_session_cancelled'))
+          <div class="alert alert-success">
+              {{ session('bootcamp_session_cancelled') }}
+          </div>
+        @endif
+              
+              
+             
             </div>
           </div>
         </div>

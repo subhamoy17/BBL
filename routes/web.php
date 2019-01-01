@@ -73,16 +73,16 @@ Route::get('deleteslots/{id}', 'TrainerController@slotsdelete');
 
 
 //view exercise type //
-Route::get('gymType','TrainerController@gym_showlist')->name('gymType');
+Route::get('exercise-list','TrainerController@gym_showlist')->name('exercise_list');
 //view exercise type  delete//
 Route::get('gymdelete/{id}', 'TrainerController@gymdelete');
 
 //view exercise type  insert//
-Route::get('add_exercise_trainer','TrainerController@add_exercise_trainer')->name('add_exercise_trainer');
+Route::get('add-exercise','TrainerController@add_exercise_trainer')->name('add_exercise_trainer');
 Route::post('exerciseUserInsert', 'TrainerController@exercise_user_insert')->name('exercise_insert');
 
 //view exercise type  update//
-Route::get('editexercise/{id}', 'TrainerController@show_edit_exercise_form');
+Route::get('editexercise/{id}', 'TrainerController@show_edit_exercise_form')->name('editexercise');
  Route::POST('updateexercise', 'TrainerController@update_exercise')->name('updateexercise');
 
 
@@ -357,10 +357,20 @@ Route::get('my-diet-plan','FrontController@common_diet_plan_history')->name('cus
 
 Route::get('purchased-history','FrontController@my_order_history')->name('my_order_history');
 
+
+Route::get('booking-pt-session','FrontController@booking_slot')->name('booking_slot');
+
+// Route::get('booking_slot','FrontController@booking_slot')->name('booking_slot');
+
 Route::get('booking-personal-training','FrontController@booking_personal_training')->name('booking_personal_training');
+
 Route::get('get_slot_time','FrontController@get_slot_time')->name('get_slot_time');
+Route::get('get_pt_time','FrontController@get_pt_time')->name('get_pt_time');
+Route::get('get_pt_time2','FrontController@get_pt_time2')->name('get_pt_time2');
+Route::get('get_pt_all_trainer','FrontController@get_pt_all_trainer')->name('get_pt_all_trainer');
 Route::get('get_current_slot_time','FrontController@get_current_slot_time')->name('get_current_slot_time');
 
+Route::get('get_current_pt_time','FrontController@get_current_pt_time')->name('get_current_pt_time');
 Route::get('get_slot_trainer','FrontController@get_slot_trainer')->name('get_slot_trainer');
 
 
@@ -371,7 +381,7 @@ Route::get('customer_session_delete/{id}', 'FrontController@session_delete')->na
 
 
 Route::get('mybooking','FrontController@booking_history')->name('booking_history');
-
+Route::get('my-pt-booking','FrontController@pt_booking_history')->name('pt_booking_history');
 
 Route::get('free-sessions','FrontController@free_sessions');
 
@@ -391,13 +401,18 @@ Route::get('slot_insert_to_cart','FrontController@slot_insert_to_cart')->name('s
 
 Route::get('cart_data_delete','FrontController@cart_data_delete')->name('cart_data_delete');
 
+Route::get('session_data_delete','FrontController@session_data_delete')->name('session_data_delete');
 
 Route::get('booking-bootcamp','FrontController@booking_bootcamp');
 Route::get('get_bootcamp_time','FrontController@get_bootcamp_time')->name('get_bootcamp_time');
 Route::post('bootcamp-booking','FrontController@bootcamp_booking_customer')->name('bootcamp_booking_customer');
+Route::post('ptsession-booking','FrontController@ptsession_booking_customer')->name('ptsession_booking_customer');
+Route::post('ptsession-booking-bytime','FrontController@ptsession_booking_customer_bytime')->name('ptsession_booking_customer_bytime');
 Route::get('bootcamp-booking-cancele-customer/{slug}','FrontController@bootcamp_booking_cancele_customer')->name('bootcamp_booking_cancele_customer');
 
+Route::get('pt-booking-cancele-customer/{slug}','FrontController@pt_booking_cancele_customer')->name('pt_booking_cancele_customer');
 
+Route::get('get_pt_date','FrontController@get_pt_date')->name('get_pt_date');
 
 
 Route::post('diet-plan-purchase','FrontController@common_diet_plan_purchase');
