@@ -52,7 +52,7 @@
                 </tbody>
               </table>
     <div class="tbl-srch">
-                 <form id="pt_frm_search" method="get">
+                 <form id="frm_search" method="get">
           <select align ="right" id="feature" name="option" >
             <option value="future_booking" {{Request::get('option')=='future_booking' || Request::get('option')==''?'selected':''}} >Future Booking</option>
             <option value="declined_booking" {{Request::get('option')=='declined_booking'?'selected':''}} >Declined Booking</option>
