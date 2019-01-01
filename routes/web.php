@@ -135,14 +135,11 @@ Route::post('motedit','TrainerController@motedit')->name('motedit');
 Route::get('motdelete/{id}', 'TrainerController@motdelete');
 
 //Add session//
-Route::get('add_session','TrainerController@add_session')->name('add_session');
 
 Route::get('add-bootcamp-session-from-schedule/{slug}','TrainerController@add_bc_session')->name('add_bc_session_from_schedule');
 
 Route::get('slot_time','TrainerController@slot_times')->name('slot_time');
 
-Route::POST('trainer_slotinsert','TrainerController@trainer_slotinsert')->name('trainer_slotinsert');
-Route::get('add_customer','TrainerController@add_customer_session')->name('add_customer');
 
 //Add Coupon//
 Route::get('searchslots','TrainerController@searchslots')->name('searchslots');
@@ -175,21 +172,10 @@ Route::get('allCustomers', 'TrainerController@all_customers')->name('allCustomer
 
 // @totan 071018
 
-Route::get('admin_get_slot_time', 'TrainerController@booking_slot_times')->name('admin_get_slot_time');
-Route::get('admin_get_current_slot_time', 'TrainerController@admin_get_current_slot_time')->name('admin_get_current_slot_time');
-Route::get('admin_get_slot_trainer', 'TrainerController@admin_get_slot_trainer')->name('admin_get_slot_trainer');
 
 Route::get('check_customer_bc_session', 'TrainerController@check_customer_bc_session')->name('check_customer_bc_session');
 
 Route::post('add-bc-by-mastertrainer', 'TrainerController@add_bc_by_mastertrainer')->name('add_bc_by_mastertrainer');
-
-Route::get('slot_insert_to_cart_trainer', 'TrainerController@slot_insert_to_cart_trainer')->name('slot_insert_to_cart_trainer');
-
-Route::get('cart_data_delete_trainer', 'TrainerController@cart_data_delete_trainer')->name('cart_data_delete_trainer');
-
-Route::get('admin_get_current_time', 'TrainerController@admin_get_current_time')->name('admin_get_current_time');
-Route::get('admin_get_time', 'TrainerController@admin_get_time')->name('admin_get_time');
-
 
 Route::get('add-bootcamp-plan', 'TrainerController@bootcamp_plan')->name('bootcamp_plan');
 
@@ -321,28 +307,6 @@ Route::GET('adminpanel/home/editprofile/{id}','Admin\ProfileUpdateController@sho
 Route::POST('adminpanel/home/updateprofile','Admin\ProfileUpdateController@updateprofile')->name('admin.profileupdate');
 /// route for admin profile view
 Route::GET('adminpanel/home/{id}','Admin\ProfileUpdateController@showprofile');
-///for showing customer details
-Route::get('pastRequestlist/{id}','TrainerController@pastshowlist');
-Route::get('futureRequestlist/{id}','TrainerController@futureshowlist');
-
-Route::get('canelledlist','TrainerController@cancelledshowlist');
-
-Route::get('futurePendingRequestlist/{id}','TrainerController@future_pending_showlist');
-
-
-Route::get('approvePendingRequest', 'TrainerController@approve_pending_request')->name('approvePendingRequest');
-
-
-Route::get('approveCustomer', 'TrainerController@approve_customer_request')->name('approveCustomer');
-// Route::get('approvePastCustomer', 'TrainerController@approve_past_customer_request')->name('approvePastCustomer');
-
-
-
-
-
-
-
-
 
 
 

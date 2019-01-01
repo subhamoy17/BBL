@@ -48,169 +48,166 @@ public function index()
 
 {
   try{
-  $cur_date =Carbon::now()->toDateString();
+    $cur_date =Carbon::now()->toDateString();
 
-if(Auth::user()->master_trainer==1)
-{
-  //number of future pending request
-  $future_pending_request=DB::table('slot_request')->where('slot_date','>=',$cur_date)->where('approval_id',1)->count(); 
+    if(Auth::user()->master_trainer==1)
+    {
+      //number of future pending request
+      $future_pending_request=DB::table('slot_request')->where('slot_date','>=',$cur_date)->where('approval_id',1)->count(); 
 
-  //number of future approve request 
-  $future_approve_request=DB::table('slot_request')
-  ->where(function($q) {
-    $q->where('approval_id', 3)
-      ->orWhere('approval_id', 4);
-  })->where('slot_date','>=',$cur_date)->count(); 
+      //number of future approve request 
+      $future_approve_request=DB::table('slot_request')
+      ->where(function($q) {
+        $q->where('approval_id', 3)
+          ->orWhere('approval_id', 4);
+      })->where('slot_date','>=',$cur_date)->count(); 
 
-  //number of past request
-  $past_request=DB::table('slot_request')->where('approval_id','<>',2)->where('slot_date','<',$cur_date)->count();
+      //number of past request
+      $past_request=DB::table('slot_request')->where('approval_id','<>',2)->where('slot_date','<',$cur_date)->count();
 
-  //number of decline request
-  $decline_request=DB::table('slot_request')->where('approval_id',4)->count();
+      //number of decline request
+      $decline_request=DB::table('slot_request')->where('approval_id',4)->count();
 
-  $total_number_of_trainer=DB::table('users')->where('master_trainer',2)->whereNull('deleted_at')->count();
-  $total_number_of_customer=DB::table('customers')->where('confirmed',1)->whereNull('deleted_at')->count();
-  // For Bootcamp
-$now = Carbon::now()->toDateString();
-  $total_bootcamop_future_booking=DB::table('bootcamp_booking')
-    ->join('bootcamp_plan_shedules','bootcamp_plan_shedules.id','bootcamp_booking.bootcamp_plan_shedules_id')
-    ->join('bootcamp_plan_address','bootcamp_plan_address.id','bootcamp_plan_shedules.address_id')
-    ->select('bootcamp_plan_shedules.plan_date','bootcamp_plan_shedules.plan_day','bootcamp_plan_shedules.plan_st_time','bootcamp_plan_shedules.plan_end_time','bootcamp_plan_address.address_line1','bootcamp_booking.created_at')
-    ->whereNull('bootcamp_booking.deleted_at')->where('bootcamp_plan_shedules.plan_date','>=',$now)->count();
-    $total_bootcamop_declined_booking=DB::table('bootcamp_booking')
-    ->join('bootcamp_plan_shedules','bootcamp_plan_shedules.id','bootcamp_booking.bootcamp_plan_shedules_id')
-    ->join('bootcamp_plan_address','bootcamp_plan_address.id','bootcamp_plan_shedules.address_id')
-    ->select('bootcamp_plan_shedules.plan_date','bootcamp_plan_shedules.plan_day','bootcamp_plan_shedules.plan_st_time','bootcamp_plan_shedules.plan_end_time','bootcamp_plan_address.address_line1','bootcamp_booking.created_at')
-    ->whereNotNull('bootcamp_plan_shedules.deleted_at')->where('bootcamp_booking.cancelled_by',0)->count();
+      $total_number_of_trainer=DB::table('users')->where('master_trainer',2)->whereNull('deleted_at')->count();
+      $total_number_of_customer=DB::table('customers')->where('confirmed',1)->whereNull('deleted_at')->count();
+      // For Bootcamp
+      $now = Carbon::now()->toDateString();
+      $total_bootcamop_future_booking=DB::table('bootcamp_booking')
+      ->join('bootcamp_plan_shedules','bootcamp_plan_shedules.id','bootcamp_booking.bootcamp_plan_shedules_id')
+      ->join('bootcamp_plan_address','bootcamp_plan_address.id','bootcamp_plan_shedules.address_id')
+      ->select('bootcamp_plan_shedules.plan_date','bootcamp_plan_shedules.plan_day','bootcamp_plan_shedules.plan_st_time','bootcamp_plan_shedules.plan_end_time','bootcamp_plan_address.address_line1','bootcamp_booking.created_at')
+      ->whereNull('bootcamp_booking.deleted_at')->where('bootcamp_plan_shedules.plan_date','>=',$now)->count();
 
-    $total_bootcamop_cancelled_booking=DB::table('bootcamp_booking')
-    ->join('bootcamp_plan_shedules','bootcamp_plan_shedules.id','bootcamp_booking.bootcamp_plan_shedules_id')
-    ->join('bootcamp_plan_address','bootcamp_plan_address.id','bootcamp_plan_shedules.address_id')
-    ->select('bootcamp_plan_shedules.plan_date','bootcamp_plan_shedules.plan_day','bootcamp_plan_shedules.plan_st_time','bootcamp_plan_shedules.plan_end_time','bootcamp_plan_address.address_line1','bootcamp_booking.created_at')
-    ->whereNotNull('bootcamp_booking.deleted_at')->where('bootcamp_booking.cancelled_by','>',0)->count();
+      $total_bootcamop_declined_booking=DB::table('bootcamp_booking')
+      ->join('bootcamp_plan_shedules','bootcamp_plan_shedules.id','bootcamp_booking.bootcamp_plan_shedules_id')
+      ->join('bootcamp_plan_address','bootcamp_plan_address.id','bootcamp_plan_shedules.address_id')
+      ->select('bootcamp_plan_shedules.plan_date','bootcamp_plan_shedules.plan_day','bootcamp_plan_shedules.plan_st_time','bootcamp_plan_shedules.plan_end_time','bootcamp_plan_address.address_line1','bootcamp_booking.created_at')
+      ->whereNotNull('bootcamp_plan_shedules.deleted_at')->where('bootcamp_booking.cancelled_by',0)->count();
 
-    $total_bootcamop_past_booking=DB::table('bootcamp_booking')
-    ->join('bootcamp_plan_shedules','bootcamp_plan_shedules.id','bootcamp_booking.bootcamp_plan_shedules_id')
-    ->join('bootcamp_plan_address','bootcamp_plan_address.id','bootcamp_plan_shedules.address_id')
-    ->select('bootcamp_plan_shedules.plan_date','bootcamp_plan_shedules.plan_day','bootcamp_plan_shedules.plan_st_time','bootcamp_plan_shedules.plan_end_time','bootcamp_plan_address.address_line1','bootcamp_booking.created_at')
-    ->whereNull('bootcamp_booking.deleted_at')->where('bootcamp_plan_shedules.plan_date','<',$now)->count();
+      $total_bootcamop_cancelled_booking=DB::table('bootcamp_booking')
+      ->join('bootcamp_plan_shedules','bootcamp_plan_shedules.id','bootcamp_booking.bootcamp_plan_shedules_id')
+      ->join('bootcamp_plan_address','bootcamp_plan_address.id','bootcamp_plan_shedules.address_id')
+      ->select('bootcamp_plan_shedules.plan_date','bootcamp_plan_shedules.plan_day','bootcamp_plan_shedules.plan_st_time','bootcamp_plan_shedules.plan_end_time','bootcamp_plan_address.address_line1','bootcamp_booking.created_at')
+      ->whereNotNull('bootcamp_booking.deleted_at')->where('bootcamp_booking.cancelled_by','>',0)->count();
 
-  $currentMonth = date('m');
-  $total_bootcamop_booking_count_month = DB::table("bootcamp_booking")->join('bootcamp_plan_shedules','bootcamp_plan_shedules.id','bootcamp_booking.bootcamp_plan_shedules_id')->where('bootcamp_booking.cancelled_by',0)->whereNull('bootcamp_booking.deleted_at')
-            ->whereRaw('MONTH(bootcamp_plan_shedules.plan_date) = ?',[$currentMonth])
-            ->count();
+      $total_bootcamop_past_booking=DB::table('bootcamp_booking')
+      ->join('bootcamp_plan_shedules','bootcamp_plan_shedules.id','bootcamp_booking.bootcamp_plan_shedules_id')
+      ->join('bootcamp_plan_address','bootcamp_plan_address.id','bootcamp_plan_shedules.address_id')
+      ->select('bootcamp_plan_shedules.plan_date','bootcamp_plan_shedules.plan_day','bootcamp_plan_shedules.plan_st_time','bootcamp_plan_shedules.plan_end_time','bootcamp_plan_address.address_line1','bootcamp_booking.created_at')
+      ->whereNull('bootcamp_booking.deleted_at')->where('bootcamp_plan_shedules.plan_date','<',$now)->count();
 
-  $total_pt_booking_crnt_month = DB::table("personal_training_booking")->join('personal_training_plan_schedules','personal_training_plan_schedules.id','personal_training_booking.personal_training_plan_shedules_id')->where('personal_training_booking.cancelled_by',0)->whereNull('personal_training_booking.deleted_at')
-            ->whereRaw('MONTH(personal_training_plan_schedules.plan_date) = ?',[$currentMonth])
-            ->count();
+      $currentMonth = date('m');
+      $total_bootcamop_booking_count_month = DB::table("bootcamp_booking")->join('bootcamp_plan_shedules','bootcamp_plan_shedules.id','bootcamp_booking.bootcamp_plan_shedules_id')->where('bootcamp_booking.cancelled_by',0)->whereNull('bootcamp_booking.deleted_at')
+                ->whereRaw('MONTH(bootcamp_plan_shedules.plan_date) = ?',[$currentMonth])
+                ->count();
+
+      $total_pt_booking_crnt_month = DB::table("personal_training_booking")->join('personal_training_plan_schedules','personal_training_plan_schedules.id','personal_training_booking.personal_training_plan_shedules_id')->where('personal_training_booking.cancelled_by',0)->whereNull('personal_training_booking.deleted_at')
+                ->whereRaw('MONTH(personal_training_plan_schedules.plan_date) = ?',[$currentMonth])
+                ->count();
 
      $total_pt_future_booking=DB::table('personal_training_booking')
-    ->join('personal_training_plan_schedules','personal_training_plan_schedules.id','personal_training_booking.personal_training_plan_shedules_id')
-    ->whereNull('personal_training_booking.deleted_at')->where('personal_training_plan_schedules.plan_date','>=',$now)->count();
+      ->join('personal_training_plan_schedules','personal_training_plan_schedules.id','personal_training_booking.personal_training_plan_shedules_id')
+      ->whereNull('personal_training_booking.deleted_at')->where('personal_training_plan_schedules.plan_date','>=',$now)->count();
 
-    $total_pt_past_booking=DB::table('personal_training_booking')
-    ->join('personal_training_plan_schedules','personal_training_plan_schedules.id','personal_training_booking.personal_training_plan_shedules_id')
-    ->whereNull('personal_training_booking.deleted_at')
-    ->where('personal_training_plan_schedules.plan_date','<',$now)->count();
+      $total_pt_past_booking=DB::table('personal_training_booking')
+      ->join('personal_training_plan_schedules','personal_training_plan_schedules.id','personal_training_booking.personal_training_plan_shedules_id')
+      ->whereNull('personal_training_booking.deleted_at')
+      ->where('personal_training_plan_schedules.plan_date','<',$now)->count();
 
-    $total_pt_cancelled_booking=DB::table('personal_training_booking')
-    ->join('personal_training_plan_schedules','personal_training_plan_schedules.id','personal_training_booking.personal_training_plan_shedules_id')
-    ->where('personal_training_booking.cancelled_by','>',0)->count();
+      $total_pt_cancelled_booking=DB::table('personal_training_booking')
+      ->join('personal_training_plan_schedules','personal_training_plan_schedules.id','personal_training_booking.personal_training_plan_shedules_id')
+      ->where('personal_training_booking.cancelled_by','>',0)->count();
 
-    $total_pt_declined_booking=DB::table('personal_training_booking')
-    ->join('personal_training_plan_schedules','personal_training_plan_schedules.id','personal_training_booking.personal_training_plan_shedules_id')
-    ->whereNotNull('personal_training_booking.deleted_at')->where('personal_training_booking.cancelled_by',0)->count();
+      $total_pt_declined_booking=DB::table('personal_training_booking')
+      ->join('personal_training_plan_schedules','personal_training_plan_schedules.id','personal_training_booking.personal_training_plan_shedules_id')
+      ->whereNotNull('personal_training_booking.deleted_at')->where('personal_training_booking.cancelled_by',0)->count();
 
-  $qtrMonth=Carbon::now()->subMonth(3);
-  $total_booking_qtr=DB::table('slot_request')->where('slot_date','>=',$qtrMonth)->count();
-}
-else
-{
-  //number of future pending request
-  $future_pending_request=DB::table('slot_request')->where('trainer_id',Auth::user()->id)->where('slot_date','>=',$cur_date)->where('approval_id',1)->count(); 
+      $qtrMonth=Carbon::now()->subMonth(3);
+      $total_booking_qtr=DB::table('slot_request')->where('slot_date','>=',$qtrMonth)->count();
+    }
+    else
+    {
+      //number of future pending request
+      $future_pending_request=DB::table('slot_request')->where('trainer_id',Auth::user()->id)->where('slot_date','>=',$cur_date)->where('approval_id',1)->count(); 
 
-  //number of future approve request 
-  $future_approve_request=DB::table('slot_request')->where('trainer_id',Auth::user()->id)
-  ->where(function($q) {
-    $q->where('approval_id', 3)
-      ->orWhere('approval_id', 4);
-  })->where('slot_date','>=',$cur_date)->count(); 
+      //number of future approve request 
+      $future_approve_request=DB::table('slot_request')->where('trainer_id',Auth::user()->id)
+      ->where(function($q) {
+        $q->where('approval_id', 3)
+          ->orWhere('approval_id', 4);
+      })->where('slot_date','>=',$cur_date)->count(); 
 
-  //number of past request
-  $past_request=DB::table('slot_request')->where('trainer_id',Auth::user()->id)->where('approval_id','<>',2)->where('slot_date','<',$cur_date)->count();
+      //number of past request
+      $past_request=DB::table('slot_request')->where('trainer_id',Auth::user()->id)->where('approval_id','<>',2)->where('slot_date','<',$cur_date)->count();
 
-  //number of decline request
-  $decline_request=DB::table('slot_request')->where('trainer_id',Auth::user()->id)->where('approval_id',4)->count();
+      //number of decline request
+      $decline_request=DB::table('slot_request')->where('trainer_id',Auth::user()->id)->where('approval_id',4)->count();
 
-  $total_number_of_trainer=DB::table('users')->where('master_trainer',2)->whereNull('deleted_at')->count();
-  $total_number_of_customer=DB::table('customers')->where('confirmed',1)->whereNull('deleted_at')->count();
+      $total_number_of_trainer=DB::table('users')->where('master_trainer',2)->whereNull('deleted_at')->count();
+      $total_number_of_customer=DB::table('customers')->where('confirmed',1)->whereNull('deleted_at')->count();
 
 
-   // For Bootcamp
-$now = Carbon::now()->toDateString();
-  $total_bootcamop_future_booking=DB::table('bootcamp_booking')
-    ->join('bootcamp_plan_shedules','bootcamp_plan_shedules.id','bootcamp_booking.bootcamp_plan_shedules_id')
-    ->join('bootcamp_plan_address','bootcamp_plan_address.id','bootcamp_plan_shedules.address_id')
-    ->select('bootcamp_plan_shedules.plan_date','bootcamp_plan_shedules.plan_day','bootcamp_plan_shedules.plan_st_time','bootcamp_plan_shedules.plan_end_time','bootcamp_plan_address.address_line1','bootcamp_booking.created_at')
-    ->whereNull('bootcamp_booking.deleted_at')->where('bootcamp_plan_shedules.plan_date','>=',$now)->count();
-    $total_bootcamop_declined_booking=DB::table('bootcamp_booking')
-    ->join('bootcamp_plan_shedules','bootcamp_plan_shedules.id','bootcamp_booking.bootcamp_plan_shedules_id')
-    ->join('bootcamp_plan_address','bootcamp_plan_address.id','bootcamp_plan_shedules.address_id')
-    ->select('bootcamp_plan_shedules.plan_date','bootcamp_plan_shedules.plan_day','bootcamp_plan_shedules.plan_st_time','bootcamp_plan_shedules.plan_end_time','bootcamp_plan_address.address_line1','bootcamp_booking.created_at')
-    ->whereNotNull('bootcamp_booking.deleted_at')->where('bootcamp_booking.cancelled_by',0)->count();
+      // For Bootcamp
+      $now = Carbon::now()->toDateString();
+      $total_bootcamop_future_booking=DB::table('bootcamp_booking')
+      ->join('bootcamp_plan_shedules','bootcamp_plan_shedules.id','bootcamp_booking.bootcamp_plan_shedules_id')
+      ->join('bootcamp_plan_address','bootcamp_plan_address.id','bootcamp_plan_shedules.address_id')
+      ->select('bootcamp_plan_shedules.plan_date','bootcamp_plan_shedules.plan_day','bootcamp_plan_shedules.plan_st_time','bootcamp_plan_shedules.plan_end_time','bootcamp_plan_address.address_line1','bootcamp_booking.created_at')
+      ->whereNull('bootcamp_booking.deleted_at')->where('bootcamp_plan_shedules.plan_date','>=',$now)->count();
 
-    $total_bootcamop_cancelled_booking=DB::table('bootcamp_booking')
-    ->join('bootcamp_plan_shedules','bootcamp_plan_shedules.id','bootcamp_booking.bootcamp_plan_shedules_id')
-    ->join('bootcamp_plan_address','bootcamp_plan_address.id','bootcamp_plan_shedules.address_id')
-    ->select('bootcamp_plan_shedules.plan_date','bootcamp_plan_shedules.plan_day','bootcamp_plan_shedules.plan_st_time','bootcamp_plan_shedules.plan_end_time','bootcamp_plan_address.address_line1','bootcamp_booking.created_at')
-    ->whereNotNull('bootcamp_booking.deleted_at')->where('bootcamp_booking.cancelled_by','>',0)->count();
+      $total_bootcamop_declined_booking=DB::table('bootcamp_booking')
+      ->join('bootcamp_plan_shedules','bootcamp_plan_shedules.id','bootcamp_booking.bootcamp_plan_shedules_id')
+      ->join('bootcamp_plan_address','bootcamp_plan_address.id','bootcamp_plan_shedules.address_id')
+      ->select('bootcamp_plan_shedules.plan_date','bootcamp_plan_shedules.plan_day','bootcamp_plan_shedules.plan_st_time','bootcamp_plan_shedules.plan_end_time','bootcamp_plan_address.address_line1','bootcamp_booking.created_at')
+      ->whereNotNull('bootcamp_booking.deleted_at')->where('bootcamp_booking.cancelled_by',0)->count();
 
-    $total_bootcamop_past_booking=DB::table('bootcamp_booking')
-    ->join('bootcamp_plan_shedules','bootcamp_plan_shedules.id','bootcamp_booking.bootcamp_plan_shedules_id')
-    ->join('bootcamp_plan_address','bootcamp_plan_address.id','bootcamp_plan_shedules.address_id')
-    ->select('bootcamp_plan_shedules.plan_date','bootcamp_plan_shedules.plan_day','bootcamp_plan_shedules.plan_st_time','bootcamp_plan_shedules.plan_end_time','bootcamp_plan_address.address_line1','bootcamp_booking.created_at')
-    ->whereNull('bootcamp_booking.deleted_at')->where('bootcamp_plan_shedules.plan_date','<',$now)->count();
+      $total_bootcamop_cancelled_booking=DB::table('bootcamp_booking')
+      ->join('bootcamp_plan_shedules','bootcamp_plan_shedules.id','bootcamp_booking.bootcamp_plan_shedules_id')
+      ->join('bootcamp_plan_address','bootcamp_plan_address.id','bootcamp_plan_shedules.address_id')
+      ->select('bootcamp_plan_shedules.plan_date','bootcamp_plan_shedules.plan_day','bootcamp_plan_shedules.plan_st_time','bootcamp_plan_shedules.plan_end_time','bootcamp_plan_address.address_line1','bootcamp_booking.created_at')
+      ->whereNotNull('bootcamp_booking.deleted_at')->where('bootcamp_booking.cancelled_by','>',0)->count();
 
-  $currentMonth = date('m');
+      $total_bootcamop_past_booking=DB::table('bootcamp_booking')
+      ->join('bootcamp_plan_shedules','bootcamp_plan_shedules.id','bootcamp_booking.bootcamp_plan_shedules_id')
+      ->join('bootcamp_plan_address','bootcamp_plan_address.id','bootcamp_plan_shedules.address_id')
+      ->select('bootcamp_plan_shedules.plan_date','bootcamp_plan_shedules.plan_day','bootcamp_plan_shedules.plan_st_time','bootcamp_plan_shedules.plan_end_time','bootcamp_plan_address.address_line1','bootcamp_booking.created_at')
+      ->whereNull('bootcamp_booking.deleted_at')->where('bootcamp_plan_shedules.plan_date','<',$now)->count();
+
+      $currentMonth = date('m');
   
- $total_bootcamop_booking_count_month = DB::table("bootcamp_booking")->join('bootcamp_plan_shedules','bootcamp_plan_shedules.id','bootcamp_booking.bootcamp_plan_shedules_id')->where('bootcamp_booking.cancelled_by',0)->whereNull('bootcamp_booking.deleted_at')
-    ->whereRaw('MONTH(bootcamp_plan_shedules.plan_date) = ?',[$currentMonth])
-    ->count();
+     $total_bootcamop_booking_count_month = DB::table("bootcamp_booking")->join('bootcamp_plan_shedules','bootcamp_plan_shedules.id','bootcamp_booking.bootcamp_plan_shedules_id')->where('bootcamp_booking.cancelled_by',0)->whereNull('bootcamp_booking.deleted_at')
+        ->whereRaw('MONTH(bootcamp_plan_shedules.plan_date) = ?',[$currentMonth])
+        ->count();
 
 
-  $qtrMonth=Carbon::now()->subMonth(3);
-  $total_booking_qtr=DB::table('slot_request')->where('slot_date','>=',$qtrMonth)->where('trainer_id',Auth::user()->id)->count();
+      $qtrMonth=Carbon::now()->subMonth(3);
+      $total_booking_qtr=DB::table('slot_request')->where('slot_date','>=',$qtrMonth)->where('trainer_id',Auth::user()->id)->count();
 
-  $total_pt_future_booking=DB::table('personal_training_booking')
-    ->join('personal_training_plan_schedules','personal_training_plan_schedules.id','personal_training_booking.personal_training_plan_shedules_id')
-    ->whereNull('personal_training_booking.deleted_at')->where('personal_training_plan_schedules.plan_date','>=',$now)
-    ->where('personal_training_plan_schedules.trainer_id',Auth::user()->id)->count();
+      $total_pt_future_booking=DB::table('personal_training_booking')
+      ->join('personal_training_plan_schedules','personal_training_plan_schedules.id','personal_training_booking.personal_training_plan_shedules_id')
+      ->whereNull('personal_training_booking.deleted_at')->where('personal_training_plan_schedules.plan_date','>=',$now)
+      ->where('personal_training_plan_schedules.trainer_id',Auth::user()->id)->count();
 
-    $total_pt_past_booking=DB::table('personal_training_booking')
-    ->join('personal_training_plan_schedules','personal_training_plan_schedules.id','personal_training_booking.personal_training_plan_shedules_id')
-    ->whereNull('personal_training_booking.deleted_at')
-    ->where('personal_training_plan_schedules.plan_date','<',$now)
-    ->where('personal_training_plan_schedules.trainer_id',Auth::user()->id)->count();
+      $total_pt_past_booking=DB::table('personal_training_booking')
+      ->join('personal_training_plan_schedules','personal_training_plan_schedules.id','personal_training_booking.personal_training_plan_shedules_id')
+      ->whereNull('personal_training_booking.deleted_at')
+      ->where('personal_training_plan_schedules.plan_date','<',$now)
+      ->where('personal_training_plan_schedules.trainer_id',Auth::user()->id)->count();
 
-    $total_pt_cancelled_booking=DB::table('personal_training_booking')
-    ->join('personal_training_plan_schedules','personal_training_plan_schedules.id','personal_training_booking.personal_training_plan_shedules_id')
-    ->where('personal_training_booking.cancelled_by','>',0)
-    ->where('personal_training_plan_schedules.trainer_id',Auth::user()->id)->count();
+      $total_pt_cancelled_booking=DB::table('personal_training_booking')
+      ->join('personal_training_plan_schedules','personal_training_plan_schedules.id','personal_training_booking.personal_training_plan_shedules_id')
+      ->where('personal_training_booking.cancelled_by','>',0)
+      ->where('personal_training_plan_schedules.trainer_id',Auth::user()->id)->count();
 
-    $total_pt_declined_booking=DB::table('personal_training_booking')
-    ->join('personal_training_plan_schedules','personal_training_plan_schedules.id','personal_training_booking.personal_training_plan_shedules_id')
-    ->whereNotNull('personal_training_booking.deleted_at')->where('personal_training_booking.cancelled_by',0)
-    ->where('personal_training_plan_schedules.trainer_id',Auth::user()->id)->count();
-
-   
-}
-  
-
-  return view('trainer.home')->with(compact('total_number_of_trainer','total_number_of_customer','total_bootcamop_booking_count_month','total_bootcamop_future_booking','total_bootcamop_declined_booking','total_bootcamop_cancelled_booking','total_bootcamop_past_booking','total_pt_booking_crnt_month','total_pt_future_booking','total_pt_past_booking','total_pt_cancelled_booking','total_pt_declined_booking'));
-
+      $total_pt_declined_booking=DB::table('personal_training_booking')
+      ->join('personal_training_plan_schedules','personal_training_plan_schedules.id','personal_training_booking.personal_training_plan_shedules_id')
+      ->whereNotNull('personal_training_booking.deleted_at')->where('personal_training_booking.cancelled_by',0)
+      ->where('personal_training_plan_schedules.trainer_id',Auth::user()->id)->count();
+    }
+    return view('trainer.home')->with(compact('total_number_of_trainer','total_number_of_customer','total_bootcamop_booking_count_month','total_bootcamop_future_booking','total_bootcamop_declined_booking','total_bootcamop_cancelled_booking','total_bootcamop_past_booking','total_pt_booking_crnt_month','total_pt_future_booking','total_pt_past_booking','total_pt_cancelled_booking','total_pt_declined_booking'));
   }
   catch(\Exception $e) {
-      return abort(200);
+    return abort(200);
   }
 }
 
@@ -246,7 +243,6 @@ public function showupdateform()
 // update profile of trainer
 public function updateprofile(Request $request)
 {
-  DB::beginTransaction();
   try{
 
   if($request->image!="")
@@ -266,14 +262,11 @@ public function updateprofile(Request $request)
     $data['updated_at']=Carbon::now();
 
     $data=DB::table('users')->where('id',$request->id)->update($mydata);
-
-    DB::commit();
     return redirect()->back()->with("success","Your profile has been updated successfully.");
 
   }
   catch(\Exception $e) {
-    DB::rollback();
-      return abort(200);
+    return abort(200);
   }
 }
 
@@ -439,7 +432,7 @@ public function trainer_active_deactive(Request $request)
 
 public function addtrainer()
 {
-    return view('trainer.addtrainer');
+  return view('trainer.addtrainer');
 }
 
 
@@ -575,67 +568,59 @@ public function trainerdelete($id)
 
 public function inserttrainer(Request $request)
 {
-
-  DB::beginTransaction();
   try{
-  
 
-  $validator=Validator::make($request->all(), [
+      $validator=Validator::make($request->all(), [
 
-    'email' => 'sometimes|email|max:255|unique:users',
-  ]);
+        'email' => 'sometimes|email|max:255|unique:users',
+      ]);
 
-  if($validator->fails())
-  {
-    Log::debug(" Validator ".print_r($validator->errors(),true));
-    return redirect()->back()->withErrors($validator)->withInput();
-  }
+      if($validator->fails())
+      {
+        return redirect()->back()->withErrors($validator)->withInput();
+      }
 
-  if($request->image!="")
-  {
-    $request->validate
-    ([ 'image'=>'image|mimes:jpeg,jpg,png,gif|max:2048', ]);
-    $myimage=$request->image;
-    $folder="backend/images/"; 
-    $extension=$myimage->getClientOriginalExtension(); 
-    $image_name=time()."_adminimg.".$extension; 
-    $upload=$myimage->move($folder,$image_name); 
-    $data['image']=$image_name; 
-  }
-  else
-    { $data['image']=$request->oldimage;  }
-    $data['name']=$request->name;
-    $data['contact_no']=$request->contact_no;
-    $data['address']=$request->address;
-    $data['email']=$request->email;
-    $data['master_trainer']=2;
-    $password_code = str_random(6);
-    $data['password']= bcrypt($password_code);
-    $data['created_at']=Carbon::now();
-    $data['is_active']=1;
+      if($request->image!="")
+      {
+        $request->validate
+        ([ 'image'=>'image|mimes:jpeg,jpg,png,gif|max:2048', ]);
+        $myimage=$request->image;
+        $folder="backend/images/"; 
+        $extension=$myimage->getClientOriginalExtension(); 
+        $image_name=time()."_adminimg.".$extension; 
+        $upload=$myimage->move($folder,$image_name); 
+        $data['image']=$image_name; 
+      }
+      else
+      { $data['image']=$request->oldimage;  }
+      $data['name']=$request->name;
+      $data['contact_no']=$request->contact_no;
+      $data['address']=$request->address;
+      $data['email']=$request->email;
+      $data['master_trainer']=2;
+      $password_code = str_random(6);
+      $data['password']= bcrypt($password_code);
+      $data['created_at']=Carbon::now();
+      $data['is_active']=1;
 
-    $data['title']=(isset($request->title) && !empty($request->title)) ? $request->title : NULL ;
-    $data['designation']=(isset($request->designation) && !empty($request->designation)) ? $request->designation : NULL ;
-    $data['description']=(isset($request->description) && !empty($request->description)) ? $request->description : NULL ;
-    $data['facebook']=(isset($request->facebook) && !empty($request->facebook)) ? $request->facebook : NULL ;
-    $data['twitter']=(isset($request->twitter) && !empty($request->twitter)) ? $request->twitter : NULL ;
-    $data['instagram']=(isset($request->instagram) && !empty($request->instagram)) ? $request->instagram : NULL ;
-    $data['show_in_about_us']=(isset($request->show_in_about_us) && !empty($request->show_in_about_us)) ? 1 : 0 ;
+      $data['title']=(isset($request->title) && !empty($request->title)) ? $request->title : NULL ;
+      $data['designation']=(isset($request->designation) && !empty($request->designation)) ? $request->designation : NULL ;
+      $data['description']=(isset($request->description) && !empty($request->description)) ? $request->description : NULL ;
+      $data['facebook']=(isset($request->facebook) && !empty($request->facebook)) ? $request->facebook : NULL ;
+      $data['twitter']=(isset($request->twitter) && !empty($request->twitter)) ? $request->twitter : NULL ;
+      $data['instagram']=(isset($request->instagram) && !empty($request->instagram)) ? $request->instagram : NULL ;
+      $data['show_in_about_us']=(isset($request->show_in_about_us) && !empty($request->show_in_about_us)) ? 1 : 0 ;
 
-  DB::table('users')->insert($data);
+      DB::table('users')->insert($data);
 
-  Mail::send('emails.enquirymail',['password' =>$password_code,'email' =>$data['email'],'name'=>$data['name']], function($message) {
-    $message->to(Input::get('email'))->subject('Successfully add as a trainer');
-    });
-
-  DB::commit();
-  return redirect('trainer/trainerlist')->with("success","You have successfully added one trainer");
-  }
-
-  catch(\Exception $e) {
-      DB::rollback();
-      return abort(200);
-  }
+      Mail::send('emails.enquirymail',['password' =>$password_code,'email' =>$data['email'],'name'=>$data['name']], function($message) {
+      $message->to(Input::get('email'))->subject('Successfully add as a trainer');
+      });
+      return redirect('trainer/trainerlist')->with("success","You have successfully added one trainer");
+    }
+    catch(\Exception $e) {
+        return abort(200);
+    }
 }
 
 
@@ -645,11 +630,11 @@ public function showtrainerseditform($id)
 
   try{
   
-  $data= DB::table('users')->where('id',$id)->first();
-  //Log::debug(" data ".print_r($data,true));
-  return view ("trainer.edittrainer")->with(compact('data'));
-}
-catch(\Exception $e) {
+    $data= DB::table('users')->where('id',$id)->first();
+    //Log::debug(" data ".print_r($data,true));
+    return view ("trainer.edittrainer")->with(compact('data'));
+  }
+  catch(\Exception $e) {
       return abort(200);
   }
 }
@@ -660,15 +645,15 @@ public function traineredit(Request $request)
 
   try{
     
-  if($request->image!="")
-  {
-    $myimage=$request->image;
-    $folder="backend/images/"; 
-    $extension=$myimage->getClientOriginalExtension(); 
-    $image_name=time()."_adminimg.".$extension; 
-    $upload=$myimage->move($folder,$image_name); 
-    $data['image']=$image_name; 
-  }else {   $data['image']=$request->oldimage; }
+    if($request->image!="")
+    {
+      $myimage=$request->image;
+      $folder="backend/images/"; 
+      $extension=$myimage->getClientOriginalExtension(); 
+      $image_name=time()."_adminimg.".$extension; 
+      $upload=$myimage->move($folder,$image_name); 
+      $data['image']=$image_name; 
+    }else {   $data['image']=$request->oldimage; }
 
     $data['name']=$request->name;
     $data['contact_no']=$request->contact_no;
@@ -686,489 +671,27 @@ public function traineredit(Request $request)
 
 
     return redirect('trainer/trainerlist')->with("success","You have successfully updated one trainer");
-    }
-    catch(\Exception $e) {
-
-      return abort(200);
-  }
-}
-
-
-//past customer list//
-public function pastshowlist(Request $request)
-{
-  try{
-  
-  $id=$request->id;
-  $cur_date =Carbon::now()->toDateString();
-  $cur_time =date("H:i:s");
-  if(Auth::user()->master_trainer==1)
-  {
- $data=DB::table('slot_request')
-  ->join('customers','customers.id','slot_request.customer_id')
-  ->join('users','users.id','slot_request.trainer_id')
-  ->join('slot_approval','slot_approval.id','slot_request.approval_id')
-  ->join('slot_times','slot_times.id','slot_request.slot_time_id')
-  ->select('slot_request.id','customers.name','customers.ph_no','customers.image','slot_approval.status','slot_request.created_at','slot_request.approval_id','slot_request.slot_date','slot_times.time as slot_time','users.name as trainer_name')
-  ->where('slot_request.slot_date','<',$cur_date)
-  ->where('approval_id','<>',2)->orderBy('slot_request.slot_date', 'ASC')
-  ->get();
-  }
-  else{
-    $data=DB::table('slot_request')
-  ->join('customers','customers.id','slot_request.customer_id')
-  ->join('users','users.id','slot_request.trainer_id')
-  ->join('slot_approval','slot_approval.id','slot_request.approval_id')
-  ->join('slot_times','slot_times.id','slot_request.slot_time_id')
-  ->select('slot_request.id','customers.name','customers.ph_no','customers.image','slot_approval.status','slot_request.created_at','slot_request.approval_id','slot_request.slot_date','slot_times.time as slot_time','users.name as trainer_name')
-  ->where('slot_request.slot_date','<',$cur_date)
-  ->where('approval_id','<>',2)
-  ->where('slot_request.trainer_id',$id)->orderBy('slot_request.slot_date', 'ASC')->get();
-  }
-  
-  return view('trainer.past_request_customers')->with(compact('data'));
-
   }
   catch(\Exception $e) {
-     
-      return abort(200);
+   return abort(200);
   }
 }
-
-
-//past customer list//
-public function cancelledshowlist()
-{
-  try{
-  
-  if(Auth::user()->master_trainer==1)
-  {
-    $data=DB::table('slot_request')
-  ->join('customers','customers.id','slot_request.customer_id')
-  ->join('users','users.id','slot_request.trainer_id')
-  ->join('slot_approval','slot_approval.id','slot_request.approval_id')
-  ->join('slot_times','slot_times.id','slot_request.slot_time_id')
-  ->select('slot_request.id','customers.name','customers.ph_no','customers.image','slot_approval.status','slot_request.created_at','slot_request.approval_id','slot_request.slot_date','slot_times.time as slot_time','users.name as trainer_name')
-  ->where('approval_id',2)->orderBy('slot_request.slot_date', 'ASC')
-  ->get();
-  }
-  else{
-    $data=DB::table('slot_request')
-  ->join('customers','customers.id','slot_request.customer_id')
-  ->join('users','users.id','slot_request.trainer_id')
-  ->join('slot_approval','slot_approval.id','slot_request.approval_id')
-  ->join('slot_times','slot_times.id','slot_request.slot_time_id')
-  ->select('slot_request.id','customers.name','customers.ph_no','customers.image','slot_approval.status','slot_request.created_at','slot_request.approval_id','slot_request.slot_date','slot_times.time as slot_time','users.name as trainer_name')
-  ->where('approval_id',2)
-  ->where('slot_request.trainer_id',Auth::user()->id)->orderBy('slot_request.slot_date', 'ASC')->get();
-  }
-  
-  return view('trainer.cancelled_request_customers')->with(compact('data'));
-  }
-  catch(\Exception $e) {
-      return abort(200);
-  }
-}
-
-//future customer ajax function//
-public function approve_customer_request(Request $request)
-{
-
-  
-  $remaining_session_request_now=Carbon::now()->toDateString();
-  $data=$request->get('data');
-  $id=$data['id'];
-  $action=$data['action'];
-
-  $customer_id=DB::table('slot_request')->where('id',$id)->first();
-
-  
-
-  $slot_time=DB::table('slot_times')->where('id',$customer_id->slot_time_id)->first();
-
-
-    
-  if($action=="Approve")
-  {
-    $package_history=DB::table('purchases_history')
-    ->where('customer_id',$customer_id->customer_id)
-    ->where('purchases_history.active_package',1)
-    ->where('purchases_history.package_remaining','>',0)
-    ->where('purchases_history.package_validity_date','>=',$remaining_session_request_now)
-    ->orderBy('package_validity_date','ASC')->first();
-
-    $extra_package=DB::table('purchases_history')
-    ->select('id','purchases_date','package_validity_date','package_remaining','extra_package_remaining')
-    ->where('customer_id',$customer_id->customer_id)
-    ->where('active_package',1)
-    ->where('extra_package_remaining','>',0)
-    ->orderBy('package_validity_date', 'DESC')
-    ->first();
-
-
-    if($package_history)
-    {
-
-      $package_history_update_data['package_remaining']=$package_history->package_remaining-1;
-
-      $package_history_update=DB::table('purchases_history')->where('id',$package_history->id)->update($package_history_update_data);
-
-
-      DB::table('slot_request')->where('id',$id)->update(['approval_id' =>3,'decline_reason'=>null]);
-
-      $customer_details=Customer::find($customer_id->customer_id);
-      $trainer_details=User::find($customer_id->trainer_id);
-
-      $notifydata['url'] = '/customer/mybooking';
-      $notifydata['customer_name']=$customer_details->name;
-      $notifydata['customer_email']=$customer_details->email;
-      $notifydata['customer_phone']=$customer_details->ph_no;
-      $notifydata['status']='Approved Session Request';
-      $notifydata['session_booked_on']=$customer_id->created_at;
-      $notifydata['session_booking_date']=$customer_id->slot_date;
-      $notifydata['session_booking_time']=$slot_time->time;
-      $notifydata['trainer_name']=$trainer_details->name;
-      $notifydata['decline_reason']=' ';
-
-      Log::debug("Approved Session Request notification ".print_r($notifydata,true));
-
-      $customer_details->notify(new SessionRequestNotification($notifydata));  
-    }
-    else
-    {
-      $package_history_update_data['extra_package_remaining']=$extra_package->extra_package_remaining-1;
-
-      $package_history_update=DB::table('purchases_history')->where('id',$extra_package->id)->update($package_history_update_data);
-
-
-      DB::table('slot_request')->where('id',$id)->update(['approval_id' =>3,'decline_reason'=>null]);
-
-      $customer_details=Customer::find($customer_id->customer_id);
-      $trainer_details=User::find($customer_id->trainer_id);
-
-      $notifydata['url'] = '/customer/mybooking';
-      $notifydata['customer_name']=$customer_details->name;
-      $notifydata['customer_email']=$customer_details->email;
-      $notifydata['customer_phone']=$customer_details->ph_no;
-      $notifydata['status']='Approved Session Request';
-      $notifydata['session_booked_on']=$customer_id->created_at;
-      $notifydata['session_booking_date']=$customer_id->slot_date;
-      $notifydata['session_booking_time']=$slot_time->time;
-      $notifydata['trainer_name']=$trainer_details->name;
-      $notifydata['decline_reason']=' ';
-
-      Log::debug("Approved Session Request notification ".print_r($notifydata,true));
-
-      $customer_details->notify(new SessionRequestNotification($notifydata));
-     
-    }
-    return response()->json(1);
-  }
-  elseif($action=="Decline")
-  {
-    $reason=$data['comment'];
-        
-    $package_history=DB::table('purchases_history')
-    ->where('customer_id',$customer_id->customer_id)
-    ->where('purchases_history.active_package',1)
-    ->where('package_remaining','>=',0)
-    ->where('purchases_history.package_validity_date','>=',$remaining_session_request_now)
-    ->orderBy('package_validity_date','DESC')->first();
-
-    $extra_package=DB::table('purchases_history')
-    ->select('id','purchases_date','package_validity_date','package_remaining','extra_package_remaining')
-    ->where('customer_id',$customer_id->customer_id)
-    ->where('active_package',1)
-    ->where('extra_package_remaining','>=',0)
-    ->orderBy('package_validity_date', 'DESC')
-    ->first();
-
-    if($package_history)
-    {
-
-      $package_history_update_data['package_remaining']=$package_history->package_remaining+1;
-
-      $package_history_update=DB::table('purchases_history')->where('id',$package_history->id)->update($package_history_update_data);
-        
-      Log::debug(" package_history_update ".print_r($package_history_update,true));
-
-
-      DB::table('slot_request')->where('id',$id)->update(['approval_id' => 4, 'decline_reason'=> $reason]);
-
-      $customer_details=Customer::find($customer_id->customer_id);
-      $trainer_details=User::find($customer_id->trainer_id);
-
-      $notifydata['url'] = '/customer/mybooking';
-      $notifydata['customer_name']=$customer_details->name;
-      $notifydata['customer_email']=$customer_details->email;
-      $notifydata['customer_phone']=$customer_details->ph_no;
-      $notifydata['status']='Declined Session Request';
-      $notifydata['session_booked_on']=$customer_id->created_at;
-      $notifydata['session_booking_date']=$customer_id->slot_date;
-      $notifydata['session_booking_time']=$slot_time->time;
-      $notifydata['trainer_name']=$trainer_details->name;
-      $notifydata['decline_reason']=$reason;
-
-      Log::debug("Declined Session Request notification ".print_r($notifydata,true));
-
-      $customer_details->notify(new SessionRequestNotification($notifydata));
-    }
-    else
-    {
-      $package_history_update_data['extra_package_remaining']=$extra_package->extra_package_remaining+1;
-
-      $package_history_update=DB::table('purchases_history')->where('id',$extra_package->id)->update($package_history_update_data);
-        
-      Log::debug(" package_history_update ".print_r($package_history_update,true));
-
-      DB::table('slot_request')->where('id',$id)->update(['approval_id' => 4, 'decline_reason'=> $reason]);
-
-      $customer_details=Customer::find($customer_id->customer_id);
-      $trainer_details=User::find($customer_id->trainer_id);
-
-      $notifydata['url'] = '/customer/mybooking';
-      $notifydata['customer_name']=$customer_details->name;
-      $notifydata['customer_email']=$customer_details->email;
-      $notifydata['customer_phone']=$customer_details->ph_no;
-      $notifydata['status']='Declined Session Request';
-      $notifydata['session_booked_on']=$customer_id->created_at;
-      $notifydata['session_booking_date']=$customer_id->slot_date;
-      $notifydata['session_booking_time']=$slot_time->time;
-      $notifydata['trainer_name']=$trainer_details->name;
-      $notifydata['decline_reason']=$reason;
-
-      Log::debug("Declined Session Request notification ".print_r($notifydata,true));
-
-      $customer_details->notify(new SessionRequestNotification($notifydata));
-    }
-    return response()->json(2);
-  }
-}
-
-//future customer list//
-public function futureshowlist(Request $request)
-{
-  try{
-  
-  $id=$request->id;
-  $cur_date =Carbon::now()->toDateString();
-
-// Log::debug("id ".print_r($id,true));
-//   Log::debug("cur_date ".print_r($cur_date,true));
-
-  $cur_time =date("H:i:s");
-  if(Auth::user()->master_trainer==1)
-{
-  $data=DB::table('slot_request')
-  ->join('customers','customers.id','slot_request.customer_id')
-  ->join('users','users.id','slot_request.trainer_id')
-  ->join('slot_approval','slot_approval.id','slot_request.approval_id')
-  ->join('slot_times','slot_times.id','slot_request.slot_time_id')
-  ->select( 'slot_request.id','customers.name','customers.ph_no','customers.image','slot_approval.status','slot_request.created_at','slot_request.approval_id','slot_request.slot_date','slot_times.time as slot_time','users.name as trainer_name')->where('slot_request.slot_date','>=',$cur_date)
-  ->where(function($q) {
-    $q->where('approval_id', 3)
-      ->orWhere('approval_id', 4);
-  })->orderBy('slot_request.slot_date', 'ASC')->get();
-  
-}
-
-else{
-    $data=DB::table('slot_request')
-  ->join('customers','customers.id','slot_request.customer_id')
-  ->join('users','users.id','slot_request.trainer_id')
-  ->join('slot_approval','slot_approval.id','slot_request.approval_id')
-  ->join('slot_times','slot_times.id','slot_request.slot_time_id')
-  ->select( 'slot_request.id','customers.name','customers.ph_no','customers.image','slot_approval.status','slot_request.created_at','slot_request.approval_id','slot_request.slot_date','slot_times.time as slot_time','users.name as trainer_name')->where('slot_request.slot_date','>=',$cur_date)
-  ->where(function($q) {
-    $q->where('approval_id', 3)
-      ->orWhere('approval_id', 4);
-  })->where('slot_request.trainer_id',$id)->orderBy('slot_request.slot_date', 'ASC')->get();
-}
-  
-  
-  return view('trainer.future_request_customers')->with(compact('data'));
-
-}
-  catch(\Exception $e) {
-     
-      return abort(200);
-  }
-}
-
-
-//future customer pending list//
-
-public function future_pending_showlist(Request $request)
-{
-  try{
-  
-  $id=$request->id;
-  $cur_date =Carbon::now()->toDateString();
-  $cur_time =date("H:i:s");
-
-  if(Auth::user()->master_trainer==1){
- $data=DB::table('slot_request')
-  ->join('customers','customers.id','slot_request.customer_id')
-  ->join('users','users.id','slot_request.trainer_id')
-  ->join('slot_approval','slot_approval.id','slot_request.approval_id')
-  ->join('slot_times','slot_times.id','slot_request.slot_time_id')
-  ->select( 'slot_request.id','customers.name','customers.ph_no','customers.image','slot_approval.status','slot_request.created_at','slot_request.approval_id','slot_request.slot_date','slot_times.time as slot_time','users.name as trainer_name')->where('slot_request.slot_date','>=',$cur_date)->where('slot_request.approval_id',1)->orderBy('slot_request.slot_date', 'ASC')->get();
-
-        }
-
-   else{
-  $data=DB::table('slot_request')
-  ->join('customers','customers.id','slot_request.customer_id')
-  ->join('users','users.id','slot_request.trainer_id')
-  ->join('slot_approval','slot_approval.id','slot_request.approval_id')
-  ->join('slot_times','slot_times.id','slot_request.slot_time_id')
-  ->select( 'slot_request.id','customers.name','customers.ph_no','customers.image','slot_approval.status','slot_request.created_at','slot_request.approval_id','slot_request.slot_date','slot_times.time as slot_time','users.name as trainer_name')->where('slot_request.slot_date','>=',$cur_date)->where('slot_request.approval_id',1)->where('slot_request.trainer_id',$id)->orderBy('slot_request.slot_date', 'ASC')->get();
-
-     }       
-  
-  return view('trainer.future_pending_request_customers')->with(compact('data'));
-}
-catch(\Exception $e) {
-      return abort(200);
-  }
-}
-
-//future  pending customer request ajax function//
-public function approve_pending_request(Request $request)
-{
-  
-  $data=$request->get('data');
-  $id=$data['id'];
-  $action=$data['action'];   
-
-  if($action=="Approve")
-  {
-        
-    DB::table('slot_request')->where('id',$id)->update(['approval_id' =>3,'decline_reason'=>null]);
-
-    $get_customer_id=DB::table('slot_request')->where('id',$id)->first();
-
-    $slot_time=DB::table('slot_times')->where('id',$get_customer_id->slot_time_id)->first();
-
-    $customer_details=Customer::find($get_customer_id->customer_id);
-    $trainer_details=User::find($get_customer_id->trainer_id);
-
-    $notifydata['url'] = '/customer/mybooking';
-    $notifydata['customer_name']=$customer_details->name;
-    $notifydata['customer_email']=$customer_details->email;
-    $notifydata['customer_phone']=$customer_details->ph_no;
-    $notifydata['status']='Approved Session Request';
-    $notifydata['session_booked_on']=$get_customer_id->created_at;
-    $notifydata['session_booking_date']=$get_customer_id->slot_date;
-    $notifydata['session_booking_time']=$slot_time->time;
-    $notifydata['trainer_name']=$trainer_details->name;
-    $notifydata['decline_reason']=' ';
-
-    Log::debug("Approved Session Request notification ".print_r($notifydata,true));
-
-    $customer_details->notify(new SessionRequestNotification($notifydata));
-
-    return response()->json(1);
-  }
-  elseif($action=="Decline")
-  {
-
-    $reason=$data['comment'];
-    $remaining_session_request_now=Carbon::now()->toDateString();
-
-    $customer_id=DB::table('slot_request')->where('id',$id)->first();
-    $slot_time=DB::table('slot_times')->where('id',$customer_id->slot_time_id)->first();
-
-    $package_history=DB::table('purchases_history')
-    ->where('customer_id',$customer_id->customer_id)
-    ->where('purchases_history.active_package',1)
-    ->where('package_remaining','>=',0)
-    ->where('purchases_history.package_validity_date','>=',$remaining_session_request_now)
-    ->orderBy('package_validity_date','DESC')->first();
-
-    $extra_package=DB::table('purchases_history')
-    ->select('id','purchases_date','package_validity_date','package_remaining','extra_package_remaining')
-    ->where('customer_id',$customer_id->customer_id)
-    ->where('active_package',1)
-    ->where('extra_package_remaining','>=',0)
-    ->orderBy('package_validity_date', 'DESC')
-    ->first();
-
-    if($package_history)
-    {
-      $package_history_update_data['package_remaining']=$package_history->package_remaining+1;
-
-      $package_history_update=DB::table('purchases_history')->where('id',$package_history->id)->update($package_history_update_data);
-
-      Log::debug(" package_history_update ".print_r($package_history_update,true));
-      DB::table('slot_request')->where('id',$id)->update(['approval_id' => 4, 'decline_reason'=> $reason]);
-
-      $customer_details=Customer::find($customer_id->customer_id);
-      $trainer_details=User::find($customer_id->trainer_id);
-
-      $notifydata['url'] = '/customer/mybooking';
-      $notifydata['customer_name']=$customer_details->name;
-      $notifydata['customer_email']=$customer_details->email;
-      $notifydata['customer_phone']=$customer_details->ph_no;
-      $notifydata['status']='Declined Session Request';
-      $notifydata['session_booked_on']=$customer_id->created_at;
-      $notifydata['session_booking_date']=$customer_id->slot_date;
-      $notifydata['session_booking_time']=$slot_time->time;
-      $notifydata['trainer_name']=$trainer_details->name;
-      $notifydata['decline_reason']=$reason;
-
-      Log::debug("Declined Session Request notification ".print_r($notifydata,true));
-
-      $customer_details->notify(new SessionRequestNotification($notifydata));
-    }
-    else
-    {
-      $package_history_update_data['extra_package_remaining']=$extra_package->extra_package_remaining+1;
-
-      $package_history_update=DB::table('purchases_history')->where('id',$extra_package->id)->update($package_history_update_data);
-
-      Log::debug(" package_history_update ".print_r($package_history_update,true));
-      DB::table('slot_request')->where('id',$id)->update(['approval_id' => 4, 'decline_reason'=> $reason]);
-
-      $customer_details=Customer::find($customer_id->customer_id);
-      $trainer_details=User::find($customer_id->trainer_id);
-
-      $notifydata['url'] = '/customer/mybooking';
-      $notifydata['customer_name']=$customer_details->name;
-      $notifydata['customer_email']=$customer_details->email;
-      $notifydata['customer_phone']=$customer_details->ph_no;
-      $notifydata['status']='Declined Session Request';
-      $notifydata['session_booked_on']=$customer_id->created_at;
-      $notifydata['session_booking_date']=$customer_id->slot_date;
-      $notifydata['session_booking_time']=$slot_time->time;
-      $notifydata['trainer_name']=$trainer_details->name;
-      $notifydata['decline_reason']=$reason;
-
-      Log::debug("Declined Session Request notification ".print_r($notifydata,true));
-
-      $customer_details->notify(new SessionRequestNotification($notifydata));
-    }
-    return response()->json(2);
-  }
-}
-
 
 //all customers table//
 public function all_customers()
 {
   try{
   
-  $data=DB::table('customers')->whereNull('deleted_at')->where('confirmed',1)->get();
-  return view('trainer.customers_all')->with(compact('data'));
-}
-catch(\Exception $e) {
+    $data=DB::table('customers')->whereNull('deleted_at')->where('confirmed',1)->get();
+    return view('trainer.customers_all')->with(compact('data'));
+  }
+  catch(\Exception $e) {
       return abort(200);
   }
 }
 //gym insert form//
 public function add_exercise_trainer()
 {
-  
   return view('trainer.exercise_insert_details');
 }
 
@@ -1176,36 +699,34 @@ public function add_exercise_trainer()
 public function exercise_user_insert(Request $request)
 {
 
-  DB::beginTransaction();
   try{
   
-  // Log::debug(" data ".print_r($request->all(),true)); /// create log for showing error and print resul
-  if($request->image!="")
-  {
-    $request->validate
-    (
-        [ 'image'=>'image|mimes:jpeg,jpg,png,gif|max:2048']
-    );
-    $myimage=$request->image;
-    $folder="backend/images/"; 
-    $extension=$myimage->getClientOriginalExtension(); 
-    $image_name=time()."_adminimg.".$extension; 
-    $upload=$myimage->move($folder,$image_name); 
-    $data['image']=(isset($request->video) && !empty($request->video)) ? null : $image_name; 
-  }
-  $data['title']=$request->title;
-  $data['description']=$request->description;
-  $data['duration']=$request->duration;
-  $data['trainer_id']=$request->trainer_id;
-  $data['video']=(isset($request->video) && !empty($request->video)) ? $request->video : null; 
-  $data['created_at']=Carbon::now();
+    // Log::debug(" data ".print_r($request->all(),true)); /// create log for showing error and print resul
+    if($request->image!="")
+    {
+      $request->validate
+      (
+          [ 'image'=>'image|mimes:jpeg,jpg,png,gif|max:2048']
+      );
+      $myimage=$request->image;
+      $folder="backend/images/"; 
+      $extension=$myimage->getClientOriginalExtension(); 
+      $image_name=time()."_adminimg.".$extension; 
+      $upload=$myimage->move($folder,$image_name); 
+      $data['image']=(isset($request->video) && !empty($request->video)) ? null : $image_name; 
+    }
+    $data['title']=$request->title;
+    $data['description']=$request->description;
+    $data['duration']=$request->duration;
+    $data['trainer_id']=$request->trainer_id;
+    $data['video']=(isset($request->video) && !empty($request->video)) ? $request->video : null; 
+    $data['created_at']=Carbon::now();
 
-  DB::table('exercise_details')->insert($data);
-  DB::commit();
-  return redirect('trainer/gymType')->with("success","You have successfully added one exercise.");
-}
-catch(\Exception $e) {
-      DB::rollback();
+    DB::table('exercise_details')->insert($data);
+  
+    return redirect('trainer/gymType')->with("success","You have successfully added one exercise.");
+  }
+  catch(\Exception $e) {
       return abort(200);
   }
 }
@@ -1215,20 +736,18 @@ public function gym_showlist(Request $request)
 { 
   try{
   
-  $trainer_details=DB::table('users')->where('users.id',Auth::user()->id)->value('master_trainer');
-  if($trainer_details==2)
-  {
-    $data=DB::table('exercise_details')->where('exercise_details.trainer_id',Auth::user()->id)->get();
-    return view('trainer.gymlist')->with(compact('data'));
+    $trainer_details=DB::table('users')->where('users.id',Auth::user()->id)->value('master_trainer');
+    if($trainer_details==2)
+    {
+      $data=DB::table('exercise_details')->where('exercise_details.trainer_id',Auth::user()->id)->get();
+      return view('trainer.gymlist')->with(compact('data'));
+    }
+    else
+    {
+      $data=DB::table('exercise_details')->get();
+      return view('trainer.gymlist')->with(compact('data'));
+    }
   }
-  else
-  {
-    $data=DB::table('exercise_details')->get();
-    return view('trainer.gymlist')->with(compact('data'));
-  }
-
-  }
-
   catch(\Exception $e) {
       return abort(200);
   }
@@ -1237,71 +756,60 @@ public function gym_showlist(Request $request)
 //gym delete function//
 public function gymdelete($id)
 { 
-  DB::beginTransaction();
   try{
   
-  DB::table('exercise_details')->delete($id);
-  DB::commit();
-  return redirect()->back()->with("delete","You have successfully deleted one exercise.");
-}
-catch(\Exception $e) {
-      DB::rollback();
-      return abort(200);
+    DB::table('exercise_details')->delete($id);
+    return redirect()->back()->with("delete","You have successfully deleted one exercise.");
+  }
+  catch(\Exception $e) {
+    return abort(200);
   }
 }
+
 //gym edit form//
 public function show_edit_exercise_form($id)
 {
   try{
   
-  $data= DB::table('exercise_details')->where('id',$id)->first();
-  //Log::debug(" data ".print_r($data,true));
-  return view ("trainer.editexercise")->with(compact('data'));
+    $data= DB::table('exercise_details')->where('id',$id)->first();
+    //Log::debug(" data ".print_r($data,true));
+    return view ("trainer.editexercise")->with(compact('data'));
   }
   catch(\Exception $e) {
-     
-      return abort(200);
+    return abort(200);
   }
 }
 
 //gym edit function//
 public function update_exercise(Request $request)
 { 
-
-  DB::beginTransaction();
   try{
   
-  
-  if($request->image!="")
-  {
-    $myimage=$request->image;
-    $folder="backend/images/"; 
-    $extension=$myimage->getClientOriginalExtension(); 
-    $image_name=time()."_adminimg.".$extension; 
-    $upload=$myimage->move($folder,$image_name); 
-    $data['image']= (isset($request->video) && !empty($request->video)) ? null : $image_name; 
+    if($request->image!="")
+    {
+      $myimage=$request->image;
+      $folder="backend/images/"; 
+      $extension=$myimage->getClientOriginalExtension(); 
+      $image_name=time()."_adminimg.".$extension; 
+      $upload=$myimage->move($folder,$image_name); 
+      $data['image']= (isset($request->video) && !empty($request->video)) ? null : $image_name; 
+    }
+    else
+    {
+      $data['image']= (isset($request->video) && !empty($request->video)) ? null : $request->oldimage; 
+    }
+
+    $data['title']=$request->title;
+    $data['description']=$request->description;
+    $data['duration']=$request->duration;
+    $data['video']=(isset($request->video) && !empty($request->video)) ? $request->video : null;
+    $data['updated_at']=Carbon::now();
+
+    DB::table('exercise_details')->where('id',$request->id)->update($data);
+    return redirect()->route("gymType")->with("success","You have successfully updated one exercise.");
   }
-  else
-  {
-    $data['image']= (isset($request->video) && !empty($request->video)) ? null : $request->oldimage; 
-  }
-
-  $data['title']=$request->title;
-  $data['description']=$request->description;
-  $data['duration']=$request->duration;
-  $data['video']=(isset($request->video) && !empty($request->video)) ? $request->video : null;
-  $data['updated_at']=Carbon::now();
-
-  DB::table('exercise_details')->where('id',$request->id)->update($data);
-
-  DB::commit();
-  return redirect()->route("gymType")->with("success","You have successfully updated one exercise.");
-
-}
-
   catch(\Exception $e) {
-      DB::rollback();
-      return abort(200);
+    return abort(200);
   }
 
 }
@@ -1313,11 +821,11 @@ public function feedbacklist(Request $request)
 {
   try{
   
-  $data=DB::table('feedback')->orderBy('feedback.id','desc')->get();
-  return view('trainer.feedbacklist')->with(compact('data'));
-}
-catch(\Exception $e) {
-      return abort(200);
+    $data=DB::table('feedback')->orderBy('feedback.id','desc')->get();
+    return view('trainer.feedbacklist')->with(compact('data'));
+  }
+  catch(\Exception $e) {
+    return abort(200);
   }
 }
 
@@ -1326,11 +834,11 @@ public function contactlist(Request $request)
 {
   try{
   
-  $data=DB::table('contact_us')->orderBy('contact_us.id','desc')->get();
-  return view('trainer.contactlist')->with(compact('data'));
+    $data=DB::table('contact_us')->orderBy('contact_us.id','desc')->get();
+    return view('trainer.contactlist')->with(compact('data'));
   }
-catch(\Exception $e) {
-      return abort(200);
+  catch(\Exception $e) {
+    return abort(200);
   }
 }
 
@@ -1339,11 +847,11 @@ public function testimonial_view()
 {
   try{
   
-  $data=DB::table('testimonial')->where('deleted_at',null)->get();
-  return view('trainer.testimonial_view')->with(compact('data'));
+    $data=DB::table('testimonial')->where('deleted_at',null)->get();
+    return view('trainer.testimonial_view')->with(compact('data'));
   }
-catch(\Exception $e) {
-      return abort(200);
+  catch(\Exception $e) {
+    return abort(200);
   }
 }
 
@@ -1351,44 +859,42 @@ catch(\Exception $e) {
 public function testimonialshow()
 {
   try{
-  
   return view('trainer.testimonial_backend');
-}
-catch(\Exception $e) {
-      return abort(200);
+  }
+  catch(\Exception $e) {
+    return abort(200);
   }
 }
 
 public function testimonialinsert(Request $request)
 {
-  DB::beginTransaction();
+
   try{
   
-  if($request->image!="")
-  {
-    $request->validate
-    (
-      [ 'image'=>'image|mimes:jpeg,jpg,png,gif|max:2048']
-    );
-    $myimage=$request->image;
-    $folder="backend/images/"; 
-    $extension=$myimage->getClientOriginalExtension(); 
-    $image_name=time()."_adminimg.".$extension; 
-    $upload=$myimage->move($folder,$image_name); 
-    $data['image']=$image_name; 
-  }
-  else{ $data['image']=$request->oldimage;  }
+    if($request->image!="")
+    {
+      $request->validate
+      (
+        [ 'image'=>'image|mimes:jpeg,jpg,png,gif|max:2048']
+      );
+      $myimage=$request->image;
+      $folder="backend/images/"; 
+      $extension=$myimage->getClientOriginalExtension(); 
+      $image_name=time()."_adminimg.".$extension; 
+      $upload=$myimage->move($folder,$image_name); 
+      $data['image']=$image_name; 
+    }
+    else{ $data['image']=$request->oldimage;  }
 
-  $data['name']=$request->name;
-  $data['designation']=$request->designation;
-  $data['description']=$request->description;
-  DB::table('testimonial')->insert($data);
-  DB::commit();
-  return redirect('trainer/testimonial_view')->with("success","You have successfully added one testimonial.");
-}
-catch(\Exception $e) {
-      DB::rollback();
-      return abort(200);
+    $data['name']=$request->name;
+    $data['designation']=$request->designation;
+    $data['description']=$request->description;
+    DB::table('testimonial')->insert($data);
+  
+    return redirect('trainer/testimonial_view')->with("success","You have successfully added one testimonial.");
+  }
+  catch(\Exception $e) {
+    return abort(200);
   }
 }
 
@@ -1397,43 +903,40 @@ public function testimonialedit($id)
 {
   try{
   
-  $data= DB::table('testimonial')->where('id',$id)->first();
-  Log::debug(" data ".print_r($data,true));
-  return view ("trainer.edit_testimonial")->with(compact('data'));
-}
-catch(\Exception $e) {
-      return abort(200);
+    $data= DB::table('testimonial')->where('id',$id)->first();
+    return view ("trainer.edit_testimonial")->with(compact('data'));
+  }
+  catch(\Exception $e) {
+    return abort(200);
   }
 }
 
 public function testimonialupdate(Request $request)
 { 
-DB::beginTransaction();
   try{
   
-  if($request->image!="")
-  {
-    $myimage=$request->image;
-    $folder="backend/images/"; 
-    $extension=$myimage->getClientOriginalExtension(); 
-    $image_name=time()."_adminimg.".$extension; 
-    $upload=$myimage->move($folder,$image_name); 
-    $data['image']=$image_name; 
+    if($request->image!="")
+    {
+      $myimage=$request->image;
+      $folder="backend/images/"; 
+      $extension=$myimage->getClientOriginalExtension(); 
+      $image_name=time()."_adminimg.".$extension; 
+      $upload=$myimage->move($folder,$image_name); 
+      $data['image']=$image_name; 
+    }
+    else {   $data['image']=$request->oldimage; }
+
+    $data['name']=$request->name;
+    $data['designation']=$request->designation;
+    $data['description']=$request->description;
+    $data['updated_at']=Carbon::now();
+
+    DB::table('testimonial')->where('id',$request->id)->update($data);
+  
+    return redirect('trainer/testimonial_view')->with("success","You have successfully updated one testimonial.");
   }
-  else {   $data['image']=$request->oldimage; }
-
-  $data['name']=$request->name;
-  $data['designation']=$request->designation;
-  $data['description']=$request->description;
-  $data['updated_at']=Carbon::now();
-
-  DB::table('testimonial')->where('id',$request->id)->update($data);
-  DB::commit();
-  return redirect('trainer/testimonial_view')->with("success","You have successfully updated one testimonial.");
-}
   catch(\Exception $e) {
-      DB::rollback();
-      return abort(200);
+    return abort(200);
   }
 
 }
@@ -1441,18 +944,16 @@ DB::beginTransaction();
 
 public function testimonialdelete($id)
 {
-  DB::beginTransaction();
   try{
   
-  $updatedata['deleted_at']=Carbon::now();
+    $updatedata['deleted_at']=Carbon::now();
 
-  DB::table('testimonial')->where('id',$id)->update($updatedata);
-  DB::commit();
-  return redirect('trainer/testimonial_view')->with("delete","You have successfully deleted one testimonial.");
-}
+    DB::table('testimonial')->where('id',$id)->update($updatedata);
+  
+    return redirect('trainer/testimonial_view')->with("delete","You have successfully deleted one testimonial.");
+  }
   catch(\Exception $e) {
-      DB::rollback();
-      return abort(200);
+    return abort(200);
   }
 }
 
@@ -1460,28 +961,25 @@ public function mot_show(Request $request)
 {
   try{
   
-  $data=DB::table('customer_mot')
-  ->join('customers','customers.id','customer_mot.customer_id')
-  ->select('customer_mot.*','customers.name','customers.ph_no','customers.email')->where('customer_mot.deleted_at',null)->get();
-  return view('trainer.customer_mot')->with(compact('data'));
-}
-catch(\Exception $e) {
-      return abort(200);
+    $data=DB::table('customer_mot')
+    ->join('customers','customers.id','customer_mot.customer_id')
+    ->select('customer_mot.*','customers.name','customers.ph_no','customers.email')->where('customer_mot.deleted_at',null)->get();
+    return view('trainer.customer_mot')->with(compact('data'));
+  }
+  catch(\Exception $e) {
+    return abort(200);
   }
 }
 
 public function motinsertshow()
 {
-DB::beginTransaction();
   try{
   
-  $data=DB::table('customers')->get();
-  DB::commit();
-  return view('trainer.motinsertshow')->with(compact('data'));
-}
-catch(\Exception $e) {
-      DB::rollback();
-      return abort(200);
+    $data=DB::table('customers')->get();
+    return view('trainer.motinsertshow')->with(compact('data'));
+  }
+  catch(\Exception $e) {
+    return abort(200);
   }
 }
 
@@ -1491,207 +989,163 @@ public function motinsertshowauto(Request $request)
   //Log::debug(" motinsertshowauto ".print_r($request->all(),true)); 
 
   $query = $request->get('term','');
-    
-      
-       // Log::debug ( " :: query :: ".print_r ($query,true));    
-        $products=DB::table('customers')->where('name','LIKE','%'.$query.'%')->orwhere('email','LIKE','%'.$query.'%')->orwhere('ph_no','LIKE','%'.$query.'%')->get();
+     
+  $products=DB::table('customers')->where('name','LIKE','%'.$query.'%')->orwhere('email','LIKE','%'.$query.'%')->orwhere('ph_no','LIKE','%'.$query.'%')->get();
         
-        $data=array();
-        $data1=array();
-        foreach ($products as $product) {
+  $data=array();  $data1=array();
+  foreach ($products as $product) 
+  {
                
-          $data[]=array('value'=>$product->name,'id'=>$product->id, 'email'=>$product->email,'ph_no'=>$product->ph_no );
+    $data[]=array('value'=>$product->name,'id'=>$product->id, 'email'=>$product->email,'ph_no'=>$product->ph_no );
+  }
 
-               
-        }
-
-        // Log::debug ( " :: motinsertshowauto :: ".print_r ($data,true));
-        // Log::debug ( " :: products :: ".print_r ($products,true));
-
-        if(count($data))
-        {
-          return $data;
-        }
-        else
-        {
-          
-          $data1[]=array('value'=>'No Result Found');
-          return $data1;
-        }
-    
-    
+  if(count($data)) {  return $data;  }
+  else {   $data1[]=array('value'=>'No Result Found');    return $data1;  } 
 }
 
 
 
 public function motinsert(Request $request)
 {
-  DB::beginTransaction();
   try{
   
   //Log::debug(" metric ".print_r($request->right_arm_credential,true));
 
-  if($request->right_arm_credential=="metric")
-    {
-        $right_arm =$request->right_arm;
+    if($request->right_arm_credential=="metric")
+      {
+          $right_arm =$request->right_arm;
+      }
+      else
+      {
+          $right_arm =($request->right_arm/0.39370 );
+      }
+      if($request->left_arm_credential=="metric")
+      {
+          $left_arm =$request->left_arm;
+      }
+      else
+      {
+          $left_arm =($request->left_arm/0.39370 );
+      }
+      if($request->chest_credential=="metric")
+      {
+          $chest =$request->chest;
+      }
+      else
+      {
+          $chest =($request->chest/0.39370 );
+      }
+      if($request->waist_credential=="metric")
+      {
+          $waist =$request->waist;
+      }
+      else
+      {
+          $waist =($request->waist/0.39370 );
+      }
+      if($request->hips_credential=="metric")
+      {
+          $hips =$request->hips;
+      }
+      else
+      {
+          $hips =($request->hips/0.39370 );
+      }
+      if($request->right_thigh_credential=="metric")
+      {
+          $right_thigh =$request->right_thigh;
+      }
+      else
+      {
+          $right_thigh =($request->right_thigh/0.39370 );
+      }
+      if($request->left_thigh_credential=="metric")
+      {
+          $left_thigh =$request->left_thigh;
+      }
+      else
+      {
+          $left_thigh =($request->left_thigh/0.39370 );
+      }
+      if($request->height_credential=="metric")
+      {
+          $height =$request->height;
+      }
+      else
+      {
+          $height =($request->height/0.39370 );
+      }
+
+
+      if($request->right_calf_credential=="metric")
+      {
+          $right_calf =$request->right_calf;
+      }
+      else
+      {
+          $right_calf =($request->right_calf/0.39370 );
+      }
+
+
+
+      if($request->left_calf_credential=="metric")
+      {
+          $left_calf =$request->left_calf;
+      }
+      else
+      {
+          $left_calf =($request->left_calf/0.39370 );
+      }
+
+     if($request->starting_weight_credential=="metric")
+        {
+            $starting_weight =$request->starting_weight;
+        }
+        else
+        {
+            $starting_weight =($request->starting_weight/2.2046 );
+        }
+
+     if($request->ending_weight_credential=="metric")
+        {
+            $ending_weight =$request->ending_weight;
+        }
+        else
+        {
+            $ending_weight =($request->ending_weight/2.2046 );
+        }
+
+      $data['right_arm']=(isset($right_arm) && !empty($right_arm)) ? $right_arm : null;
+      $data['left_arm']=(isset($left_arm) && !empty($left_arm)) ? $left_arm : null;
+      $data['chest']=(isset($chest) && !empty($chest)) ? $chest : null;
+      $data['waist']=(isset($waist) && !empty($waist)) ? $waist : null;
+      $data['hips']=(isset($hips) && !empty($hips)) ? $hips : null;
+      $data['right_thigh']=(isset($right_thigh) && !empty($right_thigh)) ? $right_thigh : null;
+      $data['left_thigh']=(isset($left_thigh) && !empty($left_thigh)) ? $left_thigh : null;
+      $data['right_calf']=(isset($right_calf) && !empty($right_calf)) ? $right_calf : null;
+      $data['left_calf']=(isset($left_calf) && !empty($left_calf)) ? $left_calf : null;
+      $data['starting_weight']=(isset($starting_weight) && !empty($starting_weight)) ? $starting_weight : null;
+      $data['ending_weight']=(isset($ending_weight) && !empty($ending_weight)) ? $ending_weight : null;
+      $data['heart_beat']=(isset($request->heart_beat) && !empty($request->heart_beat)) ? $request->heart_beat : null;
+      $data['blood_pressure']=(isset($request->blood_pressure) && !empty($request->blood_pressure)) ? $request->blood_pressure : null;
+      $data['height']=(isset($height) && !empty($height)) ? $height : null;
+
+      $data['date']=(isset($request->date) && !empty($request->date)) ? $request->date : null;
+
+      $data['description']=(isset($request->description) && !empty($request->description)) ? $request->description : null;
+
+      $data['trainer_id']=(isset($request->trainer_id) && !empty($request->trainer_id)) ? $request->trainer_id : null;
+      $data['trainer_id']=(isset($request->trainer_id) && !empty($request->trainer_id)) ? $request->trainer_id : null;
+      $data['customer_id']=(isset($request->apply) && !empty($request->apply)) ? $request->apply : null;
+
+      DB::table('customer_mot')->insert($data);
+
+      return redirect('trainer/mot_show')->with("success","You have successfully added one customer's MOT.");
     }
-    else
-    {
-        $right_arm =($request->right_arm/0.39370 );
-    }
-    if($request->left_arm_credential=="metric")
-    {
-        $left_arm =$request->left_arm;
-    }
-    else
-    {
-        $left_arm =($request->left_arm/0.39370 );
-    }
-    if($request->chest_credential=="metric")
-    {
-        $chest =$request->chest;
-    }
-    else
-    {
-        $chest =($request->chest/0.39370 );
-    }
-    if($request->waist_credential=="metric")
-    {
-        $waist =$request->waist;
-    }
-    else
-    {
-        $waist =($request->waist/0.39370 );
-    }
-    if($request->hips_credential=="metric")
-    {
-        $hips =$request->hips;
-    }
-    else
-    {
-        $hips =($request->hips/0.39370 );
-    }
-    if($request->right_thigh_credential=="metric")
-    {
-        $right_thigh =$request->right_thigh;
-    }
-    else
-    {
-        $right_thigh =($request->right_thigh/0.39370 );
-    }
-    if($request->left_thigh_credential=="metric")
-    {
-        $left_thigh =$request->left_thigh;
-    }
-    else
-    {
-        $left_thigh =($request->left_thigh/0.39370 );
-    }
-    if($request->height_credential=="metric")
-    {
-        $height =$request->height;
-    }
-    else
-    {
-        $height =($request->height/0.39370 );
-    }
-
-
-    if($request->right_calf_credential=="metric")
-    {
-        $right_calf =$request->right_calf;
-    }
-    else
-    {
-        $right_calf =($request->right_calf/0.39370 );
-    }
-
-
-
-    if($request->left_calf_credential=="metric")
-    {
-        $left_calf =$request->left_calf;
-    }
-    else
-    {
-        $left_calf =($request->left_calf/0.39370 );
-    }
-
-
-
-
-
-
- if($request->starting_weight_credential=="metric")
-    {
-        $starting_weight =$request->starting_weight;
-    }
-    else
-    {
-        $starting_weight =($request->starting_weight/2.2046 );
-    }
-
-
-
-
- if($request->ending_weight_credential=="metric")
-    {
-        $ending_weight =$request->ending_weight;
-    }
-    else
-    {
-        $ending_weight =($request->ending_weight/2.2046 );
-    }
-
-
-
-
-    $data['right_arm']=(isset($right_arm) && !empty($right_arm)) ? $right_arm : null;
-    $data['left_arm']=(isset($left_arm) && !empty($left_arm)) ? $left_arm : null;
-    $data['chest']=(isset($chest) && !empty($chest)) ? $chest : null;
-    $data['waist']=(isset($waist) && !empty($waist)) ? $waist : null;
-    $data['hips']=(isset($hips) && !empty($hips)) ? $hips : null;
-    $data['right_thigh']=(isset($right_thigh) && !empty($right_thigh)) ? $right_thigh : null;
-    $data['left_thigh']=(isset($left_thigh) && !empty($left_thigh)) ? $left_thigh : null;
-
-    $data['right_calf']=(isset($right_calf) && !empty($right_calf)) ? $right_calf : null;
-    $data['left_calf']=(isset($left_calf) && !empty($left_calf)) ? $left_calf : null;
-
-
- $data['starting_weight']=(isset($starting_weight) && !empty($starting_weight)) ? $starting_weight : null;
-
-  
-    $data['ending_weight']=(isset($ending_weight) && !empty($ending_weight)) ? $ending_weight : null;
-
-
-   
-    $data['heart_beat']=(isset($request->heart_beat) && !empty($request->heart_beat)) ? $request->heart_beat : null;
-    $data['blood_pressure']=(isset($request->blood_pressure) && !empty($request->blood_pressure)) ? $request->blood_pressure : null;
-    $data['height']=(isset($height) && !empty($height)) ? $height : null;
-
-    $data['date']=(isset($request->date) && !empty($request->date)) ? $request->date : null;
-
-    $data['description']=(isset($request->description) && !empty($request->description)) ? $request->description : null;
-
-    $data['trainer_id']=(isset($request->trainer_id) && !empty($request->trainer_id)) ? $request->trainer_id : null;
-    $data['trainer_id']=(isset($request->trainer_id) && !empty($request->trainer_id)) ? $request->trainer_id : null;
-    $data['customer_id']=(isset($request->apply) && !empty($request->apply)) ? $request->apply : null;
-
-// print_r($data);die();
-    DB::table('customer_mot')->insert($data);
-    Log::debug(" customer_mot ".print_r($data,true));
-
-    DB::commit();
-    return redirect('trainer/mot_show')->with("success","You have successfully added one customer's MOT.");
-  }
-  catch(\Exception $e) {
-      DB::rollback();
+    catch(\Exception $e) {
       return abort(200);
-  }
-
+    }
 }
-
-
 
 
 public function mot_customer_request(Request $request)
@@ -1700,7 +1154,6 @@ public function mot_customer_request(Request $request)
   $data=$request->get('data');
   $id=$data['id'];
   $positions = DB::table('customer_mot')->where('customer_id',$id)->orderBy('date','DESC')->first();
-  //Log::debug(" Check id ".print_r($positions,true));
   return response()->json($positions);
 }
 
@@ -1708,15 +1161,15 @@ public function moteditshow($id)
 {
   try{
   
-  $data=DB::table('customer_mot')
-  ->join('customers','customers.id','customer_mot.customer_id')
-  ->join('users','users.id','customer_mot.trainer_id')
-  ->select('customer_mot.id as mot_id','customer_mot.height','customer_mot.customer_id as customer_id','customer_mot.trainer_id','customer_mot.right_arm','customer_mot.left_arm','customer_mot.chest','customer_mot.waist','customer_mot.hips','customer_mot.right_thigh','customer_mot.left_thigh','customer_mot.starting_weight','customer_mot.date','customer_mot.right_calf','customer_mot.left_calf','customer_mot.heart_beat','customers.name as current_customer_name','customer_mot.blood_pressure','customer_mot.ending_weight','customer_mot.description')->where('customer_mot.id',$id)->first();
+    $data=DB::table('customer_mot')
+    ->join('customers','customers.id','customer_mot.customer_id')
+    ->join('users','users.id','customer_mot.trainer_id')
+    ->select('customer_mot.id as mot_id','customer_mot.height','customer_mot.customer_id as customer_id','customer_mot.trainer_id','customer_mot.right_arm','customer_mot.left_arm','customer_mot.chest','customer_mot.waist','customer_mot.hips','customer_mot.right_thigh','customer_mot.left_thigh','customer_mot.starting_weight','customer_mot.date','customer_mot.right_calf','customer_mot.left_calf','customer_mot.heart_beat','customers.name as current_customer_name','customer_mot.blood_pressure','customer_mot.ending_weight','customer_mot.description')->where('customer_mot.id',$id)->first();
 
-  return view('trainer.moteditshow')->with(compact('data'));
+    return view('trainer.moteditshow')->with(compact('data'));
   }
   catch(\Exception $e) {
-      return abort(200);
+    return abort(200);
   }
 }
 
@@ -1724,7 +1177,6 @@ public function moteditshow($id)
 
 public function motedit(Request $request){
 
-  DB::beginTransaction();
   try{
 
   
@@ -1803,7 +1255,7 @@ public function motedit(Request $request){
         $right_calf =($request->right_calf/0.39370 );
     }
 
-if($request->left_calf_credential=="metric")
+    if($request->left_calf_credential=="metric")
     {
         $left_calf =$request->left_calf;
     }
@@ -1812,10 +1264,6 @@ if($request->left_calf_credential=="metric")
         $left_calf =($request->left_calf/0.39370 );
     }
 
-
-
-
- 
     if($request->starting_weight_credential=="metric")
     {
         $starting_weight=$request->starting_weight;
@@ -1824,8 +1272,6 @@ if($request->left_calf_credential=="metric")
     {
         $starting_weight =($request->starting_weight/2.2046 );
     }
-
-
 
     if($request->ending_weight_credential=="metric")
     {
@@ -1836,10 +1282,6 @@ if($request->left_calf_credential=="metric")
         $ending_weight =($request->ending_weight/2.2046 );
     }
 
-
-
-
-
     $data['right_arm']=(isset($right_arm) && !empty($right_arm)) ? $right_arm : null;
     $data['left_arm']=(isset($left_arm) && !empty($left_arm)) ? $left_arm : null;
     $data['chest']=(isset($chest) && !empty($chest)) ? $chest : null;
@@ -1848,9 +1290,7 @@ if($request->left_calf_credential=="metric")
     $data['right_thigh']=(isset($right_thigh) && !empty($right_thigh)) ? $right_thigh : null;
     $data['left_thigh']=(isset($left_thigh) && !empty($left_thigh)) ? $left_thigh : null;
     $data['right_calf']=(isset($right_calf) && !empty($right_calf)) ? $right_calf : null;
-
     $data['left_calf']=(isset($left_calf) && !empty($left_calf)) ? $left_calf : null;
-
 
     $data['starting_weight']=(isset($starting_weight) && !empty($starting_weight)) ? $starting_weight : null;
     $data['ending_weight']=(isset($ending_weight) && !empty($ending_weight)) ? $ending_weight : null;
@@ -1861,12 +1301,10 @@ if($request->left_calf_credential=="metric")
 
     $data['date']=(isset($request->date) && !empty($request->date)) ? $request->date : null;
     DB::table('customer_mot')->where('id',$request->id)->update($data);
-    Log::debug(" Check id ".print_r($data,true));
-    DB::commit();
+    
     return redirect('trainer/mot_show')->with("success","You have successfully updated one customer's MOT.");
   }
   catch(\Exception $e) {
-      DB::rollback();
       return abort(200);
   }
 
@@ -1875,97 +1313,63 @@ if($request->left_calf_credential=="metric")
 
 public function motdelete($id)
 {
-  DB::beginTransaction();
   try{
   
-  $updatedata['deleted_at']=Carbon::now();
-  DB::table('customer_mot')->where('id',$id)->update($updatedata);
-  DB::commit();
-  return redirect('trainer/mot_show')->with("delete","You have successfully deleted one customer's MOT.");
-}
-catch(\Exception $e) {
-      DB::rollback();
-      return abort(200);
+    $updatedata['deleted_at']=Carbon::now();
+    DB::table('customer_mot')->where('id',$id)->update($updatedata);
+    return redirect('trainer/mot_show')->with("delete","You have successfully deleted one customer's MOT.");
+  }
+  catch(\Exception $e) {
+    return abort(200);
   }
 }
 
 
-
-
-
-
-
-
-  function cheeck_exercise_category(Request $request)
-  {
+public function cheeck_exercise_category(Request $request)
+{
     
-    $category=$request->title;
-    $category=preg_replace('/\s+/', ' ', $category);
-    
-    $exercise_details=DB::table('exercise_details')->where('title',$category)->count();
-
-    if($exercise_details>0)
-    {
-      return 1;
-    }
-    else
-    {
-      return 0;
-    }
-  }
-
-
-function cheeckexercisecategory_edit(Request $request)
-  {
-    
-    $category=$request->title;
-    $category=preg_replace('/\s+/', ' ', $category);
-    
-    $edit_category=DB::table('exercise_details')->where('id',$request->id)->pluck('title');
-    $all_category=DB::table('exercise_details')->where('id','!=',$request->id)->get()->all();
-
-    $duplicate_cat=0;
-    foreach($all_category as $each_category)
-    {
-      if($each_category->title==$category)
-      {
-        $duplicate_cat=1;
-      }
-    }
-
+  $category=$request->title;
+  $category=preg_replace('/\s+/', ' ', $category);
   
-    if($duplicate_cat==1)
-    {
-      return 1;
-    }
-    else
-    {
-      return 0;
-    }
-  }
-function cheecktestimonialname(Request $request)
+  $exercise_details=DB::table('exercise_details')->where('title',$category)->count();
+
+  if($exercise_details>0) {  return 1;  }
+  else  {   return 0;  }
+}
+
+
+public function cheeckexercisecategory_edit(Request $request)
+{
+    
+  $category=$request->title;
+  $category=preg_replace('/\s+/', ' ', $category);
+  
+  $edit_category=DB::table('exercise_details')->where('id',$request->id)->pluck('title');
+  $all_category=DB::table('exercise_details')->where('id','!=',$request->id)->get()->all();
+
+  $duplicate_cat=0;
+  foreach($all_category as $each_category)
   {
-    
-
-    $name=$request->name;
-    $name=preg_replace('/\s+/', ' ', $name);
-    
-    $testimonial_details=DB::table('testimonial')->where('name',$name)->count();
-
-    if($testimonial_details>0)
-    {
-      return 1;
-    }
-    else
-    {
-      return 0;
-    }
+    if($each_category->title==$category)  {   $duplicate_cat=1;   }
   }
 
-  function cheecktestimonialname_edit(Request $request)
-  {
-    
+  if($duplicate_cat==1) {   return 1;  }
+  else  {    return 0;   }
+}
 
+public function cheecktestimonialname(Request $request)
+{
+  $name=$request->name;
+  $name=preg_replace('/\s+/', ' ', $name);
+  
+  $testimonial_details=DB::table('testimonial')->where('name',$name)->count();
+
+  if($testimonial_details>0) {  return 1;  }
+  else  {    return 0;  }
+}
+
+public function cheecktestimonialname_edit(Request $request)
+{
     $name=$request->name;
     $name=preg_replace('/\s+/', ' ', $name);
     
@@ -1975,287 +1379,13 @@ function cheecktestimonialname(Request $request)
     $duplicate_name=0;
     foreach($all_name as $each_name)
     {
-      if($each_name->name==$name)
-      {
-        $duplicate_name=1;
-      }
+      if($each_name->name==$name)   {    $duplicate_name=1;   }
     }
-
   
-    if($duplicate_name==1)
-    {
-      return 1;
-    }
-    else
-    {
-      return 0;
-    } 
-
-  }
-
-
-
-  public function booking_slot_times(Request $request)
-{
-  
-  $trainer_id=$request->trainer_id;
-  $slot_date=$request->slot_date;
-
-  $get_slot_times=DB::table('slot_request')
-  ->where('trainer_id',$trainer_id)
-  ->where('slot_date',$slot_date)
-  ->where(function($q) {
-         $q->where('approval_id', 1)
-           ->orWhere('approval_id', 3);
-     })
-  ->pluck('slot_time_id');
-
-
-  if(count($get_slot_times))
-{
-foreach($get_slot_times as $key=>$hour) {
-
+    if($duplicate_name==1)  {  return 1;  }
+    else {   return 0;   } 
 }
 
-  $length=$key+1;
-  $upto=$length*4;
-
-  for($i=$length;$i<$upto;$i++)
-{
-  $get_slot_times[$i]=$get_slot_times[$i-$length]+1;
-
-}
-
-foreach($get_slot_times as $key=>$hour) {
-
-}
-
-  $length=$key+1;
-  $upto=$length*4;
-
-  for($i=$length;$i<$upto;$i++)
-{
-  $get_slot_times[$i]=$get_slot_times[$i-$length]-1;
-
-}
-
-
-}
-
-$final_slot_time=DB::table('slot_times')->whereNotIn('id',$get_slot_times)
-  ->get()->all();
-
-
-  foreach($final_slot_time as $myslot_time)
-  {
-    $myslot_time->time=date('h:i A', strtotime($myslot_time->time));
-  }
-  
-  return json_encode($final_slot_time);
-}
-
-public function admin_get_current_slot_time(Request $request)
-{
-  
-  $trainer_id=$request->trainer_id;
-  $slot_date=$request->slot_date;
-  
-  $get_slot_times=DB::table('slot_request')
-  ->where('trainer_id',$trainer_id)
-  ->where('slot_date',$slot_date)
-  ->where(function($q) {
-         $q->where('approval_id', 1)
-           ->orWhere('approval_id', 3);
-     })
-  ->pluck('slot_time_id')->all();
-
-$get_slot_times2=DB::table('slot_times')
-  ->wherein('id',$request->time_id)
-  ->pluck('id')->all();
-
-  $get_slot_times=array_merge($get_slot_times,$get_slot_times2);
-
-
-  if(count($get_slot_times))
-{
-foreach($get_slot_times as $key=>$hour) {
-
-}
-
-  $length=$key+1;
-  $upto=$length*4;
-
-  for($i=$length;$i<$upto;$i++)
-{
-  $get_slot_times[$i]=$get_slot_times[$i-$length]+1;
-
-}
-
-foreach($get_slot_times as $key=>$hour) {
-
-}
-
-$length=$key+1;
-$upto=$length*4;
-
-  for($i=$length;$i<$upto;$i++)
-{
-  $get_slot_times[$i]=$get_slot_times[$i-$length]-1;
-
-}
-
-}
-
-$final_slot_time=DB::table('slot_times')->whereNotIn('id',$get_slot_times)
-  ->get()->all();
-
-
-  foreach($final_slot_time as $myslot_time)
-  {
-    $myslot_time->time=date('h:i A', strtotime($myslot_time->time));
-  }
-  
-  return json_encode($final_slot_time);
-}
-
-
-public function admin_get_slot_trainer(Request $request)
-{
-
-  $slot_time=$request->slot_time;
-  $slot_date=$request->slot_date;
-
-  $get_slot_trainer=DB::table('slot_request')
-  ->where('slot_time_id',$slot_time)
-  ->where('slot_date',$slot_date)
-  ->where(function($q) {
-         $q->where('approval_id', 1)
-           ->orWhere('approval_id', 3);
-     })
-  ->pluck('trainer_id');
-
-  $old_slot_time_id=DB::table('slot_request')
-  ->where('slot_date',$slot_date)
-  ->where(function($q) {
-         $q->where('approval_id', 1)
-           ->orWhere('approval_id', 3);
-     })
-  ->pluck('slot_time_id')->toArray();
-
-  $cart_slot_time_id=DB::table('cart_slot_request')
-  ->where('slot_date',$slot_date)
-  ->where(function($q) {
-         $q->where('approval_id', 1)
-           ->orWhere('approval_id', 3);
-     })
-  ->pluck('slot_time_id')->toArray();
-
-  if($cart_slot_time_id)
-  {
-    $old_slot_time_id=array_merge($old_slot_time_id,$cart_slot_time_id);
-  }
-
-  $old_trainer_id=DB::table('slot_request')
-  ->where('slot_date',$slot_date)
-  ->where(function($q) {
-         $q->where('approval_id', 1)
-           ->orWhere('approval_id', 3);
-     })
-  ->pluck('trainer_id')->toArray();
-
-  $cart_trainer_id=DB::table('cart_slot_request')
-  ->where('slot_date',$slot_date)
-  ->where(function($q) {
-         $q->where('approval_id', 1)
-           ->orWhere('approval_id', 3);
-     })
-  ->pluck('trainer_id')->toArray();
-
-  if($cart_trainer_id)
-  {
-    $old_trainer_id=array_merge($old_trainer_id,$cart_trainer_id);
-  }
-
-  $length=count($old_slot_time_id);
-  $upto=$length*4;
-
-  for($i=$length;$i<$upto;$i++)
-  {
-    $old_slot_time_id[$i]=$old_slot_time_id[$i-$length]+1;
-  }
-
-  $choose_slot_times=array();
-  $choose_slot_times[0]=$slot_time;
-  $slot_date=array();
-  $slot_date[0]=$slot_date;
-
-  $length=1;
-  $upto=$length*4;
-
-  for($i=$length;$i<$upto;$i++)
-  {
-    $choose_slot_times[$i]=$choose_slot_times[$i-$length]+1;
-  }
-
-
-  if(array_intersect($old_slot_time_id, $choose_slot_times))
-  {
-    
-    $final_slot_trainer=DB::table('users')->whereNull('deleted_at')->where('is_active', 1)->whereNotIn('id',$old_trainer_id)->get();
-  }
- else
-  {
-    //Log::debug(" not equal");
-    $final_slot_trainer=DB::table('users')->whereNull('deleted_at')->where('is_active', 1)->whereNotIn('id',$get_slot_trainer)->get();
-  }
-
-  
-  return json_encode($final_slot_trainer);
-}
-
-
-
-
-public function slot_insert_to_cart_trainer(Request $request)
-{
-
-  $cart_data['trainer_id']=$request->trainer_id;
-  $cart_data['slot_date']=$request->slot_date;
-  $cart_data['slot_time_id']=$request->slots_time_id;
-  $cart_data['approval_id']=3;
-  $cart_data['request_trainer_id']=Auth::user()->id;
-
-  $insert_cart=DB::table('cart_slot_request')->insert($cart_data);
-
-  $id = DB::getPdo()->lastInsertId();
-
-   return json_encode($id);
-
-}
-
-public function cart_data_delete_trainer(Request $request)
-{
-  //Log::debug("cart data delete");
-
-  $total_slots=$request->total_slots;
-  for($i=0;$i<$total_slots;$i++)
-  {
-
-     $trainer_id=$request->trainer_id[$i];
-    $slots_date=$request->slots_date[$i];
-    $slots_time_id=$request->slots_time_id[$i];
-
-    $delete_from_cart=DB::table('cart_slot_request')
-    ->where('trainer_id',$trainer_id)
-    ->where('slot_date',$slots_date)
-    ->where('slot_time_id',$slots_time_id)
-    ->delete();
-
-    return json_encode($delete_from_cart);
-
-  }
-
-}
 
   public function add_bc_session($id)
   {
@@ -2271,38 +1401,6 @@ public function cart_data_delete_trainer(Request $request)
   }
   }
 
-
-  public function add_session($id)
-  {
-    
-    //Log::debug(" insert_bootcamp_plan data ".print_r($plan_id,true));
-
-  // $remaining_session_request_now=Carbon::now()->toDateString();  
-  // $customers=DB::table('customers')->whereNull('deleted_at')->where('confirmed',1)->get();
-  // $data=DB::table('users')->whereNull('deleted_at')->where('is_active',1)->get();
-  // $all_times=DB::table('slot_times')->get()->all();
-
-  // $sum_slots = DB::table('purchases_history')
-  // ->select('active_package','package_remaining','customer_id')  
-  // ->where('active_package',1 )
-  // ->where('package_remaining','>',0)
-  // ->where('package_validity_date','>=',$remaining_session_request_now)
-  // ->sum('package_remaining');
-
-  // $sum_extra_slots = DB::table('purchases_history')
-  // ->select('active_package','package_remaining','extra_package_remaining','customer_id')
-  // ->where('active_package',1)
-  // ->where('extra_package_remaining','>',0)
-  // ->sum('extra_package_remaining');
-
-  // $trainer_data=DB::table('users')->whereNull('deleted_at')->where('is_active',1)->get();
- 
-  // $total_remaining_session=$sum_slots+$sum_extra_slots;
-  //   return view('trainer.add_session')->with(compact('data','total_remaining_session','customers','trainer_data','all_times'));
-  }
-
-  
-
 public function search_customer_bc(Request $request)
 {
   $query = $request->get('term','');   
@@ -2313,24 +1411,12 @@ public function search_customer_bc(Request $request)
         $data=array();
          $data1=array();
 
-        foreach ($customers_details as $all_details) {
+    foreach ($customers_details as $all_details) {
                
- $data[]=array('value'=>$all_details->name,'id'=>$all_details->id, 'email'=>$all_details->email,'ph_no'=>$all_details->ph_no );
-               
-        }
-        if(count($data))
-        {
-          
-            return $data;
-                     
-            }
-        else{
-
-           $data1[]=array('value'=>'No Result Found');
-          return $data1;
-          }
-    
-    
+      $data[]=array('value'=>$all_details->name,'id'=>$all_details->id, 'email'=>$all_details->email,'ph_no'=>$all_details->ph_no );
+    }
+    if(count($data)) {  return $data;  }
+    else{ $data1[]=array('value'=>'No Result Found');   return $data1;   }
 }
 
   public function check_customer_bc_session(Request $request)
@@ -2392,7 +1478,7 @@ public function search_customer_bc(Request $request)
 
   public function add_bc_by_mastertrainer(Request $request)
   {
-    Log::debug(" insert_bootcamp_plan data ".print_r($request->all(),true));
+    //Log::debug(" insert_bootcamp_plan data ".print_r($request->all(),true));
 
     DB::beginTransaction();
     try
@@ -2494,370 +1580,6 @@ public function search_customer_bc(Request $request)
   }
   }
 
-
-public function trainer_slotinsert(Request $request)
-{
-  
-
-  $req_type=$request->req_type;
-  $total_slots=$request->total_slots;
-  $customer_id=$request->customer_id; //customer_id
-  $remaining_session_request_now=Carbon::now()->toDateString(); // current date
-
-  for($i=0;$i<$total_slots;$i++)
-  {
-    $all_package=DB::table('purchases_history')
-    ->select('id','purchases_date','package_validity_date','package_remaining')
-    ->where('customer_id',$customer_id)
-    ->where('active_package',1)
-    ->where('package_remaining','>',0)
-    ->where('package_validity_date','>=',$remaining_session_request_now)
-    ->orderBy('package_validity_date', 'ASC')
-    ->first();
-
-    $extra_package=DB::table('purchases_history')
-    ->select('id','purchases_date','package_validity_date','package_remaining','extra_package_remaining')
-    ->where('customer_id',$customer_id)
-    ->where('extra_package_remaining','>',0)
-    ->where('active_package',1)
-    ->first();
-
-    $trainer_id=$request->trainer_id[$i];
-    $slots_date=$request->slots_date[$i];
-    $slots_time_id=$request->slots_time_id[$i];
-
-    $slot_time=DB::table('slot_times')->where('id',$slots_time_id)->first();
-
-    if($extra_package)
-    {
-
-      $oldest_package_id=$extra_package->id;
-      $package_remaining=$extra_package->extra_package_remaining;
-
-      $slots_data['customer_id']=$customer_id;
-      $slots_data['trainer_id']=$trainer_id;
-      $slots_data['purchases_id']=$oldest_package_id;
-      $slots_data['slot_date']=$slots_date;
-      $slots_data['slot_time_id']=$slots_time_id;
-      $slots_data['approval_id']=3;
-
-      $new_remaining_package['extra_package_remaining']=$package_remaining-1;
-      
-      $insert_slot_session=DB::table('slot_request')->insert($slots_data);
-
-      $update_package_purchase=DB::table('purchases_history')
-      ->where('id',$oldest_package_id)
-      ->update($new_remaining_package);
-      
-
-      $customer_details=Customer::find($customer_id);
-      $trainer_details=User::find($trainer_id);
-
-      $notifydata['url'] = '/trainer-login';
-      if($notifydata['url'] == '/trainer-login')
-      {
-      $notifydata['url'] = '/trainer-login';
-      $notifydata['customer_name']=$customer_details->name;
-      $notifydata['customer_email']=$customer_details->email;
-      $notifydata['customer_phone']=$customer_details->ph_no;
-      $notifydata['status']='Sent Session Request To Trainer';
-      $notifydata['session_booking_date']=$slots_date;
-      $notifydata['session_booking_time']=$slot_time->time;
-      $notifydata['trainer_name']=$trainer_details->name;
-
-      $trainer_details->notify(new SessionRequestNotificationToTrainer($notifydata));
-
-
-    }
-
-    $notifydata['url'] = '/customer/mybooking';
-
-    if($notifydata['url'] = '/customer/mybooking')
-    {
-
-    $notifydata['url'] = '/customer/mybooking';
-    $notifydata['customer_name']=$customer_details->name;
-    $notifydata['customer_email']=$customer_details->email;
-    $notifydata['customer_phone']=$customer_details->ph_no;
-    $notifydata['status']='Sent Session Request by trainer';
-    $notifydata['session_booked_on']=' ';
-    $notifydata['session_booking_date']=$slots_date;
-    $notifydata['session_booking_time']=$slot_time->time;
-    $notifydata['trainer_name']=$trainer_details->name;
-    $notifydata['decline_reason']=' ';
-
-
-    $customer_details->notify(new SessionRequestNotification($notifydata));
-  }
-    }
-    elseif($all_package)
-    {
-   
-      $oldest_package_id=$all_package->id;
-      $package_remaining=$all_package->package_remaining;
-
-      $slots_data['customer_id']=$customer_id;
-      $slots_data['trainer_id']=$trainer_id;
-      $slots_data['purchases_id']=$oldest_package_id;
-      $slots_data['slot_date']=$slots_date;
-      $slots_data['slot_time_id']=$slots_time_id;
-      $slots_data['approval_id']=3;
-
-      Log::debug(" Check session request data1 ".print_r($slots_data,true));
-
-      $insert_slot_session=DB::table('slot_request')->insert($slots_data);
-
-      $new_remaining_package['package_remaining']=$package_remaining-1;
-
-
-      $update_package_purchase=DB::table('purchases_history')
-      ->where('id',$oldest_package_id)
-      ->update($new_remaining_package);
-
-
-      $customer_details=Customer::find($customer_id);
-      $trainer_details=User::find($trainer_id);
-
-      $notifydata['url'] = '/trainer-login';
-      if($notifydata['url'] == '/trainer-login')
-      {
-      $notifydata['customer_name']=$customer_details->name;
-      $notifydata['customer_email']=$customer_details->email;
-      $notifydata['customer_phone']=$customer_details->ph_no;
-      $notifydata['status']='Sent Session Request To Trainer';
-      $notifydata['session_booking_date']=$slots_date;
-      $notifydata['session_booking_time']=$slot_time->time;
-      $notifydata['trainer_name']=$trainer_details->name;
-
-
-      $trainer_details->notify(new SessionRequestNotificationToTrainer($notifydata));
-
-    }
-
-    $notifydata['url'] = '/customer/mybooking';
-
-    if($notifydata['url'] = '/customer/mybooking')
-    {
-
-    $notifydata['url'] = '/customer/mybooking';
-    $notifydata['customer_name']=$customer_details->name;
-    $notifydata['customer_email']=$customer_details->email;
-    $notifydata['customer_phone']=$customer_details->ph_no;
-    $notifydata['status']='Sent Session Request by trainer';
-    $notifydata['session_booked_on']=' ';
-    $notifydata['session_booking_date']=$slots_date;
-    $notifydata['session_booking_time']=$slot_time->time;
-    $notifydata['trainer_name']=$trainer_details->name;
-    $notifydata['decline_reason']=' ';
-    $notifydata['sending_trainer']=Auth::user()->name;
-
-
-    $customer_details->notify(new SessionRequestNotification($notifydata));
-  }
-    }
-    else
-    {
-      $insert_slot_session=0;
-    }
-
-    
-  }
-
-  if($insert_slot_session && $update_package_purchase) 
-  {
-
-    $sum_slots = DB::table('purchases_history')->
-    select('active_package','package_remaining','customer_id')
-    ->where('customer_id',$customer_id)
-    ->where('active_package',1)
-    ->where('package_remaining','>=',0)
-    ->where('package_validity_date','>=',$remaining_session_request_now)
-    ->sum('package_remaining');
-
-    $sum_extra_slots = DB::table('purchases_history')
-    ->select('active_package','package_remaining','extra_package_remaining','customer_id')
-    ->where('customer_id',$customer_id)
-    ->where('active_package',1)
-    ->where('extra_package_remaining','>=',0)
-    ->sum('extra_package_remaining');
-
-    $total_remaining_session=$sum_slots+$sum_extra_slots;
-
-    $trainer_name = Input::get('trainer_name');
-    $slots_date = Input::get('slots_date');
-    $slots_time = Input::get('slots_time');
-    $total_slots = Input::get('total_slots');
-
-    $a=new \stdClass;
-
-    $a->trainer_name=$trainer_name;
-    $a->slots_date=$slots_date;
-    $a->slots_time=$slots_time;
-    $a->total_slots=$total_slots;
-        
-    $successdata=array('success'=>1,'session_remaining'=>$total_remaining_session,'all_data'=>$a);
-    
-    return response()->json($successdata);
-  }
-  else
-  {
-
-    $successdata=array('success'=>0,'session_remaining'=>0);
-
-    return response()->json($successdata);
-  }  
-   
-}
-
-public function add_customer_session(Request $request)
-{
-
-  
-
-  //Log::debug(" data customer_email ".print_r($request->all(),true)); 
-  $remaining_session_request_now=Carbon::now()->toDateString();
-   $customer_email=$request->user_email;
-//Log::debug(" Check all_package  ".print_r($customer_email,true));
-    $all_package=DB::table('purchases_history')->join('customers','customers.id','purchases_history.customer_id')
-    ->select('purchases_history.id','purchases_history.purchases_date','purchases_history.package_validity_date','purchases_history.package_remaining','customers.id as customer_id','customers.name as customer_name','customers.email as customer_email')
-    ->where(function ($query) {
-    $query->where('package_remaining', '>', 0)
-          ->where('active_package',1)
-          ->where('package_validity_date','>=',$remaining_session_request_now)
-          ->orWhere('extra_package_remaining', '>', 0);
-})->where('customers.email','=', $customer_email)->get()->all();
-   
-   //Log::debug(" Check all_package  ".print_r($all_package,true));
-   if($all_package)
-    {
-      return response()->json(1);
-    }
-    else{
-      return response()->json(2);
-    }
-  
-}
-
-public function admin_get_time(Request $request)
-{
-
-  
-  $slot_date=$request->slot_date;
-
-
-  //$time_data=DB::table('slot_times')->get()->all();
-
-  $get_slot_times=DB::table('slot_request')
-  ->where('slot_date',$slot_date)
-  ->where(function($q) {
-         $q->where('approval_id', 1)
-           ->orWhere('approval_id', 3);
-     })
-  ->pluck('slot_time_id');
-
-  if(count($get_slot_times)){
-
-  foreach($get_slot_times as $key=>$hour) {
-
-}
-
-  $length=$key+1;
-  $upto=$length*4;
-
-  for($i=$length;$i<$upto;$i++)
-{
-  $get_slot_times[$i]=$get_slot_times[$i-$length]+1;
-
-}
-
-  foreach($get_slot_times as $key=>$hour) {
-
-}
-
-  $length=$key+1;
-  $upto=$length*4;
-
-  for($i=$length;$i<$upto;$i++)
-{
-  $get_slot_times[$i]=$get_slot_times[$i-$length]-1;
-
-}
-}
-
-$final_slot_time=DB::table('slot_times')->whereNotIn('id',$get_slot_times)
-  ->get()->all();
-
-
-  foreach($final_slot_time as $myslot_time)
-  {
-    $myslot_time->time=date('h:i A', strtotime($myslot_time->time));
-  }
-
-  return json_encode($final_slot_time);
-}
-
-public function admin_get_current_time(Request $request)
-{
-
-
-  $slot_date=$request->slot_date;
-
-  $get_slot_times=DB::table('slot_request')
-  ->where('slot_date',$slot_date)
-  ->where(function($q) {
-         $q->where('approval_id', 1)
-           ->orWhere('approval_id', 3);
-     })
-  ->pluck('slot_time_id')->all();
-
-  $get_slot_times2=DB::table('slot_times')
-  ->wherein('id',$request->time_id)
-  ->pluck('id')->all();
-
-  $get_slot_times=array_merge($get_slot_times,$get_slot_times2);
-
-  if(count($get_slot_times)){
-
-  foreach($get_slot_times as $key=>$hour) {
-
-}
-
-  $length=$key+1;
-  $upto=$length*4;
-
-  for($i=$length;$i<$upto;$i++)
-{
-  $get_slot_times[$i]=$get_slot_times[$i-$length]+1;
-
-}
-
-  foreach($get_slot_times as $key=>$hour) {
-
-}
-
-  $length=$key+1;
-  $upto=$length*4;
-
-  for($i=$length;$i<$upto;$i++)
-{
-  $get_slot_times[$i]=$get_slot_times[$i-$length]-1;
-
-}
-}
-
-$final_slot_time=DB::table('slot_times')->whereNotIn('id',$get_slot_times)
-  ->get()->all();
-
-
-  foreach($final_slot_time as $myslot_time)
-  {
-    $myslot_time->time=date('h:i A', strtotime($myslot_time->time));
-  }
-
-  return json_encode($final_slot_time);
-}
-
-
 public function bootcamp_plan()
 { 
   try{
@@ -2868,8 +1590,6 @@ public function bootcamp_plan()
        return abort(200);
    }
 }
-
-
 
 public function insert_bootcamp_plan(Request $request)
 {
@@ -3839,57 +2559,51 @@ foreach($all_customers as $each_customer)
 
   public function insert_common_diet_plan(Request $request)
   {
-// Log::debug(":: insert_common_diet_plan :: ".print_r($request->all(),true));
-    DB::beginTransaction();
+  
     try
     {
     
-        $data['diet_plan_name'] = $request->diet_plan_name;
-        $data['description'] = $request->description;
-        $data['video'] = $request->video;
-        if($request->common_diet_image!="")
-        {
-          $image=$request->common_diet_image;
-          $folder="backend/common_diet_plan_images/"; 
-          $extension=$image->getClientOriginalExtension(); 
-          $image_name=time()."common_diet_plan_images.".$extension; 
-          $upload=$image->move($folder,$image_name); 
-          $data['image']=$image_name; 
-        }
-        if($request->hasFile('diet_plan_pdf'))
-        {
-          $pdf=$request->diet_plan_pdf;
-          $folder="backend/common_diet_plan_images/"; 
-          $extension=$pdf->getClientOriginalExtension(); 
-          $pdf_name=time()."common_diet_plan_pdf.".$extension; 
-          $upload=$pdf->move($folder,$pdf_name); 
-          $data['diet_plan_pdf']=$pdf_name; 
-        }
-        $data['price'] = $request->price;
-        $data['author_name'] = $request->author_name;
-        // $data['author_designation'] = $request->author_designation;
-        if($request->author_image!="")
-        {
-          $auth_image=$request->author_image;
-          $folder="backend/common_diet_plan_images/"; 
-          $extension=$auth_image->getClientOriginalExtension(); 
-          $image_name=time()."common_diet_plan_auther_images.".$extension; 
-          $upload=$auth_image->move($folder,$image_name); 
-          $data['author_image']=$image_name; 
-        }
+      $data['diet_plan_name'] = $request->diet_plan_name;
+      $data['description'] = $request->description;
+      $data['video'] = $request->video;
+      if($request->common_diet_image!="")
+      {
+        $image=$request->common_diet_image;
+        $folder="backend/common_diet_plan_images/"; 
+        $extension=$image->getClientOriginalExtension(); 
+        $image_name=time()."common_diet_plan_images.".$extension; 
+        $upload=$image->move($folder,$image_name); 
+        $data['image']=$image_name; 
+      }
+      if($request->hasFile('diet_plan_pdf'))
+      {
+        $pdf=$request->diet_plan_pdf;
+        $folder="backend/common_diet_plan_images/"; 
+        $extension=$pdf->getClientOriginalExtension(); 
+        $pdf_name=time()."common_diet_plan_pdf.".$extension; 
+        $upload=$pdf->move($folder,$pdf_name); 
+        $data['diet_plan_pdf']=$pdf_name; 
+      }
+      $data['price'] = $request->price;
+      $data['author_name'] = $request->author_name;
+      // $data['author_designation'] = $request->author_designation;
+      if($request->author_image!="")
+      {
+        $auth_image=$request->author_image;
+        $folder="backend/common_diet_plan_images/"; 
+        $extension=$auth_image->getClientOriginalExtension(); 
+        $image_name=time()."common_diet_plan_auther_images.".$extension; 
+        $upload=$auth_image->move($folder,$image_name); 
+        $data['author_image']=$image_name; 
+      }
 
-
-
-        $data['inserted_by'] = Auth::user()->id;
-        DB::table('common_diet_plan')->insert($data);
-        DB::commit();
-        return redirect('trainer/common-diet-plan')->with("success","You have successfully added a diet plan.");
+      $data['inserted_by'] = Auth::user()->id;
+      DB::table('common_diet_plan')->insert($data);
         
+      return redirect('trainer/common-diet-plan')->with("success","You have successfully added a diet plan.");
     }
     catch(\Exception $e) 
     {
-      
-      DB::rollback();
       return abort(200);
     }
   }
@@ -3897,17 +2611,14 @@ foreach($all_customers as $each_customer)
   //Delete diet plan from list
   public function delete_common_diet_plan($id)
   {
-    DB::beginTransaction();
     try{
     
       $updatedata['deleted_at']=Carbon::now();
       DB::table('common_diet_plan')->where('id',$id)->update($updatedata);
-      DB::commit();
       return redirect('trainer/common-diet-plan')->with("delete","One diet plan is deleted successfully !");
     }
-      catch(\Exception $e) {
-        DB::rollback();
-        return abort(200);
+    catch(\Exception $e) {
+      return abort(200);
     }
   }
 
@@ -3915,9 +2626,8 @@ foreach($all_customers as $each_customer)
   public function edit_common_diet_plan($id)
   {
     try{
-    
-    $diet= DB::table('common_diet_plan')->find($id);
-    return view ("trainer.edit-common-diet-plan",compact('diet'));
+      $diet= DB::table('common_diet_plan')->find($id);
+      return view ("trainer.edit-common-diet-plan",compact('diet'));
     }
     catch(\Exception $e) {
         return abort(200);
@@ -3926,15 +2636,10 @@ foreach($all_customers as $each_customer)
 
   public function update_common_diet_plan(Request $request)
   { 
-
-    DB::beginTransaction();
     try
     {
-      
-
       $data['diet_plan_name']=$request->diet_plan_name;
       $data['description']=$request->description;
-
       if($request->common_diet_image!="")
         {
           $image=$request->common_diet_image;
@@ -3977,36 +2682,23 @@ foreach($all_customers as $each_customer)
       $data['updated_at'] = Carbon::now();
 
       DB::table('common_diet_plan')->where('id',$request->id)->update($data);
-
-      DB::commit();
       return redirect('trainer/common-diet-plan')->with("editsuccess","You have successfully update your diet plan");
-      
-    
     }
     catch(\Exception $e) {
-        DB::rollback();
-        return abort(200);
+      return abort(200);
     }
   }
 
   function checkDietPlan_duplicate(Request $request)
   {
-
-    Log::debug(":: request :: ".print_r($request->all(),true));
     
     $dietPlanName=$request->diet_plan_name;
     $dietPlanName=preg_replace('/\s+/', ' ', $dietPlanName);
     
     $dietPlanList=DB::table('common_diet_plan')->where('diet_plan_name',$dietPlanName)->whereNull('deleted_at')->count();
 
-    if($dietPlanList>0)
-    {
-      return 1;
-    }
-    else
-    {
-      return 0;
-    }
+    if($dietPlanList>0)  {  return 1;  }
+    else  {   return 0;   }
   }
 
   function check_editDietPlan_duplicate(Request $request)
@@ -4025,16 +2717,10 @@ foreach($all_customers as $each_customer)
       }
     }
 
-    if($duplicate_diet_plan==1)
-    {
-      return 1;
-    }
-    else
-    {
-      return 0;
-    }
-
+    if($duplicate_diet_plan==1)  { return 1;  }
+    else  {  return 0; }
   }
+
 public function searchslots(Request $request)
 {
   
@@ -4046,34 +2732,21 @@ public function searchslots(Request $request)
         $data=array();
          $data1=array();
 
-        foreach ($products as $product) {
+  foreach ($products as $product) {
                
           // $data[]=array('value'=>$product->email,'id'=>$product->id);
- $data[]=array('value'=>$product->slots_name,'id'=>$product->id, 'slots_number'=>$product->slots_number,'slots_price'=>$product->slots_price, 'slots_validity'=>$product->slots_validity );
-               
-        }
-        if(count($data))
-        {
-          
-            return $data;
-                     
-            }
-        else{
-
-           $data1[]=array('value'=>'No Result Found');
-          return $data1;
-            // return ['value'=>'No Result Found','id'=>''];
-          }
-    
-    
+    $data[]=array('value'=>$product->slots_name,'id'=>$product->id, 'slots_number'=>$product->slots_number,'slots_price'=>$product->slots_price, 'slots_validity'=>$product->slots_validity );       
+  }
+  if(count($data))  {  return $data; }
+  else{   $data1[]=array('value'=>'No Result Found');   return $data1;   } 
 }
 
 public function add_coupon()
 {
   try{
   
-  $slots = DB::table('slots')->get()->all();
-  return view('trainer.addcoupon')->with(compact('slots'));
+    $slots = DB::table('slots')->get()->all();
+    return view('trainer.addcoupon')->with(compact('slots'));
   }
   catch(\Exception $e) {
     return abort(200);
@@ -4084,30 +2757,26 @@ public function coupon_insert(Request $request)
 {
 //Log::debug(" data customer_email ".print_r($request->all(),true)); 
 
-  DB::beginTransaction();
   try{
 
-  $daterange=$request->daterange; 
-  $mode_of_date=explode(" - ",$daterange);
-  $format = 'Y-m-d';
-  $startDate=$mode_of_date[0];
-  $endDate=$mode_of_date[1];
-    
-  $cupon_data['slots_id']=$request->apply_slots; 
-  $cupon_data['coupon_code']=$request->coupon_code;
-  $cupon_data['discount_price']=$request->discount_price;
-  $cupon_data['valid_from']=$startDate;
-  $cupon_data['valid_to']= $endDate;
-  $cupon_data['is_active']=$request->is_active;
-    
-  DB::table('slots_discount_coupon')->insert($cupon_data);
-  DB::commit();
-  return redirect('trainer/our_coupon_list')->with("success","You have successfully added one coupon");
-
+    $daterange=$request->daterange; 
+    $mode_of_date=explode(" - ",$daterange);
+    $format = 'Y-m-d';
+    $startDate=$mode_of_date[0];
+    $endDate=$mode_of_date[1];
+      
+    $cupon_data['slots_id']=$request->apply_slots; 
+    $cupon_data['coupon_code']=$request->coupon_code;
+    $cupon_data['discount_price']=$request->discount_price;
+    $cupon_data['valid_from']=$startDate;
+    $cupon_data['valid_to']= $endDate;
+    $cupon_data['is_active']=$request->is_active;
+      
+    DB::table('slots_discount_coupon')->insert($cupon_data);
+  
+    return redirect('trainer/our_coupon_list')->with("success","You have successfully added one coupon");
   }
-
   catch(\Exception $e) {
-      DB::rollback();
       return abort(200);
   }
   
@@ -4122,23 +2791,17 @@ function duplicatecoupon(Request $request)
     
     $duplicatecoupon_details=DB::table('slots_discount_coupon')->where('coupon_code',$duplicatecoupon)->where('slots_id',$apply_slots)->whereNull('slots_discount_coupon.deleted_at')->count();
 
-    if($duplicatecoupon_details>0)
-    {
-      return 1;
-    }
-    else
-    {
-      return 0;
-    }
+    if($duplicatecoupon_details>0) {  return 1;  }
+    else   {    return 0;  }
   }
 
 public function our_coupon_list(Request $request)
 {
    try{
   
-  $all_cupon_data=DB::table('slots_discount_coupon')->join('slots','slots.id','slots_discount_coupon.slots_id')->select('slots_discount_coupon.id as coupon_id','slots_discount_coupon.coupon_code','slots_discount_coupon.discount_price','slots_discount_coupon.valid_from','slots_discount_coupon.valid_to','slots_discount_coupon.is_active','slots.id as slots_id','slots.slots_name as slots_name')->whereNull('slots_discount_coupon.deleted_at')->get()->all();
-  return view('trainer.viewcoupon')->with(compact('all_cupon_data'));
-}catch(\Exception $e) { 
+    $all_cupon_data=DB::table('slots_discount_coupon')->join('slots','slots.id','slots_discount_coupon.slots_id')->select('slots_discount_coupon.id as coupon_id','slots_discount_coupon.coupon_code','slots_discount_coupon.discount_price','slots_discount_coupon.valid_from','slots_discount_coupon.valid_to','slots_discount_coupon.is_active','slots.id as slots_id','slots.slots_name as slots_name')->whereNull('slots_discount_coupon.deleted_at')->get()->all();
+    return view('trainer.viewcoupon')->with(compact('all_cupon_data'));
+  }catch(\Exception $e) { 
     return abort(200);
   }
 }
@@ -4150,11 +2813,9 @@ public function our_coupon_edit_view($id)
   try{
   
     $edit_coupondata= DB::table('slots_discount_coupon')->join('slots','slots.id','slots_discount_coupon.slots_id')->select('slots_discount_coupon.id','slots_discount_coupon.coupon_code','slots_discount_coupon.discount_price','slots_discount_coupon.valid_from','slots_discount_coupon.valid_to','slots.id as slots_id','slots.slots_name as slots_name','slots_discount_coupon.is_active')->where('slots_discount_coupon.id',$id)->first();
-    Log::debug(" data ".print_r($edit_coupondata,true));
     return view ("trainer.editcoupon")->with(compact('edit_coupondata'));
   }
-catch(\Exception $e) {
-      
+  catch(\Exception $e) {
       return abort(200);
   }
 
@@ -4162,28 +2823,26 @@ catch(\Exception $e) {
 
 public function coupon_edit_insert(Request $request)
 {
+  try{
     $daterange=$request->daterange; 
     $mode_of_date=explode(" - ",$daterange);
     $format = 'Y-m-d';
     $startDate=$mode_of_date[0];
     $endDate=$mode_of_date[1];
-  DB::beginTransaction();
-  try{
   
-  $edit_coupondata['slots_id']=$request->slots_id;
-  $edit_coupondata['coupon_code']=$request->coupon_code;
-  $edit_coupondata['discount_price']=$request->discount_price;
-  $edit_coupondata['valid_from']=$startDate;
-  $edit_coupondata['valid_to']=$endDate;
-  $edit_coupondata['is_active']=$request->is_active;
-  $edit_coupondata['updated_at']=Carbon::now();
-  DB::table('slots_discount_coupon')->where('id',$request->id)->update($edit_coupondata);
-  DB::commit();
-  return redirect('trainer/our_coupon_list')->with("success","You have successfully updated one coupon");
+    $edit_coupondata['slots_id']=$request->slots_id;
+    $edit_coupondata['coupon_code']=$request->coupon_code;
+    $edit_coupondata['discount_price']=$request->discount_price;
+    $edit_coupondata['valid_from']=$startDate;
+    $edit_coupondata['valid_to']=$endDate;
+    $edit_coupondata['is_active']=$request->is_active;
+    $edit_coupondata['updated_at']=Carbon::now();
+    DB::table('slots_discount_coupon')->where('id',$request->id)->update($edit_coupondata);
+  
+    return redirect('trainer/our_coupon_list')->with("success","You have successfully updated one coupon");
   }
   catch(\Exception $e) {
-      DB::rollback();
-      return abort(200);
+    return abort(200);
   }
 }
 
@@ -4205,31 +2864,20 @@ function duplicatecoupon_edit(Request $request)
         $duplicate_cat=1;
       }
     }
-
-  
-    if($duplicate_cat==1)
-    {
-      return 1;
-    }
-    else
-    {
-      return 0;
-    }
+    if($duplicate_cat==1)  {  return 1;  }
+    else  {  return 0;  }
   }
 
 public function coupon_delete($id)
 {
-  DB::beginTransaction();
   try{
   
-  $coupon_delete['deleted_at']=Carbon::now();
+    $coupon_delete['deleted_at']=Carbon::now();
 
-  DB::table('slots_discount_coupon')->where('id',$id)->update($coupon_delete);
-  DB::commit();
-  return redirect('trainer/our_coupon_list')->with("success","You have successfully deleted one coupon");
-}
+    DB::table('slots_discount_coupon')->where('id',$id)->update($coupon_delete);
+    return redirect('trainer/our_coupon_list')->with("success","You have successfully deleted one coupon");
+  }
   catch(\Exception $e) {
-      DB::rollback();
       return abort(200);
   }
 }
@@ -4241,17 +2889,10 @@ function checkdiscount_price(Request $request)
     $apply_slots=$request->apply_slots;
     $discount_price=preg_replace('/\s+/', ' ', $discount_price);
     
-    // $checkdiscount_price=DB::table('slots_discount_coupon')->where('coupon_code',$duplicatecoupon)->where('slots_id',$apply_slots)->whereNull('slots_discount_coupon.deleted_at')->value('discount_price');
- $checkdiscount_price=DB::table('slots')->where('slots.id',$apply_slots)->whereNull('slots.deleted_at')->value('slots_price');
- Log::debug(" checkdiscount_price ".print_r($checkdiscount_price,true));
-    if($discount_price >= $checkdiscount_price  )
-    {
-      return 2;
-    }
-    else
-    {
-      return 0;
-    }
+    $checkdiscount_price=DB::table('slots')->where('slots.id',$apply_slots)->whereNull('slots.deleted_at')->value('slots_price');
+ 
+    if($discount_price >= $checkdiscount_price  )  {  return 2;   }
+    else   {     return 0;   }
   }
 
 function checkdiscount_price_edit(Request $request)
@@ -4261,18 +2902,10 @@ function checkdiscount_price_edit(Request $request)
     $apply_slots=$request->slots_id;
     $discount_price=preg_replace('/\s+/', ' ', $discount_price);
 
- $checkdiscount_price=DB::table('slots')->where('slots.id',$apply_slots)->whereNull('slots.deleted_at')->value('slots_price');
+    $checkdiscount_price=DB::table('slots')->where('slots.id',$apply_slots)->whereNull('slots.deleted_at')->value('slots_price');
 
- Log::debug(" checkdiscount_price ".print_r($checkdiscount_price,true));
- Log::debug(" discount_price ".print_r($discount_price,true));
-    if($discount_price >= $checkdiscount_price  )
-    {
-      return 2;
-    }
-    else
-    {
-      return 0;
-    }
+    if($discount_price >= $checkdiscount_price  )  {   return 2;  }
+    else   {  return 0;  }
   }
 
   public function diet_plan_purchases(Request $request)
@@ -4280,15 +2913,13 @@ function checkdiscount_price_edit(Request $request)
   
    try{
  
- $diet_plan_purchases=DB::table('common_diet_plan_purchases_history')->join('customers','customers.id','common_diet_plan_purchases_history.plan_purchase_by')->join('common_diet_plan','common_diet_plan.id','common_diet_plan_purchases_history.plan_id')->select('common_diet_plan_purchases_history.id as diet_plan_id','common_diet_plan_purchases_history.plan_name as plan_name','common_diet_plan_purchases_history.plan_price as plan_price','common_diet_plan_purchases_history.plan_purchase_by as plan_purchase_by','common_diet_plan_purchases_history.payment_reference_id as payment_reference_id','common_diet_plan_purchases_history.purchase_date as purchase_date', 'common_diet_plan_purchases_history.status as status','common_diet_plan.diet_plan_name as diet_plan_name','common_diet_plan.id as common_diet_plan_id','customers.id as customers_id','customers.name as customers_name')->get();
+      $diet_plan_purchases=DB::table('common_diet_plan_purchases_history')->join('customers','customers.id','common_diet_plan_purchases_history.plan_purchase_by')->join('common_diet_plan','common_diet_plan.id','common_diet_plan_purchases_history.plan_id')->select('common_diet_plan_purchases_history.id as diet_plan_id','common_diet_plan_purchases_history.plan_name as plan_name','common_diet_plan_purchases_history.plan_price as plan_price','common_diet_plan_purchases_history.plan_purchase_by as plan_purchase_by','common_diet_plan_purchases_history.payment_reference_id as payment_reference_id','common_diet_plan_purchases_history.purchase_date as purchase_date', 'common_diet_plan_purchases_history.status as status','common_diet_plan.diet_plan_name as diet_plan_name','common_diet_plan.id as common_diet_plan_id','customers.id as customers_id','customers.name as customers_name')->get();
 
- // Log::debug(" data diet_plan_purchases ".print_r($diet_plan_purchases,true));
-  return view('trainer.diet_plan_purchases_history')->with(compact('diet_plan_purchases'));
-}
-catch(\Exception $e) {
-
+      return view('trainer.diet_plan_purchases_history')->with(compact('diet_plan_purchases'));
+    }
+    catch(\Exception $e) {
       return abort(200);
-  }
+    }
 }
 
 public function add_product()
@@ -4299,8 +2930,7 @@ public function add_product()
     $all_slot_time=DB::table('slot_times')->get();
     return view('trainer/add_product')->with(compact('all_traning_type','all_payment_type','all_slot_time'));
   }
-catch(\Exception $e) {
-
+  catch(\Exception $e) {
       return abort(200);
   }
 }
@@ -4308,57 +2938,50 @@ catch(\Exception $e) {
 public function insert_product(Request $request)
 {
   
-  DB::beginTransaction();
-   try{
-  $products_data['training_type_id']=$request->training_type;
-  $products_data['payment_type_id']=$request->payment_type;
-if($request->submit == 'Save')
-  {
-$products_data['status']=0;
-  }
-  else{
-    $products_data['status']=1;
-  }
+  try{
+    $products_data['training_type_id']=$request->training_type;
+    $products_data['payment_type_id']=$request->payment_type;
+    if($request->submit == 'Save')
+    {
+      $products_data['status']=0;
+    }
+    else{
+      $products_data['status']=1;
+    }
   
-  if($request->payment_type == 1)
-  {
-    $products_data['total_sessions']=$request->no_session;
-     $products_data['price_session_or_month']=$request->price;
-     $products_data['total_price']=$request->final_total_price;
-     $products_data['validity_value']=$request->validity;
-     $products_data['validity_duration']=$request->validity_2;
-  }
-  else if($request->payment_type == 2)
-  {
+    if($request->payment_type == 1)
+    {
+      $products_data['total_sessions']=$request->no_session;
+       $products_data['price_session_or_month']=$request->price;
+       $products_data['total_price']=$request->final_total_price;
+       $products_data['validity_value']=$request->validity;
+       $products_data['validity_duration']=$request->validity_2;
+    }
+    else if($request->payment_type == 2)
+    {
 
-    if($request->has('session_unlimited'))
-  {
-    $products_data['total_sessions']='Unlimited';
-  }
-  elseif($request->no_session_mon!='')
-  {
-    $products_data['total_sessions']=$request->no_session_mon;
-  }
+      if($request->has('session_unlimited'))
+    {
+      $products_data['total_sessions']='Unlimited';
+    }
+    elseif($request->no_session_mon!='')
+    {
+      $products_data['total_sessions']=$request->no_session_mon;
+    }
 
-    
      $products_data['price_session_or_month']=$request->sub_price;
      $products_data['total_price']=$request->anual_total_price;
      $products_data['contract']=$request->contract;
      $products_data['notice_period_value']=$request->notice_period;
     $products_data['notice_period_duration']=$request->notice_period_2;
-  }
+    }
 
- 
-  
-
-  $insert_products=DB::table('products')->insert($products_data);
-DB::commit();
-  return redirect('trainer/all-products')->with("success","You have successfully added one package");
+    $insert_products=DB::table('products')->insert($products_data);
+    return redirect('trainer/all-products')->with("success","You have successfully added one package");
   }
-   catch(\Exception $e) {
-     DB::rollback();
-       return abort(200);
-   }
+  catch(\Exception $e) {
+      return abort(200);
+  }
 
 }
 
@@ -4366,23 +2989,19 @@ public function edit_product($id)
 {
 
   try{
-  $product_id=\Crypt::decrypt($id);
-  $all_traning_type=DB::table('training_type')->get();
-  $all_payment_type=DB::table('payment_type')->get();
-  $all_slot_time=DB::table('slot_times')->get();
+    $product_id=\Crypt::decrypt($id);
+    $all_traning_type=DB::table('training_type')->get();
+    $all_payment_type=DB::table('payment_type')->get();
+    $all_slot_time=DB::table('slot_times')->get();
 
-  $product_details=DB::table('products')
-  ->join('training_type','products.training_type_id','training_type.id')
-  ->join('payment_type','products.payment_type_id','payment_type.id')
-  ->select('products.id as product_id','training_type.training_name as training_name','training_type.id as training_type_id','payment_type.payment_type_name as payment_type_name','payment_type.id as payment_type_id','products.total_sessions as total_sessions','products.price_session_or_month as price_session_or_month','products.total_price as total_price','products.validity_value as validity_value','products.validity_duration as validity_duration','products.contract as contract','products.notice_period_value as notice_period_value','products.notice_period_duration as notice_period_duration')
-  ->where('products.id',$product_id)
-  ->first();
+    $product_details=DB::table('products')
+    ->join('training_type','products.training_type_id','training_type.id')
+    ->join('payment_type','products.payment_type_id','payment_type.id')
+    ->select('products.id as product_id','training_type.training_name as training_name','training_type.id as training_type_id','payment_type.payment_type_name as payment_type_name','payment_type.id as payment_type_id','products.total_sessions as total_sessions','products.price_session_or_month as price_session_or_month','products.total_price as total_price','products.validity_value as validity_value','products.validity_duration as validity_duration','products.contract as contract','products.notice_period_value as notice_period_value','products.notice_period_duration as notice_period_duration')
+    ->where('products.id',$product_id)
+    ->first();
 
-  
-  
-  //Log::debug(":: product_details :: ".print_r($product_details,true));
-
-  return view('trainer.edit_product')->with(compact('product_details','all_traning_type','all_payment_type','all_slot_time','product_day'));
+    return view('trainer.edit_product')->with(compact('product_details','all_traning_type','all_payment_type','all_slot_time','product_day'));
   }
   catch(\Exception $e) {
       return abort(200);
@@ -4391,68 +3010,60 @@ public function edit_product($id)
 
 public function update_product(Request $request)
 {
-  //Log::debug(":: product_details :: ".print_r($request->all(),true));
 
-  DB::beginTransaction();
-    try{
-  $products_data['training_type_id']=$request->training_type;
-  $products_data['payment_type_id']=$request->payment_type;
+  try{
+    $products_data['training_type_id']=$request->training_type;
+    $products_data['payment_type_id']=$request->payment_type;
 
+    if($request->payment_type == 1)
+    {
+      $products_data['total_sessions']=$request->no_session;
+       $products_data['price_session_or_month']=$request->price;
+       $products_data['total_price']=$request->final_total_price;
+       $products_data['validity_value']=$request->validity;
+       $products_data['validity_duration']=$request->validity_2;
+       if($request->save == 'Save')
+    {
+      $products_data['status']=0;
+    }
+    else{
+      $products_data['status']=1;
+    }
+    }
+    else if($request->payment_type == 2)
+    {
 
-
-if($request->payment_type == 1)
-  {
-    $products_data['total_sessions']=$request->no_session;
-     $products_data['price_session_or_month']=$request->price;
-     $products_data['total_price']=$request->final_total_price;
-     $products_data['validity_value']=$request->validity;
-     $products_data['validity_duration']=$request->validity_2;
-     if($request->save == 'Save')
-  {
-$products_data['status']=0;
-  }
-  else{
-    $products_data['status']=1;
-  }
-  }
-  else if($request->payment_type == 2)
-  {
-
-    if($request->save == 'Save')
-  {
-$products_data['status']=0;
-  }
-  else{
-    $products_data['status']=1;
-  }
-    if($request->has('session_unlimited'))
-  {
-    $products_data['total_sessions']='Unlimited';
-  }
-  elseif($request->no_session!='')
-  {
-    $products_data['total_sessions']=$request->no_session;
-  }
+      if($request->save == 'Save')
+    {
+      $products_data['status']=0;
+    }
+    else{
+      $products_data['status']=1;
+    }
+      if($request->has('session_unlimited'))
+    {
+      $products_data['total_sessions']='Unlimited';
+    }
+    elseif($request->no_session!='')
+    {
+      $products_data['total_sessions']=$request->no_session;
+    }
     
      $products_data['price_session_or_month']=$request->price;
      $products_data['total_price']=$request->final_total_price;
      $products_data['contract']=$request->contract;
      $products_data['notice_period_value']=$request->notice_period;
-    $products_data['notice_period_duration']=$request->notice_period_2;
-  }
+     $products_data['notice_period_duration']=$request->notice_period_2;
+    }
 
-  $update_products=DB::table('products')->where('id',$request->product_id)->update($products_data);
-
-  
-    DB::commit();
-  return redirect('trainer/all-products')->with("success","You have successfully updated one package");
+    $update_products=DB::table('products')->where('id',$request->product_id)->update($products_data);
+    
+    return redirect('trainer/all-products')->with("success","You have successfully updated one package");
   }
    catch(\Exception $e) {
-     DB::rollback();
-       return abort(200);
+      return abort(200);
    }
 
-  
 }
 
 public function product_delete($id)
@@ -4464,7 +3075,6 @@ public function product_delete($id)
   return redirect('trainer/all-products')->with("success","You have successfully deleted one package");
   }
   catch(\Exception $e) {
-     
       return abort(200);
    }
 
@@ -4476,20 +3086,14 @@ public function view_product(Request $request)
    try{
   
 
-  $all_products_data=DB::table('products')
-  ->join('training_type','products.training_type_id','training_type.id')
-  ->join('payment_type','products.payment_type_id','payment_type.id')
-  ->select('products.id as product_id','products.payment_type_id as payment_type_id','products.deleted_at as deleted_at','training_type.training_name as training_name','payment_type.payment_type_name as payment_type_name','products.total_sessions as total_sessions','products.price_session_or_month as price_session_or_month','products.total_price as total_price','products.validity_value as validity_value','products.validity_duration as validity_duration','products.contract as contract','products.notice_period_value as notice_period_value','products.status as status','products.notice_period_duration as notice_period_duration',(DB::raw('products.validity_value * products.validity_duration  as validity')),(DB::raw('products.notice_period_value * products.notice_period_duration  as notice_period')))
-  
-  ->orderby('products.id','DESC')->get();
+    $all_products_data=DB::table('products')
+    ->join('training_type','products.training_type_id','training_type.id')
+    ->join('payment_type','products.payment_type_id','payment_type.id')
+    ->select('products.id as product_id','products.payment_type_id as payment_type_id','products.deleted_at as deleted_at','training_type.training_name as training_name','payment_type.payment_type_name as payment_type_name','products.total_sessions as total_sessions','products.price_session_or_month as price_session_or_month','products.total_price as total_price','products.validity_value as validity_value','products.validity_duration as validity_duration','products.contract as contract','products.notice_period_value as notice_period_value','products.status as status','products.notice_period_duration as notice_period_duration',(DB::raw('products.validity_value * products.validity_duration  as validity')),(DB::raw('products.notice_period_value * products.notice_period_duration  as notice_period')))
+    ->orderby('products.id','DESC')->get();
 
-  // Log::debug(":: personal_training_product_details :: ".print_r($personal_training_product_details,true));
-  
-
-  
-
-  return view('trainer.allproducts')->with(compact('all_products_data','products_day_time','products_st_time','products_end_time'));
-}catch(\Exception $e) { 
+    return view('trainer.allproducts')->with(compact('all_products_data','products_day_time','products_st_time','products_end_time'));
+  }catch(\Exception $e) { 
     return abort(200);
   }
 }

@@ -97,10 +97,6 @@
                         <p class="text-light">Total Bootcamp Booking in Current Month</p>
 
                     </div>
-
-                        <div class="chart-wrapper px-0" style="height:70px;" height="70"/>
-                     <!--  <a href="{{url('pastRequestlist')}}/{{Auth::user()->id}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a> -->
-                        </div>
                 </div>
             </div>
             <!--/.col-->

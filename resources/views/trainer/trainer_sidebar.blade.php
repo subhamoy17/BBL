@@ -26,7 +26,7 @@
           <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('home')}}">Dashboard</a></li>
           @endif
 
-          @if(Request::segment(2) == "allCustomers" || Request::segment(2) == "mot_show" || Request::segment(2) == "motinsertshow" || Request::segment(2) == "moteditshow" || Request::segment(2) == "add_session" || Request::segment(2) == "purchased-history" || Request::segment(2) == "deactive-order" || Request::segment(2) == "active-order")
+          @if(Request::segment(2) == "allCustomers" || Request::segment(2) == "mot_show" || Request::segment(2) == "motinsertshow" || Request::segment(2) == "moteditshow" || Request::segment(2) == "purchased-history" || Request::segment(2) == "deactive-order" || Request::segment(2) == "active-order")
             <li class="menu-item-has-children dropdown show" >
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: #fff !important;"> <i class="menu-icon fa fa-dashboard"></i>Customers</a>
             <ul class="sub-menu children dropdown-menu show"> 
@@ -46,12 +46,6 @@
           @else 
           <li><i class="fa fa-id-card-o"></i><a href="{{route('mot_show')}}">MOT</a></li>
           @endif
-
-         <!--  @if(Request::segment(2) == "add_session")
-          <li><i class="fa fa-id-card-o"></i><a href="{{route('add_session')}}" style="color: #fff !important;">Add Session</a></li>
-          @else 
-          <li><i class="fa fa-id-card-o"></i><a href="{{route('add_session')}}">Add Session</a></li>
-          @endif -->
 
           @if(Request::segment(2) == "purchased-history" || Request::segment(2) == "deactive-order" || Request::segment(2) == "active-order")
           <li><i class="fa fa-id-card-o"></i><a href="{{route('order_history')}}" style="color: #fff !important;">Purchased History</a></li>
@@ -196,41 +190,6 @@
                       <li class="active">
                       <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('feedbacklist')}}">Web User Feedback</a></li>
                   @endif -->
-
-                  <!-- @if(Request::segment(1) == "pastRequestlist" || Request::segment(1) == "futureRequestlist" || Request::segment(1) == "futurePendingRequestlist" || Request::segment(1) == "canelledlist")         
-                <li class="menu-item-has-children dropdown show">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i> Slot Request</a>
-                  <ul class="sub-menu children dropdown-menu show"> 
-                    @else
-                    <li class="menu-item-has-children dropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i> Slot Request</a>
-                      <ul class="sub-menu children dropdown-menu"> 
-                        @endif
-                        @if(Request::segment(1) == "pastRequestlist")
-                        <li><i class="fa fa-id-card-o" ></i><a href="{{url('pastRequestlist')}}/{{Auth::user()->id}}" style="color: #fff !important;">Past Slot Booking Request</a></li>
-                        @else
-                        <li><i class="fa fa-id-card-o"></i><a href="{{url('pastRequestlist')}}/{{Auth::user()->id}}">Past Slot Booking Request</a></li>
-                        @endif
-                        @if(Request::segment(1) == "futureRequestlist")
-                        <li><i class="fa fa-id-card-o"></i><a href="{{url('futureRequestlist')}}/{{Auth::user()->id}}" style="color: #fff !important;">Future Slot Booking Request</a></li>
-                        @else
-                        <li><i class="fa fa-id-card-o"></i><a href="{{url('futureRequestlist')}}/{{Auth::user()->id}}">Future Slot Booking Request</a></li>
-                        @endif
-
-                      @if(Request::segment(1) == "futurePendingRequestlist")
-                        <li><i class="fa fa-id-card-o"></i><a href="{{url('futurePendingRequestlist')}}/{{Auth::user()->id}}" style="color: #fff !important;">Pending Request</a></li>
-                        @else
-                        <li><i class="fa fa-id-card-o"></i><a href="{{url('futurePendingRequestlist')}}/{{Auth::user()->id}}">Pending Request</a></li>
-                        @endif
-
-                        @if(Request::segment(1) == "canelledlist")
-                        <li><i class="fa fa-id-card-o"></i><a href="{{url('canelledlist')}}" style="color: #fff !important;">Cancelled Request</a></li>
-                        @else
-                        <li><i class="fa fa-id-card-o"></i><a href="{{url('canelledlist')}}">Cancelled Request</a></li>
-                        @endif 
-                        -->
-
-
 
                       </ul></li></ul></li></ul></li></ul>
                    @else
