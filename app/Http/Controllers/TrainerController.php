@@ -3131,15 +3131,12 @@ public function active_order_by_admin($order_id)
 
 public function active_order_success(Request $request)
 {
-  DB::beginTransaction();
     try{
   $update_order=DB::table('order_details')->where('id',$request->order_id)
   ->update(['order_validity_date'=>$request->order_validity_date]);
-  DB::commit();
   return redirect()->back()->with('success','This order is successfully activate');
   }
    catch(\Exception $e) {
-     DB::rollback();
        return abort(200);
    }
 }
@@ -3161,17 +3158,13 @@ public function deactive_order_by_admin($order_id)
 
 public function deactive_order_success(Request $request)
 {
-  Log::debug(":: deactive_order_success :: ".print_r($request->all(),true));
-  DB::beginTransaction();
     try{
   $update_order=DB::table('order_details')->where('id',$request->order_id)
   ->update(['order_validity_date'=>$request->order_validity_date]);
 
-  DB::commit();
   return redirect()->back()->with('success','This order is successfully de-activate');
   }
    catch(\Exception $e) {
-     DB::rollback();
        return abort(200);
    }
 }
@@ -3253,19 +3246,11 @@ public function checked_bootcampdate(Request $request)
    
     $bootcamp_plan_date=$request->plan_end_date;
     $bootcamp_plan_id=$request->id;
-   // Log::debug(":: bootcamp_plan_date :: ".print_r($bootcamp_plan_date,true));
-   // Log::debug(":: bootcamp_plan_id :: ".print_r($bootcamp_plan_id,true));
     
     $checked_bootcampdate=DB::table('bootcamp_plans')->join('bootcamp_plan_shedules','bootcamp_plan_shedules.bootcamp_plan_id','bootcamp_plans.id')->where('bootcamp_plan_shedules.plan_date','>',$bootcamp_plan_date)->where('bootcamp_plans.id',$bootcamp_plan_id)->where('bootcamp_plan_shedules.no_of_uses','>',0)->whereNull('bootcamp_plan_shedules.deleted_at')->count();
     //Log::debug(":: checked_bootcampdate :: ".print_r($checked_bootcampdate,true));
-    if($checked_bootcampdate > 0)
-    {
-      return 1;
-    }
-    else
-    {
-      return 0;
-    }
+    if($checked_bootcampdate > 0)  {  return 1;  }
+    else   {   return 0;  }
   }
 
   //all new personal training functions
@@ -3490,6 +3475,7 @@ public function checked_bootcampdate(Request $request)
 
   public function pt_plan_schedule(Request $request)
   {
+    try{
     $now = Carbon::now()->toDateString();
 
     $all_schedules=DB::table('personal_training_plan_schedules')
@@ -3574,6 +3560,10 @@ public function checked_bootcampdate(Request $request)
   
     return view('trainer.pt_plan_schedule_list')->with(compact('all_schedules','now'));
   }
+  catch(\Exception $e) {
+    return abort(200);
+  }
+}
 
 
   public function pt_schedule_trainer_edit($id)
@@ -3975,22 +3965,12 @@ public function search_customer_pt(Request $request)
 
         foreach ($customers_details as $all_details) {
                
- $data[]=array('value'=>$all_details->name,'id'=>$all_details->id, 'email'=>$all_details->email,'ph_no'=>$all_details->ph_no );
+  $data[]=array('value'=>$all_details->name,'id'=>$all_details->id, 'email'=>$all_details->email,'ph_no'=>$all_details->ph_no );
                
         }
         if(count($data))
-        {
-          
-            return $data;
-                     
-            }
-        else{
-
-           $data1[]=array('value'=>'No Result Found');
-          return $data1;
-          }
-    
-    
+        {  return $data;  }
+        else{ $data1[]=array('value'=>'No Result Found'); return $data1; }  
 }
 
   public function check_customer_pt_session(Request $request)
@@ -4024,8 +4004,6 @@ public function search_customer_pt(Request $request)
     {
       return json_encode(0);
     }
-    
-    //Log::debug(" insert_bootcamp_plan data ".print_r(count($total_remaining_session),true));
     
   }
 
