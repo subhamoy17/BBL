@@ -383,10 +383,9 @@ $('.weightconvert').on('change', function(){
             <label>Customer Details</label>
           </div>
           
-           <div class="row">
-              <div  id="cus_n" name="cus_n"></div><span>,</span>&nbsp;&nbsp;
+           <div class="row col-md-9">
+              <div  id="cus_n" name="cus_n" style="padding-left: 28px;"></div><span>,</span>&nbsp;&nbsp;
               <div  id="cus_e" name="cus_e"></div><span>,</span>&nbsp;&nbsp;
-              
               <div  id="cus_p" name="cus_p"></div>
                 
       </div>
