@@ -2,7 +2,7 @@
 
 @extends('trainerlayouts.trainer_template')
 @section('content')
-
+@if(Auth::user()->master_trainer==1)
 <script>
 // for shortin ,pagination,searching data using datatable concept
 $(document).ready(function() { 
@@ -10,13 +10,40 @@ $(document).ready(function() {
         lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
 
 // disable shorting from slno,image and action columns
-"columnDefs": [ { "orderable": false, "targets": [0,1,8,9] } ],
+"columnDefs": [ { "orderable": false, "targets": [0,6,7,8] } ],
 
 });
 });
 
 </script>
 
+@else
+<script>
+// for shortin ,pagination,searching data using datatable concept
+$(document).ready(function() { 
+    $('#bootstrap-slot-data-table').DataTable({
+        lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
+
+// disable shorting from slno,image and action columns
+"columnDefs": [ { "orderable": false, "targets": [0,5,6,7] } ],
+
+});
+});
+
+</script>
+
+@endif
+<script type="text/javascript">
+  $(document).ready(function()
+  { 
+  setTimeout(function(){ 
+                          $('.alert-success').hide();
+                      }, 5000);
+  setTimeout(function(){ 
+                          $('.alert-danger').hide();
+                      }, 50000);
+});
+</script>
 <style>
 
 .button-primary {
@@ -70,35 +97,57 @@ $(document).ready(function() {
 
 </style>
 
+<style>
+.ptbtn-rmv{
+    color: #fff;
+    background-color: #db2828;
+    border-color: #db2828;
+  }
+</style>
 
-@if(Auth::user()->master_trainer==1)
+<script>
+  function cancel_customer_booking(id){ 
+      alertify.confirm("Are you sure you want to cancel booking for this schedule?", function (e) {
+          if (e) {
+              // alertify.success("You've clicked OK");
+              window.location.href="{{url('trainer/personal-training-booking-cancel')}}/"+id;
+          } else {
+              // alertify.error("You've clicked Cancel");
+          }                                       
+      });
+  }
+</script>
+
 <div class="breadcrumbs">
     <div class="col-md-8">
         <div class="page-header float-left">
             
-                <h1>All Bootcamp Plan Calender Schedule</h1>
-
-        </div>
+                <h1>
+                  @if(Auth::user()->master_trainer==1)
+                    All Personal Training Plan Calender Schedule
+                  @else
+                    Your Personal Training Plan Calender Schedule
+                  @endif
+                  </h1>
+          </div>  
     </div>
     <div class="col-md-4">
         <div class="page-header float-right">
-            
-                <h1>
-
-                 <form id="feature_form_id" method="get">
+          <h1>
+                    <form id="feature_form_id" method="get">
                       <select id="feature" name="option" class="form-control">
-                        <option value="all_schedule" {{Request::segment(2)=='bootcamp-plan-schedule'?'selected':''}} >All Schedules</option>
+                        <option value="all_schedule" {{Request::segment(2)=='personal-training-plan-schedule'?'selected':''}} >All Schedules</option>
                         <option value="future_schedule" {{Request::get('option')=='future_schedule'?'selected':''}} >Future Schedules</option>
                         <option value="past_schedule" {{Request::get('option')=='past_schedule'?'selected':''}} >Past Schedules</option>
                         <option value="cancelled_schedule" {{Request::get('option')=='cancelled_schedule'?'selected':''}} >Cancelled Schedules</option> 
                         <option value="future_booking" {{Request::get('option')=='future_booking'?'selected':''}} >Future Booking</option> 
                         <option value="past_booking" {{Request::get('option')=='past_booking'?'selected':''}} >Past Booking</option>
                         <option value="cancelled_booking" {{Request::get('option')=='cancelled_booking'?'selected':''}} >Cancelled Booking</option>
-                        <option value="declined_booking" {{Request::get('option')=='declined_booking'?'selected':''}} >Declined Booking</option>          
+                        <option value="declined_booking" {{Request::get('option')=='declined_booking'?'selected':''}} >Declined Booking</option>         
                       </select>
                     </form>
             </h1>
-        </div>
+          </div>  
     </div>
 </div>
 
@@ -109,8 +158,24 @@ $(document).ready(function() {
         <div id="loading-img"></div>
         <div class="card">
           <div class="card-header" style="padding-left: 0px;padding-right: 0px;padding-bottom: 0px;padding-top: 10px;">
+            @if (session('cancelled_by_trainer_success'))
+              <div class="alert alert-success">
+                  {{ session('cancelled_by_trainer_success') }}
+              </div>
+            @endif
+            @if (session('cancelled_by_trainer_unsuccess'))
+              <div class="alert alert-danger">
+                  {{ session('cancelled_by_trainer_unsuccess') }}
+              </div>
+            @endif
+
+            @if (session('trainer_change_success'))
+              <div class="alert alert-success">
+                  {{ session('trainer_change_success') }}
+              </div>
+            @endif
+
             
-          <!-- </div>  onsubmit="return checkTheBox();" -->
           <div class="card-body">
              <form id="canncele_form" method="post">
 
@@ -121,7 +186,11 @@ $(document).ready(function() {
 
               <thead>
                   <tr>
-                   <th  colspan="9"></th>
+                    @if(Auth::user()->master_trainer==1)
+                   <th  colspan="8"></th>
+                   @else
+                   <th  colspan="7"></th>
+                   @endif
                     <th style="float: center;">
                        
   
@@ -135,12 +204,13 @@ $(document).ready(function() {
                   <th style="width: 3%;">Sl. No.</th>
                   <th>Date</th>
                   <th>Day</th>
+                  @if(Auth::user()->master_trainer==1)
+                  <th>Trainer Name</th>
+                  @endif
                   <th>Time</th>
                   <th style="width: 116px;">Address</th>
-                  <th>Maximum Allowed</th>
-                  <th>Booking Seats</th>
                   <th>Status</th>
-                   <th style="width: 114px;">Action</th> 
+                   <th style="width: 130px;">Action</th> 
                     <th style="width: 100px;">Select to Declined 
                     <input type="checkbox" id="all_schedule_cancel" class="selectall" style="margin-left: 21px">
                   </th>
@@ -154,17 +224,11 @@ $(document).ready(function() {
                       <td align="center">{{++$key}}</td>
                       <td>{{$each_schedule->plan_date}}</td>
                       <td>{{substr($each_schedule->plan_day,0,3)}}</td>
-                      <td>{{date("H:i", strtotime($each_schedule->plan_st_time))}} to {{date("H:i", strtotime($each_schedule->plan_end_time))}}</td>
+                      @if(Auth::user()->master_trainer==1)
+                      <td>{{$each_schedule->trainer_name}}</td>
+                      @endif
+                      <td>{{date("h:i A", strtotime($each_schedule->start_time))}} to {{date("h:i A", strtotime($each_schedule->end_time))}}</td>
                       <td>{{$each_schedule->address_line1}}</td>
-                      <td align="center">{{$each_schedule->max_allowed}}</td>
-                      <td align="center">
-                        @if($each_schedule->deleted_at=='' && $each_schedule->no_of_uses>0)
-                        
-                          <a href="{{route('bootcamp_booking_individual_cancelled',['plan_id' => Crypt::encrypt($each_schedule->schedule_id) ])}}" title="Veiw all booking" class="btn-del" style="color: #fff; background-color: #FF6347;   border-color: #FF6347;">{{$each_schedule->no_of_uses}}</a>
-                        @else
-                        {{$each_schedule->no_of_uses}}
-                        @endif
-                      </td>
                       <td align="center">
                         @if($each_schedule->deleted_at!='')
                         <i class="fa fa-ban btn-del" title="Cancelled Schedule"></i>
@@ -174,20 +238,27 @@ $(document).ready(function() {
                       </td>
                       
                       <td class="td-btn5" align="center">
-                       
-                         @if($now <= $each_schedule->plan_date && $each_schedule->deleted_at=='')
+
                         
-                       <a href="{{route('bootcamp_schedule_edit_view',['id' => Crypt::encrypt($each_schedule->schedule_id) ])}}" class="btn btn-primary btn-sm" title="Edit Schedule"><i class="fa fa-edit" title="Edit Schedule"></i></a>
-
-                        <a href="{{route('add_bc_session_from_schedule',['id' => Crypt::encrypt($each_schedule->schedule_id) ])}}" class="btn btn-booking-seat btn-sm"><i class="fa fa-ticket" title="Booking Schedule"></i></a>
-
-                      <button type="button" title="Delete Schedule" class="btn btn-danger status-all btn-sm"  id="{{$each_schedule->schedule_id}}" data-msg="Decline"><i class="fa fa-trash-o"></i></button>
-
-                       
-                         @else
-                          ---
+                        @if($each_schedule->customer_name!='')
+                        <button type="button" class="btn btn-danger status-all btn-sm" onclick="cancel_customer_booking({!!$each_schedule->schedule_id!!})" style="width: 32px;" title="Cancel Booking"><i class="fa fa-remove"></i></button>
                         @endif
-                      </td> 
+                       
+                         @if($now <= $each_schedule->plan_date && $each_schedule->deleted_at=='' && Auth::user()->master_trainer==1)
+                        
+                       <a href="{{route('pt_schedule_trainer_edit',['id' => Crypt::encrypt($each_schedule->schedule_id) ])}}" class="btn btn-primary btn-sm" title="Change Trainer"><i class="fa fa-edit" title="Change Trainer"></i></a>
+                        @endif
+                        @if($now <= $each_schedule->plan_date && $each_schedule->deleted_at=='' && $each_schedule->customer_name=='')
+                          <a href="{{route('add_pt_session_from_schedule',['id' => Crypt::encrypt($each_schedule->schedule_id) ])}}" class="btn btn-booking-seat btn-sm"><i class="fa fa-ticket" title="Booking Schedule"></i></a>
+                          @endif
+                        @if($each_schedule->deleted_at=='' && $each_schedule->customer_name!='')
+                          <a class="detail-orders-modal-btn1 btn btn-info btn-sm" href="javascript:void(0);">
+                          <i class="fa fa-eye" title="{{$each_schedule->customer_name}}, {{$each_schedule->customer_email}}, {{$each_schedule->customer_ph_no}}" aria-hidden="true" style="width: 14px; height: 14px;"></i></a>
+                        @endif
+                        @if($now <= $each_schedule->plan_date && $each_schedule->deleted_at=='')
+                      <button type="button" title="Delete Schedule" class="btn btn-danger status-all btn-sm single-pt-schedule"   id="{!!$each_schedule->schedule_id!!}" data-msg="Decline"><i class="fa fa-trash-o"></i></button>
+                        @endif
+                      </td>
                          <td>
                         @if($now <= $each_schedule->plan_date && $each_schedule->deleted_at=='')
                         <input type="checkbox" name="cancele_schedule[]" id="cancele_schedule" value="{{$each_schedule->schedule_id}}" class="cancele_check abc" style="margin-left: 27px">                    
@@ -240,7 +311,6 @@ $(document).ready(function() {
 </div>
 
 <!-- cancelled reason modal end-->
-@endif
 
 <script src="{{asset('backend/assets/js/lib/data-table/datatables.min.js')}}"></script>
 <script src="{{asset('backend/assets/js/lib/data-table/dataTables.bootstrap.min.js')}}"></script>
@@ -256,26 +326,6 @@ $(document).ready(function() {
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
 
-<!-- <script type="text/javascript">
-  function checkTheBox() {
-    var flag = 0;
-    for (var i = 0; i< 5; i++) {
-      if(document.myform["cancele_schedule[]"][i].checked){
-        flag ++;
-      }
-    }
-    if (flag != 1) {
-      alert ("You must check one and only one checkbox!");
-      return false;
-    }
-    return true;
-  }
-</script> -->
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#bootstrap-data-table-export').DataTable();
-    } );
-</script>
 
 <script type="text/javascript">
   $("#bootstrap-slot-data-table").on("click", ".selectall", function() {
@@ -345,10 +395,17 @@ $(document).ready(function (){
       // Submit form data via Ajax
 
       $.ajax({
-         url: '{{url("trainer/bootcamp-schedule-cancelled")}}',
+         url: '{{url("trainer/personal-training-delete-multiple-schedule")}}',
          data: $('#canncele_form').serialize(),
          success: function(data){
+          if(data=='success')
+          {
             alertify.alert("Your selecting schedule cancellation is done");
+          }
+          else
+          {
+            alertify.alert("Something went wrong!");
+          }
             location.reload();
          }
       });
@@ -359,71 +416,45 @@ $(document).ready(function (){
 
 </script>
 
-
-
-
 <script type="text/javascript">
   $(document).ready(function(){
-    $("#bootstrap-slot-data-table").on("click", ".status-all", function(e) {
-      var action = $(this).data("msg");
-      console.log(action);
-      var row = this.closest('tr');
-      if (action == "Decline"){
-        $('#reason_id').val('');
-        $('#reason_id').val(this.id);
-        $('#reason_action').val(action);
-        $('#comment').val('');
-        alertify.confirm("Are you sure you want to delete this shedule?", function (e) {
+    $("#bootstrap-slot-data-table").on("click", ".single-pt-schedule", function(e) {
+        alertify.confirm("Are you sure you want to cancel this shedule?", function (e) {
           if (e) {
-            $('#reason_modal').modal('show');
-          }
-          else
-          {
-          }
-        });
-      }
-      
-    });
-  $("#reason").on('click',function()
-    {   
-      var id=$('#reason_id').val();
-       console.log(id);
-      var comment=$('#comment').val();
-      if(comment.trim()=="")
-      {
-        alertify.alert("Reason is required for decline schedule");
-        $('#reason_modal').modal('show');
-        return false; 
-      }
-      else
-      {
-        $(".card-body").css("opacity", .2);
-        $("#loading-img").css({"display": "block"});
-        var cancelled_reason=$('#cancelled_reason').val($('#comment').val());
-      // Submit form data via Ajax
-
-     var Data =
+            var Data =
         {
           'id': id,
-          
-          'comment':comment
         }
-        console.log(Data);
-
       $.ajax({
-         url: '{{url("trainer/bootcamp-schedule-cancelled2")}}',
+         url: '{{url("trainer/personal-training-delete-single-schedule")}}',
         
           data:
           {
             'data': Data,
           },
          success: function(data){
+          if(data=='success')
+          {
             alertify.alert("Your selecting schedule cancellation is done");
-            location.reload();
+          }
+          else if(data=='unsuccess')
+          {
+            alertify.alert("Your selecting schedule cancellation is already done by another trainer");
+          }
+          else
+          {
+            alertify.alert("Something went wrong! Please try again");
+          }
+          location.reload();
          }
       });
-    }
-});
+          }
+          else
+          {
+          }
+        });
+      
+    });
   });
 
 </script>
@@ -436,5 +467,4 @@ $(document).ready(function(){
     });
 });
 </script>
-
 @endsection

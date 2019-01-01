@@ -121,7 +121,7 @@
                             </div>
                         </div>
                         <h4 class="mb-0">
-                            <span class="count">0</span>
+                            <span class="count">{{$total_pt_booking_crnt_month}}</span>
                         </h4>
                         <p class="text-light"> Total PT Booking in Current Month</p>
 
@@ -166,12 +166,7 @@
                         <h4 class="mb-0">
                             <span class="count">{{$total_bootcamop_future_booking}}</span>
                         </h4>
-                     <p class="text-light"><a href="{{url('trainer/bootcamp-plan-schedule')}}" class="small-box-footer">Future Request for Bootcamp <i class="fa fa-arrow-circle-right"></i></a></p>
-
-
-                        <div class="chart-wrapper px-0" style="height:70px;" height="70"/>
-                      <!--  -->
-                        </div>
+                     <p class="text-light"><a href="{{url('trainer/bootcamp-plan-schedule?option=future_booking')}}" class="small-box-footer">Future Request for Bootcamp <i class="fa fa-arrow-circle-right"></i></a></p>
 
                     </div>
 
@@ -197,11 +192,7 @@
                         <h4 class="mb-0">
                             <span class="count">{{$total_bootcamop_past_booking}}</span>
                         </h4>
-                        <p class="text-light"><a href="{{url('trainer/bootcamp-plan-schedule')}}" class="small-box-footer">Past Request for Bootcamp <i class="fa fa-arrow-circle-right"></i></a></p>
-
-                        <div class="chart-wrapper px-0" style="height:70px;" height="70"/>
-                          <!--   <canvas id="widgetChart2"></canvas> -->
-                        </div>
+                        <p class="text-light"><a href="{{url('/trainer/bootcamp-plan-schedule?option=past_booking')}}" class="small-box-footer">Past Request for Bootcamp <i class="fa fa-arrow-circle-right"></i></a></p>
 
                     </div>
                 </div>
@@ -226,13 +217,10 @@
                         <h4 class="mb-0">
                             <span class="count">{{$total_bootcamop_cancelled_booking}}</span>
                         </h4>
-                        <p class="text-light"><a href="{{url('trainer/bootcamp-plan-schedule')}}" class="small-box-footer">Cancelled Request for Bootcamp <i class="fa fa-arrow-circle-right"></i></a></p>
+                        <p class="text-light"><a href="{{url('/trainer/bootcamp-plan-schedule?option=cancelled_booking')}}" class="small-box-footer">Cancelled Request for Bootcamp <i class="fa fa-arrow-circle-right"></i></a></p>
 
                     </div>
 
-                        <div class="chart-wrapper px-0" style="height:70px;" height="70"/>
-                     <!--  <a href="{{url('pastRequestlist')}}/{{Auth::user()->id}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a> -->
-                        </div>
                 </div>
             </div>
             <!--/.col-->
@@ -255,7 +243,7 @@
                         <h4 class="mb-0">
                             <span class="count">{{$total_bootcamop_declined_booking}}</span>
                         </h4>
-                        <p class="text-light"><a href="{{url('trainer/bootcamp-plan-schedule')}}" class="small-box-footer">Declined Request for Bootcamp <i class="fa fa-arrow-circle-right"></i></a></p>
+                        <p class="text-light"><a href="{{url('/trainer/bootcamp-plan-schedule?option=declined_booking')}}" class="small-box-footer">Declined Request for Bootcamp <i class="fa fa-arrow-circle-right"></i></a></p>
                         <div class="chart-wrapper px-3" style="height:70px;" height="70"/>
                             <!-- <canvas id="widgetChart4"></canvas> -->
                         </div>
@@ -267,6 +255,7 @@
 
 
         </div> <!-- .content -->
+
 <div class="breadcrumbs">
             <div class="col-sm-4">
                 <div class="page-header float-left">
@@ -276,6 +265,7 @@
                 </div>
             </div>
         </div>
+@endif
         <div class="content mt-3">
            <div class="col-sm-6 col-lg-3">
                 <div class="text-white bg-flat-color-1">
@@ -293,14 +283,9 @@
                             </div>
                         </div>
                         <h4 class="mb-0">
-                            <span class="count">0</span>
+                            <span class="count">{{$total_pt_future_booking}}</span>
                         </h4>
-                     <p class="text-light"><a href="{{url('trainer/home')}}" class="small-box-footer">Future Request for PT Session <i class="fa fa-arrow-circle-right"></i></a></p>
-
-
-                        <div class="chart-wrapper px-0" style="height:70px;" height="70"/>
-                      <!--  -->
-                        </div>
+                     <p class="text-light"><a href="{{url('trainer/personal-training-plan-schedule?option=future_booking')}}" class="small-box-footer">Future Request for PT Session <i class="fa fa-arrow-circle-right"></i></a></p>
 
                     </div>
 
@@ -324,13 +309,9 @@
                             </div>
                         </div>
                         <h4 class="mb-0">
-                            <span class="count">0</span>
+                            <span class="count">{{$total_pt_past_booking}}</span>
                         </h4>
-                        <p class="text-light"><a href="{{url('trainer/home')}}" class="small-box-footer">Past Request for PT Session <i class="fa fa-arrow-circle-right"></i></a></p>
-
-                        <div class="chart-wrapper px-0" style="height:70px;" height="70"/>
-                          <!--   <canvas id="widgetChart2"></canvas> -->
-                        </div>
+                        <p class="text-light"><a href="{{url('trainer/personal-training-plan-schedule?option=past_booking')}}" class="small-box-footer">Past Request for PT Session <i class="fa fa-arrow-circle-right"></i></a></p>
 
                     </div>
                 </div>
@@ -353,15 +334,12 @@
                             </div>
                         </div>
                         <h4 class="mb-0">
-                            <span class="count">0</span>
+                            <span class="count">{{$total_pt_cancelled_booking}}</span>
                         </h4>
-                        <p class="text-light"><a href="{{url('trainer/home')}}" class="small-box-footer">Cancelled Request for PT Session <i class="fa fa-arrow-circle-right"></i></a></p>
+                        <p class="text-light"><a href="{{url('trainer/personal-training-plan-schedule?option=cancelled_booking')}}" class="small-box-footer">Cancelled Request for PT Session <i class="fa fa-arrow-circle-right"></i></a></p>
 
                     </div>
 
-                        <div class="chart-wrapper px-0" style="height:70px;" height="70"/>
-                     <!--  <a href="{{url('pastRequestlist')}}/{{Auth::user()->id}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a> -->
-                        </div>
                 </div>
             </div>
             <!--/.col-->
@@ -382,9 +360,9 @@
                             </div>
                         </div>
                         <h4 class="mb-0">
-                            <span class="count">0</span>
+                            <span class="count">{{$total_pt_declined_booking}}</span>
                         </h4>
-                        <p class="text-light"><a href="{{url('trainer/home')}}" class="small-box-footer">Declined Request for PT Session <i class="fa fa-arrow-circle-right"></i></a></p>
+                        <p class="text-light"><a href="{{url('trainer/personal-training-plan-schedule?option=declined_booking')}}" class="small-box-footer">Declined Request for PT Session <i class="fa fa-arrow-circle-right"></i></a></p>
                         <div class="chart-wrapper px-3" style="height:70px;" height="70"/>
                             <!-- <canvas id="widgetChart4"></canvas> -->
                         </div>
@@ -401,6 +379,5 @@
     </div><!-- /#right-panel -->
 
     <!-- Right Panel -->
-    @endif
 
 @endsection

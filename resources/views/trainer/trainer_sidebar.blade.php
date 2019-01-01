@@ -104,6 +104,29 @@
             @endif
           </ul></li>
 
+          @if(Request::segment(2) == "personal-training-plan" || Request::segment(2) == "add-personal-training-plan" || Request::segment(2) =='personal-training-plan-schedule' || Request::segment(2) =='personal-training-plan-schedule-edit' || Request::segment(2) =='add-pt-session-from-schedule')
+          <li class="menu-item-has-children dropdown show">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-dashboard"></i>Personal Training</a>
+            <ul class="sub-menu children dropdown-menu show"> 
+              @else
+              <li class="menu-item-has-children dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"> <i class="menu-icon fa fa-dashboard"></i>Personal Training</a>
+                <ul class="sub-menu children dropdown-menu">
+                  @endif 
+
+                  @if(Request::segment(2) == "personal-training-plan" || Request::segment(2) == "add-personal-training-plan")
+                  <li><i class="fa fa-id-card-o"></i><a href="{{route('personal_training_plan_list')}}" style="color: #fff !important;">Plans</a></li>
+                  @else
+                  <li><i class="fa fa-id-card-o"></i><a href="{{route('personal_training_plan_list')}}">Plans</a></li>
+                  @endif
+
+                  @if(Request::segment(2) =='personal-training-plan-schedule' || Request::segment(2) =='personal-training-plan-schedule-edit' || Request::segment(2) =='add-pt-session-from-schedule')
+                  <li><i class="fa fa-id-card-o"></i><a href="{{route('pt_plan_schedule')}}" style="color: #fff !important;">Calender</a></li>
+                  @else
+                  <li><i class="fa fa-id-card-o"></i><a href="{{route('pt_plan_schedule')}}">Calender</a></li>
+                  @endif
+
+                  </ul></li>
           @if(Request::segment(2) == "common-diet-plan" || Request::segment(2) == "diet-plan-purchases-history" || Request::segment(2) == "add-common-diet-plan" || Request::segment(2) == "edit-common-diet-plan" )
 
             <li class="menu-item-has-children dropdown show" >
@@ -212,61 +235,38 @@
                       </ul></li></ul></li></ul></li></ul>
                    @else
 
+          @if(Request::segment(2) == "home")
+           <li class="active">   
+          <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('home')}}" style="color: #fff !important;">Dashboard</a></li>
+          @else
+          <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('home')}}">Dashboard</a></li>
+          @endif
 
+          @if(Request::segment(2) == "personal-training-plan" || Request::segment(2) == "add-personal-training-plan" || Request::segment(2) =='personal-training-plan-schedule' || Request::segment(2) =='add-pt-session-from-schedule')
+          <li class="menu-item-has-children dropdown show">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-dashboard"></i>Personal Training</a>
+            <ul class="sub-menu children dropdown-menu show"> 
+              @else
+              <li class="menu-item-has-children dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"> <i class="menu-icon fa fa-dashboard"></i>Personal Training</a>
+                <ul class="sub-menu children dropdown-menu">
+                  @endif 
 
-
-                        <!-- @if(Request::segment(2) == "gymType")
-                       <ul class="nav navbar-nav">
-                 <li class="active">
-                  <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('gymType')}}" style="color: #fff !important;">Exercise List</a></li>
+                  @if(Request::segment(2) == "personal-training-plan" || Request::segment(2) == "add-personal-training-plan")
+                  <li><i class="fa fa-id-card-o"></i><a href="{{route('personal_training_plan_list')}}" style="color: #fff !important;">Plans</a></li>
                   @else
-                  <ul class="nav navbar-nav">
-                  <li class="active">
-                  <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('gymType')}}">Exercise List</a></li>
+                  <li><i class="fa fa-id-card-o"></i><a href="{{route('personal_training_plan_list')}}">Plans</a></li>
                   @endif
- -->
-                      @if(Request::segment(2) == "add_session")
-                 <ul class="nav navbar-nav">
-                 <li class="active">
-                  <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('add_session')}}" style="color: #fff !important;">Add Session</a></li>
+
+                  @if(Request::segment(2) =='personal-training-plan-schedule' || Request::segment(2) =='add-pt-session-from-schedule')
+                  <li><i class="fa fa-id-card-o"></i><a href="{{route('pt_plan_schedule')}}" style="color: #fff !important;">Calender</a></li>
                   @else
-                  <ul class="nav navbar-nav">
-                  <li class="active">
-                  <li><i class="menu-icon fa fa-dashboard"></i><a href="{{route('add_session')}}">Add Session</a></li>
+                  <li><i class="fa fa-id-card-o"></i><a href="{{route('pt_plan_schedule')}}">Calender</a></li>
                   @endif
 
-                      <!-- @if(Request::segment(1) == "pastRequestlist" || Request::segment(1) == "futureRequestlist" || Request::segment(1) == "futurePendingRequestlist" || Request::segment(1) == "canelledlist")                   
-                      <li class="menu-item-has-children dropdown show">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i> Slot Request</a>
-                        <ul class="sub-menu children dropdown-menu show"> 
-                          @else
-                          <li class="menu-item-has-children dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i> Slot Request</a>
-                            <ul class="sub-menu children dropdown-menu">
-                              @endif
-                              @if(Request::segment(1) == "pastRequestlist")
-                              
-                              <li><i class="fa fa-id-card-o"></i><a href="{{url('pastRequestlist')}}/{{Auth::user()->id}}" style="color: #fff !important;">Past Slot Booking Request</a></li>
-                              @else
-                              <li><i class="fa fa-id-card-o"></i><a href="{{url('pastRequestlist')}}/{{Auth::user()->id}}">Past Slot Booking Request</a></li>
-                              @endif
-                              @if(Request::segment(1) == "futureRequestlist")
-                              <li><i class="fa fa-id-card-o"></i><a href= "{{url('futureRequestlist')}}/{{Auth::user()->id}}"style="color: #fff !important;">Future Slot Booking Request</a></li>
-                              @else
-                              <li><i class="fa fa-id-card-o"></i><a href= "{{url('futureRequestlist')}}/{{Auth::user()->id}}">Future Slot Booking Request</a></li>
-                              @endif
-                              @if(Request::segment(1) == "futurePendingRequestlist")
-                              <li><i class="fa fa-id-card-o"></i><a href= "{{url('futurePendingRequestlist')}}/{{Auth::user()->id}}"style="color: #fff !important;">Pending Request</a></li>
-                              @else
-                              <li><i class="fa fa-id-card-o"></i><a href= "{{url('futurePendingRequestlist')}}/{{Auth::user()->id}}">Pending Request</a></li>
-                              @endif
-
-                               @if(Request::segment(1) == "canelledlist")
-                        <li><i class="fa fa-id-card-o"></i><a href="{{url('canelledlist')}}" style="color: #fff !important;">Cancelled Request</a></li>
-                        @else
-                        <li><i class="fa fa-id-card-o"></i><a href="{{url('canelledlist')}}">Cancelled Request</a></li>
-                        @endif -->
-                            </ul></li></ul></li>
+                  </ul></li>
+                      </ul></li></ul></li></ul></li></ul>
+                            
                             @endif
                           </div><!-- /.navbar-collapse -->
                         </nav>

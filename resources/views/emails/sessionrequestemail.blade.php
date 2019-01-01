@@ -118,29 +118,29 @@
       <table border="0" cellpadding="0" cellspacing="0" width="100%">
         <tr>
           <td width="50%" style="margin-top: 40px;">
-            <p style="color: #fff; margin-top: 40px;font-family: 'Open Sans', sans-serif;"><i class="fa fa-copyright" aria-hidden="true"></i> Bodybylekan.com <?php echo date("Y"); ?></p>
+            <p style="color: #fff; margin-top: 40px;font-family: 'Open Sans', sans-serif;">&copy;<a href='https://www.bodybylekan.com/' target="_blank" style='color: white;'>bodybylekan.com</a> <?php echo date("Y"); ?></p>
           </td>
           <td align="right">
             <table border="0" cellpadding="0" cellspacing="0" style="margin-top: 22px;">
               <tr>
                 <td>
                   <a href="https://www.youtube.com/channel/UCvFStHTPHjHY-_7BXA17Fug" style="margin-left:15px; font-size: 20px; color: #fff;">
-                    <i class="fab fa-youtube"></i>
+                    <img src="{{url('frontend/images/youtube-icon.png')}}" style="width: 40px; margin-top: 20px;">
                   </a>
                 </td>
                 <td>
                   <a href="https://www.instagram.com/lekanfitness/" style="margin-left:15px; font-size: 20px; color: #fff;">
-                    <i class="fab fa-instagram"></i>
+                    <img src="{{url('frontend/images/insta-icon.png')}}" style="width: 40px; margin-top: 20px;">
                   </a>
                 </td>
                 <td>
                   <a href="https://twitter.com/bodybylekan" style="margin-left:15px; font-size: 20px; color: #fff;">
-                    <i class="fab fa-twitter"></i>
+                    <img src="{{url('frontend/images/twitter-icon.png')}}" style="width: 40px; margin-top: 20px;">
                   </a>
                 </td>
                 <td>
                   <a href="https://www.facebook.com/bodybylekan" style="margin-left:15px; font-size: 20px; color: #fff;">
-                    <i class="fab fa-facebook-f"></i>
+                    <img src="{{url('frontend/images/facebook-icon.png')}}" style="width: 40px; margin-top: 20px;">
                   </a>
                 </td>
               </tr>

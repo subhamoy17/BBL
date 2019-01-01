@@ -215,6 +215,21 @@ Route::get('delete-bootcamp-plan-schedule/{id}', 'TrainerController@bootcamp_sch
 Route::post('update-bootcamp-plan-schedules','TrainerController@update_bootcamp_plan_schedules')->name('update_bootcamp_plan_schedules');
 Route::post('bootcamp-plan-final-delete','TrainerController@bootcamp_plan_final_delete')->name('bootcamp_plan_final_delete');
 
+//all new personal training route
+Route::get('personal-training-plan', 'TrainerController@personal_training_plan_list')->name('personal_training_plan_list');
+Route::get('add-personal-training-plan', 'TrainerController@add_pt_plan')->name('add_pt_plan');
+Route::post('insert-personal-training-plan', 'TrainerController@insert_pt_plan')->name('insert_pt_plan');
+Route::get('personal-training-plan-schedule', 'TrainerController@pt_plan_schedule')->name('pt_plan_schedule');
+Route::get('personal-training-booking-cancel/{slug}', 'TrainerController@pt_booking_cancel');
+Route::get('personal-training-delete-single-schedule', 'TrainerController@pt_single_schedule_delete');
+Route::get('personal-training-delete-multiple-schedule', 'TrainerController@pt_multiple_schedule_delete');
+Route::get('personal-training-plan-schedule-edit/{slug}', 'TrainerController@pt_schedule_trainer_edit')->name('pt_schedule_trainer_edit');
+Route::post('update-pt-plan-schedules', 'TrainerController@update_pt_plan_schedules')->name('update_pt_plan_schedules');
+Route::get('add-pt-session-from-schedule/{slug}', 'TrainerController@add_pt_session_from_schedule')->name('add_pt_session_from_schedule');
+Route::get('search_customer_pt','TrainerController@search_customer_pt')->name('search_customer_pt');
+Route::get('check_customer_pt_session', 'TrainerController@check_customer_pt_session')->name('check_customer_pt_session');
+Route::post('book-pt-session-trainer', 'TrainerController@book_pt_session_trainer')->name('book_pt_session_trainer');
+
 
 
 ////// For common diet plan list//////
