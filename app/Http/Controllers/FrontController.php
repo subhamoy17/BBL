@@ -824,8 +824,8 @@ public function purchases_history(Request $request)
 
 public function booking_personal_training()
 {
-   try
-  {
+  //  try
+  // {
 $pt_session_address=DB::table('bootcamp_plan_address')
   ->join('bootcamp_plans','bootcamp_plans.address_id','bootcamp_plan_address.id')
   ->select('bootcamp_plan_address.address_line1','bootcamp_plan_address.id','bootcamp_plans.address_id')
@@ -857,39 +857,36 @@ $pt_session_address=DB::table('bootcamp_plan_address')
    // new
 
 
-
-  // get customer's product validity last end date
-  $customer_product_validity=DB::table('order_details')
-  ->join('payment_history','payment_history.id','order_details.payment_id')
-  ->where('payment_history.status','Success')
-  ->where('order_details.order_validity_date','>=',$current_date)
-  ->where('order_details.status',1)
-  ->where('order_details.customer_id',Auth::guard('customer')->user()->id)
-  ->where('order_details.training_type','=','Personal Training')
-  ->max('order_details.order_validity_date');
-
-  Log::debug(" customer_product_validity ".print_r($customer_product_validity,true));
-
-  
-
-  $alredy_booked_shedule_id=DB::table('personal_training_booking')
-  ->where('customer_id',Auth::guard('customer')->user()->id)->whereNull('personal_training_booking.deleted_at')
-  ->pluck('personal_training_plan_shedules_id');
-
-  $alredy_booked_date=DB::table('personal_training_plan_schedules')
-  ->whereIn('id',$alredy_booked_shedule_id)->whereNull('personal_training_plan_schedules.deleted_at')
-  ->pluck('plan_date');
-
-
-  $date_details=DB::table('personal_training_plan_schedules')->join('bootcamp_plan_address','bootcamp_plan_address.id','personal_training_plan_schedules.address_id')
-  ->where('plan_date','<=',$customer_product_validity)->whereNull('personal_training_plan_schedules.deleted_at')->where('personal_training_plan_schedules.plan_date','>',$current_date)
-  ->whereNotIn('plan_date',$alredy_booked_date)
-  ->get()->all();
-
-
     $no_of_sessions=0;
     if(count($order_details)>0)
     {
+
+      // get customer's product validity last end date
+      $customer_product_validity=DB::table('order_details')
+      ->join('payment_history','payment_history.id','order_details.payment_id')
+      ->where('payment_history.status','Success')
+      ->where('order_details.order_validity_date','>=',$current_date)
+      ->where('order_details.status',1)
+      ->where('order_details.customer_id',Auth::guard('customer')->user()->id)
+      ->where('order_details.training_type','=','Personal Training')
+      ->max('order_details.order_validity_date');
+
+
+      $alredy_booked_shedule_id=DB::table('personal_training_booking')
+      ->where('customer_id',Auth::guard('customer')->user()->id)->whereNull('personal_training_booking.deleted_at')
+      ->pluck('personal_training_plan_shedules_id');
+
+      $alredy_booked_date=DB::table('personal_training_plan_schedules')
+      ->whereIn('id',$alredy_booked_shedule_id)->whereNull('personal_training_plan_schedules.deleted_at')
+      ->pluck('plan_date');
+
+
+      $date_details=DB::table('personal_training_plan_schedules')->join('bootcamp_plan_address','bootcamp_plan_address.id','personal_training_plan_schedules.address_id')
+      ->where('plan_date','<=',$customer_product_validity)
+      ->whereNull('personal_training_plan_schedules.deleted_at')->where('personal_training_plan_schedules.plan_date','>',$current_date)
+      ->whereNotIn('plan_date',$alredy_booked_date)
+      ->get()->all();
+      
       foreach($order_details as $total)
       {
         $no_of_sessions=$no_of_sessions+$total->remaining_sessions; 
@@ -899,12 +896,12 @@ $pt_session_address=DB::table('bootcamp_plan_address')
     else
     {
       $no_of_sessions=0;
-      return redirect('customer/pricing')->with(compact('order_details','no_of_sessions','all_pt_trainer','pt_session_address','date_details'));
+      return redirect('pricing/pt')->with(compact('order_details','no_of_sessions','all_pt_trainer','pt_session_address','date_details'));
     }
-  }
-  catch(\Exception $e) {
-    return abort(400);
-  }
+  // }
+  // catch(\Exception $e) {
+  //   return abort(400);
+  // }
   
 }
 

@@ -329,6 +329,9 @@ Route::get('frontlogin','FrontController@frontlogin')->name('frontlogin');
 
 Route::get('pricing','FrontController@frontprice')->name('customer.pricing');
 
+Route::get('pricing/pt','FrontController@frontprice');
+Route::get('pricing/bc','FrontController@frontprice');
+
 Route::get('services','FrontController@services')->name('services');
 
 //slots payment//
@@ -466,6 +469,9 @@ Route::get('services','FrontSimpleController@services')->name('services');
 Route::get('testimonial','FrontSimpleController@testimonial')->name('testimonial');
 
 Route::get('exercise','FrontSimpleController@gym_gallery')->name('exercise');
+
+Route::get('pricing/pt','FrontSimpleController@frontprice');
+Route::get('pricing/bc','FrontSimpleController@frontprice');
 
 
 

@@ -161,9 +161,9 @@
                   @endif
 
                   @if(Request::segment(2) == "gymType" || Request::segment(2) == "add_exercise_trainer" || Request::segment(2) == "editexercise")
-                  <li><i class="fa fa-id-card-o"></i><a href="{{route('gymType')}}" style="color: #fff !important;">Exercise</a></li>
+                  <li><i class="fa fa-id-card-o"></i><a href="{{route('exercise_list')}}" style="color: #fff !important;">Exercise</a></li>
                   @else 
-                  <li><i class="fa fa-id-card-o"></i><a href="{{route('gymType')}}">Exercise</a></li>
+                  <li><i class="fa fa-id-card-o"></i><a href="{{route('exercise_list')}}">Exercise</a></li>
                   @endif
 
                   @if(Request::segment(2) == "contactlist")

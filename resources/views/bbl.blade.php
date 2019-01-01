@@ -46,14 +46,14 @@
 						<div class="agile_banner_text_info">
 							<h3>Build Your Body With Us </h3>
 							<p>Train hard is the right place to start new life as an athletic, strong and healthy person with a strong will.</p>
-                            <a href="{{url('pricing')}}" class="bnr-btn">Purchase Bootcamp Package</a>
+                            <a href="{{url('pricing/bc')}}" class="bnr-btn">Purchase Bootcamp Package</a>
 						</div>
 					</li>
 					<li>
 						<div class="agile_banner_text_info">
 							<h3>Exceptional Life Fitness </h3>
 							<p>Train hard is the right place to start new life as an athletic, strong and healthy person with a strong will.</p>
-                            <a href="{{url('pricing')}}" class="bnr-btn">Purchase Personal Training Package</a>
+                            <a href="{{url('pricing/pt')}}" class="bnr-btn">Purchase Personal Training Package</a>
 						</div>
 					</li>
 				</ul>

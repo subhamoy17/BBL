@@ -369,6 +369,26 @@ $("#coupon_sub").find("checkbox").each(function(){
   </script>
 
 
+  @if(Request::segment(2) === 'pt')
+<script>
+  $(document).ready(function() {
+   
+    $('#pt_tab').trigger('click');
+    
+    });
+</script>
+@endif
+
+@if(Request::segment(2) === 'bc')
+<script>
+  $(document).ready(function() {
+   
+    $('#bc_tab').trigger('click');
+    
+    });
+</script>
+@endif
+
 	</body>
 
 </html>

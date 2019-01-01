@@ -19,7 +19,7 @@
           <div class="row">
             <div id="plantabs">
                 <ul>
-                    <li><a href="#tabs-1"  onclick="bt_plan();">Bootcamp Packages</a></li>
+                    <li><a href="#tabs-1" id="bc_tab"  onclick="bt_plan();">Bootcamp Packages</a></li>
                     <li><a href="#tabs-2" id="pt_tab"  onclick="pt_plan();">Personal Training Packages</a></li>
                     <!-- <li><a href="#tabs-4">Aenean lacinia</a></li> -->
                 </ul>
