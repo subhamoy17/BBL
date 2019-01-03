@@ -3730,6 +3730,8 @@ public function checked_bootcampdate(Request $request)
   {
     DB::beginTransaction();
     try{
+
+    //Log::debug(" data sdsdgsgsdg".print_r($request->all(),true));
        
       $data=$request->get('data');
       $schedule_id=$data['id'];

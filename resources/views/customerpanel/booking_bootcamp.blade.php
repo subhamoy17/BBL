@@ -201,7 +201,7 @@
 
                       <input type="hidden" name="_token" value="{{csrf_token()}}">
                       <input type="hidden" name="nd_btn" id="nd_btn" value="1">
-                      <div id="add_session_req" >  </div>
+                      <div id="add_bc_session_req" >  </div>
             
                       <button class="btn btn-dark btn-theme-colored btn-flat btn-drk2 save_button"  style="display:none;" id="save_btn">Submit</button>
                     </form>
@@ -381,7 +381,7 @@ $('#bootcamp_date').datepicker({
               for(var i = 0; i < obj.length; i++)
               {
                 plan_time=obj[i]['all_time'];
-console.log(plan_time);
+  
                 session_time.append($('<option>', {value: obj[i]['id']}).text(plan_time));
               }
             }
@@ -434,7 +434,7 @@ console.log(plan_time);
     }
     else
     {
-      $("#add_session_req").append('<div class="conMon"><input readonly  class="form-control" type="text" name="bootcamp_address[]" value="' + address + '" />&nbsp;&nbsp;<input readonly  class="form-control" name="bootcamp_date[]" type="text" value="' + bootcamp_date + '" />&nbsp;&nbsp;<input readonly  class="form-control" type="text" name="bootcamp_time[]" value="' + session_time_text + '" /><input type=hidden class="all_previous_date"  readonly name="all_previous_date[]"' + 'id="all_previous_date[]"' + 'value="' + bootcamp_date + '" /><input type="hidden" name="schedule_id[]"' + 'value="' + session_time + '" /></div><br>');
+      $("#add_bc_session_req").append('<div class="conMon"><input readonly  class="form-control" type="text" name="bootcamp_address[]" value="' + address + '" />&nbsp;&nbsp;<input readonly  class="form-control" name="bootcamp_date[]" type="text" value="' + bootcamp_date + '" />&nbsp;&nbsp;<input readonly  class="form-control" type="text" name="bootcamp_time[]" value="' + session_time_text + '" /><input type=hidden class="all_previous_date"  readonly name="all_previous_date[]"' + 'id="all_previous_date[]"' + 'value="' + bootcamp_date + '" /><input type="hidden" name="schedule_id[]"' + 'value="' + session_time + '" /></div><br>');
        $("#bootcamp_date").val('');$("#session_time").val('');
 
        $('#session_time').attr('disabled',true);

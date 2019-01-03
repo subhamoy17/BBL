@@ -168,7 +168,7 @@
         
 
           <!-- #tab1 -->
-          <h3 class="ed-p">Personal Training Session Booking&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <h3 class="ed-p">PT Session Booking&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   
             Remaining Session {{$no_of_sessions}}
           </h3>
@@ -185,7 +185,10 @@
                     <div class="col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group">
                               
-                              <input type="hidden" id="total_slots" class="form-control" value="{{Session::get('sum_slots')}}"  >
+                              <input type="hidden" id="total_session" class="form-control" value="{{$no_of_sessions}}"  >
+
+                              <input type="hidden" id="total_applicable_sessions" class="form-control" value="1">
+
                               <label>Address <small>*</small></label>
                              
                              
@@ -298,7 +301,9 @@
                     <div class="col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group">
                               
-                              <input type="hidden" id="total_slots2" class="form-control" value="{{Session::get('sum_slots')}}"  >
+                              <input type="hidden" id="total_session2" class="form-control" value="{{$no_of_sessions}}"  >
+
+                              <input type="hidden" id="total_applicable_sessions2" class="form-control" value="1">
 
                               <label>Address <small>*</small></label>
                               <select class="form-control" name="address2" id="address2">
@@ -1010,11 +1015,11 @@ function getalltime(choose_date)
     }
     else if(total_session==0)
     {
-      alert("You don't have any bootcamp session");
+      alert("You don't have any personal training session");
     }
     else if(total_applicable_sessions>5)
     {
-      alert("You sent maximum 5 session at a time");
+      alert("You booked maximum 5 session at a time");
     }
     else if(duplicate_date==1)
     {
@@ -1022,7 +1027,7 @@ function getalltime(choose_date)
     }
     else
     {
-      $("#add_session_req").append('<div class="col-md-4 col-sm-12 col-xs-12"><input readonly  class="form-control" type="text" name="bootcamp_address[]" value="' + address_text + '" /></div><div class="col-md-4 col-sm-12 col-xs-12"><input readonly  class="form-control" name="bootcamp_trainer[]" type="text" value="' + trainer_name + '" /></div><div class="col-md-2 col-sm-12 col-xs-12"><input readonly  class="form-control" name="bootcamp_date[]" type="text" value="' + bootcamp_date + '" /></div><div class="col-md-2 col-sm-12 col-xs-12"><input readonly  class="form-control" type="text" name="bootcamp_time[]" value="' + session_time_text + '" /></div><input type=hidden class="all_previous_date"  readonly name="all_previous_date[]"' + 'id="all_previous_date[]"' + 'value="' + bootcamp_date + '" /><input type="hidden" name="schedule_id[]"' + 'value="' + session_time + '" /></div><br>');
+      $("#add_session_req").append('<div class="col-md-4 col-sm-12 col-xs-12"><input readonly  class="form-control" type="text" name="bootcamp_address[]" value="' + address_text + '" /></div><div class="col-md-3 col-sm-12 col-xs-12"><input readonly  class="form-control" name="bootcamp_trainer[]" type="text" value="' + trainer_name + '" /></div><div class="col-md-2 col-sm-12 col-xs-12"><input readonly  class="form-control" name="bootcamp_date[]" type="text" value="' + bootcamp_date + '" /></div><div class="col-md-3 col-sm-12 col-xs-12"><input readonly  class="form-control" type="text" name="bootcamp_time[]" value="' + session_time_text + '" /></div><input type=hidden class="all_previous_date"  readonly name="all_previous_date[]"' + 'id="all_previous_date[]"' + 'value="' + bootcamp_date + '" /><input type="hidden" name="schedule_id[]"' + 'value="' + session_time + '" /></div><br>');
        $("#bootcamp_date").val('');$("#session_time").val('');
 
       $('#bootcamp_date').attr('disabled',true); $('#session_time').attr('disabled',true);
@@ -1077,11 +1082,11 @@ function getalltime(choose_date)
     }
     else if(total_session==0)
     {
-      alert("You don't have any bootcamp session");
+      alert("You don't have any personal training session");
     }
     else if(total_applicable_sessions>5)
     {
-      alert("You sent maximum 5 session at a time");
+      alert("You booked maximum 5 session at a time");
     }
     else if(duplicate_date==1)
     {
@@ -1089,7 +1094,7 @@ function getalltime(choose_date)
     }
     else
     {
-      $("#add_session_req2").append('<div class="col-md-4 col-sm-12 col-xs-12"><input readonly  class="form-control" type="text" name="bootcamp_address[]" value="' + address_text + '" /></div><div class="col-md-4 col-sm-12 col-xs-12"><input readonly  class="form-control" name="bootcamp_trainer[]" type="text" value="' + trainer_name + '" /></div><div class="col-md-2 col-sm-12 col-xs-12"><input readonly  class="form-control" name="bootcamp_date[]" type="text" value="' + bootcamp_date + '" /></div><div class="col-md-2 col-sm-12 col-xs-12"><input readonly  class="form-control" type="text" name="bootcamp_time[]" value="' + session_time_text + '" /></div><input type=hidden class="all_previous_date2"  readonly name="all_previous_date[]"' + 'id="all_previous_date[]"' + 'value="' + bootcamp_date + '" /><input type="hidden" name="schedule_id[]"' + 'value="' + schedule_id + '" /><br>');
+      $("#add_session_req2").append('<div class="col-md-4 col-sm-12 col-xs-12"><input readonly  class="form-control" type="text" name="bootcamp_address[]" value="' + address_text + '" /></div><div class="col-md-3 col-sm-12 col-xs-12"><input readonly  class="form-control" name="bootcamp_trainer[]" type="text" value="' + trainer_name + '" /></div><div class="col-md-2 col-sm-12 col-xs-12"><input readonly  class="form-control" name="bootcamp_date[]" type="text" value="' + bootcamp_date + '" /></div><div class="col-md-3 col-sm-12 col-xs-12"><input readonly  class="form-control" type="text" name="bootcamp_time[]" value="' + session_time_text + '" /></div><input type=hidden class="all_previous_date2"  readonly name="all_previous_date[]"' + 'id="all_previous_date[]"' + 'value="' + bootcamp_date + '" /><input type="hidden" name="schedule_id[]"' + 'value="' + schedule_id + '" /><br>');
      $('#session_time2').find('option').remove();
      $('#trainer_id2').find('option').remove();
        $('#session_time2').attr('disabled',true);

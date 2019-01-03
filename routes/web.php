@@ -385,7 +385,6 @@ Route::get('customer_session_delete/{id}', 'FrontController@session_delete')->na
 
 
 Route::get('mybooking','FrontController@booking_history')->name('booking_history');
-Route::get('my-pt-booking','FrontController@pt_booking_history')->name('pt_booking_history');
 
 Route::get('free-sessions','FrontController@free_sessions');
 

@@ -14,6 +14,13 @@
         {{ session('bootcamp_session_cancelled') }}
       </div>
       @endif
+
+      @if (session('pt_session_cancelled'))
+      <div class="alert alert-success">
+        {{ session('pt_session_cancelled') }}
+      </div>
+      @endif
+      
       <h3 align="center">Booking history</h3>
       <table class="table">
         <thead>

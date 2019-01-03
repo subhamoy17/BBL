@@ -419,11 +419,12 @@ $(document).ready(function (){
 <script type="text/javascript">
   $(document).ready(function(){
     $("#bootstrap-slot-data-table").on("click", ".single-pt-schedule", function(e) {
+      var schedule_id=this.id;
         alertify.confirm("Are you sure you want to cancel this shedule?", function (e) {
           if (e) {
             var Data =
         {
-          'id': id,
+          'id': schedule_id,
         }
       $.ajax({
          url: '{{url("trainer/personal-training-delete-single-schedule")}}',
