@@ -367,7 +367,8 @@ Route::get('booking-pt-session','FrontController@booking_slot')->name('booking_s
 
 Route::get('booking-personal-training','FrontController@booking_personal_training')->name('booking_personal_training');
 
-Route::get('get_slot_time','FrontController@get_slot_time')->name('get_slot_time');
+// Route::get('get_slot_time','FrontController@get_slot_time')->name('get_slot_time');
+
 Route::get('get_pt_time','FrontController@get_pt_time')->name('get_pt_time');
 Route::get('get_pt_time2','FrontController@get_pt_time2')->name('get_pt_time2');
 Route::get('get_pt_all_trainer','FrontController@get_pt_all_trainer')->name('get_pt_all_trainer');

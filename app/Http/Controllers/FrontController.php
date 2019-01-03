@@ -20,6 +20,10 @@ use App\Notifications\SessionRequestNotificationToTrainer;
 use Illuminate\Support\Facades\Input;
 use App\Notifications\BootcampSessionNotification;
 use App\Notifications\PlanPurchasedNotification;
+use App\Notifications\PersonalTrainingSessionNotification;
+use App\Notifications\PersonalTrainingSessionBookingNotification;
+
+
 
 class FrontController extends Controller
 {
@@ -821,91 +825,6 @@ public function purchases_history(Request $request)
   }
 }
 
-
-public function booking_personal_training()
-{
-  //  try
-  // {
-$pt_session_address=DB::table('bootcamp_plan_address')
-  ->join('bootcamp_plans','bootcamp_plans.address_id','bootcamp_plan_address.id')
-  ->select('bootcamp_plan_address.address_line1','bootcamp_plan_address.id','bootcamp_plans.address_id')
-  ->whereNull('bootcamp_plans.deleted_at')->distinct('bootcamp_plans.address_id')->get()->all();
- // Log::debug(" pt_session_address id ".print_r($pt_session_address,true));
-  // $data=DB::table('users')->whereNull('deleted_at')->where('is_active',1)->get();
-
-  $all_pt_trainer=DB::table('users')->join('personal_training_plan_schedules','personal_training_plan_schedules.trainer_id','users.id')->select('personal_training_plan_schedules.trainer_id as trainer_id','users.name as trainer_name')
-  ->whereNull('users.deleted_at')->where('is_active',1)
-  ->distinct('users.name')->get()->all();
-// Log::debug(" pt_session_address id ".print_r($all_pt_trainer,true));
-  
-
- 
-    $this->cart_delete_customer();
-    $current_date=Carbon::now()->toDateString();
-
-    // check customer product validity as well as available session
-    $order_details=DB::table('order_details')
-    ->join('products','products.id','order_details.product_id')
-    ->join('training_type','training_type.id','products.training_type_id')
-    ->where('order_details.customer_id',Auth::guard('customer')->user()->id)
-    ->where('order_details.status',1)
-    ->where('training_type.id',1)
-    ->where('order_details.order_validity_date','>=',$current_date)
-    ->where('order_details.remaining_sessions','>',0)
-    ->get()->all();
-
-   // new
-
-
-    $no_of_sessions=0;
-    if(count($order_details)>0)
-    {
-
-      // get customer's product validity last end date
-      $customer_product_validity=DB::table('order_details')
-      ->join('payment_history','payment_history.id','order_details.payment_id')
-      ->where('payment_history.status','Success')
-      ->where('order_details.order_validity_date','>=',$current_date)
-      ->where('order_details.status',1)
-      ->where('order_details.customer_id',Auth::guard('customer')->user()->id)
-      ->where('order_details.training_type','=','Personal Training')
-      ->max('order_details.order_validity_date');
-
-
-      $alredy_booked_shedule_id=DB::table('personal_training_booking')
-      ->where('customer_id',Auth::guard('customer')->user()->id)->whereNull('personal_training_booking.deleted_at')
-      ->pluck('personal_training_plan_shedules_id');
-
-      $alredy_booked_date=DB::table('personal_training_plan_schedules')
-      ->whereIn('id',$alredy_booked_shedule_id)->whereNull('personal_training_plan_schedules.deleted_at')
-      ->pluck('plan_date');
-
-
-      $date_details=DB::table('personal_training_plan_schedules')->join('bootcamp_plan_address','bootcamp_plan_address.id','personal_training_plan_schedules.address_id')
-      ->where('plan_date','<=',$customer_product_validity)
-      ->whereNull('personal_training_plan_schedules.deleted_at')->where('personal_training_plan_schedules.plan_date','>',$current_date)
-      ->whereNotIn('plan_date',$alredy_booked_date)
-      ->get()->all();
-      
-      foreach($order_details as $total)
-      {
-        $no_of_sessions=$no_of_sessions+$total->remaining_sessions; 
-      }
-      return view('customerpanel.booking_personal_training')->with(compact('order_details','no_of_sessions','all_pt_trainer','pt_session_address','date_details'));
-    }
-    else
-    {
-      $no_of_sessions=0;
-      return redirect('pricing/pt')->with(compact('order_details','no_of_sessions','all_pt_trainer','pt_session_address','date_details'));
-    }
-  // }
-  // catch(\Exception $e) {
-  //   return abort(400);
-  // }
-  
-}
-
-
 public function get_slot_time(Request $request)
 {
 
@@ -969,112 +888,152 @@ $final_slot_time=DB::table('slot_times')->whereNotIn('id',$get_slot_times)
  
 }
 
+
+public function booking_personal_training()
+{
+   try
+  {
+    $pt_session_address=DB::table('bootcamp_plan_address')
+    ->join('bootcamp_plans','bootcamp_plans.address_id','bootcamp_plan_address.id')
+    ->select('bootcamp_plan_address.address_line1','bootcamp_plan_address.id','bootcamp_plans.address_id')
+    ->whereNull('bootcamp_plans.deleted_at')->distinct('bootcamp_plans.address_id')->get()->all();
+
+    $all_pt_trainer=DB::table('users')->join('personal_training_plan_schedules','personal_training_plan_schedules.trainer_id','users.id')->select('personal_training_plan_schedules.trainer_id as trainer_id','users.name as trainer_name')
+    ->whereNull('users.deleted_at')->where('is_active',1)
+    ->distinct('users.name')->get()->all();
+
+    // Log::debug(" pt_session_address id ".print_r($all_pt_trainer,true));
+  
+    $current_date=Carbon::now()->toDateString();
+
+    // check customer product validity as well as available session
+    $order_details=DB::table('order_details')
+    ->join('products','products.id','order_details.product_id')
+    ->join('training_type','training_type.id','products.training_type_id')
+    ->where('order_details.customer_id',Auth::guard('customer')->user()->id)
+    ->where('order_details.status',1)
+    ->where('training_type.id',1)
+    ->where('order_details.order_validity_date','>=',$current_date)
+    ->where('order_details.remaining_sessions','>',0)
+    ->get()->all();
+
+   // new
+
+
+    $no_of_sessions=0;
+    if(count($order_details)>0)
+    {
+
+      // get customer's product validity last end date
+      $customer_product_validity=DB::table('order_details')
+      ->join('payment_history','payment_history.id','order_details.payment_id')
+      ->where('payment_history.status','Success')
+      ->where('order_details.order_validity_date','>=',$current_date)
+      ->where('order_details.status',1)
+      ->where('order_details.customer_id',Auth::guard('customer')->user()->id)
+      ->where('order_details.training_type','=','Personal Training')
+      ->max('order_details.order_validity_date');
+
+
+      $alredy_booked_shedule_id=DB::table('personal_training_booking')
+      ->where('customer_id',Auth::guard('customer')->user()->id)->whereNull('personal_training_booking.deleted_at')
+      ->pluck('personal_training_plan_shedules_id');
+
+      $alredy_booked_date=DB::table('personal_training_plan_schedules')
+      ->whereIn('id',$alredy_booked_shedule_id)->whereNull('personal_training_plan_schedules.deleted_at')
+      ->pluck('plan_date');
+
+
+      $date_details=DB::table('personal_training_plan_schedules')->join('bootcamp_plan_address','bootcamp_plan_address.id','personal_training_plan_schedules.address_id')
+      ->where('plan_date','<=',$customer_product_validity)
+      ->whereNull('personal_training_plan_schedules.deleted_at')
+      ->where('personal_training_plan_schedules.plan_date','>',$current_date)
+      ->whereNotIn('plan_date',$alredy_booked_date)
+      ->get()->all();
+
+      foreach($order_details as $total)
+      {
+        $no_of_sessions=$no_of_sessions+$total->remaining_sessions; 
+      }
+      return view('customerpanel.booking_personal_training')->with(compact('order_details','no_of_sessions','all_pt_trainer','pt_session_address','date_details'));
+    }
+    else
+    {
+      $no_of_sessions=0;
+      return redirect('pricing/pt');
+    }
+  }
+  catch(\Exception $e) {
+    return abort(400);
+  }
+  
+}
+
+
 public function get_pt_time(Request $request)
 {
 // Log::debug(" Check get_slot_times ".print_r($request->all(),true));
 
-
-$get_slot_times=DB::table('personal_training_booking')->join('personal_training_plan_schedules','personal_training_plan_schedules.id','personal_training_booking.personal_training_plan_shedules_id')->whereNull('personal_training_booking.deleted_at')->whereNull('personal_training_plan_schedules.deleted_at')
+  $get_slot_times=DB::table('personal_training_booking')
+  ->join('personal_training_plan_schedules','personal_training_plan_schedules.id','personal_training_booking.personal_training_plan_shedules_id')
+  ->whereNull('personal_training_booking.deleted_at')
+  ->whereNull('personal_training_plan_schedules.deleted_at')
+  ->where('personal_training_plan_schedules.trainer_id',$request->trainer_id)
+  ->where('personal_training_plan_schedules.plan_date',$request->pt_date)
   ->pluck('personal_training_booking.personal_training_plan_shedules_id');
 
- // Log::debug(" Check get_slot_times ".print_r($get_slot_times,true));
    if(count($get_slot_times))
-{
-foreach($get_slot_times as $key=>$hour) {
+  {
+    foreach($get_slot_times as $key=>$hour) {  }
 
-}
+    $length=$key+1;
+    $upto=$length*4;
 
-  $length=$key+1;
-  $upto=$length*4;
+    for($i=$length;$i<$upto;$i++)
+    {
+      $get_slot_times[$i]=$get_slot_times[$i-$length]+1;
+    }
 
-  for($i=$length;$i<$upto;$i++)
-{
-  $get_slot_times[$i]=$get_slot_times[$i-$length]+1;
+    foreach($get_slot_times as $key=>$hour) { }
 
-}
+    $length=$key+1;
+    $upto=$length*4;
 
-foreach($get_slot_times as $key=>$hour) {
+    for($i=$length;$i<$upto;$i++)
+    {
+      $get_slot_times[$i]=$get_slot_times[$i-$length]-1;
+    }
+  }
 
-}
+  $time_details=DB::table('personal_training_plan_schedules')
+  ->join('slot_times','slot_times.id','personal_training_plan_schedules.plan_st_time_id')
+  ->select('slot_times.id as plan_st_time_id','slot_times.time as plan_st_time','personal_training_plan_schedules.id as schedule_id')
+  ->where('personal_training_plan_schedules.trainer_id',$request->trainer_id)
+  ->where('personal_training_plan_schedules.plan_date',$request->pt_date)
+  ->whereNotIn('personal_training_plan_schedules.id',$get_slot_times)
+  ->whereNull('personal_training_plan_schedules.deleted_at')->get()->all();
 
-$length=$key+1;
-$upto=$length*4;
-
-  for($i=$length;$i<$upto;$i++)
-{
-  $get_slot_times[$i]=$get_slot_times[$i-$length]-1;
-
-}
-
-}
-
-
-$time_details=DB::table('personal_training_plan_schedules')->join('slot_times','slot_times.id','personal_training_plan_schedules.plan_st_time_id')->select('slot_times.id as plan_st_time_id','slot_times.time as plan_st_time','personal_training_plan_schedules.id as schedule_id')->where('plan_date',$request->pt_date)->whereNotIn('personal_training_plan_schedules.id',$get_slot_times)
-   ->whereNull('deleted_at')
-   ->get()->all();
-   // Log::debug(" Check final_slot_time ".print_r($time_details,true));
-
-foreach($time_details as $myslot_time)
+  foreach($time_details as $myslot_time)
   {
     $myslot_time->all_time=date('h:i A', strtotime($myslot_time->plan_st_time));
   }
-
-
 
   return json_encode($time_details);
 }
 
 public function get_pt_time2(Request $request)
 {
-// Log::debug(" Check get_slot_times ".print_r($request->all(),true));
 
-//nn
-
-$get_slot_times=DB::table('personal_training_booking')->join('personal_training_plan_schedules','personal_training_plan_schedules.id','personal_training_booking.personal_training_plan_shedules_id')->whereNull('personal_training_booking.deleted_at')->whereNull('personal_training_plan_schedules.deleted_at')
-  ->pluck('personal_training_booking.personal_training_plan_shedules_id');
-
- // Log::debug(" Check get_slot_times ".print_r($get_slot_times,true));
-   if(count($get_slot_times))
-{
-foreach($get_slot_times as $key=>$hour) {
-
-}
-
-  $length=$key+1;
-  $upto=$length*4;
-
-  for($i=$length;$i<$upto;$i++)
-{
-  $get_slot_times[$i]=$get_slot_times[$i-$length]+1;
-
-}
-
-foreach($get_slot_times as $key=>$hour) {
-
-}
-
-$length=$key+1;
-$upto=$length*4;
-
-  for($i=$length;$i<$upto;$i++)
-{
-  $get_slot_times[$i]=$get_slot_times[$i-$length]-1;
-
-}
-
-}
-
-
-  $time_details2=DB::table('personal_training_plan_schedules')->join('slot_times','slot_times.id','personal_training_plan_schedules.plan_st_time_id')->select('slot_times.id as plan_st_time_id','slot_times.time as plan_st_time','personal_training_plan_schedules.id as schedule_id')
-  ->where('plan_date',$request->pt_date2)->whereNotIn('personal_training_plan_schedules.id',$get_slot_times)
-  ->whereNull('deleted_at')
+  $time_details2=DB::table('personal_training_plan_schedules')
+  ->join('slot_times','slot_times.id','personal_training_plan_schedules.plan_st_time_id')
+  ->where('personal_training_plan_schedules.plan_date',$request->pt_date2)
+  ->whereNull('personal_training_plan_schedules.deleted_at')
+  ->select(DB::raw('distinct(personal_training_plan_schedules.plan_st_time_id)'),'slot_times.time as plan_st_time')
   ->get()->all();
- // Log::debug(" Check time_details ".print_r($time_details2,true));
 
   foreach($time_details2 as $key=>$each_time2)
   {
     $each_time2->all_time2=date('h:i A', strtotime($each_time2->plan_st_time));
-    $each_time2->all_time_id2=$each_time2->plan_st_time_id;
   }
 
   return json_encode($time_details2);
@@ -1083,23 +1042,54 @@ $upto=$length*4;
 
 public function get_pt_all_trainer(Request $request)
 {
-// Log::debug(" Check get_pt_all_trainer ".print_r($request->all(),true));
+  //Log::debug(" Check get_pt_all_trainer ".print_r($request->all(),true));
 
-$trainer_details=DB::table('personal_training_plan_schedules')->join('users','users.id','personal_training_plan_schedules.trainer_id')->select('users.id as trainer_id','users.name as trainer_name','personal_training_plan_schedules.id as schedule_id2')
-  ->where('personal_training_plan_schedules.id',$request->session_time2)
+  $already_booking_schedule=DB::table('personal_training_booking')
+  ->join('personal_training_plan_schedules','personal_training_plan_schedules.id','personal_training_booking.personal_training_plan_shedules_id')
+  ->whereNull('personal_training_booking.deleted_at')
+  ->whereNull('personal_training_plan_schedules.deleted_at')
+  ->where('personal_training_plan_schedules.plan_date',$request->choose_date)
+  ->pluck('personal_training_booking.personal_training_plan_shedules_id');
+
+   if(count($already_booking_schedule))
+  {
+    foreach($already_booking_schedule as $key=>$hour) { }
+
+    $length=$key+1;
+    $upto=$length*3;
+
+    for($i=$length;$i<$upto;$i++)
+    {
+      $already_booking_schedule[$i]=$already_booking_schedule[$i-$length]+1;
+    }
+
+    foreach($already_booking_schedule as $key=>$hour) { }
+
+    $length=$key+1;
+    $upto=$length*3;
+
+    for($i=$length;$i<$upto;$i++)
+    {
+      $already_booking_schedule[$i]=$already_booking_schedule[$i-$length]-1;
+    }
+  }
+
+  //Log::debug(" Check hello ".print_r($already_booking_schedule,true));
+
+  $trainer_details=DB::table('personal_training_plan_schedules')
+  ->join('users','users.id','personal_training_plan_schedules.trainer_id')
+  ->select('users.id as trainer_id','users.name as trainer_name','personal_training_plan_schedules.id as schedule_id2')
+  ->whereNotIn('personal_training_plan_schedules.id',$already_booking_schedule)
+  ->where('personal_training_plan_schedules.plan_date',$request->choose_date)
+  ->where('personal_training_plan_schedules.plan_st_time_id',$request->session_time_id2)
   ->whereNull('personal_training_plan_schedules.deleted_at')
   ->get()->all();
 
-  // Log::debug(" Check trainer_details ".print_r($trainer_details,true));
+  //Log::debug(" Check trainer_details ".print_r($trainer_details,true));
 
-
-  return json_encode($trainer_details);
+ return json_encode($trainer_details);
 
 }
-
-
-
-
 
 
 public function get_pt_date(Request $request)
@@ -2230,7 +2220,7 @@ public function bootcamp_booking_customer(Request $request)
 public function ptsession_booking_customer(Request $request)
 {
 
-  // Log::debug(" bootcamp_booking_customer ".print_r($request->all(),true));
+  //Log::debug(" bootcamp_booking_customer ".print_r($request->all(),true));
   DB::beginTransaction();
   try
   {
@@ -2238,15 +2228,15 @@ public function ptsession_booking_customer(Request $request)
     $current_date=Carbon::now()->toDateString();
 
     $order_details=DB::table('order_details')
-  ->join('products','products.id','order_details.product_id')
-  ->join('training_type','training_type.id','products.training_type_id')
-  ->where('order_details.customer_id',Auth::guard('customer')->user()->id)
-  ->where('order_details.status',1)
-  ->where('training_type.id',1)
-  ->where('order_details.order_validity_date','>=',$current_date)
-  ->where('order_details.remaining_sessions','>',0)
-  ->get()->all();
-// Log::debug(" order_details ".print_r($order_details,true));
+    ->join('products','products.id','order_details.product_id')
+    ->join('training_type','training_type.id','products.training_type_id')
+    ->where('order_details.customer_id',Auth::guard('customer')->user()->id)
+    ->where('order_details.status',1)
+    ->where('training_type.id',1)
+    ->where('order_details.order_validity_date','>=',$current_date)
+    ->where('order_details.remaining_sessions','>',0)
+    ->get()->all();
+    // Log::debug(" order_details ".print_r($order_details,true));
 
       if(count($order_details)>0)
     {
@@ -2254,8 +2244,7 @@ public function ptsession_booking_customer(Request $request)
     for($j=0;$j<count($request->bootcamp_date);$j++)
     {
       
-
- $no_of_session_notunlimited=DB::table('order_details')
+      $no_of_session_notunlimited=DB::table('order_details')
       ->join('products','products.id','order_details.product_id')
       ->join('training_type','training_type.id','products.training_type_id')
       ->select('order_details.id as order_id','order_details.remaining_sessions as remaining_sessions')
@@ -2270,70 +2259,86 @@ public function ptsession_booking_customer(Request $request)
 
       $pt_booking_data['personal_training_plan_shedules_id']=$request->schedule_id[$j];
       $pt_booking_data['customer_id']=Auth::guard('customer')->user()->id;
-
-
-
       $pt_booking_data['order_details_id']=$no_of_session_notunlimited->order_id;
 
+      $check_abalible_schedule=DB::table('personal_training_booking')
+      ->where('personal_training_plan_shedules_id',$request->schedule_id[$j])->whereNull('deleted_at')
+      ->get()->all();
 
-       $sheck_abalible_session=DB::table('personal_training_booking')->where('personal_training_plan_shedules_id',$request->schedule_id[$j])->whereNull('deleted_at')->get()->all();
+      if(count($check_abalible_schedule)==0)
+      {
 
-       if(count($sheck_abalible_session)==0)
-    {
-
-    
-      $pt_booking_insert=DB::table('personal_training_booking')->insert($pt_booking_data);
+        $pt_booking_insert=DB::table('personal_training_booking')->insert($pt_booking_data);
      
-      $decrease_remaining_session=DB::table('order_details')->where('id',$no_of_session_notunlimited->order_id)->where('remaining_sessions','>',0)->decrement('remaining_sessions',1);
+        $decrease_remaining_session=DB::table('order_details')->where('id',$no_of_session_notunlimited->order_id)->where('remaining_sessions','>',0)->decrement('remaining_sessions',1);
 
-      $shedule_id[$j]=$request->schedule_id[$j];
+        $shedule_id[$j]=$request->schedule_id[$j];
+      }
+      else
+      {
+        return redirect()->back()->with(["boocked"=>"Already booked this personal training session request please try again"]);
+      }
     }
 
-    else{
-          return redirect()->back()->with(["boocked"=>"All ready boocked this personal training session request please try again"]);
+        $a=new \stdClass;
+
+        $a->pt_address=Input::get('bootcamp_address');
+        $a->pt_trainer=Input::get('bootcamp_trainer');
+        $a->pt_date=Input::get('bootcamp_date');
+        $a->pt_time=Input::get('bootcamp_time');
+        $a->total_sessions=$j;
+        $all_data=array($a);
+
+        $pt_booking_data=DB::table('personal_training_booking')
+        ->join('personal_training_plan_schedules','personal_training_plan_schedules.id','personal_training_booking.personal_training_plan_shedules_id')
+        ->where('personal_training_booking.customer_id',Auth::guard('customer')->user()->id)->first();
+
+        $customer_details=Customer::find($pt_booking_data->customer_id);
+
+        $notifydata['url'] = '/customer/mybooking';
+        $notifydata['customer_name']=Auth::guard('customer')->user()->name;
+        $notifydata['customer_email']=Auth::guard('customer')->user()->email;
+        $notifydata['customer_phone']=Auth::guard('customer')->user()->ph_no;
+        $notifydata['status']='Boocked PTSession by Customer';
+        $notifydata['session_booked_on']=$pt_booking_data->created_at;
+        $notifydata['all_data']=$all_data;
+
+        $customer_details->notify(new PersonalTrainingSessionNotification($notifydata));
+
+        for($k=0;$k<$j;$k++)
+        {
+
+        $pt_schedule=DB::table('personal_training_plan_schedules')->where('personal_training_plan_schedules.id',$request->schedule_id[$k])->first();
+
+
+        $start_time=DB::table('slot_times')->where('id',$pt_schedule->plan_st_time_id)->value('time');
+        $end_time=DB::table('slot_times')->where('id',$pt_schedule->plan_end_time_id)->value('time');
+        $available_address=DB::table('bootcamp_plan_address')->where('id',$pt_schedule->address_id)->value('address_line1');
+
+        $pt_schedule->start_time=$start_time;
+        $pt_schedule->end_time=$end_time;
+        $pt_schedule->available_address=$available_address;
+
+
+        $trainer_details=User::find($pt_schedule->trainer_id);
+
+        $notifydata['url1'] = '/trainer/personal-training-plan-schedule';
+
+        if($notifydata['url1'] == '/trainer/personal-training-plan-schedule')
+        {
+          $notifydata['url'] = '/trainer/personal-training-plan-schedule';
+          $notifydata['customer_name']=Auth::guard('customer')->user()->name;
+          $notifydata['trainer_name']=$trainer_details->name;
+          $notifydata['status']='Boocked PTSession by Customer send to Trainer';
+          $notifydata['session_booked_on']=$pt_booking_data->created_at;
+          $notifydata['session_booking_date']=$pt_schedule->plan_date;
+          $notifydata['session_booking_time']=date('h:i A', strtotime($pt_schedule->start_time))." to ".date('h:i A', strtotime($pt_schedule->end_time));
+          $notifydata['schedule_address']=$pt_schedule->available_address;
+
+          $trainer_details->notify(new PersonalTrainingSessionBookingNotification($notifydata));
         }
-    }
 
-
-
-    $a=new \stdClass;
-
-    $a->pt_address=Input::get('bootcamp_address');
-    $a->pt_date=Input::get('bootcamp_date');
-    $a->pt_time=Input::get('bootcamp_time');
-    $a->total_sessions=$j;
-    $all_data=array($a);
-
-    $pt_booking_data=DB::table('personal_training_booking')->join('personal_training_plan_schedules','personal_training_plan_schedules.id','personal_training_booking.personal_training_plan_shedules_id')->where('personal_training_booking.customer_id',Auth::guard('customer')->user()->id)->first();
-
-    $customer_details=Customer::find($pt_booking_data->customer_id);
-
-    $notifydata['url'] = '/customer/mybooking';
-    $notifydata['customer_name']=Auth::guard('customer')->user()->name;
-    $notifydata['customer_email']=Auth::guard('customer')->user()->email;
-    $notifydata['customer_phone']=Auth::guard('customer')->user()->ph_no;
-    $notifydata['status']='Boocked PTSession by Customer';
-    $notifydata['session_booked_on']=$pt_booking_data->created_at;
-    $notifydata['all_data']=$all_data;
-
-    $customer_details->notify(new BootcampSessionNotification($notifydata));
-
-
-    $pt_schedule=DB::table('personal_training_plan_schedules')->where('personal_training_plan_schedules.id',$request->schedule_id)->first();
- // Log::debug(" pt_schedule ".print_r($pt_schedule,true));
-    $trainer=DB::table('users')->where('users.id',$pt_schedule->trainer_id)->first();
-  
- // Log::debug(" no_of_session_notunlimited ".print_r($trainer,true));
-
-
-    $notifydata['url'] = '/trainer/home';
-    $notifydata['customer_name']=Auth::guard('customer')->user()->name;
-    $notifydata['trainer_name']=$trainer->name;
-    $notifydata['status']='Boocked PTSession by Customer send by Trainer';
-    $notifydata['session_booked_on']=$pt_booking_data->created_at;
-    $notifydata['all_data']=$all_data;
-
-    $customer_details->notify(new BootcampSessionNotification($notifydata));
+      }
 
      DB::commit();
     return redirect()->back()->with(["success"=>"You have successfully sent the below Personal training session request(s)!",'all_data'=>$all_data]);
@@ -2356,7 +2361,7 @@ public function ptsession_booking_customer(Request $request)
 public function ptsession_booking_customer_bytime(Request $request)
 {
 
-  // Log::debug(" ptsession_booking_customer_bytime ".print_r($request->all(),true));
+   //Log::debug(" ptsession_booking_customer_bytime ".print_r($request->all(),true));
   DB::beginTransaction();
   try
   {
@@ -2425,6 +2430,7 @@ public function ptsession_booking_customer_bytime(Request $request)
     $a=new \stdClass;
 
     $a->pt_address=Input::get('bootcamp_address');
+    $a->pt_trainer=Input::get('bootcamp_trainer');
     $a->pt_date=Input::get('bootcamp_date');
     $a->pt_time=Input::get('bootcamp_time');
     $a->total_sessions=$j;
@@ -2442,23 +2448,41 @@ public function ptsession_booking_customer_bytime(Request $request)
     $notifydata['session_booked_on']=$pt_booking_data->created_at;
     $notifydata['all_data']=$all_data;
 
-    $customer_details->notify(new BootcampSessionNotification($notifydata));
+    $customer_details->notify(new PersonalTrainingSessionNotification($notifydata));
 
-    $pt_schedule=DB::table('personal_training_plan_schedules')->where('personal_training_plan_schedules.id',$request->schedule_id)->first();
- // Log::debug(" pt_schedule ".print_r($pt_schedule,true));
-    $trainer=DB::table('users')->where('users.id',$pt_schedule->trainer_id)->first();
-  
- // Log::debug(" no_of_session_notunlimited ".print_r($trainer,true));
+    for($k=0;$k<$j;$k++)
+        {
+            
+        $pt_schedule=DB::table('personal_training_plan_schedules')->where('personal_training_plan_schedules.id',$request->schedule_id[$k])->first();
+
+        $start_time=DB::table('slot_times')->where('id',$pt_schedule->plan_st_time_id)->value('time');
+        $end_time=DB::table('slot_times')->where('id',$pt_schedule->plan_end_time_id)->value('time');
+        $available_address=DB::table('bootcamp_plan_address')->where('id',$pt_schedule->address_id)->value('address_line1');
+
+        $pt_schedule->start_time=$start_time;
+        $pt_schedule->end_time=$end_time;
+        $pt_schedule->available_address=$available_address;
 
 
-    $notifydata['url'] = '/trainer/home';
-    $notifydata['customer_name']=Auth::guard('customer')->user()->name;
-    $notifydata['trainer_name']=$trainer->name;
-    $notifydata['status']='Boocked PTSession by Customer send by Trainer';
-    $notifydata['session_booked_on']=$pt_booking_data->created_at;
-    $notifydata['all_data']=$all_data;
+        $trainer_details=User::find($pt_schedule->trainer_id);
 
-    $customer_details->notify(new BootcampSessionNotification($notifydata));
+        $notifydata['url1'] = '/trainer/personal-training-plan-schedule';
+
+        if($notifydata['url1'] == '/trainer/personal-training-plan-schedule')
+        {
+          $notifydata['url'] = '/trainer/personal-training-plan-schedule';
+          $notifydata['customer_name']=Auth::guard('customer')->user()->name;
+          $notifydata['trainer_name']=$trainer_details->name;
+          $notifydata['status']='Boocked PTSession by Customer send to Trainer';
+          $notifydata['session_booked_on']=$pt_booking_data->created_at;
+          $notifydata['session_booking_date']=$pt_schedule->plan_date;
+          $notifydata['session_booking_time']=date('h:i A', strtotime($pt_schedule->start_time))." to ".date('h:i A', strtotime($pt_schedule->end_time));
+          $notifydata['schedule_address']=$pt_schedule->available_address;
+
+          $trainer_details->notify(new PersonalTrainingSessionBookingNotification($notifydata));
+        }
+
+      }
 
      DB::commit();
     return redirect()->back()->with(["success1"=>"You have successfully sent the below Personal training session request(s)!",'all_data'=>$all_data]);
@@ -2589,24 +2613,23 @@ public function pt_booking_cancele_customer($id)
     $notifydata['schedule_address']=$booking_details->address_line1;
 
     //sent notification mail
-    $client_details->notify(new BootcampSessionNotification($notifydata));
+    $client_details->notify(new PersonalTrainingSessionNotification($notifydata));
 
      $pt_schedule=DB::table('personal_training_plan_schedules')->where('personal_training_plan_schedules.id',$booking_details->schedules_id)->first();
  // Log::debug(" pt_schedule ".print_r($pt_schedule,true));
-    $trainer=DB::table('users')->where('users.id',$pt_schedule->trainer_id)->first();
-  
+    $trainer_details=User::find($pt_schedule->trainer_id);
 
-    $notifydata['url'] = '/trainer/home';
+    $notifydata['url'] = '/trainer/personal-training-plan-schedule';
     $notifydata['customer_name']=Auth::guard('customer')->user()->name;
-    $notifydata['trainer_name']=$trainer->name;
-    $notifydata['status']='Cancelled PT Session By Customer send by Trainer';
+    $notifydata['trainer_name']=$trainer_details->name;
+    $notifydata['status']='Cancelled PT Session By Customer send to Trainer';
     $notifydata['session_booked_on']=$booking_details->booked_on;
     $notifydata['session_booking_date']=$booking_details->shedule_date;
     $notifydata['session_booking_day']=$booking_details->plan_day;
     $notifydata['session_booking_time']=date('h:i A', strtotime($booking_details->plan_st_time)).' to '.date('h:i A', strtotime($booking_details1->plan_end_time));
     $notifydata['schedule_address']=$booking_details->address_line1;
 
-    $client_details->notify(new BootcampSessionNotification($notifydata));
+    $trainer_details->notify(new PersonalTrainingSessionBookingNotification($notifydata));
 
  // Log::debug(" no_of_session_notunlimited ".print_r($trainer,true));
    

@@ -269,7 +269,7 @@
     <input type="hidden" name="_token" value="{{csrf_token()}}">
     <input type="hidden" name="idd" id="id" value="{{Auth::guard('customer')->user()->id}}">
     <input type="hidden" name="nd_btn" id="nd_btn" value="1">
-    <div id="add_session_req" >
+    <div id="add_session_req" class="col-md-12 col-sm-12 col-xs-12">
 
     </div>
             
@@ -385,7 +385,7 @@
     <input type="hidden" name="_token" value="{{csrf_token()}}">
     <input type="hidden" name="idd" id="id" value="{{Auth::guard('customer')->user()->id}}">
      <input type="hidden" name="nd_btn" id="nd_btn" value="2">
-    <div id="add_session_req2" >
+    <div id="add_session_req2" class="col-md-12 col-sm-12 col-xs-12">
 
       <div style="display: none;" id='add_session_loadingimg'>
           <img src="{{asset('backend/images/loader_session_time.gif')}}" style="width: 85px;margin-top: -30px;margin-left: -21px;"/>
@@ -427,7 +427,7 @@
       <div class="modal-body" id="hall_details_edit">
       <table class="table table-border" width="100%">
         <tbody>
-        <tr><td>Address</td><td>Date</td><td>Time</td></tr>
+        <tr><td>Address</td><td>Trainer Name</td><td>Date</td><td>Time</td></tr>
         
       @foreach(session('all_data') as $key => $eachdata)
     
@@ -435,6 +435,9 @@
       <tr>
       <td>
         {{$eachdata->pt_address[$i]}}
+      </td>
+      <td>
+        {{$eachdata->pt_trainer[$i]}}
       </td>
       <td>
         {{$eachdata->pt_date[$i]}}
@@ -465,12 +468,6 @@
 </div>
 </div>
 
-<!-- 
-      @if(session('boocked'))
-      <h2>You have successfully booked the below personal training session(s).</h2>
-      @endif -->
-
-
 <div id="pt_session_modal1" class="modal fade  mot-mod session-modal" role="dialog" >
   <div class="modal-dialog">
     
@@ -482,7 +479,7 @@
       <div class="modal-body" id="hall_details_edit">
       <table class="table table-border" width="100%">
         <tbody>
-        <tr><td>Address</td><td>Date</td><td>Time</td></tr>
+        <tr><td>Address</td><td>Trainer Name</td><td>Date</td><td>Time</td></tr>
         
       @foreach(session('all_data') as $key => $eachdata)
     
@@ -490,6 +487,9 @@
       <tr>
       <td>
         {{$eachdata->pt_address[$i]}}
+      </td>
+      <td>
+        {{$eachdata->pt_trainer[$i]}}
       </td>
       <td>
         {{$eachdata->pt_date[$i]}}
@@ -647,15 +647,13 @@ function getalltime2(choose_date2)
                 $('<option>', {value: ''}).text('Please select time'));
 
               var plan_time2='';
-              var plan_time_id2='';
-                //slot_time.append($('<option>', {value: ''}).text('Please select time'));
+              var plan_time_id2=0;
               for(var i = 0; i < obj.length; i++)
               {
-                 // $('#session_time2').removeAttr('disabled');
                 plan_time2=obj[i]['all_time2'];
-                plan_time_id2=obj[i]['all_time_id2'];
-                 console.log(plan_time_id2);
-                session_time2.append($('<option>', {value: obj[i]['schedule_id']}).text(plan_time2));
+                plan_time_id2=obj[i]['plan_st_time_id'];
+                 //console.log(plan_time_id2);
+                session_time2.append($('<option>', {value: obj[i]['plan_st_time_id']}).text(plan_time2));
               }
             }
           } // end of ajax success
@@ -668,19 +666,17 @@ function getalltime2(choose_date2)
 <script type="text/javascript">
   // $(document).ready(function(){ 
   function pt_trainer(value) {
-
 $('#loadingimg2').show();
 $('#trainer_id2').find('option').remove();
      var session_time2 = $('#session_time2');
       var trainer_id2 = $('#trainer_id2');
-     // $('#trainer_id2').prop('selectedIndex',0);
        trainer_id2.prop("disabled",false);
      console.log(session_time2);
                      
 $.ajax({
         type: "GET",
         url: "{{route('get_pt_all_trainer')}}",
-        data: {'session_time2': value},
+        data: {'session_time_id2': value,'choose_date': $('#pt_date2').val()},
           
           success: function (data){
             $('#loadingimg2').hide();
@@ -700,9 +696,15 @@ $.ajax({
                  // $('#session_time2').removeAttr('disabled');
                 trainer_id=obj[i]['trainer_id'];
                 trainer_name=obj[i]['trainer_name'];
-                 console.log(trainer_name);
+                 //console.log(trainer_name);
                 trainer_id2.append($('<option>', {value: obj[i]['schedule_id2']}).text(trainer_name));
               }
+            }
+            else
+            {
+              trainer_id2.append(
+                $('<option>', {value: ''}).text('No trainer are available'));
+              trainer_id2.attr("disabled",true);
             }
           } // end of ajax success
         }); //end of ajax call
@@ -711,21 +713,6 @@ $.ajax({
 
 // });
 </script>
-<!-- 
-<script>
-  $(document).ready(function(){
-
-  $('#slot_time').mouseover(function() {
-    if($('#trainer_id').val()=='' || $('#slots_datepicker').val()=='')
-    {
-      return jsfunction();
-    } 
-   
-  });
-
-  });
-
-</script> -->
 
 
 <script>
@@ -759,18 +746,7 @@ $(document).ready(function() {
       jQuery('#main-nav').stellarNav();
     });  
   </script>
-<!--   <script>
-    window.onscroll = function() {myFunction()};
-    var header = document.getElementById("myHeader");
-    var sticky = header.offsetTop;
-    function myFunction() {
-        if (window.pageYOffset >= sticky) {
-          header.classList.add("sticky");
-        } else {
-          header.classList.remove("sticky");
-        }
-    }
-  </script> -->
+
   
 <script>
     $(document).ready(function(){  
@@ -881,6 +857,7 @@ $(document).ready(function() {
 
     function get_alldate(value)
   { 
+
     if(value>0)
     {
       $('#loadingimg').show();
@@ -985,6 +962,12 @@ function getalltime(choose_date)
                 session_time.append($('<option>', {value: obj[i]['schedule_id']}).text(plan_time));
               }
             }
+            else
+            {
+              session_time.append(
+                $('<option>', {value: ''}).text('No time are available for this trainer and date'));
+              session_time.attr('disabled',true); 
+            }
           } // end of ajax success
         }); //end of ajax call
   } //end of function call
@@ -1002,6 +985,8 @@ function getalltime(choose_date)
 
     var address_text=$("#address option:selected").text();
     var session_time_text=$("#session_time option:selected").text();
+    var trainer_name=$("#trainer_id option:selected").text();
+    
 
     var address=$("#address").val();
     var bootcamp_date=$("#pt_date").val();
@@ -1021,7 +1006,7 @@ function getalltime(choose_date)
 
     if(address=='' || bootcamp_date=='' || session_time=='')
     {
-      alert('Please select address, date and time');
+      alert('Please select address, trainer name, date and time');
     }
     else if(total_session==0)
     {
@@ -1037,7 +1022,7 @@ function getalltime(choose_date)
     }
     else
     {
-      $("#add_session_req").append('<div class="conMon"><input readonly  class="form-control" type="text" name="bootcamp_address[]" value="' + address_text + '" />&nbsp;&nbsp;<input readonly  class="form-control" name="bootcamp_date[]" type="text" value="' + bootcamp_date + '" />&nbsp;&nbsp;<input readonly  class="form-control" type="text" name="bootcamp_time[]" value="' + session_time_text + '" /><input type=hidden class="all_previous_date"  readonly name="all_previous_date[]"' + 'id="all_previous_date[]"' + 'value="' + bootcamp_date + '" /><input type="hidden" name="schedule_id[]"' + 'value="' + session_time + '" /></div><br>');
+      $("#add_session_req").append('<div class="col-md-4 col-sm-12 col-xs-12"><input readonly  class="form-control" type="text" name="bootcamp_address[]" value="' + address_text + '" /></div><div class="col-md-4 col-sm-12 col-xs-12"><input readonly  class="form-control" name="bootcamp_trainer[]" type="text" value="' + trainer_name + '" /></div><div class="col-md-2 col-sm-12 col-xs-12"><input readonly  class="form-control" name="bootcamp_date[]" type="text" value="' + bootcamp_date + '" /></div><div class="col-md-2 col-sm-12 col-xs-12"><input readonly  class="form-control" type="text" name="bootcamp_time[]" value="' + session_time_text + '" /></div><input type=hidden class="all_previous_date"  readonly name="all_previous_date[]"' + 'id="all_previous_date[]"' + 'value="' + bootcamp_date + '" /><input type="hidden" name="schedule_id[]"' + 'value="' + session_time + '" /></div><br>');
        $("#bootcamp_date").val('');$("#session_time").val('');
 
       $('#bootcamp_date').attr('disabled',true); $('#session_time').attr('disabled',true);
@@ -1049,14 +1034,8 @@ function getalltime(choose_date)
       
         total_applicable_sessions=parseInt(total_applicable_sessions)+1;
       $('#total_applicable_sessions').val(total_applicable_sessions);
-      
-
-      
-      
+     
     }
-  });
-  $('body').on('click','.btnRemoveMon',function() { 
-    $(this).closest('div.conMon').remove();
   });
 });
   
@@ -1073,6 +1052,8 @@ function getalltime(choose_date)
 
     var address_text=$("#address2 option:selected").text();
     var session_time_text=$("#session_time2 option:selected").text();
+    var trainer_name=$("#trainer_id2 option:selected").text();
+    var schedule_id=$("#trainer_id2").val();
 
     var address=$("#address2").val();
     var bootcamp_date=$("#pt_date2").val();
@@ -1092,7 +1073,7 @@ function getalltime(choose_date)
 
     if(address=='' || bootcamp_date=='' || session_time=='')
     {
-      alert('Please select address, date and time');
+      alert('Please select address, trainer name, date and time');
     }
     else if(total_session==0)
     {
@@ -1108,7 +1089,7 @@ function getalltime(choose_date)
     }
     else
     {
-      $("#add_session_req2").append('<div class="conMon"><input readonly  class="form-control" type="text" name="bootcamp_address[]" value="' + address_text + '" />&nbsp;&nbsp;<input readonly  class="form-control" name="bootcamp_date[]" type="text" value="' + bootcamp_date + '" />&nbsp;&nbsp;<input readonly  class="form-control" type="text" name="bootcamp_time[]" value="' + session_time_text + '" /><input type=hidden class="all_previous_date2"  readonly name="all_previous_date[]"' + 'id="all_previous_date[]"' + 'value="' + bootcamp_date + '" /><input type="hidden" name="schedule_id[]"' + 'value="' + session_time + '" /></div><br>');
+      $("#add_session_req2").append('<div class="col-md-4 col-sm-12 col-xs-12"><input readonly  class="form-control" type="text" name="bootcamp_address[]" value="' + address_text + '" /></div><div class="col-md-4 col-sm-12 col-xs-12"><input readonly  class="form-control" name="bootcamp_trainer[]" type="text" value="' + trainer_name + '" /></div><div class="col-md-2 col-sm-12 col-xs-12"><input readonly  class="form-control" name="bootcamp_date[]" type="text" value="' + bootcamp_date + '" /></div><div class="col-md-2 col-sm-12 col-xs-12"><input readonly  class="form-control" type="text" name="bootcamp_time[]" value="' + session_time_text + '" /></div><input type=hidden class="all_previous_date2"  readonly name="all_previous_date[]"' + 'id="all_previous_date[]"' + 'value="' + bootcamp_date + '" /><input type="hidden" name="schedule_id[]"' + 'value="' + schedule_id + '" /><br>');
      $('#session_time2').find('option').remove();
      $('#trainer_id2').find('option').remove();
        $('#session_time2').attr('disabled',true);
@@ -1127,9 +1108,7 @@ function getalltime(choose_date)
       
     }
   });
-  $('body').on('click','.btnRemoveMon',function() { 
-    $(this).closest('div.conMon').remove();
-  });
+  
 });
   
 </script>

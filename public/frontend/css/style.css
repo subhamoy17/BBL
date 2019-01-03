@@ -6179,12 +6179,12 @@ a.sign-btn2 {
 /*81818*/
 /*82218*/
 #add_session_req input{
-    width: 32.1%;
+    /*width: 32.1%;*/
     display: inline-block;
     margin: 7.5px 0;
 }
 div#add_session_req {
-    padding-left: 30px;
+    /*padding-left: 30px;*/
 }
 .btn-drk2{
     margin-top: 15px;
@@ -6217,12 +6217,12 @@ div#add_session_req {
 
 /*041018 @sumit*/
 #add_session_req2 input{
-    width: 32.1%;
+    /*width: 32.1%;*/
     display: inline-block;
     margin: 7.5px 0;
 }
 div#add_session_req2 {
-    padding-left: 30px;
+    /*padding-left: 30px;*/
 }
 .wthree-blog.padding-min .col-lg-6.col-sm-6.col-xs-12 {
 	padding: 0;

@@ -62,6 +62,53 @@
       <br>
       <a href="{{URL::to($url)}}" style="text-decoration: none;font-size: 13px;font-family: 'Open Sans', sans-serif;background: #fb5b21;padding: 12px;display: inline-block;color: #fff;border-radius: 5px;font-weight: 600; text-transform: capitalize;"><i class="fas fa-check" style="margin-right:3px;"></i> Click to check cancelled session</a>
 
+      @elseif($status=='Boocked PTSession by Customer send to Trainer' )
+      {{$customer_name}} booked the below personal training session. Please see the below details.<br>
+        <table class="table table-bordered">
+  <thead style="background-color:#FACFA4;">
+  <tr style="font-size: 13px;">
+    <th style="vertical-align:top">Address</th>
+    <th style="vertical-align:top">Booked Date</th>
+    <th style="vertical-align:top">Booked Time</th>
+  </tr>
+</thead>
+<tbody>
+  <tr style="font-size: 12px;">
+
+    <td>{{$schedule_address}}</td>
+    <td>{{date('d F Y', strtotime($session_booking_date))}}</td>
+    <td>{{$session_booking_time}}</td>
+  </tr>
+     </tbody> 
+</table>
+<br>
+  <a href="{{URL::to($url)}}" style="text-decoration: none;font-size: 13px;font-family: 'Open Sans', sans-serif;background: #fb5b21;padding: 12px;display: inline-block;color: #fff;border-radius: 5px;font-weight: 600; text-transform: capitalize;"><i class="fas fa-check" style="margin-right:3px;"></i> Click to check</a>
+
+  @elseif($status=='Cancelled PT Session By Customer send to Trainer' )
+      {{$customer_name}} cancelled below personal training session. Please see the below details.<br>
+        <table class="table table-bordered">
+  <thead style="background-color:#FACFA4;">
+  <tr style="font-size: 13px;">
+     <th style="vertical-align:top;">Address</th>
+    <th style="vertical-align:top;">Booked On</th>
+    <th style="vertical-align:top;">Booked Date</th>
+    <th style="vertical-align:top;">Booked Day</th>
+    <th style="vertical-align:top;">Time</th>
+  </tr>
+</thead>
+<tbody>
+   <tr style="font-size: 12px;">
+    <td>{{$schedule_address}}</td>
+    <td>{{date('d F Y', strtotime($session_booked_on))}}</td>
+    <td>{{date('d F Y', strtotime($session_booking_date))}}</td>
+    <td>{{$session_booking_day}}</td>
+    <td>{{$session_booking_time}}</td>
+  </tr>
+    
+     </tbody> 
+</table>
+<br>
+  <a href="{{URL::to($url)}}" style="text-decoration: none;font-size: 13px;font-family: 'Open Sans', sans-serif;background: #fb5b21;padding: 12px;display: inline-block;color: #fff;border-radius: 5px;font-weight: 600; text-transform: capitalize;"><i class="fas fa-check" style="margin-right:3px;"></i> Click to check</a>
       @elseif($status=='Single PT Schedule Delete By Admin To Trainer')
         One personal training schedule is deleted by @if($trainer_id==Auth::user()->id) you.@else {{Auth::user()->name}}.@endif Please see the below details of deleted schedule.<br>
 

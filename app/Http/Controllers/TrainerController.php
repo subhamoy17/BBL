@@ -3582,8 +3582,11 @@ public function checked_bootcampdate(Request $request)
     $end_time=DB::table('slot_times')->where('id',$all_schedules->plan_end_time_id)->value('time');
 
     $available_time=DB::table('slot_times')->get()->all();
+
+    $is_available=DB::table('personal_training_plan_schedules')->where('plan_st_time_id',$all_schedules->plan_st_time_id)->where('plan_date',$all_schedules->plan_date)->where('trainer_id','!=',$all_schedules->trainer_id)->pluck('trainer_id');
+
     $available_trainer=DB::table('users')->whereNull('deleted_at')
-      ->where('is_active',1)->orderby('name','ASC')->get()->all();
+      ->where('is_active',1)->whereNotIn('id',$is_available)->orderby('name','ASC')->get()->all();
 
     $start_time=date('h:i A', strtotime($start_time));
     $end_time=date('h:i A', strtotime($end_time));

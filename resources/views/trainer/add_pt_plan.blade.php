@@ -73,7 +73,7 @@
 				</div>
 				<div class="row">
 					<div class="col-lg-3">
-						<label>Address </label>
+						<label>Address <span class="required_field_color">*</span></label>
 					</div>
 					<div class="col-lg-3">
 						<select name="address_select" id="address_select" class="ui search form-control"
@@ -242,11 +242,6 @@
       alertify.alert('Please select trainer name, start time and end time');
       return false;
     }
-    else if(duplicate_time_id==1)
-    {
-      alertify.alert("This time range is alredy used for this trainer");
-      return false;
-    }
     else if(end_time_id<=parseInt(st_time_id)+3)
     {
       alertify.alert("Start time and end time gap minimum 1 hour is required");
@@ -257,14 +252,19 @@
       alertify.alert("You can't choose same start time and end time for a same trainer");
       return false;
     }
+    else if(duplicate_time_id==1)
+    {
+      alertify.alert("This time range is alredy used for this trainer");
+      return false;
+    }
     else
     {
-       
-      for(var j=st_time_id;j<end_time_id;j++)
+       var m=parseInt(st_time_id);
+      for(m;m<parseInt(end_time_id);m++)
       {
-        duplicate_trainer_time_id.push(trainer_id + '#' + j);
+        duplicate_trainer_time_id.push(trainer_id + '#' + m);
       }
-      alert(duplicate_trainer_time_id);
+
       $("#add_availability_div").append('<div class="row form-group" id = "removeid"><div class="col-lg-3"></div><div class="col-lg-3"><input readonly class="form-control" type="text" value="' + trainer_text + '" /></div>' + '<div class="col-lg-2"><input readonly class="form-control" type="text" value="' + st_time_text + '"/></div>' + '<div class="col-lg-2 sss"><input readonly class="form-control" type="text" value="' + end_time_text + '"/></div>' + '<input readonly type="hidden" name="trainer_id[]" value="' + trainer_id + '"/>'  + '<input readonly type="hidden" name="st_time_id[]" id="st_time_id_check" value="' + st_time_id + '"/>' + '<input readonly type="hidden" name="end_time_id[]" value="' + end_time_id + '"/>' + '<input readonly type="hidden" class="all_previous_data" name="all_previous_data[]" value="' + choosable_data + '"/>' + '<div class="col-lg-2" align="right"> <button id="btnRemove" class="btn btn-theme-colored ptbtn-rmv"><i class="fa fa-remove"></i></button></div></div>'); 
       $("#st_time_id").val('-'); $("#end_time_id").val('-'); $("#trainer_id").val('-');
     }

@@ -48,6 +48,46 @@ class PersonalTrainingSessionNotification extends Notification
     {
       //Log::debug(" Mail ".print_r($this,true));
 
+
+      if($this->notifydata['status']=='Boocked PTSession by Customer')
+        {
+         return (new MailMessage)->view(
+                  'emails.ptsessionrequestemail',
+                  [
+                'enquiredTime' => Carbon::now(),
+                'customer_name'=>$this->notifydata['customer_name'],
+                'customer_email'=>$this->notifydata['customer_email'],
+                'customer_phone'=>$this->notifydata['customer_phone'],
+                'status'=>$this->notifydata['status'],
+                'url'=>$this->notifydata['url'],
+                'all_data'=>$this->notifydata['all_data'],
+                
+                 ]);
+        }
+        
+         else if($this->notifydata['status']=='Cancelled PT Session By Customer')
+        {
+            return (new MailMessage)->view(
+              'emails.ptsessionrequestemail',
+              [
+            'enquiredTime' => Carbon::now(),
+            'customer_name'=>$this->notifydata['customer_name'],
+            'customer_email'=>$this->notifydata['customer_email'],
+            'customer_phone'=>$this->notifydata['customer_phone'],
+            'status'=>$this->notifydata['status'],
+            'url'=>$this->notifydata['url'],
+            'session_booked_on'=>$this->notifydata['session_booked_on'],
+            'session_booking_date'=>$this->notifydata['session_booking_date'],
+            'session_booking_time'=>$this->notifydata['session_booking_time'],
+            'session_booking_day'=>$this->notifydata['session_booking_day'],
+            'cancelled_reason'=>$this->notifydata['cancelled_reason'],                   
+            'schedule_address'=>$this->notifydata['schedule_address']                   
+          ]);
+        }
+
+        else
+        {
+
       return (new MailMessage)->view(
         'emails.ptsessionrequestemail',
         [
@@ -65,4 +105,5 @@ class PersonalTrainingSessionNotification extends Notification
       'schedule_address'=>$this->notifydata['schedule_address']                   
       ]);
     }
+  }
 }

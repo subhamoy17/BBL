@@ -67,6 +67,44 @@ class PersonalTrainingSessionBookingNotification extends Notification
       'trainer_id'=>$this->notifydata['booked_by_id']
       ]);
         }
+        
+        else if($this->notifydata['status']=='Boocked PTSession by Customer send to Trainer')
+        {
+         return (new MailMessage)->view(
+                  'emails.ptsessionrequestemailtotrainer',
+                  [
+                'enquiredTime' => Carbon::now(),
+                'customer_name'=>$this->notifydata['customer_name'],
+                'trainer_name'=>$this->notifydata['trainer_name'],
+                'status'=>$this->notifydata['status'],
+                'url'=>$this->notifydata['url'],
+                'session_booking_date'=>$this->notifydata['session_booking_date'],
+                'session_booking_time'=>$this->notifydata['session_booking_time'],                   
+                'schedule_address'=>$this->notifydata['schedule_address']
+                
+                 ]);
+        }
+        else if($this->notifydata['status']=='Cancelled PT Session By Customer send to Trainer')
+        {
+         return (new MailMessage)->view(
+                  'emails.ptsessionrequestemailtotrainer',
+                  [
+                'enquiredTime' => Carbon::now(),
+                'customer_name'=>$this->notifydata['customer_name'],
+                'trainer_name'=>$this->notifydata['trainer_name'],
+                
+                'status'=>$this->notifydata['status'],
+                'url'=>$this->notifydata['url'],
+                'session_booked_on'=>$this->notifydata['session_booked_on'],
+                'session_booking_date'=>$this->notifydata['session_booking_date'],
+                'session_booking_time'=>$this->notifydata['session_booking_time'],
+                'session_booking_day'=>$this->notifydata['session_booking_day'],
+                                 
+                'schedule_address'=>$this->notifydata['schedule_address']
+                
+                 ]);
+        }
+
         else
         {
       return (new MailMessage)->view(
