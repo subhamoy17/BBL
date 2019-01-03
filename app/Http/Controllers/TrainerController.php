@@ -456,31 +456,31 @@ public function trainerdelete($id)
 
   $remaining_session_request_now=Carbon::now()->toDateString();
 
-    $updatedata1['deleted_at']=Carbon::now();
-    $slot_rquest_trainer=DB::table('personal_training_available_trainer')
-    ->where('trainer_id',$id)
-    ->delete();
 
     $total_schedule=DB::table('personal_training_plan_schedules')
     ->where('personal_training_plan_schedules.trainer_id',$id)
     ->where('personal_training_plan_schedules.status',1)
-    ->where('personal_training_plan_schedules.plan_date','>=',$remaining_session_request_now)->whereNull('personal_training_plan_schedules.deleted_at')
+    ->where('personal_training_plan_schedules.plan_date','>=',$remaining_session_request_now)
     ->get()->all();
 
-  //Log::debug(" total_schedule ".print_r($total_schedule,true));
+  // Log::debug(" total_schedule ".print_r($total_schedule,true));
 
 
     if($total_schedule){
 
-foreach($total_schedule as $key=>$my_schedule)
+  foreach($total_schedule as $key=>$my_schedule)
     {
 
-  // $updatedata['deleted_at']=Carbon::now();
+   $updatedata1['deleted_at']=Carbon::now();
+      $slot_rquest_trainer=DB::table('personal_training_available_trainer')
+    ->where('trainer_id',$my_schedule->trainer_id)
+    ->update($updatedata1);
     $slot_rquest_update=DB::table('personal_training_plan_schedules')
      ->where('plan_date','>=',$remaining_session_request_now)
     ->where('trainer_id',$my_schedule->trainer_id)  
-    ->delete();
+     ->update($updatedata1);
 
+ 
 
     $slot_time=DB::table('slot_times')->where('id',$my_schedule->plan_st_time_id)->first();
 
@@ -490,7 +490,7 @@ foreach($total_schedule as $key=>$my_schedule)
     ->whereNull('personal_training_booking.deleted_at')
     ->get()->all();
 
-      Log::debug(" total_decline ".print_r($total_decline,true));
+      // Log::debug(" total_decline ".print_r($total_decline,true));
 
 
         $customer_id=0; $plan_date='';
@@ -501,7 +501,7 @@ foreach($total_schedule as $key=>$my_schedule)
           ->where('id',$my_total->customer_id)->where('status',1)
           ->whereNull('deleted_at')
           ->orderBy('order_validity_date','DESC')->get()->all();
-         Log::debug(" all_customer ".print_r($all_customer,true));
+         // Log::debug(" all_customer ".print_r($all_customer,true));
 
           $add_session=DB::table('order_details')
           ->where('id',$my_total->order_details_id)->where('status',1)
@@ -540,14 +540,7 @@ foreach($total_schedule as $key=>$my_schedule)
 
   $trainer_details->notify(new TrainerActiveDeactiveNotification($notifydata));
 
-  $slot_rquest_update=DB::table('slot_request')
-  ->where('trainer_id',$id)
-  ->where(function($q) {
-      $q->where('approval_id', 1)
-        ->orWhere('approval_id', 3);
-      })
-  ->where('slot_date','>=',$remaining_session_request_now)
-  ->update(['approval_id'=>4]);
+  
 
   DB::commit();
 
