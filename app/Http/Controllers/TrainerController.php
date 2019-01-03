@@ -323,7 +323,7 @@ public function trainer_active_deactive(Request $request)
         ->update(['deleted_at'=>NULL]);
       }
     }
-  }
+  
 
     $trainer_details=User::find($id);
 
@@ -333,7 +333,7 @@ public function trainer_active_deactive(Request $request)
     $trainer_details->notify(new TrainerActiveDeactiveNotification($notifydata));
 
     return response()->json(1);
-  
+  }  
   elseif($action=="Deactive")
   {
     
