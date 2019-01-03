@@ -84,7 +84,7 @@ $('#bootstrap-slot-data-table').DataTable({
                         </div>
                         @endif
                         @if (session('delete'))
-                            <div class="alert alert-danger">
+                            <div class="alert alert-success">
                                 {{ session('delete') }}
                             </div>
                         @endif

@@ -107,11 +107,14 @@ public function index()
 
      $total_pt_future_booking=DB::table('personal_training_booking')
       ->join('personal_training_plan_schedules','personal_training_plan_schedules.id','personal_training_booking.personal_training_plan_shedules_id')
-      ->whereNull('personal_training_booking.deleted_at')->where('personal_training_plan_schedules.plan_date','>=',$now)->count();
+      ->whereNull('personal_training_booking.deleted_at')
+      ->whereNull('personal_training_plan_schedules.deleted_at')
+      ->where('personal_training_plan_schedules.plan_date','>=',$now)->count();
 
       $total_pt_past_booking=DB::table('personal_training_booking')
       ->join('personal_training_plan_schedules','personal_training_plan_schedules.id','personal_training_booking.personal_training_plan_shedules_id')
       ->whereNull('personal_training_booking.deleted_at')
+      ->whereNull('personal_training_plan_schedules.deleted_at')
       ->where('personal_training_plan_schedules.plan_date','<',$now)->count();
 
       $total_pt_cancelled_booking=DB::table('personal_training_booking')
@@ -120,7 +123,7 @@ public function index()
 
       $total_pt_declined_booking=DB::table('personal_training_booking')
       ->join('personal_training_plan_schedules','personal_training_plan_schedules.id','personal_training_booking.personal_training_plan_shedules_id')
-      ->whereNotNull('personal_training_booking.deleted_at')->where('personal_training_booking.cancelled_by',0)->count();
+      ->whereNotNull('personal_training_booking.deleted_at')->where('personal_training_booking.cancelled_by',0)->whereNull('personal_training_plan_schedules.deleted_at')->count();
 
       $qtrMonth=Carbon::now()->subMonth(3);
       $total_booking_qtr=DB::table('slot_request')->where('slot_date','>=',$qtrMonth)->count();
@@ -291,38 +294,35 @@ public function showlist()
 public function trainer_active_deactive(Request $request)
 {
   
-// Log::debug(":: bootcamp_onlinepayment :: ".print_r($request->all(),true));
   $data=$request->get('data');
   $id=$data['id'];
   $action=$data['action'];
-   $remaining_session_request_now=Carbon::now()->toDateString();
+   
+  $remaining_session_request_now=Carbon::now()->toDateString();
+
 
   if($action=="Active")
   {
     $a=DB::table('users')->where('id',$id)->update(['is_active'=>1]);      
+    //Log::debug(" total_schedule1 ".print_r($total_schedule,true));
     $total_schedule=DB::table('personal_training_plan_schedules')
     ->where('personal_training_plan_schedules.trainer_id',$id)
     ->where('personal_training_plan_schedules.status',1)
-    ->where('personal_training_plan_schedules.plan_date','>=',$remaining_session_request_now)->whereNotNull('personal_training_plan_schedules.deleted_at')
-    ->get()->all();
+    ->where('personal_training_plan_schedules.plan_date','>=',$remaining_session_request_now)
+    ->whereNotNull('personal_training_plan_schedules.deleted_at')->get()->all();
 
-
- // Log::debug(" total_schedule1 ".print_r($total_schedule,true));
-
-if($total_schedule){
-
-foreach($total_schedule as $my_schedule)
+    if(count($total_schedule)>0)
     {
 
-   $slot_rquest_trainer=DB::table('personal_training_available_trainer')
-    ->where('trainer_id',$my_schedule->trainer_id)->update(['deleted_at'=>NULL]);
-    $slot_rquest_update=DB::table('personal_training_plan_schedules')
-    ->where('trainer_id',$my_schedule->trainer_id) 
-    ->where('plan_date','>=',$remaining_session_request_now)
-    ->update(['deleted_at'=>NULL]);
+      foreach($total_schedule as $my_schedule)
+      {
 
+        $slot_rquest_update=DB::table('personal_training_plan_schedules')
+        ->where('trainer_id',$my_schedule->trainer_id)
+        ->where('plan_date','>=',$remaining_session_request_now)
+        ->update(['deleted_at'=>NULL]);
+      }
     }
-
   }
 
     $trainer_details=User::find($id);
@@ -330,17 +330,14 @@ foreach($total_schedule as $my_schedule)
     $notifydata['status']='Trainer Active';
     $notifydata['trainer_name']=$trainer_details->name;
 
-    //Log::debug("Trainer Active notification ".print_r($notifydata,true));
-
     $trainer_details->notify(new TrainerActiveDeactiveNotification($notifydata));
 
     return response()->json(1);
   
-}
   elseif($action=="Deactive")
   {
     
-   $a=DB::table('users')->where('id',$id)->update(['is_active'=>0]);
+    $a=DB::table('users')->where('id',$id)->update(['is_active'=>0]);
     $updatedata1['deleted_at']=Carbon::now();
     $slot_rquest_trainer=DB::table('personal_training_available_trainer')
     ->where('trainer_id',$id)
@@ -349,92 +346,74 @@ foreach($total_schedule as $my_schedule)
     $total_schedule=DB::table('personal_training_plan_schedules')
     ->where('personal_training_plan_schedules.trainer_id',$id)
     ->where('personal_training_plan_schedules.status',1)
-    ->where('personal_training_plan_schedules.plan_date','>=',$remaining_session_request_now)->whereNull('personal_training_plan_schedules.deleted_at')
+    ->where('personal_training_plan_schedules.plan_date','>=',$remaining_session_request_now)
+    ->whereNull('personal_training_plan_schedules.deleted_at')
     ->get()->all();
 
-
- // Log::debug(" total_schedule1 ".print_r($total_schedule,true));
-
-  if($total_schedule){
-
- foreach($total_schedule as $key=>$my_schedule)
+    if(count($total_schedule)>0)
     {
 
+      foreach($total_schedule as $key=>$my_schedule)
+      {
 
+        $updatedata['deleted_at']=Carbon::now();
+        $slot_rquest_update=DB::table('personal_training_plan_schedules')
+        ->where('trainer_id',$my_schedule->trainer_id)
+        ->where('plan_date','>=',$remaining_session_request_now)
+        ->update($updatedata);
 
-    $updatedata['deleted_at']=Carbon::now();
-    $slot_rquest_update=DB::table('personal_training_plan_schedules')
-    ->where('trainer_id',$my_schedule->trainer_id)
-    ->where('plan_date','>=',$remaining_session_request_now)
-    ->update($updatedata);
+        $total_decline=DB::table('personal_training_booking')
+        ->join('personal_training_plan_schedules','personal_training_plan_schedules.id','personal_training_booking.personal_training_plan_shedules_id')
+        ->where('personal_training_booking.personal_training_plan_shedules_id',$my_schedule->id)
+        ->where('cancelled_by',0)
+        ->whereNull('personal_training_booking.deleted_at')
+        ->get()->all();
 
+        //Log::debug(" total_schedule1 ".print_r($total_decline,true));
 
-    $slot_time=DB::table('slot_times')->where('id',$my_schedule->plan_st_time_id)->first();
-
-    $total_decline=DB::table('personal_training_booking')
-    ->where('personal_training_booking.personal_training_plan_shedules_id',$my_schedule->id)
-    ->where('cancelled_by',0)
-    ->whereNull('personal_training_booking.deleted_at')
-    ->get()->all();
-
-      // Log::debug(" total_decline ".print_r($total_decline,true));
-
-
-        // $customer_id=0; $plan_date='';
-        foreach($total_decline as $my_total)
+        if(count($total_decline)>0)
         {
+          foreach($total_decline as $my_total)
+          {
+            //Log::debug(" total_schedule1 ".print_r($total_decline,true));
 
-         $all_customer=DB::table('order_details')
-          ->where('id',$my_total->customer_id)->where('status',1)
-          ->whereNull('deleted_at')
-          ->orderBy('order_validity_date','DESC')->get()->all();
-         Log::debug(" all_customer ".print_r($all_customer,true));
+            $cancelled_booking=DB::table('personal_training_booking')->where('personal_training_plan_shedules_id',$my_total->id)->update(['deleted_at'=>Carbon::now()]);
+            $add_session=DB::table('order_details')
+            ->where('id',$my_total->order_details_id)
+            ->increment('remaining_sessions',1);
 
-          $add_session=DB::table('order_details')
-          ->where('id',$my_total->order_details_id)->where('status',1)
-          ->whereNull('deleted_at')
-         ->increment('remaining_sessions',1);
-    
+            $start_time=DB::table('slot_times')->where('id',$my_total->plan_st_time_id)->value('time');
+            $end_time=DB::table('slot_times')->where('id',$my_total->plan_end_time_id)->value('time');
 
-        $customer_details=Customer::find($my_total->customer_id);
-        $trainer_details=User::find($id);
+            $customer_details=Customer::find($my_total->customer_id);
+            $trainer_details=User::find($id);
 
-        $notifydata['url'] = '/customer/mybooking';
-        $notifydata['customer_name']=$customer_details->name;
-        $notifydata['customer_email']=$customer_details->email;
-        $notifydata['customer_phone']=$customer_details->ph_no;
-        $notifydata['status']='Cancelled Session Request';
-        $notifydata['session_booked_on']=$my_schedule->created_at;
-        $notifydata['session_booking_date']=$my_schedule->plan_date;
-        $notifydata['session_booking_time']=$slot_time->time;
-        $notifydata['trainer_name']=$trainer_details->name;
-        $notifydata['decline_reason']='Deactivate Trainer';
+            $notifydata['url'] = '/customer/mybooking';
+            $notifydata['customer_name']=$customer_details->name;
+            $notifydata['customer_email']=$customer_details->email;
+            $notifydata['customer_phone']=$customer_details->ph_no;
+            $notifydata['status']='Cancelled Session Request';
+            $notifydata['session_booked_on']=$my_total->created_at;
+            $notifydata['session_booking_date']=$my_total->plan_date;
+            $notifydata['session_booking_time']=date('h:i A', strtotime($start_time)).' To '.date('h:i A', strtotime($end_time));
+            $notifydata['trainer_name']=$trainer_details->name;
+            $notifydata['decline_reason']='Deactivate Trainer';
 
-        $customer_details->notify(new SessionRequestNotification($notifydata));
-   
-     
+            $customer_details->notify(new SessionRequestNotification($notifydata));
+          }
+        }
+      }
     }
-
-  }
-}
-
-
-     
- 
-
 
     $trainer_details=User::find($id);
 
     $notifydata['status']='Trainer Deactive';
     $notifydata['trainer_name']=$trainer_details->name;
 
-    Log::debug("Trainer Deactive notification ".print_r($trainer_details,true));
-
     $trainer_details->notify(new TrainerActiveDeactiveNotification($notifydata));
 
     return response()->json(2);
   }
-
 }
 
 public function addtrainer()
@@ -448,12 +427,11 @@ public function trainerdelete($id)
   DB::beginTransaction();
   try{
   
-  $updatedata['deleted_at']=Carbon::now();
+    $updatedata['deleted_at']=Carbon::now();
 
-  DB::table('users')->where('id',$id)->update($updatedata);
+    DB::table('users')->where('id',$id)->update($updatedata);
 
-  $remaining_session_request_now=Carbon::now()->toDateString();
-
+    $remaining_session_request_now=Carbon::now()->toDateString();
 
     $total_schedule=DB::table('personal_training_plan_schedules')
     ->where('personal_training_plan_schedules.trainer_id',$id)
@@ -462,87 +440,72 @@ public function trainerdelete($id)
     ->get()->all();
 
   // Log::debug(" total_schedule ".print_r($total_schedule,true));
-
-
-    if($total_schedule){
-
-  foreach($total_schedule as $key=>$my_schedule)
+    if(count($total_schedule)>0)
     {
 
-   $updatedata1['deleted_at']=Carbon::now();
-      $slot_rquest_trainer=DB::table('personal_training_available_trainer')
-    ->where('trainer_id',$my_schedule->trainer_id)
-    ->update($updatedata1);
-    $slot_rquest_update=DB::table('personal_training_plan_schedules')
-     ->where('plan_date','>=',$remaining_session_request_now)
-    ->where('trainer_id',$my_schedule->trainer_id)  
-     ->update($updatedata1);
+      foreach($total_schedule as $key=>$my_schedule)
+      {
 
- 
+        $updatedata['deleted_at']=Carbon::now();
+        $slot_rquest_update=DB::table('personal_training_plan_schedules')
+        ->where('trainer_id',$my_schedule->trainer_id)
+        ->where('plan_date','>=',$remaining_session_request_now)
+        ->update($updatedata);
 
-    $slot_time=DB::table('slot_times')->where('id',$my_schedule->plan_st_time_id)->first();
+        $total_decline=DB::table('personal_training_booking')
+        ->join('personal_training_plan_schedules','personal_training_plan_schedules.id','personal_training_booking.personal_training_plan_shedules_id')
+        ->where('personal_training_booking.personal_training_plan_shedules_id',$my_schedule->id)
+        ->where('cancelled_by',0)
+        ->whereNull('personal_training_booking.deleted_at')
+        ->get()->all();
 
-    $total_decline=DB::table('personal_training_booking')
-    ->where('personal_training_booking.personal_training_plan_shedules_id',$my_schedule->id)
-    ->where('cancelled_by',0)
-    ->whereNull('personal_training_booking.deleted_at')
-    ->get()->all();
+        //Log::debug(" total_schedule1 ".print_r($total_decline,true));
 
-      // Log::debug(" total_decline ".print_r($total_decline,true));
-
-
-        $customer_id=0; $plan_date='';
-        foreach($total_decline as $my_total)
+        if(count($total_decline)>0)
         {
+          foreach($total_decline as $my_total)
+          {
+            //Log::debug(" total_schedule1 ".print_r($total_decline,true));
 
-         $all_customer=DB::table('order_details')
-          ->where('id',$my_total->customer_id)->where('status',1)
-          ->whereNull('deleted_at')
-          ->orderBy('order_validity_date','DESC')->get()->all();
-         // Log::debug(" all_customer ".print_r($all_customer,true));
+            $cancelled_booking=DB::table('personal_training_booking')->where('personal_training_plan_shedules_id',$my_total->id)->update(['deleted_at'=>Carbon::now()]);
+            $add_session=DB::table('order_details')
+            ->where('id',$my_total->order_details_id)
+            ->increment('remaining_sessions',1);
 
-          $add_session=DB::table('order_details')
-          ->where('id',$my_total->order_details_id)->where('status',1)
-          ->whereNull('deleted_at')
-         ->increment('remaining_sessions',1);
-    
+            $start_time=DB::table('slot_times')->where('id',$my_total->plan_st_time_id)->value('time');
+            $end_time=DB::table('slot_times')->where('id',$my_total->plan_end_time_id)->value('time');
 
-        $customer_details=Customer::find($my_total->customer_id);
-        $trainer_details=User::find($id);
+            $customer_details=Customer::find($my_total->customer_id);
+            $trainer_details=User::find($id);
 
-        $notifydata['url'] = '/customer/mybooking';
-        $notifydata['customer_name']=$customer_details->name;
-        $notifydata['customer_email']=$customer_details->email;
-        $notifydata['customer_phone']=$customer_details->ph_no;
-        $notifydata['status']='Cancelled Session Request';
-        $notifydata['session_booked_on']=$my_schedule->created_at;
-        $notifydata['session_booking_date']=$my_schedule->plan_date;
-        $notifydata['session_booking_time']=$slot_time->time;
-        $notifydata['trainer_name']=$trainer_details->name;
-        $notifydata['decline_reason']='Deactivate Trainer';
+            $notifydata['url'] = '/customer/mybooking';
+            $notifydata['customer_name']=$customer_details->name;
+            $notifydata['customer_email']=$customer_details->email;
+            $notifydata['customer_phone']=$customer_details->ph_no;
+            $notifydata['status']='Cancelled Session Request';
+            $notifydata['session_booked_on']=$my_total->created_at;
+            $notifydata['session_booking_date']=$my_total->plan_date;
+            $notifydata['session_booking_time']=date('h:i A', strtotime($start_time)).' To '.date('h:i A', strtotime($end_time));
+            $notifydata['trainer_name']=$trainer_details->name;
+            $notifydata['decline_reason']='Deactivate Trainer';
 
-        $customer_details->notify(new SessionRequestNotification($notifydata));
-   
-     
+            $customer_details->notify(new SessionRequestNotification($notifydata));
+          }
+        }
+      }
     }
 
-  }
-}
+    $trainer_details=User::find($id);
 
-  $trainer_details=User::find($id);
+    $notifydata['status']='Trainer Delete';
+    $notifydata['trainer_name']=$trainer_details->name;
 
-  $notifydata['status']='Trainer Delete';
-  $notifydata['trainer_name']=$trainer_details->name;
+    //Log::debug("Trainer Delete notification ".print_r($notifydata,true));
 
-  //Log::debug("Trainer Delete notification ".print_r($notifydata,true));
+    $trainer_details->notify(new TrainerActiveDeactiveNotification($notifydata));
 
-  $trainer_details->notify(new TrainerActiveDeactiveNotification($notifydata));
-
-  
-
-  DB::commit();
-
-  return redirect('trainer/trainerlist')->with("delete","You have successfully deleted one trainer");
+    DB::commit();
+    return redirect('trainer/trainerlist')->with("delete","You have successfully deleted one trainer");
   }
   catch(\Exception $e) {
       DB::rollback();
@@ -3492,21 +3455,26 @@ public function checked_bootcampdate(Request $request)
       }
       elseif($request->option=='future_booking')
       {
-        $all_schedules=$all_schedules->join('personal_training_booking','personal_training_booking.personal_training_plan_shedules_id','personal_training_plan_schedules.id')->where('personal_training_plan_schedules.plan_date','>=',$now);
+        $all_schedules=$all_schedules->join('personal_training_booking','personal_training_booking.personal_training_plan_shedules_id','personal_training_plan_schedules.id')->where('personal_training_plan_schedules.plan_date','>=',$now)->whereNull('personal_training_plan_schedules.deleted_at')
+        ->whereNull('personal_training_booking.deleted_at');
       }
       elseif($request->option=='past_booking')
       {
         $all_schedules=$all_schedules->join('personal_training_booking','personal_training_booking.personal_training_plan_shedules_id','personal_training_plan_schedules.id')
         ->whereNull('personal_training_booking.deleted_at')
+        ->whereNull('personal_training_plan_schedules.deleted_at')
         ->where('personal_training_plan_schedules.plan_date','<',$now);
       }
       elseif($request->option=='cancelled_booking')
       {
-        $all_schedules=$all_schedules->join('personal_training_booking','personal_training_booking.personal_training_plan_shedules_id','personal_training_plan_schedules.id')->where('personal_training_booking.cancelled_by','>',0);
+        $all_schedules=$all_schedules->join('personal_training_booking','personal_training_booking.personal_training_plan_shedules_id','personal_training_plan_schedules.id')
+        ->where('personal_training_booking.cancelled_by','>',0);
       }
       elseif($request->option=='declined_booking')
       {
-        $all_schedules=$all_schedules->join('personal_training_booking','personal_training_booking.personal_training_plan_shedules_id','personal_training_plan_schedules.id')->where('personal_training_booking.cancelled_by',0)->whereNotNull('personal_training_booking.deleted_at');
+        $all_schedules=$all_schedules->join('personal_training_booking','personal_training_booking.personal_training_plan_shedules_id','personal_training_plan_schedules.id')
+        ->where('personal_training_booking.cancelled_by',0)
+        ->whereNotNull('personal_training_booking.deleted_at');
       }
       else
       {

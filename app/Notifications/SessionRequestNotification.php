@@ -46,7 +46,7 @@ class SessionRequestNotification extends Notification
      */
     public function toMail($notifiable)
     {
-        Log::debug(" Mail ".print_r($this,true));
+        //Log::debug(" Mail ".print_r($this,true));
 
              if($this->notifydata['status']=='Sent Session Request by trainer')
         {

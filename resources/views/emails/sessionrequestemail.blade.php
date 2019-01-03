@@ -30,12 +30,12 @@
 
 <table style="width:100%">
   <tr>
-    <th>
+    <td>
       <?php 
       if($session_booking_time!= '')
       {
         
-       $session_booking_time=date('h:i A', strtotime($session_booking_time)); 
+       $session_booking_time1=date('h:i A', strtotime($session_booking_time)); 
       }
 
       ?>
@@ -47,11 +47,10 @@
       @else
         Hi {{$customer_name}},
       @endif
-
-      </th>
+    </td>
   </tr>
   <tr>
-    <th> 
+    <td> 
 
       <!-- after sent request to client -->
     @if($status=='Sent Session Request') 
@@ -60,23 +59,23 @@
 
       <!-- after approved request by trainer to client -->
     @if($status=='Approved Session Request')
-    Your booking on {{date('d F Y', strtotime($session_booked_on))}} at {{$session_booking_time}} with trainer {{$trainer_name}} has been approved. <a href="{{URL::to($url)}}">Click Here </a> to see your session booking details.
+    Your booking on {{date('d F Y', strtotime($session_booked_on))}} at {{$session_booking_time1}} with trainer {{$trainer_name}} has been approved. <a href="{{URL::to($url)}}">Click Here </a> to see your session booking details.
     @endif
 
       <!-- after declined request by trainer to client -->
 
     @if($status=='Declined Session Request')
-    Your booking on {{date('d F Y', strtotime($session_booked_on))}} at {{$session_booking_time}} with trainer {{$trainer_name}} has been declined due to {{$decline_reason}}. <a href="{{URL::to($url)}}">Click Here </a> to see your session booking details.
+    Your booking on {{date('d F Y', strtotime($session_booked_on))}} at {{$session_booking_time1}} with trainer {{$trainer_name}} has been declined due to {{$decline_reason}}. <a href="{{URL::to($url)}}">Click Here </a> to see your session booking details.
     @endif
 
       <!-- after deactive/ delete trainer by master trainer to client -->
     @if($status=='Cancelled Session Request')
-    Your booking on {{date('d F Y', strtotime($session_booking_date))}} at {{$session_booking_time}} with trainer {{$trainer_name}} has been cancelled due to {{$decline_reason}}. Our team will get back to you soon for the same. <a href="{{URL::to($url)}}">Click Here </a> to see your session booking details.
+    Your personal tarining session booking on {{date('d F Y', strtotime($session_booking_date))}} at {{$session_booking_time}} with trainer {{$trainer_name}} has been cancelled due to {{$decline_reason}}. Our team will get back to you soon for the same. <a href="{{URL::to($url)}}">Click Here </a> to see your session booking details.
     @endif
 
       <!-- after sent session request by client to trainer -->
     @if($status=='Sent Session Request To Trainer')
-    You have new session request on {{date('d F Y', strtotime($session_booking_date))}} at {{$session_booking_time}} with a client named {{$customer_name}}. Please login your account in BBL Trainer portal to approve the same. <a href="{{URL::to($url)}}">Click Here </a> to see the list of session request.
+    You have new session request on {{date('d F Y', strtotime($session_booking_date))}} at {{$session_booking_time1}} with a client named {{$customer_name}}. Please login your account in BBL Trainer portal to approve the same. <a href="{{URL::to($url)}}">Click Here </a> to see the list of session request.
     @endif
 
       <!-- after delete session request by client -->
@@ -86,28 +85,28 @@
 
       <!-- after delete session request by client to trainer-->
     @if($status=='Delete Session Request To Trainer')
-    {{$customer_name}} has cancelled the session request with you on {{date('d F Y', strtotime($session_booking_date))}} at {{$session_booking_time}} due to some reason. <a href="{{URL::to($url)}}">Click Here </a> to see list of cacellation request.
+    {{$customer_name}} has cancelled the session request with you on {{date('d F Y', strtotime($session_booking_date))}} at {{$session_booking_time1}} due to some reason. <a href="{{URL::to($url)}}">Click Here </a> to see list of cacellation request.
     @endif
 
     <!-- after sent session request by trainer-->
     @if($status=='Sent Session Request by trainer') 
-    Your session on {{date('d F Y', strtotime($session_booking_date))}} at {{$session_booking_time}} has been booked with {{$trainer_name}} by {{$sending_trainer}}. <a href="{{URL::to($url)}}">Click Here </a> to see your session booking details.
+    Your session on {{date('d F Y', strtotime($session_booking_date))}} at {{$session_booking_time1}} has been booked with {{$trainer_name}} by {{$sending_trainer}}. <a href="{{URL::to($url)}}">Click Here </a> to see your session booking details.
     @endif
 
     
 
-    </th> 
+    </td> 
      </tr>
 
      <tr>
-    <th> 
+    <td> 
         Regards,
-        </th> 
+        </td> 
      </tr>
 <tr>
-    <th> 
+    <td> 
         Team BBL
-        </th> 
+        </td> 
      </tr>
 
 </table>
