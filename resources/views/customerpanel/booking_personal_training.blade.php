@@ -875,7 +875,7 @@ $(document).ready(function() {
 
             if(obj.length > 0)
             { 
-            console.log(obj.length);
+            //console.log(obj.length);
               $('#pt_date').removeAttr('disabled');
               $('#pt_date').val('');
               $(".all_date_class").remove();

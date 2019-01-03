@@ -1006,8 +1006,7 @@ public function get_pt_time(Request $request)
   }
 
   $time_details=DB::table('personal_training_plan_schedules')
-  ->join('slot_times','slot_times.id','personal_training_plan_schedules.plan_st_time_id')
-  ->select('slot_times.id as plan_st_time_id','slot_times.time as plan_st_time','personal_training_plan_schedules.id as schedule_id')
+  ->select('personal_training_plan_schedules.id as schedule_id','personal_training_plan_schedules.plan_st_time_id','personal_training_plan_schedules.plan_end_time_id')
   ->where('personal_training_plan_schedules.trainer_id',$request->trainer_id)
   ->where('personal_training_plan_schedules.plan_date',$request->pt_date)
   ->whereNotIn('personal_training_plan_schedules.id',$get_slot_times)
@@ -1015,7 +1014,9 @@ public function get_pt_time(Request $request)
 
   foreach($time_details as $myslot_time)
   {
-    $myslot_time->all_time=date('h:i A', strtotime($myslot_time->plan_st_time));
+    $start_time=DB::table('slot_times')->where('id',$myslot_time->plan_st_time_id)->value('time');
+    $end_time=DB::table('slot_times')->where('id',$myslot_time->plan_end_time_id)->value('time');
+    $myslot_time->all_time=date('h:i A', strtotime($start_time)). ' To '. date('h:i A', strtotime($end_time));
   }
 
   return json_encode($time_details);
@@ -1028,7 +1029,7 @@ public function get_pt_time2(Request $request)
   ->join('slot_times','slot_times.id','personal_training_plan_schedules.plan_st_time_id')
   ->where('personal_training_plan_schedules.plan_date',$request->pt_date2)
   ->whereNull('personal_training_plan_schedules.deleted_at')
-  ->select(DB::raw('distinct(personal_training_plan_schedules.plan_st_time_id)'),'slot_times.time as plan_st_time')
+  ->select(DB::raw('distinct(personal_training_plan_schedules.plan_st_time_id)'),DB::raw('distinct(personal_training_plan_schedules.plan_end_time_id)'))
   ->get()->all();
 
   foreach($time_details2 as $key=>$each_time2)
