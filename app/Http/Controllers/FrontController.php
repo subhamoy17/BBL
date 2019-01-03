@@ -1029,12 +1029,16 @@ public function get_pt_time2(Request $request)
   ->join('slot_times','slot_times.id','personal_training_plan_schedules.plan_st_time_id')
   ->where('personal_training_plan_schedules.plan_date',$request->pt_date2)
   ->whereNull('personal_training_plan_schedules.deleted_at')
-  ->select(DB::raw('distinct(personal_training_plan_schedules.plan_st_time_id)'),DB::raw('distinct(personal_training_plan_schedules.plan_end_time_id)'))
+  ->select(DB::raw('distinct(personal_training_plan_schedules.plan_st_time_id)'),'personal_training_plan_schedules.plan_end_time_id')
   ->get()->all();
+
+  //Log::debug(" Check time_details2 ".print_r($time_details2,true));
 
   foreach($time_details2 as $key=>$each_time2)
   {
-    $each_time2->all_time2=date('h:i A', strtotime($each_time2->plan_st_time));
+    $start_time=DB::table('slot_times')->where('id',$each_time2->plan_st_time_id)->value('time');
+    $end_time=DB::table('slot_times')->where('id',$each_time2->plan_end_time_id)->value('time');
+    $each_time2->all_time2=date('h:i A', strtotime($start_time)). ' To '. date('h:i A', strtotime($end_time));
   }
 
   return json_encode($time_details2);
