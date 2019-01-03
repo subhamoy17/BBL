@@ -291,7 +291,7 @@ public function showlist()
 public function trainer_active_deactive(Request $request)
 {
   
-Log::debug(":: bootcamp_onlinepayment :: ".print_r($request->all(),true));
+// Log::debug(":: bootcamp_onlinepayment :: ".print_r($request->all(),true));
   $data=$request->get('data');
   $id=$data['id'];
   $action=$data['action'];
@@ -311,7 +311,7 @@ Log::debug(":: bootcamp_onlinepayment :: ".print_r($request->all(),true));
     ->get()->all();
 
 
-Log::debug(" total_schedule1 ".print_r($total_schedule,true));
+// Log::debug(" total_schedule1 ".print_r($total_schedule,true));
 
 if($total_schedule){
 
@@ -355,16 +355,16 @@ foreach($total_schedule as $my_schedule)
     ->get()->all();
 
 
- Log::debug(" total_schedule1 ".print_r($total_schedule,true));
+ // Log::debug(" total_schedule1 ".print_r($total_schedule,true));
 
-if($total_schedule){
+  if($total_schedule){
 
-foreach($total_schedule as $key=>$my_schedule)
+ foreach($total_schedule as $key=>$my_schedule)
     {
 
 
 
-  $updatedata['deleted_at']=Carbon::now();
+    $updatedata['deleted_at']=Carbon::now();
     $slot_rquest_update=DB::table('personal_training_plan_schedules')
     ->where('trainer_id',$my_schedule->trainer_id)
     ->where('plan_date','>=',$remaining_session_request_now)
@@ -379,7 +379,7 @@ foreach($total_schedule as $key=>$my_schedule)
     ->whereNull('personal_training_booking.deleted_at')
     ->get()->all();
 
-      Log::debug(" total_decline ".print_r($total_decline,true));
+      // Log::debug(" total_decline ".print_r($total_decline,true));
 
 
         // $customer_id=0; $plan_date='';
