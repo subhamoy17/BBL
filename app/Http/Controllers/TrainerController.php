@@ -293,7 +293,8 @@ public function showlist()
 //trainer ajax function//
 public function trainer_active_deactive(Request $request)
 {
-  
+  DB::beginTransaction();
+  try{
   $data=$request->get('data');
   $id=$data['id'];
   $action=$data['action'];
@@ -331,7 +332,7 @@ public function trainer_active_deactive(Request $request)
     $notifydata['trainer_name']=$trainer_details->name;
 
     $trainer_details->notify(new TrainerActiveDeactiveNotification($notifydata));
-
+    DB::commit();
     return response()->json(1);
   }  
   elseif($action=="Deactive")
@@ -411,9 +412,15 @@ public function trainer_active_deactive(Request $request)
     $notifydata['trainer_name']=$trainer_details->name;
 
     $trainer_details->notify(new TrainerActiveDeactiveNotification($notifydata));
-
+    DB::commit();
     return response()->json(2);
   }
+  }
+  catch(\Exception $e) {
+      DB::rollback();
+      return response()->json('something_wrong');
+  }
+
 }
 
 public function addtrainer()

@@ -76,6 +76,13 @@ $('#bootstrap-slot-data-table').DataTable({
  One request has been deactive successfully.
 </div>
 
+<div id="unsuccess-msg" class="alert alert-danger alert-dismissible" style="display: none;">
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+  <i class="icon fa fa-info-circle"></i>Something went wrong. Please try again.
+</div>
+
+
+
 
 <div class="card-header" style="padding-left: 0px;padding-right: 0px;padding-bottom: 0px;padding-top: 10px;">
                         @if (session('success'))
@@ -313,7 +320,7 @@ alertify.confirm("Are you sure you will be approve this trainer?", function (e) 
  window.location.reload();
       }, 5000);
       }
-      else{
+      else if(data==2){
         console.log("Decline decline");
       console.log(data);
    $(".card-body").css("opacity", .2);
@@ -323,8 +330,16 @@ alertify.confirm("Are you sure you will be approve this trainer?", function (e) 
         $('#decline-msg').hide();
          window.location.reload();
       }, 5000);
-
-
+      }
+      else
+      {
+        $(".card-body").css("opacity", .2);
+        $("#loading-img").css({"display": "block"});
+      $('#unsuccess-msg').show();
+      setTimeout(function(){
+        $('#unsuccess-msg').hide();
+         window.location.reload();
+      }, 5000);
       }
       
     }
