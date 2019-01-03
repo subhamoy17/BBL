@@ -171,10 +171,17 @@
           
 
               @else
-              <tr><td colspan='5' align='center'>
+              @if(Request::get('session')=='pt_session')
+              <tr><td colspan='6' align='center'>
+                No record found
+              </td>
+              </tr>
+             @else
+             <tr><td colspan='5' align='center'>
                 No record found
               </td>
             </tr>
+             @endif
              @endif
           </tbody>
         </table>
