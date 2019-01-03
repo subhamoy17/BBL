@@ -299,11 +299,7 @@ public function trainer_active_deactive(Request $request)
 
   if($action=="Active")
   {
-    $a=DB::table('users')->where('id',$id)->update(['is_active'=>1]);
-        
-    $slot_rquest_trainer=DB::table('personal_training_available_trainer')
-    ->where('trainer_id',$id)->update(['deleted_at'=>NULL]);
-
+    $a=DB::table('users')->where('id',$id)->update(['is_active'=>1]);      
     $total_schedule=DB::table('personal_training_plan_schedules')
     ->where('personal_training_plan_schedules.trainer_id',$id)
     ->where('personal_training_plan_schedules.status',1)
@@ -311,21 +307,23 @@ public function trainer_active_deactive(Request $request)
     ->get()->all();
 
 
-// Log::debug(" total_schedule1 ".print_r($total_schedule,true));
+ // Log::debug(" total_schedule1 ".print_r($total_schedule,true));
 
 if($total_schedule){
 
 foreach($total_schedule as $my_schedule)
     {
 
-  // $updatedata['deleted_at']=Carbon::now();
+   $slot_rquest_trainer=DB::table('personal_training_available_trainer')
+    ->where('trainer_id',$my_schedule->trainer_id)->update(['deleted_at'=>NULL]);
     $slot_rquest_update=DB::table('personal_training_plan_schedules')
-    ->where('trainer_id',$my_schedule->trainer_id)
-    
+    ->where('trainer_id',$my_schedule->trainer_id) 
     ->where('plan_date','>=',$remaining_session_request_now)
     ->update(['deleted_at'=>NULL]);
 
     }
+
+  }
 
     $trainer_details=User::find($id);
 
@@ -337,7 +335,7 @@ foreach($total_schedule as $my_schedule)
     $trainer_details->notify(new TrainerActiveDeactiveNotification($notifydata));
 
     return response()->json(1);
-  }
+  
 }
   elseif($action=="Deactive")
   {
