@@ -71,7 +71,7 @@
 
       <!-- after deactive/ delete trainer by master trainer to client -->
     @if($status=='Cancelled Session Request')
-    Your booking on {{date('d F Y', strtotime($session_booked_on))}} at {{$session_booking_time}} with trainer {{$trainer_name}} has been cancelled due to {{$decline_reason}}. Our team will get back to you soon for the same. <a href="{{URL::to($url)}}">Click Here </a> to see your session booking details.
+    Your booking on {{date('d F Y', strtotime($session_booking_date))}} at {{$session_booking_time}} with trainer {{$trainer_name}} has been cancelled due to {{$decline_reason}}. Our team will get back to you soon for the same. <a href="{{URL::to($url)}}">Click Here </a> to see your session booking details.
     @endif
 
       <!-- after sent session request by client to trainer -->
