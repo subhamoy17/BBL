@@ -72,7 +72,6 @@ if($coupon_id)
   $data['status']='Inprogress';
   $bank_data=DB::table('payment_history')->insert($data);
 
-// DB::table('slots_discount_coupon')->where('id',$coupon_id)->update(['is_active'=>0]);
 
    if ($insert_bank_data && $bank_data)
   {

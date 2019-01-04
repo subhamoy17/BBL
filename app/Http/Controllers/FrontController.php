@@ -2550,15 +2550,15 @@ function couponchecking(Request $request)
     $couponcode=preg_replace('/\s+/', ' ', $couponcode);
      //Log::debug(" data couponcode ".print_r($couponcode,true));
 
-    $newprice=DB::table('slots_discount_coupon')->where('coupon_code',$couponcode)->where('slots_id',$package_id)->where('is_active',1)->whereNull('slots_discount_coupon.deleted_at')->where('slots_discount_coupon.valid_to','>=',$now)->value('discount_price');
-    $coupon_id=DB::table('slots_discount_coupon')->where('coupon_code',$couponcode)->where('slots_id',$package_id)->where('is_active',1)->whereNull('slots_discount_coupon.deleted_at')->value('slots_discount_coupon.id');
-     $ex_coupon_code=DB::table('slots_discount_coupon')->where('coupon_code',$couponcode)->where('slots_id',$package_id)->where('is_active',0)->whereNull('slots_discount_coupon.deleted_at')->value('slots_discount_coupon.coupon_code');
+    $newprice=DB::table('package_discount_coupon')->where('coupon_code',$couponcode)->where('product_id',$package_id)->where('is_active',1)->whereNull('package_discount_coupon.deleted_at')->where('package_discount_coupon.valid_to','>=',$now)->value('discount_price');
+    $coupon_id=DB::table('package_discount_coupon')->where('coupon_code',$couponcode)->where('product_id',$package_id)->where('is_active',1)->whereNull('package_discount_coupon.deleted_at')->value('package_discount_coupon.id');
+     $ex_coupon_code=DB::table('package_discount_coupon')->where('coupon_code',$couponcode)->where('product_id',$package_id)->where('is_active',0)->whereNull('package_discount_coupon.deleted_at')->value('package_discount_coupon.coupon_code');
 //Log::debug(" data startDate ".print_r($newprice,true));
 //Log::debug(" data ex_coupon_code ".print_r($ex_coupon_code,true));
   $new_package_price= $package_price-$newprice;
-$coupon_expair=DB::table('slots_discount_coupon')->where('coupon_code',$couponcode)->where('slots_id',$package_id)->where('is_active',1)->whereNull('slots_discount_coupon.deleted_at')->where('slots_discount_coupon.valid_to','<=',$now)->value('slots_discount_coupon.coupon_code');
+$coupon_expair=DB::table('package_discount_coupon')->where('coupon_code',$couponcode)->where('product_id',$package_id)->where('is_active',1)->whereNull('package_discount_coupon.deleted_at')->where('package_discount_coupon.valid_to','<=',$now)->value('package_discount_coupon.coupon_code');
 
-$wrong_details=DB::table('slots_discount_coupon')->where('coupon_code',$couponcode)->where('slots_id',$package_id)->whereNull('slots_discount_coupon.deleted_at')->count();
+$wrong_details=DB::table('package_discount_coupon')->where('coupon_code',$couponcode)->where('product_id',$package_id)->whereNull('package_discount_coupon.deleted_at')->count();
 // $wrong=$wrong_details==0
 //Log::debug(" data wrong_details ".print_r($wrong_details,true));
     if($newprice)
@@ -2594,15 +2594,10 @@ $wrong_details=DB::table('slots_discount_coupon')->where('coupon_code',$couponco
     $validcoupon=$request->coupon_code;
     $package_id=$request->package_id;
     $validcoupon=preg_replace('/\s+/', ' ', $validcoupon);
-    // Log::debug(" data validcoupon ".print_r($validcoupon,true));
-    // $duplicatecoupon_details=DB::table('slots_discount_coupon')->where('coupon_code',$duplicatecoupon)->where('slots_id',$package_id)->whereNull('slots_discount_coupon.deleted_at')->count();
 
-     $coupon_code=DB::table('slots_discount_coupon')->where('coupon_code',$validcoupon)->where('slots_id',$package_id)->where('is_active',1)->whereNull('slots_discount_coupon.deleted_at')->get()->count();
-     $ex_coupon_code=DB::table('slots_discount_coupon')->where('coupon_code',$validcoupon)->where('slots_id',$package_id)->where('is_active',0)->whereNull('slots_discount_coupon.deleted_at')->value('slots_discount_coupon.coupon_code');
-     // $coupon_expair=DB::table('slots_discount_coupon')->where('coupon_code',$validcoupon)->where('slots_id',$package_id)->where('is_active',1)->whereNull('slots_discount_coupon.deleted_at')->where('slots_discount_coupon.valid_to','<',$now)->get();
-
-//Log::debug(" data coupon_code ".print_r($coupon_code,true));
-//Log::debug(" data ex_coupon_code ".print_r($ex_coupon_code,true));
+     $coupon_code=DB::table('package_discount_coupon')->where('coupon_code',$validcoupon)->where('product_id',$package_id)->where('is_active',1)->whereNull('package_discount_coupon.deleted_at')->get()->count();
+     $ex_coupon_code=DB::table('package_discount_coupon')->where('coupon_code',$validcoupon)->where('product_id',$package_id)->where('is_active',0)->whereNull('package_discount_coupon.deleted_at')->value('package_discount_coupon.coupon_code');
+    
  // Log::debug(" data coupon_expair ".print_r($coupon_expair,true));
 
     if($coupon_code == 1)

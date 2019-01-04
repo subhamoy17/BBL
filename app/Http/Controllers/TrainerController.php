@@ -2721,14 +2721,14 @@ public function coupon_insert(Request $request)
     $startDate=$mode_of_date[0];
     $endDate=$mode_of_date[1];
       
-    $cupon_data['slots_id']=$request->apply_slots; 
+    $cupon_data['product_id']=$request->apply_slots; 
     $cupon_data['coupon_code']=$request->coupon_code;
     $cupon_data['discount_price']=$request->discount_price;
     $cupon_data['valid_from']=$startDate;
     $cupon_data['valid_to']= $endDate;
     $cupon_data['is_active']=$request->is_active;
       
-    DB::table('slots_discount_coupon')->insert($cupon_data);
+    DB::table('package_discount_coupon')->insert($cupon_data);
   
     return redirect('trainer/our_coupon_list')->with("success","You have successfully added one coupon");
   }
@@ -2745,7 +2745,7 @@ function duplicatecoupon(Request $request)
     $apply_slots=$request->apply_slots;
     $duplicatecoupon=preg_replace('/\s+/', ' ', $duplicatecoupon);
     
-    $duplicatecoupon_details=DB::table('slots_discount_coupon')->where('coupon_code',$duplicatecoupon)->where('slots_id',$apply_slots)->whereNull('slots_discount_coupon.deleted_at')->count();
+    $duplicatecoupon_details=DB::table('package_discount_coupon')->where('coupon_code',$duplicatecoupon)->where('product_id',$apply_slots)->whereNull('package_discount_coupon.deleted_at')->count();
 
     if($duplicatecoupon_details>0) {  return 1;  }
     else   {    return 0;  }
@@ -2755,7 +2755,7 @@ public function our_coupon_list(Request $request)
 {
    try{
   
-    $all_cupon_data=DB::table('slots_discount_coupon')->join('slots','slots.id','slots_discount_coupon.slots_id')->select('slots_discount_coupon.id as coupon_id','slots_discount_coupon.coupon_code','slots_discount_coupon.discount_price','slots_discount_coupon.valid_from','slots_discount_coupon.valid_to','slots_discount_coupon.is_active','slots.id as slots_id','slots.slots_name as slots_name')->whereNull('slots_discount_coupon.deleted_at')->get()->all();
+    $all_cupon_data=DB::table('package_discount_coupon')->join('slots','slots.id','package_discount_coupon.product_id')->select('package_discount_coupon.id as coupon_id','package_discount_coupon.coupon_code','package_discount_coupon.discount_price','package_discount_coupon.valid_from','package_discount_coupon.valid_to','package_discount_coupon.is_active','slots.id as slots_id','slots.slots_name as slots_name')->whereNull('package_discount_coupon.deleted_at')->get()->all();
     return view('trainer.viewcoupon')->with(compact('all_cupon_data'));
   }catch(\Exception $e) { 
     return abort(200);
@@ -2768,7 +2768,7 @@ public function our_coupon_edit_view($id)
   
   try{
   
-    $edit_coupondata= DB::table('slots_discount_coupon')->join('slots','slots.id','slots_discount_coupon.slots_id')->select('slots_discount_coupon.id','slots_discount_coupon.coupon_code','slots_discount_coupon.discount_price','slots_discount_coupon.valid_from','slots_discount_coupon.valid_to','slots.id as slots_id','slots.slots_name as slots_name','slots_discount_coupon.is_active')->where('slots_discount_coupon.id',$id)->first();
+    $edit_coupondata= DB::table('package_discount_coupon')->join('slots','slots.id','package_discount_coupon.product_id')->select('package_discount_coupon.id','package_discount_coupon.coupon_code','package_discount_coupon.discount_price','package_discount_coupon.valid_from','package_discount_coupon.valid_to','slots.id as slots_id','slots.slots_name as slots_name','package_discount_coupon.is_active')->where('package_discount_coupon.id',$id)->first();
     return view ("trainer.editcoupon")->with(compact('edit_coupondata'));
   }
   catch(\Exception $e) {
@@ -2786,14 +2786,14 @@ public function coupon_edit_insert(Request $request)
     $startDate=$mode_of_date[0];
     $endDate=$mode_of_date[1];
   
-    $edit_coupondata['slots_id']=$request->slots_id;
+    $edit_coupondata['product_id']=$request->product_id;
     $edit_coupondata['coupon_code']=$request->coupon_code;
     $edit_coupondata['discount_price']=$request->discount_price;
     $edit_coupondata['valid_from']=$startDate;
     $edit_coupondata['valid_to']=$endDate;
     $edit_coupondata['is_active']=$request->is_active;
     $edit_coupondata['updated_at']=Carbon::now();
-    DB::table('slots_discount_coupon')->where('id',$request->id)->update($edit_coupondata);
+    DB::table('package_discount_coupon')->where('id',$request->id)->update($edit_coupondata);
   
     return redirect('trainer/our_coupon_list')->with("success","You have successfully updated one coupon");
   }
@@ -2806,11 +2806,11 @@ function duplicatecoupon_edit(Request $request)
   {
     
     $duplicatecoupon_edit=$request->coupon_code;
-    $apply_slots=$request->slots_id;
+    $apply_slots=$request->product_id;
     $duplicatecoupon_edit=preg_replace('/\s+/', ' ', $duplicatecoupon_edit);
     
-    $edit_coupon=DB::table('slots_discount_coupon')->where('id',$request->id)->where('slots_id',$apply_slots)->whereNull('slots_discount_coupon.deleted_at')->pluck('coupon_code');
-    $all_coupon=DB::table('slots_discount_coupon')->where('id','!=',$request->id)->where('slots_id',$apply_slots)->whereNull('slots_discount_coupon.deleted_at')->get()->all();
+    $edit_coupon=DB::table('package_discount_coupon')->where('id',$request->id)->where('product_id',$apply_slots)->whereNull('package_discount_coupon.deleted_at')->pluck('coupon_code');
+    $all_coupon=DB::table('package_discount_coupon')->where('id','!=',$request->id)->where('product_id',$apply_slots)->whereNull('package_discount_coupon.deleted_at')->get()->all();
 
     $duplicate_cat=0;
     foreach($all_coupon as $each_coupon)
@@ -2830,7 +2830,7 @@ public function coupon_delete($id)
   
     $coupon_delete['deleted_at']=Carbon::now();
 
-    DB::table('slots_discount_coupon')->where('id',$id)->update($coupon_delete);
+    DB::table('package_discount_coupon')->where('id',$id)->update($coupon_delete);
     return redirect('trainer/our_coupon_list')->with("success","You have successfully deleted one coupon");
   }
   catch(\Exception $e) {
@@ -2855,7 +2855,7 @@ function checkdiscount_price_edit(Request $request)
   {
     
     $discount_price=$request->discount_price;
-    $apply_slots=$request->slots_id;
+    $apply_slots=$request->product_id;
     $discount_price=preg_replace('/\s+/', ' ', $discount_price);
 
     $checkdiscount_price=DB::table('slots')->where('slots.id',$apply_slots)->whereNull('slots.deleted_at')->value('slots_price');

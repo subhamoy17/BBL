@@ -164,7 +164,7 @@ required: "Please select a date"
                         <form action="{{route('coupon_edit_insert')}}" method="post" enctype="multipart/form-data" class="form-horizontal" id="couponeditform">
                             <input type="hidden" name="_token" value="{{csrf_token()}}">
                               <input type="hidden" name="id" id="id" value="{{$edit_coupondata->id}}">
-                              <input type="hidden" name="slots_id" id="slots_id" value="{{$edit_coupondata->slots_id}}">
+                              <input type="hidden" name="product_id" id="product_id" value="{{$edit_coupondata->product_id}}">
                           <div class="row form-group">
                             <div class="col col-md-3"><label for="text-input" class=" form-control-label">Package Name<span class="required_field_color">*</span></label></div>
                             <div class="col-12 col-md-9"><input type="text" id="slots_name1" name="slots_name1" placeholder="Title" class="form-control" value="{{$edit_coupondata->slots_name}}" readonly>
