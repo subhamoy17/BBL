@@ -18,8 +18,8 @@
 					<h3>Popular <span>Links</span> </h3>
 					  <ul class="links">
 							<li><a href="{{url('/')}}">Home</a></li>
-							<li><a href="{{url('customer/services')}}">Services</a></li>
-							<li><a href="{{url('customer/pricing')}}">Pricing</a></li>
+							<li><a href="{{url('services')}}">Services</a></li>
+							<li><a href="{{url('pricing')}}">Pricing</a></li>
 						
 						</ul>
 				</div>
@@ -29,9 +29,9 @@
 <div class="col-md-2 gylayouts_footer_grid">
 					<h3>Our <span>Links</span> </h3>
 					  <ul class="links">
-							<li><a href="{{url('customer/about-us')}}">About Us</a></li>
-							<li><a href="{{url('customer/contact-us')}}">Contact Us</a></li>
-							<li><a href="{{url('customer/testimonial')}}">Testimonial</a></li>
+							<li><a href="{{url('about-us')}}">About Us</a></li>
+							<li><a href="{{url('contact-us')}}">Contact Us</a></li>
+							<li><a href="{{url('testimonial')}}">Testimonial</a></li>
 						</ul>
 				</div>
 

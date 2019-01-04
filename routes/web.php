@@ -346,7 +346,6 @@ Route::get('bankpaymentcomplete','BankPaymentController@bank_payment_complete')-
 
 // Front Coupon
 Route::get('cus_couponsearch','FrontController@couponchecking')->name('cus_couponsearch');
-Route::post('valid_coupon','FrontController@validcoupon')->name('valid_coupon');
 //customer profile//
 
 Route::get('profile','FrontController@customer_profile')->name('profile');

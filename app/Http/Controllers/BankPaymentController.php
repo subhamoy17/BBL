@@ -254,7 +254,7 @@ public function bootcamp_bank_payment_success(Request $request)
   ->where('products.id',$request->product_id)->first();
 
   $payment_history_data['payment_id']='BBL'.time();
-  $payment_history_data['amount']=$package_details->total_price;
+  $payment_history_data['amount']=$request->package_price;
   $payment_history_data['payment_mode']='Bank Transfer';
   $payment_history_data['status']='Inprogress';
 
@@ -302,7 +302,7 @@ public function bootcamp_bank_payment_success(Request $request)
   $order_data['no_of_sessions']=$package_details->total_sessions;
   $order_data['remaining_sessions']=0;
   $order_data['price_session_or_month']=$package_details->price_session_or_month;
-  $order_data['total_price']=$package_details->total_price;
+  $order_data['total_price']=$request->package_price;
   $order_data['validity_value']=$package_details->validity_value;
   $order_data['validity_duration']=$package_details->validity_duration;
   $order_data['contract']=$package_details->contract;
@@ -320,7 +320,7 @@ public function bootcamp_bank_payment_success(Request $request)
     $notifydata['no_of_sessions'] =$package_details->total_sessions;
     $notifydata['product_validity'] =$order_data['order_validity_date'];
     $notifydata['product_purchase_date'] =Carbon::now()->toDateString();
-    $notifydata['product_amount'] =$package_details->total_price;
+    $notifydata['product_amount'] =$request->package_price;
     $notifydata['order_id'] =$payment_history_data['payment_id'];
     $notifydata['payment_mode'] ='Bank Transfer';
     $notifydata['url'] = '/customer/purchased-history';
@@ -359,7 +359,7 @@ public function pt_bank_payment_success(Request $request)
   ->where('products.id',$request->product_id)->first();
 
   $payment_history_data['payment_id']='BBL'.time();
-  $payment_history_data['amount']=$package_details->total_price;
+  $payment_history_data['amount']=$request->package_price;
   $payment_history_data['payment_mode']='Bank Transfer';
   $payment_history_data['status']='Inprogress';
 
@@ -396,7 +396,7 @@ public function pt_bank_payment_success(Request $request)
   $order_data['no_of_sessions']=$package_details->total_sessions;
   $order_data['remaining_sessions']=0;
   $order_data['price_session_or_month']=$package_details->price_session_or_month;
-  $order_data['total_price']=$package_details->total_price;
+  $order_data['total_price']=$request->package_price;
   $order_data['validity_value']=$package_details->validity_value;
   $order_data['validity_duration']=$package_details->validity_duration;
   $order_data['contract']=$package_details->contract;
@@ -414,7 +414,7 @@ public function pt_bank_payment_success(Request $request)
     $notifydata['no_of_sessions'] =$package_details->total_sessions;
     $notifydata['product_validity'] =$order_data['order_validity_date'];
     $notifydata['product_purchase_date'] =$order_data['order_purchase_date'];
-    $notifydata['product_amount'] =$package_details->total_price;
+    $notifydata['product_amount'] =$request->package_price;
     $notifydata['order_id'] =$payment_history_data['payment_id'];
     $notifydata['payment_mode'] ='Bank Transfer';
     $notifydata['url'] = '/customer/purchased-history';

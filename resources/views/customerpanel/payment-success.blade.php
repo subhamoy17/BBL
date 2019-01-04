@@ -19,7 +19,8 @@
     Session::forget('success_bootcamp_stripe');
     Session::forget('order_id');
     ?>
-
+    <a href="{{url('customer/purchased-history')}}" class="btbb">Back</a>
+    <a href="{{url('pricing/bc')}}" class="btbb">Purchase Another Bootcamp Package</a>
     @endif
 
     @if ($message = Session::get('failed_bootcamp_stripe'))
@@ -34,7 +35,8 @@
     <?php 
     Session::forget('failed_bootcamp_stripe');
     ?>
-
+    <a href="{{url('customer/purchased-history')}}" class="btbb">Back</a>
+    <a href="{{url('pricing/bc')}}" class="btbb">Purchase Another Bootcamp Package</a>
     @endif
 
     @if ($message = Session::get('success_bootcamp_bank'))
@@ -54,6 +56,8 @@
     Session::forget('success_bootcamp_bank');
     Session::forget('payment_id');
     ?>
+    <a href="{{url('customer/purchased-history')}}" class="btbb">Back</a>
+    <a href="{{url('pricing/bc')}}" class="btbb">Purchase Another Bootcamp Package</a>
     @endif
 
     @if ($message = Session::get('success_pt_stripe'))
@@ -71,7 +75,8 @@
     Session::forget('success_pt_stripe');
     Session::forget('order_id');
     ?>
-
+    <a href="{{url('customer/purchased-history')}}" class="btbb">Back</a>
+    <a href="{{url('pricing/pt')}}" class="btbb">Purchase Another PT Package</a>
     @endif
 
     @if ($message = Session::get('failed_pt_stripe'))
@@ -87,6 +92,8 @@
     Session::forget('failed_pt_stripe');
     ?>
 
+    <a href="{{url('customer/purchased-history')}}" class="btbb">Back</a>
+    <a href="{{url('pricing/pt')}}" class="btbb">Purchase Another PT Package</a>
     @endif
 
     @if ($message = Session::get('success_pt_bank'))
@@ -106,10 +113,9 @@
     Session::forget('success_pt_bank');
     Session::forget('payment_id');
     ?>
-    @endif
-
     <a href="{{url('customer/purchased-history')}}" class="btbb">Back</a>
-    <a href="{{url('customer/pricing')}}" class="btbb">Purchase Another Package</a>
+    <a href="{{url('pricing/pt')}}" class="btbb">Purchase Another PT Package</a>
+    @endif
 
 	
 </div>

@@ -116,7 +116,6 @@
             @if(Request::get('option')=='future_booking' ||  Request::get('option')=='')
 
             <?php
-            date_default_timezone_set('Asia/Kolkata');
             $current_time = date("Y-m-d H:i:s");
             $bootcamp_cancel_time=$eachbooking->plan_date.' '.$eachbooking->plan_st_time;
             $bootcamp_cancel_time = date("Y-m-d H:i:s", strtotime('-24 hours', strtotime($bootcamp_cancel_time)));
@@ -153,7 +152,6 @@
               @if(Request::get('option')=='future_booking' ||  Request::get('option')=='')
 
               <?php
-              date_default_timezone_set('Asia/Kolkata');
               $current_time = date("Y-m-d H:i:s");
               $pt_cancel_time=$eachbooking1->plan_date.' '.$eachbooking1->plan_st_time;
               $pt_cancel_time = date("Y-m-d H:i:s", strtotime('-24 hours', strtotime($pt_cancel_time)));

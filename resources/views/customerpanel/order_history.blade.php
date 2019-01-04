@@ -49,8 +49,17 @@
           <tr>
             <!--  -->
             <td>{{$myorder->training_type}}</td>
-            <td> <i class="fa fa-gbp"></i> {{$myorder->total_price}}</td>
-           
+           <td>
+            @if($myorder->orginal_package_price > $myorder->total_price && $myorder->payment_type_id==1)
+            <span class="line_t2"> <i class="fa fa-gbp"></i> {{$myorder->orginal_package_price}}</span> <br>
+             <i class="fa fa-gbp"></i> {{$myorder->total_price}}
+             @elseif($myorder->price_session_or_month > $myorder->total_price && $myorder->payment_type_id==2)
+            <span class="line_t2"> <i class="fa fa-gbp"></i> {{$myorder->price_session_or_month}}</span> <br>
+             <i class="fa fa-gbp"></i> {{$myorder->total_price}}
+             @else
+             <i class="fa fa-gbp"></i> {{$myorder->total_price}} 
+             @endif
+             </td>
           <td>{{date('d F Y', strtotime($myorder->order_purchase_date))}}</td>
           @if($myorder->order_validity_date < "2050-12-30")
           <td>

@@ -10,17 +10,6 @@
                         
                         <div class="form-box form-pur">
                             <div class="row">
-                                <!-- <div class="col-md-4 col-sm-12 col-xs-12">
-                                    <div class="form-group">
-										<h5>Customer Details</h5>
-                                      <label>Name - <h6>{{Auth::guard('customer')->user()->name}}</h6></label>
-                                      
-                                      <label>Email - <h6>{{Auth::guard('customer')->user()->email}}</h6></label>
-                                      
-                                      <label>Phone - <h6>{{Auth::guard('customer')->user()->ph_no}}</h6></label>
-                                       
-                                    </div>
-                                </div> -->
               <div class="col-md-6 col-sm-12 col-xs-12">
                    <div class="packg-dt">
                    		<h5>Product Details</h5>
@@ -30,6 +19,9 @@
                                       <span class="rev-line">
                                       <label class="line-t">Price - <h6 class="line-t"><i class="fa fa-gbp"></i> {{$package_details->total_price}}</h6></label>
                                       </span>
+                                      <div id="new_price" style="display: none;">
+                                      <label id="new_p">Discounted Price - <h6><i class="fa fa-gbp"></i></h6></label>
+                                      </div>
                                       <label>No. Of Sessions - <h6>{{$package_details->total_sessions}}</h6></label>
                                        
                                        <label>Validity - <h6>{{$package_details->validity? $package_details->validity.' Days' : 'N/A'}}</h6></label>
@@ -60,6 +52,25 @@
 
                               <label for="selector1" id="check_error" class="error coupon-err-st" style="display:none;"></label>
                               <div class="clear"></div>
+                                     <div id="app_btn">                                        
+                                  <input type="text" id="coupon_code" class="coupon_st" name="coupon_code" placeholder="Coupon Code" onkeyup=" return jsnull()">
+                                       <input type="hidden" name="package_id" id="package_id" value="{{$package_details->product_id}}"> 
+                                        <input type="hidden" name="package_price" id="package_price" value="{{$package_details->total_price}}">  
+                                        <input type="hidden" id="original_package_price" value="{{$package_details->total_price}}">  
+                                         <input type="hidden" name="new_package_price" id="new_package_price">
+                                         <input type="hidden" name="coupon_id" id="coupon_id">                     
+                                  <button type="button" class="coupon_sub" id="coupon_sub"  style="margin-left: 6px;">Apply</button>
+                                  </div>
+                                  <!-- <div class="clearfix"></div> -->
+                                   <span id='loadingimg2' style="display: none;" class="load_img">
+                                <span>
+                              <img src="{{asset('backend/images/loader_session_time.gif')}}" style="width: 42px;margin-left: -5px;"/>
+                            </span>
+                            </span> 
+                                  
+                                <div  id="invalid_coupon"></div>
+                                <div id="success_coupon"></div>
+
                           <div class="form-group btn-wrp">
                     <input name="form_botcheck" class="form-control" value="" type="hidden">
                         <button type="submit" id="aqb" class="btn btn-dark btn-theme-colored btn-flat">Submit</button>

@@ -270,9 +270,6 @@ public function purchase_payment_mode(Request $request)
   $coupon_code=$request->coupon_code;
   $coupon_id=$request->coupon_id;
   $new_package_price=$request->new_package_price;
-//Log::debug(" coupon_code ".print_r($coupon_code,true));
-//Log::debug(" coupon_id ".print_r($coupon_id,true));
-   //Log::debug(" new_package_price ".print_r($new_package_price,true));
   $slot_details=DB::table('slots')->where('id',$request->id)->first();
 
 if($request->new_package_price)
@@ -1649,7 +1646,8 @@ public function bootcamp_purchase_payment_mode(Request $request)
   
 
   try{
-  $this->cart_delete_customer();
+
+    $package_price=$request->package_price;
 
   $package_details=DB::table('products')
   ->join('training_type','training_type.id','products.training_type_id')
@@ -1662,11 +1660,11 @@ public function bootcamp_purchase_payment_mode(Request $request)
 
   if($request->selector1=='Stripe')
   {
-    return view('customerpanel.bootcamp_online_payment')->with(compact('package_details'));
+    return view('customerpanel.bootcamp_online_payment')->with(compact('package_details','package_price'));
   }
   if($request->selector1=='Bank Transfer')
   {
-    return view('customerpanel.bootcamp_bank_payment')->with(compact('package_details'));
+    return view('customerpanel.bootcamp_bank_payment')->with(compact('package_details','package_price'));
   }
 
   }
@@ -1698,7 +1696,7 @@ public function bootcamp_strip_payment(Request $request)
         ]);
     
          $payment_details = \Stripe\Charge::create ( array (
-                  "amount" => intval($package_details->total_price)*100,
+                  "amount" => $request->package_price*100,
                   "currency" => "gbp",
                   "source" => $request->input ( 'stripeToken' ), // obtained with Stripe.js
                   "description" =>$package_details->product_name
@@ -1707,7 +1705,7 @@ public function bootcamp_strip_payment(Request $request)
 
     $payment_history_data['payment_id']=$payment_details->id;
     $payment_history_data['currency']='GBP';
-    $payment_history_data['amount']=$package_details->total_price;
+    $payment_history_data['amount']=$request->package_price;
     $payment_history_data['payment_mode']='Stripe';
     $payment_history_data['status']='Success';
 
@@ -1730,7 +1728,7 @@ public function bootcamp_strip_payment(Request $request)
     $order_data['no_of_sessions']=$package_details->total_sessions;
     $order_data['remaining_sessions']=$package_details->total_sessions;
     $order_data['price_session_or_month']=$package_details->price_session_or_month;
-    $order_data['total_price']=$package_details->total_price;
+    $order_data['total_price']=$request->package_price;
     $order_data['validity_value']=$package_details->validity_value;
     $order_data['validity_duration']=$package_details->validity_duration;
     $order_data['contract']=$package_details->contract;
@@ -1751,7 +1749,7 @@ public function bootcamp_strip_payment(Request $request)
     $notifydata['no_of_sessions'] =$package_details->total_sessions;
     $notifydata['product_validity'] =$order_data['order_validity_date'];
     $notifydata['product_purchase_date'] =$order_data['order_purchase_date'];
-    $notifydata['product_amount'] =$package_details->total_price;
+    $notifydata['product_amount'] =$request->package_price;
     $notifydata['order_id'] =$payment_details->id;
     $notifydata['payment_mode'] ='Stripe';
     $notifydata['url'] = '/customer/purchased-history';
@@ -1769,7 +1767,7 @@ public function bootcamp_strip_payment(Request $request)
 
       $payment_history_data['payment_id']='';
       $payment_history_data['currency']='GBP';
-      $payment_history_data['amount']=$package_details->total_price;
+      $payment_history_data['amount']=$request->package_price;
       $payment_history_data['payment_mode']='Stripe';
       $payment_history_data['status']='Failed';
 
@@ -1792,7 +1790,7 @@ public function bootcamp_strip_payment(Request $request)
       $order_data['no_of_sessions']=$package_details->total_sessions;
       $order_data['remaining_sessions']=0;
       $order_data['price_session_or_month']=$package_details->price_session_or_month;
-      $order_data['total_price']=$package_details->total_price;
+      $order_data['total_price']=$request->package_price;
       $order_data['validity_value']=$package_details->validity_value;
       $order_data['validity_duration']=$package_details->validity_duration;
       $order_data['contract']=$package_details->contract;
@@ -1809,7 +1807,7 @@ public function bootcamp_strip_payment(Request $request)
       $notifydata['no_of_sessions'] =$package_details->total_sessions;
       $notifydata['product_validity'] =$order_data['order_validity_date'];
       $notifydata['product_purchase_date'] =$order_data['order_purchase_date'];
-      $notifydata['product_amount'] =$package_details->total_price;
+      $notifydata['product_amount'] =$request->package_price;
       $notifydata['order_id'] =' ';
       $notifydata['payment_mode'] ='Stripe';
       $notifydata['url'] = '/customer/purchased-history';
@@ -1829,12 +1827,8 @@ public function bootcamp_strip_payment(Request $request)
 
 public function bootcampstripepaymentsuccess()
 {
-  $this->cart_delete_customer();
   return view('customerpanel.payment-success');
 }
-
-
-
 
 public function booking_bootcamp()
 {
@@ -1949,7 +1943,6 @@ public function booking_bootcamp()
     return view('customerpanel.booking_bootcamp')->with(compact('bootcampaddress','order_details','no_of_sessions','date_details'));
   }
 
-  //Log::debug(" data couponcode ".print_r(count($order_details),true));
   }
 
     catch(\Exception $e) {
@@ -2540,79 +2533,70 @@ public function cart_delete_customer()
   $cart_delete=DB::table('cart_slot_request')->where('request_customer_id',Auth::guard('customer')->user()->id)->delete();
 }
 
-function couponchecking(Request $request)
+public function couponchecking(Request $request)
   {
     $now = Carbon::now()->toDateString();
-    Log::debug(" data couponchecking ".print_r($request->all(),true));
+
     $couponcode=$request->coupon_code;
     $package_id=$request->package_id;
     $package_price=$request->package_price;
     $couponcode=preg_replace('/\s+/', ' ', $couponcode);
-     //Log::debug(" data couponcode ".print_r($couponcode,true));
+     
+    //Log::debug(" data newprice ".print_r($request->all(),true));
 
-    $newprice=DB::table('package_discount_coupon')->where('coupon_code',$couponcode)->where('product_id',$package_id)->where('is_active',1)->whereNull('package_discount_coupon.deleted_at')->where('package_discount_coupon.valid_to','>=',$now)->value('discount_price');
-    $coupon_id=DB::table('package_discount_coupon')->where('coupon_code',$couponcode)->where('product_id',$package_id)->where('is_active',1)->whereNull('package_discount_coupon.deleted_at')->value('package_discount_coupon.id');
-     $ex_coupon_code=DB::table('package_discount_coupon')->where('coupon_code',$couponcode)->where('product_id',$package_id)->where('is_active',0)->whereNull('package_discount_coupon.deleted_at')->value('package_discount_coupon.coupon_code');
-//Log::debug(" data startDate ".print_r($newprice,true));
-//Log::debug(" data ex_coupon_code ".print_r($ex_coupon_code,true));
-  $new_package_price= $package_price-$newprice;
-$coupon_expair=DB::table('package_discount_coupon')->where('coupon_code',$couponcode)->where('product_id',$package_id)->where('is_active',1)->whereNull('package_discount_coupon.deleted_at')->where('package_discount_coupon.valid_to','<=',$now)->value('package_discount_coupon.coupon_code');
 
-$wrong_details=DB::table('package_discount_coupon')->where('coupon_code',$couponcode)->where('product_id',$package_id)->whereNull('package_discount_coupon.deleted_at')->count();
-// $wrong=$wrong_details==0
-//Log::debug(" data wrong_details ".print_r($wrong_details,true));
-    if($newprice)
+    $newprice=DB::table('package_discount_coupon')
+    ->where('coupon_code',$couponcode)->where('product_id',$package_id)->where('is_active',1)->whereNull('package_discount_coupon.deleted_at')->where('package_discount_coupon.valid_to','>=',$now)
+    ->first();
+
+    //Log::debug(" data newprice ".print_r($newprice,true));
+
+    if($newprice && $newprice->is_generic==1)
     {
-      
-      return response()->json(['new_package_price'=>$new_package_price, 'coupon_id'=>$coupon_id,'ex_coupon_code'=>$ex_coupon_code, 'coupon_expair'=>$coupon_expair,'now'=>$now, 'wrong_details'=>$wrong_details]);
+      $newprice=$newprice->discount_price;
     }
-    else if($ex_coupon_code)
+    elseif($newprice && $newprice->is_generic==0)
     {
-      
-      return response()->json(['ex_coupon_code'=>$ex_coupon_code]);
+      $is_specific=DB::table('coupon_specific_customers')
+      ->where('package_discount_coupon_id',$newprice->id)
+      ->where('customer_id',Auth::guard('customer')->user()->id)
+      ->first();
+      if(!empty($is_specific))
+      {
+        $newprice=$newprice->discount_price;
+      }
+      else
+      {
+        $newprice=0;
+      }
+    }
+    else
+    {
+      $newprice=0;
+    }
+
+     $is_deactivated=DB::table('package_discount_coupon')->where('coupon_code',$couponcode)->where('product_id',$package_id)->where('is_active',0)->whereNull('package_discount_coupon.deleted_at')->value('package_discount_coupon.coupon_code');
+
+    $new_package_price= $newprice;
+
+    $coupon_expair=DB::table('package_discount_coupon')->where('coupon_code',$couponcode)->where('product_id',$package_id)->where('is_active',1)->whereNull('package_discount_coupon.deleted_at')->where('package_discount_coupon.valid_to','<',$now)->value('package_discount_coupon.coupon_code');
+
+    if($newprice>0)
+    {
+      return response()->json(['new_package_price'=>$new_package_price,'is_deactivated'=>$is_deactivated, 'coupon_expair'=>$coupon_expair,'now'=>$now]);
+    }
+    else if($is_deactivated)
+    {
+      return response()->json(['is_deactivated'=>$is_deactivated]);
     }
      else if($coupon_expair)
     {
-      
       return response()->json(['coupon_expair'=>$coupon_expair]);
     }
-     else if($wrong_details<1)
-    {
-      
-      return response()->json(['wrong_details'=>$wrong_details]);
-    }
     else
     {
-       return response()->json(0);
+      return response()->json(0);
     }
-  }
-
-
-  public function validcoupon(Request $request)
-  {
-     $now = Carbon::now()->toDateString();
-    $validcoupon=$request->coupon_code;
-    $package_id=$request->package_id;
-    $validcoupon=preg_replace('/\s+/', ' ', $validcoupon);
-
-     $coupon_code=DB::table('package_discount_coupon')->where('coupon_code',$validcoupon)->where('product_id',$package_id)->where('is_active',1)->whereNull('package_discount_coupon.deleted_at')->get()->count();
-     $ex_coupon_code=DB::table('package_discount_coupon')->where('coupon_code',$validcoupon)->where('product_id',$package_id)->where('is_active',0)->whereNull('package_discount_coupon.deleted_at')->value('package_discount_coupon.coupon_code');
-    
- // Log::debug(" data coupon_expair ".print_r($coupon_expair,true));
-
-    if($coupon_code == 1)
-    {
-      return 2;
-    }
-   else if($ex_coupon_code)
-    {
-      return 3;
-    }    
-    else
-    {
-      return 1;
-    }
-   
   }
 
 
@@ -2672,7 +2656,7 @@ catch(\Exception $e) {
   try{
  $this->cart_delete_customer();
  
- $my_order_history=DB::table('order_details')->join('products','products.id','order_details.product_id')->join('training_type','training_type.id','products.training_type_id')->join('payment_type','payment_type.id','products.payment_type_id')->join('payment_history','payment_history.id','order_details.payment_id')->select('order_details.id as order_details_id','order_details.customer_id as customer_id','order_details.order_purchase_date as order_purchase_date','order_details.remaining_sessions as remaining_sessions','order_details.payment_type as payment_type','order_details.training_type as training_type','order_details.order_validity_date as order_validity_date','order_details.payment_option as payment_option','order_details.status as status','products.training_type_id as training_type_id', 'products.total_sessions as total_sessions', 'order_details.price_session_or_month as price_session_or_month','products.id as product_id','order_details.total_price as total_price','products.validity_value as validity_value','products.validity_duration as validity_duration','training_type.training_name as training_name','payment_type.payment_type_name as payment_type_name','payment_history.status as payment_status')->where('order_details.customer_id',Auth::guard('customer')->user()->id)->whereNull('order_details.deleted_at');
+ $my_order_history=DB::table('order_details')->join('products','products.id','order_details.product_id')->join('training_type','training_type.id','products.training_type_id')->join('payment_type','payment_type.id','products.payment_type_id')->join('payment_history','payment_history.id','order_details.payment_id')->select('order_details.id as order_details_id','order_details.customer_id as customer_id','order_details.order_purchase_date as order_purchase_date','order_details.remaining_sessions as remaining_sessions','order_details.payment_type as payment_type','order_details.training_type as training_type','order_details.order_validity_date as order_validity_date','order_details.payment_option as payment_option','order_details.status as status','products.training_type_id as training_type_id', 'products.total_sessions as total_sessions', 'order_details.price_session_or_month as price_session_or_month','products.id as product_id','order_details.total_price as total_price','products.validity_value as validity_value','products.validity_duration as validity_duration','training_type.training_name as training_name','payment_type.payment_type_name as payment_type_name','payment_history.status as payment_status','products.price_session_or_month','products.total_price as orginal_package_price','products.payment_type_id')->where('order_details.customer_id',Auth::guard('customer')->user()->id)->whereNull('order_details.deleted_at');
  
   
   if(isset($request->start_date) && isset($request->end_date) && !empty($request->start_date) && !empty($request->end_date))
@@ -2684,7 +2668,7 @@ catch(\Exception $e) {
    }
   $my_order_history=$my_order_history->orderby('order_details.id','DESC')->paginate(10);
 
-     Log::debug(" data my_order_history ".print_r($my_order_history,true));
+     
   return view('customerpanel.order_history')->with(compact('my_order_history'));
 }
 
@@ -2726,8 +2710,8 @@ public function pt_purchase_payment_mode(Request $request)
   
 
   try{
-  $this->cart_delete_customer();
 
+    $package_price=$request->package_price;
   $package_details=DB::table('products')
   ->join('training_type','training_type.id','products.training_type_id')
   ->join('payment_type','payment_type.id','products.payment_type_id')
@@ -2739,11 +2723,11 @@ public function pt_purchase_payment_mode(Request $request)
 
   if($request->selector1=='Stripe')
   {
-    return view('customerpanel.pt_online_payment')->with(compact('package_details'));
+    return view('customerpanel.pt_online_payment')->with(compact('package_details','package_price'));
   }
   if($request->selector1=='Bank Transfer')
   {
-    return view('customerpanel.pt_bank_payment')->with(compact('package_details'));
+    return view('customerpanel.pt_bank_payment')->with(compact('package_details','package_price'));
   }
 
   }
@@ -2775,7 +2759,7 @@ public function pt_strip_payment(Request $request)
         ]);
     
          $payment_details = \Stripe\Charge::create ( array (
-                  "amount" => intval($package_details->total_price)*100,
+                  "amount" => $request->package_price*100,
                   "currency" => "gbp",
                   "source" => $request->input ( 'stripeToken' ), // obtained with Stripe.js
                   "description" =>$package_details->product_name
@@ -2784,7 +2768,7 @@ public function pt_strip_payment(Request $request)
 
     $payment_history_data['payment_id']=$payment_details->id;
     $payment_history_data['currency']='GBP';
-    $payment_history_data['amount']=$package_details->total_price;
+    $payment_history_data['amount']=$request->package_price;
     $payment_history_data['payment_mode']='Stripe';
     $payment_history_data['status']='Success';
 
@@ -2807,7 +2791,7 @@ public function pt_strip_payment(Request $request)
     $order_data['no_of_sessions']=$package_details->total_sessions;
     $order_data['remaining_sessions']=$package_details->total_sessions;
     $order_data['price_session_or_month']=$package_details->price_session_or_month;
-    $order_data['total_price']=$package_details->total_price;
+    $order_data['total_price']=$request->package_price;
     $order_data['validity_value']=$package_details->validity_value;
     $order_data['validity_duration']=$package_details->validity_duration;
     $order_data['contract']=$package_details->contract;
@@ -2828,7 +2812,7 @@ public function pt_strip_payment(Request $request)
     $notifydata['no_of_sessions'] =$package_details->total_sessions;
     $notifydata['product_validity'] =$order_data['order_validity_date'];
     $notifydata['product_purchase_date'] =$order_data['order_purchase_date'];
-    $notifydata['product_amount'] =$package_details->total_price;
+    $notifydata['product_amount'] =$request->package_price;
     $notifydata['order_id'] =$payment_details->id;
     $notifydata['payment_mode'] ='Stripe';
     $notifydata['url'] = '/customer/purchased-history';
@@ -2846,7 +2830,7 @@ public function pt_strip_payment(Request $request)
 
       $payment_history_data['payment_id']='';
       $payment_history_data['currency']='GBP';
-      $payment_history_data['amount']=$package_details->total_price;
+      $payment_history_data['amount']=$request->package_price;
       $payment_history_data['payment_mode']='Stripe';
       $payment_history_data['status']='Failed';
 
@@ -2869,7 +2853,7 @@ public function pt_strip_payment(Request $request)
       $order_data['no_of_sessions']=$package_details->total_sessions;
       $order_data['remaining_sessions']=0;
       $order_data['price_session_or_month']=$package_details->price_session_or_month;
-      $order_data['total_price']=$package_details->total_price;
+      $order_data['total_price']=$request->package_price;
       $order_data['validity_value']=$package_details->validity_value;
       $order_data['validity_duration']=$package_details->validity_duration;
       $order_data['contract']=$package_details->contract;
@@ -2886,7 +2870,7 @@ public function pt_strip_payment(Request $request)
       $notifydata['no_of_sessions'] =$package_details->total_sessions;
       $notifydata['product_validity'] =$order_data['order_validity_date'];
       $notifydata['product_purchase_date'] =$order_data['order_purchase_date'];
-      $notifydata['product_amount'] =$package_details->total_price;
+      $notifydata['product_amount'] =$request->package_price;
       $notifydata['order_id'] =' ';
       $notifydata['payment_mode'] ='Stripe';
       $notifydata['url'] = '/customer/purchased-history';

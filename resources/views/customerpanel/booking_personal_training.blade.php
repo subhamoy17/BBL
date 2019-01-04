@@ -106,25 +106,25 @@
                 <li class="{{ Request::is('/') ? 'active' : null }}">
                         <a href="{{route('bbldb')}}">Home</a>
                       </li>
-                       <li class="{{ Request::segment(2) === 'about-us' ? 'active' : null }}">
-                        <a href="{{url('customer/about-us')}}">About Us</a>
+                       <li class="{{ Request::segment(1) === 'about-us' ? 'active' : null }}">
+                        <a href="{{url('about-us')}}">About Us</a>
                       </li>
-                <li class="{{ Request::segment(2) === 'pricing' ? 'active' : null }}">
-                        <a href="{{url('customer/pricing')}}">Pricing</a>
+                <li class="{{ Request::segment(1) === 'pricing' ? 'active' : null }}">
+                        <a href="{{url('pricing')}}">Pricing</a>
                       </li>
                      
-                    <li class="{{ Request::segment(2) === 'services' ? 'active' : null }}">
-                        <a href="{{url('customer/services')}}">Services</a>
+                    <li class="{{ Request::segment(1) === 'services' ? 'active' : null }}">
+                        <a href="{{url('services')}}">Services</a>
                       </li>
-                      <li class="{{ Request::segment(2) === 'exercise' ? 'active' : null }}">
-                        <a href="{{url('customer/exercise')}}">Exercise</a>
+                      <li class="{{ Request::segment(1) === 'exercise' ? 'active' : null }}">
+                        <a href="{{url('exercise')}}">Exercise</a>
                       </li>
 
-                  <li class="{{ Request::segment(2) === 'contact-us' ? 'active' : null }}">
-                        <a href="{{url('customer/contact-us')}}">Contact Us</a>
+                  <li class="{{ Request::segment(1) === 'contact-us' ? 'active' : null }}">
+                        <a href="{{url('contact-us')}}">Contact Us</a>
                       </li>
-                      <li class="{{ Request::segment(2) === 'testimonial' ? 'active' : null }}">
-                        <a href="{{url('customer/testimonial')}}">Testimonial</a>
+                      <li class="{{ Request::segment(1) === 'testimonial' ? 'active' : null }}">
+                        <a href="{{url('testimonial')}}">Testimonial</a>
                       </li>
 
                       @if(Auth::guard('customer')->check())

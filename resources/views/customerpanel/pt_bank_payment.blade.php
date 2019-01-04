@@ -56,10 +56,10 @@ function bank_image()
     <p><h5>Sort Code: </h5> <span> 09-01-29</span></p>
     <p><h5>Account No: </h5> <span>33473491</span></p>
   </div>
-  <label class="w3-text-blue"><b>Payable amount is </b>&nbsp;  <span class="pay-pal-price"><i class="fa fa-gbp"></i> {{$package_details->total_price
-  }}</span></label>
+  <label class="w3-text-blue"><b>Payable amount is </b>&nbsp;  <span class="pay-pal-price"><i class="fa fa-gbp"></i> {{$package_price}}</span></label>
   
   <input class="w3-input w3-border" name="product_id" type="hidden" value="{{$package_details->product_id}}" readonly >
+  <input class="w3-input w3-border" name="package_price" type="hidden" value="{{$package_price}}" >
   
     <label><h5 class="line-h5">Description</h5>
     </br> <strong>Please use the same reference used in bank transfer</strong>

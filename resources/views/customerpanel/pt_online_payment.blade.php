@@ -27,6 +27,7 @@
     id="payment-form" method="post">
     {{ csrf_field() }}
     <input class="w3-input w3-border" name="product_id" type="hidden" value="{{$package_details->product_id}}" >
+    <input class="w3-input w3-border" name="package_price" type="hidden" value="{{$package_price}}" >
     <div class='form-row'>
         <div class='col-md-12 form-group required'>
             <label class='control-label'>Name on Card</label> <input
@@ -60,7 +61,7 @@
     <div class='form-row'>
         <div class='col-md-12'>
             <div class='form-control total btn-info' style="padding: 13px;">
-                Total payable amount is <span class='amount'><i class="fa fa-gbp"></i> {{intval($package_details->total_price)}}</span>
+                Total payable amount is <span class='amount'><i class="fa fa-gbp"></i> {{$package_price}}</span>
             </div>
         </div>
     </div>

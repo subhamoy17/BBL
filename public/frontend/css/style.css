@@ -6424,7 +6424,7 @@ span.line_t:before {
     background: #fff;
     top: 10px;
     z-index: 9999;
-    left: -5px;
+    left: 4px;
 }
 span.line_t {
     position: relative;
