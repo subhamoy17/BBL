@@ -144,6 +144,7 @@ Route::get('slot_time','TrainerController@slot_times')->name('slot_time');
 //Add Coupon//
 Route::get('searchslots','TrainerController@searchslots')->name('searchslots');
 Route::get('add_coupon','TrainerController@add_coupon')->name('add_coupon');
+Route::get('add-package-coupon/{id}','TrainerController@add_package_coupon')->name('add_package_coupon');
 Route::POST('coupon_insert','TrainerController@coupon_insert')->name('coupon_insert');
 Route::get('our_coupon_list','TrainerController@our_coupon_list')->name('our_coupon_list');
 Route::get('our_coupon_edit_view/{id}','TrainerController@our_coupon_edit_view')->name('our_coupon_edit_view');

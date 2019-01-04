@@ -101,7 +101,7 @@ $('#bootstrap-slot-data-table').DataTable({
                             @foreach($all_cupon_data as $key=>$mydata)
                                 <tr>
                                     <td>{{++$key}}</td>
-                                    <td>{{$mydata->slots_name}}</td>
+                                    <td>{{$mydata->training_name}}</td>
                                      <td>{{$mydata->coupon_code}}</td>
                                     <td>{{$mydata->discount_price}}</td>
                                     <td>{{date('d F Y', strtotime($mydata->valid_from))}}</td>

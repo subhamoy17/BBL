@@ -2700,14 +2700,24 @@ public function searchslots(Request $request)
 public function add_coupon()
 {
   try{
-  
-    $slots = DB::table('slots')->get()->all();
+  $slots = DB::table('slots')->get()->all();
+   
     return view('trainer.addcoupon')->with(compact('slots'));
   }
   catch(\Exception $e) {
     return abort(200);
   } 
 }
+
+public function add_package_coupon($id)
+{
+  
+    $product_id=\Crypt::decrypt($id);
+     $products = DB::table('products')->join('training_type','training_type.id','products.training_type_id')->where('products.id',$product_id)->get()->all();
+    return view('trainer.addcoupon')->with(compact('product_id','products'));
+ 
+}
+
 
 public function coupon_insert(Request $request)
 {
@@ -2721,7 +2731,7 @@ public function coupon_insert(Request $request)
     $startDate=$mode_of_date[0];
     $endDate=$mode_of_date[1];
       
-    $cupon_data['product_id']=$request->apply_slots; 
+    $cupon_data['product_id']=$request->product_id; 
     $cupon_data['coupon_code']=$request->coupon_code;
     $cupon_data['discount_price']=$request->discount_price;
     $cupon_data['valid_from']=$startDate;
@@ -2740,12 +2750,13 @@ public function coupon_insert(Request $request)
 
 function duplicatecoupon(Request $request)
   {
-    
+    Log::debug(" duplicatecoupon ".print_r($request->all(),true));
+
     $duplicatecoupon=$request->coupon_code;
-    $apply_slots=$request->apply_slots;
+    $apply_slots=$request->product_id;
     $duplicatecoupon=preg_replace('/\s+/', ' ', $duplicatecoupon);
     
-    $duplicatecoupon_details=DB::table('package_discount_coupon')->where('coupon_code',$duplicatecoupon)->where('product_id',$apply_slots)->whereNull('package_discount_coupon.deleted_at')->count();
+    $duplicatecoupon_details=DB::table('package_discount_coupon')->where('coupon_code',$duplicatecoupon)->where('product_id',$product_id)->whereNull('package_discount_coupon.deleted_at')->count();
 
     if($duplicatecoupon_details>0) {  return 1;  }
     else   {    return 0;  }
@@ -2753,13 +2764,13 @@ function duplicatecoupon(Request $request)
 
 public function our_coupon_list(Request $request)
 {
-   try{
+   // try{
   
-    $all_cupon_data=DB::table('package_discount_coupon')->join('slots','slots.id','package_discount_coupon.product_id')->select('package_discount_coupon.id as coupon_id','package_discount_coupon.coupon_code','package_discount_coupon.discount_price','package_discount_coupon.valid_from','package_discount_coupon.valid_to','package_discount_coupon.is_active','slots.id as slots_id','slots.slots_name as slots_name')->whereNull('package_discount_coupon.deleted_at')->get()->all();
+    $all_cupon_data=DB::table('package_discount_coupon')->join('products','products.id','package_discount_coupon.product_id')->join('training_type','training_type.id','products.training_type_id')->select('package_discount_coupon.id as coupon_id','package_discount_coupon.coupon_code','package_discount_coupon.discount_price','package_discount_coupon.valid_from','package_discount_coupon.valid_to','package_discount_coupon.is_active','training_type.id as training_id','training_type.training_name as training_name')->whereNull('package_discount_coupon.deleted_at')->get()->all();
     return view('trainer.viewcoupon')->with(compact('all_cupon_data'));
-  }catch(\Exception $e) { 
-    return abort(200);
-  }
+  // }catch(\Exception $e) { 
+  //   return abort(200);
+  // }
 }
 
 
@@ -2841,14 +2852,22 @@ public function coupon_delete($id)
 function checkdiscount_price(Request $request)
   {
     
+
     $discount_price=$request->discount_price;
-    $apply_slots=$request->apply_slots;
+    $apply_slots=$request->product_id;
     $discount_price=preg_replace('/\s+/', ' ', $discount_price);
     
-    $checkdiscount_price=DB::table('slots')->where('slots.id',$apply_slots)->whereNull('slots.deleted_at')->value('slots_price');
+    $checkdiscount_price=DB::table('package_discount_coupon')->where('package_discount_coupon.id',$apply_slots)->whereNull('package_discount_coupon.deleted_at')->value('slots_price');
  
     if($discount_price >= $checkdiscount_price  )  {  return 2;   }
     else   {     return 0;   }
+
+
+    $duplicatecoupon=$request->coupon_code;
+    $apply_slots=$request->product_id;
+    $duplicatecoupon=preg_replace('/\s+/', ' ', $duplicatecoupon);
+    
+    $duplicatecoupon_details=DB::table('package_discount_coupon')->where('coupon_code',$duplicatecoupon)->where('product_id',$product_id)->whereNull('package_discount_coupon.deleted_at')->count();
   }
 
 function checkdiscount_price_edit(Request $request)

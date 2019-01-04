@@ -184,28 +184,30 @@ required: "Please select a date"
 
                             <input type="hidden" name="_token" value="{{csrf_token()}}">
 
-                          <div class="row form-group">
+                    <!--       <div class="row form-group">
                             <div class="col col-md-3"><label for="text-input" class=" form-control-label">Package Name<span class="required_field_color">*</span></label></div>
                          
                             <div class="col-12 col-md-9"><input type="text" id="slots_name" name="slots_name" placeholder="Enter Package Name" class="form-control slots_name required" onkeyup=" return jsnull()">
-                               <input type="hidden" id="apply_slots" name="apply_slots">
+                               
                             </div>
-                          </div>
+                          </div> -->
 
-                          <div   id="slot_details" style="display: none;">
+                          <div   id="slot_details">
                             <div class="row form-group" id="s_d">
           <div class="col col-md-3">
-            <label for="text-input" class=" form-control-label">Package Details</label>
+            <label for="text-input" class=" form-control-label">Product Details</label>
           </div>
           
            
-           <label class="sl3">Session Number : </label> <div class="sl2" id="slots_number" name="slots_number"></div><span>,</span>
-             <lable class="sl">Package Price : <i class="fa fa-gbp"></i> </lable></span><div class="sl2" id="slots_price" name="slots_price"></div><span>,</span>
+           <label class="sl3">Product Name : </label> <div class="sl2" id="slots_number" name="slots_number"></div><span>,</span>
+             <lable class="sl">Product Price : <i class="fa fa-gbp"></i> </lable></span><div class="sl2" id="slots_price" name="slots_price"></div><span>,</span>
               
-              <label class="sl"> Package Validity : </label><div class="sl2" id="slots_validity" name="slots_validity"></div>
+              <label class="sl"> Product Payment Type : </label><div class="sl2" id="slots_validity" name="slots_validity"></div>
                 
       </div>
- <div class="row form-group">
+
+                        <input type="hidden" id="product_id" name="product_id" value="{{$product_id}}">
+                            <div class="row form-group">
                             <div class="col col-md-3"><label for="text-input" class=" form-control-label">Discount Coupon Code<span class="required_field_color">*</span></label></div>
                             <div class="col-12 col-md-9"><input type="text" id="coupon_code" name="coupon_code" placeholder="Coupon Code" class="form-control" >
                               <div id="duplicate_coupon" class="coupon-error2"></div>
@@ -266,8 +268,7 @@ required: "Please select a date"
 <script src="{{asset('backend/assets/js/moment.min.js')}}"></script>
 <script src="{{asset('backend/assets/js/daterangepicker.min.js')}}"></script>
 
-
-  <script>
+<script>
   $(document).ready(function(){
 var dis=false;
 var cup=false;
@@ -392,6 +393,7 @@ function check(){
  });
   
   </script>
+ 
   <script>
  
      function  jsnull(){
