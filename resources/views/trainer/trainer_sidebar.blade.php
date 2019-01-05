@@ -144,7 +144,7 @@
                   @endif
                 </ul></li>
 
-                @if(Request::segment(2) == "trainerlist" || Request::segment(2) == "addtrainer" || Request::segment(2) == "edittrainer" || Request::segment(2) == "gymType" || Request::segment(2) == "add_exercise_trainer" || Request::segment(2) == "editexercise" || Request::segment(2) == "contactlist" || Request::segment(2) == "testimonial_view" || Request::segment(2) == "testimonialshow" || Request::segment(2) == "testimonialedit")
+                @if(Request::segment(2) == "trainerlist" || Request::segment(2) == "addtrainer" || Request::segment(2) == "edittrainer" || Request::segment(2) == "exercise-list" || Request::segment(2) == "add-exercise" || Request::segment(2) == "editexercise" || Request::segment(2) == "contactlist" || Request::segment(2) == "testimonial_view" || Request::segment(2) == "testimonialshow" || Request::segment(2) == "testimonialedit")
           <li class="menu-item-has-children dropdown show">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-dashboard"></i>Admin</a>
             <ul class="sub-menu children dropdown-menu show"> 
@@ -160,7 +160,7 @@
                   <li><i class="fa fa-id-card-o"></i><a href="{{route('trainerlist')}}">Trainers</a></li>
                   @endif
 
-                  @if(Request::segment(2) == "gymType" || Request::segment(2) == "add_exercise_trainer" || Request::segment(2) == "editexercise")
+                  @if(Request::segment(2) == "exercise-list" || Request::segment(2) == "add-exercise" || Request::segment(2) == "editexercise")
                   <li><i class="fa fa-id-card-o"></i><a href="{{route('exercise_list')}}" style="color: #fff !important;">Exercise</a></li>
                   @else 
                   <li><i class="fa fa-id-card-o"></i><a href="{{route('exercise_list')}}">Exercise</a></li>
