@@ -76,11 +76,11 @@ $('#bootstrap-slot-data-table').DataTable({
                                 <tr>
                                     <th id="slno" >Sl. No.</th>
                                     <th>Package Type</th>
-                                    <th>Coupon Code</th>
-                                    <th>Price (<i class="fa fa-gbp"></i>)</th>
-                                    <th>Validity</th>
-                                    <th>Generic/Specific</th>
-                                    <th>Status</th>
+                                    <th>Discount Coupon Code</th>
+                                    <th>Discount Coupon Price (<i class="fa fa-gbp"></i>)</th>
+                                    <th>Discount Coupon Start Date</th>
+                                    <th>Discount Coupon End Date</th>
+                                    <th>Discount Coupon Status</th>
                                     <th id="action">Action</th>
                                 </tr>
                             </thead>
@@ -92,18 +92,11 @@ $('#bootstrap-slot-data-table').DataTable({
                                     <td>{{$mydata->training_name}}</td>
                                      <td>{{$mydata->coupon_code}}</td>
                                     <td>{{$mydata->discount_price}}</td>
-                                    <td>{{$mydata->valid_from}} to {{$mydata->valid_to}}</td>
-                                    <td>
-                                        @if($mydata->is_generic==0)
-                                            Customer Specific
-                                        @else
-                                            Generic
-                                        @endif
-                                    </td>                                 
-                                    <td align="center">@if($mydata->is_active==1)
-                                        <i class="fa fa-check-circle btn-act"  title="Active"> 
-                                        @else
-                                        <i class="fa fa-times-circle btn-ina" title="Inactive"></i> @endif</td>
+                                    <td>{{date('d F Y', strtotime($mydata->valid_from))}}</td>
+
+                                    <td>{{date('d F Y', strtotime($mydata->valid_to))}}</td>
+                                 
+                                    <td>@if($mydata->is_active==1) Active @else Inactive @endif</td>
                                    
                                         
                                         <td style="width: 70px"">

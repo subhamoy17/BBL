@@ -132,9 +132,8 @@ $('#bootstrap-slot-data-table').DataTable({
                                              @if($my_productdata->deleted_at == '')
                                         <a href="{{route('edit_product',['product_id' => Crypt::encrypt($my_productdata->product_id)])}}"><button class="btn btn-primary btn-sm"><i class="fa fa-edit" title="Edit product"></i></button></a>
                                         <button type="button" class="btn btn-danger btn-sm" onclick="delete_client({!!$my_productdata->product_id!!})" style="width: 32px;" title="Delete product"><i class="fa fa-trash-o"></i></button>
-                                        @if($my_productdata->total_price>0)
+
                                         <a href="{{route('add_package_coupon',['product_id' => Crypt::encrypt($my_productdata->product_id)])}}"><button class="btn btn-primary btn-sm"><i class="fa fa-plus" title="Add Coupon"></i></button></a>
-                                        @endif
                                         @endif
                                         <a class="detail-products-modal-btn1 btn btn-info btn-sm" id="{{$my_productdata->product_id}}" href="#"   data-personal-contract="{{$my_productdata->contract? $my_productdata->contract : 'N/A'}}" data-personal-notice-period="{{$my_productdata->notice_period? $my_productdata->notice_period.' Days' : 'N/A'}}" data-personal-training-name="{{$my_productdata->training_name}}" data-personal-price-session-or-month="{{$my_productdata->price_session_or_month}}" data-personal-total-price="{{$my_productdata->total_price}}" data-personal-total-sessions="{{$my_productdata->total_sessions}}" data-personal-notice-period-value="{{$my_productdata->notice_period_value}}" data-personal-payment-type-name="{{$my_productdata->payment_type_name}}"><i class="fa fa-eye" title="view details"  aria-hidden="true"></i></a>
                                     </td>

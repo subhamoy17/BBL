@@ -11,7 +11,7 @@ use Carbon\Carbon;
 
 
 
-class PersonalTrainingSessionNotification extends Notification implements ShouldQueue
+class PersonalTrainingSessionNotification extends Notification
 {
     use Queueable;
 

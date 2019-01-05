@@ -54,49 +54,37 @@
 
 
 $.validator.addMethod("coupon_code_validity", function(value, element) {
-  
   var Data = {
     'product_id': $("#product_id").val(),
     'coupon_code': value,
     'package_discount_coupon_id': $('#package_discount_coupon_id').val()
   }
-  var check_result = false;
   $.ajax({
     url: "{{route('duplicatecoupon')}}",
     json_enc: Data,
     type: "GET",
-    async: false,
     dataType: "json",
     data:{
       'data': Data,
     },
-    success: function (response_data){ 
-      if(response_data==1)
-      {
-        check_result = false;
-      }
-      else
-      {
-        check_result = true;
+    success: function (response_data){
+      if(response_data == "1"){
+        return false;
+      }else if(response_data == "0"){
+        return true;
       }
     }
-
   });
-  return check_result;
 }, "");
 $.validator.addMethod("discount_price_validity", function(value, element) {
   var actual_price = $("#actual_price").val();
   actual_price = parseFloat(actual_price);
   var discounted_price = parseFloat(value);
-  if(discounted_price==0)
-  {
-    return false;
-  }else if(discounted_price < actual_price){
+  if(discounted_price < actual_price){
     return true;
   }else{
     return false;
   }
-
 }, "");
 
 
@@ -110,13 +98,13 @@ $('#couponaddform').validate({
 
     "coupon_code": {
       required: true,
-      coupon_code_validity: true
+      coupon_code_validity: true,
     },
 
     "discount_price": {
       required: true,
       number: true,
-      discount_price_validity: true
+      discount_price_validity: true,
     },
 
     "customer_id[]": {
@@ -127,18 +115,18 @@ $('#couponaddform').validate({
   messages: {
 
     "validity": {
-      required: "Please select coupon validity start date & end date."
+      required: "Please select coupon validity start date & end date.",
     },
 
     "coupon_code": {
       required: "Please enter a coupon code.",
-      coupon_code_validity: "Coupon code is already exists."
+      coupon_code_validity: "Coupon code is already exists.",
     },
 
     "discount_price": {
       required: "Please enter discounted price.",
       number: "Please enter a valid discounted price.",
-      discount_price_validity: "Please enter a valid discounted price."
+      discount_price_validity: "Please enter a valid discounted price.",
     },
 
     "customer_id[]": {

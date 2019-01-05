@@ -46,7 +46,9 @@ class TrainerActiveDeactiveNotification extends Notification
      */
     public function toMail($notifiable)
     {
-        
+        Log::debug(" Mail ".print_r($this,true));
+
+
             return (new MailMessage)->view(
               'emails.traineractivedeactivetemail',
               [

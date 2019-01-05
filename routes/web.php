@@ -13,6 +13,10 @@
 
 Route::get('/', 'FrontSimpleController@index')->name('bbldb');
 
+Route::get('/alertifydemo', function () {
+    return view('alertifyjquery');
+});
+
 
 Route::POST('update-trainer-first-changepassword','TrainerFirstChangePasswordController@updateTrainerPassword')->name('trainer.firstchangepassword.update');
 
