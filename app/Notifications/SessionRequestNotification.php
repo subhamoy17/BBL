@@ -11,7 +11,7 @@ use Carbon\Carbon;
 
 
 
-class SessionRequestNotification extends Notification 
+class SessionRequestNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
