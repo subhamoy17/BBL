@@ -856,11 +856,12 @@ public function get_pt_time(Request $request)
 
   $get_slot_times=DB::table('personal_training_booking')
   ->join('personal_training_plan_schedules','personal_training_plan_schedules.id','personal_training_booking.personal_training_plan_shedules_id')
+  ->join('slot_times','slot_times.id','personal_training_plan_schedules.plan_st_time_id')
   ->whereNull('personal_training_booking.deleted_at')
   ->whereNull('personal_training_plan_schedules.deleted_at')
   ->where('personal_training_plan_schedules.trainer_id',$request->trainer_id)
   ->where('personal_training_plan_schedules.plan_date',$request->pt_date)
-  ->pluck('personal_training_booking.personal_training_plan_shedules_id');
+  ->pluck('slot_times.id');
 
    if(count($get_slot_times))
   {
@@ -885,11 +886,13 @@ public function get_pt_time(Request $request)
     }
   }
 
+  //Log::debug(" Check get_slot_times ".print_r($get_slot_times,true));
+
   $time_details=DB::table('personal_training_plan_schedules')
   ->select('personal_training_plan_schedules.id as schedule_id','personal_training_plan_schedules.plan_st_time_id','personal_training_plan_schedules.plan_end_time_id')
   ->where('personal_training_plan_schedules.trainer_id',$request->trainer_id)
   ->where('personal_training_plan_schedules.plan_date',$request->pt_date)
-  ->whereNotIn('personal_training_plan_schedules.id',$get_slot_times)
+  ->whereNotIn('personal_training_plan_schedules.plan_st_time_id',$get_slot_times)
   ->whereNull('personal_training_plan_schedules.deleted_at')->get()->all();
 
   foreach($time_details as $myslot_time)
@@ -931,17 +934,18 @@ public function get_pt_all_trainer(Request $request)
 
   $already_booking_schedule=DB::table('personal_training_booking')
   ->join('personal_training_plan_schedules','personal_training_plan_schedules.id','personal_training_booking.personal_training_plan_shedules_id')
+  ->join('slot_times','slot_times.id','personal_training_plan_schedules.plan_st_time_id')
   ->whereNull('personal_training_booking.deleted_at')
   ->whereNull('personal_training_plan_schedules.deleted_at')
   ->where('personal_training_plan_schedules.plan_date',$request->choose_date)
-  ->pluck('personal_training_booking.personal_training_plan_shedules_id');
+  ->pluck('slot_times.id');
 
    if(count($already_booking_schedule))
   {
     foreach($already_booking_schedule as $key=>$hour) { }
 
     $length=$key+1;
-    $upto=$length*3;
+    $upto=$length*4;
 
     for($i=$length;$i<$upto;$i++)
     {
@@ -951,7 +955,7 @@ public function get_pt_all_trainer(Request $request)
     foreach($already_booking_schedule as $key=>$hour) { }
 
     $length=$key+1;
-    $upto=$length*3;
+    $upto=$length*4;
 
     for($i=$length;$i<$upto;$i++)
     {
@@ -964,7 +968,7 @@ public function get_pt_all_trainer(Request $request)
   $trainer_details=DB::table('personal_training_plan_schedules')
   ->join('users','users.id','personal_training_plan_schedules.trainer_id')
   ->select('users.id as trainer_id','users.name as trainer_name','personal_training_plan_schedules.id as schedule_id2')
-  ->whereNotIn('personal_training_plan_schedules.id',$already_booking_schedule)
+  ->whereNotIn('personal_training_plan_schedules.plan_st_time_id',$already_booking_schedule)
   ->where('personal_training_plan_schedules.plan_date',$request->choose_date)
   ->where('personal_training_plan_schedules.plan_st_time_id',$request->session_time_id2)
   ->whereNull('personal_training_plan_schedules.deleted_at')
