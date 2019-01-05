@@ -43,7 +43,7 @@ public function index(Request $request)
   ->where('training_type.id',1)->where('products.status',1)
   ->orderby('products.id','DESC')->get();
 
-  return view('bbl')->with(compact('bootcamp_product_details','personal_training_product_details'));
+  return view('maintainance')->with(compact('bootcamp_product_details','personal_training_product_details'));
   }
       catch(\Exception $e) 
       {
