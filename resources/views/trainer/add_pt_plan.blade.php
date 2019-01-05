@@ -276,7 +276,7 @@
     var del_end_time=$(this).closest('div#removeid').find("input[name='end_time_id[]']").val();
     var del_trainer_id=$(this).closest('div#removeid').find("input[name='trainer_id[]']").val();
 
-    for(var m=del_st_time;m<del_end_time;m++)
+    for(var m=parseInt(del_st_time);m<parseInt(del_end_time);m++)
       {
         var index = duplicate_trainer_time_id.indexOf(del_trainer_id + '#' + m);
         if (index > -1) {
