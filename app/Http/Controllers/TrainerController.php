@@ -2815,8 +2815,8 @@ function duplicatecoupon(Request $request)
     }
     $duplicatecoupon_details = $duplicatecoupon_details->count();
 
-    if($duplicatecoupon_details>0){  echo "1";  }
-      else{    echo "0";  }
+    if($duplicatecoupon_details>0){  return 1;  }
+      else{    return 0;  }
   }
 
 public function our_coupon_list(Request $request)

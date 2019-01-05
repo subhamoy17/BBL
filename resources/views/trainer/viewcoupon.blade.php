@@ -96,7 +96,10 @@ $('#bootstrap-slot-data-table').DataTable({
 
                                     <td>{{date('d F Y', strtotime($mydata->valid_to))}}</td>
                                  
-                                    <td>@if($mydata->is_active==1) Active @else Inactive @endif</td>
+                                    <td align="center">@if($mydata->is_active==1)
+                                        <i class="fa fa-check-circle btn-act"  title="Active"> 
+                                        @else
+                                        <i class="fa fa-times-circle btn-ina" title="Inactive"></i> @endif</td>
                                    
                                         
                                         <td style="width: 70px"">
