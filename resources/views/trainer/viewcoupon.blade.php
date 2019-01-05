@@ -11,7 +11,7 @@ $('#bootstrap-slot-data-table').DataTable({
         lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
         
         // disable shorting from slno,image and action columns
-        "columnDefs": [ { "orderable": false, "targets": [0,7] } ],
+        "columnDefs": [ { "orderable": false, "targets": [0,6] } ],
         
     });
  } );
@@ -76,11 +76,10 @@ $('#bootstrap-slot-data-table').DataTable({
                                 <tr>
                                     <th id="slno" >Sl. No.</th>
                                     <th>Package Type</th>
-                                    <th>Discount Coupon Code</th>
-                                    <th>Discount Coupon Price (<i class="fa fa-gbp"></i>)</th>
-                                    <th>Discount Coupon Start Date</th>
-                                    <th>Discount Coupon End Date</th>
-                                    <th>Discount Coupon Status</th>
+                                    <th>Coupon Code</th>
+                                    <th>Price (<i class="fa fa-gbp"></i>)</th>
+                                    <th>Validity</th>
+                                    <th>Status</th>
                                     <th id="action">Action</th>
                                 </tr>
                             </thead>
@@ -92,10 +91,7 @@ $('#bootstrap-slot-data-table').DataTable({
                                     <td>{{$mydata->training_name}}</td>
                                      <td>{{$mydata->coupon_code}}</td>
                                     <td>{{$mydata->discount_price}}</td>
-                                    <td>{{date('d F Y', strtotime($mydata->valid_from))}}</td>
-
-                                    <td>{{date('d F Y', strtotime($mydata->valid_to))}}</td>
-                                 
+                                    <td>{{$mydata->valid_from}} to {{$mydata->valid_to}}</td>                                 
                                     <td align="center">@if($mydata->is_active==1)
                                         <i class="fa fa-check-circle btn-act"  title="Active"> 
                                         @else
