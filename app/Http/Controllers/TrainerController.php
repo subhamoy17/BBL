@@ -3508,7 +3508,7 @@ public function checked_bootcampdate(Request $request)
       }
 
 
-      $all_schedules=$all_schedules->get();
+      $all_schedules=$all_schedules->orderBy('users.name','ASC')->get();
 
     foreach($all_schedules as $each_schedule)
      {
