@@ -4,101 +4,135 @@
 
 @section('content')
 
-
+<style type="text/css">
+  #customer_id-error {
+    color: #dc3545;
+    font-weight: 700;
+    text-transform: none;
+    font-size: 13px;
+  }
+</style>
 
 <script>
 
   $(document).ready(function(){
+    
+    $("#is_generic_yes").click(function(){
+        $(".specific-coupon-block").hide();
+        $("#customer_id").attr('name', 'customer_id_not_required');
+    });
+    $("#is_generic_no").click(function(){
+        $(".specific-coupon-block").show();
+        $("#customer_id").attr('name', 'customer_id[]');
+    });
+    // $("#coupon_code").keyup(function(){
+    //   var Data = 
+    //     {
+    //       'product_id': $("#product_id").val(),
+    //       'coupon_code': $('#coupon_code').val(),
+    //       'package_discount_coupon_id': $('#package_discount_coupon_id').val()
+    //     }
+    //   $.ajax({
+    //       url: "{{route('duplicatecoupon')}}",
+    //       json_enc: Data,
+    //       type: "GET",
+    //       dataType: "json",
+    //       data:
+    //       {
+    //         'data': Data,
+    //       },
+    //       success: function (response_data)
+    //       {
+    //         if(response_data == 1){
+    //           $("#duplicate_coupon").html("Coupon code is already exists.");
+    //         }else{
+    //           $("#duplicate_coupon").html("");
+    //         }
+    //       }
+    //     });
+    // });
 
 
-
-    $.validator.addMethod("alpha", function(value, element){
-      return this.optional(element) || value == value.match(/^[a-zA-Z, '']+$/);
-    }, "Alphabetic characters only please");
-
-// mobile number can contant only numeric
-$.validator.addMethod('numericO nly', function (value) {
-  return /^[0-9]+$/.test(value);
-}, 'Please enter only numeric values');
-
-$.validator.addMethod('blood', function (value) {
-  return /^[0-9]*[/]?[0-9]*$/.test(value);
-}, 'Please enter only numeric values');
-
-$.validator.addMethod("alphanumeric", function(value, element) {
-  return this.optional(element) || /^[\w.]+$/i.test(value);
-}, "Letters, numbers, and underscores only please");
-
-
-$.validator.addMethod("dollarsscents", function(value, element) {
-  return this.optional(element) || /^\d{0,5}(\.\d{0,3})?$/i.test(value);
-}, "Please enter value betwwen 1 to 999990.99");
+$.validator.addMethod("coupon_code_validity", function(value, element) {
+  var Data = {
+    'product_id': $("#product_id").val(),
+    'coupon_code': value,
+    'package_discount_coupon_id': $('#package_discount_coupon_id').val()
+  }
+  $.ajax({
+    url: "{{route('duplicatecoupon')}}",
+    json_enc: Data,
+    type: "GET",
+    dataType: "json",
+    data:{
+      'data': Data,
+    },
+    success: function (response_data){
+      if(response_data == "1"){
+        return false;
+      }else if(response_data == "0"){
+        return true;
+      }
+    }
+  });
+}, "");
+$.validator.addMethod("discount_price_validity", function(value, element) {
+  var actual_price = $("#actual_price").val();
+  actual_price = parseFloat(actual_price);
+  var discounted_price = parseFloat(value);
+  if(discounted_price < actual_price){
+    return true;
+  }else{
+    return false;
+  }
+}, "");
 
 
 $('#couponaddform').validate({  
-/// rules of error 
-rules: {
+  /// rules of error 
+  rules: {
 
-  "slots_name":
-  {
-    required: true,
+    "validity": {
+      required: true,
+    },
+
+    "coupon_code": {
+      required: true,
+      coupon_code_validity: true,
+    },
+
+    "discount_price": {
+      required: true,
+      number: true,
+      discount_price_validity: true,
+    },
+
+    "customer_id[]": {
+      required: true,
+    }
   },
 
-  "coupon_code": {
- required: true,
+  messages: {
 
+    "validity": {
+      required: "Please select coupon validity start date & end date.",
+    },
 
-},
+    "coupon_code": {
+      required: "Please enter a coupon code.",
+      coupon_code_validity: "Coupon code is already exists.",
+    },
 
-"discount_price": {
- required: true,
-number: true,
-range: [1, 99999.99]
-},
-"valid_from": {
-required: true,
+    "discount_price": {
+      required: "Please enter discounted price.",
+      number: "Please enter a valid discounted price.",
+      discount_price_validity: "Please enter a valid discounted price.",
+    },
 
-},
-"daterange": {
-required: true,
-
-}
-
-
-
-
-},
-
-messages: {
-
-  "slots_name":
-  {
-    required: "Please enter slot name"
-  },
-
-  "coupon_code":
-  {
-    required: "Please enter coupon code"
-  },
-
-  "discount_price":{
- required: 'Please enter the discount price',
-number: 'Please enter decimal only',
-range: "Please enter value betwwen 1 to 99999.99"
-},
-
-"valid_from":{
-required: "Please select a date"
-},
-
-"daterange":{
- required: "Please select a date",
- 
-}
-
-
-
-}
+    "customer_id[]": {
+      required: "Please select at least one customer.",
+    }
+  }
 });
 
 
@@ -195,53 +229,114 @@ required: "Please select a date"
                           <div   id="slot_details">
                             <div class="row form-group" id="s_d">
           <div class="col col-md-3">
-            <label for="text-input" class=" form-control-label">Product Details</label>
+            <label for="text-input" class=" form-control-label">Package Details</label>
           </div>
           
            
-           <label class="sl3">Product Name : </label> <div class="sl2" id="slots_number" name="slots_number"></div><span>,</span>
-             <lable class="sl">Product Price : <i class="fa fa-gbp"></i> </lable></span><div class="sl2" id="slots_price" name="slots_price"></div><span>,</span>
-              
-              <label class="sl"> Product Payment Type : </label><div class="sl2" id="slots_validity" name="slots_validity"></div>
+            <label class="sl3">Type : </label> {{$product->training_name}}
+            
+            @if($product->payment_type_id == 1)
+            <lable class="sl">Total Package Price : <i class="fa fa-gbp"></i> </lable>
+              {{$product->total_price}}
+            <input type="hidden" name="actual_price" id="actual_price" value="{{$product->total_price}}">
+            @elseif($product->payment_type_id == 2)
+            <lable class="sl">Monthly Package Price : <i class="fa fa-gbp"></i> </lable>
+              {{$product->price_session_or_month}}
+              <input type="hidden" name="actual_price" id="actual_price" value="{{$product->price_session_or_month}}">
+            @endif
+              <label class="sl">Payment Type : </label>{{$product->payment_type_name}}
                 
       </div>
 
                         <input type="hidden" id="product_id" name="product_id" value="{{$product_id}}">
-                            <div class="row form-group">
-                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Discount Coupon Code<span class="required_field_color">*</span></label></div>
-                            <div class="col-12 col-md-9"><input type="text" id="coupon_code" name="coupon_code" placeholder="Coupon Code" class="form-control" >
-                              <div id="duplicate_coupon" class="coupon-error2"></div>
+                        @if(isset($product->package_discount_coupon_id) && !empty($product->package_discount_coupon_id))
+                          <input type="hidden" name="package_discount_coupon_id" id="package_discount_coupon_id" value="{{$product->package_discount_coupon_id}}">
+                        @else
+                          <input type="hidden" name="package_discount_coupon_id" id="package_discount_coupon_id" >
+                        @endif
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Coupon Validity<span class="required_field_color">*</span></label></div>
+                            <div class="col-12 col-md-9"><input class="drange form-control" type="text" name="validity" id="validity" value="" placeholder="Select Date" readonly/>
                             </div>
                           </div>
                            <div class="row form-group">
-                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Discount Coupon Price (<i class="fa fa-gbp"></i>)<span class="required_field_color">*</span></label></div>
-                            <div class="col-12 col-md-9"><input type="text" id="discount_price" name="discount_price" placeholder="Discount Price" class="form-control" >
-                              <div id="lessthan_slot" class="coupon-error2"></div>
-                            </div>
-                          </div>
-
-                           <!-- <div class="row form-group">
-                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Valid From<span class="required_field_color">*</span></label></div>
-                            <div class="col-12 col-md-9"><input type="text" id="valid_from" name="valid_from" placeholder="Valid From" class="form-control" value="">
-                            </div>
-                          </div> -->
-
-
-                          <div class="row form-group">
-                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Discount Coupon Validity<span class="required_field_color">*</span></label></div>
-                            <div class="col-12 col-md-9"><input class="drange form-control" type="text" name="daterange" id="daterange" value="" placeholder="Select Date" readonly/>
-                            </div>
-                          </div>
-
-
-                          <div class="row form-group">
-                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Discount Coupon Status<span class="required_field_color">*</span></label></div>
+                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Discounted Price (<i class="fa fa-gbp"></i>)<span class="required_field_color">*</span></label></div>
                             <div class="col-12 col-md-9">
-                              <input type="radio"  id="is_active_yes" name="is_active" value="1" checked="checked">Active &nbsp;
-                              <input type="radio"  id="is_active_no" name="is_active" value="0">Inactive
+                              
+                              @if(isset($product->discount_price) && !empty($product->discount_price))
+                                <input type="text" id="discount_price" name="discount_price" placeholder="Discount Price" class="form-control" value="{{$product->discount_price}}">
+                              @else
+                                <input type="text" id="discount_price" name="discount_price" placeholder="Discount Price" class="form-control" >
+                              @endif
                             </div>
-                          </div> 
-      
+                          </div>
+                          <div class="row form-group">
+                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Coupon Code<span class="required_field_color">*</span></label></div>
+                            <div class="col-12 col-md-9">
+                              @if(isset($product->coupon_code) && !empty($product->coupon_code))
+                                <input type="text" id="coupon_code" name="coupon_code" placeholder="Coupon Code" class="form-control" value="{{$product->coupon_code}}">
+                              @else
+                                <input type="text" id="coupon_code" name="coupon_code" placeholder="Coupon Code" class="form-control" value="">
+                              @endif
+                              <div id="duplicate_coupon" class="coupon-error2"></div>
+                            </div>
+                          </div>
+                          <div class="row form-group">
+                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Coupon Status<span class="required_field_color">*</span></label></div>
+                            <div class="col-12 col-md-9">
+                              @if(isset($product->is_active) && !empty($product->is_active) || !isset($product->is_active))
+                                  <input type="radio"  id="is_active_yes" class="is_active" name="is_active" value="1" checked="checked"> Active &nbsp;
+                                  <input type="radio"  id="is_active_no" class="is_active" name="is_active" value="0"> Inactive
+                              @else
+                                  <input type="radio"  id="is_active_yes" class="is_active" name="is_active" value="1"> Active &nbsp;
+                                  <input type="radio"  id="is_active_no" class="is_active" name="is_active" value="0" checked="checked"> Inactive
+                              @endif
+                              
+                            </div>
+                          </div>
+                          <div class="row form-group">
+                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Coupon Type<span class="required_field_color">*</span></label></div>
+                            <div class="col-12 col-md-9">
+                              @if(isset($product->is_generic) && $product->is_generic == 1 || !isset($product->is_generic))
+                                <input type="radio"  id="is_generic_yes" class="is_generic" name="is_generic" value="1" checked="checked"> Generic &nbsp;
+                                <input type="radio"  id="is_generic_no" class="is_generic" name="is_generic" value="0"> Customer Specific
+                              @else
+                                <input type="radio"  id="is_generic_yes" class="is_generic" name="is_generic" value="1" > Generic &nbsp;
+                                <input type="radio"  id="is_generic_no" class="is_generic" name="is_generic" value="0" checked="checked"> Customer Specific
+                              @endif
+                              
+                            </div>
+                          </div>
+                          @if(isset($product->is_generic) && $product->is_generic == 1 || !isset($product->is_generic))
+                            <div class="row form-group specific-coupon-block" style="display: none;">
+                          @else
+                            <div class="row form-group specific-coupon-block">
+                          @endif
+
+                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Customer List<span class="required_field_color">*</span></label></div>
+                            <div class="col-12 col-md-9">
+                              @if(isset($product->is_generic) && $product->is_generic == 1 || !isset($product->is_generic))
+                                <select name="customer_id_not_required[]" id="customer_id" class="form-control" multiple>
+                              @else
+                                <select name="customer_id[]" id="customer_id" class="form-control" multiple>
+                              @endif
+                              
+                                    @if(count($customer_list))
+                                      <option value=" ">Choose Customer</option>
+                                      @foreach($customer_list as $single_customer)
+                                        @if(isset($selected_customer_list) && in_array($single_customer->id, $selected_customer_list))
+                                          <option value="{{$single_customer->id}}" selected="selected">{{$single_customer->name}} - {{$single_customer->email}}</option>
+                                        @else
+                                          <option value="{{$single_customer->id}}">{{$single_customer->name}} - {{$single_customer->email}}</option>
+                                        @endif
+                                          
+                                      @endforeach 
+                                    @else
+                                      <option value=" ">No Customer Found</option>
+                                    @endif 
+                                </select>
+                            </div>
+                          </div>
                          <div class="row form-group">
                           <div class="col col-md-10">
                           </div>
@@ -277,7 +372,7 @@ required: "Please select a date"
 <script>
 $(function() {
   var start, end;
-  $('input[name="daterange"]').daterangepicker({
+  $('input[name="validity"]').daterangepicker({
     opens: 'left',
      minDate:moment().startOf('hour'),
        // end : moment().subtract(29, 'days'),

@@ -54,7 +54,7 @@
           @endif         
           </ul></li>  
 
-          @if(Request::segment(2) == "all-products" || Request::segment(2) == "add-product" || Request::segment(2) == "insert-product" || Request::segment(2) == "edit-product" || Request::segment(2) == "add_coupon" || Request::segment(2) == "our_coupon_list" || Request::segment(2) == "our_coupon_edit_view")
+          @if(Request::segment(2) == "all-products" || Request::segment(2) == "add-product" || Request::segment(2) == "insert-product" || Request::segment(2) == "edit-product" || Request::segment(2) == "add_coupon" || Request::segment(2) == "our_coupon_list" || Request::segment(2) == "our_coupon_edit_view" || Request::segment(2) == "our_coupon_list"  || Request::segment(2) == "add-package-coupon")
             <li class="menu-item-has-children dropdown show" >
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: #fff !important;"> <i class="menu-icon fa fa-dashboard"></i>Products</a>
             <ul class="sub-menu children dropdown-menu show"> 
@@ -69,7 +69,7 @@
           <li><i class="fa fa-id-card-o"></i><a href="{{route('view_product')}}">Packages</a></li>
           @endif
 
-          @if(Request::segment(2) == "add_coupon" || Request::segment(2) == "our_coupon_list" || Request::segment(2) == "our_coupon_edit_view")
+          @if(Request::segment(2) == "our_coupon_edit_view" || Request::segment(2) == "our_coupon_list" || Request::segment(2) == "add-package-coupon")
           <li><i class="fa fa-id-card-o"></i><a href="{{route('our_coupon_list')}}" style="color: #fff !important;">Discount</a></li>
           @else 
           <li><i class="fa fa-id-card-o"></i><a href="{{route('our_coupon_list')}}">Discount</a></li>

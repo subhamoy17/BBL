@@ -33,20 +33,8 @@ $('#bootstrap-slot-data-table').DataTable({
         <div class="page-header float-left">
             <div class="page-title">
                 <h1>Discount Coupon List</h1>
-            </div>
-       
-                            
+            </div>             
         </div>
-    </div>
-    <div class="col-sm-3">
-       
-         <strong class="card-title add-n-cl cl-list">
-                              <a href="{{route('add_coupon')}}">
-                                    <button class="btn btn-success"><i class="fa fa-plus"></i> Add Discount Coupon</button>
-                                </a>
-                                <br>
-
-                            </strong>
     </div>
 </div>
 
@@ -87,7 +75,7 @@ $('#bootstrap-slot-data-table').DataTable({
                             <thead>
                                 <tr>
                                     <th id="slno" >Sl. No.</th>
-                                    <th>Package Name</th>
+                                    <th>Package Type</th>
                                     <th>Discount Coupon Code</th>
                                     <th>Discount Coupon Price (<i class="fa fa-gbp"></i>)</th>
                                     <th>Discount Coupon Start Date</th>

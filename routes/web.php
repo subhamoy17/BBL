@@ -150,7 +150,7 @@ Route::get('our_coupon_list','TrainerController@our_coupon_list')->name('our_cou
 Route::get('our_coupon_edit_view/{id}','TrainerController@our_coupon_edit_view')->name('our_coupon_edit_view');
 Route::POST('coupon_edit_insert','TrainerController@coupon_edit_insert')->name('coupon_edit_insert');
 Route::get('coupon_delete/{id}', 'TrainerController@coupon_delete')->name('coupon_delete');
-Route::post('duplicatecoupon','TrainerController@duplicatecoupon')->name('duplicatecoupon');
+Route::GET('duplicatecoupon','TrainerController@duplicatecoupon')->name('duplicatecoupon');
 Route::post('duplicatecoupon_edit','TrainerController@duplicatecoupon_edit')->name('duplicatecoupon_edit');
 Route::post('checkdiscount_price','TrainerController@checkdiscount_price')->name('checkdiscount_price');
 Route::post('checkdiscount_price_edit','TrainerController@checkdiscount_price_edit')->name('checkdiscount_price_edit');

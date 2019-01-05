@@ -2709,23 +2709,33 @@ public function add_coupon()
   } 
 }
 
-public function add_package_coupon($id)
-{
+public function add_package_coupon($product_id){
   
-    $product_id=\Crypt::decrypt($id);
-     $products = DB::table('products')->join('training_type','training_type.id','products.training_type_id')->where('products.id',$product_id)->get()->all();
-    return view('trainer.addcoupon')->with(compact('product_id','products'));
+    $product_id=\Crypt::decrypt($product_id);
+    $product = DB::table('products')
+    ->join('training_type','training_type.id','products.training_type_id')
+    ->join('payment_type','payment_type.id','products.payment_type_id')
+    ->where('products.id',$product_id)
+    ->first();
+    $customer_list = DB::table('customers')
+    ->select('id','name','email')
+    ->where('confirmed',1)
+    ->whereNull('confirmation_code')
+    ->get()
+    ->all();
+    return view('trainer.addcoupon')->with(compact('product_id','product','customer_list'));
  
 }
 
 
 public function coupon_insert(Request $request)
 {
-//Log::debug(" data customer_email ".print_r($request->all(),true)); 
-
+// Log::debug(" data customer_email ".print_r($request->all(),true)); 
+  // print_r($request);die();
+  DB::beginTransaction();
   try{
 
-    $daterange=$request->daterange; 
+    $daterange=$request->validity; 
     $mode_of_date=explode(" - ",$daterange);
     $format = 'Y-m-d';
     $startDate=$mode_of_date[0];
@@ -2737,40 +2747,87 @@ public function coupon_insert(Request $request)
     $cupon_data['valid_from']=$startDate;
     $cupon_data['valid_to']= $endDate;
     $cupon_data['is_active']=$request->is_active;
+    $cupon_data['is_generic']=$request->is_generic;
+    if(isset($request->package_discount_coupon_id) && !empty($request->package_discount_coupon_id)){
+      DB::table('package_discount_coupon')->where('id',$request->package_discount_coupon_id)->update($cupon_data);
+      $coupon_id=$request->package_discount_coupon_id;
+    }else{
+      DB::table('package_discount_coupon')->insert($cupon_data);
+      $coupon_id=DB::getPdo()->lastInsertId();
+    }
+
+    if($cupon_data['is_generic'] == 0 && isset($request->customer_id) && !empty($request->customer_id)){
+
+      if(isset($request->package_discount_coupon_id) && !empty($request->package_discount_coupon_id)){
+
+        $delete_coupon_specific_customer = DB::table('coupon_specific_customers')->where('package_discount_coupon_id',$coupon_id)->delete();
+        foreach($request->customer_id as $single_customer){
+          $coupon_customer_data['customer_id'] = $single_customer;
+          $coupon_customer_data['package_discount_coupon_id'] = $coupon_id;
+          DB::table('coupon_specific_customers')->insert($coupon_customer_data);
+        }
+
+        DB::commit();
+        return redirect('trainer/our_coupon_list')->with("success","You have successfully updated one coupon");
+      }else{
+        foreach($request->customer_id as $single_customer){
+          $coupon_customer_data['customer_id'] = $single_customer;
+          $coupon_customer_data['package_discount_coupon_id'] = $coupon_id;
+          DB::table('coupon_specific_customers')->insert($coupon_customer_data);
+        }
+        DB::commit();
+        return redirect('trainer/our_coupon_list')->with("success","You have successfully added one coupon");
+      }
       
-    DB::table('package_discount_coupon')->insert($cupon_data);
-  
-    return redirect('trainer/our_coupon_list')->with("success","You have successfully added one coupon");
+    }elseif($cupon_data['is_generic'] == 1){
+
+      $delete_coupon_specific_customer = DB::table('coupon_specific_customers')->where('package_discount_coupon_id',$coupon_id)->delete();
+      DB::commit();
+      if(isset($request->package_discount_coupon_id) && !empty($request->package_discount_coupon_id)){
+        return redirect('trainer/our_coupon_list')->with("success","You have successfully updated one coupon");
+      }else{
+        return redirect('trainer/our_coupon_list')->with("success","You have successfully added one coupon");
+      }
+    }else{
+      DB::rollback();
+    }
   }
   catch(\Exception $e) {
-      return abort(200);
+    DB::rollback();
+    return abort(200);
   }
-  
 }
 
 function duplicatecoupon(Request $request)
   {
     Log::debug(" duplicatecoupon ".print_r($request->all(),true));
 
-    $duplicatecoupon=$request->coupon_code;
-    $apply_slots=$request->product_id;
-    $duplicatecoupon=preg_replace('/\s+/', ' ', $duplicatecoupon);
+    $coupon_and_product_details=$request->get('data');
+    $coupon_code = $coupon_and_product_details['coupon_code'];
+    $product_id = $coupon_and_product_details['product_id'];
+    $coupon_code=preg_replace('/\s+/', ' ', $coupon_code);
     
-    $duplicatecoupon_details=DB::table('package_discount_coupon')->where('coupon_code',$duplicatecoupon)->where('product_id',$product_id)->whereNull('package_discount_coupon.deleted_at')->count();
+    $duplicatecoupon_details=DB::table('package_discount_coupon')
+    ->where('coupon_code',$coupon_code)
+    ->where('product_id',$product_id)->whereNull('deleted_at');
+    if(isset($coupon_and_product_details['package_discount_coupon_id']) && !empty($coupon_and_product_details['package_discount_coupon_id'])){
+      $duplicatecoupon_details = $duplicatecoupon_details->where('package_discount_coupon.id','!=',$coupon_and_product_details['package_discount_coupon_id']);
+    }
+    $duplicatecoupon_details = $duplicatecoupon_details->count();
 
-    if($duplicatecoupon_details>0) {  return 1;  }
-    else   {    return 0;  }
+    if($duplicatecoupon_details>0){  echo "1";  }
+      else{    echo "0";  }
   }
 
 public function our_coupon_list(Request $request)
 {
-   // try{
+   try{
   
     $all_cupon_data=DB::table('package_discount_coupon')->join('products','products.id','package_discount_coupon.product_id')->join('training_type','training_type.id','products.training_type_id')->select('package_discount_coupon.id as coupon_id','package_discount_coupon.coupon_code','package_discount_coupon.discount_price','package_discount_coupon.valid_from','package_discount_coupon.valid_to','package_discount_coupon.is_active','training_type.id as training_id','training_type.training_name as training_name')->whereNull('package_discount_coupon.deleted_at')->get()->all();
     return view('trainer.viewcoupon')->with(compact('all_cupon_data'));
-  // }catch(\Exception $e) { 
-  //   return abort(200);
-  // }
+  }catch(\Exception $e) { 
+    return abort(200);
+  }
 }
 
 
@@ -2779,8 +2836,34 @@ public function our_coupon_edit_view($id)
   
   try{
   
-    $edit_coupondata= DB::table('package_discount_coupon')->join('slots','slots.id','package_discount_coupon.product_id')->select('package_discount_coupon.id','package_discount_coupon.coupon_code','package_discount_coupon.discount_price','package_discount_coupon.valid_from','package_discount_coupon.valid_to','slots.id as slots_id','slots.slots_name as slots_name','package_discount_coupon.is_active')->where('package_discount_coupon.id',$id)->first();
-    return view ("trainer.editcoupon")->with(compact('edit_coupondata'));
+    $product= DB::table('package_discount_coupon')
+    ->select('package_discount_coupon.*','package_discount_coupon.id as package_discount_coupon_id','products.id as products_id','products.price_session_or_month','products.total_price','products.training_type_id','products.payment_type_id','training_type.training_name','payment_type.payment_type_name')
+    ->join('products','products.id','package_discount_coupon.product_id')
+    ->join('training_type','training_type.id','products.training_type_id')
+    ->join('payment_type','payment_type.id','products.payment_type_id')
+    ->where('package_discount_coupon.id',$id)->first();
+    $product_id = $product->products_id;
+    $customer_list = DB::table('customers')
+    ->select('id','name','email')
+    ->where('confirmed',1)
+    ->whereNull('confirmation_code')
+    ->get()
+    ->all();
+    $selected_customer_list = DB::table('coupon_specific_customers')
+    ->select('customer_id')
+    ->where('package_discount_coupon_id',$product->package_discount_coupon_id)
+    ->get()
+    ->all();
+    $selected_customer_list_sorted = array();
+    // in_array(1, $selected_customer_list);die();
+    foreach($selected_customer_list as $selected_single_customer){
+      $selected_customer_list_sorted[] = $selected_single_customer->customer_id;
+    }
+    $selected_customer_list = $selected_customer_list_sorted;
+    // print_r($customer_list);die();
+    // return view ("trainer.editcoupon")->with(compact('edit_coupondata'));
+
+    return view('trainer.addcoupon')->with(compact('product_id','product','customer_list','selected_customer_list'));
   }
   catch(\Exception $e) {
       return abort(200);
@@ -2842,7 +2925,9 @@ public function coupon_delete($id)
     $coupon_delete['deleted_at']=Carbon::now();
 
     DB::table('package_discount_coupon')->where('id',$id)->update($coupon_delete);
+    DB::table('coupon_specific_customers')->where('package_discount_coupon_id',$id)->delete();
     return redirect('trainer/our_coupon_list')->with("success","You have successfully deleted one coupon");
+
   }
   catch(\Exception $e) {
       return abort(200);
