@@ -2823,7 +2823,7 @@ public function our_coupon_list(Request $request)
 {
    try{
   
-    $all_cupon_data=DB::table('package_discount_coupon')->join('products','products.id','package_discount_coupon.product_id')->join('training_type','training_type.id','products.training_type_id')->select('package_discount_coupon.id as coupon_id','package_discount_coupon.coupon_code','package_discount_coupon.discount_price','package_discount_coupon.valid_from','package_discount_coupon.valid_to','package_discount_coupon.is_active','training_type.id as training_id','training_type.training_name as training_name')->whereNull('package_discount_coupon.deleted_at')->get()->all();
+    $all_cupon_data=DB::table('package_discount_coupon')->join('products','products.id','package_discount_coupon.product_id')->join('training_type','training_type.id','products.training_type_id')->select('package_discount_coupon.id as coupon_id','package_discount_coupon.coupon_code','package_discount_coupon.discount_price','package_discount_coupon.valid_from','package_discount_coupon.valid_to','package_discount_coupon.is_active','package_discount_coupon.is_generic','training_type.id as training_id','training_type.training_name as training_name')->whereNull('package_discount_coupon.deleted_at')->get()->all();
     return view('trainer.viewcoupon')->with(compact('all_cupon_data'));
   }catch(\Exception $e) { 
     return abort(200);

@@ -11,7 +11,7 @@ $('#bootstrap-slot-data-table').DataTable({
         lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
         
         // disable shorting from slno,image and action columns
-        "columnDefs": [ { "orderable": false, "targets": [0,6] } ],
+        "columnDefs": [ { "orderable": false, "targets": [0,7] } ],
         
     });
  } );
@@ -79,6 +79,7 @@ $('#bootstrap-slot-data-table').DataTable({
                                     <th>Coupon Code</th>
                                     <th>Price (<i class="fa fa-gbp"></i>)</th>
                                     <th>Validity</th>
+                                    <th>Generic/Specific</th>
                                     <th>Status</th>
                                     <th id="action">Action</th>
                                 </tr>
@@ -91,7 +92,14 @@ $('#bootstrap-slot-data-table').DataTable({
                                     <td>{{$mydata->training_name}}</td>
                                      <td>{{$mydata->coupon_code}}</td>
                                     <td>{{$mydata->discount_price}}</td>
-                                    <td>{{$mydata->valid_from}} to {{$mydata->valid_to}}</td>                                 
+                                    <td>{{$mydata->valid_from}} to {{$mydata->valid_to}}</td>
+                                    <td>
+                                        @if($mydata->is_generic==0)
+                                            Customer Specific
+                                        @else
+                                            Generic
+                                        @endif
+                                    </td>                                 
                                     <td align="center">@if($mydata->is_active==1)
                                         <i class="fa fa-check-circle btn-act"  title="Active"> 
                                         @else
