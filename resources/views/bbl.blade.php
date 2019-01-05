@@ -198,7 +198,7 @@
 					<ul class="about-list">
 						<li>
 							<div class="col-md-4 we-gyl">
-								<img src="{{asset('frontend/images/1.jpg')}}" alt="" class="img-responsive" />
+								<img src="{{asset('frontend/images/1_new.jpg')}}" alt="" class="img-responsive" />
 							</div>
 							<div class="col-md-8 in-block">
 								<h5>GYM TRAINING </h5>
@@ -208,7 +208,7 @@
 						</li>
 						<li>
 						<div class="col-md-4 we-gyl">
-								<img src="{{asset('frontend/images/3.jpg')}}" alt="" class="img-responsive" />
+								<img src="{{asset('frontend/images/3_new.jpg')}}" alt="" class="img-responsive" />
 							</div>
 							<div class="col-md-8 in-block">
 								<h5>DIET PLANS</h5>
